@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'DIN'; 
+    src: url('../fonts/DINRegularAlternate.eot'); /* IE9 Compatibility Modes */
+    src: url('../fonts/DINRegularAlternate.eot?') format('eot'),  /* IE6-IE8 */
+    url('../fonts/DINRegularAlternate.otf') format('otf'), 
+    url('../fonts/DINRegularAlternate.ttf') format('truetype'); /* Safari, Android, iOS */
+    }
+
+@font-face {
+    font-family: 'DIN_bold'; 
+    src: url('../fonts/din-bold-webfont.eot.eot'); /* IE9 Compatibility Modes */
+    src: url('../fonts/din-bold-webfont.eot.eot?') format('eot'),  /* IE6-IE8 */
+    url('../fonts/DINBold.otf') format('otf'), 
+    url('../fonts/DINBold.ttf') format('truetype'); /* Safari, Android, iOS */
+    }

@@ -1,0 +1,65 @@
+<?php
+
+Route::get('/main', function () {
+    return view('contenido/contenido');
+})->name('main');
+
+Route::get('/parametro/GetParametroByGrupo', 'ParametroController@GetParametroByGrupo');
+Route::get('/parametro/GetLstProveedor', 'ParametroController@GetLstProveedor');
+Route::get('/parametro/GetLineasByProveedor', 'ParametroController@GetLineasByProveedor');
+Route::get('/parametro/GetMarcasByProveedor', 'ParametroController@GetMarcasByProveedor');
+Route::get('/parametro/GetModelosByProveedor', 'ParametroController@GetModelosByProveedor');
+Route::get('/parametro/GetDocumentoNatural', 'ParametroController@GetDocumentoNatural');
+Route::get('/parametro/GetDocumentoJuridica', 'ParametroController@GetDocumentoJuridica');
+Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo');
+Route::post('/elemento/SetElemento', 'ElementoController@store');
+Route::put('/elemento/desactivar','ElementoController@desactivar');
+Route::put('/elemento/activar','ElementoController@activar');
+Route::post('/versionvehiculo/SetVersion', 'VersionVehiculoController@store');
+Route::get('/versionvehiculo/GetVersionVehiculo', 'VersionVehiculoController@GetVersionVehiculo');
+Route::post('/versionvehiculo/UpdVersionVehiculoById', 'VersionVehiculoController@UpdVersionVehiculoById');
+Route::put('/versionvehiculo/desactivar','VersionVehiculoController@desactivar');
+Route::put('/versionvehiculo/activar','VersionVehiculoController@activar');
+Route::get('/versionvehiculo/GetLineasByProveedor', 'VersionVehiculoController@GetLineasByProveedor');
+Route::get('/versionvehiculo/GetMarcaByLinea', 'VersionVehiculoController@GetMarcaByLinea');
+Route::get('/versionvehiculo/GetModeloByMarca', 'VersionVehiculoController@GetModeloByMarca');
+Route::post('/compra/importFileCompra', 'ExcelController@importFileCompra');
+Route::post('/compra/readFileCompra', 'ExcelController@readFileCompra');
+Route::post('/compra/SetCompra', 'CompraController@store');
+Route::get('/compra/GetCompra', 'CompraController@GetCompra');
+Route::put('/compra/desactivar','CompraController@desactivar');
+Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
+Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');
+Route::post('/listapreciovh/importFileListaPrecioVh', 'ExcelController@importFileListaPrecioVh');
+Route::post('/listapreciovh/readFileListaPrecioVh', 'ExcelController@readFileListaPrecioVh');
+Route::post('/listapreciovh/SetListaPrecioVhDetalle', 'ListaPrecioVersionVehController@store');
+Route::get('/listapreciovh/GetListaVhDetalle', 'ListaPrecioVersionVehController@GetListaVhDetalle');
+Route::put('/listapreciovh/activar','ListaPrecioVersionVehController@activar');
+Route::put('/listapreciovh/desactivar','ListaPrecioVersionVehController@desactivar');
+Route::get('/compra/GetCompraSinWOperativo', 'CompraController@GetCompraSinWOperativo');
+Route::get('/woperativo/GetWOperativo', 'WarrantOperativoController@GetWOperativo');
+Route::post('/woperativo/SetWOperativo', 'WarrantOperativoController@SetWOperativo');
+Route::post('/woperativo/SetWOperativoDetalle', 'WarrantOperativoController@SetWOperativoDetalle');
+Route::get('/woperativo/GetWOperativoDetalle', 'WarrantOperativoController@GetWOperativoDetalle');
+Route::get('/compra/GetCompraSinWFinanciero', 'CompraController@GetCompraSinWFinanciero');
+Route::get('/wfinanciero/GetWFinanciero', 'WarrantFinancieroController@GetWFinanciero');
+Route::post('/wfinanciero/SetWFinanciero', 'WarrantFinancieroController@SetWFinanciero');
+Route::post('/wfinanciero/SetWFinancieroDetalle', 'WarrantFinancieroController@SetWFinancieroDetalle');
+Route::get('/wfinanciero/GetWFinancieroDetalle', 'WarrantFinancieroController@GetWFinancieroDetalle');
+Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
+Route::post('/ec/SetEventoCampania', 'EventoCampaniaController@store');
+Route::post('/ec/SetDetalleEventoCampania', 'EventoCampaniaController@SetDetalleEventoCampania');
+Route::post('/ec/SetEventoElementoVenta', 'EventoCampaniaController@SetEventoElementoVenta');
+Route::post('/ec/SetDistribucionEventoByEC', 'EventoCampaniaController@SetDistribucionEventoByEC');
+Route::post('/ec/SetDistribucionEventoByElemento', 'EventoCampaniaController@SetDistribucionEventoByElemento');
+Route::get('/ec/GetEventoCampania', 'EventoCampaniaController@GetEventoCampania');
+Route::get('/ec/GetDistribucionByElementoVenta', 'EventoCampaniaController@GetDistribucionByElementoVenta');
+Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
+Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
+Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');
+Route::post('/gescontacto/SetContactoPerNatural', 'GestionContactoController@SetContactoPerNatural');
+Route::post('/gescontacto/SetContactoRefVehiculo', 'GestionContactoController@SetContactoRefVehiculo');
+
+Route::get('/','Auth\LoginController@showLoginForm')->middleware('guest');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
