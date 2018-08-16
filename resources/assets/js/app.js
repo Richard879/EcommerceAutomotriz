@@ -18,6 +18,6 @@ const app = new Vue({
     el: '#app',
     data:{
         menu:0,
-        ruta: 'http://172.20.6.60:8080/saisacsys/public'
+        ruta: 'http://localhost:8080/saisacsys/public'
     }
 });

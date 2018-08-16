@@ -117,7 +117,7 @@
                                                                                 <td>{{ operativo.fValorTotal }}</td>
                                                                                 <td>{{ operativo.cParNombre }}</td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo.nIdWarrantFinanciero);" data-toggle="tooltip" data-placement="top" v-bind:title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
+                                                                                    <a href="#" @click="asignaIdWFinanciero(operativo.nIdWarrantFinanciero);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantFinanciero">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -233,13 +233,13 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">                                                                        
-                                                                                <td>{{ odetalle.nIdDetalleWarrant }}</td>
-                                                                                <td>{{ odetalle.nOrdenCompra }}</td>
-                                                                                <td>{{ odetalle.cNombreComercial }}</td>
-                                                                                <td>{{ odetalle.cNumeroVin }}</td>
-                                                                                <td>{{ odetalle.cSimboloMoneda }}</td>
-                                                                                <td>{{ odetalle.fValorWarrant }}</td>
-                                                                                <td>{{ odetalle.cParNombre }}</td>
+                                                                                <td v-text="odetalle.nIdDetalleWarrant"></td>
+                                                                                <td v-text="odetalle.nOrdenCompra"></td>
+                                                                                <td v-text="odetalle.cNombreComercial"></td>
+                                                                                <td v-text="odetalle.cNumeroVin"></td>
+                                                                                <td v-text="odetalle.cSimboloMoneda"></td>
+                                                                                <td v-text="odetalle.fValorWarrant"></td>
+                                                                                <td v-text="odetalle.cParNombre"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -397,15 +397,15 @@
                                                                     <tbody>
                                                                         <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
                                                                             <td>
-                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +temporal.nIdCompra">
-                                                                                <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
+                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                             </td>
-                                                                            <td>{{ temporal.nOrdenCompra }}</td>
-                                                                            <td>{{ temporal.cNumeroVin }}</td>
-                                                                            <td>{{ temporal.cNombreComercial }}</td>
-                                                                            <td>{{ temporal.cSimboloMoneda }}</td>
-                                                                            <td>{{ temporal.fTotalCompra }}</td>
-                                                                            <td>{{ temporal.cNumeroFactura }}</td>
+                                                                            <td v-text="temporal.nOrdenCompra"></td>
+                                                                            <td v-text="temporal.cNumeroVin"></td>
+                                                                            <td v-text="temporal.cNombreComercial"></td>
+                                                                            <td v-text="temporal.cSimboloMoneda"></td>
+                                                                            <td v-text="temporal.fTotalCompra"></td>
+                                                                            <td v-text="temporal.cNumeroFactura"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -476,7 +476,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form action="" method="post" enctype="multipart/form-data" class="">
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -534,17 +534,17 @@
                                                         <tbody>
                                                             <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
                                                                 <td>
-                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" v-bind:title="'Asignar Vehículo ' +vehiculo.cNumeroVin">
+                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" :title="'Asignar Vehículo ' +vehiculo.cNumeroVin">
                                                                         <i class='fa-md fa fa-check-circle'></i>
                                                                     </a>
                                                                 </td>
-                                                                <td>{{vehiculo.cNumeroVin}}</td>
-                                                                <td>{{vehiculo.cNombreComercial}}</td>
-                                                                <td>{{vehiculo.cAnioFabricacion}}</td>
-                                                                <td>{{vehiculo.cAnioVersion}}</td>
-                                                                <td>{{vehiculo.cSimboloMoneda}}</td>
-                                                                <td>{{vehiculo.fTotalCompra}}</td>
-                                                                <td>{{vehiculo.cNumeroFactura}}</td>
+                                                                <td v-text="vehiculo.cNumeroVin"></td>
+                                                                <td v-text="vehiculo.cNombreComercial"></td>
+                                                                <td v-text="vehiculo.cAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.cAnioVersion"></td>
+                                                                <td v-text="vehiculo.cSimboloMoneda"></td>
+                                                                <td v-text="vehiculo.fTotalCompra"></td>
+                                                                <td v-text="vehiculo.cNumeroFactura"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>                                                    
@@ -724,7 +724,7 @@
                 axios.get(url).then(response => {
                     this.arrayBanco = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboEstadoWarrant(){
@@ -733,7 +733,7 @@
                 axios.get(url).then(response => {
                     this.arrayEstadoWarrant = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             tabBuscarWFinanciero(){
@@ -758,7 +758,7 @@
                     this.pagination.from        = response.data.arrayWFinanciero.from;
                     this.pagination.to           = response.data.arrayWFinanciero.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -787,7 +787,7 @@
                     this.pagination.from        = response.data.arrayWFinancieroDetalle.from;
                     this.pagination.to           = response.data.arrayWFinancieroDetalle.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaDetalle(page){
@@ -840,7 +840,7 @@
                     this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
                     this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaVehiculos(page){
@@ -973,15 +973,16 @@
     }
 </script>
 <style>
-       .mostrar{
+        .mostrar{
             display: list-item !important;
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

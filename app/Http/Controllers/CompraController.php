@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\Compra;
 
 class CompraController extends Controller
@@ -92,7 +93,7 @@ class CompraController extends Controller
                                                                 $fTotalCompra,
                                                                 $det['cNumeroFactura'],
                                                                 $det['dFechaFacturado'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }    
             DB::commit(); 

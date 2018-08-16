@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\ListaPrecioVersionVeh;
 
 class ListaPrecioVersionVehController extends Controller
@@ -65,7 +66,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                     $request->nNroListaPrecio,
                                                                     $request->dFechaInicio,
                                                                     $request->nIdTipoLista,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
         return response()->json($versionvehiculo);          
     }
@@ -106,7 +107,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['fPrecioBono'],
                                                                 $det['fPrecioDealer'],   
                                                                 $det['fBonoEspecial'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }    
             DB::commit(); 

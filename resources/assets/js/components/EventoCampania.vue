@@ -116,29 +116,29 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="ec in arrayEventoCampania" :key="ec.nIdEventoCampania">                                                                        
-                                                                                <td>{{ ec.nIdEventoCampania }}</td>
-                                                                                <td>{{ ec.cNombreProveedor }}</td>
-                                                                                <td>{{ ec.cTipoEvento }}</td>
-                                                                                <td>{{ ec.cNombreEventoCampania }}</td>
-                                                                                <td>{{ ec.dFechaInicio }}</td>
-                                                                                <td>{{ ec.dFechaFin }}</td>
-                                                                                <td>{{ ec.fValorPresupuesto }}</td>
-                                                                                <td>{{ ec.cFlagDetalleEvento }}</td>
+                                                                                <td v-text="ec.nIdEventoCampania"></td>
+                                                                                <td v-text="ec.cNombreProveedor"></td>
+                                                                                <td v-text="ec.cTipoEvento"></td>
+                                                                                <td v-text="ec.cNombreEventoCampania"></td>
+                                                                                <td v-text="ec.dFechaInicio"></td>
+                                                                                <td v-text="ec.dFechaFin"></td>
+                                                                                <td v-text="ec.fValorPresupuesto"></td>
+                                                                                <td v-text="ec.cFlagDetalleEvento"></td>
                                                                                 <td>
                                                                                     <!--<a href="#" @click="activar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top" 
-                                                                                        v-bind:title="'Asigna Distribución ' +ec.nIdEventoCampania">
+                                                                                        :title="'Asigna Distribución ' +ec.nIdEventoCampania">
                                                                                             <i class="fa-md fa fa-usd"></i>
                                                                                         </a>-->
                                                                                     <template v-if="ec.cEventoCampaniaEstado=='A'">
                                                                                         <a href="#" @click="desactivar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top" 
-                                                                                        v-bind:title="'Desactivar ' +ec.nIdEventoCampania">
+                                                                                        :title="'Desactivar ' +ec.nIdEventoCampania">
                                                                                             <i class="fa-md fa fa-check-square"></i>
                                                                                         </a>
                                                                                     </template>
                                                                                     <template v-else>
                                                                                         <a href="#" @click="activar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top" 
-                                                                                        v-bind:title="'Activar ' +ec.nIdEventoCampania">
-                                                                                            <i v-bind:style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                        :title="'Activar ' +ec.nIdEventoCampania">
+                                                                                            <i :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                         </a>
                                                                                     </template>
                                                                                 </td>
@@ -457,13 +457,13 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(templinea, index)  in arrayTemporalLinea" :key="templinea.nIdLinea">
                                                                                                 <td>
-                                                                                                    <a href="#" @click="eliminarItemLinea(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +templinea.cLineaNombre">
-                                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                    <a href="#" @click="eliminarItemLinea(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +templinea.cLineaNombre">
+                                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                                 </td>
-                                                                                                <td>{{ templinea.nIdProveedor }}</td>
-                                                                                                <td>{{ templinea.cProveedorNombre }}</td>
-                                                                                                <td>{{ templinea.nIdLinea }}</td>
-                                                                                                <td>{{ templinea.cLineaNombre }}</td>
+                                                                                                <td v-text="templinea.nIdProveedor"></td>
+                                                                                                <td v-text="templinea.cProveedorNombre"></td>
+                                                                                                <td v-text="templinea.nIdLinea"></td>
+                                                                                                <td v-text="templinea.cLineaNombre"></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -485,13 +485,13 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(tempmarca, index)  in arrayTemporalMarca" :key="tempmarca.nIdLinea">
                                                                                                 <td>
-                                                                                                    <a href="#" @click="eliminarItemMarca(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +tempmarca.cMarcaNombre">
-                                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                    <a href="#" @click="eliminarItemMarca(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +tempmarca.cMarcaNombre">
+                                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                                 </td>
-                                                                                                <td>{{ tempmarca.nIdProveedor }}</td>
-                                                                                                <td>{{ tempmarca.cProveedorNombre }}</td>
-                                                                                                <td>{{ tempmarca.nIdMarca }}</td>
-                                                                                                <td>{{ tempmarca.cMarcaNombre }}</td>
+                                                                                                <td v-text="tempmarca.nIdProveedor"></td>
+                                                                                                <td v-text="tempmarca.cProveedorNombre"></td>
+                                                                                                <td v-text="tempmarca.nIdMarca"></td>
+                                                                                                <td v-text="tempmarca.cMarcaNombre"></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -513,13 +513,13 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(tempmodelo, index)  in arrayTemporalModelo" :key="tempmodelo.nIdModelo">
                                                                                                 <td>
-                                                                                                    <a href="#" @click="eliminarItemModelo(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +tempmodelo.cModeloNombre">
-                                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                    <a href="#" @click="eliminarItemModelo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +tempmodelo.cModeloNombre">
+                                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                                 </td>
-                                                                                                <td>{{ tempmodelo.nIdProveedor }}</td>
-                                                                                                <td>{{ tempmodelo.cProveedorNombre }}</td>
-                                                                                                <td>{{ tempmodelo.nIdModelo }}</td>
-                                                                                                <td>{{ tempmodelo.cModeloNombre }}</td>
+                                                                                                <td v-text="tempmodelo.nIdProveedor"></td>
+                                                                                                <td v-text="tempmodelo.cProveedorNombre"></td>
+                                                                                                <td v-text="tempmodelo.nIdModelo"></td>
+                                                                                                <td v-text="tempmodelo.cModeloNombre"></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -577,12 +577,12 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(tempelemento, index)  in arrayTemporalElemento" :key="tempelemento.nIdElemento">
                                                                                                 <td>
-                                                                                                    <a href="#" @click="eliminarItemElemento(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +tempelemento.cElemenNombre">
-                                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                    <a href="#" @click="eliminarItemElemento(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +tempelemento.cElemenNombre">
+                                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                                 </td>
-                                                                                                <td>{{ tempelemento.cProveedorNombre }}</td>
-                                                                                                <td>{{ tempelemento.cElemenNombre }}</td>
-                                                                                                <td>{{ tempelemento.fElemenValorVenta }}</td>
+                                                                                                <td v-text="tempelemento.cProveedorNombre"></td>
+                                                                                                <td v-text="tempelemento.cElemenNombre"></td>
+                                                                                                <td v-text="tempelemento.fElemenValorVenta"></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -625,7 +625,7 @@
                                                                                     <div class="col-sm-12">
                                                                                         <input type="hidden" v-model="formDistribucion.nideventocampania">
                                                                                         <label class="checkbox-inline" v-for="dist in lstTipoDistribucion" :key="dist.id">
-                                                                                            <input type="radio" class="radio-template" v-model="formDistribucion.ntipodistribucion" v-bind:value="dist.value" v-on:change="cambiarVistaDistribucion()">
+                                                                                            <input type="radio" class="radio-template" v-model="formDistribucion.ntipodistribucion" :value="dist.value" v-on:change="cambiarVistaDistribucion()">
                                                                                             <label for="" class="form-control-label" v-text="dist.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
                                                                                     </div>
@@ -647,7 +647,7 @@
                                                                                                 <div class="col-sm-8">
                                                                                                     <div class="input-group">
                                                                                                         <select name="account" v-model="formDistribucion.ntipoproveedor" class="form-control form-control-sm" v-on:change="asignaEmpresaEC()">
-                                                                                                            <option v-for="provdist in lstProveedorDitribucion" v-bind:value="provdist.value" v-bind:key="provdist.value">
+                                                                                                            <option v-for="provdist in lstProveedorDitribucion" :value="provdist.value" :key="provdist.value">
                                                                                                                 {{ provdist.text }}
                                                                                                             </option>
                                                                                                         </select>
@@ -676,11 +676,11 @@
                                                                                             <tbody>
                                                                                                 <tr v-for="(proveedor, index) in arrayProveedorPorEC" :key="proveedor.nIdEntidad">
                                                                                                     <td>
-                                                                                                        <a href="#" @click="eliminarItemProveedorEC(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +proveedor.cProveedorNombre">
-                                                                                                        <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                        <a href="#" @click="eliminarItemProveedorEC(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +proveedor.cProveedorNombre">
+                                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                                     </td>
-                                                                                                    <td>{{ proveedor.nIdEntidad }}</td>
-                                                                                                    <td>{{ proveedor.cProveedorNombre }}</td>
+                                                                                                    <td v-text="proveedor.nIdEntidad"></td>
+                                                                                                    <td v-text="proveedor.cProveedorNombre"></td>
                                                                                                     <td>
                                                                                                         <input type="number" v-model="arrayIndexEntidadValor[index]" class="form-control form-control-sm">
                                                                                                     </td>
@@ -710,11 +710,11 @@
                                                                                                         </thead>
                                                                                                         <tbody>
                                                                                                             <tr v-for="(eledist, index) in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
-                                                                                                                <td>{{ eledist.nIdEventoElementoVenta }}</td>
-                                                                                                                <td>{{ eledist.cProveedorNombre }}</td>
-                                                                                                                <td>{{ eledist.cTipoElemenNombre }}</td>
-                                                                                                                <td>{{ eledist.cElemenNombre }}</td>
-                                                                                                                <td>{{ eledist.fElemenValorVenta }}</td>
+                                                                                                                <td v-text="eledist.nIdEventoElementoVenta"></td>
+                                                                                                                <td v-text="eledist.cProveedorNombre"></td>
+                                                                                                                <td v-text="eledist.cTipoElemenNombre"></td>
+                                                                                                                <td v-text="eledist.cElemenNombre"></td>
+                                                                                                                <td v-text="eledist.fElemenValorVenta"></td>
                                                                                                                 <td>
                                                                                                                     <div class="input-group"> 
                                                                                                                         <input type="hidden" v-model="arrayIndexProvId[index]"> 
@@ -802,7 +802,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -817,7 +817,7 @@
                                                             <label class="col-sm-4 form-control-label">Nombre</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
-                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                                     <div class="input-group-prepend">
                                                                         <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
                                                                     </div>
@@ -844,7 +844,7 @@
                                                                             <i class='fa-md fa fa-check-circle'></i>
                                                                         </a>
                                                                     </td>
-                                                                    <td>{{proveedor.cParNombre}}</td>
+                                                                    <td v-text="proveedor.cParNombre"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -902,7 +902,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form class="form-horizontal">
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <template v-if="vistaModal==0">
                                     <div class="col-lg-12">
@@ -948,8 +948,8 @@
                                                                                 <i class='fa-md fa fa-check-circle'></i>
                                                                             </a>
                                                                         </td>
-                                                                        <td>{{linea.cProveedorNombre}}</td>
-                                                                        <td>{{linea.cLineaNombre}}</td>
+                                                                        <td v-text="linea.cProveedorNombre"></td>
+                                                                        <td v-text="linea.cLineaNombre"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -1038,8 +1038,8 @@
                                                                                 <i class='fa-md fa fa-check-circle'></i>
                                                                             </a>
                                                                         </td>
-                                                                        <td>{{marca.cProveedorNombre}}</td>
-                                                                        <td>{{marca.cMarcaNombre}}</td>
+                                                                        <td v-text="marca.cProveedorNombre"></td>
+                                                                        <td v-text="marca.cMarcaNombre"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -1128,8 +1128,8 @@
                                                                                 <i class='fa-md fa fa-check-circle'></i>
                                                                             </a>
                                                                         </td>
-                                                                        <td>{{modelo.cProveedorNombre}}</td>
-                                                                        <td>{{modelo.cModeloNombre}}</td>
+                                                                        <td v-text="modelo.cProveedorNombre"></td>
+                                                                        <td v-text="modelo.cModeloNombre"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -1188,7 +1188,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form class="form-horizontal">
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -1241,16 +1241,16 @@
                                                             <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
                                                                 <td>
                                                                     <a href="#" @click="asignarElemento(elemento)" data-toggle="tooltip" data-placement="top" 
-                                                                        v-bind:title="'Asignar ' +elemento.cElemenNombre">
+                                                                        :title="'Asignar ' +elemento.cElemenNombre">
                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                     </a>
                                                                 </td>
-                                                                <td>{{ elemento.nIdElemento }}</td>
-                                                                <td>{{ elemento.cProveedorNombre }}</td>
-                                                                <td>{{ elemento.cTipoElemenNombre }}</td>
-                                                                <td>{{ elemento.cElemenNombre }}</td>
-                                                                <td>{{ elemento.fElemenValorVenta }}</td>
-                                                                <td>{{ elemento.fElemenValorMinimoVenta }}</td>
+                                                                <td v-text="elemento.nIdElemento"></td>
+                                                                <td v-text="elemento.cProveedorNombre"></td>
+                                                                <td v-text="elemento.cTipoElemenNombre"></td>
+                                                                <td v-text="elemento.cElemenNombre"></td>
+                                                                <td v-text="elemento.fElemenValorVenta"></td>
+                                                                <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>                                    
@@ -1307,7 +1307,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -1323,7 +1323,7 @@
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
                                                                     <input type="hidden" v-model="formDistribucion.nindex">
-                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                                     <div class="input-group-prepend">
                                                                         <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
                                                                             <i class="fa-lg fa fa-search"></i>
@@ -1352,7 +1352,7 @@
                                                                             <i class='fa-md fa fa-check-circle'></i>
                                                                         </a>
                                                                     </td>
-                                                                    <td>{{proveedor.cParNombre}}</td>
+                                                                    <td v-text="proveedor.cParNombre"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1410,7 +1410,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -1453,7 +1453,7 @@
                                                                             <i class='fa-md fa fa-check-circle'></i>
                                                                         </a>
                                                                     </td>
-                                                                    <td>{{proveedor.cParNombre}}</td>
+                                                                    <td v-text="proveedor.cParNombre"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1555,7 +1555,7 @@
                     cmarcanombre: '',
                     cmodelonombre: ''
                 },
-                fillProvedor:{
+                fillProveedor:{
                     cnombreproveedor: ''
                 },
                 formEle:{
@@ -1571,16 +1571,6 @@
                     celecodigoerp: '',
                     felevalorventa: '',
                     felevarlorminventa: ''
-                },
-                fillEventoCamp:{
-                    nideventocampania: 0,
-                    ntipodistribucion: 1,
-                    nidproveedor: 0,
-                    cproveedornombre: '',
-                    nindex: 0,
-                    ntipoproveedor: 0,
-                    fValorPorcentual: 0,
-                    nentidad: 0
                 },
                 formEventoCamp:{
                     nidempresa: 0,
@@ -1690,41 +1680,61 @@
         },
         methods:{
             llenarComboTipoEC(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110045 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110045,
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayTipoEC = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboDetalleEC(){
-                var url = this.ruta + '/grupopar/GetGrupoParametroEventoCampania?opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/grupopar/GetGrupoParametroEventoCampania';
+
+                axios.get(url, {
+                    params: {
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayDetalleEC = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboTpoElemento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110027 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110027,
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayTipoElemento = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             buscaProveedores(){
                 this.listarProveedores(1);
             },
             listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
-                                                                    + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString() 
-                                                                    + '&opcion=' + 1
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
                     this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
                     this.paginationModal.total = response.data.arrayProveedor.total;
@@ -1733,7 +1743,7 @@
                     this.paginationModal.from        = response.data.arrayProveedor.from;
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaProveedor(page){
@@ -1754,14 +1764,16 @@
                 this.listarEventoCampania(1);
             },
             listarEventoCampania(page){
-                this.nidempresa = 1300011;
-                this.nidsucursal = 1300013;
+                var url = this.ruta + '/ec/GetEventoCampania';
 
-                var url = this.ruta + '/ec/GetEventoCampania?nidempresa=' + this.nidempresa
-                                                                + '&nidsucursal=' + this.nidsucursal
-                                                                + '&nidproveedor=' + this.formEventoCamp.nidproveedor
-                                                                + '&page='+ page;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal' : 1300013,
+                        'nidproveedor' : this.formEventoCamp.nidproveedor,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayEventoCampania = response.data.arrayEventoCampania.data;
                     this.pagination.current_page =  response.data.arrayEventoCampania.current_page;
                     this.pagination.total = response.data.arrayEventoCampania.total;
@@ -1770,7 +1782,7 @@
                     this.pagination.from        = response.data.arrayEventoCampania.from;
                     this.pagination.to           = response.data.arrayEventoCampania.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -1932,13 +1944,16 @@
                 this.listarLineasByProveedor(1);
             },
             listarLineasByProveedor(page){
-                this.nidempresa = 1300011;
+                var url = this.ruta + '/parametro/GetLineasByProveedor';
 
-                var url = this.ruta + '/parametro/GetLineasByProveedor?nidempresa=' + this.nidempresa
-                                                                    + '&nidproveedor=' + this.formEventoCamp.nidproveedor
-                                                                    + '&clineanombre=' + this.fillModal.clineanombre.toString()
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidproveedor' : this.formEventoCamp.nidproveedor,
+                        'clineanombre' : this.fillModal.clineanombre.toString(),
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayLinea = response.data.arrayLinea.data;
                     this.paginationModal.current_page =  response.data.arrayLinea.current_page;
                     this.paginationModal.total = response.data.arrayLinea.total;
@@ -1947,7 +1962,7 @@
                     this.paginationModal.from        = response.data.arrayLinea.from;
                     this.paginationModal.to           = response.data.arrayLinea.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaLineasByProveedor(page){
@@ -1987,13 +2002,16 @@
                 this.listarMarcasByProveedor(1);
             },
             listarMarcasByProveedor(page){
-                this.nidempresa = 1300011;
+                var url = this.ruta + '/parametro/GetMarcasByProveedor';
 
-                var url = this.ruta + '/parametro/GetMarcasByProveedor?nidempresa=' + this.nidempresa
-                                                                    + '&nidproveedor=' + this.formEventoCamp.nidproveedor
-                                                                    + '&cmarcanombre=' + this.fillModal.cmarcanombre.toString()
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidproveedor' : this.formEventoCamp.nidproveedor,
+                        'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayMarca = response.data.arrayMarca.data;
                     this.paginationModal.current_page =  response.data.arrayMarca.current_page;
                     this.paginationModal.total = response.data.arrayMarca.total;
@@ -2002,7 +2020,7 @@
                     this.paginationModal.from        = response.data.arrayMarca.from;
                     this.paginationModal.to           = response.data.arrayMarca.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaMarcasByProveedor(page){
@@ -2042,13 +2060,16 @@
                 this.listarModelosByProveedor(1);
             },
             listarModelosByProveedor(page){
-                this.nidempresa = 1300011;
-
-                var url = this.ruta + '/parametro/GetModelosByProveedor?nidempresa=' + this.nidempresa
-                                                                    + '&nidproveedor=' + this.formEventoCamp.nidproveedor
-                                                                    + '&cmodelonombre=' + this.fillModal.cmodelonombre.toString()
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetModelosByProveedor';
+                
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidproveedor' : this.formEventoCamp.nidproveedor,
+                        'cmodelonombre' : this.fillModal.cmodelonombre.toString(),
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayModelo = response.data.arrayModelo.data;
                     this.paginationModal.current_page =  response.data.arrayModelo.current_page;
                     this.paginationModal.total = response.data.arrayModelo.total;
@@ -2057,7 +2078,7 @@
                     this.paginationModal.from        = response.data.arrayModelo.from;
                     this.paginationModal.to           = response.data.arrayModelo.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaModelosByProveedor(page){
@@ -2146,11 +2167,15 @@
                 this.listarElementos(1);
             },
             listarElementos(page){
-                var url = this.ruta + '/elemento/GetElementoByTipo?nidempresa=' + 1300011 
-                                                                     + '&nidtipoelemen=' + this.formEle.ntpoelemen
-                                                                     + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/elemento/GetElementoByTipo';
 
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidtipoelemen' : this.formEle.ntpoelemen,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayElementoVenta = response.data.arrayElementoVenta.data;
                     this.pagination.current_page =  response.data.arrayElementoVenta.current_page;
                     this.pagination.total = response.data.arrayElementoVenta.total;
@@ -2158,7 +2183,6 @@
                     this.pagination.last_page   = response.data.arrayElementoVenta.last_page;
                     this.pagination.from        = response.data.arrayElementoVenta.from;
                     this.pagination.to           = response.data.arrayElementoVenta.to;
-
                 }).catch(error => {
                     this.errors = error
                 });
@@ -2208,7 +2232,7 @@
                 axios.get(url).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarVistaDistribucion(){
@@ -2228,12 +2252,17 @@
                 this.listarProveedorPorElementoVenta(1);
             },
             listarProveedorPorElementoVenta(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
-                                                                    + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString() 
-                                                                    + '&opcion=' + 1
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetLstProveedor';
+                
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
                     this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
                     this.paginationModal.total = response.data.arrayProveedor.total;
@@ -2242,7 +2271,7 @@
                     this.paginationModal.from        = response.data.arrayProveedor.from;
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             asignarProveedorPorElementoVenta(nIdProveedor, cProveedorNombre){
@@ -2280,7 +2309,7 @@
             listarProveedorPorEC(page){
                 var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
                                                                     + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString() 
+                                                                    + '&cnombreproveedor=' + this.fillProveedor.cnombreproveedor.toString() 
                                                                     + '&opcion=' + 1
                                                                     + '&page='+ page;
                 axios.get(url).then(response => {
@@ -2292,7 +2321,7 @@
                     this.paginationModal.from        = response.data.arrayProveedor.from;
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             asignarProveedorPorEC(data =[]){
@@ -2384,8 +2413,7 @@
                     dFechaInicio: this.formEventoCamp.dfechainicio,
                     dFechaFin: this.formEventoCamp.dfechafin,
                     fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
-                    nIdUsuario: 190011
+                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
                 }).then(response => {
                     this.registrarAsignaDetalle(response.data[0].nIdEventoCampania)
                     this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
@@ -2416,8 +2444,7 @@
                         cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
                         data: this.arrayRegistraDetalle,
                         nTotalRegistros: this.arrayRegistraDetalle.length,
-                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                        nIdUsuario: 190011
+                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2431,8 +2458,7 @@
 
                     axios.post(url, {
                         nIdEventoCampania: nIdEventoCampania,
-                        data: this.arrayTemporalElemento,
-                        nIdUsuario: 190011
+                        data: this.arrayTemporalElemento
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2459,8 +2485,7 @@
                         var url = this.ruta + '/ec/SetDistribucionEventoByEC';
                         axios.post(url, {
                             nIdEventoCampania: this.formDistribucion.nideventocampania,
-                            data: list,
-                            nIdUsuario: 190011
+                            data: list
                         }).then(response => {
                             swal('Distribución registrada');
                             this.limpiarFormulario();
@@ -2488,8 +2513,7 @@
 
                         var url = this.ruta + '/ec/SetDistribucionEventoByElemento';
                         axios.post(url, {
-                            data: list,
-                            nIdUsuario: 190011
+                            data: list
                         }).then(response => {
                             swal('Distribución registrada');
                             this.limpiarFormulario();
@@ -2591,15 +2615,16 @@
     }
 </script>
 <style>
-       .mostrar{
+        .mostrar{
             display: list-item !important;
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

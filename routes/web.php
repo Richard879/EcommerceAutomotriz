@@ -58,7 +58,24 @@ Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
 Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
 Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');
 Route::post('/gescontacto/SetContactoPerNatural', 'GestionContactoController@SetContactoPerNatural');
+Route::post('/gescontacto/SetContactoPerJuridica', 'GestionContactoController@SetContactoPerJuridica');
 Route::post('/gescontacto/SetContactoRefVehiculo', 'GestionContactoController@SetContactoRefVehiculo');
+Route::post('/gescontacto/SetContactoSegRefVehiculo', 'GestionContactoController@SetContactoSegRefVehiculo');
+Route::get('/gescontacto/GetListContactoByVendedor', 'GestionContactoController@GetListContactoByVendedor');
+Route::post('/gescontacto/SetContactoCarteraMes', 'GestionContactoController@SetContactoCarteraMes');
+Route::get('/gescontacto/GetListContactoBySinCarteraMes', 'GestionContactoController@GetListContactoBySinCarteraMes');
+Route::get('/gescontacto/GetCarteraMesByVendedor', 'GestionContactoController@GetCarteraMesByVendedor');
+Route::get('/gescontacto/GetContactoNaturalById', 'GestionContactoController@GetContactoNaturalById');
+Route::get('/gescontacto/GetContactoJuridicoById', 'GestionContactoController@GetContactoJuridicoById');
+Route::get('/gescontacto/GetRefVehiculoByContacto', 'GestionContactoController@GetRefVehiculoByContacto');
+Route::post('/gescontacto/SetSeguimiento', 'GestionContactoController@SetSeguimiento');
+Route::get('/gescontacto/GetListSeguimientoByIdAsignacion', 'GestionContactoController@GetListSeguimientoByIdAsignacion');
+Route::get('/gescontacto/GetListVendedoresByJFV', 'GestionContactoController@GetListVendedoresByJFV');
+Route::get('/gescontacto/GetListContactoByJFV', 'GestionContactoController@GetListContactoByJFV');
+Route::get('/gescontacto/GetListContactosLibres', 'GestionContactoController@GetListContactosLibres');
+
+Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
+Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
 
 Route::get('/','Auth\LoginController@showLoginForm')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->name('login');

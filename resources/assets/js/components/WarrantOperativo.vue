@@ -117,7 +117,7 @@
                                                                                 <td>{{ operativo.fValorTotal }}</td>
                                                                                 <td>{{ operativo.cParNombre }}</td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" v-bind:title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
+                                                                                    <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -399,8 +399,8 @@
                                                                     <tbody>
                                                                         <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
                                                                             <td>
-                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +temporal.nIdCompra">
-                                                                                <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
+                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                             </td>
                                                                             <td>{{ temporal.nOrdenCompra }}</td>
                                                                             <td>{{ temporal.cNumeroVin }}</td>
@@ -478,7 +478,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form action="" method="post" enctype="multipart/form-data" class="">
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -726,7 +726,7 @@
                 axios.get(url).then(response => {
                     this.arrayBanco = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboEstadoWarrant(){
@@ -735,7 +735,7 @@
                 axios.get(url).then(response => {
                     this.arrayEstadoWarrant = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             tabBuscarWOperativo(){
@@ -760,7 +760,7 @@
                     this.pagination.from        = response.data.arrayWOperativo.from;
                     this.pagination.to           = response.data.arrayWOperativo.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -789,7 +789,7 @@
                     this.pagination.from        = response.data.arrayWOperativoDetalle.from;
                     this.pagination.to           = response.data.arrayWOperativoDetalle.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaDetalle(page){
@@ -842,7 +842,7 @@
                     this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
                     this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaVehiculos(page){
@@ -975,15 +975,16 @@
     }
 </script>
 <style>
-       .mostrar{
+        .mostrar{
             display: list-item !important;
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

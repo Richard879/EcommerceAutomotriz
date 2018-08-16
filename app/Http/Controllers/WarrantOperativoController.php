@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\WarrantOperativo;
 
 class WarrantOperativoController extends Controller
@@ -74,7 +75,7 @@ class WarrantOperativoController extends Controller
                                                                 $request->cNumeroWarrant,
                                                                 $request->dFechaInicio,
                                                                 $request->dFechaVence,
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
                                    
             return response()->json($wo);
@@ -88,7 +89,7 @@ class WarrantOperativoController extends Controller
                                                             array(wo[0].nIdWarrantOperativo,
                                                                 $det['nIdCompra'],
                                                                 $det['fValorWarrant'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  */
            // DB::commit(); 
@@ -113,7 +114,7 @@ class WarrantOperativoController extends Controller
                                                             array($request->nIdWarrantOperativo,
                                                                 $det['nIdCompra'],
                                                                 $det['fTotalCompra'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  
             DB::commit(); 

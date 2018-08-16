@@ -114,21 +114,21 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="lista in arrayListaPrecioVh" :key="lista.nIdListaPrecioVh" >
-                                                                                <td>{{ lista.nIdListaPrecioVh }}</td>
-                                                                                <td>{{ lista.cProveedorNombre }}</td>
-                                                                                <td>{{ lista.cNumeroMes + '-' + lista.cAnio}}</td>
-                                                                                <td>{{ lista.nNroListaPrecio }}</td>
-                                                                                <td>{{ lista.cTipoLista }}</td>
-                                                                                <td>{{ lista.dFechaInicio }}</td>
-                                                                                <td>{{ lista.dFechaFin }}</td>
+                                                                                <td v-text="lista.nIdListaPrecioVh"></td>
+                                                                                <td v-text="lista.cProveedorNombre"></td>
+                                                                                <td v-text="lista.cNumeroMes + '-' + lista.cAnio"></td>
+                                                                                <td v-text="lista.nNroListaPrecio"></td>
+                                                                                <td v-text="lista.cTipoLista"></td>
+                                                                                <td v-text="lista.dFechaInicio"></td>
+                                                                                <td v-text="lista.dFechaFin"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                        v-bind:title="'Agregar Detalle a Lista ' +lista.nNroListaPrecio">
+                                                                                        :title="'Agregar Detalle a Lista ' +lista.nNroListaPrecio">
                                                                                         <i class="fa-md fa fa-sign-in"></i>
                                                                                     </a>
                                                                                     <template v-if="lista.nListadoDetalleContador > 0">
                                                                                         <a href="#" @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                            v-bind:title="'Ver Detalle Lista ' +lista.nNroListaPrecio">
+                                                                                            :title="'Ver Detalle Lista ' +lista.nNroListaPrecio">
                                                                                             <i class="fa-md fa fa-eye"></i>
                                                                                         </a>
                                                                                     </template>
@@ -137,14 +137,14 @@
                                                                                     </template>
                                                                                     <template v-if="lista.cListaEstado=='A'">
                                                                                         <a href="#" @click="desactivar(lista.nIdListaPrecioVh)" data-toggle="tooltip" data-placement="top" 
-                                                                                            v-bind:title="'Desactivar Lista ' +lista.nNroListaPrecio">
+                                                                                            :title="'Desactivar Lista ' +lista.nNroListaPrecio">
                                                                                             <i class="fa-md fa fa-check-square"></i>
                                                                                         </a>
                                                                                     </template>
                                                                                     <template v-else>
                                                                                         <a href="#" @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" data-toggle="tooltip" data-placement="top" 
-                                                                                            v-bind:title="'Activar Lista ' +lista.nNroListaPrecio">
-                                                                                            <i v-bind:style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                            :title="'Activar Lista ' +lista.nNroListaPrecio">
+                                                                                            <i :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                         </a>
                                                                                     </template>
                                                                                 </td>
@@ -443,34 +443,34 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="(lista, index) in arrayExcel" :key="lista.nIdVersionVh">
-                                                                                <td><a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +lista.nOrdenListaPrecioVh">
-                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                <td><a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lista.nOrdenListaPrecioVh">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                 </td>
-                                                                                <td>{{ lista.nIdVersionVeh }}</td>
-                                                                                <td>{{ lista.cNombreComercial }}</td>
-                                                                                <td>{{ lista.nAnioFabricacion }}</td>
-                                                                                <td>{{ lista.nAnioModelo }}</td>
-                                                                                <td>{{ lista.cUnidadMedida }}</td>
-                                                                                <td>{{ lista.cMoneda }}</td>
-                                                                                <td>{{ lista.FInicioProm }}</td>
-                                                                                <td>{{ lista.FFinProm }}</td>
-                                                                                <td>{{ lista.fPrecioBase }}</td>
-                                                                                <td>{{ lista.fDescuento }}</td>
-                                                                                <td>{{ lista.fPrecioCierre }}</td>
-                                                                                <td>{{ lista.fPlaca }}</td>
-                                                                                <td>{{ lista.fMargen }}</td>
-                                                                                <td>{{ lista.fCostoDealer }}</td>
-                                                                                <td>{{ lista.fBono }}</td>
-                                                                                <td>{{ lista.fPrecioCierre2 }}</td>
-                                                                                <td>{{ lista.fFlete }}</td>
-                                                                                <td>{{ lista.fPrecioVentaP }}</td>
-                                                                                <td>{{ lista.fFleteProveedor }}</td>
-                                                                                <td>{{ lista.fPorcDsctoFp }}</td>
-                                                                                <td>{{ lista.fFactorFc }}</td>
-                                                                                <td>{{ lista.fDescuentoFc }}</td>
-                                                                                <td>{{ lista.fPrecioBono }}</td>
-                                                                                <td>{{ lista.fPrecioDealer }}</td>
-                                                                                <td>{{ lista.fBonoEspecial }}</td>
+                                                                                <td v-text="lista.nIdVersionVeh"></td>
+                                                                                <td v-text="lista.cNombreComercial"></td>
+                                                                                <td v-text="lista.nAnioFabricacion"></td>
+                                                                                <td v-text="lista.nAnioModelo"></td>
+                                                                                <td v-text="lista.cUnidadMedida"></td>
+                                                                                <td v-text="lista.cMoneda"></td>
+                                                                                <td v-text="lista.FInicioProm"></td>
+                                                                                <td v-text="lista.FFinProm"></td>
+                                                                                <td v-text="lista.fPrecioBase"></td>
+                                                                                <td v-text="lista.fDescuento"></td>
+                                                                                <td v-text="lista.fPrecioCierre"></td>
+                                                                                <td v-text="lista.fPlaca"></td>
+                                                                                <td v-text="lista.fMargen"></td>
+                                                                                <td v-text="lista.fCostoDealer"></td>
+                                                                                <td v-text="lista.fBono"></td>
+                                                                                <td v-text="lista.fPrecioCierre2"></td>
+                                                                                <td v-text="lista.fFlete"></td>
+                                                                                <td v-text="lista.fPrecioVentaP"></td>
+                                                                                <td v-text="lista.fFleteProveedor"></td>
+                                                                                <td v-text="lista.fPorcDsctoFp"></td>
+                                                                                <td v-text="lista.fFactorFc"></td>
+                                                                                <td v-text="lista.fDescuentoFc"></td>
+                                                                                <td v-text="lista.fPrecioBono"></td>
+                                                                                <td v-text="lista.fPrecioDealer"></td>
+                                                                                <td v-text="lista.fBonoEspecial"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -600,13 +600,13 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="lpd in arrayListaPrecioVhDet" :key="lpd.nIdListaPrecioVersionVehDetalle">
-                                                                            <td>{{lpd.nIdListaPrecioVersionVehDetalle}}</td>
-                                                                            <td>{{lpd.nIdVersionVeh}}</td>
-                                                                            <td>{{lpd.cNombreComercial}}</td>
-                                                                            <td>{{lpd.nAnioFabricacion}}</td>
-                                                                            <td>{{lpd.nAnioModelo}}</td>
-                                                                            <td>{{lpd.cSimboloMoneda}}</td>
-                                                                            <td>{{lpd.fCostoDealer}}</td>
+                                                                            <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
+                                                                            <td v-text="lpd.nIdVersionVeh"></td>
+                                                                            <td v-text="lpd.cNombreComercial"></td>
+                                                                            <td v-text="lpd.nAnioFabricacion"></td>
+                                                                            <td v-text="lpd.nAnioModelo"></td>
+                                                                            <td v-text="lpd.cSimboloMoneda"></td>
+                                                                            <td v-text="lpd.fCostoDealer"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -686,7 +686,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -701,9 +701,9 @@
                                                             <label class="col-sm-4 form-control-label">Nombre</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
-                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
                                                                     <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores"><i class="fa-lg fa fa-search"></i></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -917,7 +917,7 @@
                     this.paginationModal.from        = response.data.arrayProveedor.from;
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaProveedor(page){
@@ -935,7 +935,7 @@
                 axios.get(url).then(response => {
                     this.arrayTipoLista = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             buscarListaPrecioVh(){
@@ -958,7 +958,7 @@
                     this.pagination.from        = response.data.arrayListaPrecioVh.from;
                     this.pagination.to           = response.data.arrayListaPrecioVh.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -980,8 +980,7 @@
                     nIdCronograma: 220016,
                     nNroListaPrecio: parseInt(this.formListaPrecioVh.nnrolistaprecio),
                     dFechaInicio: this.formListaPrecioVh.dfechainicio,
-                    nIdTipoLista: this.formListaPrecioVh.nidtipolista,
-                    nIdUsuario: 190011
+                    nIdTipoLista: this.formListaPrecioVh.nidtipolista
                 }).then(response => {
                     swal('Lista de Precio registrada');
                     this.limpiarFormulario();
@@ -1042,12 +1041,18 @@
                                 nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh,
                                 nIdProveedor: nIdProveedor,
                                 nIdTipoLista: nIdTipoLista
-                            }).then(response =>{                            
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarListaPrecioVh(1);                          
+                            }).then(response =>{     
+                                if(response.data[0].nFlagMsje == 1)
+                                {
+                                    swal(
+                                    'Activado!',
+                                    'El registro fue activado.'
+                                    );
+                                    this.listarListaPrecioVh(1);  
+                                }
+                                else{
+                                    swal('Ya existe Lista activa');
+                                }                                                                               
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -1189,7 +1194,7 @@
                     this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
                     this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaDetalle(page){
@@ -1283,8 +1288,7 @@
                 var url = this.ruta + '/listapreciovh/SetListaPrecioVhDetalle';
                 axios.post(url, {
                     nIdListaPrecioVersionVeh: this.formListaPrecioVh.nidlistaprecioversionVeh,
-                    data: this.arrayListaPrecioVh,
-                    nIdUsuario: 190011
+                    data: this.arrayListaPrecioVh
                 }).then(response => {
                     swal('Detalle de Lista registrada');
                     this.arrayExcel = [];
@@ -1351,10 +1355,11 @@
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

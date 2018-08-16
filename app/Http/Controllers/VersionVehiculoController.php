@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\VersionVehiculo;
 
 class VersionVehiculoController extends Controller
@@ -26,7 +27,7 @@ class VersionVehiculoController extends Controller
                                                                     /*$request->nIdAnioFabricacion,
                                                                     $request->nIdAnioVersion,*/
                                                                     $request->cNombreComercial,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
         return response()->json($versionvehiculo);                                               
     }
@@ -43,10 +44,9 @@ class VersionVehiculoController extends Controller
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
         $cNombreComercial = $request->cnombrecomercial;
-        if($cNombreComercial == ''){
-            $cNombreComercial = "";
-        }
         
+        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
+
         $arrayVersionVeh = DB::select('exec usp_VersionVeh_GetVersionVehiculo ?, ?, ?, ? ,? ,?, ?, ?', 
                                                                         array(  $nIdEmpresa,
                                                                                 $nIdProveedor,
@@ -92,7 +92,7 @@ class VersionVehiculoController extends Controller
                                                                     /*$request->nIdAnioFabricacion,
                                                                     $request->nIdAnioVersion,*/
                                                                     $request->cNombreComercial,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
         return response()->json($versionvehiculo);                                               
     }

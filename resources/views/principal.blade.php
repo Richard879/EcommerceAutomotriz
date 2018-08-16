@@ -101,7 +101,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <img src="img/avatar-1.jpg" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" alt="admin@bootstrapmaster.com">
-                            <span class="d-md-down-none">RICHARD</span>
+                            <span class="d-md-down-none">{{ Auth::user()->usuario }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!--<div class="dropdown-header text-center">

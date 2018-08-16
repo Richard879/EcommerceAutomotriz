@@ -134,24 +134,24 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
-                                                                            <td>{{ compra.nIdCompra }}</td>
-                                                                            <td>{{ compra.cNumeroMes + '-' + compra.cAnio }}</td>
-                                                                            <td>{{ compra.nOrdenCompra }}</td>
-                                                                            <td>{{ compra.cNombreLinea }}</td>
-                                                                            <td>{{ compra.cNombreAlmacen }}</td>
-                                                                            <td>{{ compra.nNumeroReserva }}</td>
-                                                                            <td>{{ compra.cNumeroVin }}</td>
-                                                                            <td>{{ compra.cFormaPago }}</td>
-                                                                            <td>{{ compra.cNombreComercial }}</td>
-                                                                            <td>{{ compra.nAnioFabricacion }}</td>
-                                                                            <td>{{ compra.nAnioVersion }}</td>
-                                                                            <td>{{ compra.cSimboloMoneda }}</td>
-                                                                            <td>{{ compra.fTotalCompra }}</td>
-                                                                            <td>{{ compra.cNumeroFactura }}</td>
-                                                                            <td>{{ compra.dFechaFacturado }}</td>
+                                                                            <td v-text="compra.nIdCompra"></td>
+                                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
+                                                                            <td v-text="compra.nOrdenCompra"></td>
+                                                                            <td v-text="compra.cNombreLinea"></td>
+                                                                            <td v-text="compra.cNombreAlmacen"></td>
+                                                                            <td v-text="compra.nNumeroReserva"></td>
+                                                                            <td v-text="compra.cNumeroVin"></td>
+                                                                            <td v-text="compra.cFormaPago"></td>
+                                                                            <td v-text="compra.cNombreComercial"></td>
+                                                                            <td v-text="compra.nAnioFabricacion"></td>
+                                                                            <td v-text="compra.nAnioVersion"></td>
+                                                                            <td v-text="compra.cSimboloMoneda"></td>
+                                                                            <td v-text="compra.fTotalCompra"></td>
+                                                                            <td v-text="compra.cNumeroFactura"></td>
+                                                                            <td v-text="compra.dFechaFacturado"></td>
                                                                             <td>
-                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" v-bind:title="'Anular O/C ' +compra.nOrdenCompra">
-                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                 </a>
                                                                             </td>
                                                                         </tr>
@@ -337,25 +337,25 @@
                                                                         <tbody>
                                                                             <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenCompra">
                                                                                 <td>
-                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +compra.nOrdenCompra">
-                                                                                    <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +compra.nOrdenCompra">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                 </td>
-                                                                                <td>{{ compra.nOrdenCompra }}</td>
-                                                                                <td>{{ compra.cNombreLinea }}</td>
-                                                                                <td>{{ compra.cNombreAlmacen }}</td>
-                                                                                <td>{{ compra.nNumeroReserva }}</td>
-                                                                                <td>{{ compra.cNumeroVin }}</td>
-                                                                                <td>{{ compra.cFormaPago }}</td>
-                                                                                <td>{{ compra.cNombreMarca }}</td>
-                                                                                <td>{{ compra.cNombreModelo }}</td>
-                                                                                <td>{{ compra.cNombreComercial }}</td>
-                                                                                <td>{{ compra.cNombreColor }}</td>
-                                                                                <td>{{ compra.nAnioFabricacion }}</td>
-                                                                                <td>{{ compra.nAnioVersion }}</td>
-                                                                                <td>{{ compra.cSimboloMoneda }}</td>
-                                                                                <td>{{ compra.fTotalCompra }}</td>
-                                                                                <td>{{ compra.cNumeroFactura }}</td>
-                                                                                <td>{{ compra.dFechaFacturado }}</td>
+                                                                                <td v-text="compra.nOrdenCompra"></td>
+                                                                                <td v-text="compra.cNombreLinea"></td>
+                                                                                <td v-text="compra.cNombreAlmacen"></td>
+                                                                                <td v-text="compra.nNumeroReserva"></td>
+                                                                                <td v-text="compra.cNumeroVin"></td>
+                                                                                <td v-text="compra.cFormaPago"></td>
+                                                                                <td v-text="compra.cNombreMarca"></td>
+                                                                                <td v-text="compra.cNombreModelo"></td>
+                                                                                <td v-text="compra.cNombreComercial"></td>
+                                                                                <td v-text="compra.cNombreColor"></td>
+                                                                                <td v-text="compra.nAnioFabricacion"></td>
+                                                                                <td v-text="compra.nAnioVersion"></td>
+                                                                                <td v-text="compra.cSimboloMoneda"></td>
+                                                                                <td v-text="compra.fTotalCompra"></td>
+                                                                                <td v-text="compra.cNumeroFactura"></td>
+                                                                                <td v-text="compra.dFechaFacturado"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -428,7 +428,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -443,7 +443,7 @@
                                                             <label class="col-sm-4 form-control-label">Nombre</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
-                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                                     <div class="input-group-prepend">
                                                                         <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
                                                                     </div>
@@ -542,7 +542,7 @@
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
                 arrayProveedor: [],
-                fillProvedor:{
+                fillProveedor:{
                     cnombreproveedor: ''
                 },
                 fillCompra:{
@@ -645,8 +645,6 @@
                 this.listarCompras(1);
             },
             listarCompras(page){
-                this.nidempresa = 1300011;
-                this.nidsucursal = 1300013;
                 if(this.fillCompra.nordencompra == ''){
                     var nordencompra = 0;
                 }
@@ -654,14 +652,18 @@
                     var nordencompra = this.fillCompra.nordencompra;
                 }
 
-                var url = this.ruta + '/compra/GetCompra?nidempresa=' + this.nidempresa
-                                                                + '&nidsucursal=' + this.nidsucursal
-                                                                + '&dfechainicio=' + this.fillCompra.dfechainicio
-                                                                + '&dfechafin=' + this.fillCompra.dfechafin
-                                                                + '&nordencompra=' + nordencompra
-                                                                + '&cnumerovin=' + this.fillCompra.cnumerovin
-                                                                + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/compra/GetCompra';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal' : 1300013,
+                        'dfechainicio' : this.fillCompra.dfechainicio,
+                        'dfechafin' : this.fillCompra.dfechafin,
+                        'nordencompra' : nordencompra,
+                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayCompra = response.data.arrayCompra.data;
                     this.pagination.current_page =  response.data.arrayCompra.current_page;
                     this.pagination.total = response.data.arrayCompra.total;
@@ -670,7 +672,7 @@
                     this.pagination.from        = response.data.arrayCompra.from;
                     this.pagination.to           = response.data.arrayCompra.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -685,12 +687,17 @@
                 this.listarProveedores(1);
             },
             listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
-                                                                    + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString() 
-                                                                    + '&opcion=' + 1
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetLstProveedor';
+                
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
                     this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
                     this.paginationModal.total = response.data.arrayProveedor.total;
@@ -699,7 +706,7 @@
                     this.paginationModal.from        = response.data.arrayProveedor.from;
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaProveedor(page){
@@ -712,12 +719,17 @@
                 this.cerrarModal();
             },
             listarTipoLista(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110044 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110044,
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayTipoLista = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             getFile(e){
@@ -941,10 +953,11 @@
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;
