@@ -3074,7 +3074,18 @@
                 this.limpiarNuevoContacto();
                 this.cargarTabDatosPersonales();
                 this.tabDatosPersonales();
-            },            
+            },  
+            // =============  TAB DATOS PERSONALES ======================     
+            tabDatosPersonales(){
+                $('#Tab11').addClass('nav-link active');
+                $('#Tab22').removeClass('nav-link active');
+                $('#Tab22').addClass("nav-link disabled");
+                $('#Tab33').removeClass('nav-link active');
+                $('#Tab33').addClass('nav-link disabled');
+                $('#TabDatosPersonales').addClass('in active show');
+                $('#TabDatosContacto').removeClass('in active show');
+                $('#TabReferenciaVehiculo').removeClass('in active show');
+            },     
             cambiarTipoPersona(){
                 this.llenarComboTpoDocumento();
                 if(this.formNuevoContacto.ntipopersona == 1)
@@ -3100,6 +3111,53 @@
                 this.llenarComboAnioModelo();
                 this.llenarComboTpoDocumentoDatoConctactoJurifico();
             },
+            validarTab22(){
+                this.error = 0;
+                this.mensajeError =[];
+                let nrodocumento = this.formNuevoContacto.cnrodocumento;
+
+                if(this.formNuevoContacto.ntpodocumento == 0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Documento');
+                };
+                if(this.formNuevoContacto.ntipopersona == 1)
+                {
+                    if(!nrodocumento){
+                        this.mensajeError.push('Debes Ingresar Nro Documento');
+                    };
+                    if(nrodocumento.length < 8 || nrodocumento.length > 8) {
+                        this.mensajeError.push('El Nro Documento debe contener 8 dígitos');
+                    };
+                    if(this.formNuevoContacto.ncelular.length > 9){
+                        this.mensajeError.push('El numero de Celular es incorrecto');
+                    };
+                    if(!this.formNuevoContacto.capepaterno){
+                        this.mensajeError.push('Debes Ingresar Apellido Paterno');
+                    };
+                    if(!this.formNuevoContacto.capematerno){
+                        this.mensajeError.push('Debes Ingresar Apellido Materno');
+                    };
+                    if(!this.formNuevoContacto.cnombres){
+                        this.mensajeError.push('Debes Ingresar Nombres');
+                    };
+                }
+
+                if(this.formNuevoContacto.ntipopersona == 2){
+                    if(!nrodocumento){
+                        this.mensajeError.push('Debes Ingresar Nro Documento');
+                    };
+                    if(nrodocumento.length < 11 || nrodocumento.length > 11) {
+                        this.mensajeError.push('El Nro Documento debe contener (11) números');
+                    };
+                    if(!this.formNuevoContacto.cnombres){
+                        this.mensajeError.push('Debes Ingresar Razon Social');
+                    };
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             llenarComboTpoDocumento(){
                 if(this.formNuevoContacto.ntipopersona == 1)
                 {
@@ -3122,16 +3180,6 @@
                         console.log(error);
                     });
                 }
-            },
-            llenarComboTpoDocumentoDatoConctactoJurifico(){
-                var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayTipoDocumentoNaturales = response.data;
-                    this.formNuevoContactoJurifico.ntpodocumento = 0;
-                }).catch(error => {
-                    console.log(error);
-                });
             },
             llenarComboDptos(){
                 var url = this.ruta + '/ubigeo/GetDptos';
@@ -3160,6 +3208,123 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            llenarComboEstadoCivil(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110048 
+                                                                            + '&opcion=' + 0;
+                axios.get(url).then(response => {
+                    this.arrayEstadoCivil = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboProfesion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110049 
+                                                                            + '&opcion=' + 0;
+                axios.get(url).then(response => {
+                    this.arrayProfesion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            // =============  TAB DATOS DE CONTACTO ======================
+            activarTab22(){
+                if(this.validarTab22()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                $('#Tab11').removeClass('nav-link active');
+                $('#Tab11').addClass("nav-link");
+                $('#Tab22').removeClass('nav-link disabled');
+                $('#Tab22').addClass("nav-link active");
+                $('#TabDatosPersonales').removeClass('in active show');
+                $('#TabDatosContacto').addClass('in active show');
+            },
+            validarTab33(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formNuevoContacto.niddepartamento == 0){
+                    this.mensajeError.push('Debes Seleccionar Departamento');
+                };
+                if(this.formNuevoContacto.nidprovincia == 0){
+                    this.mensajeError.push('Debes Seleccionar Provincia');
+                };
+                if(this.formNuevoContacto.niddistrito == 0){
+                    this.mensajeError.push('Debes Seleccionar Distrito');
+                };
+                if(!this.formNuevoContacto.cdireccion){
+                    this.mensajeError.push('Debes Ingresar Dirección');
+                };
+                if(!this.formNuevoContacto.cmailprincipal){
+                    this.mensajeError.push('Debes Ingresar Email');
+                };
+                if(!this.formNuevoContacto.ncelular){
+                    this.mensajeError.push('Debes Ingresar Celular');
+                };
+                if(this.formNuevoContacto.ncelular.length > 9){
+                        this.mensajeError.push('El numero de Celular es incorrecto');
+                };
+
+                if(this.formNuevoContacto.ntipopersona == 2) {
+                    let nrodocumento = this.formNuevoContactoJurifico.cnrodocumento;
+                    if(this.formNuevoContactoJurifico.ntpodocumento == 0){
+                        this.mensajeError.push('Debes Seleccionar un Tipo de Documento');
+                    };
+                    if(!nrodocumento){
+                        this.mensajeError.push('Debes escribir el #doc del contacto');
+                    };
+                    if(nrodocumento.length < 8 || nrodocumento.length > 9) {
+                        this.mensajeError.push('El Nro Documento debe contener más de 7 dígitos');
+                    };
+                    if(!this.formNuevoContactoJurifico.capepaterno){
+                        this.mensajeError.push('Debes escribir el apellido paterno del contacto');
+                    };
+                    if(!this.formNuevoContactoJurifico.capematerno){
+                        this.mensajeError.push('Debes escribir el apellido materno del contacto');
+                    };
+                    if(!this.formNuevoContactoJurifico.cnombres){
+                        this.mensajeError.push('Debes escribir el nombre del contacto');
+                    };
+                    if(!this.formNuevoContactoJurifico.cmailprincipal){
+                        this.mensajeError.push('Debes escribir el correo del contacto');
+                    };
+                    if(!this.formNuevoContactoJurifico.ncelular){
+                        this.mensajeError.push('Debes escribir el telefono movil del contacto');
+                    };
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            llenarComboTpoDocumentoDatoConctactoJurifico(){
+                var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
+                                                                            + '&opcion=' + 0;
+                axios.get(url).then(response => {
+                    this.arrayTipoDocumentoNaturales = response.data;
+                    this.formNuevoContactoJurifico.ntpodocumento = 0;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            // =============  TAB REFERENCIA VEHICULO ====================== 
+            activarTab33(){
+                if(this.validarTab33()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                $('#Tab22').removeClass('nav-link active');
+                $('#Tab22').addClass("nav-link");
+                $('#Tab33').removeClass('nav-link disabled');
+                $('#Tab33').addClass("nav-link active");
+                $('#TabDatosContacto').removeClass('in active show');
+                $('#TabReferenciaVehiculo').addClass('in active show');
             },
             llenarComboLinea(){
                 this.nidempresa = 130011;
@@ -3209,24 +3374,6 @@
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayAnioModelo = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboEstadoCivil(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110048 
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayEstadoCivil = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboProfesion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110049 
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayProfesion = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -3348,144 +3495,7 @@
             eliminarItemReferenciaVehiculo(index){
                 this.$delete(this.arrayReferenciaVehiculo, index);
             },
-            tabDatosPersonales(){
-                $('#Tab11').addClass('nav-link active');
-                $('#Tab22').removeClass('nav-link active');
-                $('#Tab22').addClass("nav-link disabled");
-                $('#Tab33').removeClass('nav-link active');
-                $('#Tab33').addClass('nav-link disabled');
-                $('#TabDatosPersonales').addClass('in active show');
-                $('#TabDatosContacto').removeClass('in active show');
-                $('#TabReferenciaVehiculo').removeClass('in active show');
-            },
-            activarTab22(){
-                if(this.validarTab22()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                $('#Tab11').removeClass('nav-link active');
-                $('#Tab11').addClass("nav-link");
-                $('#Tab22').removeClass('nav-link disabled');
-                $('#Tab22').addClass("nav-link active");
-                $('#TabDatosPersonales').removeClass('in active show');
-                $('#TabDatosContacto').addClass('in active show');
-            },
-            validarTab22(){
-                this.error = 0;
-                this.mensajeError =[];
-                let nrodocumento = this.formNuevoContacto.cnrodocumento;
-
-                if(this.formNuevoContacto.ntpodocumento == 0){
-                    this.mensajeError.push('Debes Seleccionar Tipo Documento');
-                };
-                if(this.formNuevoContacto.ntipopersona == 1)
-                {
-                    if(!nrodocumento){
-                        this.mensajeError.push('Debes Ingresar Nro Documento');
-                    };
-                    if(nrodocumento.length < 8 || nrodocumento.length > 8) {
-                        this.mensajeError.push('El Nro Documento debe contener 8 dígitos');
-                    };
-                    if(!this.formNuevoContacto.capepaterno){
-                        this.mensajeError.push('Debes Ingresar Apellido Paterno');
-                    };
-                    if(!this.formNuevoContacto.capematerno){
-                        this.mensajeError.push('Debes Ingresar Apellido Materno');
-                    };
-                    if(!this.formNuevoContacto.cnombres){
-                        this.mensajeError.push('Debes Ingresar Nombres');
-                    };
-                }
-
-                if(this.formNuevoContacto.ntipopersona == 2){
-                    if(!nrodocumento){
-                        this.mensajeError.push('Debes Ingresar Nro Documento');
-                    };
-                    if(nrodocumento.length < 11 || nrodocumento.length > 11) {
-                        this.mensajeError.push('El Nro Documento debe contener (11) números');
-                    };
-                    if(!this.formNuevoContacto.cnombres){
-                        this.mensajeError.push('Debes Ingresar Razon Social');
-                    };
-                }
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            activarTab33(){
-                if(this.validarTab33()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                $('#Tab22').removeClass('nav-link active');
-                $('#Tab22').addClass("nav-link");
-                $('#Tab33').removeClass('nav-link disabled');
-                $('#Tab33').addClass("nav-link active");
-                $('#TabDatosContacto').removeClass('in active show');
-                $('#TabReferenciaVehiculo').addClass('in active show');
-            },
-            validarTab33(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.formNuevoContacto.niddepartamento == 0){
-                    this.mensajeError.push('Debes Seleccionar Departamento');
-                };
-                if(this.formNuevoContacto.nidprovincia == 0){
-                    this.mensajeError.push('Debes Seleccionar Provincia');
-                };
-                if(this.formNuevoContacto.niddistrito == 0){
-                    this.mensajeError.push('Debes Seleccionar Distrito');
-                };
-                if(!this.formNuevoContacto.cdireccion){
-                    this.mensajeError.push('Debes Ingresar Dirección');
-                };
-                if(!this.formNuevoContacto.cmailprincipal){
-                    this.mensajeError.push('Debes Ingresar Email');
-                };
-                if(!this.formNuevoContacto.ncelular){
-                    this.mensajeError.push('Debes Ingresar Celular');
-                };
-
-                if(this.formNuevoContacto.ntipopersona == 2) {
-                    let nrodocumento = this.formNuevoContactoJurifico.cnrodocumento;
-                    if(this.formNuevoContactoJurifico.ntpodocumento == 0){
-                        this.mensajeError.push('Debes Seleccionar un Tipo de Documento');
-                    };
-                    if(!nrodocumento){
-                        this.mensajeError.push('Debes escribir el #doc del contacto');
-                    };
-                    if(nrodocumento.length < 8 || nrodocumento.length > 9) {
-                        this.mensajeError.push('El Nro Documento debe contener más de 7 dígitos');
-                    };
-                    if(!this.formNuevoContactoJurifico.capepaterno){
-                        this.mensajeError.push('Debes escribir el apellido paterno del contacto');
-                    };
-                    if(!this.formNuevoContactoJurifico.capematerno){
-                        this.mensajeError.push('Debes escribir el apellido materno del contacto');
-                    };
-                    if(!this.formNuevoContactoJurifico.cnombres){
-                        this.mensajeError.push('Debes escribir el nombre del contacto');
-                    };
-                    if(!this.formNuevoContactoJurifico.cmailprincipal){
-                        this.mensajeError.push('Debes escribir el correo del contacto');
-                    };
-                    if(!this.formNuevoContactoJurifico.ncelular){
-                        this.mensajeError.push('Debes escribir el telefono movil del contacto');
-                    };
-                }
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
+            // =============  REGISTRAR CONTACTO ====================== 
             registrarNuevoContacto(){     
                 if(this.validarRegistroNuevoContacto()){
                     this.accionmodal=1;
