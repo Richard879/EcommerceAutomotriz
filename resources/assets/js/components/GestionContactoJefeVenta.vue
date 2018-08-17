@@ -56,7 +56,7 @@
                                                                         <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                                         <div class="col-sm-8">
                                                                             <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                <input type="radio" class="radio-template" v-model="fillContacto.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
+                                                                                <input type="radio" class="radio-template" v-model="fillMisContactos.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
                                                                                 <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                             </label>
                                                                         </div>
@@ -68,7 +68,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Contacto</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillContacto.cfiltrodescripcion" @keyup.enter="listarMisContactosJFV(1)" class="form-control form-control-sm">
+                                                                            <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarMisContactosJFV(1)" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -76,7 +76,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nro Documento</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillContacto.cnrodocumento" @keyup.enter="listarMisContactosJFV(1)" class="form-control form-control-sm">
+                                                                            <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarMisContactosJFV(1)" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -99,7 +99,7 @@
                                                         <template v-if="arrayContacto.length">
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-sm">
-                                                                    <template v-if="fillContacto.ntipopersona == 1">
+                                                                    <template v-if="fillMisContactos.ntipopersona == 1">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Código</th>
@@ -253,7 +253,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -261,7 +261,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" class="form-control form-control-sm">
+                                                                                <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" @keyup.enter="buscarContactosPorVendedor()" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -399,7 +399,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">ASIGNAR CONTACTO</h3>
+                                                            <h3 class="h4">REASIGNAR CONTACTO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="col-lg-12">
@@ -438,7 +438,7 @@
                                                                                     <input type="hidden" v-model="formReasignarContacto.nreasignaidvendedor">
                                                                                     <input type="text" v-model="formReasignarContacto.creasignavendedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                     <div class="input-group-prepend">
-                                                                                        <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirnuevoModal('nuevovendedor','buscar')">
+                                                                                        <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('nuevovendedor','buscar')">
                                                                                             <i class="fa-lg fa fa-search"></i>
                                                                                         </button>
                                                                                     </div>
@@ -562,7 +562,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillContactoLibre.cfiltrodescripcion" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillContactoLibre.cfiltrodescripcion" @keyup.enter="buscarContactosLibres()" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -570,7 +570,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Documento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="number" v-model.number="fillContactoLibre.cnrodocumento" class="form-control form-control-sm">
+                                                                                <input type="number" v-model.number="fillContactoLibre.cnrodocumento" @keyup.enter="buscarContactosLibres()" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -2172,7 +2172,7 @@
                 },
                 // ============================================================
                 // =========== VARIABLES BUSCAR CONTACTO ============
-                fillContacto:{
+                fillMisContactos:{
                     ntipopersona: 1,
                     cnrodocumento: '',
                     cfiltrodescripcion: ''
@@ -2182,8 +2182,6 @@
                 fillContactoPorVendedor:{
                     ntipopersona: 1,
                     cnrodocumento: '',
-                    nidvendedor: 0,
-                    cvendedornombre: '',
                     cfiltrodescripcion: ''
                 },
                 arrayContactosPorVendedor: [],
@@ -2202,14 +2200,14 @@
                 // =============================================================
                 // ============== VARIABLES ASIGNAR CONTACTO =================
                 fillAsignarContacto: {
-                    nidcontacto: '',
+                    nidcontacto: 0,
                     ccontacto: ''
                 },
                 arrayReferenciaLibre: [],
                 // =============================================================
                 // ============== VARIABLES REASIGNAR CONTACTO =================
                 formReasignarContacto: {
-                    nidcontacto: '',
+                    nidcontacto: 0,
                     ccontacto: '',
                     nidvendedor: 0,
                     cvendedornombre: '',
@@ -2380,8 +2378,9 @@
             // =========================================================
             // =============  TAB MIS CONTACTOS ========================
             tabMisContactos(){
+                $('#Tab4').addClass("nav-link disabled");
+                this.limpiarMisContactos();
                 this.arrayContacto = [];
-                this.limpiarFormularioNuevoContacto();
             },
             cambiarTipoPersonaMisContactos(){
                 this.arrayContacto = [];
@@ -2398,9 +2397,9 @@
                         'nidempresa' : 1300011,
                         'nidsucursal' : 1300013,
                         'nidcronograma' : 220016,
-                        'ntipopersona' : this.fillContacto.ntipopersona,
-                        'cnrodocumento' : String(this.fillContacto.cnrodocumento.toString()),
-                        'cfiltrodescripcion' : this.fillContacto.cfiltrodescripcion.toString(),
+                        'ntipopersona' : this.fillMisContactos.ntipopersona,
+                        'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
+                        'cfiltrodescripcion' : this.fillMisContactos.cfiltrodescripcion.toString(),
                         'page' : page
                     }
                 }).then(response => {
@@ -2418,8 +2417,12 @@
             // =========================================================
             // =============  TAB CONTACTOS POR VENDEDOR ===============
             tabContactosPorVendedor(){
+                $('#Tab4').addClass("nav-link disabled");
                 this.vistaContactoPorVendedor = 1;
                 this.arrayContactosPorVendedor = [];
+                this.limpiarTodoVendedor();
+                this.limpiarReasignarContacto();
+                this.limpiarContactosPorVendedor();
             },
             buscarContactosPorVendedor(){
                 if(this.validarBusquedaContactosPorVendedor()){
@@ -2484,7 +2487,7 @@
             },
             mostrarVistaContactoPorVendedor(nIdContacto, cNombres, cVendedor){
                 this.vistaContactoPorVendedor = 0;
-                this.formReasignarContacto.nidcontacto = nIdContacto;
+                this.formReasignarContacto.nidcontacto = parseInt(nIdContacto);
                 this.formReasignarContacto.ccontacto = cNombres;
                 this.formReasignarContacto.cvendedornombre = cVendedor;
                 this.listarReferenciaVehiculoPorReasignar(1);
@@ -2571,9 +2574,12 @@
             // =========================================================
             // =============  TAB CONTACTOS LIBRES =====================
             tabContactosLibres(){
-                this.llenarComboTipoContacto();
+                $('#Tab4').addClass("nav-link disabled");
                 this.vistaContactoLibre = 1;
                 this.arrayContactoLibre = [];
+                this.limpiarTodoVendedor();
+                this.limpiarContactoLibre();
+                this.llenarComboTipoContacto();
             },
             buscarContactosLibres(){
                 this.listarContactosLibres(1);
@@ -2693,7 +2699,9 @@
                 if(this.formVendedor.nidvendedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Vendedor');
                 };
-                
+                if(this.fillAsignarContacto.nidcontacto = 0){
+                    this.mensajeError.push('Debes Seleccionar un Contacto');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -3015,7 +3023,7 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Seguimiento registrado');
-                        this.limpiarFormularioSeguimiento();
+                        this.limpiarSeguimiento();
                         this.listarSeguimientoPorIdAsignacion(1);
                     }
                 }).catch(error => {
@@ -3063,6 +3071,7 @@
             // =============  TAB NUEVO CONTACTO ======================
             tabNuevoContacto(){
                 $('#Tab4').addClass("nav-link disabled");
+                this.limpiarNuevoContacto();
                 this.cargarTabDatosPersonales();
                 this.tabDatosPersonales();
             },            
@@ -3574,7 +3583,7 @@
                         data: this.arrayReferenciaVehiculo
                     }).then(response => {
                         swal('Contacto registrado');
-                        this.limpiarFormularioNuevoContacto();
+                        this.limpiarNuevoContacto();
                         this.tabDatosPersonales();
                     }).catch(error => {
                         console.log(error);
@@ -3666,7 +3675,7 @@
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'proveedor':
+                    case "proveedor":
                     {
                         switch(accion){
                             case 'buscar':
@@ -3678,7 +3687,8 @@
                             }
                         }
                     }
-                    case 'vendedor':
+                    break;
+                    case "vendedor":
                     {
                         switch(accion){
                             case 'buscar':
@@ -3690,10 +3700,7 @@
                             }
                         }
                     }
-                }
-            },
-            abrirnuevoModal(modelo, accion, data =[]){
-                switch(modelo){
+                    break;
                     case 'nuevovendedor':
                     {
                         switch(accion){
@@ -3706,10 +3713,36 @@
                             }
                         }
                     }
+                    break;
                 }
             },
             // ===========================================================
-            limpiarFormularioSeguimiento(){
+            limpiarMisContactos(){
+                this.fillMisContactos.cnrodocumento = '';
+                this.fillMisContactos.cfiltrodescripcion = '';
+            },
+            limpiarTodoVendedor(){
+                this.arrayVendedor = [];
+                this.formVendedor.nidvendedor = 0;
+                this.formVendedor.cvendedornombre = '';
+            },
+            limpiarContactosPorVendedor(){
+                this.fillContactoPorVendedor.cnrodocumento = '';
+                this.fillContactoPorVendedor.cfiltrodescripcion = '';
+            },
+            limpiarReasignarContacto(){
+                this.formReasignarContacto.nidcontacto = 0;
+                this.formReasignarContacto.ccontacto = '';
+                this.formReasignarContacto.nidvendedor = 0;
+                this.formReasignarContacto.cvendedornombre = '';
+                this.formReasignarContacto.nreasignaidvendedor = 0;
+                this.formReasignarContacto.creasignavendedornombre = '';
+            },
+            limpiarContactoLibre(){
+                this.fillContactoLibre.cnrodocumento = '';
+                this.fillContactoLibre.cfiltrodescripcion = '';
+            },
+            limpiarSeguimiento(){
                 this.formNuevoSeguimiento.nidzona = 0;
                 this.formNuevoSeguimiento.nidestadoseguimiento = 0;
                 this.formNuevoSeguimiento.nidtiposeguimiento = 0;
@@ -3718,7 +3751,7 @@
                 this.formNuevoSeguimiento.casunto = '';
                 this.formNuevoSeguimiento.crendirseguimiento = '';
             },
-            limpiarFormularioNuevoContacto(){
+            limpiarNuevoContacto(){
                 //Tab DATOS PERSONALES
                 this.formNuevoContacto.ntpodocumento = '',
                 this.formNuevoContacto.cnrodocumento = '',
@@ -3740,13 +3773,13 @@
                 this.formNuevoContacto.nprofesion = '',
                 this.formNuevoContacto.ccentrolaboral = '',
                 //Tab DATOS DE CONTACTO - Datos Contacto Jurídico
-                /*this.formNuevoContactoJurifico.ntpodocumento = '',
+                this.formNuevoContactoJurifico.ntpodocumento = '',
                 this.formNuevoContactoJurifico.cnrodocumento = '',
                 this.formNuevoContactoJurifico.capematerno = '',
                 this.formNuevoContactoJurifico.capepaterno = '',
                 this.formNuevoContactoJurifico.cnombres = '',
                 this.formNuevoContactoJurifico.cmailprincipal = '',
-                this.formNuevoContactoJurifico.ncelular = '',*/
+                this.formNuevoContactoJurifico.ncelular = '',
                 //Tab REFERENCIA VEHICULO
                 this.formNuevoContacto.nidproveedor = 0,
                 this.formNuevoContacto.cproveedornombre = '',

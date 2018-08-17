@@ -1511,6 +1511,8 @@
                     cnrodocumento: '',
                     cfiltrodescripcion: ''
                 },
+                // =============================================================
+                // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
                     ntipopersona: 1,
                     ntpodocumento: 0,
@@ -1656,7 +1658,6 @@
             // =============  TAB MIS CONTACTOS ========================
             tabMisContactos(){
                 this.arrayContacto = [];
-                this.limpiarFormularioNuevoContacto();
             },
             cambiarTipoPersonaMisContactos(){
                 this.arrayContacto = [];
@@ -1716,7 +1717,6 @@
                 this.arrayContactoCarteraMes = [];
                 $('#Tab3').addClass("nav-link disabled");
                 this.listarCarteraMesPorVendedor();
-                this.limpiarFormularioNuevoContacto();
             },
             cambiarTipoPersonaCarteraMes(){
                 this.arrayContactoCarteraMes = [];
@@ -2066,7 +2066,7 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Seguimiento registrado');
-                        this.limpiarFormularioSeguimiento();
+                        this.limpiarSeguimiento();
                         this.listarSeguimientoPorIdAsignacion(1);
                     }
                 }).catch(error => {
@@ -2114,6 +2114,7 @@
             // =============  TAB NUEVO CONTACTO ======================
             tabNuevoContacto(){
                 $('#Tab3').addClass("nav-link disabled");
+                this.limpiarNuevoContacto();
                 this.cargarTabDatosPersonales();
                 this.tabDatosPersonales();
             },            
@@ -2663,13 +2664,15 @@
                         data: this.arrayReferenciaVehiculo
                     }).then(response => {
                         swal('Contacto registrado');
-                        this.limpiarFormularioNuevoContacto();
+                        this.limpiarNuevoContacto();
                         this.tabDatosPersonales();
                     }).catch(error => {
                         console.log(error);
                     });
                 }
             },
+            // =============================================
+            // =============  MODAL ========================
             cerrarModal(){
                 this.modal = 0
                 this.error = 0,
@@ -2691,7 +2694,8 @@
                     }
                 }
             },
-            limpiarFormularioSeguimiento(){
+            // ===========================================================
+            limpiarSeguimiento(){
                 this.formNuevoSeguimiento.nidzona = 0;
                 this.formNuevoSeguimiento.nidestadoseguimiento = 0;
                 this.formNuevoSeguimiento.nidtiposeguimiento = 0;
@@ -2700,7 +2704,7 @@
                 this.formNuevoSeguimiento.casunto = '';
                 this.formNuevoSeguimiento.crendirseguimiento = '';
             },
-            limpiarFormularioNuevoContacto(){
+            limpiarNuevoContacto(){
                 //Tab DATOS PERSONALES
                 this.formNuevoContacto.ntpodocumento = '',
                 this.formNuevoContacto.cnrodocumento = '',
