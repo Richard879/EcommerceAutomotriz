@@ -288,13 +288,88 @@ class GestionContactoController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nTipoPersona = $request->ntipopersona;
+        $cNroDocumento = $request->cnrodocumento;
+        $cFiltroDescripcion = $request->cfiltrodescripcion;
+        $nTipoContacto = $request->ntipocontacto;
 
-        $arrayContactoLibre = DB::select('exec usp_Contacto_GetListContactosLibres ?', 
-                                                                        array(  $nTipoPersona
+        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+
+        $arrayContactoLibre = DB::select('exec usp_Contacto_GetListContactosLibres ?, ?, ?, ?', 
+                                                                        array(  $nTipoPersona,
+                                                                                $cNroDocumento,
+                                                                                $cFiltroDescripcion,
+                                                                                $nTipoContacto
                                                                                 ));
 
         $arrayContactoLibre = $this->arrayPaginator($arrayContactoLibre, $request);
         return ['arrayContactoLibre'=>$arrayContactoLibre];
+    }
+
+    public function GetListReferenciaVehiculoLibre(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdContacto = $request->nidcontacto;
+
+        $arrayReferenciaLibre = DB::select('exec usp_Contacto_GetListReferenciaVehiculoLibre ?', 
+                                                                        array(  $nIdContacto
+                                                                                ));
+
+        $arrayReferenciaLibre = $this->arrayPaginator($arrayReferenciaLibre, $request);
+        return ['arrayReferenciaLibre'=>$arrayReferenciaLibre];
+    }
+
+    public function SetAsignaReferenciaLibre(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $arrayRefLibre = DB::select('exec usp_Contacto_SetAsignaReferenciaLibre ?, ?, ?, ?, ?, ?', 
+                                                            array(  $request->nIdReferenciaVehiculoContacto,
+                                                                    $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdCronograma,
+                                                                    $request->nIdVendedor,
+                                                                    Auth::user()->id
+                                                                    ));
+        
+        return response()->json($arrayRefLibre);
+    }
+
+    public function GetRefVehiculoByContactoPorReasignar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdContacto = $request->nidcontacto;
+        $nIdVendedor = $request->nidvendedor;
+
+        $arrayReasignarReferencia = DB::select('exec usp_Contacto_GetRefVehiculoByContacto ?, ?, ?, ?', 
+                                                                        array(  $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $nIdContacto,
+                                                                                $nIdVendedor
+                                                                                ));
+
+        $arrayReasignarReferencia = $this->arrayPaginator($arrayReasignarReferencia, $request);
+        return ['arrayReasignarReferencia'=>$arrayReasignarReferencia]; 
+    }
+    
+    public function UpdReasignarReferenciaVehiculo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $arrayReasignarRef = DB::select('exec usp_Contacto_UpdReasignarReferenciaVehiculo ?, ?, ?, ?, ?, ?', 
+                                                            array(  $request->nIdReferenciaVehiculoContacto,
+                                                                    $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdCronograma,
+                                                                    $request->nIdVendedor,
+                                                                    Auth::user()->id
+                                                                    ));
+        
+        return response()->json($arrayReasignarRef);
     }
 
     //Acciones Mis Contactos
@@ -314,12 +389,12 @@ class GestionContactoController extends Controller
 
         $arrayContacto = DB::select('exec usp_Contacto_GetListContactoByJFV ?, ?, ?, ?, ?, ?, ?',
                                                                     array(  $nIdEmpresa,
-                                                                    $nIdSucursal,
-                                                                    $nIdCronograma,
-                                                                    $nTipoPersona,
-                                                                    $cNroDocumento,
-                                                                    $cFiltroDescripcion,
-                                                                    Auth::user()->id
+                                                                            $nIdSucursal,
+                                                                            $nIdCronograma,
+                                                                            $nTipoPersona,
+                                                                            $cNroDocumento,
+                                                                            $cFiltroDescripcion,
+                                                                            Auth::user()->id
                                                                     ));
 
         $arrayContacto = $this->arrayPaginator($arrayContacto, $request);

@@ -207,367 +207,636 @@
                                     </section>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabContactosPorVendedor">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BUSCAR CONTACTOS POR VENDEDOR</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                        <div class="col-sm-8">
-                                                                            <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                <input type="radio" class="radio-template" v-model="fillContactoPorVendedor.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaContactosPorVendedor()">
-                                                                                <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                            </label>
+                                    <template v-if="vistaContactoPorVendedor">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR CONTACTOS POR VENDEDOR</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                            <div class="col-sm-8">
+                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                                    <input type="radio" class="radio-template" v-model="fillContactoPorVendedor.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaContactosPorVendedor()">
+                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                </label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Vendedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="formVendedor.nidvendedor">
+                                                                                    <input type="text" v-model="formVendedor.cvendedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosPorVendedor();">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayContactosPorVendedor.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <template v-if="fillContactoPorVendedor.ntipopersona == 1">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Apellidos</th>
+                                                                                    <th>Nombres</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Dirección</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Vendedor</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">                                                                        
+                                                                                    <td>{{ c.nIdContacto }}</td>
+                                                                                    <td>{{ c.cPerApellidos }}</td>
+                                                                                    <td>{{ c.cNombres }}</td>
+                                                                                    <td>{{ c.cNumeroDocumento }}</td>
+                                                                                    <td>{{ c.nTelefonoMovil }}</td>
+                                                                                    <td>{{ c.cDireccion }}</td>
+                                                                                    <td>{{ c.cEmail }}</td>
+                                                                                    <td>{{ c.cVendedor }}</td>
+                                                                                    <td>
+                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombres, c.cVendedor)"  data-placement="top"
+                                                                                            :title="'Reasignar Contacto'">
+                                                                                            <i :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </template>
+                                                                        <template v-else>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Razon Social</th>
+                                                                                    <th>Persona Contacto</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Vendedor</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">                                                                        
+                                                                                    <td>{{ c.nIdContacto }}</td>
+                                                                                    <td>{{ c.cRazonSocial }}</td>
+                                                                                    <td>{{ c.cContacto }}</td>
+                                                                                    <td>{{ c.cNumeroDocumento }}</td>
+                                                                                    <td>{{ c.nTelefonoMovil }}</td>
+                                                                                    <td>{{ c.cEmail }}</td>
+                                                                                    <td>{{ c.cVendedor }}</td>
+                                                                                    <td>
+                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cRazonSocial, c.cVendedor)"  data-placement="top"
+                                                                                            :title="'Reasignar Contacto'">
+                                                                                            <i :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </template>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-lg-12">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Vendedor</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <input type="hidden" v-model="fillContactoPorVendedor.nidvendedor">
-                                                                                <input type="text" v-model="fillContactoPorVendedor.cvendedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
+                                                                        <div class="col-lg-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaContactosPorVendedor(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link" 
+                                                                                        href="#" @click.prevent="cambiarPaginaContactosPorVendedor(page)" 
+                                                                                        v-text="page"></a>
+                                                                                    </li>                            
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaContactosPorVendedor(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </template>
+                                    <template v-else>
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">ASIGNAR CONTACTO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nombre Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="formReasignarContacto.nidcontacto">
+                                                                                    <label v-text="formReasignarContacto.ccontacto" class="form-control-label"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nombre Vendedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="formReasignarContacto.nidvendedor">
+                                                                                    <label v-text="formReasignarContacto.cvendedornombre" class="form-control-label"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Nuevo Vendedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="formReasignarContacto.nreasignaidvendedor">
+                                                                                    <input type="text" v-model="formReasignarContacto.creasignavendedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirnuevoModal('nuevovendedor','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Contacto</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillContactoPorVendedor.cfiltrodescripcion" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Documento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" v-model.number="fillContactoPorVendedor.cnrodocumento" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosPorVendedor();">
-                                                                        <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <template v-if="arrayContactosPorVendedor.length">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-striped table-sm">
-                                                                    <template v-if="fillContactoPorVendedor.ntipopersona == 1">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO REFERENCIAS</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayReasignarReferencia.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Código</th>
-                                                                                <th>Apellidos</th>
-                                                                                <th>Nombres</th>
-                                                                                <th>Nro Documento</th>
-                                                                                <th>Telefono</th>
-                                                                                <th>Dirección</th>
-                                                                                <th>Email</th>
-                                                                                <th>Vendedor</th>
+                                                                                <th>Cód Ref.</th>
+                                                                                <th>Proveedor</th>
+                                                                                <th>Línea</th>
+                                                                                <th>Marca</th>
+                                                                                <th>Modelo</th>
+                                                                                <th>Año Fab</th>
+                                                                                <th>Año Modelo</th>
                                                                                 <th>Acciones</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">                                                                        
-                                                                                <td>{{ c.nIdContacto }}</td>
-                                                                                <td>{{ c.cPerApellidos }}</td>
-                                                                                <td>{{ c.cNombres }}</td>
-                                                                                <td>{{ c.cNumeroDocumento }}</td>
-                                                                                <td>{{ c.nTelefonoMovil }}</td>
-                                                                                <td>{{ c.cDireccion }}</td>
-                                                                                <td>{{ c.cEmail }}</td>
-                                                                                <td>{{ c.cVendedor }}</td>
+                                                                            <tr v-for="referencia in arrayReasignarReferencia" :key="referencia.nIdReferenciaVehiculoContacto">
+                                                                                <td v-text="referencia.nIdReferenciaVehiculoContacto"></td>
+                                                                                <td v-text="referencia.cProveedorNombre"></td>
+                                                                                <td v-text="referencia.cLineaNombre"></td>
+                                                                                <td v-text="referencia.cMarcaNombre"></td>
+                                                                                <td v-text="referencia.cModeloNombre"></td>
+                                                                                <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                <td v-text="referencia.nAnioModelo"></td>
                                                                                 <td>
-                                                                                    <a data-toggle="tooltip" @click.prevent="abrirModal('contactosCPV','reasignarContacto', c)"  data-placement="top"
-                                                                                        :title="'Reasignar Contacto'">
-                                                                                        <i :style="'color:orange'" class="fa-md fa fa-street-view"></i>
+                                                                                    <a href="#" @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                        :title="'Reasignar Referencia'">
+                                                                                        <i :style="'color:blue'" class="fa-md fa fa-car"></i>
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
-                                                                    </template>
-                                                                    <template v-else>
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>Razon Social</th>
-                                                                                <th>Persona Contacto</th>
-                                                                                <th>Nro Documento</th>
-                                                                                <th>Telefono</th>
-                                                                                <th>Email</th>
-                                                                                <th>Vendedor</th>
-                                                                                <th>Acciones</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">                                                                        
-                                                                                <td>{{ c.nIdContacto }}</td>
-                                                                                <td>{{ c.cRazonSocial }}</td>
-                                                                                <td>{{ c.cContacto }}</td>
-                                                                                <td>{{ c.cNumeroDocumento }}</td>
-                                                                                <td>{{ c.nTelefonoMovil }}</td>
-                                                                                <td>{{ c.cEmail }}</td>
-                                                                                <td>{{ c.cVendedor }}</td>
-                                                                                <td>
-                                                                                    <a data-toggle="tooltip" @click.prevent="abrirModal('contactosCPV','reasignarContacto', c)"  data-placement="top"
-                                                                                        :title="'Reasignar Contacto'">
-                                                                                        <i :style="'color:orange'" class="fa-md fa fa-street-view"></i>
-                                                                                    </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </template>
+                                                                    </table>                                   
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaReferenciaPorReasignar(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaReferenciaPorReasignar(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaReferenciaPorReasignar(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
                                                                 </table>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="row">
-                                                                    <div class="col-lg-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaContactosPorVendedor(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page" 
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link" 
-                                                                                    href="#" @click.prevent="cambiarPaginaContactosPorVendedor(page)" 
-                                                                                    v-text="page"></a>
-                                                                                </li>                            
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaContactosPorVendedor(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-lg-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-else>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td colspan="10">No existen registros!</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </template>
+                                                            </template>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
+                                        </section>
+                                    </template>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabContactosLibres">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                     <div class="card-header">
-                                                        <h3 class="h4">BUSCAR CONTACTOS LIBRES</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                        <div class="col-sm-8">
-                                                                            <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                <input type="radio" class="radio-template" v-model="fillContactoLibre.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaContactoLibre()">
-                                                                                <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                            </label>
+                                    <template v-if="vistaContactoLibre">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR CONTACTOS LIBRES</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                            <div class="col-sm-8">
+                                                                                <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                                    <input type="radio" class="radio-template" v-model="fillContactoLibre.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaContactoLibre()">
+                                                                                    <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                </label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Contacto</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillContactoLibre.ccontacto" class="form-control form-control-sm">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillContactoLibre.cfiltrodescripcion" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" v-model.number="fillContactoLibre.cnrodocumento" class="form-control form-control-sm">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Documento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" v-model.number="fillContactoLibre.cnrodocumento" class="form-control form-control-sm">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Tipo de Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <select v-model="fillContactoLibre.ntipocontacto" class="form-control form-control-sm">
+                                                                                    <option v-for="item in arrayTipoContacto" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Tipo de Contacto</label>
-                                                                        <div class="col-sm-8">
-                                                                            <select v-model="fillContactoLibre.ctipocontacto" class="form-control form-control-sm">
-                                                                                <option v-for="tipoConctacto in arrayTipoContacto" :key="tipoConctacto.value" :value="tipoConctacto.value" v-text="tipoConctacto.text">
-                                                                                </option>
-                                                                            </select>
-                                                                        </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosLibres();">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarContactosLibres();">
-                                                                        <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <template v-if="arrayContactoLibre.length">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-striped table-sm">
-                                                                    <template v-if="fillContactoLibre.ntipopersona == 1">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>Apellidos</th>
-                                                                                <th>Nombres</th>
-                                                                                <th>Nro Documento</th>
-                                                                                <th>Telefono</th>
-                                                                                <th>Dirección</th>
-                                                                                <th>Email</th>
-                                                                                <th>Acciones</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">                                                                        
-                                                                                <td v-text="c.nIdContacto"></td>
-                                                                                <td v-text="c.cPerApellidos"></td>
-                                                                                <td v-text="c.cNombres"></td>
-                                                                                <td v-text="c.cNumeroDocumento"></td>
-                                                                                <td v-text="c.nTelefonoMovil"></td>
-                                                                                <td v-text="c.cDireccion"></td>
-                                                                                <td v-text="c.cEmail"></td>
-                                                                                <td>
-                                                                                    <a data-toggle="tooltip" @click.prevent="abrirModal('contactosCPV','reasignarContacto', c)"  data-placement="top"
-                                                                                        :title="'Reasignar Contacto'">
-                                                                                        <i :style="'color:orange'" class="fa-md fa fa-street-view"></i>
-                                                                                    </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </template>
-                                                                    <template v-else>
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>Razon Social</th>
-                                                                                <th>Persona Contacto</th>
-                                                                                <th>Nro Documento</th>
-                                                                                <th>Telefono</th>
-                                                                                <th>Email</th>
-                                                                                <th>Acciones</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">                                                                        
-                                                                                <td v-text="c.nIdContacto"></td>
-                                                                                <td v-text="c.cRazonSocial"></td>
-                                                                                <td v-text="c.cContacto"></td>
-                                                                                <td v-text="c.cNumeroDocumento"></td>
-                                                                                <td v-text="c.nTelefonoMovil"></td>
-                                                                                <td v-text="c.cEmail"></td>
-                                                                                <td>
-                                                                                    <a data-toggle="tooltip" @click.prevent="abrirModal('contactosCPV','reasignarContacto', c)"  data-placement="top"
-                                                                                        :title="'Reasignar Contacto'">
-                                                                                        <i :style="'color:orange'" class="fa-md fa fa-street-view"></i>
-                                                                                    </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </template>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayContactoLibre.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <template v-if="fillContactoLibre.ntipopersona == 1">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Apellidos</th>
+                                                                                    <th>Nombres</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Dirección</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">                                                                        
+                                                                                    <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.cPerApellidos"></td>
+                                                                                    <td v-text="c.cNombres"></td>
+                                                                                    <td v-text="c.cNumeroDocumento"></td>
+                                                                                    <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cDireccion"></td>
+                                                                                    <td v-text="c.cEmail"></td>
+                                                                                    <td>
+                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombres)"  data-placement="top"
+                                                                                            :title="'Asignar Contacto a Vendedor'">
+                                                                                            <i :style="'color:blue'" class="fa-md fa fa-user"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </template>
+                                                                        <template v-else>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Razon Social</th>
+                                                                                    <th>Persona Contacto</th>
+                                                                                    <th>Nro Documento</th>
+                                                                                    <th>Telefono</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">                                                                        
+                                                                                    <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.cRazonSocial"></td>
+                                                                                    <td v-text="c.cContacto"></td>
+                                                                                    <td v-text="c.cNumeroDocumento"></td>
+                                                                                    <td v-text="c.nTelefonoMovil"></td>
+                                                                                    <td v-text="c.cEmail"></td>
+                                                                                    <td>
+                                                                                        <a data-toggle="tooltip" @click.prevent="mostrarVistaAsignaContacto(c.nIdContacto, c.cRazonSocial)"  data-placement="top"
+                                                                                            :title="'Asignar Contacto a Vendedor'">
+                                                                                            <i :style="'color:blue'" class="fa-md fa fa-user"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </template>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaContactoLibre(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
                                                                 </table>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="row">
-                                                                    <div class="col-lg-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link"
-                                                                                    href="#" @click.prevent="cambiarPaginaContactoLibre(page)"
-                                                                                    v-text="page"></a>
-                                                                                </li>
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaContactoLibre(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-lg-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-else>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td colspan="10">No existen registros!</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </template>
+                                                            </template>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
+                                        </section>
+                                    </template>
+                                    <template v-else>
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">ASIGNAR CONTACTO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nombre Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="fillAsignarContacto.nidcontacto">
+                                                                                    <label v-text="fillAsignarContacto.ccontacto" class="form-control-label"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Nuevo Vendedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="formVendedor.nidvendedor">
+                                                                                    <input type="text" v-model="formVendedor.cvendedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO REFERENCIAS</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayReferenciaLibre.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Cód Ref.</th>
+                                                                                <th>Proveedor</th>
+                                                                                <th>Línea</th>
+                                                                                <th>Marca</th>
+                                                                                <th>Modelo</th>
+                                                                                <th>Año Fab</th>
+                                                                                <th>Año Modelo</th>
+                                                                                <th>Acciones</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="referencia in arrayReferenciaLibre" :key="referencia.nIdReferenciaVehiculoContacto">
+                                                                                <td v-text="referencia.nIdReferenciaVehiculoContacto"></td>
+                                                                                <td v-text="referencia.cProveedorNombre"></td>
+                                                                                <td v-text="referencia.cLineaNombre"></td>
+                                                                                <td v-text="referencia.cMarcaNombre"></td>
+                                                                                <td v-text="referencia.cModeloNombre"></td>
+                                                                                <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                <td v-text="referencia.nAnioModelo"></td>
+                                                                                <td>
+                                                                                    <a href="#" @click="asignarReferenciaLibre(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                        :title="'Asignar Referencia'">
+                                                                                        <i :style="'color:blue'" class="fa-md fa fa-car"></i>
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>                                   
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaReferenciaLibre(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaReferenciaLibre(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaReferenciaLibre(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </template>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabSeguimiento">
                                     <section class="forms">
@@ -1767,98 +2036,83 @@
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">REASIGNAR CONTACTO</h3>
+                                            <h3 class="h4">LISTADO</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="col-lg-12">
-                                                <div class="form-group row" v-show="error">
-                                                    <div class="col-xs-12">
-                                                        <div class="row">
-                                                            <div class="text-center text-error">
-                                                                <div v-for="error in mensajeError" :key="error" v-text="error"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="form-group row">
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Contacto:</label>
+                                                            <label class="col-sm-4 form-control-label">Nombres</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
-                                                                    <label v-text="fillReasignarContacto.contacto"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Tipo Persona</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <label v-text="fillReasignarContacto.tipopersona"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">DNI/RUC:</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <label v-text="fillReasignarContacto.dni"></label>
+                                                                    <input type="text" v-model="fillVendedor.cnombrevendedor" @keyup.enter="listarVendedores(1)" class="form-control form-control-sm">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="listarVendedores(1);"><i class="fa-lg fa fa-search"></i></button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <template v-if="arrayVendedor.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Seleccione</th>
+                                                                    <th>Nombre Vendedor</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="vendedor in arrayVendedor" :key="vendedor.nIdPar">
+                                                                    <td>
+                                                                        <a href="#" @click="reasignarVendedor(vendedor.nIdPar, vendedor.cParNombre);">
+                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td v-text="vendedor.cParNombre"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-12">
                                                         <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Marca</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <label v-text="fillReasignarContacto.nombremarca"></label>
-                                                                </div>
+                                                            <div class="col-lg-7">
+                                                                <nav>
+                                                                    <ul class="pagination">
+                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        </li>
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                        :class="[page==isActivedModal?'active':'']">
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaVendedor(page)"
+                                                                            v-text="page"></a>
+                                                                        </li>
+                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <div class="col-lg-5">
+                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Modelo</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <label v-text="fillReasignarContacto.nombremodelo"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Vendedor:</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <label v-text="fillReasignarContacto.vendedor"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-4">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nuevo Vendedor</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <select name="account" v-model="fillReasignarContacto.idvendedor" class="form-control form-control-sm">
-                                                                        <option v-for="vendedor in arrayVendedor" :key="vendedor.nIdVendedor" :value="vendedor.nIdVendedor" v-text="vendedor.cUsuario">
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
@@ -1867,7 +2121,6 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="ReasignarContactoCPV()">Guardar</button>
                         <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                     </div>
                 </div>
@@ -1887,54 +2140,45 @@
                 cmes: 'MAYO',
                 nidempresa: 0,
                 nidsucursal: 0,
-                arrayTipoDocumento: [],
-                arrayLinea: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                arrayAnioFabricacion: [],
-                arrayAnioModelo: [],
-                arrayEstadoCivil: [],
-                arrayProfesion: [],
-                arrayProveedor: [],
                 arrayReferenciaVehiculo: [],
                 arraySegReferenciavehiculo: [],
                 arrayContacto: [],
-                arrayContactoCarteraMes: [],
-                arrayDptos:[],
-                arrayProv : [],
-                arrayDist: [],
                 arrayTipoPersona: [
                     { value: '1', text: 'NATURAL'},
                     { value: '2', text: 'JURIDICA'}
                 ],
-                arrayZona: [],
                 arrayEstadoSeguimiento: [],
                 arrayTipoSeguimiento: [],
                 arrayFormaPago: [],
                 arraySeguimiento: [],
                 arrayTipoDocumentoNaturales: [],
-                arrayVendedor: [],
-                arrayContactosPorVendedor: [],
-                arrayTipoContacto: [
-                    { value: 0, text: 'Seleccione un Tipo de Persona'},
-                    { value: 'N', text: 'N'},
-                    { value: 'S', text: 'S'}
-                ],
-                arrayContactoLibre: [],
+                // ============================================================
+                // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
+                arrayProveedor: [],
+                // ============================================================
+                // =========== VARIABLES MODAL VENDEDOR ============
                 fillVendedor:{
                     cnombrevendedor: ''
                 },
+                arrayVendedor: [],
+                // ============================================================
+                // =========== VARIABLES FORMULARIO VENDEDOR ============
+                formVendedor: {
+                    nidvendedor: '',
+                    cvendedornombre: ''
+                },
+                // ============================================================
+                // =========== VARIABLES BUSCAR CONTACTO ============
                 fillContacto:{
                     ntipopersona: 1,
                     cnrodocumento: '',
                     cfiltrodescripcion: ''
                 },
                 // =============================================================
-                // VARIABLES TAB CONTACTOS POR VENDEDOR
-                // =============================================================
+                // =========== VARIABLES TAB CONTACTOS POR VENDEDOR ============
                 fillContactoPorVendedor:{
                     ntipopersona: 1,
                     cnrodocumento: '',
@@ -1942,15 +2186,39 @@
                     cvendedornombre: '',
                     cfiltrodescripcion: ''
                 },
+                arrayContactosPorVendedor: [],
+                vistaContactoPorVendedor: 1,
                 // =============================================================
-                // VARIABLES TAB CONTACTOS LIBRES
-                // =============================================================
+                // ============== VARIABLES TAB CONTACTOS LIBRES ===============
                 fillContactoLibre: {
                     ntipopersona: 1,
                     cnrodocumento: '',
-                    ccontacto: '',
-                    ctipocontacto: 0
+                    cfiltrodescripcion: '',
+                    ntipocontacto: 0
                 },
+                arrayContactoLibre: [],
+                arrayTipoContacto: [],
+                vistaContactoLibre: 1,
+                // =============================================================
+                // ============== VARIABLES ASIGNAR CONTACTO =================
+                fillAsignarContacto: {
+                    nidcontacto: '',
+                    ccontacto: ''
+                },
+                arrayReferenciaLibre: [],
+                // =============================================================
+                // ============== VARIABLES REASIGNAR CONTACTO =================
+                formReasignarContacto: {
+                    nidcontacto: '',
+                    ccontacto: '',
+                    nidvendedor: 0,
+                    cvendedornombre: '',
+                    nreasignaidvendedor: 0,
+                    creasignavendedornombre: ''
+                },
+                arrayReasignarReferencia: [],
+                // =============================================================
+                // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
                     ntipopersona: 1,
                     ntpodocumento: 0,
@@ -1990,6 +2258,8 @@
                     cmailprincipal: '',
                     ncelular : ''
                 },
+                // =============================================================
+                // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
                     ctipopersona: '',
                     ccontacto: '',
@@ -1999,6 +2269,9 @@
                     cemail: '',
                     nidpersona: 0
                 },
+                arrayZona: [],
+                // =============================================================
+                // ============== VARIABLES TAB NUEVO SEGUIMIENTO ==============
                 formNuevoSeguimiento:{
                     nidzona: 0,
                     nidestadoseguimiento: 0,
@@ -2010,17 +2283,18 @@
                     crendirseguimiento: '',
                     nidasignacioncontactovendedor: 0
                 },
-                fillReasignarContacto: {
-                    contacto: '',
-                    tipopersona: 0,
-                    dni: '',
-                    nombrelinea: 0,
-                    nombremarca: 0,
-                    nombremodelo: 0,
-                    vendedor: '',
-                    idvendedor: 0,
-                    idasigcontactvendedor: 0
-                },
+                arrayTipoDocumento: [],
+                arrayLinea: [],
+                arrayMarca: [],
+                arrayModelo: [],
+                arrayAnioFabricacion: [],
+                arrayAnioModelo: [],
+                arrayEstadoCivil: [],
+                arrayProfesion: [],
+                arrayDptos:[],
+                arrayProv : [],
+                arrayDist: [],
+                // =============================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -2144,17 +2418,8 @@
             // =========================================================
             // =============  TAB CONTACTOS POR VENDEDOR ===============
             tabContactosPorVendedor(){
-                /*$('#Tab1').removeClass('nav-link active');
-                $('#Tab1').addClass("nav-link disabled");
-                $('#TabContactosLibres').removeClass('nav-link active');
-                $('#TabContactosLibres').addClass("nav-link disabled");
-                $('#TabSeguirContacto').removeClass('nav-link active');
-                $('#TabSeguirContacto').addClass("nav-link disabled");
-                $('#TabNuevoContacto').removeClass('nav-link active');
-                $('#TabNuevoContacto').addClass("nav-link disabled");*/
-                //this.llenarComboVendedores();
-                //this.limpiarBuscarContactosCPV();
-                //this.limpiarListadoCPV();
+                this.vistaContactoPorVendedor = 1;
+                this.arrayContactosPorVendedor = [];
             },
             buscarContactosPorVendedor(){
                 if(this.validarBusquedaContactosPorVendedor()){
@@ -2169,7 +2434,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillContactoPorVendedor.nidvendedor == 0){
+                if(this.formVendedor.nidvendedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Vendedor');
                 };
                 
@@ -2181,6 +2446,7 @@
             cambiarPaginaContactosPorVendedor(page){
                 this.pagination.current_page=page;
                 this.listarContactosPorVendedor(page);
+                this.arrayVendedor = [];
             },
             listarContactosPorVendedor(page){
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
@@ -2193,7 +2459,7 @@
                         'ntipopersona' : this.fillContactoPorVendedor.ntipopersona,
                         'cnrodocumento' : String(this.fillContactoPorVendedor.cnrodocumento.toString()),
                         'cfiltrodescripcion' : this.fillContactoPorVendedor.cfiltrodescripcion.toString(),
-                        'nidvendedor'      : this.fillContactoPorVendedor.nidvendedor,
+                        'nidvendedor'      : this.formVendedor.nidvendedor,
                         'page' : page
                     }
                 }).then(response => {
@@ -2216,9 +2482,98 @@
             cambiarTipoPersonaContactosPorVendedor(){
                 this.arrayContactosPorVendedor = []
             },
+            mostrarVistaContactoPorVendedor(nIdContacto, cNombres, cVendedor){
+                this.vistaContactoPorVendedor = 0;
+                this.formReasignarContacto.nidcontacto = nIdContacto;
+                this.formReasignarContacto.ccontacto = cNombres;
+                this.formReasignarContacto.cvendedornombre = cVendedor;
+                this.listarReferenciaVehiculoPorReasignar(1);
+            },
+            listarReferenciaVehiculoPorReasignar(page){
+                var url = this.ruta + '/gescontacto/GetRefVehiculoByContactoPorReasignar';
+                
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': 1300013,
+                        'nidcontacto' : this.formReasignarContacto.nidcontacto,
+                        'nidvendedor' : this.formReasignarContacto.nreasignaidvendedor,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayReasignarReferencia = response.data.arrayReasignarReferencia.data;
+                    this.pagination.current_page =  response.data.arrayReasignarReferencia.current_page;
+                    this.pagination.total = response.data.arrayReasignarReferencia.total;
+                    this.pagination.per_page    = response.data.arrayReasignarReferencia.per_page;
+                    this.pagination.last_page   = response.data.arrayReasignarReferencia.last_page;
+                    this.pagination.from        = response.data.arrayReasignarReferencia.from;
+                    this.pagination.to           = response.data.arrayReasignarReferencia.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaReferenciaPorReasignar(page){
+                this.pagination.current_page=page;
+                this.listarReferenciaVehiculoPorReasignar(page);
+            },
+            reasignarReferenciaVehiculo(nIdReferenciaVehiculoContacto){
+                if(this.validaReasignarReferenciaVehiculo()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                swal({
+                    title: 'Estas seguro de Reasignar esta Referencia?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/gescontacto/UpdReasignarReferenciaVehiculo';
+                            axios.post(url, {
+                                nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
+                                nIdEmpresa: 1300011,
+                                nIdSucursal: 1300013,
+                                nIdCronograma: 220016,
+                                nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
+                            }).then(response => {                            
+                                swal(
+                                'Activado!',
+                                'El registro fue Reasignado.'
+                                );
+                                this.listarReferenciaVehiculoPorReasignar(1);                           
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        {
+                        }
+                    })
+            },
+            validaReasignarReferenciaVehiculo(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formReasignarContacto.nreasignaidvendedor == 0){
+                    this.mensajeError.push('Debes Seleccionar un Vendedor');
+                };
+                
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             // =========================================================
             // =============  TAB CONTACTOS LIBRES =====================
             tabContactosLibres(){
+                this.llenarComboTipoContacto();
+                this.vistaContactoLibre = 1;
+                this.arrayContactoLibre = [];
             },
             buscarContactosLibres(){
                 this.listarContactosLibres(1);
@@ -2232,9 +2587,10 @@
                 
                 axios.get(url, {
                     params: {
-                        /*'nidempresa': 1300011,
-                        'nidsucursal': 1300013,*/
                         'ntipopersona' : this.fillContactoLibre.ntipopersona,
+                        'cnrodocumento' : String(this.fillContactoLibre.cnrodocumento.toString()),
+                        'cfiltrodescripcion' : this.fillContactoLibre.cfiltrodescripcion.toString(),
+                        'ntipocontacto': this.fillContactoLibre.ntipocontacto,
                         'page' : page
                     }
                 }).then(response => {
@@ -2249,18 +2605,99 @@
                     console.log(error);
                 });
             },
-            //////////FALTAAAAAAAAAAAAAAAAAA
             llenarComboTipoContacto(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110053 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110056 
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
-                    this.arrayEstadoSeguimiento = response.data;
+                    this.arrayTipoContacto = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             cambiarTipoPersonaContactoLibre(){
                 this.arrayContactoLibre = []
+            },
+            mostrarVistaAsignaContacto(nIdContacto, cNombres){
+                this.vistaContactoLibre = 0;
+                this.fillAsignarContacto.nidcontacto = nIdContacto;
+                this.fillAsignarContacto.ccontacto = cNombres;
+                this.listarReferenciasVehiculoLibre(1);
+            },
+            listarReferenciasVehiculoLibre(page){
+                var url = this.ruta + '/gescontacto/GetListReferenciaVehiculoLibre';
+                
+                axios.get(url, {
+                    params: {
+                        'nidcontacto': this.fillAsignarContacto.nidcontacto,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayReferenciaLibre = response.data.arrayReferenciaLibre.data;
+                    this.pagination.current_page =  response.data.arrayReferenciaLibre.current_page;
+                    this.pagination.total = response.data.arrayReferenciaLibre.total;
+                    this.pagination.per_page    = response.data.arrayReferenciaLibre.per_page;
+                    this.pagination.last_page   = response.data.arrayReferenciaLibre.last_page;
+                    this.pagination.from        = response.data.arrayReferenciaLibre.from;
+                    this.pagination.to           = response.data.arrayReferenciaLibre.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaReferenciaLibre(page){
+                this.pagination.current_page=page;
+                this.listarReferenciasVehiculoLibre(page);
+            },
+            asignarReferenciaLibre(nIdReferenciaVehiculoContacto){
+                if(this.validaAsignarReferenciLibre()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                swal({
+                    title: 'Estas seguro de asignar esta referencia?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/gescontacto/SetAsignaReferenciaLibre';
+                            axios.post(url, {
+                                nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
+                                nIdEmpresa: 1300011,
+                                nIdSucursal: 1300013,
+                                nIdCronograma: 220016,
+                                nIdVendedor: parseInt(this.formVendedor.nidvendedor)
+                            }).then(response => {                            
+                                swal(
+                                'Activado!',
+                                'El registro fue asignado.'
+                                );
+                                this.listarReferenciasVehiculoLibre(1);                           
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        {
+                        }
+                    })
+            },
+            validaAsignarReferenciLibre(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formVendedor.nidvendedor == 0){
+                    this.mensajeError.push('Debes Seleccionar un Vendedor');
+                };
+                
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // ========================================================
             // =============  TAB SEGUIMIENTO =========================
@@ -2715,44 +3152,6 @@
                     console.log(error);
                 });
             },
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formNuevoContacto.nidproveedor = nProveedorId;
-                this.formNuevoContacto.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
-                this.llenarComboLinea();
-            },
             llenarComboLinea(){
                 this.nidempresa = 130011;
 
@@ -3182,6 +3581,84 @@
                     });
                 }
             },
+            // ==========================================================
+            // =============  BUSCAR PROVEEDORES ========================
+            buscaProveedores(){
+                this.listarProveedores(1);
+            },
+            listarProveedores(page){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayProveedor = response.data.arrayProveedor.data;
+                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
+                    this.paginationModal.total = response.data.arrayProveedor.total;
+                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
+                    this.paginationModal.from        = response.data.arrayProveedor.from;
+                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaProveedor(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedores(page);
+            },
+            asignarProveedor(nProveedorId, cProveedorNombre){
+                this.formNuevoContacto.nidproveedor = nProveedorId;
+                this.formNuevoContacto.cproveedornombre = cProveedorNombre;
+                this.cerrarModal();
+                this.arrayMarca = [];
+                this.arrayModelo = [];
+                this.llenarComboLinea();
+            },
+            // ==========================================================
+            // =============  BUSCAR VENDEDORES =========================
+            listarVendedores(page){
+                var url = this.ruta + '/gescontacto/GetListVendedoresByJFV';
+
+                axios.get(url, {
+                    params: {
+                        'cnombrevendedor' :   this.fillVendedor.cnombrevendedor,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayVendedor = response.data.arrayVendedor.data;
+                    this.paginationModal.current_page =  response.data.arrayVendedor.current_page;
+                    this.paginationModal.total = response.data.arrayVendedor.total;
+                    this.paginationModal.per_page    = response.data.arrayVendedor.per_page;
+                    this.paginationModal.last_page   = response.data.arrayVendedor.last_page;
+                    this.paginationModal.from        = response.data.arrayVendedor.from;
+                    this.paginationModal.to           = response.data.arrayVendedor.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaVendedor(page){
+                this.paginationModal.current_page=page;
+                this.listarVendedores(page);
+            },
+            asignarVendedor(nVendedorId, cVendedorNombre){
+                this.formVendedor.nidvendedor = nVendedorId;
+                this.formVendedor.cvendedornombre = cVendedorNombre;
+                this.cerrarModal();
+            },
+            reasignarVendedor(nVendedorId, cVendedorNombre){
+                this.formReasignarContacto.nreasignaidvendedor = nVendedorId;
+                this.formReasignarContacto.creasignavendedornombre = cVendedorNombre;
+                this.cerrarModal();
+            },
+            // =============================================
+            // =============  MODAL ========================
             cerrarModal(){
                 this.modal = 0
                 this.error = 0,
@@ -3213,61 +3690,23 @@
                             }
                         }
                     }
-                    case 'contactosCPV':
+                }
+            },
+            abrirnuevoModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'nuevovendedor':
                     {
                         switch(accion){
-                            case 'reasignarContacto':
+                            case 'buscar':
                             {
                                 this.accionmodal=4;
                                 this.modal = 1;
-                                // =============================================
-                                // Data para reasignar contacto
-                                // =============================================
-                                this.fillReasignarContacto.contacto = data['Contacto'];
-                                this.fillReasignarContacto.tipopersona = data['TipoPersona'];
-                                this.fillReasignarContacto.dni = data['DNI'];
-                                this.fillReasignarContacto.nombrelinea = data['nombreLinea'];
-                                this.fillReasignarContacto.nombremarca = data['nombreMarca'];
-                                this.fillReasignarContacto.nombremodelo = data['nombreModelo'];
-                                this.fillReasignarContacto.vendedor = data['Vendedor'];
-                                this.fillReasignarContacto.idasigcontactvendedor = data['codAsigContactVendedor'];
-                                //this.llenarComboVendedores();
+                                this.listarVendedores(1);
                                 break;
                             }
                         }
                     }
                 }
-            },
-            // ==========================================================
-            // =============  BUSCAR VENDEDORES =========================
-            listarVendedores(page){
-                var url = this.ruta + '/gescontacto/GetListVendedoresByJFV';
-
-                axios.get(url, {
-                    params: {
-                        'cnombrevendedor' :   this.fillVendedor.cnombrevendedor,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayVendedor = response.data.arrayVendedor.data;
-                    this.paginationModal.current_page =  response.data.arrayVendedor.current_page;
-                    this.paginationModal.total = response.data.arrayVendedor.total;
-                    this.paginationModal.per_page    = response.data.arrayVendedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVendedor.last_page;
-                    this.paginationModal.from        = response.data.arrayVendedor.from;
-                    this.paginationModal.to           = response.data.arrayVendedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaVendedor(page){
-                this.paginationModal.current_page=page;
-                this.listarVendedores(page);
-            },
-            asignarVendedor(nVendedorId, cVendedorNombre){
-                this.fillContactoPorVendedor.nidvendedor = nVendedorId;
-                this.fillContactoPorVendedor.cvendedornombre = cVendedorNombre;
-                this.cerrarModal();
             },
             // ===========================================================
             limpiarFormularioSeguimiento(){
