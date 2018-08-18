@@ -16,14 +16,8 @@ Vue.component('cotizacion', require('./components/Cotizacion.vue'));
 
 const app = new Vue({
     el: '#app',
-<<<<<<< HEAD
     data: {
         menu: 0,
         ruta: 'http://localhost:8080/saisacsys/public'
-=======
-    data:{
-        menu:0,
-        ruta: 'http://172.20.6.62:8080/saisacsys/public'
->>>>>>> cc974c7350c622f286db4837c16def0bbb100047
     }
 });
