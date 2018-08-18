@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS VENDEDOR</h2>
+            <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS JEFE DE VENTAS</h2>
           </div>
         </header>
         
