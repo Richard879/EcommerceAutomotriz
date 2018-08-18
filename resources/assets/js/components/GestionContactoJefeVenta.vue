@@ -519,7 +519,7 @@
                                                             </template>
                                                             <template v-else>
                                                                 <table>
-                                                                    <tbody>
+                                                                    <thead>
                                                                         <tr>
                                                                             <th>Contacto</th>
                                                                             <th>Razón Social</th>
