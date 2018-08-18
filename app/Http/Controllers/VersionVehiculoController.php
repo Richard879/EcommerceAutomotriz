@@ -6,29 +6,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\VersionVehiculo;
 
 class VersionVehiculoController extends Controller
 {
-    
+
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
-        $versionvehiculo = DB::select('exec usp_VersionVeh_SetVersion ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+
+        $versionvehiculo = DB::select('exec usp_VersionVeh_SetVersion ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdProveedor,
                                                                     $request->nIdClase,
-                                                                    $request->nIdSubClase, 
+                                                                    $request->nIdSubClase,
                                                                     $request->nIdLinea,
                                                                     $request->nIdMarca,
                                                                     $request->nIdModelo,
                                                                     /*$request->nIdAnioFabricacion,
                                                                     $request->nIdAnioVersion,*/
                                                                     $request->cNombreComercial,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
-        return response()->json($versionvehiculo);                                               
+        return response()->json($versionvehiculo);
     }
 
     public function GetVersionVehiculo(Request $request)
@@ -46,12 +47,12 @@ class VersionVehiculoController extends Controller
         if($cNombreComercial == ''){
             $cNombreComercial = "";
         }
-        
-        $arrayVersionVeh = DB::select('exec usp_VersionVeh_GetVersionVehiculo ?, ?, ?, ? ,? ,?, ?, ?', 
+
+        $arrayVersionVeh = DB::select('exec usp_VersionVeh_GetVersionVehiculo ?, ?, ?, ? ,? ,?, ?, ?',
                                                                         array(  $nIdEmpresa,
                                                                                 $nIdProveedor,
                                                                                 $nIdClase,
-                                                                                $nIdSubClase, 
+                                                                                $nIdSubClase,
                                                                                 $nIdLinea,
                                                                                 $nIdMarca,
                                                                                 $nIdModelo,
@@ -59,7 +60,7 @@ class VersionVehiculoController extends Controller
                                                                                 ));
 
         $arrayVersionVeh = $this->arrayPaginator($arrayVersionVeh, $request);
-        return ['arrayVersionVehiculo'=>$arrayVersionVeh];   
+        return ['arrayVersionVehiculo'=>$arrayVersionVeh];
     }
 
     public function arrayPaginator($array, $request)
@@ -79,22 +80,22 @@ class VersionVehiculoController extends Controller
     public function UpdVersionVehiculoById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
-        $versionvehiculo = DB::select('exec usp_VersionVeh_UpdVersionVehById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+
+        $versionvehiculo = DB::select('exec usp_VersionVeh_UpdVersionVehById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array(  $request->nIdVersionVeh,
                                                                     $request->nIdEmpresa,
                                                                     $request->nIdProveedor,
                                                                     $request->nIdClase,
-                                                                    $request->nIdSubClase, 
+                                                                    $request->nIdSubClase,
                                                                     $request->nIdLinea,
                                                                     $request->nIdMarca,
                                                                     $request->nIdModelo,
                                                                     /*$request->nIdAnioFabricacion,
                                                                     $request->nIdAnioVersion,*/
                                                                     $request->cNombreComercial,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
-        return response()->json($versionvehiculo);                                               
+        return response()->json($versionvehiculo);
     }
 
     public function GetLineasByProveedor(Request $request)
@@ -103,9 +104,9 @@ class VersionVehiculoController extends Controller
         $nIdProveedor = $request->nidproveedor;
         $cLineaNombre = "";
 
-        $arrayLinea = DB::select('exec usp_Par_GetLineaByProveedor ?, ?, ?', 
+        $arrayLinea = DB::select('exec usp_Par_GetLineaByProveedor ?, ?, ?',
                                                             array($nIdEmpresa, $nIdProveedor, $cLineaNombre));
-                                                            
+
         $data = [];
         $data[0] = [
             'nIdPar'   => 0,
@@ -124,9 +125,9 @@ class VersionVehiculoController extends Controller
     {
         $nIdLinea = $request->nidlinea;
 
-        $arrayMarca = DB::select('exec usp_Par_GetMarcaByLinea ?', 
+        $arrayMarca = DB::select('exec usp_Par_GetMarcaByLinea ?',
                                                             array($nIdLinea));
-                                                            
+
         $data = [];
         $data[0] = [
             'nIdPar'   => 0,
@@ -145,9 +146,9 @@ class VersionVehiculoController extends Controller
     {
         $nIdMarca = $request->nidmarca;
 
-        $arrayModelo = DB::select('exec usp_Par_GetModeloByMarca ?', 
+        $arrayModelo = DB::select('exec usp_Par_GetModeloByMarca ?',
                                                             array($nIdMarca));
-                                                            
+
         $data = [];
         $data[0] = [
             'nIdPar'   => 0,
@@ -166,19 +167,19 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $versionvehiculo = DB::select('exec usp_VersionVeh_DesactivaById ?', 
+        $versionvehiculo = DB::select('exec usp_VersionVeh_DesactivaById ?',
                                                             array(  $request->nIdVersionVeh
                                                                     ));
-        return response()->json($versionvehiculo);   
+        return response()->json($versionvehiculo);
     }
 
     public function activar (Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $versionvehiculo = DB::select('exec usp_VersionVeh_ActivaById ?', 
+        $versionvehiculo = DB::select('exec usp_VersionVeh_ActivaById ?',
                                                             array(  $request->nIdVersionVeh
                                                                     ));
-        return response()->json($versionvehiculo);   
+        return response()->json($versionvehiculo);
     }
 }

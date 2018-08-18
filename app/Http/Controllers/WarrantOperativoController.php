@@ -74,7 +74,7 @@ class WarrantOperativoController extends Controller
                                                                 $request->cNumeroWarrant,
                                                                 $request->dFechaInicio,
                                                                 $request->dFechaVence,
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
                                    
             return response()->json($wo);
@@ -88,7 +88,7 @@ class WarrantOperativoController extends Controller
                                                             array(wo[0].nIdWarrantOperativo,
                                                                 $det['nIdCompra'],
                                                                 $det['fValorWarrant'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  */
            // DB::commit(); 
@@ -113,7 +113,7 @@ class WarrantOperativoController extends Controller
                                                             array($request->nIdWarrantOperativo,
                                                                 $det['nIdCompra'],
                                                                 $det['fTotalCompra'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  
             DB::commit(); 

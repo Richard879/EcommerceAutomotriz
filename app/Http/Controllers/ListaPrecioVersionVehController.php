@@ -65,7 +65,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                     $request->nNroListaPrecio,
                                                                     $request->dFechaInicio,
                                                                     $request->nIdTipoLista,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
         return response()->json($versionvehiculo);          
     }
@@ -106,7 +106,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['fPrecioBono'],
                                                                 $det['fPrecioDealer'],   
                                                                 $det['fBonoEspecial'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }    
             DB::commit(); 

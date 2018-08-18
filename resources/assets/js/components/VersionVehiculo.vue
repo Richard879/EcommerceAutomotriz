@@ -142,8 +142,6 @@
                                                     <th>Marca</th>
                                                     <th>Modelo</th>
                                                     <th>Nombre Comercial</th>
-                                                    <!--<th>Año Fab.</th>
-                                                    <th>Año Modelo</th>-->
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
@@ -154,8 +152,6 @@
                                                     <td>{{ vehiculo.cMarcaNombre }}</td>
                                                     <td>{{ vehiculo.cModeloNombre }}</td>
                                                     <td>{{ vehiculo.cNombreComercial }}</td>
-                                                    <!--<td>{{ vehiculo.cAnioFabricacion }}</td>
-                                                    <td>{{ vehiculo.cAnioVersion }}</td>-->
                                                     <td>
                                                         <a href="#" @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" data-toggle="tooltip" data-placement="top" 
                                                             v-bind:title="'Actualizar ' +vehiculo.cNombreComercial">
@@ -397,7 +393,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -634,10 +630,12 @@
                                                                     + '&nidproveedor=' + this.formVersion.nidproveedor;
                 axios.get(url).then(response => {
                     this.arrayLinea = response.data;
-                    this.formVersion.nidlinea = 0;
+                    if(this.vistaFormulario){
+                        this.formVersion.nidlinea = 0;
+                    }
                     this.llenarComboMarca();
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboMarca(){
@@ -645,40 +643,26 @@
 
                 axios.get(url).then(response => {
                     this.arrayMarca = response.data;
-                    this.formVersion.nidmarca = 0;
+                    if(this.vistaFormulario){
+                        this.formVersion.nidmarca = 0;
+                    }
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboModelo(){
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca?nidmarca=' + this.formVersion.nidmarca;
                 axios.get(url).then(response => {
                     this.arrayModelo = response.data;
-                    this.formVersion.nidmodelo = 0;
+                    if(this.vistaFormulario){
+                        this.formVersion.nidmodelo = 0;
+                    }
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
-            /*llenarComboAnioFabricacion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110034 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayAnioFabricacion = response.data;
-                }).catch(error => {
-                    this.errors = error.response.data
-                });
-            },
-            llenarComboAnioVersion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110035 
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayAnioVersion = response.data;
-                }).catch(error => {
-                    this.errors = error.response.data
-                });
-            },*/
             buscaProveedores(){
                 this.listarProveedores(1);
             },
@@ -776,15 +760,18 @@
                     nIdLinea: parseInt(this.formVersion.nidlinea),
                     nIdMarca: parseInt(this.formVersion.nidmarca),
                     nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    /*nIdAnioFabricacion: parseInt(this.formVersion.nidaniofabricacion),
-                    nIdAnioVersion: parseInt(this.formVersion.nidanioversion),*/
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString(),
-                    nIdUsuario: 190011
+                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
                 }).then(response => {
-                    swal('Versión Vehículo registrado');
-                    this.limpiarFormulario();
-                    this.listarVersionVehiculo(1);
-                    this.vistaFormulario = 1;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Versión Vehículo registrado');
+                        this.limpiarFormulario();
+                        this.listarVersionVehiculo(1);
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Vehiculo');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -841,15 +828,18 @@
                     nIdLinea: parseInt(this.formVersion.nidlinea),
                     nIdMarca: parseInt(this.formVersion.nidmarca),
                     nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    /*nIdAnioFabricacion: parseInt(this.formVersion.nidaniofabricacion),
-                    nIdAnioVersion: parseInt(this.formVersion.nidanioversion),*/
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString(),
-                    nIdUsuario: 190011
+                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
                 }).then(response => {
-                    swal('Versión Vehículo Actualizado');
-                    this.limpiarFormulario();
-                    this.listarVersionVehiculo(1);
-                    this.vistaFormulario = 1;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Versión Vehículo Actualizado');
+                        this.limpiarFormulario();
+                        this.listarVersionVehiculo(1);
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Vehiculo');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -951,8 +941,6 @@
                                 this.llenarComboLinea();
                                 this.llenarComboMarca();
                                 this.llenarComboModelo();
-                                //this.llenarComboAnioFabricacion();
-                                //this.llenarComboAnioVersion();
                                 this.tituloFormulario = 'NUEVO VERSION VEHICULO';
                                 this.limpiarFormulario();
                                 break;
@@ -961,23 +949,19 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
+                                this.formVersion.nidproveedor = data['nIdProveedor'];
+                                this.formVersion.cproveedornombre = data['cProveedorNombre'];
                                 this.llenarComboClase();
                                 this.llenarComboSubClase();
                                 this.llenarComboLinea();
-                                this.llenarComboMarca();
-                                this.llenarComboModelo();
-                                //this.llenarComboAnioFabricacion();
-                                //this.llenarComboAnioVersion();
-                                this.tituloFormulario = 'ACTUALIZAR VERSION VEHICULO';
-                                this.formVersion.nidproveedor = data['nIdProveedor'];
-                                this.formVersion.cproveedornombre = data['cProveedorNombre'];
                                 this.formVersion.nidclase = data['nIdClase'];
                                 this.formVersion.nidsubclase = data['nIdSubClase'];
                                 this.formVersion.nidlinea = data['nIdLinea'];
+                                //this.llenarComboMarca();
                                 this.formVersion.nidmarca = data['nIdMarca'];
+                                //this.llenarComboModelo();
+                                this.tituloFormulario = 'ACTUALIZAR VERSION VEHICULO';
                                 this.formVersion.nidmodelo = data['nIdModelo'];
-                                /*this.formVersion.nidaniofabricacion = data['nIdAnioFab'];
-                                this.formVersion.nidanioversion = data['nIdAnioVersion'];*/
                                 this.formVersion.nidversionveh = data['nIdVersionVeh'];
                                 this.formVersion.cnombrecomercial = data['cNombreComercial'];
                                 break;
@@ -1025,10 +1009,11 @@
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

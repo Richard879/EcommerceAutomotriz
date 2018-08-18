@@ -19,12 +19,12 @@
                 <form class="form-horizontal was-validated" method="POST" action="{{ route('login')}}">
                     {{ csrf_field() }}
                     <div class="form-group{{$errors->has('usuario' ? 'is-invalid' : '')}}">
-                        <input id="usuario" type="text" name="usuario" value="{{old('usuario')}}" placeholder="Usuario" class="input-material">
+                        <input id="usuario" type="text" name="usuario" value="{{old('usuario')}}" style="text-transform:uppercase" placeholder="Usuario" class="input-material">
                         <!--<label for="login-username" class="label-material">User Name</label>-->
                         {!!$errors->first('usuario','<span class="help-block">:message</span>')!!}
                     </div>
                     <div class="form-group{{$errors->has('password' ? 'is-invalid' : '')}}">
-                        <input id="password" type="password" name="password" placeholder="Password" class="input-material">
+                        <input id="password" type="password" name="password" placeholder="PASSWORD" class="input-material">
                         <!--<label for="login-password" class="label-material">Password</label>-->
                         {!!$errors->first('password','<span class="help-block">:message</span>')!!}
                     </div>

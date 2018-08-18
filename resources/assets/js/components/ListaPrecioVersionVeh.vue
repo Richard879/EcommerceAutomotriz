@@ -686,7 +686,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -701,9 +701,9 @@
                                                             <label class="col-sm-4 form-control-label">Nombre</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
-                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                    <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
                                                                     <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores"><i class="fa-lg fa fa-search"></i></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -980,8 +980,7 @@
                     nIdCronograma: 220016,
                     nNroListaPrecio: parseInt(this.formListaPrecioVh.nnrolistaprecio),
                     dFechaInicio: this.formListaPrecioVh.dfechainicio,
-                    nIdTipoLista: this.formListaPrecioVh.nidtipolista,
-                    nIdUsuario: 190011
+                    nIdTipoLista: this.formListaPrecioVh.nidtipolista
                 }).then(response => {
                     swal('Lista de Precio registrada');
                     this.limpiarFormulario();
@@ -1042,12 +1041,18 @@
                                 nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh,
                                 nIdProveedor: nIdProveedor,
                                 nIdTipoLista: nIdTipoLista
-                            }).then(response =>{                            
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarListaPrecioVh(1);                          
+                            }).then(response =>{     
+                                if(response.data[0].nFlagMsje == 1)
+                                {
+                                    swal(
+                                    'Activado!',
+                                    'El registro fue activado.'
+                                    );
+                                    this.listarListaPrecioVh(1);  
+                                }
+                                else{
+                                    swal('Ya existe Lista activa');
+                                }                                                                               
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -1283,8 +1288,7 @@
                 var url = this.ruta + '/listapreciovh/SetListaPrecioVhDetalle';
                 axios.post(url, {
                     nIdListaPrecioVersionVeh: this.formListaPrecioVh.nidlistaprecioversionVeh,
-                    data: this.arrayListaPrecioVh,
-                    nIdUsuario: 190011
+                    data: this.arrayListaPrecioVh
                 }).then(response => {
                     swal('Detalle de Lista registrada');
                     this.arrayExcel = [];
@@ -1351,10 +1355,11 @@
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

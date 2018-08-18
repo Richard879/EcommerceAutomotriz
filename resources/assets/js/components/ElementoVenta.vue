@@ -278,7 +278,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -572,8 +572,7 @@
                     cElemenNombre: this.formEle.celenombre.toUpperCase(),
                     fElemenValorVenta: this.formEle.felevalorventa,
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp.toUpperCase(),
-                    nIdUsuario: 190011
+                    cCodigoERP: this.formEle.celecodigoerp.toUpperCase()
                 }).then(response => {
                     swal('Elemento registrado');
                     this.listarElementos(1);
@@ -794,10 +793,11 @@
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

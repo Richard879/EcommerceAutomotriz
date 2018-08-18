@@ -802,7 +802,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -902,7 +902,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form class="form-horizontal">
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <template v-if="vistaModal==0">
                                     <div class="col-lg-12">
@@ -1188,7 +1188,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form class="form-horizontal">
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -1307,7 +1307,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -1410,7 +1410,7 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
+                        <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -1571,16 +1571,6 @@
                     celecodigoerp: '',
                     felevalorventa: '',
                     felevarlorminventa: ''
-                },
-                fillEventoCamp:{
-                    nideventocampania: 0,
-                    ntipodistribucion: 1,
-                    nidproveedor: 0,
-                    cproveedornombre: '',
-                    nindex: 0,
-                    ntipoproveedor: 0,
-                    fValorPorcentual: 0,
-                    nentidad: 0
                 },
                 formEventoCamp:{
                     nidempresa: 0,
@@ -2384,8 +2374,7 @@
                     dFechaInicio: this.formEventoCamp.dfechainicio,
                     dFechaFin: this.formEventoCamp.dfechafin,
                     fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
-                    nIdUsuario: 190011
+                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
                 }).then(response => {
                     this.registrarAsignaDetalle(response.data[0].nIdEventoCampania)
                     this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
@@ -2416,8 +2405,7 @@
                         cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
                         data: this.arrayRegistraDetalle,
                         nTotalRegistros: this.arrayRegistraDetalle.length,
-                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                        nIdUsuario: 190011
+                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2431,8 +2419,7 @@
 
                     axios.post(url, {
                         nIdEventoCampania: nIdEventoCampania,
-                        data: this.arrayTemporalElemento,
-                        nIdUsuario: 190011
+                        data: this.arrayTemporalElemento
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2459,8 +2446,7 @@
                         var url = this.ruta + '/ec/SetDistribucionEventoByEC';
                         axios.post(url, {
                             nIdEventoCampania: this.formDistribucion.nideventocampania,
-                            data: list,
-                            nIdUsuario: 190011
+                            data: list
                         }).then(response => {
                             swal('Distribución registrada');
                             this.limpiarFormulario();
@@ -2488,8 +2474,7 @@
 
                         var url = this.ruta + '/ec/SetDistribucionEventoByElemento';
                         axios.post(url, {
-                            data: list,
-                            nIdUsuario: 190011
+                            data: list
                         }).then(response => {
                             swal('Distribución registrada');
                             this.limpiarFormulario();
@@ -2591,15 +2576,16 @@
     }
 </script>
 <style>
-       .mostrar{
+        .mostrar{
             display: list-item !important;
             opacity: 1 !important;
             position: fixed !important;
             background-color: #3c29297a !important;
+            overflow-y: scroll;
         }
         .modal-content{
             width: 100% !important;
-            position: fixed !important;
+            position: absolute !important;
         }
         .error{
             display: flex;

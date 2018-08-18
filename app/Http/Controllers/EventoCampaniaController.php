@@ -42,7 +42,7 @@ class EventoCampaniaController extends Controller
                                                                     $request->dFechaFin,
                                                                     $request->fValorPresupuesto,
                                                                     $request->cFlagDetalleEvento,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                     ));
         return response()->json($eventocampania);                                        
     }
@@ -66,7 +66,7 @@ class EventoCampaniaController extends Controller
                                                                     $det['nIdLinea'],
                                                                     $request->nTotalRegistros,
                                                                     $request->fValorPresupuesto,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                 ));
                 }  
             }
@@ -81,7 +81,7 @@ class EventoCampaniaController extends Controller
                                                                     $det['nIdMarca'],
                                                                     $request->nTotalRegistros,
                                                                     $request->fValorPresupuesto,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                 ));
                 }  
             }
@@ -96,7 +96,7 @@ class EventoCampaniaController extends Controller
                                                                     $det['nIdModelo'],
                                                                     $request->nTotalRegistros,
                                                                     $request->fValorPresupuesto,
-                                                                    $request->nIdUsuario
+                                                                    Auth::user()->id
                                                                 ));
                 }  
             }
@@ -121,7 +121,7 @@ class EventoCampaniaController extends Controller
                 DB::select('exec usp_EC_SetEventoElementoVenta ?, ?, ?', 
                                                             array($request->nIdEventoCampania,
                                                                 $det['nIdElemento'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  
 
@@ -147,7 +147,7 @@ class EventoCampaniaController extends Controller
                                                                 $det['cFlagEntidad'],
                                                                 $det['nIdEntidad'],
                                                                 $det['fValorPorcentual'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  
 
@@ -172,7 +172,7 @@ class EventoCampaniaController extends Controller
                                                             array($det['nIdEventoElementoVenta'],
                                                                 $det['nIdEntidad'],
                                                                 $det['fValorPorcentual'],
-                                                                $request->nIdUsuario
+                                                                Auth::user()->id
                                                             ));
             }  
 
