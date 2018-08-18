@@ -41,9 +41,7 @@ class ParametroController extends Controller
         $cNombreProveedor = $request->cnombreproveedor;
         $variable   = $request->opcion;
 
-        if($cNombreProveedor == ''){
-            $cNombreProveedor = "";
-        }
+        $cNombreProveedor = ($cNombreProveedor == NULL) ? ($cNombreProveedor = ' ') : $cNombreProveedor;
         
         $parametro = DB::select('exec usp_Proveedor_GetLstProveedor ?, ?, ?', 
                                                             array($nIdEmpresa, $nIdGrupoPar, $cNombreProveedor));
@@ -80,9 +78,8 @@ class ParametroController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cLineaNombre = $request->clineanombre;
-        if($cLineaNombre == ''){
-            $cLineaNombre = "";
-        }
+
+        $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
 
         $arrayLinea = DB::select('exec usp_Par_GetLineaByProveedor ?, ?, ?', 
                                                             array($nIdEmpresa, $nIdProveedor, $cLineaNombre));
@@ -97,9 +94,7 @@ class ParametroController extends Controller
         $nIdProveedor = $request->nidproveedor;
         $cMarcaNombre = $request->cmarcanombre;
 
-        if($cMarcaNombre == ''){
-            $cMarcaNombre = "";
-        }
+        $cMarcaNombre = ($cMarcaNombre == NULL) ? ($cMarcaNombre = ' ') : $cMarcaNombre;
 
         $arrayMarca = DB::select('exec usp_Par_GetMarcaByProveedor ?, ?, ?', 
                                                             array($nIdEmpresa, $nIdProveedor, $cMarcaNombre));
@@ -114,9 +109,7 @@ class ParametroController extends Controller
         $nIdProveedor = $request->nidproveedor;
         $cModeloNombre = $request->cmodelonombre;
 
-        if($cModeloNombre == ''){
-            $cModeloNombre = "";
-        }
+        $cModeloNombre = ($cModeloNombre == NULL) ? ($cModeloNombre = ' ') : $cModeloNombre;
 
         $arrayModelo = DB::select('exec usp_Par_GetModeloByProveedor ?, ?, ?', 
                                                             array($nIdEmpresa, $nIdProveedor, $cModeloNombre));

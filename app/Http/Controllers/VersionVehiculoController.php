@@ -44,9 +44,8 @@ class VersionVehiculoController extends Controller
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
         $cNombreComercial = $request->cnombrecomercial;
-        if($cNombreComercial == ''){
-            $cNombreComercial = "";
-        }
+
+        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
 
         $arrayVersionVeh = DB::select('exec usp_VersionVeh_GetVersionVehiculo ?, ?, ?, ? ,? ,?, ?, ?',
                                                                         array(  $nIdEmpresa,

@@ -17,6 +17,9 @@ class LoginController extends Controller
     public function login(Request $request){
         $this->validateLogin($request);
 
+        $user   = $request->usuario;
+        $pass   = bcrypt($request->password);
+
         $userdata = Auth::attempt(['usuario' => $request->usuario,'password' => $request->password, 'condicion' => '1']);
 
        if ($userdata){

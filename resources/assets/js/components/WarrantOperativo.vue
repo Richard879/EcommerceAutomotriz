@@ -117,7 +117,7 @@
                                                                                 <td>{{ operativo.fValorTotal }}</td>
                                                                                 <td>{{ operativo.cParNombre }}</td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" v-bind:title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
+                                                                                    <a href="#" @click="asignaIdWOperativo(operativo.nIdWarrantOperativo);" data-toggle="tooltip" data-placement="top" :title="'Ver Detalle ' +operativo.nIdWarrantOperativo">
                                                                                     <i class="fa-md fa fa-eye"></i></a>
                                                                                 </td>
                                                                             </tr>
@@ -399,8 +399,8 @@
                                                                     <tbody>
                                                                         <tr v-for="(temporal, index)  in arrayTemporal" :key="temporal.nIdCompra">
                                                                             <td>
-                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" v-bind:title="'Eliminar ' +temporal.nIdCompra">
-                                                                                <i v-bind:style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                <a href="#" @click="eliminaItemTempVehiculo(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +temporal.nIdCompra">
+                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                             </td>
                                                                             <td>{{ temporal.nOrdenCompra }}</td>
                                                                             <td>{{ temporal.cNumeroVin }}</td>
@@ -726,7 +726,7 @@
                 axios.get(url).then(response => {
                     this.arrayBanco = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboEstadoWarrant(){
@@ -735,7 +735,7 @@
                 axios.get(url).then(response => {
                     this.arrayEstadoWarrant = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             tabBuscarWOperativo(){
@@ -760,7 +760,7 @@
                     this.pagination.from        = response.data.arrayWOperativo.from;
                     this.pagination.to           = response.data.arrayWOperativo.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -789,7 +789,7 @@
                     this.pagination.from        = response.data.arrayWOperativoDetalle.from;
                     this.pagination.to           = response.data.arrayWOperativoDetalle.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaDetalle(page){
@@ -842,7 +842,7 @@
                     this.paginationModal.from        = response.data.arrayVersionVehiculo.from;
                     this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaVehiculos(page){

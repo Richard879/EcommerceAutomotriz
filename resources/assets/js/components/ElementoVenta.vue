@@ -63,27 +63,27 @@
                                             </thead>
                                             <tbody>
                                                 <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
-                                                    <td>{{ elemento.nIdElemento }}</td>
-                                                    <td>{{ elemento.cProveedorNombre }}</td>
-                                                    <td>{{ elemento.cTipoElemenNombre }}</td>
-                                                    <td>{{ elemento.cElemenNombre }}</td>
-                                                    <td>{{ elemento.fElemenValorVenta }}</td>
-                                                    <td>{{ elemento.fElemenValorMinimoVenta }}</td>
+                                                    <td v-text="elemento.nIdElemento"></td>
+                                                    <td v-text="elemento.cProveedorNombre"></td>
+                                                    <td v-text="elemento.cTipoElemenNombre"></td>
+                                                    <td v-text="elemento.cElemenNombre"></td>
+                                                    <td v-text="elemento.fElemenValorVenta"></td>
+                                                    <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                     <td>
                                                         <a href="#" @click="abrirFormulario('elemento','actualizar', elemento)" data-toggle="tooltip" data-placement="top" 
-                                                            v-bind:title="'Actualizar ' +elemento.cElemenNombre">
+                                                            :title="'Actualizar ' +elemento.cElemenNombre">
                                                             <i class="fa-md fa fa-edit"></i>
                                                         </a>
                                                         <template v-if="elemento.cElementoEstado=='A'">
                                                             <a href="#" @click="desactivar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top" 
-                                                            v-bind:title="'Desactivar ' +elemento.cElemenNombre">
+                                                            :title="'Desactivar ' +elemento.cElemenNombre">
                                                                 <i class="fa-md fa fa-check-square"></i>
                                                             </a>
                                                         </template>
                                                         <template v-else>
                                                             <a href="#" @click="activar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top" 
-                                                            v-bind:title="'Activar ' +elemento.cElemenNombre">
-                                                                <i v-bind:style="'color:red'" class="fa-md fa fa-square"></i>
+                                                            :title="'Activar ' +elemento.cElemenNombre">
+                                                                <i :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </a>
                                                         </template>
                                                     </td>
@@ -159,11 +159,11 @@
                                                     <div class="input-group">
                                                         <input type="hidden" v-model="formEle.nidproveedor">
                                                         <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <span class="input-group-btn">
+                                                        <div class="input-group-prepend">
                                                             <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
                                                                 <i class="fa-lg fa fa-search"></i>
                                                             </button>
-                                                        </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -294,9 +294,11 @@
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
                                                                     <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </span>
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -320,7 +322,7 @@
                                                                             <i class='fa-md fa fa-check-circle'></i>
                                                                         </a>
                                                                     </td>
-                                                                    <td>{{proveedor.cParNombre}}</td>
+                                                                    <td v-text="proveedor.cParNombre"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -489,7 +491,7 @@
                 axios.get(url).then(response => {
                     this.arrayTipoElemento = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             llenarComboTpoMoneda(){
@@ -498,7 +500,7 @@
                 axios.get(url).then(response => {
                     this.arrayTipoMoneda = response.data;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             buscaProveedores(){
@@ -519,7 +521,7 @@
                     this.paginationModal.from        = response.data.arrayProveedor.from;
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
                 });
             },
             cambiarPaginaProveedor(page){

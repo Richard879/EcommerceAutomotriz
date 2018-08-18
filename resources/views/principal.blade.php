@@ -15,17 +15,26 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-    <div id="app">
-        <div class="page">
-            <!-- Main Navbar-->
-            <header class="header">
-                <nav class="navbar">
-                <!-- Search Box-->
-                <div class="search-box">
-                    <button class="dismiss"><i class="icon-close"></i></button>
-                    <form id="searchForm" action="#" role="search">
-                    <input type="search" placeholder="What are you looking for..." class="form-control">
-                    </form>
+<div id="app">
+    <div class="page">
+        <!-- Main Navbar-->
+        <header class="header">
+            <nav class="navbar">
+            <!-- Search Box-->
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="What are you looking for..." class="form-control">
+                </form>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <!-- Navbar Header-->
+                <div class="navbar-header">
+                    <!-- Navbar Brand --><a href="http://172.20.6.62:8080/saisacsys" class="navbar-brand">
+                    <div class="brand-text brand-big"><span><img class="navbar-brand-full" src="img/logo.png" width="220" height="30" alt="CoreUI Logo"></span></div>
+                    <div class="brand-text brand-small"><strong>INKA</strong></div></a>
+                    <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
                 </div>
                 <div class="container-fluid">
                     <div class="navbar-holder d-flex align-items-center justify-content-between">
@@ -65,6 +74,7 @@
                                 </div></a></li>
                             <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications</strong></a></li>
                         </ul>
+<<<<<<< HEAD
                         </li>
                         <!-- Messages -->
                         <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
@@ -91,6 +101,21 @@
                             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img src="img/avatar-1.jpg" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" alt="admin@bootstrapmaster.com">
                                 <span class="d-md-down-none">{{ Auth::user()->usuario }}</span>
+=======
+                    </li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img src="img/avatar-1.jpg" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" alt="admin@bootstrapmaster.com">
+                            <span class="d-md-down-none">{{ Auth::user()->usuario }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!--<div class="dropdown-header text-center">
+                                <strong>Cuenta</strong>
+                            </div>-->
+                            <!--<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a>-->
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa fa-lock"></i> Cerrar sesión
+>>>>>>> cc974c7350c622f286db4837c16def0bbb100047
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
