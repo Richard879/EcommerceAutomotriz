@@ -1720,41 +1720,6 @@
                     console.log(error);
                 });
             },
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formEventoCamp.nidproveedor = nProveedorId;
-                this.formEventoCamp.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-            },
             tabBuscarEventoCampania(){
                 this.vistaFormularioTabBuscar = 1;
                 this.llenarComboTipoEC();
@@ -1850,33 +1815,15 @@
                         }
                     })
             },
-            cerrarModal(){
-                this.modal = 0,
-                this.error = 0,
-                this.mensajeError = ''
-            },
-            abrirModal(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'proveedor':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                this.accionmodal=2;
-                                this.modal = 1;
-                                this.listarProveedores(1);
-                                break;
-                            }
-                        }
-                    }
-                }
-            },
+            // ====================================================
+            // =============  NUEVO EVENTO ========================
             tabNuevoEventoCampania(){
                 this.limpiarFormulario();
                 this.llenarComboTipoEC();
                 this.cargarTabAsignaDetalle();
                 this.cargarTabAsignaElemento();
             },
+            // =============  TAB ASIGNA DETALLE ========================
             cargarTabAsignaDetalle(){
                 this.llenarComboDetalleEC();
             },
@@ -2126,6 +2073,15 @@
                 this.$delete(this.arrayTemporalModelo, index);
                 toastr.success('Se Eliminó Item Modelo');
             },
+            // =============  TAB ASIGNA ELEMENTO VENTA ===================
+            activarTab2(){
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link");
+                $('#Tab2').removeClass('nav-link disabled');
+                $('#Tab2').addClass("nav-link active");
+                $('#TabECAsignaDetalle').removeClass('in active show');
+                $('#TabECAsignaElemento').addClass('in active show');
+            },
             cargarTabAsignaElemento(){
                 this.llenarComboTpoElemento();
             },
@@ -2223,6 +2179,18 @@
             eliminarItemElemento(index){
                 this.$delete(this.arrayTemporalElemento, index);
                 toastr.success('Se Eliminó Item Elemento');
+            },
+            // =============  TAB DISTRIBUCION ===================
+            activarTab3(){
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link disabled");
+                $('#Tab2').removeClass('nav-link active');
+                $('#Tab2').addClass("nav-link disabled");
+                $('#Tab3').removeClass('nav-link disabled');
+                $('#Tab3').addClass("nav-link active");
+                $('#TabECAsignaElemento').removeClass('in active show');
+                $('#TabECAsignaDistribucion').addClass('in active show');
+                this.vistaFormularioDistribucion = 1;
             },
             cargarDistPorEventoCampania(){
                 this.cambiarVistaDistribucion();
@@ -2373,29 +2341,11 @@
                     }
                 }
             },
-            activarTab2(){
-                $('#Tab1').removeClass('nav-link active');
-                $('#Tab1').addClass("nav-link");
-                $('#Tab2').removeClass('nav-link disabled');
-                $('#Tab2').addClass("nav-link active");
-                $('#TabECAsignaDetalle').removeClass('in active show');
-                $('#TabECAsignaElemento').addClass('in active show');
-            },
-            activarTab3(){
-                $('#Tab1').removeClass('nav-link active');
-                $('#Tab1').addClass("nav-link disabled");
-                $('#Tab2').removeClass('nav-link active');
-                $('#Tab2').addClass("nav-link disabled");
-                $('#Tab3').removeClass('nav-link disabled');
-                $('#Tab3').addClass("nav-link active");
-                $('#TabECAsignaElemento').removeClass('in active show');
-                $('#TabECAsignaDistribucion').addClass('in active show');
-                this.vistaFormularioDistribucion = 1;
-            },
             desactivarTabs(){
                 $('#Tab2').addClass('disabled');
                 //$('#Tab3').addClass('disabled');
             },
+            // =============  REGISTRAR EVENTO ===================
             registrar(){                
                 if(this.validar()){
                     this.accionmodal=1;
@@ -2583,6 +2533,67 @@
                 $('#TabECAsignaElemento').removeClass('in active show');
                 $('#TabECAsignaDistribucion').removeClass('in active show');
             },
+            // =========================================================
+            // =============  MODAL PROVEEDORES ========================
+            buscaProveedores(){
+                this.listarProveedores(1);
+            },
+            listarProveedores(page){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayProveedor = response.data.arrayProveedor.data;
+                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
+                    this.paginationModal.total = response.data.arrayProveedor.total;
+                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
+                    this.paginationModal.from        = response.data.arrayProveedor.from;
+                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaProveedor(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedores(page);
+            },
+            asignarProveedor(nProveedorId, cProveedorNombre){
+                this.formEventoCamp.nidproveedor = nProveedorId;
+                this.formEventoCamp.cproveedornombre = cProveedorNombre;
+                this.cerrarModal();
+            },
+            // =============================================
+            // =============  MODAL ========================
+            cerrarModal(){
+                this.modal = 0,
+                this.error = 0,
+                this.mensajeError = ''
+            },
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'proveedor':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            // ===========================================================
             limpiarFormulario(){
                 this.formEventoCamp.dfechainicio = '',
                 this.formEventoCamp.dfechafin = '',
