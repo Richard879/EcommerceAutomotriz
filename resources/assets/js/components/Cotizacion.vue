@@ -1069,6 +1069,47 @@
                     }
                     break;
                 }
+                switch(modelo){
+                    case "contacto":
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case "vendedor":
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                this.listarVendedores(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'nuevovendedor':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                this.listarVendedores(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
             },
             //Limpiar Paginación
             limpiarPaginacion(){
