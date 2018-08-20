@@ -415,6 +415,7 @@ class GestionContactoController extends Controller
 
         $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
 
         $arrayContactosPorVendedor = DB::select('exec usp_Contacto_GetListContactoByVendedor ?, ?, ?, ?, ?, ?, ?',
                                                                         array(  $nIdEmpresa,
