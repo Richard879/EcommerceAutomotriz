@@ -33,8 +33,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
-                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento();"><i class="fa fa-search"></i> Buscar</button>
-                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento();"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
                                 </form>
