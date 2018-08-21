@@ -15,8 +15,8 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
-        $this->validateLogin($request);        
- 
+        $this->validateLogin($request);
+
         $user   = $request->usuario;
         $pass   = bcrypt($request->password);
 
@@ -25,20 +25,20 @@ class LoginController extends Controller
        if ($userdata){
             return redirect()->route('main');
         }
- 
+
        return back()
         ->withErrors(['usuario' => trans('auth.failed')])
         ->withInput(request(['usuario']));
- 
+
     }
- 
+
     protected function validateLogin(Request $request){
         $this->validate($request,[
             'usuario' => 'required|string',
             'password' => 'required|string'
         ]);
     }
- 
+
     public function logout(Request $request){
         Auth::logout();
         $request->session()->invalidate();

@@ -83,6 +83,7 @@ Route::post('/gescontacto/UpdReasignarReferenciaVehiculo', 'GestionContactoContr
 
 Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
 Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
+Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
 
 Route::get('/','Auth\LoginController@showLoginForm')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->name('login');

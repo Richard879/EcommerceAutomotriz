@@ -13,7 +13,7 @@
         <listapreciovh :ruta="ruta"></listapreciovh>
     </template>
     <template v-if="menu==6">
-        <compra :ruta="ruta"></compra>        
+        <compra :ruta="ruta"></compra>
     </template>
     <template v-if="menu==7">
         <woperativo :ruta="ruta"></woperativo>
@@ -31,6 +31,6 @@
         <gestioncontactov :ruta="ruta"></gestioncontactov>
     </template>
     <template v-if="menu==12">
-        <h2>Ayuda</h2>
+        <cotizacion :ruta="ruta"></cotizacion>
     </template>
 @endsection

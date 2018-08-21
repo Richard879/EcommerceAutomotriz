@@ -14,7 +14,7 @@
                             <div class="card-header">
                                 <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
                             </div>
-                            <div class="card-body"> 
+                            <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Empresa</label>
@@ -31,7 +31,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">        
+                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento();"><i class="fa fa-search"></i> Buscar</button>
                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
@@ -70,18 +70,18 @@
                                                     <td v-text="elemento.fElemenValorVenta"></td>
                                                     <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                     <td>
-                                                        <a href="#" @click="abrirFormulario('elemento','actualizar', elemento)" data-toggle="tooltip" data-placement="top" 
+                                                        <a href="#" @click="abrirFormulario('elemento','actualizar', elemento)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Actualizar ' +elemento.cElemenNombre">
                                                             <i class="fa-md fa fa-edit"></i>
                                                         </a>
                                                         <template v-if="elemento.cElementoEstado=='A'">
-                                                            <a href="#" @click="desactivar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top" 
+                                                            <a href="#" @click="desactivar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Desactivar ' +elemento.cElemenNombre">
                                                                 <i class="fa-md fa fa-check-square"></i>
                                                             </a>
                                                         </template>
                                                         <template v-else>
-                                                            <a href="#" @click="activar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top" 
+                                                            <a href="#" @click="activar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Activar ' +elemento.cElemenNombre">
                                                                 <i :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </a>
@@ -89,7 +89,7 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>                                    
+                                        </table>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="row">
@@ -99,12 +99,12 @@
                                                         <li v-if="pagination.current_page > 1" class="page-item">
                                                             <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                         </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                         :class="[page==isActived?'active':'']">
-                                                            <a class="page-link" 
-                                                            href="#" @click.prevent="cambiarPagina(page)" 
+                                                            <a class="page-link"
+                                                            href="#" @click.prevent="cambiarPagina(page)"
                                                             v-text="page"></a>
-                                                        </li>                            
+                                                        </li>
                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                             <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                         </li>
@@ -132,7 +132,7 @@
                 </div>
             </section>
         </template>
-        
+
         <template v-else>
             <section class="forms">
                 <div class="container-fluid">
@@ -141,7 +141,7 @@
                             <div class="card-header">
                                 <h3 class="h4" v-text="tituloFormulario"></h3>
                             </div>
-                            <div class="card-body"> 
+                            <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
                                         <div class="col-sm-6">
@@ -230,7 +230,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">        
+                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
                                             <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                 <i class="fa fa-save"></i> Registrar
@@ -263,7 +263,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -335,12 +335,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -375,7 +375,7 @@
                 </div>
             </div>
         </div>
-       
+
     </main>
 </template>
 <script>
@@ -440,16 +440,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -465,16 +465,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -486,7 +486,7 @@
         },
         methods:{
             llenarComboTpoElemento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110027 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110027
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayTipoElemento = response.data;
@@ -495,7 +495,7 @@
                 });
             },
             llenarComboTpoMoneda(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110028 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110028
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayTipoMoneda = response.data;
@@ -507,9 +507,9 @@
                 this.listarProveedores(1);
             },
             listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
+                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011
                                                                     + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString() 
+                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString()
                                                                     + '&opcion=' + 1
                                                                     + '&page='+ page;
                 axios.get(url).then(response => {
@@ -655,24 +655,24 @@
                             var url = this.ruta + '/elemento/activar';
                             axios.put(url , {
                                 nIdElementoVenta: nIdElementoVenta
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Activado!',
                                 'El registro fue activado.'
                                 );
-                                this.listarElementos(1); 
-                                this.vistaFormulario = 1;                          
+                                this.listarElementos(1);
+                                this.vistaFormulario = 1;
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
             },
             desactivar(nIdElementoVenta){
-                
+
                 swal({
                     title: 'Estas seguro de desactivar esta categoría?',
                     type: 'warning',
@@ -686,18 +686,18 @@
                             var url = this.ruta + '/elemento/desactivar';
                             axios.put(url , {
                                 nIdElementoVenta: nIdElementoVenta
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Desactivado!',
                                 'El registro fue desactivado.'
                                 );
                                 this.listarElementos(1);
-                                this.vistaFormulario = 1;                       
+                                this.vistaFormulario = 1;
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })

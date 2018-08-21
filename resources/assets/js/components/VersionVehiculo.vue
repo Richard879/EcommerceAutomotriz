@@ -15,7 +15,7 @@
                                 <h3 class="h4">BUSCAR VERSION VEHICULO</h3>
                             </div>
                             <div class="card-body">
-                                <form class="form-horizontal"> 
+                                <form class="form-horizontal">
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
@@ -112,7 +112,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">        
+                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVersionVehiculo();">
                                                 <i class="fa fa-search"></i> Buscar
@@ -153,18 +153,18 @@
                                                     <td v-text="vehiculo.cModeloNombre"></td>
                                                     <td v-text="vehiculo.cNombreComercial"></td>
                                                     <td>
-                                                        <a href="#" @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" data-toggle="tooltip" data-placement="top" 
+                                                        <a href="#" @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Actualizar ' +vehiculo.cNombreComercial">
                                                             <i class="fa-md fa fa-edit"></i>
                                                         </a>
                                                         <template v-if="vehiculo.cVersionVehEstado=='A'">
-                                                            <a href="#" @click="desactivar(vehiculo.nIdVersionVeh)" data-toggle="tooltip" data-placement="top" 
+                                                            <a href="#" @click="desactivar(vehiculo.nIdVersionVeh)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Desactivar ' +vehiculo.nIdVersionVeh">
                                                                 <i class="fa-md fa fa-check-square"></i>
                                                             </a>
                                                         </template>
                                                         <template v-else>
-                                                            <a href="#" @click="activar(vehiculo.nIdVersionVeh)" data-toggle="tooltip" data-placement="top" 
+                                                            <a href="#" @click="activar(vehiculo.nIdVersionVeh)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Activar ' +vehiculo.nIdVersionVeh">
                                                                 <i :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </a>
@@ -172,7 +172,7 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>                                   
+                                        </table>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="row">
@@ -182,12 +182,12 @@
                                                         <li v-if="pagination.current_page > 1" class="page-item">
                                                             <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                         </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                         :class="[page==isActived?'active':'']">
-                                                            <a class="page-link" 
-                                                            href="#" @click.prevent="cambiarPagina(page)" 
+                                                            <a class="page-link"
+                                                            href="#" @click.prevent="cambiarPagina(page)"
                                                             v-text="page"></a>
-                                                        </li>                            
+                                                        </li>
                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                             <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                         </li>
@@ -224,7 +224,7 @@
                             <div class="card-header">
                                 <h3 class="h4" v-text="tituloFormulario"></h3>
                             </div>
-                            <div class="card-body"> 
+                            <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
                                         <div class="col-sm-6">
@@ -322,7 +322,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">        
+                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
                                             <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                 <i class="fa fa-save"></i> Registrar
@@ -342,7 +342,7 @@
                 </div>
             </section>
         </template>
-        
+
         <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-md" role="document">
                 <div class="modal-content">
@@ -354,7 +354,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">                                    
+                            <div v-for="e in mensajeError" :key="e" v-text="e">
                             </div>
                         </div>
                     </div>
@@ -424,12 +424,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -465,7 +465,7 @@
             </div>
         </div>
 
-       
+
     </main>
 </template>
 <script>
@@ -536,16 +536,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -561,16 +561,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -583,7 +583,7 @@
         methods:{
             llenarComboClase(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110029,
@@ -821,7 +821,7 @@
             },
             actualizar(){
                 var url = this.ruta + '/versionvehiculo/UpdVersionVehiculoById';
-                
+
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -867,17 +867,17 @@
                             var url = this.ruta + '/versionvehiculo/activar';
                             axios.put(url, {
                                 nIdVersionVeh: nIdVersionVeh
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Activado!',
                                 'El registro fue activado.'
                                 );
-                                this.listarVersionVehiculo(1);                           
+                                this.listarVersionVehiculo(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -892,21 +892,21 @@
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
-                        if (result.value) {  
+                        if (result.value) {
                             var url = this.ruta + '/versionvehiculo/desactivar';
                             axios.put(url, {
                                 nIdVersionVeh: nIdVersionVeh
-                            }).then(response => {                     
+                            }).then(response => {
                                 swal(
                                 'Desactivado!',
                                 'El registro fue desactivado.'
                                 );
-                                this.listarVersionVehiculo(1);                   
+                                this.listarVersionVehiculo(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -987,7 +987,7 @@
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
                 }
-                
+
             },
             limpiarFormulario(){
                 //this.formVersion.nidproveedor= 0,

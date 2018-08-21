@@ -5,7 +5,7 @@
             <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS JEFE DE VENTAS</h2>
           </div>
         </header>
-        
+
         <section>
             <div class="container-fluid">
                 <div class="col-lg-12">
@@ -48,7 +48,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">BUSCAR CONTACTOS</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -81,7 +81,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">        
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarMisContactosJFV(1);"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
@@ -114,7 +114,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="c in arrayContacto" :key="c.nIdContacto">                                                                        
+                                                                            <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cPerApellidos"></td>
                                                                                 <td v-text="c.cNombres"></td>
@@ -124,7 +124,7 @@
                                                                                 <td v-text="c.cEmail"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombres">
                                                                                         <i class="fa-md fa fa-sign-out"></i>
                                                                                     </a>
@@ -146,7 +146,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="c in arrayContacto" :key="c.nIdContacto">                                                                        
+                                                                            <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cRazonSocial"></td>
                                                                                 <td v-text="c.cContacto"></td>
@@ -155,7 +155,7 @@
                                                                                 <td v-text="c.cEmail"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Seguimiento ' + c.cRazonSocial">
                                                                                         <i class="fa-md fa fa-sign-out"></i>
                                                                                     </a>
@@ -173,12 +173,12 @@
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
                                                                                     <a @click.prevent="cambiarPaginaMisContactos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                 </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                 :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link" 
-                                                                                    href="#" @click.prevent="cambiarPaginaMisContactos(page)" 
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaMisContactos(page)"
                                                                                     v-text="page"></a>
-                                                                                </li>                            
+                                                                                </li>
                                                                                 <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                     <a @click.prevent="cambiarPaginaMisContactos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                 </li>
@@ -301,7 +301,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">                                                                        
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
                                                                                     <td>{{ c.nIdContacto }}</td>
                                                                                     <td>{{ c.cPerApellidos }}</td>
                                                                                     <td>{{ c.cNombres }}</td>
@@ -333,7 +333,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">                                                                        
+                                                                                <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
                                                                                     <td>{{ c.nIdContacto }}</td>
                                                                                     <td>{{ c.cRazonSocial }}</td>
                                                                                     <td>{{ c.cContacto }}</td>
@@ -360,12 +360,12 @@
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaContactosPorVendedor(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                     </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                     :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link" 
-                                                                                        href="#" @click.prevent="cambiarPaginaContactosPorVendedor(page)" 
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaContactosPorVendedor(page)"
                                                                                         v-text="page"></a>
-                                                                                    </li>                            
+                                                                                    </li>
                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaContactosPorVendedor(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                     </li>
@@ -482,14 +482,14 @@
                                                                                 <td v-text="referencia.nAnioFabricacion"></td>
                                                                                 <td v-text="referencia.nAnioModelo"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Reasignar Referencia'">
                                                                                         <i :style="'color:blue'" class="fa-md fa fa-car"></i>
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
-                                                                    </table>                                   
+                                                                    </table>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <div class="row">
@@ -622,7 +622,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">                                                                        
+                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.cPerApellidos"></td>
                                                                                     <td v-text="c.cNombres"></td>
@@ -652,7 +652,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">                                                                        
+                                                                                <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.cRazonSocial"></td>
                                                                                     <td v-text="c.cContacto"></td>
@@ -787,14 +787,14 @@
                                                                                 <td v-text="referencia.nAnioFabricacion"></td>
                                                                                 <td v-text="referencia.nAnioModelo"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignarReferenciaLibre(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="asignarReferenciaLibre(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Asignar Referencia'">
                                                                                         <i :style="'color:blue'" class="fa-md fa fa-car"></i>
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
-                                                                    </table>                                   
+                                                                    </table>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <div class="row">
@@ -842,7 +842,7 @@
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
-                                                <ul class="nav nav-tabs">                                                    
+                                                <ul class="nav nav-tabs">
                                                     <li class="nav-item">
                                                         <a class="nav-link" id="Tab111" href="#TabSegDatosContacto" @click="TabSegDatosContacto();" role="tab" data-toggle="tab">
                                                             <i class="fa fa fa-male"></i> DATOS DE CONTACTO
@@ -921,7 +921,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">        
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-9 offset-sm-4">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab222();">
                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
@@ -937,7 +937,7 @@
                                                         <section class="forms">
                                                             <div class="container-fluid">
                                                                 <div class="col-lg-12">
-                                                                    <form class="form-horizontal"> 
+                                                                    <form class="form-horizontal">
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
@@ -1016,7 +1016,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">        
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-9 offset-sm-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarSegReferenciaVehiculo()">
                                                                                     <i class="fa fa-save"></i> Registrar
@@ -1056,12 +1056,12 @@
                                                                                                 <td v-text="r.nAnioFabricacion"></td>
                                                                                                 <td v-text="r.nAnioModelo"></td>
                                                                                                 <td>
-                                                                                                    <a href="#" @click="activarTab333(r.nIdAsignacionContactoVendedor)" data-toggle="tooltip" data-placement="top" 
+                                                                                                    <a href="#" @click="activarTab333(r.nIdAsignacionContactoVendedor)" data-toggle="tooltip" data-placement="top"
                                                                                                         :title="'Nuevo Seguimiento ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
                                                                                                         <i class="fa-md fa fa-sign-out"></i>
                                                                                                     </a>
                                                                                                     <template v-if="r.cReferenciaVehEstado=='A'">
-                                                                                                        <a href="#" @click="desactivar(r.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                                        <a href="#" @click="desactivar(r.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
                                                                                                         :title="'Desactivar ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
                                                                                                             <i class="fa-md fa fa-check-square"></i>
                                                                                                         </a>
@@ -1069,7 +1069,7 @@
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </tbody>
-                                                                                    </table>                                   
+                                                                                    </table>
                                                                                 </div>
                                                                                 <div class="col-lg-12">
                                                                                     <div class="row">
@@ -1079,12 +1079,12 @@
                                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
                                                                                                         <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                                     </li>
-                                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                                     :class="[page==isActived?'active':'']">
-                                                                                                        <a class="page-link" 
-                                                                                                        href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                                        <a class="page-link"
+                                                                                                        href="#" @click.prevent="cambiarPagina(page)"
                                                                                                         v-text="page"></a>
-                                                                                                    </li>                            
+                                                                                                    </li>
                                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                                         <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                                     </li>
@@ -1204,7 +1204,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">        
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-9 offset-sm-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarSeguimiento();">
                                                                                     <i class="fa fa-save"></i> Registrar
@@ -1247,7 +1247,7 @@
                                                                                                 <td v-text="s.cAsunto"></td>
                                                                                                 <td>
                                                                                                     <template v-if="s.cSeguimientoEstado=='A'">
-                                                                                                        <a href="#" @click="desactivar(s.nIdSeguimientoContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                                        <a href="#" @click="desactivar(s.nIdSeguimientoContacto)" data-toggle="tooltip" data-placement="top"
                                                                                                         :title="'Desactivar ' + s.nIdSeguimientoContacto">
                                                                                                             <i class="fa-md fa fa-check-square"></i>
                                                                                                         </a>
@@ -1255,7 +1255,7 @@
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </tbody>
-                                                                                    </table>                                   
+                                                                                    </table>
                                                                                 </div>
                                                                                 <div class="col-lg-12">
                                                                                     <div class="row">
@@ -1265,12 +1265,12 @@
                                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
                                                                                                         <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                                     </li>
-                                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                                     :class="[page==isActived?'active':'']">
-                                                                                                        <a class="page-link" 
-                                                                                                        href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                                        <a class="page-link"
+                                                                                                        href="#" @click.prevent="cambiarPagina(page)"
                                                                                                         v-text="page"></a>
-                                                                                                    </li>                            
+                                                                                                    </li>
                                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                                         <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                                     </li>
@@ -1403,7 +1403,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">        
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-9 offset-sm-4">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
@@ -1631,7 +1631,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </template>
-                                                                <div class="form-group row">        
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-4">
                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
                                                                             <i class="fa fa-arrow-right"></i> Siguiente
@@ -1645,7 +1645,7 @@
                                                         <section class="forms">
                                                             <div class="container-fluid">
                                                                 <div class="col-lg-12">
-                                                                    <form class="form-horizontal"> 
+                                                                    <form class="form-horizontal">
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
@@ -1723,7 +1723,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">        
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-9 offset-sm-5">
                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarReferenciaVehiculo()">
                                                                                     <i class="fa fa-arrow-down"></i> Asignar
@@ -1755,7 +1755,7 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
                                                                                                 <td>
-                                                                                                    <a href="#" @click="eliminarItemReferenciaVehiculo(index)" data-toggle="tooltip" data-placement="top" 
+                                                                                                    <a href="#" @click="eliminarItemReferenciaVehiculo(index)" data-toggle="tooltip" data-placement="top"
                                                                                                         :title="'Eliminar Referencia'">
                                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                                     </a>
@@ -1768,9 +1768,9 @@
                                                                                                 <td v-text="referencia.nAnioModelo"></td>
                                                                                             </tr>
                                                                                         </tbody>
-                                                                                    </table>                                   
+                                                                                    </table>
                                                                                 </div>
-                                                                                <div class="form-group row">        
+                                                                                <div class="form-group row">
                                                                                     <div class="col-sm-9 offset-sm-5">
                                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarNuevoContacto()">
                                                                                             <i class="fa fa-save"></i> Registrar
@@ -1816,7 +1816,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">     
+                            <div v-for="e in mensajeError" :key="e" v-text="e">
                             </div>
                         </div>
                     </div>
@@ -2330,16 +2330,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -2355,16 +2355,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -2440,7 +2440,7 @@
                 if(this.formVendedor.nidvendedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Vendedor');
                 };
-                
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2494,7 +2494,7 @@
             },
             listarReferenciaVehiculoPorReasignar(page){
                 var url = this.ruta + '/gescontacto/GetRefVehiculoByContactoPorReasignar';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -2543,17 +2543,17 @@
                                 nIdSucursal: 1300013,
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Activado!',
                                 'El registro fue Reasignado.'
                                 );
-                                this.listarReferenciaVehiculoPorReasignar(1);                           
+                                this.listarReferenciaVehiculoPorReasignar(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -2565,7 +2565,7 @@
                 if(this.formReasignarContacto.nreasignaidvendedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Vendedor');
                 };
-                
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2590,7 +2590,7 @@
             },
             listarContactosLibres(page){
                  var url = this.ruta + '/gescontacto/GetListContactosLibres';
-                
+
                 axios.get(url, {
                     params: {
                         'ntipopersona' : this.fillContactoLibre.ntipopersona,
@@ -2612,7 +2612,7 @@
                 });
             },
             llenarComboTipoContacto(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110056 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110056
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayTipoContacto = response.data;
@@ -2631,7 +2631,7 @@
             },
             listarReferenciasVehiculoLibre(page){
                 var url = this.ruta + '/gescontacto/GetListReferenciaVehiculoLibre';
-                
+
                 axios.get(url, {
                     params: {
                         'nidcontacto': this.fillAsignarContacto.nidcontacto,
@@ -2677,17 +2677,17 @@
                                 nIdSucursal: 1300013,
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formVendedor.nidvendedor)
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Activado!',
                                 'El registro fue asignado.'
                                 );
-                                this.listarReferenciasVehiculoLibre(1);                           
+                                this.listarReferenciasVehiculoLibre(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -2812,7 +2812,7 @@
                         this.mensajeError.push('Debes Ingresar Nombres');
                     };
                 }
-                
+
                 if(this.formNuevoContacto.ntipopersona == 2){
                     if(!this.formNuevoContacto.cnrodocumento){
                     this.mensajeError.push('Debes Ingresar Nro Documento');
@@ -2829,7 +2829,7 @@
             },
             listarReferenciaVehiculoByContacto(page){
                 var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -2943,7 +2943,7 @@
                 this.listarSeguimientoPorIdAsignacion(1);
             },
             llenarComboZona(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110052 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110052
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayZona = response.data;
@@ -2952,7 +2952,7 @@
                 });
             },
             llenarComboEstadoSeguimiento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110053 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110053
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayEstadoSeguimiento = response.data;
@@ -2961,7 +2961,7 @@
                 });
             },
             llenarComboTipoSeguimiento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110054 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110054
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayTipoSeguimiento = response.data;
@@ -2970,7 +2970,7 @@
                 });
             },
             llenarComboFormaPago(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110055 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110055
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayFormaPago = response.data;
@@ -2980,7 +2980,7 @@
             },
             listarSeguimientoPorIdAsignacion(page){
                 var url = this.ruta + '/gescontacto/GetListSeguimientoByIdAsignacion';
-                
+
                 axios.get(url, {
                     params: {
                         'nidasignacioncontactovendedor' : this.formNuevoSeguimiento.nidasignacioncontactovendedor,
@@ -3061,7 +3061,7 @@
                 if(!this.formNuevoSeguimiento.crendirseguimiento){
                     this.mensajeError.push('Debes Ingresar Hora Seguimiento');
                 };
-                
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -3074,8 +3074,8 @@
                 this.limpiarNuevoContacto();
                 this.cargarTabDatosPersonales();
                 this.tabDatosPersonales();
-            },  
-            // =============  TAB DATOS PERSONALES ======================     
+            },
+            // =============  TAB DATOS PERSONALES ======================
             tabDatosPersonales(){
                 $('#Tab11').addClass('nav-link active');
                 $('#Tab22').removeClass('nav-link active');
@@ -3085,7 +3085,7 @@
                 $('#TabDatosPersonales').addClass('in active show');
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').removeClass('in active show');
-            },     
+            },
             cambiarTipoPersona(){
                 this.llenarComboTpoDocumento();
                 if(this.formNuevoContacto.ntipopersona == 1)
@@ -3161,7 +3161,7 @@
             llenarComboTpoDocumento(){
                 if(this.formNuevoContacto.ntipopersona == 1)
                 {
-                    var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047 
+                    var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
                                                                             + '&opcion=' + 0;
                     axios.get(url).then(response => {
                         this.arrayTipoDocumento = response.data;
@@ -3171,7 +3171,7 @@
                     });
                 }
                 else{
-                    var url = this.ruta + '/parametro/GetDocumentoJuridica?ngrupoparid=' + 110047 
+                    var url = this.ruta + '/parametro/GetDocumentoJuridica?ngrupoparid=' + 110047
                                                                                 + '&opcion=' + 0;
                     axios.get(url).then(response => {
                         this.arrayTipoDocumento = response.data;
@@ -3210,7 +3210,7 @@
                 });
             },
             llenarComboEstadoCivil(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110048 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110048
                                                                             + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayEstadoCivil = response.data;
@@ -3219,7 +3219,7 @@
                 });
             },
             llenarComboProfesion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110049 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110049
                                                                             + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayProfesion = response.data;
@@ -3311,7 +3311,7 @@
                     console.log(error);
                 });
             },
-            // =============  TAB REFERENCIA VEHICULO ====================== 
+            // =============  TAB REFERENCIA VEHICULO ======================
             activarTab33(){
                 if(this.validarTab33()){
                     this.accionmodal=1;
@@ -3361,7 +3361,7 @@
                 });
             },
             llenarComboAnioFabricacion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110034 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110034
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayAnioFabricacion = response.data;
@@ -3370,7 +3370,7 @@
                 });
             },
             llenarComboAnioModelo(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110035 
+                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110035
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayAnioModelo = response.data;
@@ -3495,8 +3495,8 @@
             eliminarItemReferenciaVehiculo(index){
                 this.$delete(this.arrayReferenciaVehiculo, index);
             },
-            // =============  REGISTRAR CONTACTO ====================== 
-            registrarNuevoContacto(){     
+            // =============  REGISTRAR CONTACTO ======================
+            registrarNuevoContacto(){
                 if(this.validarRegistroNuevoContacto()){
                     this.accionmodal=1;
                     this.modal = 1;
