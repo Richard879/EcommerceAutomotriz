@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-<<<<<<< HEAD
 
 <head>
     <meta charset="utf-8">
@@ -122,43 +121,6 @@
                                 {{ csrf_field() }}
                             </form>
                             
-=======
-   <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="description" content="Sistema Ventas Laravel Vue Js- IncanatoIT">
-      <meta name="author" content="Incanatoit.com">
-      <meta name="keyword" content="Sistema ventas Laravel Vue Js, Sistema compras Laravel Vue Js">
-      <link rel="shortcut icon" href="img/favicon.ico">
-      <title>Sistema Ventas - SAISAC</title>
-      <meta name="csrf-token" content="{{ csrf_token() }}">
-      <link rel="stylesheet" href="css/plantilla.css">
-   </head>
-   <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-      <div id="app">
-         <div class="page">
-            <!-- Main Navbar-->
-            <header class="header">
-               <nav class="navbar">
-                  <!-- Search Box-->
-                  <div class="search-box">
-                     <button class="dismiss"><i class="icon-close"></i></button>
-                     <form id="searchForm" action="#" role="search">
-                        <input type="search" placeholder="What are you looking for..." class="form-control">
-                     </form>
-                  </div>
-                  <div class="container-fluid">
-                     <div class="navbar-holder d-flex align-items-center justify-content-between">
-                        <!-- Navbar Header-->
-                        <div class="navbar-header">
-                           <!-- Navbar Brand -->
-                           <a href="http://172.20.6.62:8080/saisacsys" class="navbar-brand">
-                              <div class="brand-text brand-big"><span><img class="navbar-brand-full" src="img/logo.png" width="220" height="30" alt="CoreUI Logo"></span></div>
-                              <div class="brand-text brand-small"><strong>INKA</strong></div>
-                           </a>
-                           <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
->>>>>>> 597c17d730310d676ad9330c44689e34db6c0cb5
                         </div>
                         <!-- Navbar Menu -->
                         <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
