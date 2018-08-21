@@ -1,0 +1,15 @@
+
+#myProgress {
+    width: 100%;
+    /*background-color: #3c29297a !important;*/
+  }
+  
+  #myBar {
+    width: 100%;
+    height: 1200px;
+    /*background-color: #3c29297a !important;*/
+    opacity: 1 !important;
+    position: fixed !important;
+   /*z-index: 1050;*/
+    
+  }

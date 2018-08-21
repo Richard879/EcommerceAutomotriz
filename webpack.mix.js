@@ -19,6 +19,7 @@ mix.styles([
     'resources/assets/template/css/style.default.css',
     'resources/assets/template/css/custom.css',
     'resources/assets/template/css/simple-line-icons.min.css',
+    'resources/assets/template/css/styleprogress.css'
 ], 'public/css/plantilla.css')
 .scripts([
 	'resources/assets/template/vendor/jquery/jquery.min.js',

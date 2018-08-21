@@ -1183,6 +1183,8 @@
                 this.listarListaPrecioVhDetalle(1);
             },
             listarListaPrecioVhDetalle(page){
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/listapreciovh/GetListaVhDetalle?nidlistaprecioversionveh=' + this.formListaPrecioVh.nidlistaprecioversionVeh
                                                                                             + '&page='+ page;
                 axios.get(url).then(response => {
@@ -1193,6 +1195,8 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
                     this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1224,6 +1228,7 @@
                 });
             },
             readFileListaPrecioVh(nameFile){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/listapreciovh/readFileListaPrecioVh';
                 axios.post(url, {
                     nameFile: nameFile
@@ -1238,7 +1243,8 @@
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
                     this.contadorArrayExcel = response.data.length;
-                
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1343,6 +1349,10 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){

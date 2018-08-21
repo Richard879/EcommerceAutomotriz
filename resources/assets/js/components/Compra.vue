@@ -645,6 +645,7 @@
                 this.listarCompras(1);
             },
             listarCompras(page){
+                this.mostrarProgressBar();
                 if(this.fillCompra.nordencompra == ''){
                     var nordencompra = 0;
                 }
@@ -671,6 +672,8 @@
                     this.pagination.last_page   = response.data.arrayCompra.last_page;
                     this.pagination.from        = response.data.arrayCompra.from;
                     this.pagination.to           = response.data.arrayCompra.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -757,6 +760,8 @@
                 });
             },
             readFileCompra(nameFile){
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/compra/readFileCompra';
                 axios.post(url, {
                     nameFile: nameFile
@@ -771,7 +776,8 @@
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
                     this.contadorArrayExcel = response.data.length;
-
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -941,6 +947,10 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){

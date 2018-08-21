@@ -210,4 +210,24 @@ class EventoCampaniaController extends Controller
         $result = $array->forPage($page, $perPage)->values()->all();
         return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
+
+    public function desactivar (Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEventoCampania = DB::select('exec usp_EC_DesactivaById ?', 
+                                                            array(  $request->nIdEventoCampania
+                                                                    ));
+        return response()->json($nIdEventoCampania);   
+    }
+
+    public function activar (Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEventoCampania = DB::select('exec usp_EC_ActivaById ?', 
+                                                            array(  $request->nIdEventoCampania
+                                                                    ));
+        return response()->json($nIdEventoCampania);   
+    }
 }

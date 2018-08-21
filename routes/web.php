@@ -54,6 +54,8 @@ Route::post('/ec/SetDistribucionEventoByEC', 'EventoCampaniaController@SetDistri
 Route::post('/ec/SetDistribucionEventoByElemento', 'EventoCampaniaController@SetDistribucionEventoByElemento');
 Route::get('/ec/GetEventoCampania', 'EventoCampaniaController@GetEventoCampania');
 Route::get('/ec/GetDistribucionByElementoVenta', 'EventoCampaniaController@GetDistribucionByElementoVenta');
+Route::put('/ec/desactivar', 'EventoCampaniaController@desactivar');
+Route::put('/ec/activar', 'EventoCampaniaController@activar');
 Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
 Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
 Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');

@@ -16,6 +16,11 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+
+<div id="myProgress">
+  <div id="myBar"></div>
+</div>
+
 <div id="app">
     <div class="page">
         <!-- Main Navbar-->

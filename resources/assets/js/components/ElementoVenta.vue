@@ -537,6 +537,8 @@
                 this.listarElementos(1);
             },
             listarElementos(page){
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/elemento/GetElementoByTipo?nidempresa=' + 1300011 
                                                                      + '&nidtipoelemen=' + this.formEle.ntpoelemen
                                                                      + '&page='+ page;
@@ -550,6 +552,8 @@
                     this.pagination.from        = response.data.arrayElementoVenta.from;
                     this.pagination.to           = response.data.arrayElementoVenta.to;
 
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
                 });
@@ -782,6 +786,10 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){
