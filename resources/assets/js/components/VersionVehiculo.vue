@@ -866,7 +866,7 @@
                         if (result.value) {
                             var url = this.ruta + '/versionvehiculo/activar';
                             axios.put(url, {
-                                nIdVersionVeh: nIdVersionVeh
+                                nIdVersionVeh: parseInt(nIdVersionVeh)
                             }).then(response => {
                                 swal(
                                 'Activado!',
@@ -895,7 +895,7 @@
                         if (result.value) {
                             var url = this.ruta + '/versionvehiculo/desactivar';
                             axios.put(url, {
-                                nIdVersionVeh: nIdVersionVeh
+                                nIdVersionVeh: parseInt(nIdVersionVeh)
                             }).then(response => {
                                 swal(
                                 'Desactivado!',

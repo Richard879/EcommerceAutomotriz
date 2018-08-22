@@ -13,6 +13,7 @@ Vue.component('campania', require('./components/EventoCampania.vue'));
 Vue.component('gestioncontactojf', require('./components/GestionContactoJefeVenta.vue'));
 Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.vue'));
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
+Vue.component('pedido', require('./components/GenerarPedido.vue'));
 
 const app = new Vue({
     el: '#app',

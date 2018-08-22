@@ -22,10 +22,7 @@ class CompraController extends Controller
         $dFechaFin = $request->dfechafin;
         $nOrdenCompra = $request->nordencompra;
         $cNumeroVin = $request->cnumerovin;
-
-        if($cNumeroVin == ''){
-            $cNumeroVin = "";
-        }
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
         $arrayCompra = DB::select('exec usp_Compra_GetCompra ?, ?, ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
@@ -110,12 +107,8 @@ class CompraController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $cNumeroVin = $request->cnumerovin;
         $cNombreComercial = $request->cnombrecomercial;
-        if($cNumeroVin == ''){
-            $cNumeroVin = "";
-        }
-        if($cNombreComercial == ''){
-            $cNombreComercial = "";
-        }
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
 
         $arrayVersionVehiculo = DB::select('exec usp_Compra_GetVehiculosSinWOperativo ?, ?, ?, ?',
                                                                         array(  $nIdEmpresa,
@@ -136,12 +129,8 @@ class CompraController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $cNumeroVin = $request->cnumerovin;
         $cNombreComercial = $request->cnombrecomercial;
-        if($cNumeroVin == ''){
-            $cNumeroVin = "";
-        }
-        if($cNombreComercial == ''){
-            $cNombreComercial = "";
-        }
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
 
         $arrayVersionVehiculo = DB::select('exec usp_Compra_GetVehiculosSinWFinanciero ?, ?, ?, ?',
                                                                         array(  $nIdEmpresa,

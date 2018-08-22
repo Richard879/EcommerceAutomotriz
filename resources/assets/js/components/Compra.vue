@@ -837,10 +837,9 @@
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
                     nIdCronograma: 220011,
-                    nIdProveedor: this.formCompra.nidproveedor,
-                    nIdTipoLista: this.formCompra.nidtipolista,
-                    data: this.arrayCompra,
-                    nIdUsuario: 190011
+                    nIdProveedor: parseInt(this.formCompra.nidproveedor),
+                    nIdTipoLista: parseInt(this.formCompra.nidtipolista),
+                    data: this.arrayCompra
                 }).then(response => {
                     swal('Compra registrada');
                     this.arrayExcel = [];
@@ -887,7 +886,7 @@
                 return this.error;
             },
             desactivar(nIdCompra){
-                
+
                 swal({
                         title: 'Estas seguro de eliminar esta Compra?',
                         type: 'warning',

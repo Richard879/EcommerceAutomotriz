@@ -87,4 +87,22 @@ class ElementoController extends Controller
         return response()->json($elementoVenta);   
     }
     
+    public function UpdElementoById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $element = DB::select('exec usp_Elemen_UpdElementoById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                            array($request->nIdEmpresa,
+                                                                    $request->nIdProveedor,
+                                                                    $request->nIdElementoVenta,
+                                                                    $request->nIdTipoElemento, 
+                                                                    $request->nIdMoneda,
+                                                                    $request->cElemenNombre,
+                                                                    $request->fElemenValorVenta,
+                                                                    $request->fElemenValorMinimoVenta,
+                                                                    $request->cCodigoERP,
+                                                                    Auth::user()->id
+                                                                    ));
+        return response()->json($element);         
+    }
 }
