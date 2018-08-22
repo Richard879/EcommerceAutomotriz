@@ -578,7 +578,7 @@
                     cElemenNombre: this.formEle.celenombre.toUpperCase(),
                     fElemenValorVenta: this.formEle.felevalorventa,
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp.toUpperCase()
+                    cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
                     swal('Elemento registrado');
                     this.listarElementos(1);
@@ -624,18 +624,17 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdProveedor: parseInt(this.formEle.nidproveedor),
-                    nIdElemento: parseInt(this.formEle.nidelemento),
+                    nIdElementoVenta: parseInt(this.formEle.nidelemento),
                     nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
                     nIdMoneda: parseInt(this.formEle.nidmoneda),
                     cElemenNombre: this.formEle.celenombre.toUpperCase(),
                     fElemenValorVenta: this.formEle.felevalorventa,
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp.toUpperCase(),
-                    nIdUsuario: 190011
+                    cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
                     swal('Elemento Actualizado');
                     this.limpiarFormulario();
-                    this.listarElementos(1);
+                    //this.listarElementos(1);
                     this.vistaFormulario = 1;
                 }).catch(error => {
                     console.log(error);
@@ -749,6 +748,7 @@
                                 this.llenarComboTpoElemento();
                                 this.llenarComboTpoMoneda();
                                 this.tituloFormulario = 'ACTUALIZAR ELEMENTO VENTA';
+                                this.formEle.nidelemento = data['nIdElemento'];
                                 this.formEle.ntpoelemen = data['nIdTipoElemento'];
                                 this.formEle.nidproveedor  = data['nIdProveedor'];
                                 this.formEle.cproveedornombre = data['cProveedorNombre'];

@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">COMPRA</h2>
+            <h2 class="no-margin-bottom">GENERAR PEDIDO</h2>
           </div>
         </header>
         
@@ -13,24 +13,19 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaCompra" @click="limpiarFormulario();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> BUSCAR COMPRA
+                                    <a class="nav-link active" href="#TabBuscaPedido" @click="tabBuscarPedido()" role="tab" data-toggle="tab">
+                                        <i class="fa fa-search"></i> BUSCAR PEDIDOS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-bus"></i> GENERAR COMPRA
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario();" role="tab" data-toggle="tab">
-                                        <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
+                                    <a class="nav-link" href="#TabGeneraPedido" @click="tabGenerarPedido()" role="tab" data-toggle="tab">
+                                        <i class="fa fa-list-alt"></i> GENERAR PEDIDO
                                     </a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
-                                <div class="tab-pane fade in active show" id="TabBuscaCompra">
+                                <div class="tab-pane fade in active show" id="TabBuscaPedido">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
@@ -63,7 +58,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillCompra.dfechainicio" class="form-control form-control-sm">
+                                                                            <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -71,7 +66,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillCompra.dfechafin" class="form-control form-control-sm">
+                                                                            <input type="date" v-model="fillPedido.dfechafin" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -79,9 +74,9 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
+                                                                        <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            <input type="text" v-model="fillPedido.nordencompra" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -89,14 +84,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-4">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();"><i class="fa fa-search"></i> Buscar</button>
+                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos();"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -109,7 +104,7 @@
                                                         <h3 class="h4">LISTADO</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <template v-if="arrayCompra.length">
+                                                        <template v-if="arrayPedido.length">
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-sm">
                                                                     <thead>
@@ -133,10 +128,10 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
-                                                                            <td v-text="compra.nIdCompra"></td>
+                                                                        <tr v-for="compra in arrayPedido" :key="compra.nIdPedido">
+                                                                            <td v-text="compra.nIdPedido"></td>
                                                                             <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                            <td v-text="compra.nOrdenCompra"></td>
+                                                                            <td v-text="compra.nOrdenPedido"></td>
                                                                             <td v-text="compra.cNombreLinea"></td>
                                                                             <td v-text="compra.cNombreAlmacen"></td>
                                                                             <td v-text="compra.nNumeroReserva"></td>
@@ -146,11 +141,11 @@
                                                                             <td v-text="compra.nAnioFabricacion"></td>
                                                                             <td v-text="compra.nAnioVersion"></td>
                                                                             <td v-text="compra.cSimboloMoneda"></td>
-                                                                            <td v-text="compra.fTotalCompra"></td>
+                                                                            <td v-text="compra.fTotalPedido"></td>
                                                                             <td v-text="compra.cNumeroFactura"></td>
                                                                             <td v-text="compra.dFechaFacturado"></td>
                                                                             <td>
-                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
+                                                                                <a href="#" @click="desactivar(compra.nIdPedido)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenPedido">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                 </a>
                                                                             </td>
@@ -199,13 +194,13 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabGeneraCompra">
+                                <div role="tabpanel" class="tab-pane fade" id="TabGeneraPedido">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">GENERAR COMPRA</h3>
+                                                        <h3 class="h4">BUSCAR COTIZACIONES</h3>
                                                     </div>
                                                     <div class="card-body"> 
                                                         <form class="form-horizontal">
@@ -230,7 +225,7 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Año</label>
+                                                                        <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
                                                                         </div>
@@ -238,7 +233,7 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Mes</label>
+                                                                        <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
                                                                         </div>
@@ -248,26 +243,21 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
                                                                         <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <input type="hidden" v-model="formCompra.nidproveedor">
-                                                                                <input type="text" v-model="formCompra.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
+                                                                            <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
+                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                                                </option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Lista</label>
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formCompra.nidtipolista" class="form-control form-control-sm">
-                                                                                <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
+                                                                            <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
+                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
                                                                                 </option>
                                                                             </select>
                                                                         </div>
@@ -288,7 +278,7 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-5">
                                                                     <div class="row">
-                                                                        <label class="col-sm-6 form-control-label">* Ordenes de Compra</label>
+                                                                        <label class="col-sm-6 form-control-label">* Ordenes de Pedido</label>
                                                                         <div class="col-sm-6">
                                                                             <label for="file-upload" class="btn btn-warning btn-corner btn-sm">
                                                                                 <i class="fa fa-file-excel-o"></i> Seleccionar Archivo
@@ -301,7 +291,7 @@
                                                                         <input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
                                                                         <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx"/>
                                                                         <div class="col-sm-6">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileCompra()">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFilePedido()">
                                                                                 <i class="fa fa-retweet"></i> Procesar
                                                                             </button>
                                                                         </div>
@@ -335,12 +325,12 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenCompra">
+                                                                            <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenPedido">
                                                                                 <td>
-                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +compra.nOrdenCompra">
+                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +compra.nOrdenPedido">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                 </td>
-                                                                                <td v-text="compra.nOrdenCompra"></td>
+                                                                                <td v-text="compra.nOrdenPedido"></td>
                                                                                 <td v-text="compra.cNombreLinea"></td>
                                                                                 <td v-text="compra.cNombreAlmacen"></td>
                                                                                 <td v-text="compra.nNumeroReserva"></td>
@@ -353,7 +343,7 @@
                                                                                 <td v-text="compra.nAnioFabricacion"></td>
                                                                                 <td v-text="compra.nAnioVersion"></td>
                                                                                 <td v-text="compra.cSimboloMoneda"></td>
-                                                                                <td v-text="compra.fTotalCompra"></td>
+                                                                                <td v-text="compra.fTotalPedido"></td>
                                                                                 <td v-text="compra.cNumeroFactura"></td>
                                                                                 <td v-text="compra.dFechaFacturado"></td>
                                                                             </tr>
@@ -393,7 +383,6 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">ccc</div>
                             </div>
                         </div>
                     </div>
@@ -537,21 +526,23 @@
                 cmes: 'MAYO',
                 nidempresa: 0,
                 nidsucursal: 0,
-                arrayCompra: [],
+                arrayPedido: [],
                 arrayExcel: [],
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
                 arrayProveedor: [],
+                arrayMarca: [],
+                arrayModelo: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
-                fillCompra:{
+                fillPedido:{
                     dfechainicio: '',
                     dfechafin: '',
                     nordencompra: '',
                     cnumerovin: ''
                 },
-                formCompra:{
+                formPedido:{
                     nformapago: 0,
                     nidtipolista: 0,
                     nidproveedor: 0,
@@ -641,37 +632,40 @@
             }
         },
         methods:{
-            buscarCompras(){
-                this.listarCompras(1);
+            tabBuscarPedido(){
+                
             },
-            listarCompras(page){
+            buscarPedidos(){
+                this.listarPedidos(1);
+            },
+            listarPedidos(page){
                 this.mostrarProgressBar();
-                if(this.fillCompra.nordencompra == ''){
+                if(this.fillPedido.nordencompra == ''){
                     var nordencompra = 0;
                 }
                 else{
-                    var nordencompra = this.fillCompra.nordencompra;
+                    var nordencompra = this.fillPedido.nordencompra;
                 }
 
-                var url = this.ruta + '/compra/GetCompra';
+                var url = this.ruta + '/compra/GetPedido';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
                         'nidsucursal' : 1300013,
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
+                        'dfechainicio' : this.fillPedido.dfechainicio,
+                        'dfechafin' : this.fillPedido.dfechafin,
                         'nordencompra' : nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'cnumerovin' : this.fillPedido.cnumerovin,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.pagination.current_page =  response.data.arrayCompra.current_page;
-                    this.pagination.total = response.data.arrayCompra.total;
-                    this.pagination.per_page    = response.data.arrayCompra.per_page;
-                    this.pagination.last_page   = response.data.arrayCompra.last_page;
-                    this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;
+                    this.arrayPedido = response.data.arrayPedido.data;
+                    this.pagination.current_page =  response.data.arrayPedido.current_page;
+                    this.pagination.total = response.data.arrayPedido.total;
+                    this.pagination.per_page    = response.data.arrayPedido.per_page;
+                    this.pagination.last_page   = response.data.arrayPedido.last_page;
+                    this.pagination.from        = response.data.arrayPedido.from;
+                    this.pagination.to           = response.data.arrayPedido.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -680,9 +674,9 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarCompras(page);
+                this.listarPedidos(page);
             },
-            tabGenerarCompra(){
+            tabGenerarPedido(){
                 this.listarTipoLista();
                 this.limpiarFormulario();
             },
@@ -717,8 +711,8 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formCompra.nidproveedor = nProveedorId;
-                this.formCompra.cproveedornombre = cProveedorNombre;
+                this.formPedido.nidproveedor = nProveedorId;
+                this.formPedido.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
             },
             listarTipoLista(){
@@ -741,8 +735,8 @@
                 this.attachment = selectFile;
                 this.textFile = e.target.files[0].name;
             },
-            importFileCompra(){
-                if(this.validarReadFileCompra()){
+            importFilePedido(){
+                if(this.validarReadFilePedido()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -752,17 +746,17 @@
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
                 //var fd = new FormData();
                 //fd.append('file', this.fileExcel, this.fileExcel.name);
-                var url = this.ruta + '/compra/importFileCompra';
+                var url = this.ruta + '/compra/importFilePedido';
                 axios.post(url, this.form, config).then(response=>{
-                    this.readFileCompra(response.data);
+                    this.readFilePedido(response.data);
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            readFileCompra(nameFile){
+            readFilePedido(nameFile){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/compra/readFileCompra';
+                var url = this.ruta + '/compra/readFilePedido';
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
@@ -789,7 +783,7 @@
 
                 foo.map(function(value, key) {
                     if(key==0){
-                        if(value.nOrdenCompra != "OC"){
+                        if(value.nOrdenPedido != "OC"){
                             list.push('Falta celda OC, verifique el archivo.');
                         };
                         if(value.cNombreLinea != "Línea"){
@@ -801,12 +795,12 @@
                         if(value.nNumeroReserva != "Nro Reserva"){
                             list.push('Falta celda Nro Reserva, verifique el archivo.');
                         };
-                        if(value.fTotalCompra != "Total"){
+                        if(value.fTotalPedido != "Total"){
                             list.push('Falta celda Total, verifique el archivo.');
                         };
                     };
                     /*if(key != 0){
-                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalCompra)){
+                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalPedido)){
                             list.push('Existe un error en el campo Total, verifique el archivo.');
                         }
                     };*/
@@ -824,7 +818,7 @@
                 this.$delete(this.arrayExcel, index);
             },
             registrar(){
-                this.arrayCompra = this.arrayExcel;
+                this.arrayPedido = this.arrayExcel;
 
                 if(this.validarRegistro()){
                     this.accionmodal=1;
@@ -832,18 +826,19 @@
                     return;
                 }
                 
-                var url = this.ruta + '/compra/SetCompra';
+                var url = this.ruta + '/compra/SetPedido';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
                     nIdCronograma: 220011,
-                    nIdProveedor: parseInt(this.formCompra.nidproveedor),
-                    nIdTipoLista: parseInt(this.formCompra.nidtipolista),
-                    data: this.arrayCompra
+                    nIdProveedor: this.formPedido.nidproveedor,
+                    nIdTipoLista: this.formPedido.nidtipolista,
+                    data: this.arrayPedido,
+                    nIdUsuario: 190011
                 }).then(response => {
-                    swal('Compra registrada');
+                    swal('Pedido registrada');
                     this.arrayExcel = [];
-                    this.arrayCompra = [];
+                    this.arrayPedido = [];
                     this.attachment = null;
                     this.textFile = '';
                     $("#file").val("");
@@ -859,13 +854,13 @@
                 if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 }
-                if(this.arrayCompra == []){
+                if(this.arrayPedido == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.formCompra.nidproveedor == 0){
+                if(this.formPedido.nidproveedor == 0){
                     this.mensajeError.push('Debes seleccionar un Proveedor');
                 };
-                if(this.formCompra.nidtipolista == 0){
+                if(this.formPedido.nidtipolista == 0){
                     this.mensajeError.push('Debes seleccionar un Tipo Lista');
                 };
 
@@ -874,7 +869,7 @@
                 }
                 return this.error;
             },
-            validarReadFileCompra(){
+            validarReadFilePedido(){
                 this.error = 0;
                 this.mensajeError =[];
                 if(!this.textFile){
@@ -885,10 +880,10 @@
                 }
                 return this.error;
             },
-            desactivar(nIdCompra){
-
+            desactivar(nIdPedido){
+                
                 swal({
-                        title: 'Estas seguro de eliminar esta Compra?',
+                        title: 'Estas seguro de eliminar esta Pedido?',
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -898,13 +893,13 @@
                         }).then((result) => {
                         var url = this.ruta + '/compra/desactivar';
                         axios.put(url, {
-                            nIdCompra: nIdCompra
+                            nIdPedido: nIdPedido
                         }).then(response => {                            
                             swal(
                             'Desactivado!',
                             'El registro fue eliminado.'
                             );
-                            this.listarCompras(1);                   
+                            this.listarPedidos(1);                   
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -933,10 +928,10 @@
                 }
             },
             limpiarFormulario(){
-                this.fillCompra.nordencompra= '',
-                this.fillCompra.cnumerovin=  '',
+                this.fillPedido.nordencompra= '',
+                this.fillPedido.cnumerovin=  '',
                 this.arrayExcel = [],
-                this.arrayCompra = [],
+                this.arrayPedido = [],
                 this.limpiarPaginacion()
             },
             limpiarPaginacion(){

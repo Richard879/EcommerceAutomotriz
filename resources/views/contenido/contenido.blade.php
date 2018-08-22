@@ -33,4 +33,7 @@
     <template v-if="menu==12">
         <cotizacion :ruta="ruta"></cotizacion>
     </template>
+    <template v-if="menu==13">
+        <pedido :ruta="ruta"></pedido>
+    </template>
 @endsection

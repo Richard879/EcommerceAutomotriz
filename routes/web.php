@@ -15,6 +15,7 @@ Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo'
 Route::post('/elemento/SetElemento', 'ElementoController@store');
 Route::put('/elemento/desactivar','ElementoController@desactivar');
 Route::put('/elemento/activar','ElementoController@activar');
+Route::post('/elemento/UpdElementoById', 'ElementoController@UpdElementoById');
 Route::post('/versionvehiculo/SetVersion', 'VersionVehiculoController@store');
 Route::get('/versionvehiculo/GetVersionVehiculo', 'VersionVehiculoController@GetVersionVehiculo');
 Route::post('/versionvehiculo/UpdVersionVehiculoById', 'VersionVehiculoController@UpdVersionVehiculoById');
