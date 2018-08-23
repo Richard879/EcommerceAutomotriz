@@ -90,4 +90,59 @@ class CotizacionController extends Controller
         $tipocambio = DB::select('exec usp_Cotizacion_GetTipoCambio');
         return response()->json($tipocambio);
     }
+
+    public function SetCabeceraCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayCabeceraCotizacion = DB::select('exec usp_Cotizacion_SetCabeceraCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    array(  $request->nIdAsignacionContactoVendedor,
+                                            $request->cNumeroCotizacion,
+                                            $request->nIdEmpresa,
+                                            $request->nIdSucursal,
+                                            $request->nIdReferencia,
+                                            $request->dFechaCotizacion,
+                                            $request->dFechaVencimientoCotizacion,
+                                            $request->fTipoCambioVenta,
+                                            $request->fTipoCambioCompra,
+                                            $request->fTotalCotizacionVehiculoDolar,
+                                            $request->fTotalCotizacionVehiculoSol,
+                                            $request->fTotalElementoVentaDolar,
+                                            $request->fTotalElementoVentaSol,
+                                            Auth::user()->id
+                                        ));
+
+        return response()->json($arrayCabeceraCotizacion);
+    }
+
+    public function SetDetalleCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            //Itera todas las referencias de vehiculos
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec usp_Contacto_SetReferenciaVehiculo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                        array(
+                                                            $request->nIdEmpresa,
+                                                            $request->nIdSucursal,
+                                                            $request->nIdCronograma,
+                                                            $request->nIdContacto,
+                                                            $det['nIdProveedor'],
+                                                            $det['nIdLinea'],
+                                                            $det['nIdMarca'],
+                                                            $det['nIdModelo'],
+                                                            $det['nAnioFabricacion'],
+                                                            $det['nAnioModelo'],
+                                                            Auth::user()->id
+                                                        ));
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

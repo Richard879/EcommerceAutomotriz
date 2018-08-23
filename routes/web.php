@@ -85,6 +85,8 @@ Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListRef
 Route::get('/gescotizacion/GetTipoLista', 'CotizacionController@GetTipoLista');
 Route::get('/gescotizacion/GetListVehiculos', 'CotizacionController@GetListVehiculos');
 Route::get('/gescotizacion/GetTipoCambio', 'CotizacionController@GetTipoCambio');
+Route::get('/gescotizacion/SetCabeceraCotizacion', 'CotizacionController@SetCabeceraCotizacion');
+Route::get('/gescotizacion/SetDetalleCotizacion', 'CotizacionController@SetDetalleCotizacion');
 
 Route::get('/','Auth\LoginController@showLoginForm')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->name('login');

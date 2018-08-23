@@ -264,7 +264,7 @@ class GestionContactoController extends Controller
                                                                     $request->cAsunto,
                                                                     $request->cRendirSeguimiento,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ));
 
         return response()->json($arraySeguimiento);
     }

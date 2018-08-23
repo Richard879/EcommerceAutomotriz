@@ -177,5 +177,6 @@
       <script src="js/app.js"></script>
       <script src="js/bootstrap.min.js"></script>
       <script src="js/plantilla.js"></script>
+      <script src="js/moment.min.js"></script>
    </body>
 </html>

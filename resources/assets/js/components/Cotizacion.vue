@@ -229,7 +229,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item">
-                                                                <a class="nav-link " id="tab0304" href="#TabDCConfirmarCotizacion" role="tab" data-toggle="tab">
+                                                                <a class="nav-link disabled" id="tab0304" href="#TabDCConfirmarCotizacion" @click.prevent="siguienteTabDConfirmarcotizacion" role="tab" data-toggle="tab">
                                                                     <i class="fa fa-check"></i> CONFIRMAR COTIZACIÓN
                                                                 </a>
                                                             </li>
@@ -318,10 +318,10 @@
                                                                                                         </div>
                                                                                                         <div class="col-lg-5 direction-money">
                                                                                                             <div class="form-group row">
-                                                                                                                USD : <label> {{ montoTotalVehiculo = totalVehiculo }} </label>
+                                                                                                                USD &nbsp<label> {{ montoTotalVehiculo = totalVehiculo }} </label>
                                                                                                             </div>
                                                                                                             <div class="form-group row">
-                                                                                                                S/. : <label> {{ montoTotalSolesVehiculo = totalSolesVehiculo }} </label>
+                                                                                                                S/. &nbsp<label> {{ montoTotalVehiculoSoles = totalVehiculoSoles }} </label>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -344,6 +344,9 @@
                                                                         <div class="col-lg-12 centrarbtn">
                                                                              <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
                                                                                 <i class="fa fa-arrow-right"></i> Siguiente
+                                                                            </button>&nbsp
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
                                                                             </button>
                                                                         </div>
                                                                     </div>
@@ -378,7 +381,7 @@
                                                                                                             <tr>
                                                                                                                 <th>Acción</th>
                                                                                                                 <th>Elemento Venta</th>
-                                                                                                                <th>Cantidad</th>
+                                                                                                                <th colspan="2">Cantidad</th>
                                                                                                                 <th>Precio</th>
                                                                                                                 <th>SubTotal</th>
                                                                                                             </tr>
@@ -387,11 +390,11 @@
                                                                                                             <tr v-for="(elementoventa, index) in arrayElementoVenta" :key="elementoventa.nIdContacto">
                                                                                                                 <td>
                                                                                                                     <a href="#" @click="removerElementoVentaLista(index);">
-                                                                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                                                                        <i class='fa fa-trash-o'></i>
                                                                                                                     </a>
                                                                                                                 </td>
                                                                                                                 <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                                <td><input type="number" min="1" class="form-control" v-model="elementoventa.cantidad"/></td>
+                                                                                                                <td colspan="2"><input type="number" min="1" class="form-control" v-model="elementoventa.cantidad"/></td>
                                                                                                                 <td v-text="elementoventa.fElemenValorVenta"></td>
                                                                                                                 <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
                                                                                                             </tr>
@@ -401,12 +404,74 @@
                                                                                                 <div class="col-lg-12">
                                                                                                     <div class="row flex-rigth-margin">
                                                                                                         <div class="form-group row">
-                                                                                                            USD : <label> {{ montoTotalElementoVenta = totalElementoVenta }} </label>
+                                                                                                            USD &nbsp<label> {{ montoTotalElementoVenta = totalElementoVenta }} </label>
                                                                                                         </div>
                                                                                                         <div class="form-group row">
-                                                                                                            S/. : <label> {{ montoTotalSolesElementoVenta = totalSolesElementoVenta }} </label>
+                                                                                                            S/. &nbsp<label> {{ montoTotalElementoVentaSoles = totalElementoVentaSoles }} </label>
                                                                                                         </div>
                                                                                                     </div>
+                                                                                                </div>
+                                                                                            </template>
+                                                                                            <template v-else>
+                                                                                                <table>
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td colspan="10">No existen registros!</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </template>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 centrarbtn">
+                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                            </button>&nbsp
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                            <div role="tabpanel" class="tab-pane fade" id="TabDCVerificarCampana">
+                                                                <section class="forms">
+                                                                    <div class="container-fluid">
+                                                                        <div class="col-lg-12">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <form class="form-horizontal">
+                                                                                        <div class="col-lg-12">
+                                                                                            <template v-if="arrayEventoCampania.length">
+                                                                                                <div class="table-responsive">
+                                                                                                    <table class="table table-striped table-sm">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th>Código</th>
+                                                                                                                <th>Nombre</th>
+                                                                                                                <th>Tipo</th>
+                                                                                                                <th>Acción</th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                            <tr v-for="(evento, index) in arrayEventoCampania" :key="evento.nIdContacto">
+                                                                                                                <td v-text="evento.NombreComercial"></td>
+                                                                                                                <td v-text="evento.NombreComercial"></td>
+                                                                                                                <td v-text="evento.cantidad"></td>
+                                                                                                                <td>
+                                                                                                                    <a href="#" @click="buscarDetalleCampania(evento);">
+                                                                                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                                                                                    </a>
+                                                                                                                    <a href="#" @click="confirmarCampania(index);">
+                                                                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                                                                    </a>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
                                                                                                 </div>
                                                                                             </template>
                                                                                             <template v-else>
@@ -426,20 +491,6 @@
                                                                     </div>
                                                                 </section>
                                                             </div>
-                                                            <div role="tabpanel" class="tab-pane fade" id="TabDCVerificarCampana">
-                                                                <section class="forms">
-                                                                    <div class="container-fluid">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <form class="form-horizontal">
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </section>
-                                                            </div>
                                                             <div role="tabpanel" class="tab-pane fade" id="TabDCConfirmarCotizacion">
                                                                 <section class="forms">
                                                                     <div class="container-fluid">
@@ -447,9 +498,118 @@
                                                                             <div class="card">
                                                                                 <div class="card-body">
                                                                                     <form class="form-horizontal">
+                                                                                        <div class="col-lg-12">
+                                                                                            <template v-if="arrayConfiCotiVehiculo.length">
+                                                                                                <div class="table-responsive">
+                                                                                                    <table class="table table-striped table-sm">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th colspan="3">Vehículo</th>
+                                                                                                                <th>Cantidad</th>
+                                                                                                                <th>Dscto</th>
+                                                                                                                <th>Precio Final</th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                            <tr v-for="cotivehiculo in arrayConfiCotiVehiculo" :key="cotivehiculo.nIdContacto">
+                                                                                                                <td colspan="3"> {{ cotivehiculo.detalle }} </td>
+                                                                                                                <td v-text="cotivehiculo.cantidad"></td>
+                                                                                                                <td v-text="cotivehiculo.dscto"></td>
+                                                                                                                <td v-text="cotivehiculo.preciofinal"></td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                                <div class="col-lg-12">
+                                                                                                    <div class="row flex-rigth-margin">
+                                                                                                        <div class="form-group row">
+                                                                                                            TOTAL USD &nbsp<label> {{ montoTotalConfiCotiVehiculo = totalConfiCotiVehiculo }} </label>
+                                                                                                        </div>
+                                                                                                        <div class="form-group row">
+                                                                                                            TOTAL S/. &nbsp<label> {{ montoTotalConfiCotiVehiculoSoles = totalConfiCotiVehiculoSoles }} </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </template>
+                                                                                            <template v-else>
+                                                                                                <table>
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td colspan="10">No existen vehículos cotizados!</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </template>
+                                                                                            <template v-if="arrayConfiCotiEleVenta.length">
+                                                                                                <div class="table-responsive">
+                                                                                                    <table class="table table-striped table-sm">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th colspan="3">Elemento Venta</th>
+                                                                                                                <th>Cantidad</th>
+                                                                                                                <th>Dscto</th>
+                                                                                                                <th>Precio Final</th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVenta" :key="cotieleventa.nIdContacto">
+                                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                                                <td v-text="cotieleventa.cantidad"></td>
+                                                                                                                <td v-text="cotieleventa.dscto"></td>
+                                                                                                                <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                                <div class="col-lg-12">
+                                                                                                    <div class="row flex-rigth-margin">
+                                                                                                        <div class="form-group row">
+                                                                                                            TOTAL USD &nbsp<label> {{ montoTotalConfiCotiEleVenta = totalConfiCotiEleVenta }} </label>
+                                                                                                        </div>
+                                                                                                        <div class="form-group row">
+                                                                                                            TOTAL S/. &nbsp<label> {{ montoTotalConfiCotiEleVentaSoles = totalConfiCotiEleVentaSoles }} </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </template>
+                                                                                            <template v-else>
+                                                                                                <table>
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td colspan="10">No existen elementos de ventas cotizados!</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </template>
+
+                                                                                            <hr/>
+                                                                                            <div class="col-lg-12">
+                                                                                                <div class="row flex-rigth-margin">
+                                                                                                    <div class="form-group row">
+                                                                                                        <strong>
+                                                                                                            TOTAL USD &nbsp<label> {{ montoTotalCotizacion = totalConfiCoti }} </label>
+                                                                                                        </strong>
+                                                                                                    </div>
+                                                                                                    <div class="form-group row">
+                                                                                                        <strong>
+                                                                                                            TOTAL S/. &nbsp<label> {{ montoTotalCotizacionSoles = totalConfiCotiSoles }} </label>
+                                                                                                        </strong>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 centrarbtn">
+                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarCotizacion">
+                                                                                <i class="fa fa-arrow-right"></i> REGISTRAR
+                                                                            </button>
+                                                                            &nbsp
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="cancelarCotizacion">
+                                                                                <i class="fa fa-arrow-right"></i> CANCELAR
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </section>
@@ -1123,8 +1283,10 @@
                 //SUBTAB Vehiculo
                 arrayVehiculo: [],
                 montoTotalVehiculo: 0,
-                tipoCambio: 0,
-                montoTotalSolesVehiculo: 0,
+                tipoCambio1: 0,
+                tipoCambio2: 0,
+                tipoCambio3: 0,
+                montoTotalVehiculoSoles: 0,
 
                 //SUBTAB Elemento Venta
                 fillBusqTipoElemento: {
@@ -1136,7 +1298,19 @@
                 arrayElementoVentaModal: [],
                 arrayElementoVenta: [],
                 montoTotalElementoVenta: 0,
-                montoTotalSolesElementoVenta: 0,
+                montoTotalElementoVentaSoles: 0,
+                //SUBTAB EVENTO CAMPAÑA
+                arrayEventoCampania: [],
+                //SUBTAB CONFIRMAR COTIZACIÓN
+                arrayConfiCotiVehiculo: [],
+                montoTotalConfiCotiVehiculo: 0,
+                montoTotalConfiCotiVehiculoSoles: 0,
+                arrayConfiCotiEleVenta: [],
+                montoTotalConfiCotiEleVenta: 0,
+                montoTotalConfiCotiEleVentaSoles: 0,
+                arrayMontosCotizacion: [],
+                montoTotalCotizacion: 0,
+                montoTotalCotizacionSoles: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1230,9 +1404,9 @@
                     return valorAnterior + parseInt(valorActual.PrecioCierre);
                 }, 0);
             },
-            totalSolesVehiculo: function(){
+            totalVehiculoSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalVehiculo * me.tipoCambio;
+                let montoconvertido = me.montoTotalVehiculo * me.tipoCambio3;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -1242,9 +1416,45 @@
                     return valorAnterior + parseInt(valorActual.subtotal);
                 }, 0);
             },
-            totalSolesElementoVenta: function(){
+            totalElementoVentaSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalElementoVenta * me.tipoCambio;
+                let montoconvertido = me.montoTotalElementoVenta * me.tipoCambio3;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
+            totalConfiCotiVehiculo: function(){
+                let me = this;
+                return me.arrayConfiCotiVehiculo.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseInt(valorActual.preciofinal);
+                }, 0);
+            },
+            totalConfiCotiVehiculoSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalConfiCotiVehiculo * me.tipoCambio3;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
+            totalConfiCotiEleVenta: function(){
+                let me = this;
+                return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseInt(valorActual.preciofinal);
+                }, 0);
+            },
+            totalConfiCotiEleVentaSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalConfiCotiEleVenta * me.tipoCambio3;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
+            totalConfiCoti: function(){
+                let me = this;
+                return me.arrayMontosCotizacion.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseInt(valorActual.monto);
+                }, 0);
+            },
+            totalConfiCotiSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalCotizacion * me.tipoCambio3;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -1571,6 +1781,8 @@
                         text: 'El vehículo ya se encuentra agregado!',
                     })
                 } else {
+                    this.arrayVehiculo = [];
+
                     this.arrayVehiculo.push({
                         codListaPrecioVD : vehiculo.codListaPrecioVD,
                         NombreComercial  : vehiculo.NombreComercial,
@@ -1734,6 +1946,110 @@
             removerElementoVentaLista(index){
                 this.$delete(this.arrayElementoVenta, index);
             },
+            siguienteTabDCVerificarCampania(){
+                $('#tab0302').removeClass('nav-link active');
+                $('#tab0302').addClass('nav-link');
+                $('#tab0303').removeClass('nav-link disabled');
+                $('#tab0303').addClass('nav-link active');
+
+                $('#TabDCVehiculo').removeClass('in active show');
+                $('#TabDCElementoVenta').removeClass('in active show');
+                $('#TabDCVerificarCampana').addClass('in active show');
+                $('#TabDCConfirmarCotizacion').removeClass('in active show');
+            },
+            // ======================
+            // SUBTAB CONFIRMAR COTIZACIÓN
+            // ======================
+            llenarDetalleConfirmacion(){
+                let me = this;
+
+                //Setear arrays vacío
+                me.arrayConfiCotiVehiculo = [];
+                me.arrayConfiCotiEleVenta = [];
+                me.arrayMontosCotizacion = [];
+
+                // ======================
+                // DETALLE VEHÍCULO
+                // ======================
+                me.arrayVehiculo.map(function (v) {
+                    me.arrayConfiCotiVehiculo.push({
+                        codigo      : v.codListaPrecioVD,
+                        detalle     : v.NombreComercial,
+                        cantidad    : v.cantidad,
+                        dscto       : v.dscto,
+                        preciofinal : me.montoTotalVehiculo,
+                        flagTipoItem: 'V'
+                    });
+                });
+
+                me.arrayMontosCotizacion.push({
+                    monto: me.montoTotalVehiculo
+                });
+
+                // ======================
+                // DETALLE ELEMENTO VENTA
+                // ======================
+                if(me.arrayElementoVenta.length > 0){
+                    me.arrayElementoVenta.map(function(ev){
+                        me.arrayConfiCotiEleVenta.push({
+                            codigo      : ev.nIdElemento,
+                            detalle     : ev.cElemenNombre,
+                            cantidad    : ev.cantidad,
+                            dscto       : 1,
+                            preciofinal : ev.subtotal,
+                            flagTipoItem: 'E'
+                        });
+                    });
+
+                    me.arrayMontosCotizacion.push({
+                        monto: me.montoTotalElementoVenta
+                    });
+                }
+            },
+            registrarCotizacion(){
+                if(this.validarTabDCElementoVenta()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/gescotizacion/SetCabeceraCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nIdAsignacionContactoVendedor': this.fillAsignarContacto.nidcontacto,
+                        'cNumeroCotizacion' : 'COT-001',
+                        'nIdEmpresa' : 1300011,
+                        'nIdSucursal':1300013,
+                        'nIdReferencia':1300129,
+                        'dFechaCotizacion':moment().format('YYYY-MM-DD'),
+                        'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),
+                        'fTipoCambioVenta':this.tipoCambio2,
+                        'fTipoCambioCompra':this.tipoCambio1,
+                        'fTotalCotizacionVehiculoDolar': this.montoTotalConfiCotiVehiculo,
+                        'fTotalCotizacionVehiculoSol': this.montoTotalConfiCotiVehiculoSoles,
+                        'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
+                        'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
+                    }
+                }).then(response => {
+                    this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            registrarDetalleCotizacion(nIdCabeCoti){
+                if(this.arrayVehiculo.length > 0){
+                    var url = this.ruta + '/gescotizacion/SetDetalleCotizacion';
+                    axios.post(url, {
+                        nIdCabeCoti: nIdCabeCoti,
+                        arrayvehiculos: this.arrayConfiCotiVehiculo,
+                        arrayelemventa: this.arrayConfiCotiEleVenta
+                    }).then(response => {
+                        swal('Cotización registrado exitosamente');
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+            },
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
@@ -1793,7 +2109,6 @@
                                 this.accionmodal=4;
                                 this.modal = 1;
                                 this.llenarComboLinea();
-                                this.arrayVehiculo = [];
                                 break;
                             }
                         }
@@ -1847,10 +2162,35 @@
             getTipoCambio(){
                 var url = this.ruta + '/gescotizacion/GetTipoCambio';
                 axios.get(url).then(response => {
-                    this.tipoCambio = response.data[0].fvalortipocambio;
+                    this.tipoCambio1 = response.data[0].fvalortipocambio1;
+                    this.tipoCambio2 = response.data[0].fvalortipocambio2;
+                    this.tipoCambio3 = response.data[0].fvalortipocambio3;
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            siguienteTabDConfirmarcotizacion(){
+                if(this.validarTabDCElementoVenta()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                $('#tab0301').removeClass('nav-link active');
+                $('#tab0301').addClass('nav-link');
+                $('#tab0302').removeClass('nav-link active');
+                $('#tab0302').addClass('nav-link');
+                $('#tab0303').removeClass('nav-link active');
+                $('#tab0303').addClass('nav-link');
+                $('#tab0304').removeClass('nav-link disabled');
+                $('#tab0304').addClass('nav-link active');
+
+                $('#TabDCVehiculo').removeClass('in active show');
+                $('#TabDCElementoVenta').removeClass('in active show');
+                $('#TabDCVerificarCampana').removeClass('in active show');
+                $('#TabDCConfirmarCotizacion').addClass('in active show');
+
+                this.llenarDetalleConfirmacion();
             }
         }
     }
