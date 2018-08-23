@@ -146,7 +146,7 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Apellidos y Nombres</label>
+                                                                        <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="fillAsignarContacto.ccontacto" class="form-control form-control-sm" readonly>
                                                                         </div>
@@ -154,7 +154,7 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Doc. Identidad</label>
+                                                                        <label class="col-sm-4 form-control-label">* # Documento</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" v-model="fillAsignarContacto.cnrodocumento" class="form-control form-control-sm" readonly>
                                                                         </div>
@@ -289,6 +289,7 @@
                                                                                                                 <th>Sobre Precio</th>
                                                                                                                 <th>Dscto</th>
                                                                                                                 <th>Precio Cierre</th>
+                                                                                                                <th>SubTotal</th>
                                                                                                             </tr>
                                                                                                         </thead>
                                                                                                         <tbody>
@@ -302,8 +303,9 @@
                                                                                                                 <td v-text="vehiculo.cantidad"></td>
                                                                                                                 <td v-text="vehiculo.PrecioBase"></td>
                                                                                                                 <td><input type="number" min="1" class="form-control" v-model="vehiculo.sobrePrecio"/></td>
-                                                                                                                <td><input type="number" min="1" class="form-control" v-model="vehiculo.dscto"/></td>
+                                                                                                                <td v-text="vehiculo.Descuento"></td>
                                                                                                                 <td v-text="vehiculo.PrecioCierre"></td>
+                                                                                                                <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioCierre }} </td>
                                                                                                             </tr>
                                                                                                         </tbody>
                                                                                                     </table>
@@ -508,6 +510,7 @@
                                                                                                                 <th>Cantidad</th>
                                                                                                                 <th>Dscto</th>
                                                                                                                 <th>Precio Final</th>
+                                                                                                                <th>SubTotal</th>
                                                                                                             </tr>
                                                                                                         </thead>
                                                                                                         <tbody>
@@ -516,6 +519,7 @@
                                                                                                                 <td v-text="cotivehiculo.cantidad"></td>
                                                                                                                 <td v-text="cotivehiculo.dscto"></td>
                                                                                                                 <td v-text="cotivehiculo.preciofinal"></td>
+                                                                                                                <td v-text="cotivehiculo.subtotal"></td>
                                                                                                             </tr>
                                                                                                         </tbody>
                                                                                                     </table>
@@ -549,6 +553,7 @@
                                                                                                                 <th>Cantidad</th>
                                                                                                                 <th>Dscto</th>
                                                                                                                 <th>Precio Final</th>
+                                                                                                                <th>SubTotal</th>
                                                                                                             </tr>
                                                                                                         </thead>
                                                                                                         <tbody>
@@ -557,6 +562,7 @@
                                                                                                                 <td v-text="cotieleventa.cantidad"></td>
                                                                                                                 <td v-text="cotieleventa.dscto"></td>
                                                                                                                 <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                                <td v-text="cotieleventa.subtotal"></td>
                                                                                                             </tr>
                                                                                                         </tbody>
                                                                                                     </table>
@@ -748,7 +754,7 @@
                                                                     </template>
                                                                     <template v-else>
                                                                         <td v-text="contactos.cRazonSocial"></td>
-                                                                        <td v-text="contactos.cRuc"></td>
+                                                                        <td v-text="contactos.cNumeroDocumento"></td>
                                                                     </template>
                                                                     <td v-text="contactos.cEmail"></td>
                                                                 </tr>
@@ -1012,13 +1018,13 @@
                                                                 <tr>
                                                                     <th>Codigo</th>
                                                                     <th>Nombre Comercial</th>
+                                                                    <th>Año Fabricación</th>
+                                                                    <th>Año Modelo</th>
                                                                     <th>Precio Base</th>
                                                                     <th>Descuento</th>
                                                                     <th>Precio Cierre</th>
                                                                     <th>Costo Dealer</th>
                                                                     <th>Precio Venta</th>
-                                                                    <th>Año Fabricación</th>
-                                                                    <th>Año Modelo</th>
                                                                     <th>Seleccione</th>
                                                                 </tr>
                                                             </thead>
@@ -1026,13 +1032,13 @@
                                                                 <tr v-for="vehiculo in arrayVehiculoModal" :key="vehiculo.nIdContacto">
                                                                     <td v-text="vehiculo.codListaPrecioVD"></td>
                                                                     <td v-text="vehiculo.NombreComercial"></td>
+                                                                    <td v-text="vehiculo.AnioFab"></td>
+                                                                    <td v-text="vehiculo.AnioMod"></td>
                                                                     <td v-text="vehiculo.PrecioBase"></td>
                                                                     <td v-text="vehiculo.Descuento"></td>
                                                                     <td v-text="vehiculo.PrecioCierre"></td>
                                                                     <td v-text="vehiculo.CostoDealer"></td>
                                                                     <td v-text="vehiculo.PrecioVenta"></td>
-                                                                    <td v-text="vehiculo.AnioFab"></td>
-                                                                    <td v-text="vehiculo.AnioMod"></td>
                                                                     <td>
                                                                         <a href="#" @click.prevent="agregarVehículoLista(vehiculo);">
                                                                             <i class='fa-md fa fa-check-circle'></i>
@@ -1247,6 +1253,7 @@
                 // VARIABLES TAB ASIGNAR COTIZACIÓN
                 // =============================================================
                 fillAsignarContacto:{
+                    nidasignarcontacto: 0,
                     nidcontacto: 0,
                     ccontacto: '',
                     cnrodocumento: '',
@@ -1283,9 +1290,9 @@
                 //SUBTAB Vehiculo
                 arrayVehiculo: [],
                 montoTotalVehiculo: 0,
-                tipoCambio1: 0,
-                tipoCambio2: 0,
-                tipoCambio3: 0,
+                fValorTipoCambioCompra: 0,
+                fValorTipoCambioVenta: 0,
+                fValorTipocambioComercial: 0,
                 montoTotalVehiculoSoles: 0,
 
                 //SUBTAB Elemento Venta
@@ -1401,12 +1408,12 @@
             totalVehiculo: function(){
                 let me = this;
                 return me.arrayVehiculo.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.PrecioCierre);
+                    return valorAnterior + parseInt(valorActual.subtotal);
                 }, 0);
             },
             totalVehiculoSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalVehiculo * me.tipoCambio3;
+                let montoconvertido = me.montoTotalVehiculo * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -1418,31 +1425,31 @@
             },
             totalElementoVentaSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalElementoVenta * me.tipoCambio3;
+                let montoconvertido = me.montoTotalElementoVenta * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
             totalConfiCotiVehiculo: function(){
                 let me = this;
                 return me.arrayConfiCotiVehiculo.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.preciofinal);
+                    return valorAnterior + parseInt(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiVehiculoSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalConfiCotiVehiculo * me.tipoCambio3;
+                let montoconvertido = me.montoTotalConfiCotiVehiculo * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
             totalConfiCotiEleVenta: function(){
                 let me = this;
                 return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.preciofinal);
+                    return valorAnterior + parseInt(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiEleVentaSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalConfiCotiEleVenta * me.tipoCambio3;
+                let montoconvertido = me.montoTotalConfiCotiEleVenta * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -1454,7 +1461,7 @@
             },
             totalConfiCotiSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalCotizacion * me.tipoCambio3;
+                let montoconvertido = me.montoTotalCotizacion * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -1554,8 +1561,13 @@
             // TAB ASGINAR COTIZACIÓN
             // =================================================================
             llenarReferencias(){
-                var url = this.ruta + '/gescotizacion/GetListReferencias';
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110057,
+                        'opcion' : 0,
+                    }
+                }).then(response => {
                     let info = response.data;
                     //Data
                     this.arrayReferencias = info;
@@ -1667,6 +1679,7 @@
                 var url = this.ruta + '/gescotizacion/GetTipoLista';
                 axios.get(url, {
                     params: {
+                        'nidproveedor': this.fillProveedor.nidproveedor,
                         'nidtipolista' : this.fillBusqVehiculo.nidtipolista
                     }
                 }).then(response => {
@@ -1730,6 +1743,7 @@
                 var url = this.ruta + '/gescotizacion/GetListVehiculos';
                 axios.get(url, {
                     params: {
+                        'nidproveedor': this.fillProveedor.nidproveedor,
                         'nidtipolista': this.fillBusqVehiculo.nidtipolista,
                         'nidlinea' : this.fillBusqVehiculo.nidlinea,
                         'nidmarca' : this.fillBusqVehiculo.nidmarca,
@@ -1789,13 +1803,10 @@
                         PrecioBase       : vehiculo.PrecioBase,
                         Descuento        : vehiculo.Descuento,
                         PrecioCierre     : vehiculo.PrecioCierre,
-                        CostoDealer      : vehiculo.CostoDealer,
-                        PrecioVenta      : vehiculo.PrecioVenta,
-                        AnioFab          : vehiculo.AnioFab,
-                        AnioMod          : vehiculo.AnioMod,
                         cantidad         : 1,
                         sobrePrecio      : 1,
-                        dscto            : 1
+                        subtotal         : 0,
+                        nIdMoneda        : vehiculo.nIdMoneda
                     });
 
                     toastr.options.progressBar = true;
@@ -1973,12 +1984,14 @@
                 // ======================
                 me.arrayVehiculo.map(function (v) {
                     me.arrayConfiCotiVehiculo.push({
-                        codigo      : v.codListaPrecioVD,
-                        detalle     : v.NombreComercial,
-                        cantidad    : v.cantidad,
-                        dscto       : v.dscto,
-                        preciofinal : me.montoTotalVehiculo,
-                        flagTipoItem: 'V'
+                        codigo       : v.codListaPrecioVD,
+                        detalle      : v.NombreComercial,
+                        cantidad     : v.cantidad,
+                        dscto        : v.Descuento,
+                        preciofinal  : v.PrecioCierre,
+                        subtotal     : v.subtotal,
+                        nidmoneda    : v.nIdMoneda,
+                        flagTipoItem : 'V'
                     });
                 });
 
@@ -1992,12 +2005,14 @@
                 if(me.arrayElementoVenta.length > 0){
                     me.arrayElementoVenta.map(function(ev){
                         me.arrayConfiCotiEleVenta.push({
-                            codigo      : ev.nIdElemento,
-                            detalle     : ev.cElemenNombre,
-                            cantidad    : ev.cantidad,
-                            dscto       : 1,
-                            preciofinal : ev.subtotal,
-                            flagTipoItem: 'E'
+                            codigo       : ev.nIdElemento,
+                            detalle      : ev.cElemenNombre,
+                            cantidad     : ev.cantidad,
+                            dscto        : 1,
+                            preciofinal  : ev.fElemenValorVenta,
+                            subtotal     : ev.subtotal,
+                            flagTipoItem : 'EV',
+                            nidmoneda    : ev.nIdMoneda
                         });
                     });
 
@@ -2007,31 +2022,32 @@
                 }
             },
             registrarCotizacion(){
-                if(this.validarTabDCElementoVenta()){
+                if(this.validarRegistrarCotizacion()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
                 var url = this.ruta + '/gescotizacion/SetCabeceraCotizacion';
-                axios.get(url, {
+                axios.post(url, {
                     params: {
-                        'nIdAsignacionContactoVendedor': this.fillAsignarContacto.nidcontacto,
+                        'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
                         'cNumeroCotizacion' : 'COT-001',
                         'nIdEmpresa' : 1300011,
                         'nIdSucursal':1300013,
                         'nIdReferencia':1300129,
                         'dFechaCotizacion':moment().format('YYYY-MM-DD'),
                         'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),
-                        'fTipoCambioVenta':this.tipoCambio2,
-                        'fTipoCambioCompra':this.tipoCambio1,
+                        'fTipoCambioVenta':this.fValorTipoCambioVenta,
+                        'fTipoCambioCompra':this.fValorTipoCambioCompra,
                         'fTotalCotizacionVehiculoDolar': this.montoTotalConfiCotiVehiculo,
                         'fTotalCotizacionVehiculoSol': this.montoTotalConfiCotiVehiculoSoles,
                         'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
                         'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
                     }
                 }).then(response => {
-                    this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                    console.log(response);
+                    // this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
                 }).catch(error => {
                     this.errors = error
                 });
@@ -2049,6 +2065,23 @@
                         console.log(error);
                     });
                 }
+            },
+            validarRegistrarCotizacion(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayVehiculo.length == 0){
+                    this.mensajeError.push('Debe haber un vehiculo agregado');
+                }
+
+                if(!this.fillAsignarContacto.nidcontacto){
+                    this.mensajeError.push('Debe asignar un contacto');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =================================================================
             // METODOS GENERICOS
@@ -2068,14 +2101,15 @@
                             break;
                             case 'asignar':
                             {
-                                // (this.fillBusqContacto.ntipopersona) == 1 ?
-                                //         this.fillAsignarContacto.ccontacto = data['cPerApellidos'] :
-                                //         this.fillAsignarContacto.ccontacto = data['cContacto'];
+                                (this.fillBusqContacto.ntipopersona) == 1 ?
+                                        this.fillAsignarContacto.ccontacto = data['cContacto'] :
+                                        this.fillAsignarContacto.ccontacto = data['cRazonSocial'];
                                 this.fillAsignarContacto.nidcontacto = data['nIdContacto'];
-                                this.fillAsignarContacto.ccontacto = data['cContacto'];
+                                // this.fillAsignarContacto.ccontacto = data['cContacto'];
                                 this.fillAsignarContacto.cnrodocumento = data['cNumeroDocumento'];
                                 this.fillAsignarContacto.cdireccion = data['cDireccion'];
                                 this.fillAsignarContacto.cemail = data['cEmail'];
+                                this.fillAsignarContacto.nidasignarcontacto = data['nIdAsignacionContactoVendedor'];
                                 this.tabAsignarCotizacion();
                                 this.cerrarModal();
                                 break;
@@ -2162,9 +2196,9 @@
             getTipoCambio(){
                 var url = this.ruta + '/gescotizacion/GetTipoCambio';
                 axios.get(url).then(response => {
-                    this.tipoCambio1 = response.data[0].fvalortipocambio1;
-                    this.tipoCambio2 = response.data[0].fvalortipocambio2;
-                    this.tipoCambio3 = response.data[0].fvalortipocambio3;
+                    this.fValorTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
+                    this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
                 }).catch(error => {
                     console.log(error);
                 });

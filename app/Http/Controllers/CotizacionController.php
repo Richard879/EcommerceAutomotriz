@@ -21,38 +21,14 @@ class CotizacionController extends Controller
         return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
-    public function GetListReferencias(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        $variable = 0;
-
-        $arrayReferencias = DB::select('exec usp_Cotizacion_GetListReferencias');
-
-        $data = [];
-        if($variable == "0"){
-            $data[0] = [
-                'nIdPar'   => 0,
-                'cParNombre' =>'SELECCIONE',
-            ];
-        }
-        foreach ($arrayReferencias as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdPar,
-                'cParNombre' => $value->cParNombre,
-            ];
-        }
-
-        return response()->json($data);
-    }
-
     public function GetTipoLista(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nidproveedor = $request->nidproveedor;
         $tipoLista = $request->nidtipolista;
 
-        $arrayTipoLista = DB::select('exec usp_Cotizacion_GetListTipoLista ?', [$tipoLista]);
+        $arrayTipoLista = DB::select('exec usp_Cotizacion_GetListTipoLista ?, ?', [$nidproveedor, $tipoLista]);
 
         return response()->json($arrayTipoLista);
     }
@@ -61,24 +37,24 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nidproveedor = $request->nidproveedor;
         $nidtipolista = $request->nidtipolista;
         $nidlinea   = $request->nidlinea;
         $nidmarca   = $request->nidmarca;
         $nidmodelo  = $request->nidmodelo;
         $cnombrecomercial = $request->cnombrecomercial;
 
-        $nidlinea = ($nidlinea == 0) ? ($nidlinea = '') : $nidlinea;
-        $nidmarca = ($nidmarca == 0) ? ($nidmarca = '') : $nidmarca;
-        $nidmodelo = ($nidmodelo == 0) ? ($nidmodelo = '') : $nidmodelo;
         $cnombrecomercial = ($cnombrecomercial == "") ? ($cnombrecomercial = '') : $cnombrecomercial;
 
         $arrayListaVehiculos = DB::select('exec usp_Cotizacion_GetListVehiculos ?, ?, ?, ?, ?',
-                                                                        array(  $nidtipolista,
-                                                                                $nidlinea,
-                                                                                $nidmarca,
-                                                                                $nidmodelo,
-                                                                                $cnombrecomercial
-                                                                            ));
+                                                                        [
+                                                                            $nidproveedor,
+                                                                            $nidtipolista,
+                                                                            $nidlinea,
+                                                                            $nidmarca,
+                                                                            $nidmodelo,
+                                                                            $cnombrecomercial
+                                                                        ]);
 
         $arrayListaVehiculos = $this->arrayPaginator($arrayListaVehiculos, $request);
         return ['arrayListaVehiculos'=>$arrayListaVehiculos];
@@ -93,6 +69,8 @@ class CotizacionController extends Controller
 
     public function SetCabeceraCotizacion(Request $request)
     {
+        // return $request;
+
         if (!$request->ajax()) return redirect('/');
 
         $arrayCabeceraCotizacion = DB::select('exec usp_Cotizacion_SetCabeceraCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
@@ -121,24 +99,52 @@ class CotizacionController extends Controller
 
         try{
             DB::beginTransaction();
-            $detalles = $request->data;
+            $arrayvehiculos = $request->arrayvehiculos;
             //Itera todas las referencias de vehiculos
-            foreach($detalles as $ep=>$det)
+            foreach($arrayvehiculos as $ep=>$det)
             {
-                DB::select('exec usp_Contacto_SetReferenciaVehiculo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                        array(
-                                                            $request->nIdEmpresa,
-                                                            $request->nIdSucursal,
-                                                            $request->nIdCronograma,
-                                                            $request->nIdContacto,
-                                                            $det['nIdProveedor'],
-                                                            $det['nIdLinea'],
-                                                            $det['nIdMarca'],
-                                                            $det['nIdModelo'],
-                                                            $det['nAnioFabricacion'],
-                                                            $det['nAnioModelo'],
-                                                            Auth::user()->id
-                                                        ));
+                DB::select('exec usp_Cotizacion_SetDetalleCotizacion
+                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                            [
+                                                $request->nIdCabeCoti,
+                                                $det['flagTipoItem'],
+                                                $det['codigo'],
+                                                null,
+                                                null,
+                                                'N',
+                                                null,
+                                                'N',
+                                                $det['nidmoneda'],
+                                                $det['cantidad'],
+                                                $det['preciofinal'],
+                                                $det['dscto'],
+                                                $det['subtotal'],
+                                                Auth::user()->id
+                                            ]);
+            }
+
+            $arrayelemventa = $request->arrayelemventa;
+            //Itera todas las referencias de vehiculos
+            foreach($arrayelemventa as $ep=>$det)
+            {
+                DB::select('exec usp_Cotizacion_SetDetalleCotizacion
+                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                            [
+                                                $request->nIdCabeCoti,
+                                                $det['flagTipoItem'],
+                                                null,
+                                                null,
+                                                $det['codigo'],
+                                                'N',
+                                                null,
+                                                'N',
+                                                $det['nidmoneda'],
+                                                $det['cantidad'],
+                                                $det['preciofinal'],
+                                                $det['dscto'],
+                                                $det['subtotal'],
+                                                Auth::user()->id
+                                            ]);
             }
             DB::commit();
         } catch (Exception $e){
