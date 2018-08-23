@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="Tab1" href="#TabBuscaListaPrecioVh" @click="desactivarTabs();" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" id="Tab1" href="#TabBuscaListaPrecioVh" @click="tabBuscaListaPrecioVh()" role="tab" data-toggle="tab">
                                         <i class="fa fa-search"></i> BUSCAR LISTA PRECIO
                                     </a>
                                 </li>
@@ -123,7 +123,7 @@
                                                                                 <td v-text="lista.dFechaFin"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                        :title="'Agregar Detalle a Lista ' +lista.nNroListaPrecio">
+                                                                                        :title="'Agregar Detalle a Lista'">
                                                                                         <i class="fa-md fa fa-sign-in"></i>
                                                                                     </a>
                                                                                     <template v-if="lista.nListadoDetalleContador > 0">
@@ -899,6 +899,11 @@
             }
         },
         methods:{
+            tabBuscaListaPrecioVh(){
+                this.formListaPrecioVh.nidproveedor = 0,
+                this.formListaPrecioVh.cproveedornombre = '',
+                this.desactivarTabs();
+            },
             buscaProveedores(){
                 this.listarProveedores(1);
             },
@@ -942,6 +947,7 @@
                 this.listarListaPrecioVh(1);
             },
             listarListaPrecioVh(page){
+                this.mostrarProgressBar();
                 this.nidempresa = 1300011;
                 this.nidsucursal = 1300013;
 
@@ -957,6 +963,8 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVh.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVh.from;
                     this.pagination.to           = response.data.arrayListaPrecioVh.to;
+                 }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1183,6 +1191,8 @@
                 this.listarListaPrecioVhDetalle(1);
             },
             listarListaPrecioVhDetalle(page){
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/listapreciovh/GetListaVhDetalle?nidlistaprecioversionveh=' + this.formListaPrecioVh.nidlistaprecioversionVeh
                                                                                             + '&page='+ page;
                 axios.get(url).then(response => {
@@ -1193,6 +1203,8 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
                     this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1224,6 +1236,7 @@
                 });
             },
             readFileListaPrecioVh(nameFile){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/listapreciovh/readFileListaPrecioVh';
                 axios.post(url, {
                     nameFile: nameFile
@@ -1238,7 +1251,8 @@
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
                     this.contadorArrayExcel = response.data.length;
-                
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1343,6 +1357,10 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){

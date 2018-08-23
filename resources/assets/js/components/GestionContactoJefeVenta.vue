@@ -3711,7 +3711,7 @@
                         }
                     }
                     break;
-                    case 'nuevovendedor':
+                    case "nuevovendedor":
                     {
                         switch(accion){
                             case 'buscar':

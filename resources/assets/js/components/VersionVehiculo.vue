@@ -720,8 +720,9 @@
                 return this.error;
             },
             listarVersionVehiculo(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/versionvehiculo/GetVersionVehiculo';
-
+                
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -742,6 +743,8 @@
                     this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
                     this.pagination.from        = response.data.arrayVersionVehiculo.from;
                     this.pagination.to           = response.data.arrayVersionVehiculo.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -863,7 +866,7 @@
                         if (result.value) {
                             var url = this.ruta + '/versionvehiculo/activar';
                             axios.put(url, {
-                                nIdVersionVeh: nIdVersionVeh
+                                nIdVersionVeh: parseInt(nIdVersionVeh)
                             }).then(response => {
                                 swal(
                                 'Activado!',
@@ -892,7 +895,7 @@
                         if (result.value) {
                             var url = this.ruta + '/versionvehiculo/desactivar';
                             axios.put(url, {
-                                nIdVersionVeh: nIdVersionVeh
+                                nIdVersionVeh: parseInt(nIdVersionVeh)
                             }).then(response => {
                                 swal(
                                 'Desactivado!',
@@ -998,6 +1001,10 @@
                 this.formVersion.nidaniofabricacion= 0,
                 this.formVersion.nidanioversion= 0
                 //this.arrayVersionVehiculo = []
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){

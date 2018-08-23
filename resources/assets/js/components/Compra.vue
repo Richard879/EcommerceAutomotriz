@@ -645,6 +645,7 @@
                 this.listarCompras(1);
             },
             listarCompras(page){
+                this.mostrarProgressBar();
                 if(this.fillCompra.nordencompra == ''){
                     var nordencompra = 0;
                 }
@@ -671,6 +672,8 @@
                     this.pagination.last_page   = response.data.arrayCompra.last_page;
                     this.pagination.from        = response.data.arrayCompra.from;
                     this.pagination.to           = response.data.arrayCompra.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -757,6 +760,8 @@
                 });
             },
             readFileCompra(nameFile){
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/compra/readFileCompra';
                 axios.post(url, {
                     nameFile: nameFile
@@ -771,7 +776,8 @@
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
                     this.contadorArrayExcel = response.data.length;
-
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -831,10 +837,9 @@
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
                     nIdCronograma: 220011,
-                    nIdProveedor: this.formCompra.nidproveedor,
-                    nIdTipoLista: this.formCompra.nidtipolista,
-                    data: this.arrayCompra,
-                    nIdUsuario: 190011
+                    nIdProveedor: parseInt(this.formCompra.nidproveedor),
+                    nIdTipoLista: parseInt(this.formCompra.nidtipolista),
+                    data: this.arrayCompra
                 }).then(response => {
                     swal('Compra registrada');
                     this.arrayExcel = [];
@@ -881,7 +886,7 @@
                 return this.error;
             },
             desactivar(nIdCompra){
-                
+
                 swal({
                         title: 'Estas seguro de eliminar esta Compra?',
                         type: 'warning',
@@ -941,6 +946,10 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){

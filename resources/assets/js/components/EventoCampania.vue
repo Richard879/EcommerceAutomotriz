@@ -1752,7 +1752,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarWFinancieros(page);
+                this.listarEventoCampania(page);
             },
             activar(nIdEventoCampania){
                 swal({
@@ -2180,6 +2180,77 @@
                 this.$delete(this.arrayTemporalElemento, index);
                 toastr.success('Se Eliminó Item Elemento');
             },
+            // =============  REGISTRAR EVENTO ===================
+            registrar(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/ec/SetEventoCampania';
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
+                    cNombreEventoCampania: this.formEventoCamp.descripcion,
+                    nIdTipoEvento: this.formEventoCamp.ntipo,
+                    dFechaInicio: this.formEventoCamp.dfechainicio,
+                    dFechaFin: this.formEventoCamp.dfechafin,
+                    fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
+                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
+                }).then(response => {
+                    this.registrarAsignaDetalle(response.data[0].nIdEventoCampania)
+                    this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
+                    swal('Evento Campaña registrado');
+                    this.activarTab3();
+                    this.formDistribucion.nideventocampania = response.data[0].nIdEventoCampania;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registrarAsignaDetalle(nIdEventoCampania){
+                if(this.arrayTemporalLinea.length > 0){
+                    this.arrayRegistraDetalle = this.arrayTemporalLinea;
+                };
+                if(this.arrayTemporalMarca.length > 0){
+                    this.arrayRegistraDetalle = this.arrayTemporalMarca;
+                };
+                if(this.arrayTemporalModelo.length > 0){
+                    this.arrayRegistraDetalle = this.arrayTemporalModelo;
+                };
+
+                if (this.arrayRegistraDetalle.length > 0)
+                {
+                    var url = this.ruta + '/ec/SetDetalleEventoCampania';
+
+                    axios.post(url, {
+                        nIdEventoCampania: nIdEventoCampania,
+                        cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
+                        data: this.arrayRegistraDetalle,
+                        nTotalRegistros: this.arrayRegistraDetalle.length,
+                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto
+                    }).then(response => {
+                        //this.registrarAsignaDetalle(response.data);
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+            },
+            registrarAsignaElemento(nIdEventoCampania){
+                if(this.arrayTemporalElemento.length > 0){
+                    var url = this.ruta + '/ec/SetEventoElementoVenta';
+
+                    axios.post(url, {
+                        nIdEventoCampania: nIdEventoCampania,
+                        data: this.arrayTemporalElemento
+                    }).then(response => {
+                        //this.registrarAsignaDetalle(response.data);
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+            },
             // =============  TAB DISTRIBUCION ===================
             activarTab3(){
                 $('#Tab1').removeClass('nav-link active');
@@ -2345,77 +2416,7 @@
                 $('#Tab2').addClass('disabled');
                 //$('#Tab3').addClass('disabled');
             },
-            // =============  REGISTRAR EVENTO ===================
-            registrar(){
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                var url = this.ruta + '/ec/SetEventoCampania';
-                axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
-                    nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
-                    cNombreEventoCampania: this.formEventoCamp.descripcion,
-                    nIdTipoEvento: this.formEventoCamp.ntipo,
-                    dFechaInicio: this.formEventoCamp.dfechainicio,
-                    dFechaFin: this.formEventoCamp.dfechafin,
-                    fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                    cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
-                }).then(response => {
-                    this.registrarAsignaDetalle(response.data[0].nIdEventoCampania)
-                    this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
-                    swal('Evento Campaña registrado');
-                    this.activarTab3();
-                    this.formDistribucion.nideventocampania = response.data[0].nIdEventoCampania;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            registrarAsignaDetalle(nIdEventoCampania){
-                if(this.arrayTemporalLinea.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalLinea;
-                };
-                if(this.arrayTemporalMarca.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalMarca;
-                };
-                if(this.arrayTemporalModelo.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalModelo;
-                };
-
-                if (this.arrayRegistraDetalle.length > 0)
-                {
-                    var url = this.ruta + '/ec/SetDetalleEventoCampania';
-
-                    axios.post(url, {
-                        nIdEventoCampania: nIdEventoCampania,
-                        cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
-                        data: this.arrayRegistraDetalle,
-                        nTotalRegistros: this.arrayRegistraDetalle.length,
-                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto
-                    }).then(response => {
-                        //this.registrarAsignaDetalle(response.data);
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                }
-            },
-            registrarAsignaElemento(nIdEventoCampania){
-                if(this.arrayTemporalElemento.length > 0){
-                    var url = this.ruta + '/ec/SetEventoElementoVenta';
-
-                    axios.post(url, {
-                        nIdEventoCampania: nIdEventoCampania,
-                        data: this.arrayTemporalElemento
-                    }).then(response => {
-                        //this.registrarAsignaDetalle(response.data);
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                }
-            },
+           // =============  REGISTRAR DISTRIBUCION ===================
             registrarAsignaDistribucion(){
                 if(this.formDistribucion.ntipodistribucion==1){
 
@@ -2423,6 +2424,7 @@
                         var list=[];
                         var listIndexEntidadValor=[];
                         listIndexProvValor = this.arrayIndexEntidadValor;
+                        var valorPorEC = 0;
 
                         this.arrayProveedorPorEC.map(function(value, key) {
                             list.push({
@@ -2430,7 +2432,14 @@
                                 cFlagEntidad: value.cFlagEntidad,
                                 fValorPorcentual: listIndexProvValor[key]
                             });
+                            valorPorEC = valorPorEC + parseInt(listIndexProvValor[key]);
                         });
+
+                        if(this.validaRegistroDistribuionPorEC(valorPorEC)){
+                            this.accionmodal=1;
+                            this.modal = 1;
+                            return;
+                        }
 
                         var url = this.ruta + '/ec/SetDistribucionEventoByEC';
                         axios.post(url, {
@@ -2511,6 +2520,23 @@
 
                 if(this.formDistribucion.nideventocampania == 0){
                     this.mensajeError.push('Error en registro de Distribucion');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaRegistroDistribuionPorEC(valorPorEC){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(valorPorEC > 100){
+                    this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mas de 100%');
+                };
+
+                if(valorPorEC != 100){
+                    this.mensajeError.push('La suma de los valores de porcentaje debe ser = 100%');
                 };
 
                 if(this.mensajeError.length){

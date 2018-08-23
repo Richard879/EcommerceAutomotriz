@@ -15,6 +15,7 @@ Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo'
 Route::post('/elemento/SetElemento', 'ElementoController@store');
 Route::put('/elemento/desactivar','ElementoController@desactivar');
 Route::put('/elemento/activar','ElementoController@activar');
+Route::post('/elemento/UpdElementoById', 'ElementoController@UpdElementoById');
 Route::post('/versionvehiculo/SetVersion', 'VersionVehiculoController@store');
 Route::get('/versionvehiculo/GetVersionVehiculo', 'VersionVehiculoController@GetVersionVehiculo');
 Route::post('/versionvehiculo/UpdVersionVehiculoById', 'VersionVehiculoController@UpdVersionVehiculoById');
@@ -54,6 +55,8 @@ Route::post('/ec/SetDistribucionEventoByEC', 'EventoCampaniaController@SetDistri
 Route::post('/ec/SetDistribucionEventoByElemento', 'EventoCampaniaController@SetDistribucionEventoByElemento');
 Route::get('/ec/GetEventoCampania', 'EventoCampaniaController@GetEventoCampania');
 Route::get('/ec/GetDistribucionByElementoVenta', 'EventoCampaniaController@GetDistribucionByElementoVenta');
+Route::put('/ec/desactivar', 'EventoCampaniaController@desactivar');
+Route::put('/ec/activar', 'EventoCampaniaController@activar');
 Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
 Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
 Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');
