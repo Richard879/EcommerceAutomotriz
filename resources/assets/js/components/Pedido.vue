@@ -58,7 +58,11 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
+<<<<<<< HEAD
+                                                                            <input type="date" v-model="fillCompra.dfechainicio" class="form-control form-control-sm">
+=======
                                                                             <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
+>>>>>>> 93969adf5aeb9ff3360542055e0da725090078cf
                                                                         </div>
                                                                     </div>
                                                                 </div>

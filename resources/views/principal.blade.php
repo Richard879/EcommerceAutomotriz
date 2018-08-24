@@ -12,7 +12,7 @@
     <title>Sistema Ventas - SAISAC</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="css/plantilla.css">
-    
+
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -37,7 +37,7 @@
                 <div class="navbar-header">
                     <!-- Navbar Brand --><a href="http://172.20.6.62:8080/saisacsys" class="navbar-brand">
                     <div class="brand-text brand-big"><span><img class="navbar-brand-full" src="img/logo.png" width="220" height="30" alt="CoreUI Logo"></span></div>
-                    <div class="brand-text brand-small"><strong>INKA</strong></div></a>    
+                    <div class="brand-text brand-small"><strong>INKA</strong></div></a>
                     <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
                 </div>
                 <!-- Navbar Menu -->
@@ -47,22 +47,22 @@
                     <!-- Notifications-->
                     <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
                     <ul aria-labelledby="notifications" class="dropdown-menu">
-                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item">
                             <div class="notification">
                             <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
                             <div class="notification-time"><small>4 minutes ago</small></div>
                             </div></a></li>
-                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item">
                             <div class="notification">
                             <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
                             <div class="notification-time"><small>4 minutes ago</small></div>
                             </div></a></li>
-                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item">
                             <div class="notification">
                             <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
                             <div class="notification-time"><small>4 minutes ago</small></div>
                             </div></a></li>
-                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item">
                             <div class="notification">
                             <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
                             <div class="notification-time"><small>10 minutes ago</small></div>
@@ -73,17 +73,17 @@
                     <!-- Messages                        -->
                     <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
                     <ul aria-labelledby="notifications" class="dropdown-menu">
-                        <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
                             <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                             <div class="msg-body">
                             <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
                             </div></a></li>
-                        <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
                             <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
                             <div class="msg-body">
                             <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
                             </div></a></li>
-                        <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                        <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
                             <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
                             <div class="msg-body">
                             <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
@@ -118,7 +118,7 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                            
+
                         </div>
                     </li>
                     <!-- Logout -->
@@ -128,7 +128,7 @@
             </div>
             </nav>
         </header>
-        <div class="page-content d-flex align-items-stretch"> 
+        <div class="page-content d-flex align-items-stretch">
             <!-- Side Navbar -->
             @include('template.sidebar')
             <div class="content-inner">
@@ -144,7 +144,7 @@
                         </div>
                         <div class="col-sm-6 text-right">
                         <p>Design by <a href="#" class="external">SAISACTI</a></p>
-                        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding -->
+                        <!-- Please do not remove the backlink to us unless you support further themes development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding -->
                         </div>
                     </div>
                     </div>
