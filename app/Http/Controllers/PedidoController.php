@@ -29,16 +29,42 @@ class PedidoController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $dFechaInicio = $request->dfechainicio;
         $dFechaFin = $request->dfechafin;
+        $nIdMarca = $request->nidmarca;
+        $nIdModelo = $request->nidmodelo;
 
-        $arrayPedido = DB::select('exec usp_Pedido_GetLstCotizacionIngresadas ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Pedido_GetLstCotizacionIngresadas ?, ?, ?, ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
+                                                                    $nIdMarca,
+                                                                    $nIdModelo,
                                                                     Auth::user()->id
                                                                     ));
 
         $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
+    }
+
+    public function GetLstCompraByIdModelo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdCabeceraCotizacion = $request->nidcabeceracotizacion;
+        $cNumeroVin = $request->cnumerovin;
+
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+
+        $arrayCompra = DB::select('exec usp_Pedido_GetLstCompraByIdModelo ?, ?, ?, ?',
+                                                            array(  $nIdEmpresa,
+                                                                    $nIdSucursal,
+                                                                    $nIdCabeceraCotizacion,
+                                                                    $cNumeroVin
+                                                                    ));
+
+        $arrayCompra = $this->arrayPaginator($arrayCompra, $request);
+        return ['arrayCompra'=>$arrayCompra];
     }
 }
