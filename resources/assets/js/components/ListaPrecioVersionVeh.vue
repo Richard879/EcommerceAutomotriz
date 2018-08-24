@@ -992,7 +992,7 @@
                 }).then(response => {
                     swal('Lista de Precio registrada');
                     this.limpiarFormulario();
-                    this.listarListaPrecioVh();
+                    this.listarListaPrecioVh(1);
                     this.vistaFormTab1 = 1;
                 }).catch(error => {
                     console.log(error);
