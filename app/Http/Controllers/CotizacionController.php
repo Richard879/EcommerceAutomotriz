@@ -69,8 +69,6 @@ class CotizacionController extends Controller
 
     public function SetCabeceraCotizacion(Request $request)
     {
-        return $request;
-
         if (!$request->ajax()) return redirect('/');
 
         $arrayCabeceraCotizacion = DB::select('exec usp_Cotizacion_SetCabeceraCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
@@ -104,16 +102,15 @@ class CotizacionController extends Controller
             //Itera todas las referencias de vehiculos
             foreach($arrayvehiculos as $ep=>$det)
             {
-                DB::select('exec usp_Cotizacion_SetDetalleCotizacion
-                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                DB::select('exec usp_Cotizacion_SetDetalleCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                             [
                                                 $request->nIdCabeCoti,
                                                 $det['flagTipoItem'],
                                                 $det['codigo'],
-                                                null,
-                                                null,
+                                                0,
+                                                0,
                                                 'N',
-                                                null,
+                                                0,
                                                 'N',
                                                 $det['nidmoneda'],
                                                 $det['cantidad'],
@@ -130,16 +127,15 @@ class CotizacionController extends Controller
                 //Itera todas las referencias de vehiculos
                 foreach($arrayelemventa as $ep=>$det)
                 {
-                    DB::select('exec usp_Cotizacion_SetDetalleCotizacion
-                                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec usp_Cotizacion_SetDetalleCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                 [
                                                     $request->nIdCabeCoti,
                                                     $det['flagTipoItem'],
-                                                    null,
-                                                    null,
+                                                    0,
+                                                    0,
                                                     $det['codigo'],
                                                     'N',
-                                                    null,
+                                                    0,
                                                     'N',
                                                     $det['nidmoneda'],
                                                     $det['cantidad'],

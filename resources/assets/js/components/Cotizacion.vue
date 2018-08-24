@@ -2030,24 +2030,21 @@
 
                 var url = this.ruta + '/gescotizacion/SetCabeceraCotizacion';
                 axios.post(url, {
-                    params: {
-                        'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
-                        'cNumeroCotizacion' : 'COT-001',
-                        'nIdEmpresa' : 1300011,
-                        'nIdSucursal':1300013,
-                        'nIdReferencia':1300129,
-                        'dFechaCotizacion':moment().format('YYYY-MM-DD'),
-                        'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),
-                        'fTipoCambioVenta':this.fValorTipoCambioVenta,
-                        'fTipoCambioCompra':this.fValorTipoCambioCompra,
-                        'fTotalCotizacionVehiculoDolar': this.montoTotalConfiCotiVehiculo,
-                        'fTotalCotizacionVehiculoSol': this.montoTotalConfiCotiVehiculoSoles,
-                        'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
-                        'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
-                    }
+                    'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
+                    'cNumeroCotizacion' : 'COT-001',
+                    'nIdEmpresa' : 1300011,
+                    'nIdSucursal':1300013,
+                    'nIdReferencia':1300129,
+                    'dFechaCotizacion':moment().format('YYYY-MM-DD'),
+                    'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),
+                    'fTipoCambioVenta':this.fValorTipoCambioVenta,
+                    'fTipoCambioCompra':this.fValorTipoCambioCompra,
+                    'fTotalCotizacionVehiculoDolar': this.montoTotalConfiCotiVehiculo,
+                    'fTotalCotizacionVehiculoSol': this.montoTotalConfiCotiVehiculoSoles,
+                    'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
+                    'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
                 }).then(response => {
-                    console.log(response);
-                    // this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                    this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
                 }).catch(error => {
                     this.errors = error
                 });
@@ -2060,6 +2057,7 @@
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
                         arrayelemventa: this.arrayConfiCotiEleVenta
                     }).then(response => {
+                        this.limpiarProcesoCotizacion();
                         swal('Cotización registrado exitosamente');
                     }).catch(error => {
                         console.log(error);
@@ -2082,6 +2080,65 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            limpiarProcesoCotizacion(){
+                //Tab Asignar Cotización
+                this.fillAsignarContacto.ccontacto = '';
+                this.fillAsignarContacto.cdireccion = '';
+                this.fillAsignarContacto.cemail = '';
+                this.fillAsignarContacto.cnrodocumento = '';
+                this.fillAsignarContacto.nidasignarcontacto = '';
+                this.fillAsignarContacto.nidcontacto = '';
+                this.fillAsignarContacto.nidreferencia = '';
+                //Tab Detalle Cotización
+                this.fillProveedor.cproveedornombre = '';
+                this.fillProveedor.nidproveedor = '';
+                this.fillBusqVehiculo.cinfotipolista = '';
+                this.fillBusqVehiculo.cnombrecomercial = '';
+                this.fillBusqVehiculo.nidlinea = 0;
+                this.fillBusqVehiculo.nidmarca = 0;
+                this.fillBusqVehiculo.nidmodelo = 0;
+                this.fillBusqVehiculo.nidtipolista = 0;
+                this.arrayVehiculo = [];
+                this.arrayElementoVenta = [];
+                this.arrayMontosCotizacion = [];
+                this.arrayConfiCotiVehiculo = [];
+                this.arrayConfiCotiEleVenta = [];
+                this.montoTotalVehiculo = 0;
+                this.montoTotalVehiculoSoles = 0;
+                this.montoTotalElementoVenta = 0;
+                this.montoTotalElementoVentaSoles = 0;
+                this.montoTotalConfiCotiVehiculo = 0;
+                this.montoTotalConfiCotiVehiculoSoles = 0;
+                this.montoTotalConfiCotiEleVenta = 0;
+                this.montoTotalConfiCotiEleVentaSoles = 0;
+                this.montoTotalCotizacion = 0;
+                this.montoTotalCotizacionSoles = 0;
+
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link active');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link');
+
+                $('#TabCotizacion').addClass("in active show");
+                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabDetalleCotizacion').removeClass('in active show');
+
+                $('#tab0301').removeClass('nav-link');
+                $('#tab0301').addClass('nav-link active');
+                $('#tab0302').removeClass('nav-link active');
+                $('#tab0302').addClass('nav-link disabled');
+                $('#tab0303').removeClass('nav-link active');
+                $('#tab0303').addClass('nav-link disabled');
+                $('#tab0304').removeClass('nav-link active');
+                $('#tab0304').addClass('nav-link disabled');
+
+                $('#TabDCVehiculo').addClass('in active show');
+                $('#TabDCElementoVenta').removeClass('in active show');
+                $('#TabDCVerificarCampana').removeClass('in active show');
+                $('#TabDCConfirmarCotizacion').removeClass('in active show');
             },
             // =================================================================
             // METODOS GENERICOS
