@@ -13,12 +13,12 @@ Vue.component('campania', require('./components/EventoCampania.vue'));
 Vue.component('gestioncontactojf', require('./components/GestionContactoJefeVenta.vue'));
 Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.vue'));
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
-Vue.component('pedido', require('./components/GenerarPedido.vue'));
+Vue.component('pedido', require('./components/Pedido.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
         menu: 0,
-        ruta: 'http://localhost:8080/saisacsys/public'
+        ruta: 'http://172.20.6.62:8080/saisacsys/public'
     }
 });

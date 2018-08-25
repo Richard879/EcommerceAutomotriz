@@ -420,8 +420,6 @@
                                                                                 <th>Año Modelo</th>
                                                                                 <th>UM</th>
                                                                                 <th>Mon.<nav></nav></th>
-                                                                                <th>FInicio Prom.<nav></nav></th>
-                                                                                <th>FFin Prom.<nav></nav></th>
                                                                                 <th>Prec. Base</th>
                                                                                 <th>Dscto</th>
                                                                                 <th>Prec.Cierre</th>
@@ -429,14 +427,10 @@
                                                                                 <th>Margen</th>
                                                                                 <th>Costo Dealer</th>
                                                                                 <th>Bono</th>
-                                                                                <th>Precio Cierre 2</th>
+                                                                                <th>Prec. Cierre 2</th>
                                                                                 <th>Flete</th>
+                                                                                <th>TYP</th>
                                                                                 <th>Precio.Vta P</th>
-                                                                                <th>Flete.Prov</th>
-                                                                                <th>% Dscto.Fp</th>
-                                                                                <th>% Factor_Fc</th>
-                                                                                <th>Dscto.Fc</th>
-                                                                                <th>Prec./Bono</th>
                                                                                 <th>Dealer/Prec. Bono</th>
                                                                                 <th>Bono.Especial</th>
                                                                             </tr>
@@ -452,8 +446,6 @@
                                                                                 <td v-text="lista.nAnioModelo"></td>
                                                                                 <td v-text="lista.cUnidadMedida"></td>
                                                                                 <td v-text="lista.cMoneda"></td>
-                                                                                <td v-text="lista.FInicioProm"></td>
-                                                                                <td v-text="lista.FFinProm"></td>
                                                                                 <td v-text="lista.fPrecioBase"></td>
                                                                                 <td v-text="lista.fDescuento"></td>
                                                                                 <td v-text="lista.fPrecioCierre"></td>
@@ -463,13 +455,9 @@
                                                                                 <td v-text="lista.fBono"></td>
                                                                                 <td v-text="lista.fPrecioCierre2"></td>
                                                                                 <td v-text="lista.fFlete"></td>
+                                                                                <td v-text="lista.fTYP"></td>
                                                                                 <td v-text="lista.fPrecioVentaP"></td>
-                                                                                <td v-text="lista.fFleteProveedor"></td>
-                                                                                <td v-text="lista.fPorcDsctoFp"></td>
-                                                                                <td v-text="lista.fFactorFc"></td>
-                                                                                <td v-text="lista.fDescuentoFc"></td>
-                                                                                <td v-text="lista.fPrecioBono"></td>
-                                                                                <td v-text="lista.fPrecioDealer"></td>
+                                                                                <td v-text="lista.fPrecioBonoDealer"></td>
                                                                                 <td v-text="lista.fBonoEspecial"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -992,7 +980,7 @@
                 }).then(response => {
                     swal('Lista de Precio registrada');
                     this.limpiarFormulario();
-                    this.listarListaPrecioVh();
+                    this.listarListaPrecioVh(1);
                     this.vistaFormTab1 = 1;
                 }).catch(error => {
                     console.log(error);
