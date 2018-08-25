@@ -13,17 +13,17 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="tab01" href="#TabCotizacion" @click="tabCotizacion();" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" id="tab01" href="#TabCotizacion" @click="tabCotizacion" role="tab" data-toggle="tab">
                                         <i class="fa fa-list"></i> COTIZACIÓN
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabAsignarCotizacion" @click="tabAsignarCotizacion();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="tab02" href="#TabAsignarCotizacion" @click="tabAsignarCotizacion" role="tab" data-toggle="tab">
                                         <i class="fa fa-tasks"></i> ASIGNAR CONTACTO
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab03" href="#TabDetalleCotizacion" role="tab" data-toggle="tab">
+                                    <a class="nav-link disabled" id="tab03" href="#TabDetalleCotizacion" @click="tabDetalleCotización" role="tab" data-toggle="tab">
                                         <i class="fa fa-list-ol"></i> DETALLE COTIZACIÓN
                                     </a>
                                 </li>
@@ -131,73 +131,111 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Contacto</label>
-                                                                        <div class="col-sm-8">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
-                                                                                <i class="fa fa-search"></i> Buscar
-                                                                            </button>
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
+                                                                                    <i class="fa fa-search"></i> Buscar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillAsignarContacto.ccontacto" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* # Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillAsignarContacto.cnrodocumento" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Dirección</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillAsignarContacto.cdireccion" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Referencia</label>
+                                                                            <div class="col-sm-8">
+                                                                                <select v-model="fillAsignarContacto.nidreferencia" class="form-control form-control-sm">
+                                                                                    <option v-for="item in arrayReferencias" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Email</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillAsignarContacto.cemail" class="form-control form-control-sm" readonly>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Contacto</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillAsignarContacto.ccontacto" class="form-control form-control-sm" readonly>
-                                                                        </div>
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayReferenciavehiculo.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Acción</th>
+                                                                                    <th>Proovedor</th>
+                                                                                    <th>Linea</th>
+                                                                                    <th>Marca</th>
+                                                                                    <th>Modelo</th>
+                                                                                    <th>Año Fab</th>
+                                                                                    <th>Año Modelo</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="referencia in arrayReferenciavehiculo" :key="referencia.nIdContacto">
+                                                                                    <td>
+                                                                                        <a href="#" @click="asingarReferenciaVehiculo(referencia.nIdAsignacionContactoVendedor);">
+                                                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                    <td v-text="referencia.cProveedorNombre"></td>
+                                                                                    <td v-text="referencia.cLineaNombre"></td>
+                                                                                    <td v-text="referencia.cMarcaNombre"></td>
+                                                                                    <td v-text="referencia.cModeloNombre"></td>
+                                                                                    <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                    <td v-text="referencia.nAnioModelo"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* # Documento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillAsignarContacto.cnrodocumento" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Dirección</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillAsignarContacto.cdireccion" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Referencia</label>
-                                                                        <div class="col-sm-8">
-                                                                            <select v-model="fillAsignarContacto.nidreferencia" class="form-control form-control-sm">
-                                                                                <option v-for="item in arrayReferencias" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                </option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Email</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillAsignarContacto.cemail" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="tabDetalleCotización();">
-                                                                        <i class="fa fa-angle-right"></i> Siguiente
-                                                                    </button>
-                                                                </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -347,6 +385,9 @@
                                                                              <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
                                                                                 <i class="fa fa-arrow-right"></i> Siguiente
                                                                             </button>&nbsp
+                                                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
+                                                                            </button>&nbsp
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
                                                                                 <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
                                                                             </button>
@@ -459,16 +500,13 @@
                                                                                                             </tr>
                                                                                                         </thead>
                                                                                                         <tbody>
-                                                                                                            <tr v-for="(evento, index) in arrayEventoCampania" :key="evento.nIdContacto">
-                                                                                                                <td v-text="evento.NombreComercial"></td>
-                                                                                                                <td v-text="evento.NombreComercial"></td>
-                                                                                                                <td v-text="evento.cantidad"></td>
+                                                                                                            <tr v-for="(evento, index) in arrayEventoCampania" :key="index">
+                                                                                                                <td v-text="index+1"></td>
+                                                                                                                <td v-text="evento.cNombreEventoCampania"></td>
+                                                                                                                <td v-text="evento.TipoEvento"></td>
                                                                                                                 <td>
-                                                                                                                    <a href="#" @click="buscarDetalleCampania(evento);">
+                                                                                                                    <a href="#" @click="abrirModal('campaña', 'detalle', evento);">
                                                                                                                         <i class="fa fa-search" aria-hidden="true"></i>
-                                                                                                                    </a>
-                                                                                                                    <a href="#" @click="confirmarCampania(index);">
-                                                                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                                                                                     </a>
                                                                                                                 </td>
                                                                                                             </tr>
@@ -489,6 +527,11 @@
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 centrarbtn">
+                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </section>
@@ -583,6 +626,49 @@
                                                                                                     <tbody>
                                                                                                         <tr>
                                                                                                             <td colspan="10">No existen elementos de ventas cotizados!</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </template>
+                                                                                            <template v-if="arrayConfiCotiEventoEleVenta.length">
+                                                                                                <div class="table-responsive">
+                                                                                                    <table class="table table-striped table-sm">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th colspan="3">Campaña</th>
+                                                                                                                <th>Elemento Venta</th>
+                                                                                                                <th>Cantidad</th>
+                                                                                                                <th>Dscto</th>
+                                                                                                                <th>Precio Final</th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                            <tr v-for="(cotieleventa, index) in arrayConfiCotiEventoEleVenta" :key="index">
+                                                                                                                <td colspan="3" v-text=" cotieleventa.nombreEC"></td>
+                                                                                                                <td v-text=" cotieleventa.nombreEV"></td>
+                                                                                                                <td v-text="cotieleventa.cantidad"></td>
+                                                                                                                <td v-text="cotieleventa.dscto"></td>
+                                                                                                                <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                                <div class="col-lg-12">
+                                                                                                    <div class="row flex-rigth-margin">
+                                                                                                        <div class="form-group row">
+                                                                                                            TOTAL USD &nbsp<label>{{montoTotalConfiCotiEventoEleVenta=totalConfiCotiEventoEleVenta}}</label>
+                                                                                                        </div>
+                                                                                                        <div class="form-group row">
+                                                                                                            TOTAL S/. &nbsp<label>{{montoTotalConfiCotiEventoEleVentaSoles=totalConfiCotiEventoEleVentaSoles}} </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </template>
+                                                                                            <template v-else>
+                                                                                                <table>
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td colspan="10">No existen elementos de ventas en campañas!</td>
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                 </table>
@@ -1221,6 +1307,83 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Buscar Elemento de Venta -->
+        <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">DETALLE EVENTO/CAMPAÑA</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div>
+                                                                <h1 v-text="fillEventoCampania.cNombreEventoCampania"></h1>
+                                                                <h3 v-text="fillEventoCampania.TipoEvento"></h3>
+                                                                <input type="hidden" v-text="montoTotalEventoElementoVenta = totalEventoEleVentaModal">
+                                                                <input type="hidden" v-text="montoTotalEventoElementoVentaSoles = totalEventoEleVentaModalSoles">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <template v-if="arrayEventoEleVentaModal.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Elemento Venta</th>
+                                                                    <th>Valor</th>
+                                                                    <th>Acciones</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="(eleventa, index) in arrayEventoEleVentaModal" :key="eleventa.nIdContacto">
+                                                                    <template v-if="eleventa.nIdEventoCampania == fillEventoCampania.nIdEventoCampania">
+                                                                        <td v-text="eleventa.cNombre"></td>
+                                                                        <td v-text="eleventa.fValorVenta"></td>
+                                                                        <td>
+                                                                            <a href="#" @click.prevent="removerElementoVentaCampania(index);">
+                                                                                <i class='fa-md fa fa-trash-o'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </template>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -1262,6 +1425,7 @@
                     nidreferencia: 0
                 },
                 arrayReferencias: [],
+                arrayReferenciavehiculo: [],
                 // =============================================================
                 // VARIABLES TAB DETALLE COTIZACIÓN
                 // =============================================================
@@ -1294,7 +1458,6 @@
                 fValorTipoCambioVenta: 0,
                 fValorTipocambioComercial: 0,
                 montoTotalVehiculoSoles: 0,
-
                 //SUBTAB Elemento Venta
                 fillBusqTipoElemento: {
                     cempresa: 'SAISAC',
@@ -1307,14 +1470,32 @@
                 montoTotalElementoVenta: 0,
                 montoTotalElementoVentaSoles: 0,
                 //SUBTAB EVENTO CAMPAÑA
+                arrayCampaniasByModelo: [],
+                arrayCampaniasByMarca: [],
+                arrayCampaniasByLinea: [],
                 arrayEventoCampania: [],
+                fillEventoCampania: {
+                    nIdEventoCampania: 0,
+                    cNombreEventoCampania: '',
+                    TipoEvento: ''
+                },
+                arrayEventoEleVenta: [],
+                arrayEventoEleVentaModal: [],
+                montoTotalEventoElementoVenta: 0,
+                montoTotalEventoElementoVentaSoles: 0,
                 //SUBTAB CONFIRMAR COTIZACIÓN
                 arrayConfiCotiVehiculo: [],
                 montoTotalConfiCotiVehiculo: 0,
                 montoTotalConfiCotiVehiculoSoles: 0,
+
                 arrayConfiCotiEleVenta: [],
                 montoTotalConfiCotiEleVenta: 0,
                 montoTotalConfiCotiEleVentaSoles: 0,
+
+                arrayConfiCotiEventoEleVenta: [],
+                montoTotalConfiCotiEventoEleVenta: 0,
+                montoTotalConfiCotiEventoEleVentaSoles: 0,
+
                 arrayMontosCotizacion: [],
                 montoTotalCotizacion: 0,
                 montoTotalCotizacionSoles: 0,
@@ -1405,6 +1586,7 @@
                 }
                 return pagesArray;
             },
+            //Calcula SubTotales y Total del TAB Vehículo
             totalVehiculo: function(){
                 let me = this;
                 return me.arrayVehiculo.reduce(function(valorAnterior, valorActual){
@@ -1417,6 +1599,7 @@
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
+            //Calcula SubTotales y Total del TAB Elemento Venta
             totalElementoVenta: function(){
                 let me = this;
                 return me.arrayElementoVenta.reduce(function(valorAnterior, valorActual){
@@ -1429,6 +1612,20 @@
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
+            //Calcula SubTotales y Total del TAB Evento Campaña
+            totalEventoEleVentaModal: function(){
+                let me = this;
+                return me.arrayEventoEleVentaModal.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseInt(valorActual.fValorVenta);
+                }, 0);
+            },
+            totalEventoEleVentaModalSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalEventoElementoVenta * me.fValorTipocambioComercial;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
+            //Calcula SubTotales y Total del TAB Cotización - Vehiculo
             totalConfiCotiVehiculo: function(){
                 let me = this;
                 return me.arrayConfiCotiVehiculo.reduce(function(valorAnterior, valorActual){
@@ -1441,6 +1638,7 @@
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
+            //Calcula SubTotales y Total del TAB Cotización - Elemento Venta
             totalConfiCotiEleVenta: function(){
                 let me = this;
                 return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
@@ -1453,6 +1651,20 @@
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
+            //Calcula SubTotales y Total del TAB Cotización - Evento Camapaña (Elemento Venta)
+            totalConfiCotiEventoEleVenta: function(){
+                let me = this;
+                return me.arrayConfiCotiEventoEleVenta.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseFloat(valorActual.preciofinal);
+                }, 0);
+            },
+            totalConfiCotiEventoEleVentaSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalConfiCotiEventoEleVenta * me.fValorTipocambioComercial;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
+            //Calcula SubTotales y Total de toda la Cotización
             totalConfiCoti: function(){
                 let me = this;
                 return me.arrayMontosCotizacion.reduce(function(valorAnterior, valorActual){
@@ -1464,7 +1676,7 @@
                 let montoconvertido = me.montoTotalCotizacion * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
-            },
+            }
         },
         methods:{
             // =================================================================
@@ -1500,6 +1712,7 @@
                 $('#TabAsignarCotizacion').addClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
                 this.llenarReferencias();
+                this.llenarReferenciasVehiculo();
             },
             validaCotizacion(){
                 this.error = 0;
@@ -1575,6 +1788,35 @@
                     this.errors = error.response.data
                 });
             },
+            llenarReferenciasVehiculo(){
+                var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidsucursal' : 1300013,
+                        'nidcontacto' : this.fillAsignarContacto.nidcontacto
+                    }
+                }).then(response => {
+                    let info = response.data.arraySegReferenciavehiculo;
+                    //Data
+                    this.arrayReferenciavehiculo = info.data;
+                    //Pagination
+                    this.pagination.current_page   =   info.current_page;
+                    this.pagination.total          =   info.total;
+                    this.pagination.per_page       =   info.per_page;
+                    this.pagination.last_page      =   info.last_page;
+                    this.pagination.from           =   info.from;
+                    this.pagination.to             =   info.to;
+                    //Limpiar caja busqueda
+                    this.limpiarfillBusqContacto();
+                }).catch(error => {
+                    this.errors = error.response.data
+                });
+            },
+            asingarReferenciaVehiculo(referencia){
+                this.fillAsignarContacto.nidasignarcontacto = referencia;
+                this.tabDetalleCotización();
+            },
             tabDetalleCotización(){
                 if(this.validaAsignarCotizacion()){
                     this.accionmodal=1;
@@ -1586,7 +1828,7 @@
                 $('#tab01').addClass('nav-link');
                 $('#tab02').removeClass('nav-link active');
                 $('#tab02').addClass('nav-link');
-                $('#tab03').removeClass('nav-link');
+                $('#tab03').removeClass('nav-link disabled');
                 $('#tab03').addClass('nav-link active');
 
                 $('#TabCotizacion').removeClass('in active show');
@@ -1611,6 +1853,10 @@
                 }
                 if(this.fillAsignarContacto.nidreferencia == 0){
                     this.mensajeError.push('Debes Seleccionar una Referencia');
+                }
+                if(this.fillAsignarContacto.nidasignarcontacto == 0 ||
+                    this.fillAsignarContacto.nidasignarcontacto == undefined){
+                    this.mensajeError.push('Debes asignar una Referencia de Vehículo');
                 }
 
                 if(this.mensajeError.length){
@@ -1806,7 +2052,10 @@
                         cantidad         : 1,
                         sobrePrecio      : 1,
                         subtotal         : 0,
-                        nIdMoneda        : vehiculo.nIdMoneda
+                        nIdMoneda        : vehiculo.nIdMoneda,
+                        nIdLinea         : vehiculo.nIdLinea,
+                        nIdMarca         : vehiculo.nIdMarca,
+                        nIdModelo        : vehiculo.nIdModelo
                     });
 
                     toastr.options.progressBar = true;
@@ -1958,6 +2207,14 @@
                 this.$delete(this.arrayElementoVenta, index);
             },
             siguienteTabDCVerificarCampania(){
+                if(this.validarTabDCElementoVenta()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                $('#tab0301').removeClass('nav-link active');
+                $('#tab0301').addClass('nav-link');
                 $('#tab0302').removeClass('nav-link active');
                 $('#tab0302').addClass('nav-link');
                 $('#tab0303').removeClass('nav-link disabled');
@@ -1967,6 +2224,180 @@
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').addClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
+                this.$nextTick(function () {
+                    this.llenarCamapaniasPorModeloVehiculo();
+                })
+            },
+            // ======================
+            // SUBTAB VERIFICAR CAMPAÑA
+            // ======================
+            llenarCamapaniasPorModeloVehiculo(){
+                var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
+                axios.get(url, {
+                    params: {
+                        'nidproveedor': this.fillProveedor.nidproveedor,
+                        'fecha'       : moment().format('YYYY-MM-DD'),
+                        'nidcodigo'   : this.arrayVehiculo[0].nIdModelo,
+                        'tipo'        : 3
+                    }
+                }).then(response => {
+                    this.arrayCampaniasByModelo  =  response.data;
+                    this.$nextTick(function () {
+                        this.llenarCamapaniasPorMarcaVehiculo();
+                    })
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            llenarCamapaniasPorMarcaVehiculo(){
+                var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
+                axios.get(url, {
+                    params: {
+                        'nidproveedor': this.fillProveedor.nidproveedor,
+                        'fecha'       : moment().format('YYYY-MM-DD'),
+                        'nidcodigo'   : this.arrayVehiculo[0].nIdMarca,
+                        'tipo'        : 2
+                    }
+                }).then(response => {
+                    this.arrayCampaniasByMarca  =  response.data;
+                    this.$nextTick(function () {
+                        this.llenarCamapaniasPorLineaVehiculo();
+                    })
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            llenarCamapaniasPorLineaVehiculo(){
+                var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
+                axios.get(url, {
+                    params: {
+                        'nidproveedor': this.fillProveedor.nidproveedor,
+                        'fecha'       : moment().format('YYYY-MM-DD'),
+                        'nidcodigo'   : this.arrayVehiculo[0].nIdLinea,
+                        'tipo'        : 1
+                    }
+                }).then(response => {
+                    this.arrayCampaniasByLinea  =  response.data;
+                    this.$nextTick(function () {
+                        this.llenarEventoCampania();
+                    })
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            llenarEventoCampania(){
+                let me = this;
+                let url = me.ruta + '/gescotizacion/GetListEventoElementoVenta';
+
+                this.arrayEventoCampania = []; //Setea array de campañas
+                this.arrayEventoEleVentaModal = [];//Setea array de elementos de venta del modal
+
+                this.$nextTick(function () {
+                    let me = this;
+                    if(this.arrayCampaniasByModelo.length > 0){
+                        this.arrayCampaniasByModelo.map(function(ec){
+                            me.arrayEventoCampania.push({
+                                nIdEventoCampania       : ec.nIdEventoCampania,
+                                cNombreEventoCampania   : ec.cNombreEventoCampania,
+                                nIdTipoEvento           : ec.nIdTipoEvento,
+                                TipoEvento              : ec.TipoEvento,
+                                dFechaInicio            : ec.dFechaInicio,
+                                dFechaFin               : ec.dFechaFin,
+                                fValorPresupuesto       : ec.fValorPresupuesto
+                            });
+
+                            axios.get(url, {
+                                params: {
+                                    'fecha'  : moment().format('YYYY-MM-DD'),
+                                    'nideventocampania'  : ec.nIdEventoCampania
+                                }
+                            }).then(response => {
+                                me.arrayEventoEleVenta  =  response.data;
+                                me.$nextTick(function () {
+                                    me.llenarEventoEleVenta();
+                                })
+                            }).catch(error => {
+                                me.errors = error
+                            });
+                        });
+                    }
+                    if(this.arrayCampaniasByMarca.length > 0){
+                        this.arrayCampaniasByMarca.map(function(ec){
+                            me.arrayEventoCampania.push({
+                                nIdEventoCampania       : ec.nIdEventoCampania,
+                                cNombreEventoCampania   : ec.cNombreEventoCampania,
+                                nIdTipoEvento           : ec.nIdTipoEvento,
+                                TipoEvento              : ec.TipoEvento,
+                                dFechaInicio            : ec.dFechaInicio,
+                                dFechaFin               : ec.dFechaFin,
+                                fValorPresupuesto       : ec.fValorPresupuesto
+                            });
+
+                            axios.get(url, {
+                                params: {
+                                    'fecha'  : moment().format('YYYY-MM-DD'),
+                                    'nideventocampania'  : ec.nIdEventoCampania
+                                }
+                            }).then(response => {
+                                me.arrayEventoEleVenta  =  response.data;
+                                me.$nextTick(function () {
+                                    me.llenarEventoEleVenta();
+                                })
+                            }).catch(error => {
+                                this.errors = error
+                            });
+                        });
+                    }
+                    if(this.arrayCampaniasByLinea.length > 0){
+                        this.arrayCampaniasByLinea.map(function(ec){
+                            me.arrayEventoCampania.push({
+                                nIdEventoCampania       : ec.nIdEventoCampania,
+                                cNombreEventoCampania   : ec.cNombreEventoCampania,
+                                nIdTipoEvento           : ec.nIdTipoEvento,
+                                TipoEvento              : ec.TipoEvento,
+                                dFechaInicio            : ec.dFechaInicio,
+                                dFechaFin               : ec.dFechaFin,
+                                fValorPresupuesto       : ec.fValorPresupuesto
+                            });
+
+                            axios.get(url, {
+                                params: {
+                                    'fecha'  : moment().format('YYYY-MM-DD'),
+                                    'nideventocampania'  : ec.nIdEventoCampania
+                                }
+                            }).then(response => {
+                                me.arrayEventoEleVenta  =  response.data;
+                                me.$nextTick(function () {
+                                    me.llenarEventoEleVenta();
+                                })
+                            }).catch(error => {
+                                me.errors = error
+                            });
+                        });
+                    }
+                })
+            },
+            llenarEventoEleVenta(){
+                this.$nextTick(function () {
+                    let me = this;
+                    if(this.arrayEventoEleVenta.length > 0){
+                        this.arrayEventoEleVenta.map(function(eev){
+                            me.arrayEventoEleVentaModal.push({
+                                nIdEventoCampania       : eev.nIdEventoCampania,
+                                cNombreEventoCampania   : eev.cNombreEventoCampania,
+                                nIdElementoVenta        : eev.nIdElementoVenta,
+                                cNombre                 : eev.cNombre,
+                                nIdEventoElementoVenta  : eev.nIdEventoElementoVenta,
+                                fValorVenta             : eev.fValorVenta,
+                                nIdMoneda               : eev.nIdMoneda,
+                                cantidad                : 1
+                            });
+                        });
+                    }
+                })
+            },
+            removerElementoVentaCampania(index){
+                this.$delete(this.arrayEventoEleVentaModal, index);
             },
             // ======================
             // SUBTAB CONFIRMAR COTIZACIÓN
@@ -1975,9 +2406,10 @@
                 let me = this;
 
                 //Setear arrays vacío
-                me.arrayConfiCotiVehiculo = [];
-                me.arrayConfiCotiEleVenta = [];
-                me.arrayMontosCotizacion = [];
+                me.arrayConfiCotiVehiculo = [];//Seteo array detalle de vehiculos
+                me.arrayConfiCotiEleVenta = [];//Seteo array detalle de ele venta
+                me.arrayConfiCotiEventoEleVenta = [];//Seteo array detalle ele venta de campaña
+                me.arrayMontosCotizacion = [];//Seteo array de totales calculados
 
                 // ======================
                 // DETALLE VEHÍCULO
@@ -2011,13 +2443,37 @@
                             dscto        : 1,
                             preciofinal  : ev.fElemenValorVenta,
                             subtotal     : ev.subtotal,
-                            flagTipoItem : 'EV',
+                            flagTipoItem : 'E',
                             nidmoneda    : ev.nIdMoneda
                         });
                     });
 
                     me.arrayMontosCotizacion.push({
                         monto: me.montoTotalElementoVenta
+                    });
+                }
+
+                // ======================
+                // DETALLE CAMPAÑA ELEMENTO VENTA
+                // ======================
+                if(me.arrayEventoEleVentaModal.length > 0){
+                    me.arrayEventoEleVentaModal.map(function(ev){
+                        me.arrayConfiCotiEventoEleVenta.push({
+                            codigoEV     : ev.nIdElementoVenta,
+                            codigoEC     : ev.nIdEventoCampania,
+                            codigoEEV    : ev.nIdEventoElementoVenta,
+                            nombreEV     : ev.cNombre,
+                            nombreEC     : ev.cNombreEventoCampania,
+                            cantidad     : ev.cantidad,
+                            dscto        : 1,
+                            preciofinal  : ev.fValorVenta,
+                            flagTipoItem : 'E',
+                            nidmoneda    : ev.nIdMoneda
+                        });
+                    });
+
+                    me.arrayMontosCotizacion.push({
+                        monto: me.montoTotalEventoElementoVenta
                     });
                 }
             },
@@ -2055,7 +2511,8 @@
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
-                        arrayelemventa: this.arrayConfiCotiEleVenta
+                        arrayelemventa: this.arrayConfiCotiEleVenta,
+                        arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
                         this.limpiarProcesoCotizacion();
                         swal('Cotización registrado exitosamente');
@@ -2089,7 +2546,8 @@
                 this.fillAsignarContacto.cnrodocumento = '';
                 this.fillAsignarContacto.nidasignarcontacto = '';
                 this.fillAsignarContacto.nidcontacto = '';
-                this.fillAsignarContacto.nidreferencia = '';
+                this.fillAsignarContacto.nidreferencia = 0;
+                this.arrayReferenciavehiculo = [];
                 //Tab Detalle Cotización
                 this.fillProveedor.cproveedornombre = '';
                 this.fillProveedor.nidproveedor = '';
@@ -2099,28 +2557,41 @@
                 this.fillBusqVehiculo.nidmarca = 0;
                 this.fillBusqVehiculo.nidmodelo = 0;
                 this.fillBusqVehiculo.nidtipolista = 0;
+
                 this.arrayVehiculo = [];
                 this.arrayElementoVenta = [];
+                this.arrayEventoEleVenta= [];
+                this.arrayEventoEleVentaModal= [];
+
+
                 this.arrayMontosCotizacion = [];
                 this.arrayConfiCotiVehiculo = [];
                 this.arrayConfiCotiEleVenta = [];
+                this.arrayConfiCotiEventoEleVenta = [];
+
                 this.montoTotalVehiculo = 0;
                 this.montoTotalVehiculoSoles = 0;
                 this.montoTotalElementoVenta = 0;
                 this.montoTotalElementoVentaSoles = 0;
+                this.montoTotalEventoElementoVenta= 0;
+                this.montoTotalEventoElementoVentaSoles= 0;
+
                 this.montoTotalConfiCotiVehiculo = 0;
                 this.montoTotalConfiCotiVehiculoSoles = 0;
                 this.montoTotalConfiCotiEleVenta = 0;
                 this.montoTotalConfiCotiEleVentaSoles = 0;
                 this.montoTotalCotizacion = 0;
                 this.montoTotalCotizacionSoles = 0;
+                this.montoTotalConfiCotiEventoEleVenta= 0;
+                this.montoTotalConfiCotiEventoEleVentaSoles= 0;
+
 
                 $('#tab01').removeClass('nav-link active');
                 $('#tab01').addClass('nav-link active');
                 $('#tab02').removeClass('nav-link active');
                 $('#tab02').addClass('nav-link');
                 $('#tab03').removeClass('nav-link active');
-                $('#tab03').addClass('nav-link');
+                $('#tab03').addClass('nav-link disabled');
 
                 $('#TabCotizacion').addClass("in active show");
                 $('#TabAsignarCotizacion').removeClass('in active show');
@@ -2166,7 +2637,6 @@
                                 this.fillAsignarContacto.cnrodocumento = data['cNumeroDocumento'];
                                 this.fillAsignarContacto.cdireccion = data['cDireccion'];
                                 this.fillAsignarContacto.cemail = data['cEmail'];
-                                this.fillAsignarContacto.nidasignarcontacto = data['nIdAsignacionContactoVendedor'];
                                 this.tabAsignarCotizacion();
                                 this.cerrarModal();
                                 break;
@@ -2213,6 +2683,21 @@
                                 this.accionmodal=5;
                                 this.modal = 1;
                                 this.cargarTipoElemento();
+                            }
+                        }
+                    }
+                    break;
+                    case 'campaña':
+                    {
+                        switch(accion){
+                            case 'detalle':
+                            {
+                                this.fillEventoCampania.cNombreEventoCampania = data['cNombreEventoCampania'];
+                                this.fillEventoCampania.TipoEvento = data['TipoEvento'];
+                                this.fillEventoCampania.nIdEventoCampania = data['nIdEventoCampania'];
+                                this.accionmodal=6;
+                                this.modal = 1;
+                                break;
                             }
                         }
                     }
