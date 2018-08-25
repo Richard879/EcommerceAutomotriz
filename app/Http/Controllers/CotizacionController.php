@@ -147,9 +147,70 @@ class CotizacionController extends Controller
                 }
             }
 
+            $arrayeventoelemventalength = sizeof($request->arrayeventoeleventa);
+            if($arrayeventoelemventalength > 0){
+                $arrayeventoeleventa = $request->arrayeventoeleventa;
+                //Itera todas las referencias de vehiculos
+                foreach($arrayeventoeleventa as $ep=>$det)
+                {
+                    DB::select('exec usp_Cotizacion_SetDetalleCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                [
+                                                    $request->nIdCabeCoti,
+                                                    $det['flagTipoItem'],
+                                                    0,
+                                                    0,
+                                                    $det['codigoEV'],
+                                                    'S',
+                                                    $det['codigoEEV'],
+                                                    'N',
+                                                    $det['nidmoneda'],
+                                                    $det['cantidad'],
+                                                    $det['preciofinal'],
+                                                    $det['dscto'],
+                                                    $det['preciofinal'],
+                                                    Auth::user()->id
+                                                ]);
+                }
+            }
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function GetListCampañasByVehiculo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidproveedor   = $request->nidproveedor;
+        $fecha          = $request->fecha;
+        $nidcodigo      = $request->nidcodigo;
+        $tipo           = $request->tipo;
+
+        $arrayEventoCampania = DB::select('exec usp_Cotizacion_GetListCampañasByVehiculo ?, ?, ?, ?',
+                                                                        [
+                                                                            $nidproveedor,
+                                                                            $fecha,
+                                                                            $nidcodigo,
+                                                                            $tipo
+                                                                        ]);
+
+        return response()->json($arrayEventoCampania);
+    }
+
+    public function GetListEventoElementoVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $fecha              = $request->fecha;
+        $nideventocampania  = $request->nideventocampania;
+
+        $arrayEventoEleVenta = DB::select('exec usp_Cotizacion_GetListEventoElementoVenta ?, ?',
+                                                                        [
+                                                                            $fecha,
+                                                                            $nideventocampania
+                                                                        ]);
+
+        return response()->json($arrayEventoEleVenta);
     }
 }

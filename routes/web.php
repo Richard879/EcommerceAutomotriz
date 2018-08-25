@@ -88,6 +88,8 @@ Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListRef
 Route::get('/gescotizacion/GetTipoLista', 'CotizacionController@GetTipoLista');
 Route::get('/gescotizacion/GetListVehiculos', 'CotizacionController@GetListVehiculos');
 Route::get('/gescotizacion/GetTipoCambio', 'CotizacionController@GetTipoCambio');
+Route::get('/gescotizacion/GetListCampañasByVehiculo', 'CotizacionController@GetListCampañasByVehiculo');
+Route::get('/gescotizacion/GetListEventoElementoVenta', 'CotizacionController@GetListEventoElementoVenta');
 Route::post('/gescotizacion/SetCabeceraCotizacion', 'CotizacionController@SetCabeceraCotizacion');
 Route::post('/gescotizacion/SetDetalleCotizacion', 'CotizacionController@SetDetalleCotizacion');
 
