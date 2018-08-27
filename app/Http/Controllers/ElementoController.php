@@ -22,7 +22,7 @@ class ElementoController extends Controller
                                                     array($nIdEmpresa, $nIdTipoElemento)));*/
         
         $arrayElementoVenta = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?', 
-                                 array($nIdEmpresa, $nIdTipoElemento));
+                                                                    [$nIdEmpresa, $nIdTipoElemento]);
 
         $arrayElementoVenta = $this->arrayPaginator($arrayElementoVenta, $request);
 

@@ -46,7 +46,7 @@ class CotizacionController extends Controller
 
         $cnombrecomercial = ($cnombrecomercial == "") ? ($cnombrecomercial = '') : $cnombrecomercial;
 
-        $arrayListaVehiculos = DB::select('exec usp_Cotizacion_GetListVehiculos ?, ?, ?, ?, ?',
+        $arrayListaVehiculos = DB::select('exec usp_Cotizacion_GetListVehiculos ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nidproveedor,
                                                                             $nidtipolista,

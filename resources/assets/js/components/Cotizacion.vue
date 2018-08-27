@@ -18,8 +18,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabAsignarCotizacion" @click="tabAsignarCotizacion" role="tab" data-toggle="tab">
-                                        <i class="fa fa-tasks"></i> ASIGNAR CONTACTO
+                                    <a class="nav-link" id="tab02" href="#TabAsignarContacto" @click="tabAsignarContacto" role="tab" data-toggle="tab">
+                                        <i class="fa fa-user"></i> ASIGNAR CONTACTO
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -45,7 +45,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Empresa</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.cempresa" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="fillConfigBasica.cempresa" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -53,7 +53,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.csucursal" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="fillConfigBasica.csucursal" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -61,17 +61,17 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio Venta</label>
+                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio Compra</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.tipoCambioVenta" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.tipoCambioCompra" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
+                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio Venta </label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.tipoCambioCompra" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.tipoCambioVenta" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -81,7 +81,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.fechaInicio" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.fechaInicio" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -89,7 +89,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.fechaFin" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.fechaFin" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -99,18 +99,18 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Ref. Cotización</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.refCotizacion" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.refCotizacion" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
+                                                                    <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
                                                                         <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="tabAsignarCotizacion();">
-                                                                        <i class="fa fa-angle-right"></i> Siguiente
+                                                                    </button>-->
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabAsignarContacto();">
+                                                                        <i class="fa fa-arrow-right"></i> Siguiente
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -121,7 +121,7 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAsignarCotizacion">
+                                <div role="tabpanel" class="tab-pane fade" id="TabAsignarContacto">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
@@ -155,7 +155,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* # Documento</label>
+                                                                            <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillAsignarContacto.cnrodocumento" class="form-control form-control-sm" readonly>
                                                                             </div>
@@ -173,10 +173,10 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Referencia</label>
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Medio</label>
                                                                             <div class="col-sm-8">
                                                                                 <select v-model="fillAsignarContacto.nidreferencia" class="form-control form-control-sm">
-                                                                                    <option v-for="item in arrayReferencias" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                    <option v-for="item in arrayTipoMedio" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
                                                                                     </option>
                                                                                 </select>
                                                                             </div>
@@ -194,6 +194,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <hr/>
                                                             <div class="col-lg-12">
                                                                 <template v-if="arrayReferenciavehiculo.length">
                                                                     <div class="table-responsive">
@@ -213,7 +214,7 @@
                                                                                 <tr v-for="referencia in arrayReferenciavehiculo" :key="referencia.nIdContacto">
                                                                                     <td>
                                                                                         <a href="#" @click="asingarReferenciaVehiculo(referencia.nIdAsignacionContactoVendedor);">
-                                                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                                                            <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
                                                                                         </a>
                                                                                     </td>
                                                                                     <td v-text="referencia.cProveedorNombre"></td>
@@ -248,465 +249,485 @@
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <ul class="nav nav-tabs">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link active" id="tab0301" href="#TabDCVehiculo" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa-car"></i> VEHÍCULO
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link disabled" id="tab0302" href="#TabDCElementoVenta" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa-list-ol"></i> ELEMENTO VENTA
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link disabled" id="tab0303" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa-check-square"></i> VERIFICAR CAMPAÑA
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link disabled" id="tab0304" href="#TabDCConfirmarCotizacion" @click.prevent="siguienteTabDConfirmarcotizacion" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa-check"></i> CONFIRMAR COTIZACIÓN
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="tab-content">
-                                                            <div role="tabpanel" class="tab-pane fade in active show" id="TabDCVehiculo">
-                                                                <section class="forms">
-                                                                    <div class="container-fluid">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <form class="form-horizontal">
-                                                                                        <div class="col-lg-12">
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <div class="input-group">
-                                                                                                                <input type="hidden" v-model="fillProveedor.nidproveedor">
-                                                                                                                <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                                                <div class="input-group-prepend">
-                                                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                                    </button>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">VEHÍCULO</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                            <div class="input-group-prepend">
-                                                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('vehiculo','buscar')">
-                                                                                                                    <i class="fa fa-search"></i> Buscar
-                                                                                                                </button>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-12">
-                                                                                            <template v-if="arrayVehiculo.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Acción</th>
-                                                                                                                <th>Vehículo</th>
-                                                                                                                <th>Cantidad</th>
-                                                                                                                <th>Precio Base</th>
-                                                                                                                <th>Sobre Precio</th>
-                                                                                                                <th>Dscto</th>
-                                                                                                                <th>Precio Cierre</th>
-                                                                                                                <th>SubTotal</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="(vehiculo, index) in arrayVehiculo" :key="vehiculo.nIdContacto">
-                                                                                                                <td>
-                                                                                                                    <a href="#" @click="removerVehiculoLista(index);">
-                                                                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                                                                                    </a>
-                                                                                                                </td>
-                                                                                                                <td v-text="vehiculo.NombreComercial"></td>
-                                                                                                                <td v-text="vehiculo.cantidad"></td>
-                                                                                                                <td v-text="vehiculo.PrecioBase"></td>
-                                                                                                                <td><input type="number" min="1" class="form-control" v-model="vehiculo.sobrePrecio"/></td>
-                                                                                                                <td v-text="vehiculo.Descuento"></td>
-                                                                                                                <td v-text="vehiculo.PrecioCierre"></td>
-                                                                                                                <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioCierre }} </td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                                <div class="col-lg-12">
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-7">
-                                                                                                            <div class="form-group row">
-                                                                                                                SP : <label>2438</label>&nbsp
-                                                                                                                Dx : <label>2438.00</label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="col-lg-5 direction-money">
-                                                                                                            <div class="form-group row">
-                                                                                                                USD &nbsp<label> {{ montoTotalVehiculo = totalVehiculo }} </label>
-                                                                                                            </div>
-                                                                                                            <div class="form-group row">
-                                                                                                                S/. &nbsp<label> {{ montoTotalVehiculoSoles = totalVehiculoSoles }} </label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen registros!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
+                                                <ul class="nav nav-tabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="tab0301" href="#TabDCVehiculo" role="tab" data-toggle="tab">
+                                                            <i class="fa fa-car"></i> VEHÍCULO
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link disabled" id="tab0302" href="#TabDCElementoVenta" role="tab" data-toggle="tab">
+                                                            <i class="fa fa fa-sign-out"></i> ELEMENTO VENTA
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link disabled" id="tab0303" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
+                                                            <i class="fa fa-check-square"></i> VERIFICAR CAMPAÑA
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link disabled" id="tab0304" href="#TabDCConfirmarCotizacion" @click.prevent="siguienteTabDConfirmarcotizacion" role="tab" data-toggle="tab">
+                                                            <i class="fa fa-check"></i> CONFIRMAR COTIZACIÓN
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabDCVehiculo">
+                                                        <section class="forms">
+                                                            <div class="container-fluid">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header">
+                                                                            <h3 class="h4">ASIGNAR VEHÍCULO</h3>
                                                                         </div>
-                                                                        <div class="col-lg-12 centrarbtn">
-                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
-                                                                                <i class="fa fa-arrow-right"></i> Siguiente
-                                                                            </button>&nbsp
-                                                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
-                                                                            </button>&nbsp
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-                                                            <div role="tabpanel" class="tab-pane fade" id="TabDCElementoVenta">
-                                                                <section class="forms">
-                                                                    <div class="container-fluid">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <form class="form-horizontal">
-                                                                                        <div class="col-lg-12">
-                                                                                            <div class="form-group row">
-                                                                                                <div class="col-sm-6">
-                                                                                                    <div class="row">
-                                                                                                        <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
-                                                                                                        <div class="col-sm-8">
-                                                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventa','buscar')">
-                                                                                                                <i class="fa fa-search"></i> Buscar
+                                                                        <div class="card-body">
+                                                                            <form class="form-horizontal">
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <div class="input-group">
+                                                                                                        <input type="hidden" v-model="fillProveedor.nidproveedor">
+                                                                                                        <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                                        <div class="input-group-prepend">
+                                                                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                                <i class="fa-lg fa fa-search"></i>
                                                                                                             </button>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="col-lg-12">
-                                                                                            <template v-if="arrayElementoVenta.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Acción</th>
-                                                                                                                <th>Elemento Venta</th>
-                                                                                                                <th colspan="2">Cantidad</th>
-                                                                                                                <th>Precio</th>
-                                                                                                                <th>SubTotal</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="(elementoventa, index) in arrayElementoVenta" :key="elementoventa.nIdContacto">
-                                                                                                                <td>
-                                                                                                                    <a href="#" @click="removerElementoVentaLista(index);">
-                                                                                                                        <i class='fa fa-trash-o'></i>
-                                                                                                                    </a>
-                                                                                                                </td>
-                                                                                                                <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                                <td colspan="2"><input type="number" min="1" class="form-control" v-model="elementoventa.cantidad"/></td>
-                                                                                                                <td v-text="elementoventa.fElemenValorVenta"></td>
-                                                                                                                <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                                <div class="col-lg-12">
-                                                                                                    <div class="row flex-rigth-margin">
-                                                                                                        <div class="form-group row">
-                                                                                                            USD &nbsp<label> {{ montoTotalElementoVenta = totalElementoVenta }} </label>
-                                                                                                        </div>
-                                                                                                        <div class="form-group row">
-                                                                                                            S/. &nbsp<label> {{ montoTotalElementoVentaSoles = totalElementoVentaSoles }} </label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen registros!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-12 centrarbtn">
-                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                <i class="fa fa-arrow-right"></i> Siguiente
-                                                                            </button>&nbsp
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-                                                            <div role="tabpanel" class="tab-pane fade" id="TabDCVerificarCampana">
-                                                                <section class="forms">
-                                                                    <div class="container-fluid">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <form class="form-horizontal">
-                                                                                        <div class="col-lg-12">
-                                                                                            <template v-if="arrayEventoCampania.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Código</th>
-                                                                                                                <th>Nombre</th>
-                                                                                                                <th>Tipo</th>
-                                                                                                                <th>Acción</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="(evento, index) in arrayEventoCampania" :key="index">
-                                                                                                                <td v-text="index+1"></td>
-                                                                                                                <td v-text="evento.cNombreEventoCampania"></td>
-                                                                                                                <td v-text="evento.TipoEvento"></td>
-                                                                                                                <td>
-                                                                                                                    <a href="#" @click="abrirModal('campaña', 'detalle', evento);">
-                                                                                                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                                                                                                    </a>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen registros!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-12 centrarbtn">
-                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                <i class="fa fa-arrow-right"></i> Siguiente
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-                                                            <div role="tabpanel" class="tab-pane fade" id="TabDCConfirmarCotizacion">
-                                                                <section class="forms">
-                                                                    <div class="container-fluid">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <form class="form-horizontal">
-                                                                                        <div class="col-lg-12">
-                                                                                            <template v-if="arrayConfiCotiVehiculo.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th colspan="3">Vehículo</th>
-                                                                                                                <th>Cantidad</th>
-                                                                                                                <th>Dscto</th>
-                                                                                                                <th>Precio Final</th>
-                                                                                                                <th>SubTotal</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="cotivehiculo in arrayConfiCotiVehiculo" :key="cotivehiculo.nIdContacto">
-                                                                                                                <td colspan="3"> {{ cotivehiculo.detalle }} </td>
-                                                                                                                <td v-text="cotivehiculo.cantidad"></td>
-                                                                                                                <td v-text="cotivehiculo.dscto"></td>
-                                                                                                                <td v-text="cotivehiculo.preciofinal"></td>
-                                                                                                                <td v-text="cotivehiculo.subtotal"></td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                                <div class="col-lg-12">
-                                                                                                    <div class="row flex-rigth-margin">
-                                                                                                        <div class="form-group row">
-                                                                                                            TOTAL USD &nbsp<label> {{ montoTotalConfiCotiVehiculo = totalConfiCotiVehiculo }} </label>
-                                                                                                        </div>
-                                                                                                        <div class="form-group row">
-                                                                                                            TOTAL S/. &nbsp<label> {{ montoTotalConfiCotiVehiculoSoles = totalConfiCotiVehiculoSoles }} </label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen vehículos cotizados!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
-                                                                                            <template v-if="arrayConfiCotiEleVenta.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th colspan="3">Elemento Venta</th>
-                                                                                                                <th>Cantidad</th>
-                                                                                                                <th>Dscto</th>
-                                                                                                                <th>Precio Final</th>
-                                                                                                                <th>SubTotal</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVenta" :key="cotieleventa.nIdContacto">
-                                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
-                                                                                                                <td v-text="cotieleventa.cantidad"></td>
-                                                                                                                <td v-text="cotieleventa.dscto"></td>
-                                                                                                                <td v-text="cotieleventa.preciofinal"></td>
-                                                                                                                <td v-text="cotieleventa.subtotal"></td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                                <div class="col-lg-12">
-                                                                                                    <div class="row flex-rigth-margin">
-                                                                                                        <div class="form-group row">
-                                                                                                            TOTAL USD &nbsp<label> {{ montoTotalConfiCotiEleVenta = totalConfiCotiEleVenta }} </label>
-                                                                                                        </div>
-                                                                                                        <div class="form-group row">
-                                                                                                            TOTAL S/. &nbsp<label> {{ montoTotalConfiCotiEleVentaSoles = totalConfiCotiEleVentaSoles }} </label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen elementos de ventas cotizados!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
-                                                                                            <template v-if="arrayConfiCotiEventoEleVenta.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th colspan="3">Campaña</th>
-                                                                                                                <th>Elemento Venta</th>
-                                                                                                                <th>Cantidad</th>
-                                                                                                                <th>Dscto</th>
-                                                                                                                <th>Precio Final</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="(cotieleventa, index) in arrayConfiCotiEventoEleVenta" :key="index">
-                                                                                                                <td colspan="3" v-text=" cotieleventa.nombreEC"></td>
-                                                                                                                <td v-text=" cotieleventa.nombreEV"></td>
-                                                                                                                <td v-text="cotieleventa.cantidad"></td>
-                                                                                                                <td v-text="cotieleventa.dscto"></td>
-                                                                                                                <td v-text="cotieleventa.preciofinal"></td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                                <div class="col-lg-12">
-                                                                                                    <div class="row flex-rigth-margin">
-                                                                                                        <div class="form-group row">
-                                                                                                            TOTAL USD &nbsp<label>{{montoTotalConfiCotiEventoEleVenta=totalConfiCotiEventoEleVenta}}</label>
-                                                                                                        </div>
-                                                                                                        <div class="form-group row">
-                                                                                                            TOTAL S/. &nbsp<label>{{montoTotalConfiCotiEventoEleVentaSoles=totalConfiCotiEventoEleVentaSoles}} </label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen elementos de ventas en campañas!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
-
-                                                                                            <hr/>
-                                                                                            <div class="col-lg-12">
-                                                                                                <div class="row flex-rigth-margin">
-                                                                                                    <div class="form-group row">
-                                                                                                        <strong>
-                                                                                                            TOTAL USD &nbsp<label> {{ montoTotalCotizacion = totalConfiCoti }} </label>
-                                                                                                        </strong>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <strong>
-                                                                                                            TOTAL S/. &nbsp<label> {{ montoTotalCotizacionSoles = totalConfiCotiSoles }} </label>
-                                                                                                        </strong>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <div class="input-group-prepend">
+                                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('vehiculo','buscar')">
+                                                                                                            <i class="fa fa-search"></i> Buscar
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr/>
+                                                                                <div class="col-lg-12">
+                                                                                    <template v-if="arrayVehiculo.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Acción</th>
+                                                                                                        <th>Vehículo</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Precio Base</th>
+                                                                                                        <th>Sobre Precio</th>
+                                                                                                        <th>Dscto</th>
+                                                                                                        <th>Precio Cierre</th>
+                                                                                                        <th>SubTotal</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(vehiculo, index) in arrayVehiculo" :key="vehiculo.nIdContacto">
+                                                                                                        <td>
+                                                                                                            <a href="#" @click="removerVehiculoLista(index);">
+                                                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle" aria-hidden="true"></i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                        <td v-text="vehiculo.NombreComercial"></td>
+                                                                                                        <td v-text="vehiculo.cantidad"></td>
+                                                                                                        <td v-text="vehiculo.PrecioBase"></td>
+                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio"/></td>
+                                                                                                        <td v-text="vehiculo.Descuento"></td>
+                                                                                                        <td v-text="vehiculo.PrecioCierre"></td>
+                                                                                                        <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioCierre }} </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <div class="row">
+                                                                                                <div class="col-lg-6">
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="col-sm-2 form-control-label">SP: </label>
+                                                                                                        <label class="form-control-label"><strong>2438</strong></label>
+                                                                                                        <label class="col-sm-2 form-control-label">Dx: </label>
+                                                                                                        <label class="form-control-label"><strong>2438.00</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-lg-6 direction-money">
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label"><strong>{{ montoTotalVehiculoDolar = totalVehiculo }}</strong></label>
+                                                                                                    </div>
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label"><strong>{{ montoTotalVehiculoSoles = totalVehiculoSoles }}</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-9 offset-sm-3">
+                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                                </button>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
+                                                                                                </button>
+                                                                                                <button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="TabDCElementoVenta">
+                                                        <section class="forms">
+                                                            <div class="container-fluid">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header">
+                                                                            <h3 class="h4">ASIGNAR ELEMENTO VENTA</h3>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <form class="form-horizontal">
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventa','buscar')">
+                                                                                                        <i class="fa fa-search"></i> Buscar
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr/>
+                                                                                <div class="col-lg-12">
+                                                                                    <template v-if="arrayElementoVenta.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Acción</th>
+                                                                                                        <th>Elemento Venta</th>
+                                                                                                        <th colspan="2">Cantidad</th>
+                                                                                                        <th>Precio</th>
+                                                                                                        <th>SubTotal</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(elementoventa, index) in arrayElementoVenta" :key="elementoventa.nIdContacto">
+                                                                                                        <td>
+                                                                                                            <a href="#" @click="removerElementoVentaLista(index);">
+                                                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                        <td v-text="elementoventa.cElemenNombre"></td>
+                                                                                                        <td colspan="2"><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
+                                                                                                        <td v-text="elementoventa.fElemenValorVenta"></td>
+                                                                                                        <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <div class="row flex-rigth-margin">
+                                                                                                <div class="form-group row">
+                                                                                                    <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVenta = totalElementoVenta }}</strong></label>
+                                                                                                </div>
+                                                                                                <div class="form-group row">
+                                                                                                    <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVentaSoles = totalElementoVentaSoles }}</strong></label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-9 offset-sm-4">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                        </button>
+                                                                                        <button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                            <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="TabDCVerificarCampana">
+                                                        <section class="forms">
+                                                            <div class="container-fluid">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                         <div class="card-header">
+                                                                            <h3 class="h4">CAMPAÑAS ACTIVAS</h3>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <form class="form-horizontal">
+                                                                                <div class="col-lg-12">
+                                                                                    <template v-if="arrayEventoCampania.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Código</th>
+                                                                                                        <th>Nombre</th>
+                                                                                                        <th>Tipo</th>
+                                                                                                        <th>Acción</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(evento, index) in arrayEventoCampania" :key="index">
+                                                                                                        <td v-text="index+1"></td>
+                                                                                                        <td v-text="evento.cNombreEventoCampania"></td>
+                                                                                                        <td v-text="evento.TipoEvento"></td>
+                                                                                                        <td>
+                                                                                                            <a href="#" @click="abrirModal('campaña', 'detalle', evento);">
+                                                                                                                <i class="fa-md fa fa-search-plus" aria-hidden="true"></i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-9 offset-sm-4">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="TabDCConfirmarCotizacion">
+                                                        <section class="forms">
+                                                            <div class="container-fluid">
+                                                                <div class="col-lg-12">
+                                                                    <form class="form-horizontal">
+                                                                        <template v-if="arrayConfiCotiVehiculo.length">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-sm">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th colspan="3">Vehículo</th>
+                                                                                            <th>Cantidad</th>
+                                                                                            <th>Dscto</th>
+                                                                                            <th>Precio Final</th>
+                                                                                            <th>SubTotal</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="cotivehiculo in arrayConfiCotiVehiculo" :key="cotivehiculo.nIdContacto">
+                                                                                            <td colspan="3"> {{ cotivehiculo.detalle }} </td>
+                                                                                            <td v-text="cotivehiculo.cantidad"></td>
+                                                                                            <td v-text="cotivehiculo.dscto"></td>
+                                                                                            <td v-text="cotivehiculo.preciofinal"></td>
+                                                                                            <td v-text="cotivehiculo.subtotal"></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row flex-rigth-margin">
+                                                                                    <div class="form-group row">
+                                                                                        <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label"><strong> {{ montoTotalConfiCotiVehiculo = totalConfiCotiVehiculo }}</strong></label>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label"><strong> {{ montoTotalConfiCotiVehiculoSoles = totalConfiCotiVehiculoSoles }}</strong></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </template>
+                                                                        <template v-else>
+                                                                            <table>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td colspan="10">No existen vehículos cotizados!</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </template>
+                                                                        <template v-if="arrayConfiCotiEleVenta.length">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-sm">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th colspan="3">Elemento Venta</th>
+                                                                                            <th>Cantidad</th>
+                                                                                            <th>Dscto</th>
+                                                                                            <th>Precio Final</th>
+                                                                                            <th>SubTotal</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="cotieleventa in arrayConfiCotiEleVenta" :key="cotieleventa.nIdContacto">
+                                                                                            <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                            <td v-text="cotieleventa.cantidad"></td>
+                                                                                            <td v-text="cotieleventa.dscto"></td>
+                                                                                            <td v-text="cotieleventa.preciofinal"></td>
+                                                                                            <td v-text="cotieleventa.subtotal"></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row flex-rigth-margin">
+                                                                                    <div class="form-group row">
+                                                                                        <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVenta = totalConfiCotiEleVenta }}</strong></label>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaSoles = totalConfiCotiEleVentaSoles }}</strong></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </template>
+                                                                        <template v-else>
+                                                                            <table>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td colspan="10">No existen elementos de ventas cotizados!</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </template>
+                                                                        <template v-if="arrayConfiCotiEventoEleVenta.length">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-sm">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th colspan="3">Campaña</th>
+                                                                                            <th>Elemento Venta</th>
+                                                                                            <th>Cantidad</th>
+                                                                                            <th>Dscto</th>
+                                                                                            <th>Precio Final</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="(cotieleventa, index) in arrayConfiCotiEventoEleVenta" :key="index">
+                                                                                            <td colspan="3" v-text=" cotieleventa.nombreEC"></td>
+                                                                                            <td v-text=" cotieleventa.nombreEV"></td>
+                                                                                            <td v-text="cotieleventa.cantidad"></td>
+                                                                                            <td v-text="cotieleventa.dscto"></td>
+                                                                                            <td v-text="cotieleventa.preciofinal"></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row flex-rigth-margin">
+                                                                                    <div class="form-group row">
+                                                                                        <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalConfiCotiEventoEleVenta}}</strong></label>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVentaSoles=totalConfiCotiEventoEleVentaSoles}}</strong></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </template>
+                                                                        <template v-else>
+                                                                            <table>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td colspan="10">No existen elementos de ventas en campañas!</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </template>
+
+                                                                        <hr/>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row flex-rigth-margin">
+                                                                                <div class="form-group row">
+                                                                                    <strong>
+                                                                                        TOTAL USD &nbsp; &nbsp; <label> {{ montoTotalCotizacion = totalConfiCoti }} </label>
+                                                                                    </strong>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <strong>
+                                                                                        TOTAL S/. &nbsp; &nbsp; <label> {{ montoTotalCotizacionSoles = totalConfiCotiSoles }} </label>
+                                                                                    </strong>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-lg-12 centrarbtn">
-                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarCotizacion">
-                                                                                <i class="fa fa-arrow-right"></i> REGISTRAR
-                                                                            </button>
-                                                                            &nbsp
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="cancelarCotizacion">
-                                                                                <i class="fa fa-arrow-right"></i> CANCELAR
-                                                                            </button>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-9 offset-sm-4">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarCotizacion">
+                                                                                    <i class="fa fa-save"></i> REGISTRAR
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="cancelarCotizacion">
+                                                                                    <i class="fa fa-close"></i> CANCELAR
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </section>
+                                                                    </form>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </section>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1083,14 +1104,14 @@
                                                         <div class="row">
                                                             <label class="col-md-4 form-control-label">Nombre Comercial</label>
                                                             <div class="col-md-8">
-                                                                <input type="text" v-model="fillBusqVehiculo.cnombrecomercial" class="form-control form-control-sm">
+                                                                <input type="text" v-model="fillBusqVehiculo.cnombrecomercial" @keyup.enter="buscarVehiculos(1)" class="form-control form-control-sm">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-9 offset-md-5">
-                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVehiculos(1);">
+                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVehiculos(1)">
                                                             <i class="fa fa-search"></i> Buscar
                                                         </button>
                                                     </div>
@@ -1102,6 +1123,7 @@
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Seleccione</th>
                                                                     <th>Codigo</th>
                                                                     <th>Nombre Comercial</th>
                                                                     <th>Año Fabricación</th>
@@ -1111,11 +1133,15 @@
                                                                     <th>Precio Cierre</th>
                                                                     <th>Costo Dealer</th>
                                                                     <th>Precio Venta</th>
-                                                                    <th>Seleccione</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr v-for="vehiculo in arrayVehiculoModal" :key="vehiculo.nIdContacto">
+                                                                    <td>
+                                                                        <a href="#" @click.prevent="agregarVehículoLista(vehiculo);">
+                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                        </a>
+                                                                    </td>
                                                                     <td v-text="vehiculo.codListaPrecioVD"></td>
                                                                     <td v-text="vehiculo.NombreComercial"></td>
                                                                     <td v-text="vehiculo.AnioFab"></td>
@@ -1125,11 +1151,6 @@
                                                                     <td v-text="vehiculo.PrecioCierre"></td>
                                                                     <td v-text="vehiculo.CostoDealer"></td>
                                                                     <td v-text="vehiculo.PrecioVenta"></td>
-                                                                    <td>
-                                                                        <a href="#" @click.prevent="agregarVehículoLista(vehiculo);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1233,28 +1254,28 @@
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Acciones</th>
                                                                     <th>Código</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Tipo Elemento</th>
                                                                     <th>Nombre Elemento</th>
                                                                     <th>Precio de Venta</th>
                                                                     <th>Precio de Venta Mínimo</th>
-                                                                    <th>Acciones</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr v-for="elemento in arrayElementoVentaModal" :key="elemento.nIdContacto">
+                                                                    <td>
+                                                                        <a href="#" @click.prevent="agregarElementoVentaLista(elemento);">
+                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                        </a>
+                                                                    </td>
                                                                     <td v-text="elemento.nIdElemento"></td>
                                                                     <td v-text="elemento.cProveedorNombre"></td>
                                                                     <td v-text="elemento.cTipoElemenNombre"></td>
                                                                     <td v-text="elemento.cElemenNombre"></td>
                                                                     <td v-text="elemento.fElemenValorVenta"></td>
                                                                     <td v-text="elemento.fElemenValorMinimoVenta"></td>
-                                                                    <td>
-                                                                        <a href="#" @click.prevent="agregarElementoVentaLista(elemento);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1326,8 +1347,8 @@
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div>
-                                                                <h1 v-text="fillEventoCampania.cNombreEventoCampania"></h1>
-                                                                <h3 v-text="fillEventoCampania.TipoEvento"></h3>
+                                                                <h3 v-text="fillEventoCampania.cNombreEventoCampania"></h3>
+                                                                <h2 class="no-margin-bottom" v-text="fillEventoCampania.TipoEvento"></h2>
                                                                 <input type="hidden" v-text="montoTotalEventoElementoVenta = totalEventoEleVentaModal">
                                                                 <input type="hidden" v-text="montoTotalEventoElementoVentaSoles = totalEventoEleVentaModalSoles">
                                                             </div>
@@ -1341,21 +1362,21 @@
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
+                                                                    <th>Acciones</th>
                                                                     <th>Elemento Venta</th>
                                                                     <th>Valor</th>
-                                                                    <th>Acciones</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr v-for="(eleventa, index) in arrayEventoEleVentaModal" :key="eleventa.nIdContacto">
                                                                     <template v-if="eleventa.nIdEventoCampania == fillEventoCampania.nIdEventoCampania">
-                                                                        <td v-text="eleventa.cNombre"></td>
-                                                                        <td v-text="eleventa.fValorVenta"></td>
                                                                         <td>
                                                                             <a href="#" @click.prevent="removerElementoVentaCampania(index);">
-                                                                                <i class='fa-md fa fa-trash-o'></i>
+                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                             </a>
                                                                         </td>
+                                                                        <td v-text="eleventa.cNombre"></td>
+                                                                        <td v-text="eleventa.fValorVenta"></td>
                                                                     </template>
                                                                 </tr>
                                                             </tbody>
@@ -1395,15 +1416,18 @@
                 // =============================================================
                 // VARIABLES TAB COTIZACIÓN
                 // =============================================================
-                configbasica: {
+                fillConfigBasica: {
                     cempresa: 'SAISAC',
                     csucursal: 'CHICLAYO',
-                    tipoCambioVenta: 3.3,
-                    tipoCambioCompra: 3.285,
-                    fechaInicio: '2018-06-15',
-                    fechaFin: '2018-06-20',
+                    tipoCambioVenta: 0.0,
+                    tipoCambioCompra: 0.0,
+                    fechaInicio: '',
+                    fechaFin: '',
                     refCotizacion: 'NINGUNA'
                 },
+                // =============================================================
+                // VARIABLES TAB ASIGNAR CONTACTO
+                // =============================================================
                 fillBusqContacto:{
                     ntipopersona: 1,
                     lblcontactonombre: 'Apellidos',
@@ -1412,9 +1436,6 @@
                     ccontactodocumento: ''
                 },
                 arrayContactosPorVendedor: [],
-                // =============================================================
-                // VARIABLES TAB ASIGNAR COTIZACIÓN
-                // =============================================================
                 fillAsignarContacto:{
                     nidasignarcontacto: 0,
                     nidcontacto: 0,
@@ -1424,7 +1445,7 @@
                     cemail: '',
                     nidreferencia: 0
                 },
-                arrayReferencias: [],
+                arrayTipoMedio: [],
                 arrayReferenciavehiculo: [],
                 // =============================================================
                 // VARIABLES TAB DETALLE COTIZACIÓN
@@ -1453,7 +1474,7 @@
                 arrayVehiculoModal : [],
                 //SUBTAB Vehiculo
                 arrayVehiculo: [],
-                montoTotalVehiculo: 0,
+                montoTotalVehiculoDolar: 0,
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
                 fValorTipocambioComercial: 0,
@@ -1534,6 +1555,7 @@
         },
         mounted() {
             this.getTipoCambio();
+            this.configuracionInicial();
         },
         computed:{
             isActived: function(){
@@ -1590,12 +1612,12 @@
             totalVehiculo: function(){
                 let me = this;
                 return me.arrayVehiculo.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalVehiculoSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalVehiculo * me.fValorTipocambioComercial;
+                let montoconvertido = me.montoTotalVehiculoDolar * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -1603,7 +1625,7 @@
             totalElementoVenta: function(){
                 let me = this;
                 return me.arrayElementoVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalElementoVentaSoles: function(){
@@ -1616,7 +1638,7 @@
             totalEventoEleVentaModal: function(){
                 let me = this;
                 return me.arrayEventoEleVentaModal.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.fValorVenta);
+                    return valorAnterior + parseFloat(valorActual.fValorVenta);
                 }, 0);
             },
             totalEventoEleVentaModalSoles: function(){
@@ -1629,7 +1651,7 @@
             totalConfiCotiVehiculo: function(){
                 let me = this;
                 return me.arrayConfiCotiVehiculo.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiVehiculoSoles: function(){
@@ -1642,7 +1664,7 @@
             totalConfiCotiEleVenta: function(){
                 let me = this;
                 return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiEleVentaSoles: function(){
@@ -1668,7 +1690,7 @@
             totalConfiCoti: function(){
                 let me = this;
                 return me.arrayMontosCotizacion.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.monto);
+                    return valorAnterior + parseFloat(valorActual.monto);
                 }, 0);
             },
             totalConfiCotiSoles: function(){
@@ -1691,10 +1713,32 @@
                 $('#tab03').addClass('nav-link');
 
                 $('#TabCotizacion').addClass("in active show");
-                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
+                this.configuracionInicial();
             },
-            tabAsignarCotizacion(){
+            configuracionInicial(){
+                this.obtenerFechaInicioCotizacion();
+            },
+            obtenerFechaInicioCotizacion(){
+                var f = new Date();
+                var day = String(f.getDate());
+                var month = String((f.getMonth() +1));
+                if (month.length < 2){
+                    month = "0" + "" + month;
+                }
+                if (day.length < 2){
+                    day = "0" + "" + day;
+                }
+                this.fillConfigBasica.fechaInicio = day + "/" + month + "/" + f.getFullYear();
+            },
+            obtenerFechaFinCotizacion(){
+                
+            },
+            // =================================================================
+            // TAB ASIGNAR CONTACTO
+            // =================================================================
+            tabAsignarContacto(){
                 if(this.validaCotizacion()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1709,9 +1753,9 @@
                 $('#tab03').addClass('nav-link');
 
                 $('#TabCotizacion').removeClass('in active show');
-                $('#TabAsignarCotizacion').addClass('in active show');
+                $('#TabAsignarContacto').addClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
-                this.llenarReferencias();
+                this.llenarTipoMedio();
                 this.llenarReferenciasVehiculo();
             },
             validaCotizacion(){
@@ -1770,10 +1814,7 @@
                 this.fillBusqContacto.ccontactonombre = '';
                 this.fillBusqContacto.ccontactodocumento = '';
             },
-            // =================================================================
-            // TAB ASGINAR COTIZACIÓN
-            // =================================================================
-            llenarReferencias(){
+            llenarTipoMedio(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
@@ -1783,7 +1824,7 @@
                 }).then(response => {
                     let info = response.data;
                     //Data
-                    this.arrayReferencias = info;
+                    this.arrayTipoMedio = info;
                 }).catch(error => {
                     this.errors = error.response.data
                 });
@@ -1832,7 +1873,7 @@
                 $('#tab03').addClass('nav-link active');
 
                 $('#TabCotizacion').removeClass('in active show');
-                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').addClass('in active show');
             },
             validaAsignarCotizacion(){
@@ -1852,7 +1893,7 @@
                     this.mensajeError.push('El email no puede estar vacío');
                 }
                 if(this.fillAsignarContacto.nidreferencia == 0){
-                    this.mensajeError.push('Debes Seleccionar una Referencia');
+                    this.mensajeError.push('Debes Seleccionar un Tipo Medio');
                 }
                 if(this.fillAsignarContacto.nidasignarcontacto == 0 ||
                     this.fillAsignarContacto.nidasignarcontacto == undefined){
@@ -2058,10 +2099,10 @@
                         nIdModelo        : vehiculo.nIdModelo
                     });
 
-                    toastr.options.progressBar = true;
+                    /*toastr.options.progressBar = true;
                     toastr.options.closeButton = true;
-                    toastr.options.positionClass = "toast-top-full-width";
-                    toastr.success('Agrego vehículo "'+ vehiculo.NombreComercial +'" exitosamente');
+                    toastr.options.positionClass = "toast-top-full-width";*/
+                    toastr.success('Se Agregó vehículo "'+ vehiculo.NombreComercial +'"');
                     this.cerrarModal();
                 }
             },
@@ -2428,7 +2469,7 @@
                 });
 
                 me.arrayMontosCotizacion.push({
-                    monto: me.montoTotalVehiculo
+                    monto: me.montoTotalVehiculoDolar
                 });
 
                 // ======================
@@ -2569,7 +2610,7 @@
                 this.arrayConfiCotiEleVenta = [];
                 this.arrayConfiCotiEventoEleVenta = [];
 
-                this.montoTotalVehiculo = 0;
+                this.montoTotalVehiculoDolar = 0;
                 this.montoTotalVehiculoSoles = 0;
                 this.montoTotalElementoVenta = 0;
                 this.montoTotalElementoVentaSoles = 0;
@@ -2594,7 +2635,7 @@
                 $('#tab03').addClass('nav-link disabled');
 
                 $('#TabCotizacion').addClass("in active show");
-                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
 
                 $('#tab0301').removeClass('nav-link');
@@ -2637,7 +2678,7 @@
                                 this.fillAsignarContacto.cnrodocumento = data['cNumeroDocumento'];
                                 this.fillAsignarContacto.cdireccion = data['cDireccion'];
                                 this.fillAsignarContacto.cemail = data['cEmail'];
-                                this.tabAsignarCotizacion();
+                                this.tabAsignarContacto();
                                 this.cerrarModal();
                                 break;
                             }
@@ -2741,6 +2782,9 @@
                     this.fValorTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                     this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
                     this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
+
+                    this.fillConfigBasica.tipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fillConfigBasica.tipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                 }).catch(error => {
                     console.log(error);
                 });

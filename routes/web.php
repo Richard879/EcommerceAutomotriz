@@ -4,10 +4,11 @@ Route::get('/','Auth\LoginController@showLoginForm')->name('formlogin');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 
 Route::middleware(['auth'])->group(function(){
-    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/main', function () {
         return view('contenido/contenido');
     })->name('main');
+
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/parametro/GetParametroByGrupo', 'ParametroController@GetParametroByGrupo');
     Route::get('/parametro/GetLstProveedor', 'ParametroController@GetLstProveedor');
@@ -87,6 +88,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/UpdReasignarReferenciaVehiculo', 'GestionContactoController@UpdReasignarReferenciaVehiculo');
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
+    Route::get('/pedido/GetListaPrecioDetalleByIdCotizacion', 'PedidoController@GetListaPrecioDetalleByIdCotizacion');
+
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
     Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');

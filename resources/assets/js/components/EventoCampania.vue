@@ -2049,7 +2049,7 @@
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
-                    toastr.success('Se Agregó Vehículo');
+                    toastr.success('Se Agregó Modelo');
                 }
             },
             encuentraModelos(nIdModelo){

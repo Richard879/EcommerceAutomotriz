@@ -68,6 +68,22 @@ class PedidoController extends Controller
         return ['arrayCompra'=>$arrayCompra];
     }
 
+    public function GetListaPrecioDetalleByIdCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdCabeceraCotizacion = $request->nidcabeceracotizacion;
+
+        $objListaDetalle = DB::select('exec usp_Pedido_GetListaPrecioDetalleByIdCotizacion ?, ?, ?',
+                                                                            array(  $nIdEmpresa,
+                                                                                    $nIdSucursal,
+                                                                                    $nIdCabeceraCotizacion
+                                                                                    ));
+        return response()->json($objListaDetalle);
+    }
+
     public function GetLstPedidos(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -106,4 +122,5 @@ class PedidoController extends Controller
         $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?', [$nidpedido]);
         return response()->json($arrayPedido);
     }
+
 }

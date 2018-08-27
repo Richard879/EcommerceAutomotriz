@@ -302,7 +302,7 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraCotizacion">
                                                                                 <td> 
-                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion)" data-toggle="tooltip" data-placement="top" 
                                                                                         :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
@@ -369,24 +369,24 @@
                                                 <div class="col-lg-12">
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="Tab111" href="#TabSegDatosContacto" @click="TabSegDatosContacto();" role="tab" data-toggle="tab">
+                                                            <a class="nav-link" id="Tab1" href="#TabAsignarCompra" @click="tabAsignarCompra()" role="tab" data-toggle="tab">
                                                                 <i class="fa fa fa-bus"></i> ASIGNAR COMPRA
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab222" href="#TabSegReferenciaVehiculo" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab2" href="#TabDocReferencias" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-book"></i> DOCUMENTOS REFERENCIAS
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab333" href="#TabSegSeguimiento" @click="tabDatosPersonales()" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab3" href="#TabDocAsociados" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-book"></i> DOCUMENTOS ASOCIADOS
                                                             </a>
                                                         </li>
                                                     </ul>
 
                                                     <div class="tab-content">
-                                                        <div class="tab-pane fade in active show" id="TabSegDatosContacto">
+                                                        <div class="tab-pane fade in active show" id="TabAsignarCompra">
                                                            <section class="forms">
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
@@ -450,8 +450,10 @@
                                                                                             <tbody>
                                                                                                 <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                                                     <td> 
-                                                                                                        <a href="#" @click="activarTabDocReferencias(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" 
-                                                                                                            :title="'Seleccionar Compra ' + compra.nIdCompra">
+                                                                                                        <a href="#" @click="activarTabDocReferencias(compra.nIdCompra, compra.cNumeroVin, compra.nOrdenCompra, 
+                                                                                                                                                    compra.cNombreComercial, compra.nAnioFabricacion, compra.nAnioVersion,
+                                                                                                                                                    compra.cNombreColor, compra.cNumeroMotor)" 
+                                                                                                            data-toggle="tooltip" data-placement="top" :title="'Seleccionar Compra ' + compra.nIdCompra">
                                                                                                             <i class="fa-md fa fa-check-circle"></i>
                                                                                                         </a>
                                                                                                     </td>
@@ -509,186 +511,205 @@
                                                                 </div>
                                                             </section>
                                                         </div>
-                                                        <!--<div role="tabpanel" class="tab-pane fade" id="TabSegReferenciaVehiculo">
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabDocReferencias">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
-                                                                        <form class="form-horizontal">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <div class="input-group">
-                                                                                                <input type="hidden" v-model="formNuevoContacto.nidproveedor">
-                                                                                                <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                                <div class="input-group-prepend">
-                                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                    </button>
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">DATOS DE PEDIDO</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Nro Cotización</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.cnrocotizacion" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.cnombrecomercial" class="form-control form-control-sm" readonly>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <input type="hidden" v-model="formNuevoContacto.nidcontacto">
-                                                                                            <select name="account" v-model="formNuevoContacto.nidlinea" class="form-control form-control-sm" v-on:change="llenarComboMarca();">
-                                                                                                <option v-for="linea in arrayLinea" :key="linea.nIdPar" :value="linea.nIdPar"> {{ linea.cParNombre }}
-                                                                                                </option>
-                                                                                            </select>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.naniofabricacion" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Año Modelo</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.naniomodelo" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Nro VIN</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.cnrovin" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">O/C</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.nordencompra" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Color</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.ccolor" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Motor</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.cmotor" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Precio Lista</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Precio Sistema</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Descuento</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Precio Cliente</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Bono</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Sobre Precio</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Bono Especial</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">Descuento</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesIngresadas()"><i class="fa fa-search"></i> Buscar</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
                                                                             </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Marca</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <select name="account" v-model="formNuevoContacto.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <select name="account" v-model="formNuevoContacto.nidmodelo" class="form-control form-control-sm">
-                                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <select name="account" v-model="formNuevoContacto.naniofabricacion" class="form-control form-control-sm">
-                                                                                                <option v-for="fab in arrayAnioFabricacion" :key="fab.nIdPar" :value="fab.nIdPar" v-text="fab.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Año Modelo</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <select name="account" v-model="formNuevoContacto.naniomodelo" class="form-control form-control-sm">
-                                                                                                <option v-for="version in arrayAnioModelo" :key="version.nIdPar" :value="version.nIdPar" v-text="version.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-9 offset-sm-5">
-                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarSegReferenciaVehiculo()">
-                                                                                        <i class="fa fa-save"></i> Registrar
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="col-lg-12">
                                                                         <div class="card">
                                                                             <div class="card-header">
-                                                                                <h3 class="h4">LISTADO</h3>
+                                                                                <h3 class="h4">FORMA DE PAGO</h3>
                                                                             </div>
                                                                             <div class="card-body">
-                                                                                <template v-if="arraySegReferenciavehiculo.length">
-                                                                                    <div class="table-responsive">
-                                                                                        <table class="table table-striped table-sm">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th>Cod. Ref.</th>
-                                                                                                    <th>Proveedor</th>
-                                                                                                    <th>Línea</th>
-                                                                                                    <th>Marca</th>
-                                                                                                    <th>Modelo</th>
-                                                                                                    <th>Año Fab</th>
-                                                                                                    <th>Año Modelo</th>
-                                                                                                    <th>Acciones</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr v-for="r in arraySegReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
-                                                                                                    <td v-text="r.nIdReferenciaVehiculoContacto"></td>
-                                                                                                    <td v-text="r.cProveedorNombre"></td>
-                                                                                                    <td v-text="r.cLineaNombre"></td>
-                                                                                                    <td v-text="r.cMarcaNombre"></td>
-                                                                                                    <td v-text="r.cModeloNombre"></td>
-                                                                                                    <td v-text="r.nAnioFabricacion"></td>
-                                                                                                    <td v-text="r.nAnioModelo"></td>
-                                                                                                    <td>
-                                                                                                        <a href="#" @click="activarTab333(r.nIdAsignacionContactoVendedor)" data-toggle="tooltip" data-placement="top"
-                                                                                                            :title="'Nuevo Seguimiento ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
-                                                                                                            <i class="fa-md fa fa-sign-out"></i>
-                                                                                                        </a>
-                                                                                                        <template v-if="r.cReferenciaVehEstado=='A'">
-                                                                                                            <a href="#" @click="desactivar(r.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                                            :title="'Desactivar ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
-                                                                                                                <i class="fa-md fa fa-check-square"></i>
-                                                                                                            </a>
-                                                                                                        </template>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-7">
-                                                                                                <nav>
-                                                                                                    <ul class="pagination">
-                                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                        </li>
-                                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                        :class="[page==isActived?'active':'']">
-                                                                                                            <a class="page-link"
-                                                                                                            href="#" @click.prevent="cambiarPagina(page)"
-                                                                                                            v-text="page"></a>
-                                                                                                        </li>
-                                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </nav>
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* Banco</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <select v-model="formDocRef.nidbanco" class="form-control form-control-sm">
+                                                                                                        <option v-for="item in arrayBanco" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                                        </option>
+                                                                                                    </select>
+                                                                                                </div>
                                                                                             </div>
-                                                                                            <div class="col-lg-5">
-                                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <!--<label class="col-sm-4 form-control-label">Nro Warranat</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" v-model="formWFinanciero.cnrowarrant" class="form-control form-control-sm">
+                                                                                                </div>-->
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </template>
-                                                                                <template v-else>
-                                                                                    <table>
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td colspan="10">No existen registros!</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </template>
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </section>
-                                                        </div>-->
-                                                        <!--<div role="tabpanel" class="tab-pane fade" id="TabSegSeguimiento">
+                                                        </div>
+                                                        <!--<div role="tabpanel" class="tab-pane fade" id="TabDocAsociados">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
@@ -1058,6 +1079,20 @@
                     cnombrecomercial: ''
                 },
                 arrayCompra: [],
+                // ============== VARIABLES TAB DOCUMENTOS REFERENCIA =================
+                formDocRef:{
+                    cnrocotizacion: '',
+                    cnrovin: '',
+                    nordencompra: '',
+                    ccolor: '',
+                    cmotor: '',
+                    cnombrecomercial: '',
+                    naniofabricacion: '',
+                    naniomodelo: '',
+                    precio: '',
+                    nidbanco: 0
+                },
+                arrayBanco: [],
                 // =============================================================
                 pagination : {
                     'total' : 0,
@@ -1189,6 +1224,7 @@
                 this.llenarComboMarcas();
                 this.llenarComboModelos();
                 this.limpiarFormulario();
+                this.vistaFormularioPedido = 1;
             },            
             llenarComboMarcas(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -1280,10 +1316,23 @@
                     })
             },
             //=============== APROBAR COTIZACION ========================
-            aprobarCotizacion(nIdCabeceraCotizacion){
+            aprobarCotizacion(nIdCabeceraCotizacion, cNumeroCotizacion){
                 this.formCompra.nidcabeceracotizacion = nIdCabeceraCotizacion;
+                this.formDocRef.cnrocotizacion = cNumeroCotizacion;
                 this.vistaFormularioPedido = 0;
                 this.listarCompras(1);
+            },
+            
+            //=============== TAB ASIGNAR COMPRA ========================
+            tabAsignarCompra(){
+                $('#Tab1').addClass('nav-link active');
+                $('#Tab2').removeClass('nav-link active');
+                $('#Tab2').addClass("nav-link disabled");
+                $('#Tab3').removeClass('nav-link active');
+                $('#Tab3').addClass('nav-link disabled');
+                $('#TabAsignarCompra').addClass('in active show');
+                $('#TabDocReferencias').removeClass('in active show');
+                $('#TabDocAsociados').removeClass('in active show');
             },
             listarCompras(page){
                 this.mostrarProgressBar();
@@ -1310,10 +1359,59 @@
                     console.log(error);
                 });
             },
-            //=============== LISTAR COMPRAS ========================
             cambiarPaginaCompra(page){
                 this.pagination.current_page=page;
                 this.listarCompras(page);
+            },
+            //============= TAB DOCUMENTOS REFERENCIAS ==================
+            activarTabDocReferencias(nIdCompra, cNumeroVin, nOrdenCompra, cNombreComercial, nAnioFabricacion, nAnioModelo, cNombreColor, cNombreMotor){
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link");
+                $('#Tab2').removeClass('nav-link disabled');
+                $('#Tab2').addClass("nav-link active");
+                $('#TabAsignarCompra').removeClass('in active show');
+                $('#TabDocReferencias').addClass('in active show');
+                this.formDocRef.cnrovin = cNumeroVin;
+                this.formDocRef.nordencompra = nOrdenCompra;
+                this.formDocRef.cnombrecomercial = cNombreComercial;
+                this.formDocRef.naniofabricacion = nAnioFabricacion;
+                this.formDocRef.naniomodelo = nAnioModelo;
+                this.formDocRef.ccolor = cNombreColor;
+                this.formDocRef.cmotor = cNombreMotor;
+                this.listarDatosListaPrecioDetalle(parseInt(this.formCompra.nidcabeceracotizacion));
+                this.llenarComboBanco();
+            },
+            listarDatosListaPrecioDetalle(nidcabeceracotizacion){
+                var url = this.ruta + '/pedido/GetListaPrecioDetalleByIdCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidsucursal' : 1300013,
+                        'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
+                    }
+                }).then(response => {
+                    this.formDocRef.precio = response.data[0].fPrecioCierre;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboBanco(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110042,
+                        'opcion': 0
+                    }
+                }).then(response => {
+                    this.arrayBanco = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            //============= TAB DOCUMENTOS ASOCIADOS ===================
+
+            tab(){
+
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================
