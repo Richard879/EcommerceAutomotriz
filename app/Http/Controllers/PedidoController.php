@@ -67,4 +67,43 @@ class PedidoController extends Controller
         $arrayCompra = $this->arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
     }
+
+    public function GetLstPedidos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa    =   $request->nidempresa;
+        $nidsucursal   =   $request->nidsucursal;
+        $nidlinea      =   $request->nidlinea;
+        $nidmarca      =   $request->nidmarca;
+        $nidmodelo     =   $request->nidmodelo;
+        $dfechainicio  =   $request->dfechainicio;
+        $dfechafin     =   $request->dfechafin;
+
+        $nidlinea = ($nidlinea == NULL) ? ($nidlinea = '') : $nidlinea;
+        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = '') : $nidmarca;
+        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = '') : $nidmodelo;
+        $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
+        $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
+
+        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosIngresadas ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nidempresa, $nidsucursal, $nidlinea,
+                                        $nidmarca, $nidmodelo, $dfechainicio,
+                                        $dfechafin, Auth::user()->id
+                                    ]);
+
+        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        return ['arrayPedido'=>$arrayPedido];
+    }
+
+    public function aprobarPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidpedido  =  $request->nidpedido;
+
+        $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?', [$nidpedido]);
+        return response()->json($arrayPedido);
+    }
 }

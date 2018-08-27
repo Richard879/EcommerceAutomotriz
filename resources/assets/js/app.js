@@ -14,11 +14,12 @@ Vue.component('gestioncontactojf', require('./components/GestionContactoJefeVent
 Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.vue'));
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
 Vue.component('pedido', require('./components/Pedido.vue'));
+Vue.component('aprobapedido', require('./components/AprobacionPedido.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
         menu: 0,
-        ruta: 'http://172.20.6.62:8080/saisacsys/public'
+        ruta: 'http://localhost:8080/saisacsys/public'
     }
 });
