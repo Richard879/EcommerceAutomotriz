@@ -18,7 +18,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabAsignarCotizacion" @click="tabAsignarCotizacion" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="tab02" href="#TabAsignarContacto" @click="tabAsignarContacto" role="tab" data-toggle="tab">
                                         <i class="fa fa-user"></i> ASIGNAR CONTACTO
                                     </a>
                                 </li>
@@ -45,7 +45,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Empresa</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.cempresa" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="fillConfigBasica.cempresa" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -53,7 +53,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.csucursal" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="fillConfigBasica.csucursal" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -61,17 +61,17 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio Venta</label>
+                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio Compra</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.tipoCambioVenta" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.tipoCambioCompra" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
+                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio Venta </label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.tipoCambioCompra" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.tipoCambioVenta" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -81,7 +81,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.fechaInicio" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.fechaInicio" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -89,7 +89,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.fechaFin" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.fechaFin" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -99,7 +99,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Ref. Cotización</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="configbasica.refCotizacion" class="form-control form-control-sm" readonly>
+                                                                            <label v-text="fillConfigBasica.refCotizacion" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -109,7 +109,7 @@
                                                                     <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
                                                                         <i class="fa fa-search"></i> Buscar
                                                                     </button>-->
-                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabAsignarCotizacion();">
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabAsignarContacto();">
                                                                         <i class="fa fa-arrow-right"></i> Siguiente
                                                                     </button>
                                                                 </div>
@@ -121,7 +121,7 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAsignarCotizacion">
+                                <div role="tabpanel" class="tab-pane fade" id="TabAsignarContacto">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
@@ -173,10 +173,10 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Referencia</label>
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Medio</label>
                                                                             <div class="col-sm-8">
                                                                                 <select v-model="fillAsignarContacto.nidreferencia" class="form-control form-control-sm">
-                                                                                    <option v-for="item in arrayReferencias" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                    <option v-for="item in arrayTipoMedio" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
                                                                                     </option>
                                                                                 </select>
                                                                             </div>
@@ -194,6 +194,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <hr/>
                                                             <div class="col-lg-12">
                                                                 <template v-if="arrayReferenciavehiculo.length">
                                                                     <div class="table-responsive">
@@ -1415,15 +1416,18 @@
                 // =============================================================
                 // VARIABLES TAB COTIZACIÓN
                 // =============================================================
-                configbasica: {
+                fillConfigBasica: {
                     cempresa: 'SAISAC',
                     csucursal: 'CHICLAYO',
-                    tipoCambioVenta: 3.3,
-                    tipoCambioCompra: 3.285,
-                    fechaInicio: '2018-06-15',
-                    fechaFin: '2018-06-20',
+                    tipoCambioVenta: 0.0,
+                    tipoCambioCompra: 0.0,
+                    fechaInicio: '',
+                    fechaFin: '',
                     refCotizacion: 'NINGUNA'
                 },
+                // =============================================================
+                // VARIABLES TAB ASIGNAR CONTACTO
+                // =============================================================
                 fillBusqContacto:{
                     ntipopersona: 1,
                     lblcontactonombre: 'Apellidos',
@@ -1432,9 +1436,6 @@
                     ccontactodocumento: ''
                 },
                 arrayContactosPorVendedor: [],
-                // =============================================================
-                // VARIABLES TAB ASIGNAR COTIZACIÓN
-                // =============================================================
                 fillAsignarContacto:{
                     nidasignarcontacto: 0,
                     nidcontacto: 0,
@@ -1444,7 +1445,7 @@
                     cemail: '',
                     nidreferencia: 0
                 },
-                arrayReferencias: [],
+                arrayTipoMedio: [],
                 arrayReferenciavehiculo: [],
                 // =============================================================
                 // VARIABLES TAB DETALLE COTIZACIÓN
@@ -1554,6 +1555,7 @@
         },
         mounted() {
             this.getTipoCambio();
+            this.configuracionInicial();
         },
         computed:{
             isActived: function(){
@@ -1610,7 +1612,7 @@
             totalVehiculo: function(){
                 let me = this;
                 return me.arrayVehiculo.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalVehiculoSoles: function(){
@@ -1623,7 +1625,7 @@
             totalElementoVenta: function(){
                 let me = this;
                 return me.arrayElementoVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalElementoVentaSoles: function(){
@@ -1636,7 +1638,7 @@
             totalEventoEleVentaModal: function(){
                 let me = this;
                 return me.arrayEventoEleVentaModal.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.fValorVenta);
+                    return valorAnterior + parseFloat(valorActual.fValorVenta);
                 }, 0);
             },
             totalEventoEleVentaModalSoles: function(){
@@ -1649,7 +1651,7 @@
             totalConfiCotiVehiculo: function(){
                 let me = this;
                 return me.arrayConfiCotiVehiculo.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiVehiculoSoles: function(){
@@ -1662,7 +1664,7 @@
             totalConfiCotiEleVenta: function(){
                 let me = this;
                 return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.subtotal);
+                    return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiEleVentaSoles: function(){
@@ -1688,7 +1690,7 @@
             totalConfiCoti: function(){
                 let me = this;
                 return me.arrayMontosCotizacion.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseInt(valorActual.monto);
+                    return valorAnterior + parseFloat(valorActual.monto);
                 }, 0);
             },
             totalConfiCotiSoles: function(){
@@ -1711,10 +1713,32 @@
                 $('#tab03').addClass('nav-link');
 
                 $('#TabCotizacion').addClass("in active show");
-                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
+                this.configuracionInicial();
             },
-            tabAsignarCotizacion(){
+            configuracionInicial(){
+                this.obtenerFechaInicioCotizacion();
+            },
+            obtenerFechaInicioCotizacion(){
+                var f = new Date();
+                var day = String(f.getDate());
+                var month = String((f.getMonth() +1));
+                if (month.length < 2){
+                    month = "0" + "" + month;
+                }
+                if (day.length < 2){
+                    day = "0" + "" + day;
+                }
+                this.fillConfigBasica.fechaInicio = day + "/" + month + "/" + f.getFullYear();
+            },
+            obtenerFechaFinCotizacion(){
+                
+            },
+            // =================================================================
+            // TAB ASIGNAR CONTACTO
+            // =================================================================
+            tabAsignarContacto(){
                 if(this.validaCotizacion()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1729,9 +1753,9 @@
                 $('#tab03').addClass('nav-link');
 
                 $('#TabCotizacion').removeClass('in active show');
-                $('#TabAsignarCotizacion').addClass('in active show');
+                $('#TabAsignarContacto').addClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
-                this.llenarReferencias();
+                this.llenarTipoMedio();
                 this.llenarReferenciasVehiculo();
             },
             validaCotizacion(){
@@ -1790,10 +1814,7 @@
                 this.fillBusqContacto.ccontactonombre = '';
                 this.fillBusqContacto.ccontactodocumento = '';
             },
-            // =================================================================
-            // TAB ASGINAR COTIZACIÓN
-            // =================================================================
-            llenarReferencias(){
+            llenarTipoMedio(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
@@ -1803,7 +1824,7 @@
                 }).then(response => {
                     let info = response.data;
                     //Data
-                    this.arrayReferencias = info;
+                    this.arrayTipoMedio = info;
                 }).catch(error => {
                     this.errors = error.response.data
                 });
@@ -1852,7 +1873,7 @@
                 $('#tab03').addClass('nav-link active');
 
                 $('#TabCotizacion').removeClass('in active show');
-                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').addClass('in active show');
             },
             validaAsignarCotizacion(){
@@ -1872,7 +1893,7 @@
                     this.mensajeError.push('El email no puede estar vacío');
                 }
                 if(this.fillAsignarContacto.nidreferencia == 0){
-                    this.mensajeError.push('Debes Seleccionar una Referencia');
+                    this.mensajeError.push('Debes Seleccionar un Tipo Medio');
                 }
                 if(this.fillAsignarContacto.nidasignarcontacto == 0 ||
                     this.fillAsignarContacto.nidasignarcontacto == undefined){
@@ -2614,7 +2635,7 @@
                 $('#tab03').addClass('nav-link disabled');
 
                 $('#TabCotizacion').addClass("in active show");
-                $('#TabAsignarCotizacion').removeClass('in active show');
+                $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
 
                 $('#tab0301').removeClass('nav-link');
@@ -2657,7 +2678,7 @@
                                 this.fillAsignarContacto.cnrodocumento = data['cNumeroDocumento'];
                                 this.fillAsignarContacto.cdireccion = data['cDireccion'];
                                 this.fillAsignarContacto.cemail = data['cEmail'];
-                                this.tabAsignarCotizacion();
+                                this.tabAsignarContacto();
                                 this.cerrarModal();
                                 break;
                             }
@@ -2761,6 +2782,9 @@
                     this.fValorTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                     this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
                     this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
+
+                    this.fillConfigBasica.tipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fillConfigBasica.tipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                 }).catch(error => {
                     console.log(error);
                 });
