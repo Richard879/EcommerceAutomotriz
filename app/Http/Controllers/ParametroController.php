@@ -178,12 +178,13 @@ class ParametroController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdPar = $request->nidpar;
-        //$cTipoParametro = $request->nidgrupopar;
         $cTipoParametro = $request->ctipoparametro;
+        $nIdTipoPar = $request->nidtipopar;
+
         $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = ' ') : $cTipoParametro;
 
-        $tipoparametro = DB::select('exec usp_TipoPar_GetTipoByIdParametro ?, ?',
-                                                            [$nIdPar, $cTipoParametro]);
+        $tipoparametro = DB::select('exec usp_TipoPar_GetTipoByIdParametro ?, ?, ?',
+                                                            [$nIdPar, $cTipoParametro, $nIdTipoPar]);
 
         return response()->json($tipoparametro);
     }

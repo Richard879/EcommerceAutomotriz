@@ -1744,8 +1744,9 @@
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
                     params: {
-                        'nidpar' : 1300116,
-                        'ctipoparametro' : 'N'
+                        'nidpar' : 1300170,
+                        'ctipoparametro' : 'N',
+                        'nidtipopar': 4
                     }
                 }).then(response => {
                     var fecha = moment().add(parseInt(response.data[0].nDatoParNumerico), 'days').format('YYYY-MM-DD');

@@ -819,8 +819,6 @@
                 return this.error;
             },
             eliminarItemExcel(index){
-                //this.arrayExcel.splice(index, 1);
-                //this.$set(this, 'imageList', this.images);
                 this.$delete(this.arrayExcel, index);
             },
             registrar(){
