@@ -539,7 +539,7 @@
             listarElementos(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/elemento/GetElementoByTipo?nidempresa=' + 1300011 
+                var url = this.ruta + '/elemento/GetElementoByTipo?nidempresa=' + 1300011
                                                                      + '&nidtipoelemen=' + this.formEle.ntpoelemen
                                                                      + '&page='+ page;
                 axios.get(url).then(response => {
@@ -649,29 +649,26 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/elemento/activar';
-                            axios.put(url , {
-                                nIdElementoVenta: nIdElementoVenta
-                            }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarElementos(1);
-                                this.vistaFormulario = 1;
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/elemento/activar';
+                        axios.put(url , {
+                            nIdElementoVenta: nIdElementoVenta
+                        }).then(response => {
+                            swal(
+                            'Activado!',
+                            'El registro fue activado.'
+                            );
+                            this.listarElementos(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
             desactivar(nIdElementoVenta){
-
                 swal({
                     title: 'Estas seguro de desactivar esta categoría?',
                     type: 'warning',
@@ -680,26 +677,24 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/elemento/desactivar';
-                            axios.put(url , {
-                                nIdElementoVenta: nIdElementoVenta
-                            }).then(response => {
-                                swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
-                                );
-                                this.listarElementos(1);
-                                this.vistaFormulario = 1;
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/elemento/desactivar';
+                        axios.put(url , {
+                            nIdElementoVenta: nIdElementoVenta
+                        }).then(response => {
+                            swal(
+                            'Desactivado!',
+                            'El registro fue desactivado.'
+                            );
+                            this.listarElementos(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
             cerrarModal(){
                 //this.accionmodal==1;

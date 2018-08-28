@@ -51,12 +51,12 @@ class Handler extends ExceptionHandler
     }
 
     /**
-    * Convierta una excepción de autenticación en una respuesta no autenticada.
-    *
-    * @param \Illuminate\Http\Request $request
-    * @param \Illuminate\Auth\AuthenticationException $exception
-    * @return \Illuminate\Http\Response
-    */
+     * Convierta una excepción de autenticación en una respuesta no autenticada.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Illuminate\Http\Response
+     */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {

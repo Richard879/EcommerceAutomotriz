@@ -5,7 +5,7 @@
             <h2 class="no-margin-bottom">COMPRA</h2>
           </div>
         </header>
-        
+
         <section>
             <div class="container-fluid">
                 <div class="col-lg-12">
@@ -38,7 +38,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">BUSCAR COMPRA</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -94,7 +94,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">        
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-4">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
@@ -166,12 +166,12 @@
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
                                                                                     <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                 </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                 :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link" 
-                                                                                    href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPagina(page)"
                                                                                     v-text="page"></a>
-                                                                                </li>                            
+                                                                                </li>
                                                                                 <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                     <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                 </li>
@@ -182,7 +182,7 @@
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
-                                                            </div>                               
+                                                            </div>
                                                         </template>
                                                         <template v-else>
                                                             <table>
@@ -207,7 +207,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">GENERAR COMPRA</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -369,7 +369,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">        
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                                             <i class="fa fa-save"></i> Registrar
@@ -413,7 +413,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -423,7 +423,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -483,12 +483,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -523,7 +523,7 @@
                 </div>
             </div>
         </div>
-        
+
     </main>
 </template>
 <script>
@@ -596,16 +596,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 3); 
+                var to = from + (this.offset * 3);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -621,16 +621,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -691,7 +691,7 @@
             },
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -723,7 +723,7 @@
             },
             listarTipoLista(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110044,
@@ -811,7 +811,7 @@
                         }
                     };*/
                 });
-                    
+
                 if(list.length){
                     this.mensajeError = list;
                     this.error = 1;
@@ -831,7 +831,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -850,8 +850,8 @@
                 }).catch(error => {
                     console.log(error);
                 });
-                
-                
+
+
             },
             validarRegistro(){
                 this.error = 0;
@@ -888,28 +888,28 @@
             desactivar(nIdCompra){
 
                 swal({
-                        title: 'Estas seguro de eliminar esta Compra?',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Desactivar!',
-                        cancelButtonText: 'No, cancelar!'
-                        }).then((result) => {
-                        var url = this.ruta + '/compra/desactivar';
-                        axios.put(url, {
-                            nIdCompra: nIdCompra
-                        }).then(response => {                            
-                            swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                            );
-                            this.listarCompras(1);                   
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                    title: 'Estas seguro de eliminar esta Compra?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    var url = this.ruta + '/compra/desactivar';
+                    axios.put(url, {
+                        nIdCompra: nIdCompra
+                    }).then(response => {
+                        swal(
+                        'Desactivado!',
+                        'El registro fue eliminado.'
+                        );
+                        this.listarCompras(1);
                     })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                })
             },
             cerrarModal(){
                 this.modal = 0,

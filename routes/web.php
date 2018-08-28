@@ -9,7 +9,7 @@ Route::middleware(['auth'])->group(function(){
     })->name('main');
 
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-    
+
     Route::get('/parametro/GetParametroByGrupo', 'ParametroController@GetParametroByGrupo');
     Route::get('/parametro/GetLstProveedor', 'ParametroController@GetLstProveedor');
     Route::get('/parametro/GetLineasByProveedor', 'ParametroController@GetLineasByProveedor');
@@ -89,9 +89,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
     Route::get('/pedido/GetListaPrecioDetalleByIdCotizacion', 'PedidoController@GetListaPrecioDetalleByIdCotizacion');
+<<<<<<< HEAD
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
 
     
+=======
+
+
+>>>>>>> 6376aa2382fa0a0c6f68a8df3d271aabbcb7a746
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
     Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
@@ -102,4 +107,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetListEventoElementoVenta', 'CotizacionController@GetListEventoElementoVenta');
     Route::post('/gescotizacion/SetCabeceraCotizacion', 'CotizacionController@SetCabeceraCotizacion');
     Route::post('/gescotizacion/SetDetalleCotizacion', 'CotizacionController@SetDetalleCotizacion');
+    Route::get('/getPedido/GetLstPedidos', 'PedidoController@GetLstPedidos');
+    Route::put('/getPedido/aprobarPedido', 'PedidoController@aprobarPedido');
 });
