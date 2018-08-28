@@ -211,18 +211,19 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="referencia in arrayReferenciavehiculo" :key="referencia.nIdContacto">
+                                                                                <tr v-for="r in arrayReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
                                                                                     <td>
-                                                                                        <a href="#" @click="asingarReferenciaVehiculo(referencia.nIdAsignacionContactoVendedor);">
+                                                                                        <a href="#" @click="asingarReferenciaVehiculo(r.nIdAsignacionContactoVendedor, r.nIdProveedor, r.cProveedorNombre,
+                                                                                                                                        r.nIdLinea, r.nIdMarca, r.nIdModelo);">
                                                                                             <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
                                                                                         </a>
                                                                                     </td>
-                                                                                    <td v-text="referencia.cProveedorNombre"></td>
-                                                                                    <td v-text="referencia.cLineaNombre"></td>
-                                                                                    <td v-text="referencia.cMarcaNombre"></td>
-                                                                                    <td v-text="referencia.cModeloNombre"></td>
-                                                                                    <td v-text="referencia.nAnioFabricacion"></td>
-                                                                                    <td v-text="referencia.nAnioModelo"></td>
+                                                                                    <td v-text="r.cProveedorNombre"></td>
+                                                                                    <td v-text="r.cLineaNombre"></td>
+                                                                                    <td v-text="r.cMarcaNombre"></td>
+                                                                                    <td v-text="r.cModeloNombre"></td>
+                                                                                    <td v-text="r.nAnioFabricacion"></td>
+                                                                                    <td v-text="r.nAnioModelo"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -251,7 +252,7 @@
                                             <div class="col-lg-12">
                                                 <ul class="nav nav-tabs">
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="tab0301" href="#TabDCVehiculo" role="tab" data-toggle="tab">
+                                                        <a class="nav-link active" id="tab0301" href="#TabDCVehiculo" @click="tabDCVehiculo" role="tab" data-toggle="tab">
                                                             <i class="fa fa-car"></i> VEHÍCULO
                                                         </a>
                                                     </li>
@@ -266,7 +267,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link disabled" id="tab0304" href="#TabDCConfirmarCotizacion" @click.prevent="siguienteTabDConfirmarcotizacion" role="tab" data-toggle="tab">
+                                                        <a class="nav-link disabled" id="tab0304" href="#TabDCConfirmarCotizacion" role="tab" data-toggle="tab">
                                                             <i class="fa fa-check"></i> CONFIRMAR COTIZACIÓN
                                                         </a>
                                                     </li>
@@ -381,9 +382,9 @@
                                                                                                 <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
                                                                                                     <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
                                                                                                 </button>
-                                                                                                <button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
                                                                                                     <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                                                </button>
+                                                                                                </button>-->
                                                                                             </div>
                                                                                         </div>
                                                                                     </template>
@@ -479,15 +480,18 @@
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </template>
-                                                                                </div>
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-9 offset-sm-4">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                        </button>
-                                                                                        <button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                            <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                                        </button>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
+                                                                                            </button>
+                                                                                            <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                            </button>-->
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
@@ -543,12 +547,12 @@
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </template>
-                                                                                </div>
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-9 offset-sm-4">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                        </button>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
@@ -589,7 +593,7 @@
                                                                             <div class="col-lg-12">
                                                                                 <div class="row flex-rigth-margin">
                                                                                     <div class="form-group row">
-                                                                                        <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                        <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
                                                                                         <label class="form-control-label"><strong> {{ montoTotalConfiCotiVehiculo = totalConfiCotiVehiculo }}</strong></label>
                                                                                     </div>
                                                                                     <div class="form-group row">
@@ -713,15 +717,15 @@
                                                                                     </strong>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-9 offset-sm-4">
-                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarCotizacion">
-                                                                                    <i class="fa fa-save"></i> REGISTRAR
-                                                                                </button>
-                                                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="cancelarCotizacion">
-                                                                                    <i class="fa fa-close"></i> CANCELAR
-                                                                                </button>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-9 offset-sm-4">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarCotizacion">
+                                                                                        <i class="fa fa-save"></i> REGISTRAR
+                                                                                    </button>
+                                                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="cancelarCotizacion">
+                                                                                        <i class="fa fa-close"></i> CANCELAR
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </form>
@@ -1443,7 +1447,10 @@
                     cnrodocumento: '',
                     cdireccion: '',
                     cemail: '',
-                    nidreferencia: 0
+                    nidreferencia: 0,
+                    nidlinea: 0,
+                    nidmarca: 0,
+                    nidmodelo: 0
                 },
                 arrayTipoMedio: [],
                 arrayReferenciavehiculo: [],
@@ -1554,7 +1561,6 @@
             }
         },
         mounted() {
-            this.getTipoCambio();
             this.configuracionInicial();
         },
         computed:{
@@ -1719,6 +1725,8 @@
             },
             configuracionInicial(){
                 this.obtenerFechaInicioCotizacion();
+                this.obtenerFechaFinCotizacion();
+                this.getTipoCambio();
             },
             obtenerFechaInicioCotizacion(){
                 var f = new Date();
@@ -1733,7 +1741,43 @@
                 this.fillConfigBasica.fechaInicio = day + "/" + month + "/" + f.getFullYear();
             },
             obtenerFechaFinCotizacion(){
-                
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : 1300116,
+                        'ctipoparametro' : 'N'
+                    }
+                }).then(response => {
+                    var fecha = moment().add(parseInt(response.data[0].nDatoParNumerico), 'days').format('YYYY-MM-DD');
+                    var f = new Date(fecha);
+                    var day = String(f.getDate());
+                    var month = String((f.getMonth() +1));
+                    if (month.length < 2){
+                        month = "0" + "" + month;
+                    }
+                    if (day.length < 2){
+                        day = "0" + "" + day;
+                    }
+                    this.fillConfigBasica.fechaFin = day + "/" + month + "/" + f.getFullYear();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            getTipoCambio(){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/gescotizacion/GetTipoCambio';
+                axios.get(url).then(response => {
+                    this.fValorTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
+                    this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
+
+                    this.fillConfigBasica.tipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fillConfigBasica.tipoCambioCompra = response.data[0].fValorTipoCambioCompra;
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // =================================================================
             // TAB ASIGNAR CONTACTO
@@ -1746,15 +1790,14 @@
                 }
 
                 $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link');
-                $('#tab02').removeClass('nav-link');
+                $('#tab01').addClass("nav-link");
                 $('#tab02').addClass('nav-link active');
                 $('#tab03').removeClass('nav-link active');
-                $('#tab03').addClass('nav-link');
-
+                $('#tab03').addClass('nav-link disabled');
                 $('#TabCotizacion').removeClass('in active show');
                 $('#TabAsignarContacto').addClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
+
                 this.llenarTipoMedio();
                 this.llenarReferenciasVehiculo();
             },
@@ -1854,8 +1897,14 @@
                     this.errors = error.response.data
                 });
             },
-            asingarReferenciaVehiculo(referencia){
-                this.fillAsignarContacto.nidasignarcontacto = referencia;
+            asingarReferenciaVehiculo(nIdAsignacionContactoVendedor, nIdProveedor, cProveedorNombre, nIdLinea, nIdMarca, nIdModelo){
+                this.tabDCVehiculo();
+                this.fillAsignarContacto.nidasignarcontacto = nIdAsignacionContactoVendedor;
+                this.fillProveedor.nidproveedor = nIdProveedor;
+                this.fillProveedor.cproveedornombre = cProveedorNombre;
+                this.fillAsignarContacto.nidlinea = nIdLinea;
+                this.fillAsignarContacto.nidmarca = nIdMarca;
+                this.fillAsignarContacto.nidmodelo = nIdModelo;
                 this.tabDetalleCotización();
             },
             tabDetalleCotización(){
@@ -1911,6 +1960,19 @@
             // ======================
             // SUBTAB VEHÍCULO
             // ======================
+            tabDCVehiculo(){
+                $('#tab0301').addClass('nav-link active');
+                $('#tab0302').removeClass('nav-link active');
+                $('#tab0302').addClass("nav-link disabled");
+                $('#tab0303').removeClass('nav-link active');
+                $('#tab0303').addClass('nav-link disabled');
+                $('#tab0304').removeClass('nav-link active');
+                $('#tab0304').addClass('nav-link disabled');
+                $('#TabDCVehiculo').addClass('in active show');
+                $('#TabDCElementoVenta').removeClass('in active show');
+                $('#TabDCVerificarCampana').removeClass('in active show');
+                $('#TabDCConfirmarCotizacion').removeClass('in active show');
+            },
             buscaProveedores(){
                 this.listarProveedores(1);
             },
@@ -1987,7 +2049,7 @@
                     }
                 }).then(response => {
                     this.arrayLinea = response.data;
-                    this.fillBusqVehiculo.nidlinea = 0;
+                    this.fillBusqVehiculo.nidlinea = this.fillAsignarContacto.nidlinea;
                     this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
@@ -2002,7 +2064,7 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.fillBusqVehiculo.nidmarca = 0;
+                    this.fillBusqVehiculo.nidmarca = this.fillAsignarContacto.nidmarca;
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -2017,7 +2079,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillBusqVehiculo.nidmodelo = 0;
+                    this.fillBusqVehiculo.nidmodelo = this.fillAsignarContacto.nidmodelo;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2026,6 +2088,8 @@
                 if(this.validarBuscarVehiculos()){
                     return;
                 }
+
+                this.mostrarProgressBar();
 
                 var url = this.ruta + '/gescotizacion/GetListVehiculos';
                 axios.get(url, {
@@ -2046,7 +2110,9 @@
                     this.paginationModal.last_page      = response.data.arrayListaVehiculos.last_page;
                     this.paginationModal.from           = response.data.arrayListaVehiculos.from;
                     this.paginationModal.to             = response.data.arrayListaVehiculos.to;
-                    this.limpiarfillBusqVehiculo();
+                    //this.limpiarfillBusqVehiculo();
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2229,10 +2295,10 @@
                         subtotal                : 0
                     });
 
-                    toastr.options.progressBar = true;
+                    /*toastr.options.progressBar = true;
                     toastr.options.closeButton = true;
-                    toastr.options.positionClass = "toast-top-full-width";
-                    toastr.success('Agrego el elemento de venta "'+ elemento.cElemenNombre +'" exitosamente');
+                    toastr.options.positionClass = "toast-top-full-width";*/
+                    toastr.success('Se Agregó "'+ elemento.cElemenNombre +'" ');
                 }
             },
             encontrarElementoVenta(elemento){
@@ -2266,13 +2332,13 @@
                 $('#TabDCVerificarCampana').addClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
                 this.$nextTick(function () {
-                    this.llenarCamapaniasPorModeloVehiculo();
+                    this.llenarCampaniasPorModeloVehiculo();
                 })
             },
             // ======================
             // SUBTAB VERIFICAR CAMPAÑA
             // ======================
-            llenarCamapaniasPorModeloVehiculo(){
+            llenarCampaniasPorModeloVehiculo(){
                 var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
                 axios.get(url, {
                     params: {
@@ -2776,19 +2842,6 @@
                 //SubTab - Modal Elemento Venta
                 this.arrayElementoVentaModal = [];
             },
-            getTipoCambio(){
-                var url = this.ruta + '/gescotizacion/GetTipoCambio';
-                axios.get(url).then(response => {
-                    this.fValorTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
-                    this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
-                    this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
-
-                    this.fillConfigBasica.tipoCambioVenta = response.data[0].fValorTipoCambioVenta;
-                    this.fillConfigBasica.tipoCambioCompra = response.data[0].fValorTipoCambioCompra;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             siguienteTabDConfirmarcotizacion(){
                 if(this.validarTabDCElementoVenta()){
                     this.accionmodal=1;
@@ -2811,6 +2864,10 @@
                 $('#TabDCConfirmarCotizacion').addClass('in active show');
 
                 this.llenarDetalleConfirmacion();
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         }
     }

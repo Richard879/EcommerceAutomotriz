@@ -172,4 +172,19 @@ class ParametroController extends Controller
         }
         return response()->json($data);
     }
+
+    public function GetTipoByIdParametro(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdPar = $request->nidpar;
+        //$cTipoParametro = $request->nidgrupopar;
+        $cTipoParametro = $request->ctipoparametro;
+        $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = ' ') : $cTipoParametro;
+
+        $tipoparametro = DB::select('exec usp_TipoPar_GetTipoByIdParametro ?, ?',
+                                                            [$nIdPar, $cTipoParametro]);
+
+        return response()->json($tipoparametro);
+    }
 }
