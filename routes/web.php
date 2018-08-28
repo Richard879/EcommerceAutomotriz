@@ -89,14 +89,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
     Route::get('/pedido/GetListaPrecioDetalleByIdCotizacion', 'PedidoController@GetListaPrecioDetalleByIdCotizacion');
-<<<<<<< HEAD
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
 
     
-=======
-
-
->>>>>>> 6376aa2382fa0a0c6f68a8df3d271aabbcb7a746
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
     Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
