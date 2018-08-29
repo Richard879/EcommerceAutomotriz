@@ -1733,7 +1733,7 @@
                 this.fillConfigBasica.fechaInicio = day + "/" + month + "/" + f.getFullYear();
             },
             obtenerFechaFinCotizacion(){
-                
+
             },
             // =================================================================
             // TAB ASIGNAR CONTACTO

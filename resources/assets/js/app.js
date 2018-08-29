@@ -15,6 +15,7 @@ Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
 Vue.component('pedido', require('./components/Pedido.vue'));
 Vue.component('aprobapedido', require('./components/AprobacionPedido.vue'));
+Vue.component('comision', require('./components/Comision.vue'));
 
 const app = new Vue({
     el: '#app',
