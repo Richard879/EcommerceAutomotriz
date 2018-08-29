@@ -331,7 +331,7 @@
                                                                                                         <th>Sobre Precio</th>
                                                                                                         <th>Dscto</th>
                                                                                                         <th>Precio Cierre</th>
-                                                                                                        <th>SubTotal</th>
+                                                                                                        <th>Precio Cliente</th>
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
@@ -345,9 +345,9 @@
                                                                                                         <td v-text="vehiculo.cantidad"></td>
                                                                                                         <td v-text="vehiculo.PrecioBase"></td>
                                                                                                         <td><input type="number" min="1" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio"/></td>
-                                                                                                        <td v-text="vehiculo.Descuento"></td>
+                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="vehiculo.descuento"/></td>
                                                                                                         <td v-text="vehiculo.PrecioCierre"></td>
-                                                                                                        <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioCierre }} </td>
+                                                                                                        <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioVenta }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
@@ -2155,10 +2155,11 @@
                         codListaPrecioVD : vehiculo.codListaPrecioVD,
                         NombreComercial  : vehiculo.NombreComercial,
                         PrecioBase       : vehiculo.PrecioBase,
-                        Descuento        : vehiculo.Descuento,
                         PrecioCierre     : vehiculo.PrecioCierre,
+                        PrecioVenta      : vehiculo.PrecioVenta,
                         cantidad         : 1,
-                        sobrePrecio      : 1,
+                        sobrePrecio      : 0,
+                        descuento        : 0,
                         subtotal         : 0,
                         nIdMoneda        : vehiculo.nIdMoneda,
                         nIdLinea         : vehiculo.nIdLinea,

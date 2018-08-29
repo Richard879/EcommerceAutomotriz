@@ -526,7 +526,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Nro Cotización</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.cnrocotizacion" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.cnrocotizacion" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -534,7 +534,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.cnombrecomercial" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.cnombrecomercial" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -544,7 +544,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.naniofabricacion" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -552,7 +552,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.naniomodelo" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -562,7 +562,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.cnrovin" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.cnrovin" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -570,7 +570,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">O/C</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.nordencompra" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.nordencompra" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -580,7 +580,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Color</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.ccolor" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.ccolor" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -588,7 +588,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Motor</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.cmotor" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.cmotor" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -598,7 +598,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Precio Lista</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fpreciolista" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -606,7 +606,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Precio Sistema</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fprecioventap" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -616,7 +616,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Descuento</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fdescuentolista" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -624,7 +624,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Precio Cliente</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fpreciofinal" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -634,7 +634,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Bono</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fbono" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -642,7 +642,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Sobre Precio</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fsobreprecio" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -652,7 +652,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Bono Especial</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fbonoespecial" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -660,7 +660,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Descuento</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.precio" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.fdescuento" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -670,7 +670,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Fecha Pedido</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <input type="text" v-model="formDocRef.dfechapedido" class="form-control form-control-sm" readonly>
+                                                                                                    <label v-text="formDocRef.dfechapedido" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -740,20 +740,34 @@
                                                                                 <h3 class="h4">Adjuntar Documentos</h3>
                                                                             </div>
                                                                             <div class="card-body">
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td>* Requerimiento Firmado por el Vendedor y con V°B° de Jefatura de Ventas.</td>
-                                                                                                <td>holaa</td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-sm">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
+                                                                                                    <td v-text="documento.cParNombre"></td>
+                                                                                                    <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                                </tr>
+                                                                                                <!--<tr>
+                                                                                                    <td>Carta de Responsabilidad.</td>
+                                                                                                    <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                                </tr>-->
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                    <div class="form-group row">
+                                                                                            <div class="col-sm-9 offset-sm-5">
+                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
+                                                                                                    <i class="fa fa-save"></i> Generar Pedido
+                                                                                                </button>
+                                                                                            </div>
+                                                                                    </div>
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -954,13 +968,22 @@
                     cnombrecomercial: '',
                     naniofabricacion: '',
                     naniomodelo: '',
-                    precio: '',
                     nidbanco: 0,
                     nidformapago: 0,
-                    dfechapedido: ''
+                    dfechapedido: '',
+                    fpreciolista: 0,
+                    fprecioventap: 0,
+                    fbono: 0,
+                    fbonoespecial: 0,
+                    fsobreprecio: 0,
+                    fdescuento: 0,
+                    fdescuentolista: 0,
+                    fpreciofinal: 0
                 },
                 arrayBanco: [],
                 arrayFormaPago: [],
+                // ============== VARIABLES TAB DOCUMENTOS ASOCIADOS =================
+                arrayTablaDocumento: [],
                 // =============================================================
                 pagination : {
                     'total' : 0,
@@ -986,7 +1009,11 @@
                 accionmodal: 0,
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                someData: '',
+                attachment: [],
+                form: new FormData,
+                textFile: ''
             }
         },
         computed:{
@@ -1274,7 +1301,11 @@
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
                     }
                 }).then(response => {
-                    this.formDocRef.precio = response.data[0].fPrecioCierre;
+                    this.formDocRef.fpreciolista = response.data[0].fPrecioLista;
+                    this.formDocRef.fprecioventap = response.data[0].fPrecioVentaP;
+                    this.formDocRef.fdescuentolista = response.data[0].fDescuento;
+                    this.formDocRef.fbono = response.data[0].fBono;
+                    this.formDocRef.fbonoespecial = response.data[0].fBonoEspecial;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -1315,6 +1346,56 @@
                 $('#Tab3').addClass("nav-link active");
                 $('#TabDocReferencias').removeClass('in active show');
                 $('#TabDocAsociados').addClass('in active show');
+                this.llenarTablaDocumentos();
+            },
+            llenarTablaDocumentos(){
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110068,
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arrayTablaDocumento = response.data.arrayParametro.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            getFile(e){
+                let selectFile = e.target.files;
+                for(let i= 0; i < selectFile.length; i++){
+                    this.attachment.push(selectFile[i]);
+                }
+            },
+            registrarPedido(){
+                this.subirArchivos();
+            },
+            subirArchivos(){
+                this.mostrarProgressBar();
+
+                let me = this;
+
+                for(let i= 0; i < this.attachment.length; i++){
+                    this.form.append('file[]', this.attachment[i]);
+                }
+
+                this.arrayTablaDocumento.map(function(info, i) {
+                    me.form.append('data['+i+']["nIdPar"]', info.nIdPar);
+                    me.form.append('data['+i+']["cParNombre"]', info.cParNombre);
+                });
+
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+
+                var url = this.ruta + '/pedido/subirArchivo';
+                
+                axios.post(url, this.form, config).then(response=>{
+                    console.log(response);
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================
@@ -1421,8 +1502,5 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
-        }
-        input[type="file"] {
-            display: none;
         }
 </style>

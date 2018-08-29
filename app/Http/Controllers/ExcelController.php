@@ -101,4 +101,21 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
+
+    public function subirArchivo(Request $request)
+    {        
+        $nameFile = $request->file;
+
+        foreach($nameFile as $file){
+            $file->store('uploads');
+        }
+
+        $data = $request->data;
+        
+        foreach($data as $item){
+            print_r($item['%22nIdPar%22']);
+        }
+
+        
+    }
 }

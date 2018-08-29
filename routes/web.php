@@ -90,6 +90,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
     Route::get('/pedido/GetListaPrecioDetalleByIdCotizacion', 'PedidoController@GetListaPrecioDetalleByIdCotizacion');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
+    Route::post('/pedido/subirArchivo', 'ExcelController@subirArchivo');
+    Route::get('/parametro/GetListParametroByGrupo', 'ParametroController@GetListParametroByGrupo');
 
     
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
