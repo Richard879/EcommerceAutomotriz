@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -123,4 +124,83 @@ class PedidoController extends Controller
         return response()->json($arrayPedido);
     }
 
+    public function subirArchivo(Request $request)
+    {             
+        try{
+            DB::beginTransaction();
+
+            $nameFile = $request->file;
+            $data = $request->data;
+
+            foreach($nameFile as $key=> $file){
+
+                if($file){
+
+                    $bandera = str_random(10);
+
+                    $ruta = Storage::putFileAs('uploads/Pedido', $file, $bandera .'_'. $file->getClientOriginalName());
+            
+                    $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',
+                                                                    [  asset($ruta),
+                                                                        $file->getClientOriginalName(),
+                                                                        Auth::user()->id
+                                                                    ]);
+
+                    $nIdDocumentoAdjunto =  $arrayDocumento[0]->nIdDocumentoAdjunto;
+
+                    foreach($data as $datakey=> $valorparametro)
+                    {
+                        if($datakey == $key)
+                        {
+                            //print_r($datakey . ' = ' . $key);
+                            $nIdTablaDocumento = $valorparametro['%22nIdPar%22'];
+                        }
+                        
+                    }
+                    
+                    DB::select('exec usp_Pedido_SetDocumentoAdjuntoPedido ?, ?, ?, ?',
+                                                                        [  "9300001",
+                                                                            $nIdTablaDocumento,
+                                                                            $nIdDocumentoAdjunto,
+                                                                            Auth::user()->id
+                                                                        ]);
+                                                                        
+                    
+                }
+
+                
+                
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+
+       /* */
+    }
+
+    public function SetCabeceraPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayCabeceraCotizacion = DB::select('exec usp_Pedido_SetPedidoAprobacionVendedor ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $request->nIdAsignacionContactoVendedor,
+                                        $request->cNumeroCotizacion,
+                                        $request->nIdEmpresa,
+                                        $request->nIdSucursal,
+                                        $request->nIdReferencia,
+                                        $request->dFechaCotizacion,
+                                        $request->dFechaVencimientoCotizacion,
+                                        $request->fTipoCambioVenta,
+                                        $request->fTipoCambioCompra,
+                                        $request->fTotalCotizacionVehiculoDolar,
+                                        $request->fTotalCotizacionVehiculoSol,
+                                        $request->fTotalElementoVentaDolar,
+                                        $request->fTotalElementoVentaSol,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayCabeceraCotizacion);
+    }
 }

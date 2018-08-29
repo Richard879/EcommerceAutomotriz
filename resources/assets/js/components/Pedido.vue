@@ -302,7 +302,7 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraCotizacion">
                                                                                 <td> 
-                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top" 
                                                                                         :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
@@ -367,6 +367,7 @@
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
+                                                    <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2><hr/>
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="Tab1" href="#TabAsignarCompra" @click="tabAsignarCompra()" role="tab" data-toggle="tab">
@@ -945,7 +946,8 @@
                     nidmarca: 0,
                     nidmodelo: 0,
                     cnumerodocumento: '',
-                    cfiltrodescripcion: ''
+                    cfiltrodescripcion: '',
+                    cnombrecontacto: ''
                 },
                 arrayPedido: [],
                 arrayMarca: [],
@@ -1211,7 +1213,8 @@
                     })
             },
             //=============== APROBAR COTIZACION ========================
-            aprobarCotizacion(nIdCabeceraCotizacion, cNumeroCotizacion){
+            aprobarCotizacion(nIdCabeceraCotizacion, cNumeroCotizacion, cContacto){
+                this.formPedido.cnombrecontacto = cContacto;
                 this.formCompra.nidcabeceracotizacion = nIdCabeceraCotizacion;
                 this.formDocRef.cnrocotizacion = cNumeroCotizacion;
                 this.vistaFormularioPedido = 0;
@@ -1369,10 +1372,29 @@
                 }
             },
             registrarPedido(){
-                this.subirArchivos();
+                /*if(this.validarRegistrarCotizacion()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }*/
+
+                var url = this.ruta + '/pedido/SetCabeceraPedido';
+                axios.post(url, {
+                    'nIdEmpresa' : 1300011,
+                    'nIdSucursal':1300013,
+                    'nIdCabeceraCotizacion' : this.formCompra.nidcabeceracotizacion,
+                    'cNumeroPedido' : 'PEDIDO-001',
+                    'dFechaPedido':moment().format('YYYY-MM-DD'),
+                    'nIdFormaPago':1300155,
+                    'cGlosa': 'PRUEBA'
+                }).then(response => {
+                    //this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                }).catch(error => {
+                    this.errors = error
+                });
             },
             subirArchivos(){
-                this.mostrarProgressBar();
+                //this.mostrarProgressBar();
 
                 let me = this;
 
@@ -1388,11 +1410,11 @@
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 
                 var url = this.ruta + '/pedido/subirArchivo';
-                
+
                 axios.post(url, this.form, config).then(response=>{
                     console.log(response);
                 }).then(function (response) {
-                    $("#myBar").hide();
+                    //$("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
