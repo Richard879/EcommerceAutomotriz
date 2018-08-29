@@ -17,7 +17,7 @@
         <li id="0506" @click="menu=9" onclick="ActivarMenu('0506')"><a href="#">Evento Campaña</a></li>
         <li id="0507" @click="menu=10" onclick="ActivarMenu('0507')"><a href="#">Gestión Contactos JF</a></li>
         <li id="0508" @click="menu=11" onclick="ActivarMenu('0508')"><a href="#">Gestión Contactos V</a></li>
-        <li id="0509" @click="menu=12" onclick="ActivarMenu('0509')"><a href="#">Cotización</a></li>
+        <li id="0509" @click="menu=12" onclick="ActivarMenu('0509')"><a href="#">Generar Cotización</a></li>
         <li id="0510" @click="menu=13" onclick="ActivarMenu('0510')"><a href="#">Generar Pedido</a></li>
         <li id="0511" @click="menu=14" onclick="ActivarMenu('0511')"><a href="#">Aprobar Pedido</a></li>
         <li id="0511" @click="menu=15" onclick="ActivarMenu('0512')"><a href="#">Comisión</a></li>
