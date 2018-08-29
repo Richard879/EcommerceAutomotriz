@@ -39,4 +39,7 @@
     <template v-if="menu==14">
         <aprobapedido :ruta="ruta"></aprobapedido>
     </template>
+    <template v-if="menu==15">
+        <comision :ruta="ruta"></comision>
+    </template>
 @endsection

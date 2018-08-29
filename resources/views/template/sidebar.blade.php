@@ -20,6 +20,7 @@
         <li id="0509" @click="menu=12" onclick="ActivarMenu('0509')"><a href="#">Generar Cotización</a></li>
         <li id="0510" @click="menu=13" onclick="ActivarMenu('0510')"><a href="#">Generar Pedido</a></li>
         <li id="0511" @click="menu=14" onclick="ActivarMenu('0511')"><a href="#">Aprobar Pedido</a></li>
+        <li id="0511" @click="menu=15" onclick="ActivarMenu('0512')"><a href="#">Comisión</a></li>
       </ul>
     </li>
     <li><a href="#06" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

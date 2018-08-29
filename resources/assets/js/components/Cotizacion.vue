@@ -2154,7 +2154,7 @@
                     this.arrayVehiculo.push({
                         codListaPrecioVD : vehiculo.codListaPrecioVD,
                         NombreComercial  : vehiculo.NombreComercial,
-                        AnioFabricacion  : vehiculo.nAnioFabricacion, 
+                        AnioFabricacion  : vehiculo.nAnioFabricacion,
                         AnioModelo       : vehiculo.nAnioModelo,
                         PrecioBase       : vehiculo.PrecioBase,
                         PrecioCierre     : vehiculo.PrecioCierre,
