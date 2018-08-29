@@ -341,11 +341,11 @@
                                                                                                                 <i :style="'color:red'" class="fa-md fa fa-times-circle" aria-hidden="true"></i>
                                                                                                             </a>
                                                                                                         </td>
-                                                                                                        <td v-text="vehiculo.NombreComercial"></td>
+                                                                                                        <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
                                                                                                         <td v-text="vehiculo.cantidad"></td>
                                                                                                         <td v-text="vehiculo.PrecioBase"></td>
-                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio"/></td>
-                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="vehiculo.descuento"/></td>
+                                                                                                        <td><input type="number" min="0" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio"/></td>
+                                                                                                        <td><input type="number" min="0" class="form-control form-control-sm" v-model="vehiculo.descuento"/></td>
                                                                                                         <td v-text="vehiculo.PrecioCierre"></td>
                                                                                                         <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioVenta }} </td>
                                                                                                     </tr>
@@ -375,7 +375,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-3">
+                                                                                            <div class="col-sm-9 offset-sm-4">
                                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
                                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
                                                                                                 </button>
@@ -2154,6 +2154,8 @@
                     this.arrayVehiculo.push({
                         codListaPrecioVD : vehiculo.codListaPrecioVD,
                         NombreComercial  : vehiculo.NombreComercial,
+                        AnioFabricacion  : vehiculo.nAnioFabricacion, 
+                        AnioModelo       : vehiculo.nAnioModelo,
                         PrecioBase       : vehiculo.PrecioBase,
                         PrecioCierre     : vehiculo.PrecioCierre,
                         PrecioVenta      : vehiculo.PrecioVenta,
