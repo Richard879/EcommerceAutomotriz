@@ -124,6 +124,25 @@ class PedidoController extends Controller
         return response()->json($arrayPedido);
     }
 
+    public function SetCabeceraPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayPedido = DB::select('exec usp_Pedido_SetPedidoAprobacionVendedor ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $request->nIdEmpresa,
+                                        $request->nIdSucursal,
+                                        $request->nIdCabeceraCotizacion,
+                                        $request->cNumeroPedido,
+                                        $request->dFechaPedido,
+                                        $request->nIdFormaPago,
+                                        $request->cGlosa,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayPedido);
+    }
+
     public function subirArchivo(Request $request)
     {             
         try{
@@ -154,12 +173,13 @@ class PedidoController extends Controller
                         {
                             //print_r($datakey . ' = ' . $key);
                             $nIdTablaDocumento = $valorparametro['%22nIdPar%22'];
+                            $nIdCabeceraPedido = $valorparametro['%22nIdCabeceraPedido%22'];
                         }
                         
                     }
                     
                     DB::select('exec usp_Pedido_SetDocumentoAdjuntoPedido ?, ?, ?, ?',
-                                                                        [  "9300001",
+                                                                        [   $nIdCabeceraPedido,
                                                                             $nIdTablaDocumento,
                                                                             $nIdDocumentoAdjunto,
                                                                             Auth::user()->id
@@ -175,32 +195,6 @@ class PedidoController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
-
-       /* */
-    }
-
-    public function SetCabeceraPedido(Request $request)
-    {
-        if (!$request->ajax()) return redirect('/');
-
-        $arrayCabeceraCotizacion = DB::select('exec usp_Pedido_SetPedidoAprobacionVendedor ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                    [
-                                        $request->nIdAsignacionContactoVendedor,
-                                        $request->cNumeroCotizacion,
-                                        $request->nIdEmpresa,
-                                        $request->nIdSucursal,
-                                        $request->nIdReferencia,
-                                        $request->dFechaCotizacion,
-                                        $request->dFechaVencimientoCotizacion,
-                                        $request->fTipoCambioVenta,
-                                        $request->fTipoCambioCompra,
-                                        $request->fTotalCotizacionVehiculoDolar,
-                                        $request->fTotalCotizacionVehiculoSol,
-                                        $request->fTotalElementoVentaDolar,
-                                        $request->fTotalElementoVentaSol,
-                                        Auth::user()->id
-                                    ]);
-
-        return response()->json($arrayCabeceraCotizacion);
+        
     }
 }

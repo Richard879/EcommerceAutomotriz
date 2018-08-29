@@ -2530,7 +2530,7 @@
                         codigo       : v.codListaPrecioVD,
                         detalle      : v.NombreComercial,
                         cantidad     : v.cantidad,
-                        dscto        : v.Descuento,
+                        dscto        : v.descuento,
                         preciofinal  : v.PrecioCierre,
                         subtotal     : v.subtotal,
                         nidmoneda    : v.nIdMoneda,

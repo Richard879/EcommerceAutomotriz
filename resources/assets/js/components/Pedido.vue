@@ -1388,12 +1388,12 @@
                     'nIdFormaPago':1300155,
                     'cGlosa': 'PRUEBA'
                 }).then(response => {
-                    //this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                    this.subirArchivos(response.data[0].nIdCabeceraPedido);
                 }).catch(error => {
                     this.errors = error
                 });
             },
-            subirArchivos(){
+            subirArchivos(nIdCabeceraPedido){
                 //this.mostrarProgressBar();
 
                 let me = this;
@@ -1405,6 +1405,7 @@
                 this.arrayTablaDocumento.map(function(info, i) {
                     me.form.append('data['+i+']["nIdPar"]', info.nIdPar);
                     me.form.append('data['+i+']["cParNombre"]', info.cParNombre);
+                    me.form.append('data['+i+']["nIdCabeceraPedido"]', nIdCabeceraPedido);
                 });
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
