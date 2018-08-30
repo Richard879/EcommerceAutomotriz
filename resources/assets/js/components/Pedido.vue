@@ -286,7 +286,6 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>Cód Coti.</th>
                                                                                 <th>Nro Coti.</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Contacto<nav></nav></th>
@@ -307,7 +306,6 @@
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
                                                                                 </td>
-                                                                                <td v-text="pedido.nIdCabeceraCotizacion"></td>
                                                                                 <td v-text="pedido.cNumeroCotizacion"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
@@ -676,13 +674,6 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="form-group row">
-                                                                                        <div class="col-sm-9 offset-sm-5">
-                                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesIngresadas()">
-                                                                                                <i class="fa fa-search"></i> Buscar
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -735,42 +726,31 @@
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDocAsociados">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="card">
-                                                                            <div class="card-header">
-                                                                                <h3 class="h4">Adjuntar Documentos</h3>
+                                                                    <div class="card">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-sm" style="border-collapse: separate;">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
+                                                                                            <td v-text="documento.cParNombre"></td>
+                                                                                            <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
                                                                             </div>
-                                                                            <div class="card-body">
-                                                                                <form class="form-horizontal">
-                                                                                    <div class="table-responsive">
-                                                                                        <table class="table table-striped table-sm">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
-                                                                                                    <td v-text="documento.cParNombre"></td>
-                                                                                                    <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
-                                                                                                </tr>
-                                                                                                <!--<tr>
-                                                                                                    <td>Carta de Responsabilidad.</td>
-                                                                                                    <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
-                                                                                                </tr>-->
-                                                                                            </tbody>
-                                                                                        </table>
+                                                                            <br>
+                                                                            <div class="form-group row">
+                                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
+                                                                                            <i class="fa fa-save"></i> Generar Pedido
+                                                                                        </button>
                                                                                     </div>
-                                                                                    <br>
-                                                                                    <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-5">
-                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
-                                                                                                    <i class="fa fa-save"></i> Generar Pedido
-                                                                                                </button>
-                                                                                            </div>
-                                                                                    </div>
-                                                                                </form>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </section>
@@ -1343,6 +1323,12 @@
             },
             //============= TAB DOCUMENTOS ASOCIADOS ===================
             activarTabDocAsociados(){
+                if(this.validaMostrarTabAsociados()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
                 $('#Tab2').removeClass('nav-link active');
                 $('#Tab2').addClass("nav-link");
                 $('#Tab3').removeClass('nav-link disabled');
@@ -1350,6 +1336,18 @@
                 $('#TabDocReferencias').removeClass('in active show');
                 $('#TabDocAsociados').addClass('in active show');
                 this.llenarTablaDocumentos();
+            },
+            validaMostrarTabAsociados(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formDocRef.nidformapago == 0){
+                    this.mensajeError.push('Debes Seleccionar Forma de Pago');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             llenarTablaDocumentos(){
                 var url = this.ruta + '/parametro/GetListParametroByGrupo';
@@ -1380,12 +1378,12 @@
 
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
-                    'nIdEmpresa' : 1300011,
-                    'nIdSucursal':1300013,
-                    'nIdCabeceraCotizacion' : this.formCompra.nidcabeceracotizacion,
-                    'cNumeroPedido' : 'PEDIDO-001',
-                    'dFechaPedido':moment().format('YYYY-MM-DD'),
-                    'nIdFormaPago':1300155,
+                    'nIdEmpresa': 1300011,
+                    'nIdSucursal': 1300013,
+                    'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
+                    'cNumeroPedido': 'PEDIDO-001',
+                    'dFechaPedido': moment().format('YYYY-MM-DD'),
+                    'nIdFormaPago': this.formDocRef.nidformapago,
                     'cGlosa': 'PRUEBA'
                 }).then(response => {
                     this.subirArchivos(response.data[0].nIdCabeceraPedido);
@@ -1394,8 +1392,7 @@
                 });
             },
             subirArchivos(nIdCabeceraPedido){
-                //this.mostrarProgressBar();
-
+                this.mostrarProgressBar();
                 let me = this;
 
                 for(let i= 0; i < this.attachment.length; i++){
@@ -1413,9 +1410,11 @@
                 var url = this.ruta + '/pedido/subirArchivo';
 
                 axios.post(url, this.form, config).then(response=>{
-                    console.log(response);
+                    swal('Pedido registrado exitosamente');
+                    this.vistaFormularioPedido = 1;
+                    this.limpiarFormulario();
                 }).then(function (response) {
-                    //$("#myBar").hide();
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1482,11 +1481,7 @@
             },
             // ===========================================================
             limpiarFormulario(){
-                this.fillPedido.nordencompra= '',
-                this.fillPedido.cnumerovin=  '',
-                this.arrayExcel = [],
-                this.arrayPedido = [],
-                this.limpiarPaginacion()
+                this.arrayPedido = [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
