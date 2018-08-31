@@ -17,7 +17,7 @@ class ElementoController extends Controller
  
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoElemento = $request->nidtipoelemen;
-        $cElemenNombre = $request->celemennombre;
+        $cElemenNombre = $request->celementonombre;
 
         $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = ' ') : $cElemenNombre;
                 
