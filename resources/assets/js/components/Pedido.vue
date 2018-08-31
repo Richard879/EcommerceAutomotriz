@@ -76,7 +76,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillPedido.nordenpedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                            <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -128,7 +128,7 @@
                                                             </div>
                                                             <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-4">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos();"><i class="fa fa-search"></i> Buscar</button>
+                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -141,51 +141,40 @@
                                                         <h3 class="h4">LISTADO</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <!--<template v-if="arrayPedido.length">
+                                                        <template v-if="arrayPedido.length">
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-sm">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Código</th>
-                                                                            <th>Periodo</th>
-                                                                            <th>OC</th>
-                                                                            <th>Línea</th>
-                                                                            <th>Almacén<nav></nav></th>
-                                                                            <th>Nro Reserva</th>
-                                                                            <th>Nro Vin</th>
-                                                                            <th>Forma Pago</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año Fab</th>
-                                                                            <th>Año Mod</th>
-                                                                            <th>Moneda</th>
-                                                                            <th>Total</th>
-                                                                            <th>Nro Factura</th>
-                                                                            <th>Fecha Facturado</th>
-                                                                            <th>Acciones</th>
+                                                                            <!--<th>Acciones</th>-->
+                                                                            <th>Nro Pedido</th>
+                                                                            <th>Vendedor</th>
+                                                                            <th>Contacto<nav></nav></th>
+                                                                            <th>Dirección</th>
+                                                                            <th>Teléfono</th>
+                                                                            <th>Celular</th>
+                                                                            <th>Email</th>
+                                                                            <th>Fecha Pedido</th>
+                                                                            <th>Estado</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr v-for="compra in arrayPedido" :key="compra.nIdPedido">
-                                                                            <td v-text="compra.nIdPedido"></td>
-                                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                            <td v-text="compra.nOrdenPedido"></td>
-                                                                            <td v-text="compra.cNombreLinea"></td>
-                                                                            <td v-text="compra.cNombreAlmacen"></td>
-                                                                            <td v-text="compra.nNumeroReserva"></td>
-                                                                            <td v-text="compra.cNumeroVin"></td>
-                                                                            <td v-text="compra.cFormaPago"></td>
-                                                                            <td v-text="compra.cNombreComercial"></td>
-                                                                            <td v-text="compra.nAnioFabricacion"></td>
-                                                                            <td v-text="compra.nAnioVersion"></td>
-                                                                            <td v-text="compra.cSimboloMoneda"></td>
-                                                                            <td v-text="compra.fTotalPedido"></td>
-                                                                            <td v-text="compra.cNumeroFactura"></td>
-                                                                            <td v-text="compra.dFechaFacturado"></td>
-                                                                            <td>
-                                                                                <a href="#" @click="desactivar(compra.nIdPedido)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenPedido">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                        <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
+                                                                            <!--<td> 
+                                                                                <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                    :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
+                                                                                    <i class="fa-md fa fa-check-circle"></i>
                                                                                 </a>
-                                                                            </td>
+                                                                            </td>-->
+                                                                            <td v-text="pedido.cNumeroPedido"></td>
+                                                                            <td v-text="pedido.cVendedorNombre"></td>
+                                                                            <td v-text="pedido.cContacto"></td>
+                                                                            <td v-text="pedido.cDireccion"></td>
+                                                                            <td v-text="pedido.cTelefonoFijo"></td>
+                                                                            <td v-text="pedido.nTelefonoMovil"></td>
+                                                                            <td v-text="pedido.cEmail"></td>
+                                                                            <td v-text="pedido.dFechaPedido"></td>
+                                                                            <td v-text="pedido.cEstadoPedido"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -224,7 +213,7 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                        </template>-->
+                                                        </template>
                                                     </div>
                                                 </div>
                                             </div>
@@ -952,7 +941,7 @@
                 fillPedido:{
                     dfechainicio: '',
                     dfechafin: '',
-                    nordenpedido: '',
+                    cnumeropedido: '',
                     cnumerovin: '',
                     nidestadopedido: 0
                 },
@@ -1113,22 +1102,19 @@
             },
             listarPedidos(page){
                 this.mostrarProgressBar();
-                if(this.fillPedido.nordenpedido == ''){
-                    var nordenpedido = 0;
-                }
-                else{
-                    var nordenpedido = this.fillPedido.nordenpedido;
-                }
 
-                var url = this.ruta + '/compra/GetPedido';
+                var url = this.ruta + '/pedido/GetListPedidoByTipoEstado';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
-                        'dfechainicio' : this.fillPedido.dfechainicio,
-                        'dfechafin' : this.fillPedido.dfechafin,
-                        'nordenpedido' : nordenpedido,
-                        'cnumerovin' : this.fillPedido.cnumerovin,
+                        'nidsucursal': 1300013,
+                        'dfechainicio': this.fillPedido.dfechainicio,
+                        'dfechafin': this.fillPedido.dfechafin,
+                        'cnumeropedido': this.fillPedido.cnumeropedido,
+                        'cnumerovin': this.fillPedido.cnumerovin,
+                        'nidmarca': this.formPedido.nidmarca,
+                        'nidmodelo': this.formPedido.nidmodelo,
+                        'nidestadopedido': this.fillPedido.nidestadopedido,
                         'page' : page
                     }
                 }).then(response => {

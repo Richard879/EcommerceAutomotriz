@@ -197,4 +197,35 @@ class PedidoController extends Controller
         }
         
     }
+
+    public function GetListPedidoByTipoEstado(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $dFechaInicio   =   $request->dfechainicio;
+        $dFechaFin      =   $request->dfechafin;
+        $cNumeroPedido  =   $request->cnumeropedido;
+        $cNumeroVin     =   $request->cnumerovin;
+        $nIdMarca       =   $request->nidmarca;
+        $nIdModelo      =   $request->nidmodelo;
+        $nIdEstadoPedido  = $request->nidestadopedido;
+        
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = ' ') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = ' ') : $dFechaFin;
+        $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = ' ') : $cNumeroPedido;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+
+        $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoByTipoEstado ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nIdEmpresa, $nIdSucursal, $dFechaInicio, $dFechaFin,
+                                        $cNumeroPedido, $cNumeroVin,
+                                        $nIdMarca, $nIdModelo,
+                                        $nIdEstadoPedido, Auth::user()->id
+                                    ]);
+
+        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        return ['arrayPedido'=>$arrayPedido];
+    }
 }
