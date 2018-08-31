@@ -113,6 +113,19 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Estado Pedido</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="fillPedido.nidestadopedido" class="form-control form-control-sm">
+                                                                                <option v-for="estado in arrayEstadoPedido" :key="estado.nIdPar" :value="estado.nIdPar" v-text="estado.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-4">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos();"><i class="fa fa-search"></i> Buscar</button>
@@ -940,8 +953,10 @@
                     dfechainicio: '',
                     dfechafin: '',
                     nordenpedido: '',
-                    cnumerovin: ''
+                    cnumerovin: '',
+                    nidestadopedido: 0
                 },
+                arrayEstadoPedido: [],
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formPedido:{
@@ -1078,6 +1093,20 @@
             tabBuscarPedido(){
                 this.formPedido.nidmarca = 0;
                 this.formPedido.nidmodelo = 0;
+            },
+            llenarEstadoPedido(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110063,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayEstadoPedido = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             buscarPedidos(){
                 this.listarPedidos(1);
@@ -1524,6 +1553,7 @@
         mounted(){
             this.llenarComboMarcas();
             this.llenarComboModelos();
+            this.llenarEstadoPedido();
         }
     }
 </script>
