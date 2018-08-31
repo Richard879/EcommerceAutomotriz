@@ -737,7 +737,7 @@
                                                                                     <tbody>
                                                                                         <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
                                                                                             <td v-text="documento.cParNombre"></td>
-                                                                                            <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                            <td><input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>

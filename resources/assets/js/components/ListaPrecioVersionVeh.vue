@@ -384,25 +384,25 @@
                                                     <div class="card-body">
                                                         <div class="col-lg-12">
                                                             <div class="form-group row">
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-8">
                                                                     <div class="row">
-                                                                        <label class="col-sm-6 form-control-label">* Adjunte Lista de Precios</label>
-                                                                        <div class="col-sm-6">
-                                                                            <label for="file-upload" class="btn btn-warning btn-corner btn-sm">
+                                                                        <label class="col-sm-4 form-control-label">* Adjunte Lista de Precios</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
                                                                                 <i class="fa fa-upload"></i> Seleccione Archivo
-                                                                            </label>
+                                                                            </label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-4">
                                                                     <div class="row">
-                                                                        <input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx"/>
-                                                                        <div class="col-sm-6">
+                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
+                                                                        <div class="col-sm-6">-->
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
                                                                                 <i class="fa fa-retweet"></i> Procesar
                                                                             </button>
-                                                                        </div>
+                                                                        <!--</div>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1205,7 +1205,7 @@
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
-                this.textFile = e.target.files[0].name;
+                //this.textFile = e.target.files[0].name;
             },
             importFileListaPrecioVh(){
                 if(this.validarReadFileListaPrecioVh()){
@@ -1274,8 +1274,6 @@
                 return this.error;
             },
             eliminarItemExcel(index){
-                //this.arrayExcel.splice(index, 1);
-                //this.$set(this, 'imageList', this.images);
                 this.$delete(this.arrayExcel, index)
             },
             registrarDetalle(){
@@ -1295,9 +1293,9 @@
                     swal('Detalle de Lista registrada');
                     this.arrayExcel = [];
                     this.arrayListaPrecioVh = [];
-                    this.attachment = null;
-                    this.textFile = '';
-                    $("#file").val("");
+                    //this.attachment = null;
+                    //this.textFile = '';
+                    $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1305,9 +1303,9 @@
             validarRegistroDetalle(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.arrayListaPrecioVh == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
@@ -1322,9 +1320,9 @@
             validarReadFileListaPrecioVh(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1376,7 +1374,7 @@
             font-weight: bold;
             font-size: 0.75rem;
         }
-        input[type="file"] {
+        /*input[type="file"] {
             display: none;
-        }
+        }*/
 </style>
