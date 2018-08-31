@@ -76,7 +76,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillPedido.nordencompra" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                            <input type="text" v-model="fillPedido.nordenpedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -939,7 +939,7 @@
                 fillPedido:{
                     dfechainicio: '',
                     dfechafin: '',
-                    nordencompra: '',
+                    nordenpedido: '',
                     cnumerovin: ''
                 },
                 // =============================================================
@@ -1084,11 +1084,11 @@
             },
             listarPedidos(page){
                 this.mostrarProgressBar();
-                if(this.fillPedido.nordencompra == ''){
-                    var nordencompra = 0;
+                if(this.fillPedido.nordenpedido == ''){
+                    var nordenpedido = 0;
                 }
                 else{
-                    var nordencompra = this.fillPedido.nordencompra;
+                    var nordenpedido = this.fillPedido.nordenpedido;
                 }
 
                 var url = this.ruta + '/compra/GetPedido';
@@ -1098,7 +1098,7 @@
                         'nidsucursal' : 1300013,
                         'dfechainicio' : this.fillPedido.dfechainicio,
                         'dfechafin' : this.fillPedido.dfechafin,
-                        'nordencompra' : nordencompra,
+                        'nordenpedido' : nordenpedido,
                         'cnumerovin' : this.fillPedido.cnumerovin,
                         'page' : page
                     }
