@@ -474,6 +474,9 @@
                 if(this.accion == 1){
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
+
+
+                    
                 }else{
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
