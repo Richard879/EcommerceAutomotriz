@@ -26,12 +26,12 @@
 
                             <div class="tab-content">
                                 <div class="tab-pane fade in active show" id="TabBuscaPedido">
-                                    <!--<section class="forms">
+                                    <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">BUSCAR COMPRA</h3>
+                                                        <h3 class="h4">BUSCAR PEDIDOS</h3>
                                                     </div>
                                                     <div class="card-body"> 
                                                         <form class="form-horizontal">
@@ -58,7 +58,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillCompra.dfechainicio" class="form-control form-control-sm">
+                                                                            <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -89,6 +89,30 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
+                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
+                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-4">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos();"><i class="fa fa-search"></i> Buscar</button>
@@ -104,7 +128,7 @@
                                                         <h3 class="h4">LISTADO</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <template v-if="arrayPedido.length">
+                                                        <!--<template v-if="arrayPedido.length">
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-sm">
                                                                     <thead>
@@ -187,12 +211,12 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                        </template>
+                                                        </template>-->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>-->
+                                    </section>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabGeneraPedido">
                                     <template v-if="vistaFormularioPedido">
@@ -744,11 +768,11 @@
                                                                             </div>
                                                                             <br>
                                                                             <div class="form-group row">
-                                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
-                                                                                            <i class="fa fa-save"></i> Generar Pedido
-                                                                                        </button>
-                                                                                    </div>
+                                                                                <div class="col-sm-9 offset-sm-5">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
+                                                                                        <i class="fa fa-save"></i> Generar Pedido
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -1052,7 +1076,8 @@
         },
         methods:{
             tabBuscarPedido(){
-                
+                this.formPedido.nidmarca = 0;
+                this.formPedido.nidmodelo = 0;
             },
             buscarPedidos(){
                 this.listarPedidos(1);
@@ -1497,6 +1522,8 @@
             }
         },
         mounted(){
+            this.llenarComboMarcas();
+            this.llenarComboModelos();
         }
     }
 </script>

@@ -22,15 +22,19 @@ class CompraController extends Controller
         $dFechaFin = $request->dfechafin;
         $nOrdenCompra = $request->nordencompra;
         $cNumeroVin = $request->cnumerovin;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayCompra = DB::select('exec usp_Compra_GetCompra ?, ?, ?, ?, ?, ?',
+        $arrayCompra = DB::select('exec usp_Compra_GetCompra ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
                                                                     $nOrdenCompra,
-                                                                    $cNumeroVin
+                                                                    $cNumeroVin,
+                                                                    $nIdMarca,
+                                                                    $nIdModelo
                                                                     ));
 
         $arrayCompra = $this->arrayPaginator($arrayCompra, $request);
