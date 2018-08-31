@@ -5,7 +5,7 @@
             <h2 class="no-margin-bottom">COMPRA</h2>
           </div>
         </header>
-        
+
         <section>
             <div class="container-fluid">
                 <div class="col-lg-12">
@@ -13,17 +13,17 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaCompra" @click="limpiarFormulario();" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" href="#TabBuscaCompra" @click="tabBuscarCompra()" role="tab" data-toggle="tab">
                                         <i class="fa fa-search"></i> BUSCAR COMPRA
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra()" role="tab" data-toggle="tab">
                                         <i class="fa fa-bus"></i> GENERAR COMPRA
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario()" role="tab" data-toggle="tab">
                                         <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
                                     </a>
                                 </li>
@@ -38,7 +38,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">BUSCAR COMPRA</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -94,8 +94,32 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">        
-                                                                <div class="col-sm-9 offset-sm-4">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="fillCompra.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
+                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="fillCompra.nidmodelo" class="form-control form-control-sm">
+                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-9 offset-sm-5">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
@@ -129,6 +153,7 @@
                                                                             <th>Total</th>
                                                                             <th>Nro Factura</th>
                                                                             <th>Fecha Facturado</th>
+                                                                            <th>Fecha Compra</th>
                                                                             <th>Acciones</th>
                                                                         </tr>
                                                                     </thead>
@@ -149,6 +174,7 @@
                                                                             <td v-text="compra.fTotalCompra"></td>
                                                                             <td v-text="compra.cNumeroFactura"></td>
                                                                             <td v-text="compra.dFechaFacturado"></td>
+                                                                            <td v-text="compra.dFechaCompra"></td>
                                                                             <td>
                                                                                 <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
@@ -166,12 +192,12 @@
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
                                                                                     <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                 </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                 :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link" 
-                                                                                    href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPagina(page)"
                                                                                     v-text="page"></a>
-                                                                                </li>                            
+                                                                                </li>
                                                                                 <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                     <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                 </li>
@@ -182,7 +208,7 @@
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
-                                                            </div>                               
+                                                            </div>
                                                         </template>
                                                         <template v-else>
                                                             <table>
@@ -207,7 +233,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">GENERAR COMPRA</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -286,25 +312,25 @@
                                                     <div class="card-body">
                                                         <div class="col-lg-12">
                                                             <div class="form-group row">
-                                                                <div class="col-sm-5">
+                                                                <div class="col-sm-8">
                                                                     <div class="row">
-                                                                        <label class="col-sm-6 form-control-label">* Ordenes de Compra</label>
-                                                                        <div class="col-sm-6">
-                                                                            <label for="file-upload" class="btn btn-warning btn-corner btn-sm">
+                                                                        <label class="col-sm-4 form-control-label">* Ordenes de Compra</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
                                                                                 <i class="fa fa-file-excel-o"></i> Seleccionar Archivo
-                                                                            </label>
+                                                                            </label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-sm-4">
                                                                     <div class="row">
-                                                                        <input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx"/>
-                                                                        <div class="col-sm-6">
+                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
+                                                                        <div class="col-sm-6">-->
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileCompra()">
                                                                                 <i class="fa fa-retweet"></i> Procesar
                                                                             </button>
-                                                                        </div>
+                                                                        <!--</div>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -369,7 +395,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">        
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                                             <i class="fa fa-save"></i> Registrar
@@ -413,7 +439,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -423,7 +449,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -483,12 +509,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -523,7 +549,7 @@
                 </div>
             </div>
         </div>
-        
+
     </main>
 </template>
 <script>
@@ -541,6 +567,8 @@
                 arrayExcel: [],
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
+                arrayMarca: [],
+                arrayModelo: [],
                 arrayProveedor: [],
                 fillProveedor:{
                     cnombreproveedor: ''
@@ -549,7 +577,9 @@
                     dfechainicio: '',
                     dfechafin: '',
                     nordencompra: '',
-                    cnumerovin: ''
+                    cnumerovin: '',
+                    nidmarca: 0,
+                    nidmodelo: 0
                 },
                 formCompra:{
                     nformapago: 0,
@@ -596,16 +626,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 3); 
+                var to = from + (this.offset * 3);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -621,16 +651,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -641,8 +671,43 @@
             }
         },
         methods:{
+            tabBuscarCompra(){
+                this.fillCompra.nidmarca = 0;
+                this.fillCompra.nidmodelo = 0;
+                this.fillCompra.dfechainicio = '';
+                this.fillCompra.dfechafin = '';
+                this.limpiarFormulario();
+            },
             buscarCompras(){
                 this.listarCompras(1);
+            },
+            llenarComboMarcas(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110032,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboModelos(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url,{
+                    params: {
+                        'nidmarca' : this.fillCompra.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.fillCompra.nidmodelo = 0;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             listarCompras(page){
                 this.mostrarProgressBar();
@@ -662,6 +727,8 @@
                         'dfechafin' : this.fillCompra.dfechafin,
                         'nordencompra' : nordencompra,
                         'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidmarca': this.fillCompra.nidmarca,
+                        'nidmodelo': this.fillCompra.nidmodelo,
                         'page' : page
                     }
                 }).then(response => {
@@ -691,7 +758,7 @@
             },
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -723,7 +790,7 @@
             },
             listarTipoLista(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110044,
@@ -739,7 +806,7 @@
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
-                this.textFile = e.target.files[0].name;
+                //this.textFile = e.target.files[0].name;
             },
             importFileCompra(){
                 if(this.validarReadFileCompra()){
@@ -811,7 +878,7 @@
                         }
                     };*/
                 });
-                    
+
                 if(list.length){
                     this.mensajeError = list;
                     this.error = 1;
@@ -819,8 +886,6 @@
                 return this.error;
             },
             eliminarItemExcel(index){
-                //this.arrayExcel.splice(index, 1);
-                //this.$set(this, 'imageList', this.images);
                 this.$delete(this.arrayExcel, index);
             },
             registrar(){
@@ -831,7 +896,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -844,21 +909,17 @@
                     swal('Compra registrada');
                     this.arrayExcel = [];
                     this.arrayCompra = [];
-                    this.attachment = null;
-                    this.textFile = '';
-                    $("#file").val("");
+                    $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
                 });
-                
-                
             },
             validarRegistro(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.arrayCompra == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
@@ -877,9 +938,9 @@
             validarReadFileCompra(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -888,28 +949,28 @@
             desactivar(nIdCompra){
 
                 swal({
-                        title: 'Estas seguro de eliminar esta Compra?',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Desactivar!',
-                        cancelButtonText: 'No, cancelar!'
-                        }).then((result) => {
-                        var url = this.ruta + '/compra/desactivar';
-                        axios.put(url, {
-                            nIdCompra: nIdCompra
-                        }).then(response => {                            
-                            swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                            );
-                            this.listarCompras(1);                   
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                    title: 'Estas seguro de eliminar esta Compra?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    var url = this.ruta + '/compra/desactivar';
+                    axios.put(url, {
+                        nIdCompra: nIdCompra
+                    }).then(response => {
+                        swal(
+                        'Desactivado!',
+                        'El registro fue eliminado.'
+                        );
+                        this.listarCompras(1);
                     })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                })
             },
             cerrarModal(){
                 this.modal = 0,
@@ -953,6 +1014,8 @@
             }
         },
         mounted(){
+            this.llenarComboMarcas();
+            this.llenarComboModelos();
         }
     }
 </script>
@@ -977,7 +1040,7 @@
             font-weight: bold;
             font-size: 0.75rem;
         }
-        input[type="file"] {
+        /*input[type="file"] {
             display: none;
-        }
+        }*/
 </style>

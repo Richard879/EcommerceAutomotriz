@@ -83,13 +83,14 @@ class ListaPrecioVersionVehController extends Controller
             foreach($detalles as $ep=>$det)
             {
                 //
-                DB::select('exec usp_ListaPrecioVh_SetDetalle ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                DB::select('exec usp_ListaPrecioVh_SetDetalle ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdListaPrecioVersionVeh,
                                                                 $det['nIdVersionVeh'],
                                                                 $det['cNombreComercial'],
                                                                 $det['nAnioFabricacion'],
                                                                 $det['nAnioModelo'],
                                                                 $det['cUnidadMedida'],
+                                                                $det['cMoneda'],
                                                                 $det['fPrecioBase'],
                                                                 $det['fDescuento'],
                                                                 $det['fPrecioCierre'],
@@ -99,13 +100,9 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['fBono'],
                                                                 $det['fPrecioCierre2'],
                                                                 $det['fFlete'],
+                                                                $det['fTYP'],
                                                                 $det['fPrecioVentaP'],
-                                                                $det['fFleteProveedor'],
-                                                                $det['fPorcDsctoFp'],
-                                                                $det['fFactorFc'],
-                                                                $det['fDescuentoFc'],
-                                                                $det['fPrecioBono'],
-                                                                $det['fPrecioDealer'],   
+                                                                $det['fPrecioBonoDealer'],   
                                                                 $det['fBonoEspecial'],
                                                                 Auth::user()->id
                                                             ));

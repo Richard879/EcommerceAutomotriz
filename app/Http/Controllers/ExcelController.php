@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\Compra;
 use App\ListaPrecioVersionVeh;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -15,7 +17,7 @@ class ExcelController extends Controller
     public function importFileCompra(Request $request)
     {        
         //$textFile = $request->file->getClientOriginalName();
-        $nameFile = $request->file->store('uploads');
+        $nameFile = $request->file->store('uploads/ExcelCompra');
         return response()->json($nameFile);
         /*return response()->json([
             'nombreFile' => $nameFile,
@@ -60,7 +62,7 @@ class ExcelController extends Controller
 
     public function importFileListaPrecioVh(Request $request)
     {
-        $nameFile = $request->file->store('uploads');
+        $nameFile = $request->file->store('uploads/ExcelListaPrecio');
         return response()->json($nameFile);
     }
     
@@ -81,25 +83,19 @@ class ExcelController extends Controller
                 'nAnioModelo' => $value[3],
                 'cUnidadMedida' => $value[4],
                 'cMoneda' => $value[5],
-                'FInicioProm ' => $value[6],
-                'FFinProm' => $value[7],
-                'fPrecioBase' => $value[8],
-                'fDescuento' => $value[9],
-                'fPrecioCierre' => $value[10],
-                'fPlaca' => $value[11],
-                'fMargen' => $value[12],
-                'fCostoDealer' => $value[13],
-                'fBono' => $value[14],
-                'fPrecioCierre2' => $value[15],
-                'fFlete' => $value[16],
-                'fPrecioVentaP' => $value[17],
-                'fFleteProveedor' => $value[18],
-                'fPorcDsctoFp' => $value[19],
-                'fFactorFc' => $value[20],
-                'fDescuentoFc' => $value[21],
-                'fPrecioBono' => $value[22],
-                'fPrecioDealer' => $value[23],
-                'fBonoEspecial' => $value[24]
+                'fPrecioBase' => $value[6],
+                'fDescuento' => $value[7],
+                'fPrecioCierre' => $value[8],
+                'fPlaca' => $value[9],
+                'fMargen' => $value[10],
+                'fCostoDealer' => $value[11],
+                'fBono' => $value[12],
+                'fPrecioCierre2' => $value[13],
+                'fFlete' => $value[14],
+                'fTYP' => $value[15],
+                'fPrecioVentaP' => $value[16],
+                'fPrecioBonoDealer' => $value[17],
+                'fBonoEspecial' => $value[18]
             ];
         }
 
@@ -107,4 +103,5 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
+    
 }

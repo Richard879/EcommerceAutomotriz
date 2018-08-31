@@ -132,10 +132,10 @@
                                                                             <tr>
                                                                                 <th>Código</th>
                                                                                 <th>Razon Social</th>
-                                                                                <th>Persona Contacto</th>
                                                                                 <th>Nro Documento</th>
                                                                                 <th>Telefono</th>
                                                                                 <th>Email</th>
+                                                                                <th>Persona Contacto</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Acciones</th>
                                                                             </tr>
@@ -144,10 +144,10 @@
                                                                             <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cRazonSocial"></td>
-                                                                                <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cNumeroDocumento"></td>
                                                                                 <td v-text="c.nTelefonoMovil"></td>
                                                                                 <td v-text="c.cEmail"></td>
+                                                                                <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="asignarCarteraMes(c.nIdContacto)" data-toggle="tooltip" data-placement="top"
@@ -302,10 +302,10 @@
                                                                             <tr>
                                                                                 <th>Código</th>
                                                                                 <th>Razon Social</th>
-                                                                                <th>Persona Contacto</th>
                                                                                 <th>Nro Documento</th>
                                                                                 <th>Telefono</th>
                                                                                 <th>Email</th>
+                                                                                <th>Persona Contacto</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Acciones</th>
                                                                             </tr>
@@ -314,10 +314,10 @@
                                                                             <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cRazonSocial"></td>
-                                                                                <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cNumeroDocumento"></td>
                                                                                 <td v-text="c.nTelefonoMovil"></td>
                                                                                 <td v-text="c.cEmail"></td>
+                                                                                <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" data-toggle="tooltip" data-placement="top"
@@ -1145,7 +1145,7 @@
                                                                                             </div>
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">Email</label>
+                                                                                                    <label class="col-sm-4 form-control-label">* Email</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
                                                                                                     </div>
@@ -1155,7 +1155,7 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">Teléfono</label>
+                                                                                                    <label class="col-sm-4 form-control-label">* Teléfono</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
                                                                                                     </div>
@@ -2728,7 +2728,7 @@
             },
             limpiarNuevoContacto(){
                 //Tab DATOS PERSONALES
-                this.formNuevoContacto.ntpodocumento = '',
+                this.formNuevoContacto.ntpodocumento = 0,
                 this.formNuevoContacto.cnrodocumento = '',
                 this.formNuevoContacto.capepaterno = '',
                 this.formNuevoContacto.capematerno = '',
@@ -2745,16 +2745,16 @@
                 this.formNuevoContacto.ncelular = '',
                 this.formNuevoContacto.ncelularalternativo = '',
                 this.formNuevoContacto.nestadocivil = 0,
-                this.formNuevoContacto.nprofesion = '',
+                this.formNuevoContacto.nprofesion = 0,
                 this.formNuevoContacto.ccentrolaboral = '',
                 //Tab DATOS DE CONTACTO - Datos Contacto Jurídico
-                /*this.formNuevoContactoJurifico.ntpodocumento = '',
+                this.formNuevoContactoJurifico.ntpodocumento = 0,
                 this.formNuevoContactoJurifico.cnrodocumento = '',
                 this.formNuevoContactoJurifico.capematerno = '',
                 this.formNuevoContactoJurifico.capepaterno = '',
                 this.formNuevoContactoJurifico.cnombres = '',
                 this.formNuevoContactoJurifico.cmailprincipal = '',
-                this.formNuevoContactoJurifico.ncelular = '',*/
+                this.formNuevoContactoJurifico.ncelular = '',
                 //Tab REFERENCIA VEHICULO
                 this.formNuevoContacto.nidproveedor = 0,
                 this.formNuevoContacto.cproveedornombre = '',

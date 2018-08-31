@@ -13,7 +13,10 @@ Vue.component('campania', require('./components/EventoCampania.vue'));
 Vue.component('gestioncontactojf', require('./components/GestionContactoJefeVenta.vue'));
 Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.vue'));
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
-Vue.component('pedido', require('./components/GenerarPedido.vue'));
+Vue.component('pedido', require('./components/Pedido.vue'));
+Vue.component('aprobapedido', require('./components/AprobacionPedido.vue'));
+Vue.component('comision', require('./components/Comision.vue'));
+Vue.component('objcomercial', require('./components/ObjComercial.vue'));
 Vue.component('turnoventa',require('./components/TurnoVenta.vue'));
 
 const app = new Vue({

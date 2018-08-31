@@ -5,7 +5,7 @@
             <h2 class="no-margin-bottom">EVENTO CAMPAÑA</h2>
           </div>
         </header>
-        
+
         <section>
             <div class="container-fluid">
                 <div class="col-lg-12">
@@ -34,7 +34,7 @@
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR EVENTO/CAMPAÑA</h3>
                                                         </div>
-                                                        <div class="card-body"> 
+                                                        <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
@@ -83,7 +83,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">        
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-4">
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarEventoCampania();"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
@@ -115,7 +115,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="ec in arrayEventoCampania" :key="ec.nIdEventoCampania">                                                                        
+                                                                            <tr v-for="ec in arrayEventoCampania" :key="ec.nIdEventoCampania">
                                                                                 <td v-text="ec.nIdEventoCampania"></td>
                                                                                 <td v-text="ec.cNombreProveedor"></td>
                                                                                 <td v-text="ec.cTipoEvento"></td>
@@ -125,18 +125,18 @@
                                                                                 <td v-text="ec.fValorPresupuesto"></td>
                                                                                 <td v-text="ec.cFlagDetalleEvento"></td>
                                                                                 <td>
-                                                                                    <!--<a href="#" @click="activar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <!--<a href="#" @click="activar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Asigna Distribución ' +ec.nIdEventoCampania">
                                                                                             <i class="fa-md fa fa-usd"></i>
                                                                                         </a>-->
                                                                                     <template v-if="ec.cEventoCampaniaEstado=='A'">
-                                                                                        <a href="#" @click="desactivar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top" 
+                                                                                        <a href="#" @click="desactivar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Desactivar ' +ec.nIdEventoCampania">
                                                                                             <i class="fa-md fa fa-check-square"></i>
                                                                                         </a>
                                                                                     </template>
                                                                                     <template v-else>
-                                                                                        <a href="#" @click="activar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top" 
+                                                                                        <a href="#" @click="activar(ec.nIdEventoCampania)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Activar ' +ec.nIdEventoCampania">
                                                                                             <i :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                         </a>
@@ -151,12 +151,12 @@
                                                                         <li v-if="pagination.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                         :class="[page==isActived?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPagina(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPagina(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -178,7 +178,7 @@
                                             </div>
                                         </section>
                                     </template>
-                                    
+
                                     <!--<template v-else>
                                         <section class="forms">
                                             <div class="container-fluid">
@@ -187,7 +187,7 @@
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
                                                         </div>
-                                                        <div class="card-body"> 
+                                                        <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
@@ -232,7 +232,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">                                                                        
+                                                                            <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
                                                                                 <td>{{ odetalle.nIdDetalleWarrant }}</td>
                                                                                 <td>{{ odetalle.nOrdenCompra }}</td>
                                                                                 <td>{{ odetalle.cNombreComercial }}</td>
@@ -248,12 +248,12 @@
                                                                         <li v-if="pagination.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                         :class="[page==isActived?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaDetalle(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaDetalle(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -284,7 +284,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">NUEVO EVENTO/CAMPAÑA</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -303,7 +303,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>                                                            
+                                                            </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
@@ -524,9 +524,9 @@
                                                                                         </tbody>
                                                                                     </table>
                                                                                 </div>
-                                                                                <br>                                                                                
+                                                                                <br>
                                                                             </template>
-                                                                            <div class="form-group row">        
+                                                                            <div class="form-group row">
                                                                                 <div class="col-sm-9 offset-sm-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
@@ -598,13 +598,13 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-                                                                            <div class="form-group row">        
+                                                                            <div class="form-group row">
                                                                                 <div class="col-sm-9 offset-sm-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                                                         <i class="fa fa-save"></i> REGISTRAR
                                                                                     </button>
                                                                                 </div>
-                                                                            </div>    
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -639,7 +639,7 @@
                                                                         </div>
                                                                         <div class="card-body">
                                                                             <template v-if="vistaFormularioDistribucion">
-                                                                                <form class="form-horizontal"> 
+                                                                                <form class="form-horizontal">
                                                                                     <div class="form-group row">
                                                                                         <div class="col-sm-6">
                                                                                             <div class="row">
@@ -686,7 +686,7 @@
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             </tbody>
-                                                                                        </table>                                    
+                                                                                        </table>
                                                                                     </div>
                                                                                 </template>
                                                                             </template>
@@ -716,8 +716,8 @@
                                                                                                                 <td v-text="eledist.cElemenNombre"></td>
                                                                                                                 <td v-text="eledist.fElemenValorVenta"></td>
                                                                                                                 <td>
-                                                                                                                    <div class="input-group"> 
-                                                                                                                        <input type="hidden" v-model="arrayIndexProvId[index]"> 
+                                                                                                                    <div class="input-group">
+                                                                                                                        <input type="hidden" v-model="arrayIndexProvId[index]">
                                                                                                                         <input type="text" v-model="arrayIndexProvNombre[index]" class="form-control form-control-sm" readonly>
                                                                                                                         <div class="input-group-prepend">
                                                                                                                             <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorElementoVenta(index)">
@@ -731,7 +731,7 @@
                                                                                                                 </td>
                                                                                                             </tr>
                                                                                                         </tbody>
-                                                                                                    </table>                                    
+                                                                                                    </table>
                                                                                                 </div>
                                                                                             </template>
                                                                                             <template v-else>
@@ -749,7 +749,7 @@
                                                                             </template>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">        
+                                                                    <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarAsignaDistribucion()">
                                                                                 <i class="fa fa-save"></i> REGISTRAR
@@ -764,7 +764,7 @@
                                                         </section>
                                                     </div>
                                                 </div>
-                                            </div>        
+                                            </div>
                                         </div>
                                     </section>
                                 </div>
@@ -787,7 +787,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -797,7 +797,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -857,12 +857,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -962,12 +962,12 @@
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                                 <a @click.prevent="cambiarPaginaLineasByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                             </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                             :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link" 
-                                                                                href="#" @click.prevent="cambiarPaginaLineasByProveedor(page)" 
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaLineasByProveedor(page)"
                                                                                 v-text="page"></a>
-                                                                            </li>                            
+                                                                            </li>
                                                                             <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                                 <a @click.prevent="cambiarPaginaLineasByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                             </li>
@@ -1052,12 +1052,12 @@
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                                 <a @click.prevent="cambiarPaginaMarcasByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                             </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                             :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link" 
-                                                                                href="#" @click.prevent="cambiarPaginaMarcasByProveedor(page)" 
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaMarcasByProveedor(page)"
                                                                                 v-text="page"></a>
-                                                                            </li>                            
+                                                                            </li>
                                                                             <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                                 <a @click.prevent="cambiarPaginaMarcasByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                             </li>
@@ -1142,12 +1142,12 @@
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                                 <a @click.prevent="cambiarPaginaModelosByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                             </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                             :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link" 
-                                                                                href="#" @click.prevent="cambiarPaginaModelosByProveedor(page)" 
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaModelosByProveedor(page)"
                                                                                 v-text="page"></a>
-                                                                            </li>                            
+                                                                            </li>
                                                                             <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                                 <a @click.prevent="cambiarPaginaModelosByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                             </li>
@@ -1182,7 +1182,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -1190,107 +1190,108 @@
                     <div class="modal-body">
                         <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
-                                        </div>
-                                        <div class="card-body"> 
-                                            <form class="form-horizontal">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Tipo Elemento</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group">
-                                                            <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
-                                                                <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                </option>
-                                                            </select>
-                                                            <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO ELEMENTO VENTA</h3>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <template v-if="arrayElementoVenta.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Acciones</th>
-                                                                <th>Código</th>
-                                                                <th>Proveedor</th>
-                                                                <th>Tipo Elemento</th>
-                                                                <th>Nombre Elemento</th>
-                                                                <th>Precio de Venta</th>
-                                                                <th>Precio de Venta Mínimo</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
-                                                                <td>
-                                                                    <a href="#" @click="asignarElemento(elemento)" data-toggle="tooltip" data-placement="top" 
-                                                                        :title="'Asignar ' +elemento.cElemenNombre">
-                                                                        <i class="fa-md fa fa-check-circle"></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td v-text="elemento.nIdElemento"></td>
-                                                                <td v-text="elemento.cProveedorNombre"></td>
-                                                                <td v-text="elemento.cTipoElemenNombre"></td>
-                                                                <td v-text="elemento.cElemenNombre"></td>
-                                                                <td v-text="elemento.fElemenValorVenta"></td>
-                                                                <td v-text="elemento.fElemenValorMinimoVenta"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>                                    
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
-                                                                    :class="[page==isActived?'active':'']">
-                                                                        <a class="page-link" 
-                                                                        href="#" @click.prevent="cambiarPaginaElemento(page)" 
-                                                                        v-text="page"></a>
-                                                                    </li>                            
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Tipo Elemento</label>
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
+                                                        <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                        </option>
+                                                    </select>
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                            <i class="fa-lg fa fa-search"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Nombre Elemento</label>
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                            <i class="fa-lg fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <template v-if="arrayElementoVenta.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Acciones</th>
+                                                            <th>Código</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Tipo Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Precio de Venta</th>
+                                                            <th>Precio de Venta Mínimo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
+                                                            <td>
+                                                                <a href="#" @click="asignarElemento(elemento)" data-toggle="tooltip" data-placement="top"
+                                                                    :title="'Asignar ' +elemento.cElemenNombre">
+                                                                    <i class="fa-md fa fa-check-circle"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td v-text="elemento.nIdElemento"></td>
+                                                            <td v-text="elemento.cProveedorNombre"></td>
+                                                            <td v-text="elemento.cTipoElemenNombre"></td>
+                                                            <td v-text="elemento.cElemenNombre"></td>
+                                                            <td v-text="elemento.fElemenValorVenta"></td>
+                                                            <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                :class="[page==isActived?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaElemento(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -1301,7 +1302,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -1365,12 +1366,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -1466,12 +1467,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -1513,7 +1514,7 @@
     export default {
         props:['ruta'],
         data(){
-            return {                
+            return {
                 cempresa: 'SAISAC',
                 csucursal: 'CHICLAYO',
                 canio: '2018',
@@ -1570,7 +1571,8 @@
                     celenombre: '',
                     celecodigoerp: '',
                     felevalorventa: '',
-                    felevarlorminventa: ''
+                    felevarlorminventa: '',
+                    celementonombre: ''
                 },
                 formEventoCamp:{
                     nidempresa: 0,
@@ -1584,7 +1586,7 @@
                     descripcion:'',
                     filedocumento:'',
                     ndetalle: 0,
-                    cflagdetalleevento: 'CA'               
+                    cflagdetalleevento: 'CA'
                 },
                 formDistribucion:{
                     nideventocampania: 0,
@@ -1623,7 +1625,7 @@
                 mensajeError: [],
                 vistaModal: 0,
                 vistaFormularioTabBuscar: 0,
-                vistaFormularioDistribucion: 0 
+                vistaFormularioDistribucion: 0
             }
         },
         computed:{
@@ -1634,16 +1636,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -1659,16 +1661,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -1768,24 +1770,24 @@
                             var url = this.ruta + '/ec/activar';
                             axios.put(url , {
                                 nIdEventoCampania: nIdEventoCampania
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Activado!',
                                 'El registro fue activado.'
                                 );
                                 this.listarEventoCampania(1);
-                                this.vistaFormularioTabBuscar = 1;                      
+                                this.vistaFormularioTabBuscar = 1;
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
             },
             desactivar(nIdEventoCampania){
-                
+
                 swal({
                     title: 'Estas seguro de desactivar este Evento?',
                     type: 'warning',
@@ -1799,18 +1801,18 @@
                             var url = this.ruta + '/ec/desactivar';
                             axios.put(url , {
                                 nIdEventoCampania: nIdEventoCampania
-                            }).then(response => {                            
+                            }).then(response => {
                                 swal(
                                 'Desactivado!',
                                 'El registro fue desactivado.'
                                 );
                                 this.listarEventoCampania(1);
-                                this.vistaFormularioTabBuscar = 1;                  
+                                this.vistaFormularioTabBuscar = 1;
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -2008,7 +2010,7 @@
             },
             listarModelosByProveedor(page){
                 var url = this.ruta + '/parametro/GetModelosByProveedor';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -2049,7 +2051,7 @@
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
-                    toastr.success('Se Agregó Vehículo');
+                    toastr.success('Se Agregó Modelo');
                 }
             },
             encuentraModelos(nIdModelo){
@@ -2100,7 +2102,7 @@
 
                                 this.accionmodal=4;
                                 this.modal = 1;
-                                this.buscarElemento();
+                                //this.buscarElemento();
                                 break;
                             }
                         }
@@ -2129,6 +2131,7 @@
                     params: {
                         'nidempresa': 1300011,
                         'nidtipoelemen' : this.formEle.ntpoelemen,
+                        'celementonombre': this.formEle.celementonombre,
                         'page' : page
                     }
                 }).then(response => {
@@ -2181,13 +2184,13 @@
                 toastr.success('Se Eliminó Item Elemento');
             },
             // =============  REGISTRAR EVENTO ===================
-            registrar(){                
+            registrar(){
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-            
+
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -2292,7 +2295,7 @@
             },
             listarProveedorPorElementoVenta(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -2346,9 +2349,9 @@
                 return this.error;
             },
             listarProveedorPorEC(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
+                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011
                                                                     + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProveedor.cnombreproveedor.toString() 
+                                                                    + '&cnombreproveedor=' + this.fillProveedor.cnombreproveedor.toString()
                                                                     + '&opcion=' + 1
                                                                     + '&page='+ page;
                 axios.get(url).then(response => {
@@ -2419,7 +2422,7 @@
            // =============  REGISTRAR DISTRIBUCION ===================
             registrarAsignaDistribucion(){
                 if(this.formDistribucion.ntipodistribucion==1){
-                     
+
                     if(this.arrayProveedorPorEC.length > 0){
                         var list=[];
                         var listIndexEntidadValor=[];
@@ -2486,7 +2489,7 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
-              
+
                 if(this.formEventoCamp.dfechainicio == ''){
                     this.mensajeError.push('Debes Ingresar Fecha Inicio');
                 };
@@ -2501,10 +2504,10 @@
                 };
                 if(!this.formEventoCamp.fvalorpresupuesto){
                     this.mensajeError.push('Debes Ingresar Valor Presupuesto');
-                };           
+                };
                 if(!this.formEventoCamp.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
-                }; 
+                };
                 if(this.formEventoCamp.dfechainicio > this.formEventoCamp.dfechafin){
                     this.mensajeError.push('La Fecha Inicio debe ser menor a la Fecha Fin.');
                 };
@@ -2517,7 +2520,7 @@
             validarDistribucion(){
                 this.error = 0;
                 this.mensajeError =[];
-              
+
                 if(this.formDistribucion.nideventocampania == 0){
                     this.mensajeError.push('Error en registro de Distribucion');
                 };
@@ -2530,11 +2533,11 @@
             validaRegistroDistribuionPorEC(valorPorEC){
                 this.error = 0;
                 this.mensajeError =[];
-              
+
                 if(valorPorEC > 100){
                     this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mas de 100%');
                 };
-                
+
                 if(valorPorEC != 100){
                     this.mensajeError.push('La suma de los valores de porcentaje debe ser = 100%');
                 };

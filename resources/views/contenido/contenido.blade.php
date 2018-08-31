@@ -37,6 +37,14 @@
         <pedido :ruta="ruta"></pedido>
     </template>
     <template v-if="menu==14">
+        <aprobapedido :ruta="ruta"></aprobapedido>
+    </template>
+    <template v-if="menu==15">
+        <comision :ruta="ruta"></comision>
+    </template>
+    <template v-if="menu==16">
+        <objcomercial :ruta="ruta"></objcomercial>
+    </template>
+    <template v-if="menu==19">
         <turnoventa :ruta="ruta"></turnoventa>
     </template>
-@endsection

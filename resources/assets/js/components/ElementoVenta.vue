@@ -32,9 +32,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label">Nombre Elemento</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
-                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento();"><i class="fa fa-search"></i> Buscar</button>
-                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento()"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
                                 </form>
@@ -403,7 +409,8 @@
                     celenombre: '',
                     celecodigoerp: '',
                     felevalorventa: '',
-                    felevarlorminventa: ''
+                    felevarlorminventa: '',
+                    celementonombre: ''
                 },
                 pagination: {
                     'total': 0,
@@ -539,11 +546,16 @@
             listarElementos(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/elemento/GetElementoByTipo?nidempresa=' + 1300011 
-                                                                     + '&nidtipoelemen=' + this.formEle.ntpoelemen
-                                                                     + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/elemento/GetElementoByTipo';
 
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidtipoelemen': this.formEle.ntpoelemen,
+                        'celementonombre': this.formEle.celementonombre,
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayElementoVenta = response.data.arrayElementoVenta.data;
                     this.pagination.current_page =  response.data.arrayElementoVenta.current_page;
                     this.pagination.total = response.data.arrayElementoVenta.total;
@@ -551,7 +563,6 @@
                     this.pagination.last_page   = response.data.arrayElementoVenta.last_page;
                     this.pagination.from        = response.data.arrayElementoVenta.from;
                     this.pagination.to           = response.data.arrayElementoVenta.to;
-
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -649,29 +660,26 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/elemento/activar';
-                            axios.put(url , {
-                                nIdElementoVenta: nIdElementoVenta
-                            }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarElementos(1);
-                                this.vistaFormulario = 1;
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/elemento/activar';
+                        axios.put(url , {
+                            nIdElementoVenta: nIdElementoVenta
+                        }).then(response => {
+                            swal(
+                            'Activado!',
+                            'El registro fue activado.'
+                            );
+                            this.listarElementos(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
             desactivar(nIdElementoVenta){
-
                 swal({
                     title: 'Estas seguro de desactivar esta categoría?',
                     type: 'warning',
@@ -680,26 +688,24 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/elemento/desactivar';
-                            axios.put(url , {
-                                nIdElementoVenta: nIdElementoVenta
-                            }).then(response => {
-                                swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
-                                );
-                                this.listarElementos(1);
-                                this.vistaFormulario = 1;
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/elemento/desactivar';
+                        axios.put(url , {
+                            nIdElementoVenta: nIdElementoVenta
+                        }).then(response => {
+                            swal(
+                            'Desactivado!',
+                            'El registro fue desactivado.'
+                            );
+                            this.listarElementos(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
             cerrarModal(){
                 //this.accionmodal==1;

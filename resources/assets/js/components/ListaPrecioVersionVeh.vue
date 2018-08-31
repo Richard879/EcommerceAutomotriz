@@ -384,25 +384,25 @@
                                                     <div class="card-body">
                                                         <div class="col-lg-12">
                                                             <div class="form-group row">
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-8">
                                                                     <div class="row">
-                                                                        <label class="col-sm-6 form-control-label">* Adjunte Lista de Precios</label>
-                                                                        <div class="col-sm-6">
-                                                                            <label for="file-upload" class="btn btn-warning btn-corner btn-sm">
+                                                                        <label class="col-sm-4 form-control-label">* Adjunte Lista de Precios</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
                                                                                 <i class="fa fa-upload"></i> Seleccione Archivo
-                                                                            </label>
+                                                                            </label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-4">
                                                                     <div class="row">
-                                                                        <input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx"/>
-                                                                        <div class="col-sm-6">
+                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
+                                                                        <div class="col-sm-6">-->
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
                                                                                 <i class="fa fa-retweet"></i> Procesar
                                                                             </button>
-                                                                        </div>
+                                                                        <!--</div>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -420,8 +420,6 @@
                                                                                 <th>Año Modelo</th>
                                                                                 <th>UM</th>
                                                                                 <th>Mon.<nav></nav></th>
-                                                                                <th>FInicio Prom.<nav></nav></th>
-                                                                                <th>FFin Prom.<nav></nav></th>
                                                                                 <th>Prec. Base</th>
                                                                                 <th>Dscto</th>
                                                                                 <th>Prec.Cierre</th>
@@ -429,14 +427,10 @@
                                                                                 <th>Margen</th>
                                                                                 <th>Costo Dealer</th>
                                                                                 <th>Bono</th>
-                                                                                <th>Precio Cierre 2</th>
+                                                                                <th>Prec. Cierre 2</th>
                                                                                 <th>Flete</th>
+                                                                                <th>TYP</th>
                                                                                 <th>Precio.Vta P</th>
-                                                                                <th>Flete.Prov</th>
-                                                                                <th>% Dscto.Fp</th>
-                                                                                <th>% Factor_Fc</th>
-                                                                                <th>Dscto.Fc</th>
-                                                                                <th>Prec./Bono</th>
                                                                                 <th>Dealer/Prec. Bono</th>
                                                                                 <th>Bono.Especial</th>
                                                                             </tr>
@@ -452,8 +446,6 @@
                                                                                 <td v-text="lista.nAnioModelo"></td>
                                                                                 <td v-text="lista.cUnidadMedida"></td>
                                                                                 <td v-text="lista.cMoneda"></td>
-                                                                                <td v-text="lista.FInicioProm"></td>
-                                                                                <td v-text="lista.FFinProm"></td>
                                                                                 <td v-text="lista.fPrecioBase"></td>
                                                                                 <td v-text="lista.fDescuento"></td>
                                                                                 <td v-text="lista.fPrecioCierre"></td>
@@ -463,13 +455,9 @@
                                                                                 <td v-text="lista.fBono"></td>
                                                                                 <td v-text="lista.fPrecioCierre2"></td>
                                                                                 <td v-text="lista.fFlete"></td>
+                                                                                <td v-text="lista.fTYP"></td>
                                                                                 <td v-text="lista.fPrecioVentaP"></td>
-                                                                                <td v-text="lista.fFleteProveedor"></td>
-                                                                                <td v-text="lista.fPorcDsctoFp"></td>
-                                                                                <td v-text="lista.fFactorFc"></td>
-                                                                                <td v-text="lista.fDescuentoFc"></td>
-                                                                                <td v-text="lista.fPrecioBono"></td>
-                                                                                <td v-text="lista.fPrecioDealer"></td>
+                                                                                <td v-text="lista.fPrecioBonoDealer"></td>
                                                                                 <td v-text="lista.fBonoEspecial"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -992,7 +980,7 @@
                 }).then(response => {
                     swal('Lista de Precio registrada');
                     this.limpiarFormulario();
-                    this.listarListaPrecioVh();
+                    this.listarListaPrecioVh(1);
                     this.vistaFormTab1 = 1;
                 }).catch(error => {
                     console.log(error);
@@ -1217,7 +1205,7 @@
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
-                this.textFile = e.target.files[0].name;
+                //this.textFile = e.target.files[0].name;
             },
             importFileListaPrecioVh(){
                 if(this.validarReadFileListaPrecioVh()){
@@ -1286,8 +1274,6 @@
                 return this.error;
             },
             eliminarItemExcel(index){
-                //this.arrayExcel.splice(index, 1);
-                //this.$set(this, 'imageList', this.images);
                 this.$delete(this.arrayExcel, index)
             },
             registrarDetalle(){
@@ -1307,9 +1293,9 @@
                     swal('Detalle de Lista registrada');
                     this.arrayExcel = [];
                     this.arrayListaPrecioVh = [];
-                    this.attachment = null;
-                    this.textFile = '';
-                    $("#file").val("");
+                    //this.attachment = null;
+                    //this.textFile = '';
+                    $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1317,9 +1303,9 @@
             validarRegistroDetalle(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.arrayListaPrecioVh == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
@@ -1334,9 +1320,9 @@
             validarReadFileListaPrecioVh(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1388,7 +1374,7 @@
             font-weight: bold;
             font-size: 0.75rem;
         }
-        input[type="file"] {
+        /*input[type="file"] {
             display: none;
-        }
+        }*/
 </style>
