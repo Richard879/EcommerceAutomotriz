@@ -86,6 +86,9 @@ Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdRe
 Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
 Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
 
+
+Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
+
 Route::get('/','Auth\LoginController@showLoginForm')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');

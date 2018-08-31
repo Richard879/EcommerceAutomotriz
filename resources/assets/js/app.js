@@ -14,6 +14,7 @@ Vue.component('gestioncontactojf', require('./components/GestionContactoJefeVent
 Vue.component('gestioncontactov', require('./components/GestionContactoVendedor.vue'));
 Vue.component('cotizacion', require('./components/Cotizacion.vue'));
 Vue.component('pedido', require('./components/GenerarPedido.vue'));
+Vue.component('turnoventa',require('./components/TurnoVenta.vue'));
 
 const app = new Vue({
     el: '#app',

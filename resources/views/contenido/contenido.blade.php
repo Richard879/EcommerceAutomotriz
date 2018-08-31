@@ -36,4 +36,7 @@
     <template v-if="menu==13">
         <pedido :ruta="ruta"></pedido>
     </template>
+    <template v-if="menu==14">
+        <turnoventa :ruta="ruta"></turnoventa>
+    </template>
 @endsection
