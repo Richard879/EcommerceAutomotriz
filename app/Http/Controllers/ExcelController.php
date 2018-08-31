@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\Compra;
 use App\ListaPrecioVersionVeh;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -15,7 +17,7 @@ class ExcelController extends Controller
     public function importFileCompra(Request $request)
     {        
         //$textFile = $request->file->getClientOriginalName();
-        $nameFile = $request->file->store('uploads');
+        $nameFile = $request->file->store('uploads/ExcelCompra');
         return response()->json($nameFile);
         /*return response()->json([
             'nombreFile' => $nameFile,
@@ -60,7 +62,7 @@ class ExcelController extends Controller
 
     public function importFileListaPrecioVh(Request $request)
     {
-        $nameFile = $request->file->store('uploads');
+        $nameFile = $request->file->store('uploads/ExcelListaPrecio');
         return response()->json($nameFile);
     }
     
@@ -101,21 +103,5 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
-
-    public function subirArchivo(Request $request)
-    {        
-        $nameFile = $request->file;
-
-        foreach($nameFile as $file){
-            $file->store('uploads');
-        }
-
-        $data = $request->data;
-        
-        foreach($data as $item){
-            print_r($item['%22nIdPar%22']);
-        }
-
-        
-    }
+    
 }

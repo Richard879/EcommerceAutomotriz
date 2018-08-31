@@ -26,12 +26,12 @@
 
                             <div class="tab-content">
                                 <div class="tab-pane fade in active show" id="TabBuscaPedido">
-                                    <!--<section class="forms">
+                                    <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">BUSCAR COMPRA</h3>
+                                                        <h3 class="h4">BUSCAR PEDIDOS</h3>
                                                     </div>
                                                     <div class="card-body"> 
                                                         <form class="form-horizontal">
@@ -58,7 +58,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillCompra.dfechainicio" class="form-control form-control-sm">
+                                                                            <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -89,6 +89,30 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
+                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
+                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-4">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos();"><i class="fa fa-search"></i> Buscar</button>
@@ -104,7 +128,7 @@
                                                         <h3 class="h4">LISTADO</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <template v-if="arrayPedido.length">
+                                                        <!--<template v-if="arrayPedido.length">
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-sm">
                                                                     <thead>
@@ -187,12 +211,12 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                        </template>
+                                                        </template>-->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>-->
+                                    </section>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabGeneraPedido">
                                     <template v-if="vistaFormularioPedido">
@@ -286,7 +310,6 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>Cód Coti.</th>
                                                                                 <th>Nro Coti.</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Contacto<nav></nav></th>
@@ -302,12 +325,11 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraCotizacion">
                                                                                 <td> 
-                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top" 
                                                                                         :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
                                                                                 </td>
-                                                                                <td v-text="pedido.nIdCabeceraCotizacion"></td>
                                                                                 <td v-text="pedido.cNumeroCotizacion"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
@@ -367,6 +389,7 @@
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
+                                                    <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2><hr/>
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="Tab1" href="#TabAsignarCompra" @click="tabAsignarCompra()" role="tab" data-toggle="tab">
@@ -675,13 +698,6 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="form-group row">
-                                                                                        <div class="col-sm-9 offset-sm-5">
-                                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesIngresadas()">
-                                                                                                <i class="fa fa-search"></i> Buscar
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -734,42 +750,31 @@
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDocAsociados">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="card">
-                                                                            <div class="card-header">
-                                                                                <h3 class="h4">Adjuntar Documentos</h3>
+                                                                    <div class="card">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-sm" style="border-collapse: separate;">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
+                                                                                            <td v-text="documento.cParNombre"></td>
+                                                                                            <td><input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
                                                                             </div>
-                                                                            <div class="card-body">
-                                                                                <form class="form-horizontal">
-                                                                                    <div class="table-responsive">
-                                                                                        <table class="table table-striped table-sm">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
-                                                                                                    <td v-text="documento.cParNombre"></td>
-                                                                                                    <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
-                                                                                                </tr>
-                                                                                                <!--<tr>
-                                                                                                    <td>Carta de Responsabilidad.</td>
-                                                                                                    <td>Seleccione Archivo<input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
-                                                                                                </tr>-->
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <br>
-                                                                                    <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-5">
-                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
-                                                                                                    <i class="fa fa-save"></i> Generar Pedido
-                                                                                                </button>
-                                                                                            </div>
-                                                                                    </div>
-                                                                                </form>
+                                                                            <br>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-9 offset-sm-5">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarPedido()">
+                                                                                        <i class="fa fa-save"></i> Generar Pedido
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </section>
@@ -945,7 +950,8 @@
                     nidmarca: 0,
                     nidmodelo: 0,
                     cnumerodocumento: '',
-                    cfiltrodescripcion: ''
+                    cfiltrodescripcion: '',
+                    cnombrecontacto: ''
                 },
                 arrayPedido: [],
                 arrayMarca: [],
@@ -1070,7 +1076,8 @@
         },
         methods:{
             tabBuscarPedido(){
-                
+                this.formPedido.nidmarca = 0;
+                this.formPedido.nidmodelo = 0;
             },
             buscarPedidos(){
                 this.listarPedidos(1);
@@ -1211,7 +1218,8 @@
                     })
             },
             //=============== APROBAR COTIZACION ========================
-            aprobarCotizacion(nIdCabeceraCotizacion, cNumeroCotizacion){
+            aprobarCotizacion(nIdCabeceraCotizacion, cNumeroCotizacion, cContacto){
+                this.formPedido.cnombrecontacto = cContacto;
                 this.formCompra.nidcabeceracotizacion = nIdCabeceraCotizacion;
                 this.formDocRef.cnrocotizacion = cNumeroCotizacion;
                 this.vistaFormularioPedido = 0;
@@ -1340,6 +1348,12 @@
             },
             //============= TAB DOCUMENTOS ASOCIADOS ===================
             activarTabDocAsociados(){
+                if(this.validaMostrarTabAsociados()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
                 $('#Tab2').removeClass('nav-link active');
                 $('#Tab2').addClass("nav-link");
                 $('#Tab3').removeClass('nav-link disabled');
@@ -1347,6 +1361,18 @@
                 $('#TabDocReferencias').removeClass('in active show');
                 $('#TabDocAsociados').addClass('in active show');
                 this.llenarTablaDocumentos();
+            },
+            validaMostrarTabAsociados(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formDocRef.nidformapago == 0){
+                    this.mensajeError.push('Debes Seleccionar Forma de Pago');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             llenarTablaDocumentos(){
                 var url = this.ruta + '/parametro/GetListParametroByGrupo';
@@ -1369,11 +1395,29 @@
                 }
             },
             registrarPedido(){
-                this.subirArchivos();
-            },
-            subirArchivos(){
-                this.mostrarProgressBar();
+                /*if(this.validarRegistrarCotizacion()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }*/
 
+                var url = this.ruta + '/pedido/SetCabeceraPedido';
+                axios.post(url, {
+                    'nIdEmpresa': 1300011,
+                    'nIdSucursal': 1300013,
+                    'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
+                    'cNumeroPedido': 'PEDIDO-001',
+                    'dFechaPedido': moment().format('YYYY-MM-DD'),
+                    'nIdFormaPago': this.formDocRef.nidformapago,
+                    'cGlosa': 'REGISTRO DE PEDIDO'
+                }).then(response => {
+                    this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            subirArchivos(nIdCabeceraPedido){
+                this.mostrarProgressBar();
                 let me = this;
 
                 for(let i= 0; i < this.attachment.length; i++){
@@ -1383,14 +1427,17 @@
                 this.arrayTablaDocumento.map(function(info, i) {
                     me.form.append('data['+i+']["nIdPar"]', info.nIdPar);
                     me.form.append('data['+i+']["cParNombre"]', info.cParNombre);
+                    me.form.append('data['+i+']["nIdCabeceraPedido"]', nIdCabeceraPedido);
                 });
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 
                 var url = this.ruta + '/pedido/subirArchivo';
-                
+
                 axios.post(url, this.form, config).then(response=>{
-                    console.log(response);
+                    swal('Pedido registrado exitosamente');
+                    this.vistaFormularioPedido = 1;
+                    this.limpiarFormulario();
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -1459,11 +1506,7 @@
             },
             // ===========================================================
             limpiarFormulario(){
-                this.fillPedido.nordencompra= '',
-                this.fillPedido.cnumerovin=  '',
-                this.arrayExcel = [],
-                this.arrayPedido = [],
-                this.limpiarPaginacion()
+                this.arrayPedido = [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
@@ -1479,6 +1522,8 @@
             }
         },
         mounted(){
+            this.llenarComboMarcas();
+            this.llenarComboModelos();
         }
     }
 </script>

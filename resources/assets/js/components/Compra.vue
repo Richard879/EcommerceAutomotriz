@@ -13,17 +13,17 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaCompra" @click="limpiarFormulario();" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" href="#TabBuscaCompra" @click="tabBuscarCompra()" role="tab" data-toggle="tab">
                                         <i class="fa fa-search"></i> BUSCAR COMPRA
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra()" role="tab" data-toggle="tab">
                                         <i class="fa fa-bus"></i> GENERAR COMPRA
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario()" role="tab" data-toggle="tab">
                                         <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
                                     </a>
                                 </li>
@@ -95,7 +95,31 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-4">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="fillCompra.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
+                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select name="account" v-model="fillCompra.nidmodelo" class="form-control form-control-sm">
+                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-9 offset-sm-5">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
@@ -129,6 +153,7 @@
                                                                             <th>Total</th>
                                                                             <th>Nro Factura</th>
                                                                             <th>Fecha Facturado</th>
+                                                                            <th>Fecha Compra</th>
                                                                             <th>Acciones</th>
                                                                         </tr>
                                                                     </thead>
@@ -149,6 +174,7 @@
                                                                             <td v-text="compra.fTotalCompra"></td>
                                                                             <td v-text="compra.cNumeroFactura"></td>
                                                                             <td v-text="compra.dFechaFacturado"></td>
+                                                                            <td v-text="compra.dFechaCompra"></td>
                                                                             <td>
                                                                                 <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
@@ -286,25 +312,25 @@
                                                     <div class="card-body">
                                                         <div class="col-lg-12">
                                                             <div class="form-group row">
-                                                                <div class="col-sm-5">
+                                                                <div class="col-sm-8">
                                                                     <div class="row">
-                                                                        <label class="col-sm-6 form-control-label">* Ordenes de Compra</label>
-                                                                        <div class="col-sm-6">
-                                                                            <label for="file-upload" class="btn btn-warning btn-corner btn-sm">
+                                                                        <label class="col-sm-4 form-control-label">* Ordenes de Compra</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
                                                                                 <i class="fa fa-file-excel-o"></i> Seleccionar Archivo
-                                                                            </label>
+                                                                            </label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-sm-4">
                                                                     <div class="row">
-                                                                        <input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx"/>
-                                                                        <div class="col-sm-6">
+                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
+                                                                        <div class="col-sm-6">-->
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileCompra()">
                                                                                 <i class="fa fa-retweet"></i> Procesar
                                                                             </button>
-                                                                        </div>
+                                                                        <!--</div>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -541,6 +567,8 @@
                 arrayExcel: [],
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
+                arrayMarca: [],
+                arrayModelo: [],
                 arrayProveedor: [],
                 fillProveedor:{
                     cnombreproveedor: ''
@@ -549,7 +577,9 @@
                     dfechainicio: '',
                     dfechafin: '',
                     nordencompra: '',
-                    cnumerovin: ''
+                    cnumerovin: '',
+                    nidmarca: 0,
+                    nidmodelo: 0
                 },
                 formCompra:{
                     nformapago: 0,
@@ -641,8 +671,43 @@
             }
         },
         methods:{
+            tabBuscarCompra(){
+                this.fillCompra.nidmarca = 0;
+                this.fillCompra.nidmodelo = 0;
+                this.fillCompra.dfechainicio = '';
+                this.fillCompra.dfechafin = '';
+                this.limpiarFormulario();
+            },
             buscarCompras(){
                 this.listarCompras(1);
+            },
+            llenarComboMarcas(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110032,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboModelos(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url,{
+                    params: {
+                        'nidmarca' : this.fillCompra.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.fillCompra.nidmodelo = 0;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             listarCompras(page){
                 this.mostrarProgressBar();
@@ -662,6 +727,8 @@
                         'dfechafin' : this.fillCompra.dfechafin,
                         'nordencompra' : nordencompra,
                         'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidmarca': this.fillCompra.nidmarca,
+                        'nidmodelo': this.fillCompra.nidmodelo,
                         'page' : page
                     }
                 }).then(response => {
@@ -739,7 +806,7 @@
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
-                this.textFile = e.target.files[0].name;
+                //this.textFile = e.target.files[0].name;
             },
             importFileCompra(){
                 if(this.validarReadFileCompra()){
@@ -842,21 +909,17 @@
                     swal('Compra registrada');
                     this.arrayExcel = [];
                     this.arrayCompra = [];
-                    this.attachment = null;
-                    this.textFile = '';
-                    $("#file").val("");
+                    $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
                 });
-
-
             },
             validarRegistro(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.arrayCompra == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
@@ -875,9 +938,9 @@
             validarReadFileCompra(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.textFile){
+                /*if(!this.textFile){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }
+                }*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -951,6 +1014,8 @@
             }
         },
         mounted(){
+            this.llenarComboMarcas();
+            this.llenarComboModelos();
         }
     }
 </script>
@@ -975,7 +1040,7 @@
             font-weight: bold;
             font-size: 0.75rem;
         }
-        input[type="file"] {
+        /*input[type="file"] {
             display: none;
-        }
+        }*/
 </style>
