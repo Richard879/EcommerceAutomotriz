@@ -595,6 +595,9 @@
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
             },
+            // =================================================================
+            // METODOS GENERICOS
+            // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
                     case "proveedor":

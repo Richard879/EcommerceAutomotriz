@@ -45,4 +45,10 @@
     <template v-if="menu==16">
         <objcomercial :ruta="ruta"></objcomercial>
     </template>
+    <template v-if="menu==17">
+        <solcaracteristica :ruta="ruta"></solcaracteristica>
+    </template>
+    <template v-if="menu==18">
+        <asigvendedorturno :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorturno>
+    </template>
 @endsection

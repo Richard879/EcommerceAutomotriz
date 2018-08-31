@@ -115,4 +115,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getObjComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
     Route::get('/getObjComercial/getDetalleVehiculo', 'ObjComercialController@getDetalleVehiculo');
     Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
+    Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurno@GetParametroById');
+    Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
 });

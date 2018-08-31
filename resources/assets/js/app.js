@@ -17,6 +17,8 @@ Vue.component('pedido', require('./components/Pedido.vue'));
 Vue.component('aprobapedido', require('./components/AprobacionPedido.vue'));
 Vue.component('comision', require('./components/Comision.vue'));
 Vue.component('objcomercial', require('./components/ObjComercial.vue'));
+Vue.component('solcaracteristica', require('./components/SolicitudCaracteristica.vue'));
+Vue.component('asigvendedorturno', require('./components/AsigVendedorTurno.vue'));
 
 const app = new Vue({
     el: '#app',

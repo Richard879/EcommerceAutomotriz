@@ -22,6 +22,8 @@
         <li id="0511" @click="menu=14" onclick="ActivarMenu('0511')"><a href="#">Aprobar Pedido</a></li>
         <li id="0512" @click="menu=15" onclick="ActivarMenu('0512')"><a href="#">Comisión</a></li>
         <li id="0513" @click="menu=16" onclick="ActivarMenu('0513')"><a href="#">Obj.Comercial Compra</a></li>
+        <li id="0514" @click="menu=17" onclick="ActivarMenu('0514')"><a href="#">Solic.Carta Caracteristica</a></li>
+        <li id="0515" @click="menu=18" onclick="ActivarMenu('0515')"><a href="#">Asig.Vendedor Turno</a></li>
       </ul>
     </li>
     <li><a href="#06" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>
