@@ -51,4 +51,7 @@
     <template v-if="menu==18">
         <asigvendedorturno :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorturno>
     </template>
+    <template v-if="menu==19">
+        <turnoventa :ruta="ruta"></turnoventa>
+    </template>
 @endsection

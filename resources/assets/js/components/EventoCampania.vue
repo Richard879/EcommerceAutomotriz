@@ -1190,107 +1190,108 @@
                     <div class="modal-body">
                         <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <form class="form-horizontal">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Tipo Elemento</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="input-group">
-                                                            <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
-                                                                <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                </option>
-                                                            </select>
-                                                            <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO ELEMENTO VENTA</h3>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <template v-if="arrayElementoVenta.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Acciones</th>
-                                                                <th>Código</th>
-                                                                <th>Proveedor</th>
-                                                                <th>Tipo Elemento</th>
-                                                                <th>Nombre Elemento</th>
-                                                                <th>Precio de Venta</th>
-                                                                <th>Precio de Venta Mínimo</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
-                                                                <td>
-                                                                    <a href="#" @click="asignarElemento(elemento)" data-toggle="tooltip" data-placement="top"
-                                                                        :title="'Asignar ' +elemento.cElemenNombre">
-                                                                        <i class="fa-md fa fa-check-circle"></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td v-text="elemento.nIdElemento"></td>
-                                                                <td v-text="elemento.cProveedorNombre"></td>
-                                                                <td v-text="elemento.cTipoElemenNombre"></td>
-                                                                <td v-text="elemento.cElemenNombre"></td>
-                                                                <td v-text="elemento.fElemenValorVenta"></td>
-                                                                <td v-text="elemento.fElemenValorMinimoVenta"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                    :class="[page==isActived?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaElemento(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Tipo Elemento</label>
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
+                                                        <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                        </option>
+                                                    </select>
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                            <i class="fa-lg fa fa-search"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Nombre Elemento</label>
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                                    <div class="input-group-prepend">
+                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                            <i class="fa-lg fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <template v-if="arrayElementoVenta.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Acciones</th>
+                                                            <th>Código</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Tipo Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Precio de Venta</th>
+                                                            <th>Precio de Venta Mínimo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
+                                                            <td>
+                                                                <a href="#" @click="asignarElemento(elemento)" data-toggle="tooltip" data-placement="top"
+                                                                    :title="'Asignar ' +elemento.cElemenNombre">
+                                                                    <i class="fa-md fa fa-check-circle"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td v-text="elemento.nIdElemento"></td>
+                                                            <td v-text="elemento.cProveedorNombre"></td>
+                                                            <td v-text="elemento.cTipoElemenNombre"></td>
+                                                            <td v-text="elemento.cElemenNombre"></td>
+                                                            <td v-text="elemento.fElemenValorVenta"></td>
+                                                            <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                :class="[page==isActived?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaElemento(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -1570,7 +1571,8 @@
                     celenombre: '',
                     celecodigoerp: '',
                     felevalorventa: '',
-                    felevarlorminventa: ''
+                    felevarlorminventa: '',
+                    celementonombre: ''
                 },
                 formEventoCamp:{
                     nidempresa: 0,
@@ -2100,7 +2102,7 @@
 
                                 this.accionmodal=4;
                                 this.modal = 1;
-                                this.buscarElemento();
+                                //this.buscarElemento();
                                 break;
                             }
                         }
@@ -2129,6 +2131,7 @@
                     params: {
                         'nidempresa': 1300011,
                         'nidtipoelemen' : this.formEle.ntpoelemen,
+                        'celementonombre': this.formEle.celementonombre,
                         'page' : page
                     }
                 }).then(response => {

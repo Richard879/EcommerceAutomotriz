@@ -19,11 +19,12 @@ Vue.component('comision', require('./components/Comision.vue'));
 Vue.component('objcomercial', require('./components/ObjComercial.vue'));
 Vue.component('solcaracteristica', require('./components/SolicitudCaracteristica.vue'));
 Vue.component('asigvendedorturno', require('./components/AsigVendedorTurno.vue'));
+Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
         menu: 0,
-        ruta: 'http://localhost:8080/saisacsys/public'
+        ruta: 'http:/localhost:8080/saisacsys/public'
     }
 });
