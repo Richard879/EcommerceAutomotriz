@@ -1384,7 +1384,7 @@
                     'cNumeroPedido': 'PEDIDO-001',
                     'dFechaPedido': moment().format('YYYY-MM-DD'),
                     'nIdFormaPago': this.formDocRef.nidformapago,
-                    'cGlosa': 'PRUEBA'
+                    'cGlosa': 'REGISTRO DE PEDIDO'
                 }).then(response => {
                     this.subirArchivos(response.data[0].nIdCabeceraPedido);
                 }).catch(error => {
