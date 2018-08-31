@@ -17,11 +17,12 @@ Vue.component('pedido', require('./components/Pedido.vue'));
 Vue.component('aprobapedido', require('./components/AprobacionPedido.vue'));
 Vue.component('comision', require('./components/Comision.vue'));
 Vue.component('objcomercial', require('./components/ObjComercial.vue'));
+Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
         menu: 0,
-        ruta: 'http://localhost:8080/saisacsys/public'
+        ruta: 'http://172.20.6.62:8080/saisacsys/public'
     }
 });

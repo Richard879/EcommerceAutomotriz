@@ -45,4 +45,10 @@
     <template v-if="menu==16">
         <objcomercial :ruta="ruta"></objcomercial>
     </template>
+    <template v-if="menu==16">
+        <objcomercial :ruta="ruta"></objcomercial>
+    </template>
+    <template v-if="menu==19">
+        <turnoventa :ruta="ruta"></turnoventa>
+    </template>
 @endsection
