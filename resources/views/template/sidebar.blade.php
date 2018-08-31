@@ -22,7 +22,8 @@
         <li id="0511" @click="menu=14" onclick="ActivarMenu('0511')"><a href="#">Aprobar Pedido</a></li>
         <li id="0512" @click="menu=15" onclick="ActivarMenu('0512')"><a href="#">Comisión</a></li>
         <li id="0513" @click="menu=16" onclick="ActivarMenu('0513')"><a href="#">Obj.Comercial Compra</a></li>
-        <li id="0516" @click="menu=19" onclick="ActivarMenu('0516')"><a href="#">turno de venta</a></li>
+        <li id="0516" @click="menu=19" onclick="ActivarMenu('0516')"><a href="#">Turno de Venta</a></li>
+        <li id="0517" @click="menu=20" onclick="ActivarMenu('0517')"><a href="#">Depósitos</a></li>
       </ul>
     </li>
     <li><a href="#06" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

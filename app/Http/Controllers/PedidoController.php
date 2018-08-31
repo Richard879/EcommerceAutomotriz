@@ -212,10 +212,10 @@ class PedidoController extends Controller
         $nIdModelo      =   $request->nidmodelo;
         $nIdEstadoPedido  = $request->nidestadopedido;
         
-        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = ' ') : $dFechaInicio;
-        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = ' ') : $dFechaFin;
-        $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = ' ') : $cNumeroPedido;
-        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
         $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoByTipoEstado ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
