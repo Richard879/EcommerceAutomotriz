@@ -17,14 +17,18 @@ class ElementoController extends Controller
  
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoElemento = $request->nidtipoelemen;
+        $cElemenNombre = $request->celemennombre;
+
+        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = ' ') : $cElemenNombre;
+                
+        $arrayElementoVenta = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?, ?', 
+                                                                    [$nIdEmpresa, $nIdTipoElemento, $cElemenNombre]);
+
+        $arrayElementoVenta = $this->arrayPaginator($arrayElementoVenta, $request);
+        return ['arrayElementoVenta'=>$arrayElementoVenta];
 
         /*$data = $this->paginateArray($element = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?', 
                                                     array($nIdEmpresa, $nIdTipoElemento)));*/
-        
-        $arrayElementoVenta = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?', 
-                                                                    [$nIdEmpresa, $nIdTipoElemento]);
-
-        $arrayElementoVenta = $this->arrayPaginator($arrayElementoVenta, $request);
 
         /*return ['pagination'=>[
                 'total'        => $pagination->total(),
@@ -33,9 +37,7 @@ class ElementoController extends Controller
                 'last_page'    => $pagination->lastPage(),
                 'from'         => $pagination->firstItem(),
                 'to'           => $pagination->lastItem(),
-         ],'elementos'=>$element];*/
-
-         return ['arrayElementoVenta'=>$arrayElementoVenta];
+         ],'elementos'=>$element];*/   
     }
 
     public function arrayPaginator($array, $request)
