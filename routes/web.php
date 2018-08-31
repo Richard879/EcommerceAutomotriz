@@ -93,7 +93,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pedido/subirArchivo', 'ExcelController@subirArchivo');
     Route::get('/parametro/GetListParametroByGrupo', 'ParametroController@GetListParametroByGrupo');
 
-    
+
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
     Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
@@ -109,4 +109,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
     Route::post('/getComision/SetRegistrarComision', 'ComisionController@SetRegistrarComision');
+    Route::get('/getObjComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
+    Route::get('/getObjComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
+    Route::get('/getObjComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
+    Route::get('/getObjComercial/getDetalleVehiculo', 'ObjComercialController@getDetalleVehiculo');
+    Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
 });

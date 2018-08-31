@@ -224,10 +224,10 @@
                                 <div class="col-lg-12">
                                     <div class="form-group row">
                                         <div class="col-md-9 offset-md-5">
-                                            <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarCotizacion(1)">
+                                            <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarComision(1)">
                                                 <i class="fa fa-save"></i> Registrar
                                             </button>
-                                            <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarCotizacion(2)">
+                                            <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarComision(2)">
                                                 <i class="fa fa-save"></i> Registrar
                                             </button>
                                         </div>
@@ -1083,7 +1083,7 @@
             // =======================
             // REGISTRAR CONFIGURACIÓN DE COMISIÓN
             // =======================
-            registrarCotizacion(data){
+            registrarComision(data){
                 if(this.validarRegistrarComision(data)){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1106,8 +1106,8 @@
                     'arrayData'             :   (data) == 1 ? this.fillDetalleFlagComision.arrayElementoVenta : this.fillDetalleFlagComision.arrayLineas,
                     'tipo'                  :   data
                 }).then(response => {
-                    console.log(response);
                     swal('Comisión registrada exitosamente');
+                    this.limpiarProceso();
                 }).catch(error => {
                     this.errors = error
                 });
@@ -1222,6 +1222,24 @@
                 this.paginationModal.last_page = 0,
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
+            },
+            limpiarProceso(){
+                this.fillProveedor.nidproveedor = 0;
+                this.fillProveedor.cproveedornombre = '';
+                this.checked = true;
+                this.fillConfigurarComision.cflagturno = '';
+                this.fillConfigurarComision.cnombreturno = '';
+                this.fillConfigurarComision.nidturnovendedor = '';
+                this.fillConfigurarComision.nidflagcomision = 1;
+                this.fillBusqTipoElemento.ntpoelemen = 0;
+                this.fillConfigurarComision.nidconcepto = 0;
+                this.fillConfigurarComision.nidtipocomision = 0;
+                this.fillConfigurarComision.nidtipomoneda = 0;
+                this.fillConfigurarComision.nvalor = 0;
+                this.fillDetalleFlagComision.arrayElementoVenta = [];
+                this.fillDetalleFlagComision.arrayLineas = [];
+                this.fillDetalleFlagComision.flagTipo = '';
+
             },
             //Cerrar Modal
             cerrarModal(){

@@ -42,4 +42,7 @@
     <template v-if="menu==15">
         <comision :ruta="ruta"></comision>
     </template>
+    <template v-if="menu==16">
+        <objcomercial :ruta="ruta"></objcomercial>
+    </template>
 @endsection
