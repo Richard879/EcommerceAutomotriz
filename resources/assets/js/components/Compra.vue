@@ -674,6 +674,8 @@
             tabBuscarCompra(){
                 this.fillCompra.nidmarca = 0;
                 this.fillCompra.nidmodelo = 0;
+                this.fillCompra.dfechainicio = '';
+                this.fillCompra.dfechafin = '';
                 this.limpiarFormulario();
             },
             buscarCompras(){
@@ -911,8 +913,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-
-
             },
             validarRegistro(){
                 this.error = 0;
