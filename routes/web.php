@@ -95,13 +95,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pedido/SetCabeceraPedido', 'PedidoController@SetCabeceraPedido');
 
 
-<<<<<<< HEAD
-Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
-
-Route::get('/','Auth\LoginController@showLoginForm')->middleware('guest');
-Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-=======
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
     Route::get('/gescontacto/GetRefVehiculoByContacto_JFV', 'GestionContactoController@GetRefVehiculoByContacto_JFV');
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
@@ -122,5 +115,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/getObjComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
     Route::get('/getObjComercial/getDetalleVehiculo', 'ObjComercialController@getDetalleVehiculo');
     Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
+    
+    /*Rutas Fernando developer*/
+    Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
 });
->>>>>>> 672d0e45e6a4a6cb53ad60072ebe9f83b62d7ba1
