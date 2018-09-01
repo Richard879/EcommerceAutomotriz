@@ -551,6 +551,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">Nro Cotización</label>
                                                                                                 <div class="col-sm-8">
+                                                                                                    <input type="hidden" v-model="formDocRef.nidcompra">
                                                                                                     <label v-text="formDocRef.cnrocotizacion" class="form-control-label-readonly"></label>
                                                                                                 </div>
                                                                                             </div>
@@ -988,7 +989,8 @@
                     fsobreprecio: 0,
                     fdescuento: 0,
                     fdescuentolista: 0,
-                    fpreciofinal: 0
+                    fpreciofinal: 0,
+                    nidcompra: 0
                 },
                 arrayBanco: [],
                 arrayFormaPago: [],
@@ -1241,7 +1243,6 @@
                 this.vistaFormularioPedido = 0;
                 this.listarCompras(1);
             },
-            
             //=============== TAB ASIGNAR COMPRA ========================
             tabAsignarCompra(){
                 $('#Tab1').addClass('nav-link active');
@@ -1290,6 +1291,7 @@
                 $('#Tab2').addClass("nav-link active");
                 $('#TabAsignarCompra').removeClass('in active show');
                 $('#TabDocReferencias').addClass('in active show');
+                this.formDocRef.nidcompra = nIdCompra;
                 this.formDocRef.cnrovin = cNumeroVin;
                 this.formDocRef.nordencompra = nOrdenCompra;
                 this.formDocRef.cnombrecomercial = cNombreComercial;
@@ -1422,12 +1424,19 @@
                     'nIdEmpresa': 1300011,
                     'nIdSucursal': 1300013,
                     'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
+                    'nIdCompra': this.formDocRef.nidcompra,
                     'cNumeroPedido': 'PEDIDO-001',
                     'dFechaPedido': moment().format('YYYY-MM-DD'),
                     'nIdFormaPago': this.formDocRef.nidformapago,
                     'cGlosa': 'REGISTRO DE PEDIDO'
                 }).then(response => {
-                    this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                    }
+                    else{
+                        swal('VIN no Disponible');
+                    }
                 }).catch(error => {
                     this.errors = error
                 });

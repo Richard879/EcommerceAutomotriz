@@ -30,7 +30,7 @@
     </li>
     <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>
       <ul id="2003" class="collapse list-unstyled ">
-        <li id="200301" @click="menu=2003" onclick="ActivarMenu('2003')"><a href="#">Ventas</a></li>
+        <li id="200301" @click="menu=2003" onclick="ActivarMenu('200301')"><a href="#">Ventas</a></li>
       </ul>
     </li>
   </ul>

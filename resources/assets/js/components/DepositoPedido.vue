@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">GENERAR PEDIDO</h2>
+            <h2 class="no-margin-bottom">DEPÓSITOS DE PEDIDO</h2>
           </div>
         </header>
         
@@ -14,12 +14,12 @@
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#TabBuscaPedido" @click="tabBuscarPedido()" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> BUSCAR PEDIDOS
+                                        <i class="fa fa-search"></i> BUSCAR DEPÓSITOS
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#TabGeneraPedido" @click="tabGenerarPedido()" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list-alt"></i> GENERAR PEDIDO
+                                        <i class="fa fa-list-alt"></i> VER DEPÓSITOS
                                     </a>
                                 </li>
                             </ul>

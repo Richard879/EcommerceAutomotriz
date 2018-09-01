@@ -128,11 +128,12 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayPedido = DB::select('exec usp_Pedido_SetPedidoAprobacionVendedor ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Pedido_SetGenerarPedidoByVendedor ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
                                         $request->nIdCabeceraCotizacion,
+                                        $request->nIdCompra,
                                         $request->cNumeroPedido,
                                         $request->dFechaPedido,
                                         $request->nIdFormaPago,
