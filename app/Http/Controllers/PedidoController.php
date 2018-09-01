@@ -85,7 +85,7 @@ class PedidoController extends Controller
         return response()->json($objListaDetalle);
     }
 
-    public function GetLstPedidosIngresadas(Request $request)
+    public function GetLstPedidosPendienteAprobacion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -99,7 +99,7 @@ class PedidoController extends Controller
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
         $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
 
-        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosIngresadas ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosPendienteAprobacion ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nidempresa, $nidsucursal,
                                         $nidmarca, $nidmodelo, 

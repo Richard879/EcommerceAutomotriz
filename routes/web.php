@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetListEventoElementoVenta', 'CotizacionController@GetListEventoElementoVenta');
     Route::post('/gescotizacion/SetCabeceraCotizacion', 'CotizacionController@SetCabeceraCotizacion');
     Route::post('/gescotizacion/SetDetalleCotizacion', 'CotizacionController@SetDetalleCotizacion');
-    Route::get('/pedido/GetLstPedidosIngresadas', 'PedidoController@GetLstPedidosIngresadas');
+    Route::get('/pedido/GetLstPedidosPendienteAprobacion', 'PedidoController@GetLstPedidosPendienteAprobacion');
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');

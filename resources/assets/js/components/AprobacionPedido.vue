@@ -512,7 +512,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/pedido/GetLstPedidosIngresadas';
+                var url = this.ruta + '/pedido/GetLstPedidosPendienteAprobacion';
                 axios.get(url, {
                     params: {
                         'nidempresa': this.fillBusquedaPedido.nidempresa,
