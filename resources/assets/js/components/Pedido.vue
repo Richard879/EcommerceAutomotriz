@@ -149,9 +149,9 @@
                                                                             <!--<th>Acciones</th>-->
                                                                             <th>Nro Pedido</th>
                                                                             <th>Vendedor</th>
-                                                                            <th>Contacto<nav></nav></th>
+                                                                            <th>Contacto</th>
+                                                                            <th>Vehiculo</th>
                                                                             <th>Dirección</th>
-                                                                            <th>Teléfono</th>
                                                                             <th>Celular</th>
                                                                             <th>Email</th>
                                                                             <th>Fecha Pedido</th>
@@ -170,8 +170,8 @@
                                                                             <td v-text="pedido.cNumeroPedido"></td>
                                                                             <td v-text="pedido.cVendedorNombre"></td>
                                                                             <td v-text="pedido.cContacto"></td>
+                                                                            <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                             <td v-text="pedido.cDireccion"></td>
-                                                                            <td v-text="pedido.cTelefonoFijo"></td>
                                                                             <td v-text="pedido.nTelefonoMovil"></td>
                                                                             <td v-text="pedido.cEmail"></td>
                                                                             <td v-text="pedido.dFechaPedido"></td>
@@ -316,9 +316,9 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Coti.</th>
                                                                                 <th>Vendedor</th>
-                                                                                <th>Contacto<nav></nav></th>
+                                                                                <th>Contacto</th>
+                                                                                <th>Vehiculo</th>
                                                                                 <th>Dirección</th>
-                                                                                <th>Teléfono</th>
                                                                                 <th>Celular</th>
                                                                                 <th>Email</th>
                                                                                 <th>Fecha Inicio</th>
@@ -337,8 +337,8 @@
                                                                                 <td v-text="pedido.cNumeroCotizacion"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cDireccion"></td>
-                                                                                <td v-text="pedido.cTelefonoFijo"></td>
                                                                                 <td v-text="pedido.nTelefonoMovil"></td>
                                                                                 <td v-text="pedido.cEmail"></td>
                                                                                 <td v-text="pedido.dFechaCotizacion"></td>

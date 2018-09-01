@@ -63,6 +63,24 @@
                                     </div>
                                 </div>-->
                                 <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" v-model="fillBusquedaPedido.dfechainicio" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" v-model="fillBusquedaPedido.dfechafin" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <div class="col-md-6">
                                         <div class="row">
                                             <label class="col-md-4 form-control-label">Marca</label>
@@ -82,24 +100,6 @@
                                                     <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
                                                     </option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
-                                            <div class="col-sm-8">
-                                                <input type="date" v-model="fillBusquedaPedido.dfechainicio" class="form-control form-control-sm">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                            <div class="col-sm-8">
-                                                <input type="date" v-model="fillBusquedaPedido.dfechafin" class="form-control form-control-sm">
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +140,7 @@
                                                         <i class="fa fa-check" aria-hidden="true"></i>
                                                     </a>
                                                 </td>
-                                                <td v-text="pedido.nIdCabeceraPedido"></td>
+                                                <td v-text="pedido.cNumeroPedido"></td>
                                                 <td v-text="pedido.Vendedor"></td>
                                                 <td v-text="pedido.cContacto"></td>
                                                 <td v-text="pedido.Vehiculo"></td>
