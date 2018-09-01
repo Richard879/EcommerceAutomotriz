@@ -137,13 +137,13 @@
                                             <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
                                                 <td>
                                                     <a href="#" @click.prevent="aprobarPedido(pedido.nIdCabeceraPedido)" :title="'Aprobar ' +pedido.nIdCabeceraPedido">
-                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                        <i class="fa-md fa fa-check" aria-hidden="true"></i>
                                                     </a>
                                                 </td>
                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                 <td v-text="pedido.Vendedor"></td>
                                                 <td v-text="pedido.cContacto"></td>
-                                                <td v-text="pedido.Vehiculo"></td>
+                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                             </tr>
                                         </tbody>
                                     </table>
