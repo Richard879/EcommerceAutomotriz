@@ -77,7 +77,7 @@
                                                     <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                     <td>
                                                         <a href="#" @click="abrirFormulario('elemento','actualizar', elemento)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Actualizar ' +elemento.cElemenNombre">
+                                                            :title="'Editar ' +elemento.cElemenNombre">
                                                             <i class="fa-md fa fa-edit"></i>
                                                         </a>
                                                         <template v-if="elemento.cElementoEstado=='A'">
