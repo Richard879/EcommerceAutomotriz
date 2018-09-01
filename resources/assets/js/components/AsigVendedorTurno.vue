@@ -18,7 +18,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link disabled" id="tab02" href="#TabAsignacion" @click="tabAsignacion" role="tab" data-toggle="tab">
+                                    <a class="nav-link disabled" id="tab02" href="#TabAsignacion" role="tab" data-toggle="tab">
                                         <i class="fa fa-list-ol"></i> ASIGNACIÓN
                                     </a>
                                 </li>
@@ -33,78 +33,63 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">BUSQUEDA</h3>
                                                     </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <form class="form-horizontal">
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input type="text" v-model="fillFormularioGeneral.cempresa" class="form-control form-control-sm" readonly>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="fillFormularioGeneral.cempresa" class="form-control form-control-sm" readonly>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input type="text" v-model="fillFormularioGeneral.csucursal" class="form-control form-control-sm" readonly>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">Año</label>
-                                                                    <div class="col-sm-8">
-                                                                        <label v-text="fillFormularioGeneral.caño" class="form-control-label-readonly"></label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">Mes</label>
-                                                                    <div class="col-sm-8">
-                                                                        <label v-text="fillFormularioGeneral.cmes" class="form-control-label-readonly"></label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-md-6">
-                                                                <div class="row">
-                                                                    <label class="col-md-4 form-control-label">Jefe de Ventas</label>
-                                                                    <div class="col-md-8">
-                                                                        <label v-text="fillFormularioGeneral.cusuarionombre" class="form-control-label-readonly"></label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="row">
-                                                                    <label class="col-md-4 form-control-label">Turno</label>
-                                                                    <div class="col-md-8">
-                                                                        <div class="input-group">
-                                                                            <input type="text" v-model="fillFormularioGeneral.cnombreturno" disabled="disabled" class="form-control form-control-sm">
-                                                                            <div class="input-group-prepend">
-                                                                                <button type="button" title="Buscar Turno" class="btn btn-info btn-corner btn-sm" @click="abrirModal('turno','buscar')">
-                                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                                </button>
-                                                                            </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="fillFormularioGeneral.csucursal" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6 offset-sm-5">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVendedoresAsignadosJV(1)">
-                                                                    <i class="fa fa-search"></i> Buscar
-                                                                </button>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Año</label>
+                                                                        <div class="col-sm-8">
+                                                                            <label v-text="fillFormularioGeneral.caño" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Mes</label>
+                                                                        <div class="col-sm-8">
+                                                                            <label v-text="fillFormularioGeneral.cmes" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </form>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">Jefe de Ventas</label>
+                                                                        <div class="col-md-8">
+                                                                            <label v-text="fillFormularioGeneral.cusuarionombre" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6 offset-sm-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVendedoresAsignadosJV(1)">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -116,7 +101,7 @@
                                                         <form class="form-horizontal">
                                                             <div class="col-lg-12">
                                                                 <template v-if="arrayVendedoresByIdJV.length">
-                                                                    <div class="table-responsive barraLateral">
+                                                                    <div class="table-responsive">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
@@ -127,7 +112,7 @@
                                                                             <tbody>
                                                                                 <tr v-for="vendedor in arrayVendedoresByIdJV" :key="vendedor.cParNombre">
                                                                                     <td>
-                                                                                        <a href="#" @click="asingarVendedorByJefe(vendedor);">
+                                                                                        <a href="#" @click="asigarVendedorByJefe(vendedor);">
                                                                                             <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
                                                                                         </a>
                                                                                     </td>
@@ -180,6 +165,147 @@
                                     </section>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabAsignacion">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">ASIGNACIÓN</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Año</label>
+                                                                        <div class="col-sm-8">
+                                                                            <label v-text="fillFormularioGeneral.caño" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Mes</label>
+                                                                        <div class="col-sm-8">
+                                                                            <label v-text="fillFormularioGeneral.cmes" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">Jefe de Ventas</label>
+                                                                        <div class="col-md-8">
+                                                                            <label v-text="fillFormularioGeneral.cusuarionombre" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">Vendedor</label>
+                                                                        <div class="col-md-8">
+                                                                            <label v-text="fillFormularioGeneral.cvendedornombre" class="form-control-label-readonly"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">Turno</label>
+                                                                        <div class="col-md-8">
+                                                                            <div class="input-group">
+                                                                                <input type="text" v-model="fillFormularioGeneral.cnombreturno" disabled="disabled" class="form-control form-control-sm">
+                                                                                <div class="input-group-prepend">
+                                                                                    <button type="button" title="Buscar Turno" class="btn btn-info btn-corner btn-sm" @click="abrirModal('turno','buscar')">
+                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">CALENDARIO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                                    <div class="col-sm-12">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-6 form-control-label">Día Seleccionado</label>
+                                                                                            <div class="col-sm-6">
+                                                                                                <label v-text="message" class="form-control-label-readonly"></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                            <div class="col-sm-12">
+                                                                                <div class="card">
+                                                                                    <div class="card-body">
+                                                                                        <form class="form-horizontal">
+                                                                                            <div class="col-lg-12">
+                                                                                                <template v-if="arrayDias.length">
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table table-striped table-sm">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th>Eliminar</th>
+                                                                                                                    <th>Día</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                <tr v-for="(dia, index) in arrayDias" :key="dia.cdia">
+                                                                                                                    <td>
+                                                                                                                        <a href="#" @click.prevent="removerDiaLista(index);">
+                                                                                                                            <i class="fa-md fa fa-times-circle" aria-hidden="true"></i>
+                                                                                                                        </a>
+                                                                                                                    </td>
+                                                                                                                    <td v-text="dia.cdia"></td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </template>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <form class="form-horizontal">
+                                                                                <calendar-view
+                                                                                    :show-date="showDate"
+                                                                                    @click-date="onClickDay"
+                                                                                    class="theme-default holiday-us-traditional holiday-us-official">
+                                                                                    <calendar-view-header slot="header" slot-scope="t" :header-props="t.headerProps" @input="setShowDate" />
+                                                                                </calendar-view>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         </div>
@@ -272,6 +398,7 @@
 </template>
 
 <script>
+    import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     export default {
         props:['ruta', 'usuario'],
         data(){
@@ -293,6 +420,9 @@
                 },
                 arrayTurnoVendedor: [],
                 arrayVendedoresByIdJV: [],
+                showDate: new Date(),
+                message: '',
+                arrayDiasSeleccionados: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -321,6 +451,10 @@
                 mensajeError: []
             }
         },
+        components: {
+			CalendarView,
+			CalendarViewHeader,
+		},
         mounted(){
             this.llenarVentaActiva();
             this.informacionUsuario();
@@ -375,6 +509,14 @@
                     from++;
                 }
                 return pagesArray;
+            },
+            arrayDias: function(){
+                let me = this;
+                return me.arrayDiasSeleccionados.sort(function(a,b){
+                    var aa = a.split('-').reverse().join(),
+                        bb = b.split('-').reverse().join();
+                    return aa < bb ? -1 : (aa > bb ? 1 : 0);
+                });
             },
         },
         methods: {
@@ -468,9 +610,6 @@
                 if(this.fillFormularioGeneral.nidusuario == 0){
                     this.mensajeError.push('Debe ser Jefe de Ventas para realizar la busqueda');
                 }
-                if(this.fillFormularioGeneral.nidturnovendedor == 0){
-                    this.mensajeError.push('Debe ser seleccionar un turno');
-                }
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -481,7 +620,7 @@
                 this.paginationModal.current_page=page;
                 this.buscarVendedoresAsignadosJV(page);
             },
-            asingarVendedorByJefe(vendedor){
+            asigarVendedorByJefe(vendedor){
                 this.fillFormularioGeneral.nidvendedor = vendedor.nIdPar;
                 this.fillFormularioGeneral.cvendedornombre = vendedor.cParNombre;
                 this.tabAsignacion();
@@ -494,6 +633,40 @@
 
                 $('#TabBusqueda').removeClass("in active show");
                 $('#TabAsignacion').addClass('in active show');
+            },
+            setShowDate(d) {
+				this.showDate = d;
+            },
+            onClickDay(d) {
+                this.message = moment(d).format('YYYY-MM-DD');
+                // `Día: ${d.toLocaleDateString()}`
+                this.agregarDiasAlVendedor(this.message);
+            },
+            agregarDiasAlVendedor(dia){
+                if(this.encontrarDia(dia)){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El día seleccionado ya se encuentra agregado!',
+                    })
+                } else {
+                    this.arrayDiasSeleccionados.push({
+                        cdia : dia
+                    })
+                    toastr.success('Se Agregó el día"'+ dia +'" ');
+                }
+            },
+            encontrarDia(dia){
+                var sw=0;
+                this.arrayDiasSeleccionados.map(function (x) {
+                    if(x.cdia == dia){
+                        sw = true;
+                    }
+                });
+                return sw;
+            },
+            removerDiaLista(index){
+                this.$delete(this.arrayDiasSeleccionados, index);
             },
             // =================================================================
             // METODOS GENERICOS
