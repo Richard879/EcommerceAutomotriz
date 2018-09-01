@@ -151,12 +151,11 @@
                                                                             <th>Vendedor</th>
                                                                             <th>Contacto</th>
                                                                             <th>Vehiculo</th>
-                                                                            <th>Dirección</th>
-                                                                            <th>Celular</th>
-                                                                            <th>Email</th>
+                                                                            <th>Número VIN</th>
+                                                                            <th>Número DUA</th>
                                                                             <th>Fecha Pedido</th>
-                                                                            <th>Estado</th>
-                                                                            <th>Aprobación</th>
+                                                                            <th>Estado Pedido</th>
+                                                                            <th>Estado Aprobación</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -171,9 +170,8 @@
                                                                             <td v-text="pedido.cVendedorNombre"></td>
                                                                             <td v-text="pedido.cContacto"></td>
                                                                             <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
-                                                                            <td v-text="pedido.cDireccion"></td>
-                                                                            <td v-text="pedido.nTelefonoMovil"></td>
-                                                                            <td v-text="pedido.cEmail"></td>
+                                                                            <td v-text="pedido.cNumeroVin"></td>
+                                                                            <td v-text="pedido.cNumeroDUA"></td>
                                                                             <td v-text="pedido.dFechaPedido"></td>
                                                                             <td v-text="pedido.cEstadoPedido"></td>
                                                                             <td v-text="pedido.cEstadoAprobacion"></td>
@@ -314,16 +312,17 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>Nro Coti.</th>
+                                                                                <th>Nro Cotizacion</th>
                                                                                 <th>Vendedor</th>
-                                                                                <th>Contacto</th>
                                                                                 <th>Vehiculo</th>
+                                                                                <th>Contacto</th>
                                                                                 <th>Dirección</th>
                                                                                 <th>Celular</th>
                                                                                 <th>Email</th>
                                                                                 <th>Fecha Inicio</th>
                                                                                 <th>Fecha Venc.</th>
-                                                                                <th>Estado</th>
+                                                                                <th>Estado Cotización</th>
+                                                                                <th>Estado Aprobación</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -336,14 +335,15 @@
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroCotizacion"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
-                                                                                <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                                                <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cDireccion"></td>
                                                                                 <td v-text="pedido.nTelefonoMovil"></td>
                                                                                 <td v-text="pedido.cEmail"></td>
                                                                                 <td v-text="pedido.dFechaCotizacion"></td>
                                                                                 <td v-text="pedido.dFechaVencimientoCotizacion"></td>
                                                                                 <td v-text="pedido.cEstadoCotizacion"></td>
+                                                                                <td v-text="pedido.cEstadoAprobacion"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>

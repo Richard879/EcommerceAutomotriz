@@ -127,10 +127,14 @@
                                         <thead>
                                             <tr>
                                                 <th>Acciones</th>
-                                                <th>N° Pedido</th>
+                                                <th>Nro Pedido</th>
                                                 <th>Vendedor</th>
                                                 <th>Contacto</th>
-                                                <th>Vehículo</th>
+                                                <th>Vehiculo</th>
+                                                <th>Número VIN</th>
+                                                <th>Número DUA</th>
+                                                <th>Fecha Pedido</th>
+                                                <th>Estado Aprobación</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -144,6 +148,10 @@
                                                 <td v-text="pedido.Vendedor"></td>
                                                 <td v-text="pedido.cContacto"></td>
                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                <td v-text="pedido.cNumeroVin"></td>
+                                                <td v-text="pedido.cNumeroDUA"></td>
+                                                <td v-text="pedido.dFechaPedido"></td>
+                                                <td v-text="pedido.cEstadoAprobacion"></td>
                                             </tr>
                                         </tbody>
                                     </table>

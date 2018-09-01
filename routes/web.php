@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetListParametroByGrupo', 'ParametroController@GetListParametroByGrupo');
     Route::post('/pedido/SetCabeceraPedido', 'PedidoController@SetCabeceraPedido');
     Route::get('/pedido/GetListPedidoByTipoEstado', 'PedidoController@GetListPedidoByTipoEstado');
+    Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
