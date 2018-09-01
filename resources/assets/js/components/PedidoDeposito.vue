@@ -13,12 +13,12 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaPedido" @click="tabBuscarPedido()" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" id="Tab1" href="#TabBuscaPedido" @click="tabBuscarPedido()" role="tab" data-toggle="tab">
                                         <i class="fa fa-search"></i> BUSCAR PEDIDOS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabGeneraDeposito" @click="tabGenerarDeposito()" role="tab" data-toggle="tab">
+                                    <a class="nav-link disabled" id="Tab2" href="#TabGeneraDeposito" @click="tabGenerarDeposito()" role="tab" data-toggle="tab">
                                         <i class="fa fa-list-alt"></i> REALIZAR DEPÓSITOS
                                     </a>
                                 </li>
@@ -94,7 +94,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
+                                                                            <select name="account" v-model="fillPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
                                                                                 <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
                                                                                 </option>
                                                                             </select>
@@ -105,7 +105,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
+                                                                            <select name="account" v-model="fillPedido.nidmodelo" class="form-control form-control-sm">
                                                                                 <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
                                                                                 </option>
                                                                             </select>
@@ -162,7 +162,7 @@
                                                                         <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
                                                                             <td> 
                                                                                 <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
-                                                                                    <a href="#" @click="generarDeposito(pedido.nIdCabeceraPedido)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="activarTabDeposito(pedido.nIdCabeceraPedido)" data-toggle="tooltip" data-placement="top" 
                                                                                         :title="'Realizar Depósito ' + pedido.cNumeroPedido">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
@@ -228,73 +228,26 @@
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">BUSCAR COTIZACIONES</h3>
+                                                        <h3 class="h4">NUEVO DEPOSITO</h3>
                                                     </div>
                                                     <div class="card-body"> 
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                        <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formPedido.dfechainicio" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formPedido.dfechafin" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Marca</label>
-                                                                        <div class="col-sm-8">
-                                                                            <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
-                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                                            <!--<select name="account" v-model="fillPedido.nidestadopedido" class="form-control form-control-sm">
+                                                                                <option v-for="estado in arrayEstadoPedido" :key="estado.nIdPar" :value="estado.nIdPar" v-text="estado.cParNombre">
                                                                                 </option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                        <div class="col-sm-8">
-                                                                            <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
-                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            </select>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
+                                                            <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-5">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesIngresadas()"><i class="fa fa-search"></i> Buscar</button>
+                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -304,7 +257,7 @@
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
+                                                        <h3 class="h4">NUEVOS DEPOSITOS POR REGISTRAR</h3>
                                                     </div>
                                                     <div class="card-body">
                                                     </div>
@@ -469,57 +422,17 @@
                     dfechafin: '',
                     cnumeropedido: '',
                     cnumerovin: '',
+                    nidmarca: 0,
+                    nidmodelo: 0,
                     nidestadopedido: 0
                 },
+                arrayPedido: [],
                 arrayEstadoPedido: [],
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formPedido:{
-                    dfechainicio: '',
-                    dfechafin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    cnumerodocumento: '',
-                    cfiltrodescripcion: '',
-                    cnombrecontacto: ''
+                    
                 },
-                arrayPedido: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                vistaFormularioPedido: 1,
-                // ============== VARIABLES TAB COMPRA =================
-                formCompra:{
-                    nidcabeceracotizacion: 0,
-                    cnumerovin: '',
-                    cnombrecomercial: ''
-                },
-                arrayCompra: [],
-                // ============== VARIABLES TAB DOCUMENTOS REFERENCIA =================
-                formDocRef:{
-                    cnrocotizacion: '',
-                    cnrovin: '',
-                    nordencompra: '',
-                    ccolor: '',
-                    cmotor: '',
-                    cnombrecomercial: '',
-                    naniofabricacion: '',
-                    naniomodelo: '',
-                    nidbanco: 0,
-                    nidformapago: 0,
-                    dfechapedido: '',
-                    fpreciolista: 0,
-                    fprecioventap: 0,
-                    fbono: 0,
-                    fbonoespecial: 0,
-                    fsobreprecio: 0,
-                    fdescuento: 0,
-                    fdescuentolista: 0,
-                    fpreciofinal: 0
-                },
-                arrayBanco: [],
-                arrayFormaPago: [],
-                // ============== VARIABLES TAB DOCUMENTOS ASOCIADOS =================
-                arrayTablaDocumento: [],
                 // =============================================================
                 pagination : {
                     'total' : 0,
@@ -606,8 +519,8 @@
         },
         methods:{
             tabBuscarPedido(){
-                this.formPedido.nidmarca = 0;
-                this.formPedido.nidmodelo = 0;
+                this.fillPedido.nidmarca = 0;
+                this.fillPedido.nidmodelo = 0;
                 this.arrayPedido = [];
             },
             llenarEstadoPedido(){
@@ -620,6 +533,34 @@
                     }
                 }).then(response => {
                     this.arrayEstadoPedido = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboMarcas(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110032,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboModelos(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url,{
+                    params: {
+                        'nidmarca' : this.fillPedido.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.fillPedido.nidmodelo = 0;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -639,8 +580,8 @@
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
                         'cnumerovin': this.fillPedido.cnumerovin,
-                        'nidmarca': this.formPedido.nidmarca,
-                        'nidmodelo': this.formPedido.nidmodelo,
+                        'nidmarca': this.fillPedido.nidmarca,
+                        'nidmodelo': this.fillPedido.nidmodelo,
                         'nidestadopedido': this.fillPedido.nidestadopedido,
                         'page' : page
                     }
@@ -663,205 +604,18 @@
                 this.listarPedidos(page);
             },
             // ==========================================================
-            // =============  TAB GENERAR PEDIDO ========================
+            // =============  TAB GENERAR DEPOSITO ========================
             tabGenerarDeposito(){
-                this.llenarComboMarcas();
-                this.llenarComboModelos();
-                this.limpiarFormulario();
-                this.vistaFormularioPedido = 1;
-            },            
-            llenarComboMarcas(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayMarca = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboModelos(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
-
-                axios.get(url,{
-                    params: {
-                        'nidmarca' : this.formPedido.nidmarca
-                    }
-                }).then(response => {
-                    this.arrayModelo = response.data;
-                    this.formPedido.nidmodelo = 0;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            //============= LISTAR COTIZACIONES INGRESADAS ==============
-            buscarCotizacionesIngresadas(){
-                this.listarCotizacionesIngresadas(1);
-            },
-            listarCotizacionesIngresadas(page){
-                this.mostrarProgressBar();
-                var url = this.ruta + '/pedido/GetLstCotizacionIngresadas';
-                axios.get(url, {
-                    params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
-                        'dfechainicio' : this.formPedido.dfechainicio,
-                        'dfechafin' : this.formPedido.dfechafin,
-                        'nidmarca' : this.formPedido.nidmarca,
-                        'nidmodelo' : this.formPedido.nidmodelo,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayPedido = response.data.arrayPedido.data;
-                    this.pagination.current_page =  response.data.arrayPedido.current_page;
-                    this.pagination.total = response.data.arrayPedido.total;
-                    this.pagination.per_page    = response.data.arrayPedido.per_page;
-                    this.pagination.last_page   = response.data.arrayPedido.last_page;
-                    this.pagination.from        = response.data.arrayPedido.from;
-                    this.pagination.to           = response.data.arrayPedido.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaCotizacion(page){
-                this.pagination.current_page=page;
-                this.listarCotizacionesIngresadas(page);
-            },
-            desactivar(nIdPedido){
-                
-                swal({
-                        title: 'Estas seguro de eliminar esta Pedido?',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Desactivar!',
-                        cancelButtonText: 'No, cancelar!'
-                        }).then((result) => {
-                        var url = this.ruta + '/compra/desactivar';
-                        axios.put(url, {
-                            nIdPedido: nIdPedido
-                        }).then(response => {                            
-                            swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                            );
-                            this.listarPedidos(1);                   
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    })
-            },
-            //=============== APROBAR COTIZACION ========================
-            generarDeposito(nIdCabeceraCotizacion, cNumeroCotizacion, cContacto){
-                this.formPedido.cnombrecontacto = cContacto;
-                this.formCompra.nidcabeceracotizacion = nIdCabeceraCotizacion;
-                this.formDocRef.cnrocotizacion = cNumeroCotizacion;
-                this.vistaFormularioPedido = 0;
-                this.listarCompras(1);
-            },
-            
-            //=============== TAB ASIGNAR COMPRA ========================
-            tabAsignarCompra(){
-                $('#Tab1').addClass('nav-link active');
-                $('#Tab2').removeClass('nav-link active');
-                $('#Tab2').addClass("nav-link disabled");
-                $('#Tab3').removeClass('nav-link active');
-                $('#Tab3').addClass('nav-link disabled');
-                $('#TabAsignarCompra').addClass('in active show');
-                $('#TabDocReferencias').removeClass('in active show');
-                $('#TabDocAsociados').removeClass('in active show');
-            },
-            listarCompras(page){
-                this.mostrarProgressBar();
-                var url = this.ruta + '/pedido/GetLstCompraByIdModelo';
-                axios.get(url, {
-                    params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
-                        'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion,
-                        'cnumerovin' : this.formCompra.cnumerovin,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.pagination.current_page =  response.data.arrayCompra.current_page;
-                    this.pagination.total = response.data.arrayCompra.total;
-                    this.pagination.per_page    = response.data.arrayCompra.per_page;
-                    this.pagination.last_page   = response.data.arrayCompra.last_page;
-                    this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaCompra(page){
-                this.pagination.current_page=page;
-                this.listarCompras(page);
-            },
-            //============= TAB DOCUMENTOS REFERENCIAS ==================
-            activarTabDocReferencias(nIdCompra, cNumeroVin, nOrdenCompra, cNombreComercial, nAnioFabricacion, nAnioModelo, cNombreColor, cNombreMotor){
+            },      
+            activarTabDeposito(nIdCabeceraPedido){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
-                $('#Tab2').addClass("nav-link active");
-                $('#TabAsignarCompra').removeClass('in active show');
-                $('#TabDocReferencias').addClass('in active show');
-                this.formDocRef.cnrovin = cNumeroVin;
-                this.formDocRef.nordencompra = nOrdenCompra;
-                this.formDocRef.cnombrecomercial = cNombreComercial;
-                this.formDocRef.naniofabricacion = nAnioFabricacion;
-                this.formDocRef.naniomodelo = nAnioModelo;
-                this.formDocRef.ccolor = cNombreColor;
-                this.formDocRef.cmotor = cNombreMotor;
-                this.obtenerFechaRegistroPedido();
-                this.listarDatosListaPrecioDetalle(parseInt(this.formCompra.nidcabeceracotizacion));
-                this.llenarComboBanco();
-                this.llenarFormaPago();
-            },
-            obtenerFechaRegistroPedido(){
-                var f = new Date();
-                var day = String(f.getDate());
-                var month = String((f.getMonth() +1));
-                if (month.length < 2){
-                    month = "0" + "" + month;
-                }
-                if (day.length < 2){
-                    day = "0" + "" + day;
-                }
-                this.formDocRef.dfechapedido  = day + "/" + month + "/" + f.getFullYear();
-            },
-            listarDatosListaPrecioDetalle(nidcabeceracotizacion){
-                this.mostrarProgressBar();
-
-                var url = this.ruta + '/pedido/GetListaPrecioDetalleByIdCotizacion';
-                axios.get(url, {
-                    params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
-                        'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
-                    }
-                }).then(response => {
-                    this.formDocRef.fpreciolista = response.data[0].fPrecioLista;
-                    this.formDocRef.fprecioventap = response.data[0].fPrecioVentaP;
-                    this.formDocRef.fdescuentolista = response.data[0].fDescuento;
-                    this.formDocRef.fbono = response.data[0].fBono;
-                    this.formDocRef.fbonoespecial = response.data[0].fBonoEspecial;
-                }).then(function (response) {
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
+                $('#Tab2').addClass("nav-link active"); 
+                $('#TabBuscaPedido').removeClass('in active show');
+                $('#TabGeneraDeposito').addClass('in active show');
+            },      
+            //=============== APROBAR COTIZACION ========================
             llenarComboBanco(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -887,141 +641,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            //============= TAB DOCUMENTOS ASOCIADOS ===================
-            activarTabDocAsociados(){
-                if(this.validaMostrarTabAsociados()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                $('#Tab2').removeClass('nav-link active');
-                $('#Tab2').addClass("nav-link");
-                $('#Tab3').removeClass('nav-link disabled');
-                $('#Tab3').addClass("nav-link active");
-                $('#TabDocReferencias').removeClass('in active show');
-                $('#TabDocAsociados').addClass('in active show');
-                this.llenarTablaDocumentos();
-            },
-            validaMostrarTabAsociados(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.formDocRef.nidformapago == 0){
-                    this.mensajeError.push('Debes Seleccionar Forma de Pago');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            llenarTablaDocumentos(){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
-                
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110068,
-                        'opcion' : 1
-                    }
-                }).then(response => {
-                    this.arrayTablaDocumento = response.data.arrayParametro.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            getFile(e){
-                let selectFile = e.target.files;
-                for(let i= 0; i < selectFile.length; i++){
-                    this.attachment.push(selectFile[i]);
-                }
-            },
-            registrarPedido(){
-                /*if(this.validarRegistrarCotizacion()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }*/
-
-                var url = this.ruta + '/pedido/SetCabeceraPedido';
-                axios.post(url, {
-                    'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
-                    'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
-                    'cNumeroPedido': 'PEDIDO-001',
-                    'dFechaPedido': moment().format('YYYY-MM-DD'),
-                    'nIdFormaPago': this.formDocRef.nidformapago,
-                    'cGlosa': 'REGISTRO DE PEDIDO'
-                }).then(response => {
-                    this.subirArchivos(response.data[0].nIdCabeceraPedido);
-                }).catch(error => {
-                    this.errors = error
-                });
-            },
-            subirArchivos(nIdCabeceraPedido){
-                this.mostrarProgressBar();
-                let me = this;
-
-                for(let i= 0; i < this.attachment.length; i++){
-                    this.form.append('file[]', this.attachment[i]);
-                }
-
-                this.arrayTablaDocumento.map(function(info, i) {
-                    me.form.append('data['+i+']["nIdPar"]', info.nIdPar);
-                    me.form.append('data['+i+']["cParNombre"]', info.cParNombre);
-                    me.form.append('data['+i+']["nIdCabeceraPedido"]', nIdCabeceraPedido);
-                });
-
-                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
-
-                var url = this.ruta + '/pedido/subirArchivo';
-
-                axios.post(url, this.form, config).then(response=>{
-                    swal('Pedido registrado exitosamente');
-                    this.vistaFormularioPedido = 1;
-                    this.limpiarFormulario();
-                }).then(function (response) {
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            // ==========================================================
-            // =============  BUSCAR PROVEEDORES ========================
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-                
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formPedido.nidproveedor = nProveedorId;
-                this.formPedido.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
             },
             // =============================================
             // =============  MODAL ========================
