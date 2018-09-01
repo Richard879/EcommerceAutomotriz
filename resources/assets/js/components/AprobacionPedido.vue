@@ -33,7 +33,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <!--<div class="form-group row">
                                     <div class="col-sm-6">
                                         <div class="row">
                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
@@ -61,7 +61,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <div class="row">
@@ -476,11 +476,12 @@
                 });
             },
             llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
 
                 axios.get(url, {
                     params: {
-                        'nidlinea': this.fillBusquedaPedido.nidlinea
+                        'ngrupoparid' : 110032,
+                        'opcion' : 0
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -511,12 +512,11 @@
                     return;
                 }
 
-                var url = this.ruta + '/getPedido/GetLstPedidos';
+                var url = this.ruta + '/pedido/GetLstPedidosIngresadas';
                 axios.get(url, {
                     params: {
                         'nidempresa': this.fillBusquedaPedido.nidempresa,
                         'nidsucursal' : this.fillBusquedaPedido.nidsucursal,
-                        'nidlinea' : this.fillBusquedaPedido.nidlinea,
                         'nidmarca' : this.fillBusquedaPedido.nidmarca,
                         'nidmodelo' : this.fillBusquedaPedido.nidmodelo,
                         'dfechainicio': this.fillBusquedaPedido.dfechainicio,
@@ -579,7 +579,7 @@
                 }).then((result) => {
                     if (result.value) {
                         let me = this;
-                        var url = me.ruta + '/getPedido/aprobarPedido';
+                        var url = me.ruta + '/pedido/SetAprobarPedido';
                         axios.put(url,{
                             nidpedido: nIdPedido
                         }).then(function (response) {
@@ -642,6 +642,10 @@
                 //Modal Buscar Proveedores
                 this.arrayProveedor = [];
             },
+        },
+        mounted(){
+            this.llenarComboMarca();
+            this.llenarComboModelo();
         }
     }
 </script>

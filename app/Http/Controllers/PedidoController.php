@@ -85,36 +85,32 @@ class PedidoController extends Controller
         return response()->json($objListaDetalle);
     }
 
-    public function GetLstPedidos(Request $request)
+    public function GetLstPedidosIngresadas(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         $nidempresa    =   $request->nidempresa;
         $nidsucursal   =   $request->nidsucursal;
-        $nidlinea      =   $request->nidlinea;
         $nidmarca      =   $request->nidmarca;
         $nidmodelo     =   $request->nidmodelo;
         $dfechainicio  =   $request->dfechainicio;
         $dfechafin     =   $request->dfechafin;
 
-        $nidlinea = ($nidlinea == NULL) ? ($nidlinea = '') : $nidlinea;
-        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = '') : $nidmarca;
-        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = '') : $nidmodelo;
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
         $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
 
-        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosIngresadas ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosIngresadas ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $nidempresa, $nidsucursal, $nidlinea,
-                                        $nidmarca, $nidmodelo, $dfechainicio,
-                                        $dfechafin, Auth::user()->id
+                                        $nidempresa, $nidsucursal,
+                                        $nidmarca, $nidmodelo, 
+                                        $dfechainicio, $dfechafin, Auth::user()->id
                                     ]);
 
         $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 
-    public function aprobarPedido(Request $request)
+    public function SetAprobarPedido(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 

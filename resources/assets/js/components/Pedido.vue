@@ -156,6 +156,7 @@
                                                                             <th>Email</th>
                                                                             <th>Fecha Pedido</th>
                                                                             <th>Estado</th>
+                                                                            <th>Aprobación</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -175,6 +176,7 @@
                                                                             <td v-text="pedido.cEmail"></td>
                                                                             <td v-text="pedido.dFechaPedido"></td>
                                                                             <td v-text="pedido.cEstadoPedido"></td>
+                                                                            <td v-text="pedido.cEstadoAprobacion"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
