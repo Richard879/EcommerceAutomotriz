@@ -2,35 +2,35 @@
   <!-- Sidebar Navidation Menus-->
   <span class="heading">MENÚ PRINCIPAL</span>
   <ul class="list-unstyled">
-    <li><a href="#04" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-language"></i>Tablas Maestras</a>
-      <ul id="04" class="collapse list-unstyled ">
-        <li id="0401" @click="menu=1" onclick="ActivarMenu('0401')"><a href="#">Elemento Venta</a></li>
-        <li id="0402" @click="menu=2" onclick="ActivarMenu('0402')"><a href="#">Versión Vehículo</a></li>
+    <li><a href="#2001" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-language"></i>Tablas Maestras</a>
+      <ul id="2001" class="collapse list-unstyled ">
+        <li id="200101" @click="menu=200101" onclick="ActivarMenu('200101')"><a href="#">Elemento Venta</a></li>
+        <li id="200102" @click="menu=200102" onclick="ActivarMenu('200102')"><a href="#">Versión Vehículo</a></li>
       </ul>
     </li>
-    <li><a href="#05" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-home"></i>Configuración Sucursal</a>
-      <ul id="05" class="collapse list-unstyled ">
-        <li id="0502" @click="menu=5" onclick="ActivarMenu('0502')"><a href="#">Lista de Precios</a></li>
-        <li id="0503" @click="menu=6" onclick="ActivarMenu('0503')"><a href="#">Compra</a></li>
-        <li id="0504" @click="menu=7" onclick="ActivarMenu('0504')"><a href="#">Warrant Operativo</a></li>
-        <li id="0505" @click="menu=8" onclick="ActivarMenu('0505')"><a href="#">Warrant Financiero</a></li>
-        <li id="0506" @click="menu=9" onclick="ActivarMenu('0506')"><a href="#">Evento Campaña</a></li>
-        <li id="0507" @click="menu=10" onclick="ActivarMenu('0507')"><a href="#">Gestión Contactos JF</a></li>
-        <li id="0508" @click="menu=11" onclick="ActivarMenu('0508')"><a href="#">Gestión Contactos V</a></li>
-        <li id="0509" @click="menu=12" onclick="ActivarMenu('0509')"><a href="#">Generar Cotización</a></li>
-        <li id="0510" @click="menu=13" onclick="ActivarMenu('0510')"><a href="#">Generar Pedido</a></li>
-        <li id="0511" @click="menu=14" onclick="ActivarMenu('0511')"><a href="#">Aprobar Pedido</a></li>
-        <li id="0512" @click="menu=15" onclick="ActivarMenu('0512')"><a href="#">Comisión</a></li>
-        <li id="0513" @click="menu=16" onclick="ActivarMenu('0513')"><a href="#">Obj.Comercial Compra</a></li>
-        <li id="0514" @click="menu=17" onclick="ActivarMenu('0514')"><a href="#">Solic.Carta Caracteristica</a></li>
-        <li id="0515" @click="menu=18" onclick="ActivarMenu('0515')"><a href="#">Asig.Vendedor Turno</a></li>
-        <li id="0516" @click="menu=19" onclick="ActivarMenu('0516')"><a href="#">Turno de Venta</a></li>
-        <li id="0517" @click="menu=20" onclick="ActivarMenu('0517')"><a href="#">Depósitos</a></li>
+    <li><a href="#2002" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-home"></i>Configuración Sucursal</a>
+      <ul id="2002" class="collapse list-unstyled ">
+        <li id="200201" @click="menu=200201" onclick="ActivarMenu('200201')"><a href="#">Lista de Precios</a></li>
+        <li id="200202" @click="menu=200202" onclick="ActivarMenu('200202')"><a href="#">Compra</a></li>
+        <li id="200203" @click="menu=200203" onclick="ActivarMenu('200203')"><a href="#">Warrant Operativo</a></li>
+        <li id="200204" @click="menu=200204" onclick="ActivarMenu('200204')"><a href="#">Warrant Financiero</a></li>
+        <li id="200205" @click="menu=200205" onclick="ActivarMenu('200205')"><a href="#">Evento Campaña</a></li>
+        <li id="200206" @click="menu=200206" onclick="ActivarMenu('200206')"><a href="#">Gestión Contactos JF</a></li>
+        <li id="200207" @click="menu=200207" onclick="ActivarMenu('200207')"><a href="#">Gestión Contactos V</a></li>
+        <li id="200208" @click="menu=200208" onclick="ActivarMenu('200208')"><a href="#">Generar Cotización</a></li>
+        <li id="200209" @click="menu=200209" onclick="ActivarMenu('200209')"><a href="#">Generar Pedido</a></li>
+        <li id="200210" @click="menu=200210" onclick="ActivarMenu('200210')"><a href="#">Aprobar Pedido</a></li>
+        <li id="200211" @click="menu=200211" onclick="ActivarMenu('200211')"><a href="#">Comisión</a></li>
+        <li id="200212" @click="menu=200212" onclick="ActivarMenu('200212')"><a href="#">Obj.Comercial Compra</a></li>
+        <li id="200213" @click="menu=200213" onclick="ActivarMenu('200213')"><a href="#">Solic.Carta Caracteristica</a></li>
+        <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asig.Vendedor Turno</a></li>
+        <li id="200215" @click="menu=200215" onclick="ActivarMenu('200215')"><a href="#">Turno de Venta</a></li>
+        <li id="200216" @click="menu=200216" onclick="ActivarMenu('200216')"><a href="#">Depósitos</a></li>
       </ul>
     </li>
-    <li><a href="#06" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>
-      <ul id="06" class="collapse list-unstyled ">
-        <li id="0601" @click="menu=4" onclick="ActivarMenu('0501')"><a href="#">Ventas</a></li>
+    <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>
+      <ul id="2003" class="collapse list-unstyled ">
+        <li id="200301" @click="menu=2003" onclick="ActivarMenu('200301')"><a href="#">Ventas</a></li>
       </ul>
     </li>
   </ul>

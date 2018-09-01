@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetListParametroByGrupo', 'ParametroController@GetListParametroByGrupo');
     Route::post('/pedido/SetCabeceraPedido', 'PedidoController@SetCabeceraPedido');
     Route::get('/pedido/GetListPedidoByTipoEstado', 'PedidoController@GetListPedidoByTipoEstado');
+    Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
@@ -106,8 +107,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetListEventoElementoVenta', 'CotizacionController@GetListEventoElementoVenta');
     Route::post('/gescotizacion/SetCabeceraCotizacion', 'CotizacionController@SetCabeceraCotizacion');
     Route::post('/gescotizacion/SetDetalleCotizacion', 'CotizacionController@SetDetalleCotizacion');
-    Route::get('/getPedido/GetLstPedidos', 'PedidoController@GetLstPedidos');
-    Route::put('/getPedido/aprobarPedido', 'PedidoController@aprobarPedido');
+    Route::get('/pedido/GetLstPedidosPendienteAprobacion', 'PedidoController@GetLstPedidosPendienteAprobacion');
+    Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
     Route::post('/getComision/SetRegistrarComision', 'ComisionController@SetRegistrarComision');

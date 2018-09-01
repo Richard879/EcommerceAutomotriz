@@ -85,36 +85,32 @@ class PedidoController extends Controller
         return response()->json($objListaDetalle);
     }
 
-    public function GetLstPedidos(Request $request)
+    public function GetLstPedidosPendienteAprobacion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         $nidempresa    =   $request->nidempresa;
         $nidsucursal   =   $request->nidsucursal;
-        $nidlinea      =   $request->nidlinea;
         $nidmarca      =   $request->nidmarca;
         $nidmodelo     =   $request->nidmodelo;
         $dfechainicio  =   $request->dfechainicio;
         $dfechafin     =   $request->dfechafin;
 
-        $nidlinea = ($nidlinea == NULL) ? ($nidlinea = '') : $nidlinea;
-        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = '') : $nidmarca;
-        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = '') : $nidmodelo;
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
         $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
 
-        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosIngresadas ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosPendienteAprobacion ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $nidempresa, $nidsucursal, $nidlinea,
-                                        $nidmarca, $nidmodelo, $dfechainicio,
-                                        $dfechafin, Auth::user()->id
+                                        $nidempresa, $nidsucursal,
+                                        $nidmarca, $nidmodelo, 
+                                        $dfechainicio, $dfechafin, Auth::user()->id
                                     ]);
 
         $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 
-    public function aprobarPedido(Request $request)
+    public function SetAprobarPedido(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -128,11 +124,12 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayPedido = DB::select('exec usp_Pedido_SetPedidoAprobacionVendedor ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Pedido_SetGenerarPedidoByVendedor ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
                                         $request->nIdCabeceraCotizacion,
+                                        $request->nIdCompra,
                                         $request->cNumeroPedido,
                                         $request->dFechaPedido,
                                         $request->nIdFormaPago,
@@ -218,6 +215,37 @@ class PedidoController extends Controller
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
         $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoByTipoEstado ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nIdEmpresa, $nIdSucursal, $dFechaInicio, $dFechaFin,
+                                        $cNumeroPedido, $cNumeroVin,
+                                        $nIdMarca, $nIdModelo,
+                                        $nIdEstadoPedido, Auth::user()->id
+                                    ]);
+
+        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        return ['arrayPedido'=>$arrayPedido];
+    }
+
+    public function GetListPedidoAprobados(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $dFechaInicio   =   $request->dfechainicio;
+        $dFechaFin      =   $request->dfechafin;
+        $cNumeroPedido  =   $request->cnumeropedido;
+        $cNumeroVin     =   $request->cnumerovin;
+        $nIdMarca       =   $request->nidmarca;
+        $nIdModelo      =   $request->nidmodelo;
+        $nIdEstadoPedido  = $request->nidestadopedido;
+        
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+
+        $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoAprobados ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdEmpresa, $nIdSucursal, $dFechaInicio, $dFechaFin,
                                         $cNumeroPedido, $cNumeroVin,
