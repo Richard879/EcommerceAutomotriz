@@ -154,7 +154,7 @@
                                                     <td v-text="vehiculo.cNombreComercial"></td>
                                                     <td>
                                                         <a href="#" @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Actualizar ' +vehiculo.cNombreComercial">
+                                                            :title="'Editar ' +vehiculo.cNombreComercial">
                                                             <i class="fa-md fa fa-edit"></i>
                                                         </a>
                                                         <template v-if="vehiculo.cVersionVehEstado=='A'">

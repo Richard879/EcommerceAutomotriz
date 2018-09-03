@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+<<<<<<< HEAD
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+=======
+>>>>>>> 5bdf7ca1faf969ebb627f00ae8441d86a11c6bfd
 
 class TurnoVentaController extends Controller
 {

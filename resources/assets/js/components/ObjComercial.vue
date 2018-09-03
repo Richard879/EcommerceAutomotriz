@@ -57,11 +57,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Año</label>
                                                                         <div class="col-sm-8">
-<<<<<<< HEAD:resources/assets/js/components/GenerarPedido.vue
-                                                                            <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
-=======
                                                                             <label v-text="fillObjComerciales.caño" class="form-control-label-readonly"></label>
->>>>>>> 672d0e45e6a4a6cb53ad60072ebe9f83b62d7ba1:resources/assets/js/components/ObjComercial.vue
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -860,7 +856,6 @@
                     'fValorMoneda'          :   0,
                     'arrayData'             :   this.arrayDetalleVehiculoAdd
                 }).then(response => {
-                    console.log(response);
                     (data) == 1 ?
                         swal('Objetivo Comercial - Compra registrada exitosamente') :
                         swal('Objetivo Comercial - Venta registrada exitosamente');

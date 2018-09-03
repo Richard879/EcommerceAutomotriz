@@ -347,7 +347,7 @@
                                                                                                         <td><input type="number" min="0" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio"/></td>
                                                                                                         <td><input type="number" min="0" class="form-control form-control-sm" v-model="vehiculo.descuento"/></td>
                                                                                                         <td v-text="vehiculo.PrecioCierre"></td>
-                                                                                                        <td> {{ vehiculo.subtotal = vehiculo.cantidad*vehiculo.PrecioVenta }} </td>
+                                                                                                        <td> {{ vehiculo.subtotal = vehiculo.PrecioVenta - vehiculo.descuento }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>

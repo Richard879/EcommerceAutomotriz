@@ -3,49 +3,61 @@
     <template v-if="menu==0">
         <dashBoard>DashBoard</dashBoard>
     </template>
-    <template v-if="menu==1">
+    <template v-if="menu==200101">
         <elementoventa :ruta="ruta"></elementoventa>
     </template>
-    <template v-if="menu==2">
+    <template v-if="menu==200102">
         <versionvehiculo :ruta="ruta"></versionvehiculo>
     </template>
-    <template v-if="menu==5">
+    <template v-if="menu==200201">
         <listapreciovh :ruta="ruta"></listapreciovh>
     </template>
-    <template v-if="menu==6">
+    <template v-if="menu==200202">
         <compra :ruta="ruta"></compra>
     </template>
-    <template v-if="menu==7">
+    <template v-if="menu==200203">
         <woperativo :ruta="ruta"></woperativo>
     </template>
-    <template v-if="menu==8">
+    <template v-if="menu==200204">
         <wfinanciero :ruta="ruta"></wfinanciero>
     </template>
-    <template v-if="menu==9">
+    <template v-if="menu==200205">
         <campania :ruta="ruta"></campania>
     </template>
-    <template v-if="menu==10">
+    <template v-if="menu==200206">
         <gestioncontactojf :ruta="ruta"></gestioncontactojf>
     </template>
-    <template v-if="menu==11">
+    <template v-if="menu==200207">
         <gestioncontactov :ruta="ruta"></gestioncontactov>
     </template>
-    <template v-if="menu==12">
+    <template v-if="menu==200208">
         <cotizacion :ruta="ruta"></cotizacion>
     </template>
-    <template v-if="menu==13">
+    <template v-if="menu==200209">
         <pedido :ruta="ruta"></pedido>
     </template>
-    <template v-if="menu==14">
+    <template v-if="menu==200210">
         <aprobapedido :ruta="ruta"></aprobapedido>
     </template>
-    <template v-if="menu==15">
+    <template v-if="menu==200211">
         <comision :ruta="ruta"></comision>
     </template>
-    <template v-if="menu==16">
+    <template v-if="menu==200212">
         <objcomercial :ruta="ruta"></objcomercial>
     </template>
-    <template v-if="menu==19">
+    <template v-if="menu==200213">
+        <solcaracteristica :ruta="ruta"></solcaracteristica>
+    </template>
+    <template v-if="menu==200214">
+        <asigvendedorturno :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorturno>
+    </template>
+    <template v-if="menu==200215">
         <turnoventa :ruta="ruta"></turnoventa>
     </template>
+<<<<<<< HEAD
+=======
+    <template v-if="menu==200216">
+        <depositopedido :ruta="ruta"></depositopedido>
+    </template>
+>>>>>>> 5bdf7ca1faf969ebb627f00ae8441d86a11c6bfd
 @endsection
