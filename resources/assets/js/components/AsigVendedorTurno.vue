@@ -227,6 +227,32 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <template v-if="fillFormularioGeneral.cnombreturno" :class="[fillFormularioGeneral.cnombreturno != '' ? 'col-xs-12' : '']">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Seleccionar</th>
+                                                                                <th>Turno</th>
+                                                                                <th>Hora Inicio</th>
+                                                                                <th>Hora Fin</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="turno in arrayTurnoVendedor" :key="turno.cdia">
+                                                                                <td>
+                                                                                    <label class="checkbox-inline" :key="turno.nIdTurnoVendedor">
+                                                                                        <input :id="turno.nIdTurnoVendedor" type="radio" class="radio-template" v-model="fillFormularioGeneral.nidturnovendedor" :value="turno.nIdTurnoVendedor">
+                                                                                    </label>
+                                                                                </td>
+                                                                                <td v-text="turno.cTurno"></td>
+                                                                                <td> {{ turno.cHoraInicio }} {{ turno.cTiempoInicio}}  </td>
+                                                                                <td> {{ turno.cHoraFin }} {{ turno.cTiempoFin}}  </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </template>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -239,9 +265,11 @@
                                                     <div class="card-body">
                                                         <div class="container-fluid">
                                                             <div class="row">
-                                                                <div class="col-lg-4">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
+                                                                <template v-if="fillFormularioGeneral.nidturnovendedor">
+                                                                    <template v-if="arrayDias.length">
+                                                                        <div :class="[arrayDias.length ? 'col-lg-3' : '']">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
                                                                                     <div class="col-sm-12">
                                                                                         <div class="row">
                                                                                             <label class="col-sm-6 form-control-label">Día Seleccionado</label>
@@ -250,55 +278,66 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                            <div class="col-sm-12">
-                                                                                <div class="card">
-                                                                                    <div class="card-body">
+                                                                                    <div class="col-sm-12">
                                                                                         <form class="form-horizontal">
                                                                                             <div class="col-lg-12">
-                                                                                                <template v-if="arrayDias.length">
-                                                                                                    <div class="table-responsive">
-                                                                                                        <table class="table table-striped table-sm">
-                                                                                                            <thead>
-                                                                                                                <tr>
-                                                                                                                    <th>Eliminar</th>
-                                                                                                                    <th>Día</th>
-                                                                                                                </tr>
-                                                                                                            </thead>
-                                                                                                            <tbody>
-                                                                                                                <tr v-for="(dia, index) in arrayDias" :key="dia.cdia">
-                                                                                                                    <td>
-                                                                                                                        <a href="#" @click.prevent="removerDiaLista(index);">
-                                                                                                                            <i class="fa-md fa fa-times-circle" aria-hidden="true"></i>
-                                                                                                                        </a>
-                                                                                                                    </td>
-                                                                                                                    <td v-text="dia.cdia"></td>
-                                                                                                                </tr>
-                                                                                                            </tbody>
-                                                                                                        </table>
-                                                                                                    </div>
-                                                                                                </template>
+                                                                                                <div class="table-responsive">
+                                                                                                    <table class="table table-striped table-sm">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th>Eliminar</th>
+                                                                                                                <th>Día</th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                            <tr v-for="(dia, index) in arrayDias" :key="dia.cdia">
+                                                                                                                <td>
+                                                                                                                    <a href="#" @click.prevent="removerDiaLista(index);">
+                                                                                                                        <i class="fa-md fa fa-times-circle" aria-hidden="true"></i>
+                                                                                                                    </a>
+                                                                                                                </td>
+                                                                                                                <td v-text="dia.cdia"></td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </form>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
-                                                                            <form class="form-horizontal">
-                                                                                <calendar-view
-                                                                                    :show-date="showDate"
-                                                                                    @click-date="onClickDay"
-                                                                                    class="theme-default holiday-us-traditional holiday-us-official">
-                                                                                    <calendar-view-header slot="header" slot-scope="t" :header-props="t.headerProps" @input="setShowDate" />
-                                                                                </calendar-view>
-                                                                            </form>
+                                                                    </template>
+                                                                    <div :class="[arrayDias.length ? 'col-lg-9' : 'col-lg-12']">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <calendar-view
+                                                                                        :show-date="showDate"
+                                                                                        @click-date="onClickDay"
+                                                                                        class="theme-default holiday-us-traditional holiday-us-official">
+                                                                                        <calendar-view-header
+                                                                                                slot="header"
+                                                                                                slot-scope="t"
+                                                                                                :header-props="t.headerProps"
+                                                                                                @input="setShowDate" />
+                                                                                    </calendar-view>
+                                                                                </form>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                    <template v-if="arrayDias.length">
+                                                                        <div class="col-lg-12">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-md-9 offset-md-5">
+                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarVendedorTurno()">
+                                                                                        <i class="fa fa-save"></i> Registrar
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                </template>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -350,7 +389,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="col-lg-12">
-                                                <template v-if="arrayTurnoVendedor.length">
+                                                <template v-if="arrayTurno.length">
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-sm">
                                                             <thead>
@@ -360,7 +399,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="turno in arrayTurnoVendedor" :key="turno.nIdPar">
+                                                                <tr v-for="turno in arrayTurno" :key="turno.nIdPar">
                                                                     <td>
                                                                         <a href="#" @click="asignarTurno(turno);">
                                                                             <i class='fa-md fa fa-check-circle'></i>
@@ -413,13 +452,15 @@
                     cmes: '',
                     nidusuario: '',
                     cusuarionombre: '',
-                    nidturnovendedor: 0,
+                    nidturno: 0,
                     cnombreturno: '',
+                    nidturnovendedor: 0,
                     nidvendedor: 0,
                     cvendedornombre: ''
                 },
-                arrayTurnoVendedor: [],
                 arrayVendedoresByIdJV: [],
+                arrayTurno: [],
+                arrayTurnoVendedor: [],
                 showDate: new Date(),
                 message: '',
                 arrayDiasSeleccionados: [],
@@ -512,10 +553,13 @@
             },
             arrayDias: function(){
                 let me = this;
-                return me.arrayDiasSeleccionados.sort(function(a,b){
-                    var aa = a.split('-').reverse().join(),
-                        bb = b.split('-').reverse().join();
-                    return aa < bb ? -1 : (aa > bb ? 1 : 0);
+                return me.arrayDiasSeleccionados.sort(function(a, b){
+                    var diaA, diaB;
+                    diaA = a.cdia.split('-');
+                    diaB = b.cdia.split('-');
+                    // '2018-10-02'.split('-')
+                    // gives ["2018", "10", "02"]
+                    return parseInt(diaA[0]) - parseInt(diaB[0]) || parseInt(diaA[1]) - parseInt(diaB[1]) || parseInt(diaA[2]) - parseInt(diaB[2]);
                 });
             },
         },
@@ -529,6 +573,9 @@
                 $('#TabBusqueda').addClass("in active show");
                 $('#TabAsignacion').removeClass('in active show');
             },
+            // ==============================================
+            // TAB BUSQUEDA
+            // ==============================================
             llenarVentaActiva(){
                 var url = this.ruta + '/getObjComercial/getVentaActiva';
                 axios.get(url).then(response => {
@@ -551,30 +598,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            // =======================
-            // MODAL TURNO COMISIÓN
-            // =======================
-            buscaTurno(){
-                this.listarTurnos(1);
-            },
-            listarTurnos(page){
-                var url = this.ruta + '/getComision/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110066,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayTurnoVendedor = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            asignarTurno(turno){
-                this.fillFormularioGeneral.nidturnovendedor = turno.nIdPar;
-                this.fillFormularioGeneral.cnombreturno = turno.cParNombre;
-                this.cerrarModal();
             },
             buscarVendedoresAsignadosJV(page){
                 if(this.validarBuscarVendedoresByJV()){
@@ -623,6 +646,9 @@
             asigarVendedorByJefe(vendedor){
                 this.fillFormularioGeneral.nidvendedor = vendedor.nIdPar;
                 this.fillFormularioGeneral.cvendedornombre = vendedor.cParNombre;
+                this.fillFormularioGeneral.nidturno = 0;
+                this.fillFormularioGeneral.cnombreturno = '';
+                this.arrayDiasSeleccionados = [];
                 this.tabAsignacion();
             },
             tabAsignacion(){
@@ -634,16 +660,57 @@
                 $('#TabBusqueda').removeClass("in active show");
                 $('#TabAsignacion').addClass('in active show');
             },
+            // ==============================================
+            // TAB ASIGNACIÓN
+            // ==============================================
+            // =======================
+            // MODAL TURNO COMISIÓN
+            // =======================
+            buscaTurno(){
+                this.listarTurnos(1);
+            },
+            listarTurnos(page){
+                var url = this.ruta + '/getComision/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110060,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayTurno = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            asignarTurno(turno){
+                this.fillFormularioGeneral.nidturno = turno.nIdPar;
+                this.fillFormularioGeneral.cnombreturno = turno.cParNombre;
+                this.fillFormularioGeneral.nidturnovendedor = 0;
+                this.arrayDiasSeleccionados = [];
+                this.llenarTurnoVendedor(turno.nIdPar);
+                this.cerrarModal();
+            },
+            llenarTurnoVendedor(turno){
+                var url = this.ruta + '/asigVendedorTurno/GeLstDetalleTurno';
+                axios.get(url, {
+                    params: {
+                        'nidturno' : turno,
+                    }
+                }).then(response => {
+                    this.arrayTurnoVendedor = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             setShowDate(d) {
 				this.showDate = d;
             },
             onClickDay(d) {
                 this.message = moment(d).format('YYYY-MM-DD');
-                // `Día: ${d.toLocaleDateString()}`
                 this.agregarDiasAlVendedor(this.message);
             },
             agregarDiasAlVendedor(dia){
-                if(this.encontrarDia(dia)){
+                if(this.encontrarDiaRepetido(dia)){
                     swal({
                         type: 'error',
                         title: 'Error...',
@@ -656,7 +723,7 @@
                     toastr.success('Se Agregó el día"'+ dia +'" ');
                 }
             },
-            encontrarDia(dia){
+            encontrarDiaRepetido(dia){
                 var sw=0;
                 this.arrayDiasSeleccionados.map(function (x) {
                     if(x.cdia == dia){
@@ -667,6 +734,61 @@
             },
             removerDiaLista(index){
                 this.$delete(this.arrayDiasSeleccionados, index);
+            },
+            registrarVendedorTurno(){
+                if(this.validarRegistrarVendedorTurno()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                var url = this.ruta + '/asigVendedorTurno/SetRegistrarVendedorTurno';
+                axios.post(url, {
+                    nidempresa : this.fillFormularioGeneral.nidempresa,
+                    nidsucursal : this.fillFormularioGeneral.nidsucursal,
+                    nidcronograma : this.fillFormularioGeneral.nidcronograma,
+                    nidvendedor : this.fillFormularioGeneral.nidvendedor,
+                    nidturnovendedor : this.fillFormularioGeneral.nidturnovendedor,
+                    arrayData : this.arrayDias
+                }).then(response => {
+                    this.limpiarProceso();
+                    swal({
+                        type: 'success',
+                        title: 'Correcto...',
+                        text: 'Asigno correctamente los turnos al vendedor!',
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validarRegistrarVendedorTurno(){
+                this.error = 0;
+                this.mensajeError =[];
+                if(!this.fillFormularioGeneral.cusuarionombre && this.fillFormularioGeneral.nidusuario == 0){
+                    this.mensajeError.push('No existe Jefe de Ventas');
+                }
+                if(!this.fillFormularioGeneral.cvendedornombre && this.fillFormularioGeneral.nidvendedor == 0){
+                    this.mensajeError.push('No existe Vendedor Asignado');
+                }
+                if(!this.fillFormularioGeneral.cnombreturno && this.fillFormularioGeneral.nidturno == 0){
+                    this.mensajeError.push('Debe seleccionar un Turno');
+                }
+                if(this.fillFormularioGeneral.nidturnovendedor == 0){
+                    this.mensajeError.push('Debe seleccionar un Turno del Vendedor');
+                }
+                if(this.arrayDias.length == 0){
+                    this.mensajeError.push('No hay fechas agregadas, debe seleccionar una fecha al menos');
+                }
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            limpiarProceso(){
+                this.fillFormularioGeneral.nidturno = 0;
+                this.fillFormularioGeneral.cnombreturno = '';
+                this.fillFormularioGeneral.nidturnovendedor = 0;
+                this.arrayTurnoVendedor = [];
+                this.arrayDiasSeleccionados = [];
             },
             // =================================================================
             // METODOS GENERICOS

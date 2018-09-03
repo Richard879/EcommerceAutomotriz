@@ -119,6 +119,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
     Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurno@GetParametroById');
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
+    Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');
+    Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
 
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
