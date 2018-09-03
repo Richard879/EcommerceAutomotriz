@@ -123,6 +123,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
 
 
-    Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
 
+    Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
+    Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
+    Route::post('/turnoventa/UpdTurnoVentaById', 'TurnoVentaController@UpdTurnoVentaById');
+    Route::put('/turnoventa/desactivar','TurnoVentaController@desactivar');
+    Route::put('/turnoventa/activar','TurnoVentaController@activar');
 });

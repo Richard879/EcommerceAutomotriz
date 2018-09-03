@@ -39,10 +39,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Inicio</label>
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorainicio" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.chorainicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>:
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminuinicio" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.cminuinicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>
                                         <div class="col-sm-2">
                                             <select v-model="formTur.nminicio" class="form-control form-control-sm">
@@ -54,10 +54,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Fin</label>
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorafin" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.chorafin" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>:
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminufin" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.cminufin" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>
                                         <div class="col-sm-2">
                                             <select v-model="formTur.nmfin" class="form-control form-control-sm">
@@ -107,7 +107,7 @@
                                                             :title="'Actualizar ' +turnoventa.nIdTurnoVendedor">
                                                             <i class="fa-md fa fa-edit"></i>
                                                         </a>
-                                                        <template v-if="turnoventa.cElementoEstado=='A'">
+                                                        <template v-if="turnoventa.cTurnoVenEstado=='A'">
                                                             <a href="#" @click="desactivar(turnoventa.nIdTurnoVendedor)" data-toggle="tooltip" data-placement="top"
                                                             :title="'Desactivar ' +turnoventa.nIdTurnoVendedor">
                                                                 <i class="fa-md fa fa-check-square"></i>
@@ -178,6 +178,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Empresa</label>
                                         <div class="col-sm-4">
+                                            <input type="hidden" v-model="formTur.nidturnovendedor">
                                             <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                         </div>
                                     </div>
@@ -199,10 +200,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Inicio</label>
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorainicio" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.chorainicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>:
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminuinicio" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.cminuinicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>
                                         <div class="col-sm-2">
                                             <select v-model="formTur.nminicio" class="form-control form-control-sm">
@@ -214,10 +215,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Fin</label>
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorafin" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.chorafin" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>:
                                         <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminufin" class="form-control form-control-sm" placeholder="00">
+                                            <input type="text" v-model="formTur.cminufin" class="form-control form-control-sm" placeholder="00" maxlength="2">
                                         </div>
                                         <div class="col-sm-2">
                                             <select v-model="formTur.nmfin" class="form-control form-control-sm">
@@ -267,11 +268,16 @@
                 formTur:{
                     cempresa: 'SAISAC',
                     csucursal: 'CHICLAYO',
+                    nidturnovendedor: 0,
                     nturno: 0,
                     nminicio:1300153,
                     nmfin:1300153,
                     nidempresa : '',
                     nidsucursal : '',
+                    chorainicio:'',
+                    chorafin:'',
+                    cminufin:'',
+                    cminuinicio:'',
                 },
                 pagination: {
                     'total': 0,
@@ -441,18 +447,18 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
-                                this.llenarComboTpoElemento();
-                                this.llenarComboTpoMoneda();
-                                this.tituloFormulario = 'ACTUALIZAR ELEMENTO VENTA';
-                                this.formTur.nidelemento = data['nIdElemento'];
-                                this.formTur.ntpoelemen = data['nIdTipoElemento'];
-                                this.formTur.nidproveedor  = data['nIdProveedor'];
-                                this.formTur.cproveedornombre = data['cProveedorNombre'];
-                                this.formTur.nidmoneda = data['nIdMoneda'];
-                                this.formTur.celenombre = data['cElemenNombre'];
-                                this.formTur.celecodigoerp = data['cCodigoERP'];
-                                this.formTur.felevalorventa = data['fElemenValorVenta'];
-                                this.formTur.felevarlorminventa = data['fElemenValorMinimoVenta'];
+                                this.llenarComboTurno();
+                                this.tituloFormulario = 'ACTUALIZAR TURNO DE VENTA';
+                                this.formTur.nidturnovendedor = data['nIdTurnoVendedor'];
+                                this.formTur.nturno = data['nIdTurno'];
+                                var aHraIni = data['cHoraInicio'].split(":");
+                                this.formTur.chorainicio = aHraIni[0];
+                                this.formTur.cminuinicio= aHraIni[1];
+                                this.formTur.nminicio = data['nIdHoraInicio'];
+                                var aHraFin = data['cHoraFin'].split(":");
+                                this.formTur.chorafin = aHraFin[0];
+                                this.formTur.cminufin = aHraFin[1];
+                                this.formTur.nmfin = data['nIdHoraFin'];
                                 break;
                             }
                         }
@@ -460,37 +466,169 @@
                 }
             },
             limpiarFormulario(){
-                this.formTur.nidproveedor= 0,
-                this.formTur.cproveedornombre=  '',
-                this.formTur.ntpoelemen= 0,
-                this.formTur.nidmoneda= 0,
-                this.formTur.celenombre= '',
-                this.formTur.celecodigoerp= '',
-                this.formTur.felevalorventa= '',
-                this.formTur.felevarlorminventa='',
-                this.arrayElementoVenta = []
+                this.formTur.nturno= 0,
+                this.formTur.nminicio=  0,
+                this.formTur.nmfin= 0,
+                this.formTur.chorainicio= '',
+                this.formTur.cminuinicio= '',
+                this.formTur.chorafin= '',
+                this.formTur.cminufin='',
+                this.arrayTurnoVenta= [],
+                this.aHraFin= [],
+                this.aHraIni = []
             },
             cambiarVistaFormulario(){
                 if(this.accion == 1){
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
-
-
-                    
                 }else{
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
                 }
-
             },
-            /*limpiarPaginacion(){
-                this.pagination.current_page =  0,
-                this.pagination.total = 0,
-                this.pagination.per_page = 0,
-                this.pagination.last_page = 0,
-                this.pagination.from  = 0,
-                this.pagination.to = 0
-            },*/
+            registrar(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/turnoventa/SetTurnoVenta';
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    nIdTurno: parseInt(this.formTur.nturno),
+                    cHoraInicio: this.formTur.chorainicio +':'+ this.formTur.cminuinicio,
+                    nIdHoraInicio: parseInt(this.formTur.nminicio),
+                    cHoraFin: this.formTur.chorafin +':'+this.formTur.cminufin,
+                    nIdHoraFin: parseInt(this.formTur.nmfin)
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('turno de Venta registrado');
+                        this.limpiarFormulario();
+                        this.listarTurnosVenta(1);
+                        this.vistaFormulario = 1;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validar(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.accion == 2 && this.formTur.nidturnovendedor == 0){
+                    this.mensajeError.push('No ha seleccionado Turno de venta');
+                }
+
+                if(!this.formTur.nturno || this.formTur.nturno == 0){
+                    this.mensajeError.push('Debes Ingresar el Turno');
+                };
+                if(!this.formTur.chorainicio){
+                    this.mensajeError.push('Debes Ingresar una Hora de Inicio');
+                };
+                if(!this.formTur.cminuinicio){
+                    this.mensajeError.push('Debes Ingresar Minuto de Inicio');
+                };
+                if(this.formTur.nminicio == 0){
+                    this.mensajeError.push('Debes Ingresar un Horario de Inicio');
+                };
+                if(!this.formTur.chorafin){
+                    this.mensajeError.push('Debes Ingresar una Hora de Fin');
+                };
+                if(!this.formTur.cminufin){
+                    this.mensajeError.push('Debes Ingresar Minuto de Fin');
+                };
+                if(this.formTur.nmfin == 0){
+                    this.mensajeError.push('Debes Ingresar un Horario de Fin');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            activar(nIdTurnoVenta){
+                swal({
+                    title: 'Estas seguro de activar este turno de venta?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/turnoventa/activar';
+                        axios.put(url , {
+                            nIdTurnoVenta: nIdTurnoVenta
+                        }).then(response => {
+                            swal(
+                            'Activado!',
+                            'El registro fue activado.'
+                            );
+                            this.listarTurnosVenta(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
+            },
+            desactivar(nIdTurnoVenta){
+                swal({
+                    title: 'Estas seguro de desactivar este turno de venta?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/turnoventa/desactivar';
+                        axios.put(url , {
+                            nIdTurnoVenta: nIdTurnoVenta
+                        }).then(response => {
+                            swal(
+                            'Desactivado!',
+                            'El registro fue desactivado.'
+                            );
+                            this.listarTurnosVenta(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
+            },
+            actualizar(){
+                var url = this.ruta + '/turnoventa/UpdTurnoVentaById';
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    nIdTurnoVendedor: parseInt(this.formTur.nidturnovendedor),
+                    nIdTurno: parseInt(this.formTur.nturno),
+                    cHoraInicio: this.formTur.chorainicio +':'+ this.formTur.cminuinicio,
+                    nIdHoraInicio: parseInt(this.formTur.nminicio),
+                    cHoraFin: this.formTur.chorafin +':'+this.formTur.cminufin,
+                    nIdHoraFin: parseInt(this.formTur.nmfin)
+                }).then(response => {
+                    swal('Turno de Venta Actualizado');
+                    this.limpiarFormulario();
+                    this.vistaFormulario = 1;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
