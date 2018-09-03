@@ -162,7 +162,7 @@
                                                                         <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
                                                                             <td> 
                                                                                 <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
-                                                                                    <a href="#" @click="activarTabDeposito(pedido.nIdCabeceraPedido)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="activarTabDeposito(pedido.nIdCabeceraPedido, pedido.cContacto)" data-toggle="tooltip" data-placement="top" 
                                                                                         :title="'Realizar Depósito ' + pedido.cNumeroPedido">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
@@ -237,17 +237,20 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
                                                                         <div class="col-sm-8">
-                                                                            <!--<select name="account" v-model="fillPedido.nidestadopedido" class="form-control form-control-sm">
-                                                                                <option v-for="estado in arrayEstadoPedido" :key="estado.nIdPar" :value="estado.nIdPar" v-text="estado.cParNombre">
+                                                                            <input type="hidden" v-model="formDeposito.nidcabecerapedido">
+                                                                            <select name="account" v-model="formDeposito.nidtipomovimiento" class="form-control form-control-sm">
+                                                                                <option v-for="m in arrayTipoMovimiento" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
                                                                                 </option>
-                                                                            </select>-->
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">        
                                                                 <div class="col-sm-9 offset-sm-5">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()"><i class="fa fa-search"></i> Buscar</button>
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirModal('deposito','buscar')">
+                                                                        <i class="fa fa-list-alt"></i> Nuevo
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -396,6 +399,331 @@
             </div>
         </div>
         
+        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DATOS DEL DEPÓSITO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Banco</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBancoEmpresa()">
+                                                            <option v-for="b in arrayBanco_Empresa" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Moneda</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMonedaEmpresa()">
+                                                            <option v-for="m in arrayMoneda_Empresa" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Cuenta</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidnumerocuenta_destino" class="form-control form-control-sm">
+                                                            <option v-for="c in arrayCuenta_Empresa" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Girado por</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalDeposito.cnombrecontacto" class="form-control-label-readonly"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Fecha</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="date" v-model="formModalDeposito.dfechadeposito" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nro Operación</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalDeposito.nnumerooperacion" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Tipo Cambio Voucher</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalDeposito.ftipocambiovoucher" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Tipo Cambio Comercial</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalDeposito.ftipocambiocomercial" class="form-control-label-readonly"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Monto</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalDeposito.fmonto" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Voucher</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Observación</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea v-model="formModalDeposito.cglosa" class="form-control form-control-sm" cols="30" rows="6"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">        
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarDepositoBancario()">
+                                                    <i class="fa fa-arrow-down"></i> Agregar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">BANCO ORIGEN</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Banco</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidbanco_origen" class="form-control form-control-sm" v-on:change="onchangeBancoEmpresa()">
+                                                            <option v-for="b in arrayBanco_Empresa" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Moneda</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidmoneda_origen" class="form-control form-control-sm" v-on:change="onchangeMonedaEmpresa()">
+                                                            <option v-for="m in arrayMoneda_Empresa" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Cuenta</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalDeposito.cnumerocuenta_origen" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Girado por</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalDeposito.cnombrecontacto" class="form-control-label-readonly"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Fecha</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="date" v-model="formModalDeposito.dfechadeposito" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nro Operación</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalDeposito.nnumerooperacion" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Tipo Cambio Voucher</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalDeposito.ftipocambiovoucher" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Tipo Cambio Comercial</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalDeposito.ftipocambiocomercial" class="form-control-label-readonly"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Monto</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formModalDeposito.fmonto" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Voucher</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Observación</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea v-model="formModalDeposito.cglosa" class="form-control form-control-sm" cols="30" rows="6"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">        
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarDepositoBancario()">
+                                                    <i class="fa fa-arrow-down"></i> Agregar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">BANCO DESTINO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Banco</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBancoEmpresa()">
+                                                            <option v-for="b in arrayBanco_Empresa" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Moneda</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMonedaEmpresa()">
+                                                            <option v-for="m in arrayMoneda_Empresa" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Cuenta</label>
+                                                    <div class="col-sm-8">
+                                                        <select name="account" v-model="formModalDeposito.nidnumerocuenta_destino" class="form-control form-control-sm">
+                                                            <option v-for="c in arrayCuenta_Empresa" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">        
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarOtroTipoDeposito()">
+                                                    <i class="fa fa-arrow-down"></i> Agregar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 <script>
@@ -409,6 +737,10 @@
                 cmes: 'MAYO',
                 nidempresa: 0,
                 nidsucursal: 0, 
+                // =========== VARIABLES TIPO CAMBIO ===============
+                fValorTipoCambioCompra: 0,
+                fValorTipoCambioVenta: 0,
+                fValorTipocambioComercial: 0,
                 // =====================================================
                 // =========== VARIABLES MODAL PROVEEDOR ===============
                 fillProveedor:{
@@ -428,11 +760,37 @@
                 },
                 arrayPedido: [],
                 arrayEstadoPedido: [],
+                arrayMarca: [],
+                arrayModelo: [],
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
-                formPedido:{
-                    
+                formDeposito:{
+                    nidtipomovimiento: 0,
+                    nidcabecerapedido: 0
                 },
+                arrayTipoMovimiento: [],
+                // =============================================================
+                // ================ VARIABLES TAB GENERAR PEDIDO ===============
+                formModalDeposito:{
+                    nidbanco_origen: 0,
+                    nidmoneda_origen: 0,
+                    nidnumerocuenta_origen: 0,
+                    cnumerocuenta_origen: '',
+                    nidbanco_destino: 0,
+                    nidmoneda_destino: 0,
+                    nidnumerocuenta_destino: 0,
+                    fmonto: 0,
+                    cnombrecontacto: '',
+                    dfechadeposito: '',
+                    nnumerooperacion: '',
+                    ftipocambiovoucher: '',
+                    ftipocambiocomercial: '',
+                    cglosa: ''
+                },
+                arrayBanco_Empresa: [],
+                arrayMoneda_Empresa: [],
+                arrayCuenta_Empresa: [],
+                arrayDeposito: [],
                 // =============================================================
                 pagination : {
                     'total' : 0,
@@ -607,40 +965,123 @@
             // =============  TAB GENERAR DEPOSITO ========================
             tabGenerarDeposito(){
             },      
-            activarTabDeposito(nIdCabeceraPedido){
+            activarTabDeposito(nIdCabeceraPedido, cContacto){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
                 $('#Tab2').addClass("nav-link active"); 
                 $('#TabBuscaPedido').removeClass('in active show');
                 $('#TabGeneraDeposito').addClass('in active show');
+                this.formDeposito.nidcabecerapedido = nIdCabeceraPedido;
+                this.formModalDeposito.cnombrecontacto = cContacto;
+                this.llenarComboTipoMovimiento();
             },      
-            //=============== APROBAR COTIZACION ========================
-            llenarComboBanco(){
+            llenarComboTipoMovimiento(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110042,
+                        'ngrupoparid': 110070,
                         'opcion': 0
                     }
                 }).then(response => {
-                    this.arrayBanco = response.data;
+                    this.arrayTipoMovimiento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            llenarFormaPago(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid': 110062,
-                        'opcion': 0
-                    }
-                }).then(response => {
-                    this.arrayFormaPago = response.data;
+            //=============== MODAL DEPOSITO ========================
+            mostrarModal_3(){
+                this.getTipoCambio();
+                this.llenarComboBanco_Empresa();
+                this.llenarComboMoneda_Empresa();
+            },
+            getTipoCambio(){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/gescotizacion/GetTipoCambio';
+                axios.get(url).then(response => {
+                    this.fValorTipoCambioCompra = response.data[0].fValorTipoCambioCompra;
+                    this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
+
+                    this.formModalDeposito.ftipocambiocomercial = response.data[0].fValorTipoCambioComercial;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            llenarComboBanco_Empresa(){
+                var url = this.ruta + '/parparametro/GetBancosByEmpresa';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar': 110021,
+                        'opcion': 0
+                    }
+                }).then(response => {
+                    this.arrayBanco_Empresa = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboMoneda_Empresa(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110028,
+                        'opcion': 0
+                    }
+                }).then(response => {
+                    this.arrayMoneda_Empresa = response.data;
+                    this.formModalDeposito.nidmoneda_origen = 0;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            onchangeBancoEmpresa(){
+                this.formModalDeposito.nidmoneda_origen = 0;
+                this.arrayCuenta_Empresa = [];
+            },
+            onchangeMonedaEmpresa(){
+                this.llenarComboCuentaEmpresa();
+            },
+            llenarComboCuentaEmpresa(){
+                var url = this.ruta + '/deposito/GetNumeroCuentaByBancoAndMoneda';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidbanco': this.formModalDeposito.nidbanco_origen,
+                        'nidmoneda': this.formModalDeposito.nidmoneda_origen,
+                        'opcion': 0
+                    }
+                }).then(response => {
+                    this.arrayCuenta_Empresa = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+             getFile(e){
+                //console.log(e);
+                let selectFile = e.target.files[0];
+                this.attachment = selectFile;
+            },
+            //=============== AGREGAR DEPOSITO BANCARIO ========================
+            agregarDepositoBancario(){
+                this.arrayDeposito.push({
+                        nIdCabeceraPedido           : this.formDeposito.nidcabecerapedido,
+                        //nIdDocumentoAdjuntoVoucher  : nIdDocumentoAdjuntoVoucher,
+                        nIdTipoMovimiento           : this.formModalDeposito.nidtipomovimiento,
+                        nIdBancoOrigen              : 0,
+                        nIdMonedaOrigen             : 0,
+                        cNumeroCuentaOrigen         : '',
+                        nIdCuentaBancariaEmpresa    : this.formModalDeposito.nidnumerocuenta_destino,
+                        dFechaDeposito              : this.formModalDeposito.dfechadeposito,
+                        nNumeroOperacion            : this.formModalDeposito.nnumerooperacion,
+                        fTipoCambioDeposito         : this.formModalDeposito.ftipocambiovoucher,
+                        fTipoCambioComercial        : this.formModalDeposito.ftipocambiocomercial,
+                        fMonto                      : this.formModalDeposito.fmonto,
+                        cGlosa                      : this.formModalDeposito.cglosa
+                    });
             },
             // =============================================
             // =============  MODAL ========================
@@ -651,14 +1092,23 @@
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'proveedor':
+                    case 'deposito':
                     {
                         switch(accion){
                             case 'buscar':
                             {
-                                this.accionmodal=2;
-                                this.modal = 1;
-                                this.listarProveedores(1);
+                                //DEPÓSITO BANCARIO EFECTIVO
+                                if(this.formDeposito.nidtipomovimiento == 1300188){
+                                    this.accionmodal=3;
+                                    this.modal = 1;
+                                    this.mostrarModal_3();
+                                }
+                                //OTRO
+                                else{
+                                    this.accionmodal=4;
+                                    this.modal = 1;
+                                    //this.listarProveedores(1);
+                                }
                                 break;
                             }
                         }
