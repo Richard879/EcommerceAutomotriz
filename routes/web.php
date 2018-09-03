@@ -95,6 +95,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pedido/SetCabeceraPedido', 'PedidoController@SetCabeceraPedido');
     Route::get('/pedido/GetListPedidoByTipoEstado', 'PedidoController@GetListPedidoByTipoEstado');
     Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
+    Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
+    Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'DepositoPedidoController@GetNumeroCuentaByBancoAndMoneda');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');

@@ -34,7 +34,7 @@
                 <!-- Navbar Header-->
                 <div class="navbar-header">
                     <!-- Navbar Brand -->
-                    <a href="http://172.20.6.62:8080/saisacsys" class="navbar-brand">
+                    <a href="http://localhost:8080/saisacsys" class="navbar-brand">
                     <div class="brand-text brand-big">
                         <span>
                             <img class="navbar-brand-full" src="img/logo.png" width="220" height="30" alt="CoreUI Logo">
