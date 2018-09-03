@@ -121,8 +121,14 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
     Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurno@GetParametroById');
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
+    Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');
+    Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
+
 
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
-
+    Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
+    Route::post('/turnoventa/UpdTurnoVentaById', 'TurnoVentaController@UpdTurnoVentaById');
+    Route::put('/turnoventa/desactivar','TurnoVentaController@desactivar');
+    Route::put('/turnoventa/activar','TurnoVentaController@activar');
 });

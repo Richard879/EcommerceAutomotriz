@@ -39,4 +39,47 @@ class AsigVendedorTurno extends Controller
         $arrayVendedoresByIdJV = $this->arrayPaginator($arrayVendedoresByIdJV, $request);
         return ['arrayVendedoresByIdJV'=>$arrayVendedoresByIdJV];
     }
+
+    public function GeLstDetalleTurno(Request $request)
+    {
+        $nidturno = $request->nidturno;
+
+        $data = DB::select('exec usp_TurnoVendedor_GeLstDetalleTurno ?',  [$nidturno]);
+
+        return response()->json($data);
+    }
+
+    public function SetRegistrarVendedorTurno(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             = $request->nidempresa;
+        $nIdSucursal            = $request->nidsucursal;
+        $nIdCronograma          = $request->nidcronograma;
+        $nidvendedor            = $request->nidvendedor;
+        $nidturnovendedor       = $request->nidturnovendedor;
+        $data                   = $request->arrayData;
+
+        try{
+            DB::beginTransaction();
+            $arrayFechaTurnoLength = sizeof($data);
+            if($arrayFechaTurnoLength > 0){
+                foreach ($data as $key => $value) {
+                    DB::select('exec usp_AsigVendedorTurno_SetRegistrar ?, ?, ?, ?, ?, ?, ?',
+                            [
+                                $nIdEmpresa,
+                                $nIdSucursal,
+                                $nIdCronograma,
+                                $nidvendedor,
+                                $nidturnovendedor,
+                                $value['cdia'],
+                                Auth::user()->id
+                            ]);
+                }
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
