@@ -856,7 +856,6 @@
                     'fValorMoneda'          :   0,
                     'arrayData'             :   this.arrayDetalleVehiculoAdd
                 }).then(response => {
-                    console.log(response);
                     (data) == 1 ?
                         swal('Objetivo Comercial - Compra registrada exitosamente') :
                         swal('Objetivo Comercial - Venta registrada exitosamente');
