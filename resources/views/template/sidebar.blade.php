@@ -24,6 +24,7 @@
         <li id="0513" @click="menu=16" onclick="ActivarMenu('0513')"><a href="#">Obj.Comercial Compra</a></li>
 
         <li id="0516" @click="menu=19" onclick="ActivarMenu('0516')"><a href="#">turno de venta</a></li>
+        
       </ul>
     </li>
     <li><a href="#06" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

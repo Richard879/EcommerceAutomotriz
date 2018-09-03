@@ -116,6 +116,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getObjComercial/getDetalleVehiculo', 'ObjComercialController@getDetalleVehiculo');
     Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
     
-    /*Rutas Fernando developer*/
+
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
+    Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
+    Route::post('/turnoventa/UpdTurnoVentaById', 'TurnoVentaController@UpdTurnoVentaById');
+    Route::put('/turnoventa/desactivar','TurnoVentaController@desactivar');
+    Route::put('/turnoventa/activar','TurnoVentaController@activar');
 });

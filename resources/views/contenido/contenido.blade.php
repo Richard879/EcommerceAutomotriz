@@ -48,3 +48,4 @@
     <template v-if="menu==19">
         <turnoventa :ruta="ruta"></turnoventa>
     </template>
+@endsection
