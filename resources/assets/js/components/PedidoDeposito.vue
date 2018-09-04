@@ -5,7 +5,7 @@
             <h2 class="no-margin-bottom">DEPÓSITOS DE PEDIDO</h2>
           </div>
         </header>
-        
+
         <section>
             <div class="container-fluid">
                 <div class="col-lg-12">
@@ -33,7 +33,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">BUSCAR PEDIDOS</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -126,7 +126,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">        
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
@@ -160,9 +160,9 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
-                                                                            <td> 
+                                                                            <td>
                                                                                 <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
-                                                                                    <a href="#" @click="activarTabDeposito(pedido.nIdCabeceraPedido, pedido.cContacto)" data-toggle="tooltip" data-placement="top" 
+                                                                                    <a href="#" @click="activarTabDeposito(pedido.nIdCabeceraPedido, pedido.cContacto)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Realizar Depósito ' + pedido.cNumeroPedido">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
@@ -189,12 +189,12 @@
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
                                                                                     <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                 </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                 :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link" 
-                                                                                    href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPagina(page)"
                                                                                     v-text="page"></a>
-                                                                                </li>                            
+                                                                                </li>
                                                                                 <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                     <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                 </li>
@@ -205,7 +205,7 @@
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
-                                                            </div>                               
+                                                            </div>
                                                         </template>
                                                         <template v-else>
                                                             <table>
@@ -230,7 +230,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">NUEVO DEPOSITO</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -246,7 +246,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">        
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirModal('deposito','buscar')">
                                                                         <i class="fa fa-list-alt"></i> Nuevo
@@ -288,7 +288,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -298,7 +298,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -358,12 +358,12 @@
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link" 
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                             v-text="page"></a>
-                                                                        </li>                            
+                                                                        </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                             <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
@@ -398,7 +398,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -432,7 +432,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6">
@@ -519,7 +519,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">        
+                                        <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarDepositoBancario()">
                                                     <i class="fa fa-arrow-down"></i> Agregar
@@ -571,7 +571,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6">
@@ -655,7 +655,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">        
+                                        <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarDepositoBancario()">
                                                     <i class="fa fa-arrow-down"></i> Agregar
@@ -691,7 +691,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6">
@@ -706,7 +706,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">        
+                                        <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="agregarOtroTipoDeposito()">
                                                     <i class="fa fa-arrow-down"></i> Agregar
@@ -736,7 +736,7 @@
                 canio: '2018',
                 cmes: 'MAYO',
                 nidempresa: 0,
-                nidsucursal: 0, 
+                nidsucursal: 0,
                 // =========== VARIABLES TIPO CAMBIO ===============
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
@@ -831,16 +831,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 3); 
+                var to = from + (this.offset * 3);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -856,16 +856,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -883,7 +883,7 @@
             },
             llenarEstadoPedido(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110063,
@@ -897,7 +897,7 @@
             },
             llenarComboMarcas(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110032,
@@ -964,18 +964,18 @@
             // ==========================================================
             // =============  TAB GENERAR DEPOSITO ========================
             tabGenerarDeposito(){
-            },      
+            },
             activarTabDeposito(nIdCabeceraPedido, cContacto){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
-                $('#Tab2').addClass("nav-link active"); 
+                $('#Tab2').addClass("nav-link active");
                 $('#TabBuscaPedido').removeClass('in active show');
                 $('#TabGeneraDeposito').addClass('in active show');
                 this.formDeposito.nidcabecerapedido = nIdCabeceraPedido;
                 this.formModalDeposito.cnombrecontacto = cContacto;
                 this.llenarComboTipoMovimiento();
-            },      
+            },
             llenarComboTipoMovimiento(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
