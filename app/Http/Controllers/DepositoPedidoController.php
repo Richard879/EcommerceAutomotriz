@@ -52,5 +52,30 @@ class DepositoPedidoController extends Controller
         return response()->json($arrayDocumento);
     }
 
-    
+    public function SetDepositoPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $request->nIdEmpresa,
+                                        $request->nIdSucursal,
+                                        $request->nIdCabeceraPedido,
+                                        $request->nIdTipoMovimiento,
+                                        $request->nIdDocumentoAdjuntoVoucher,
+                                        $request->nIdBancoOrigen,
+                                        $request->nIdMonedaOrigen,
+                                        $request->cNumeroCuentaOrigen,
+                                        $request->nIdCuentaBancariaEmpresa,
+                                        $request->dFechaDeposito,
+                                        $request->nNumeroOperacion,
+                                        $request->fTipoCambioDeposito,
+                                        $request->fTipoCambioComercial,
+                                        $request->fMonto,
+                                        $request->cGlosa,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayPedido);
+    }
 }
