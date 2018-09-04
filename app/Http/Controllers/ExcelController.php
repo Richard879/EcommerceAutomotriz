@@ -15,10 +15,15 @@ class ExcelController extends Controller
 {
 
     public function importFileCompra(Request $request)
-    {        
-        //$textFile = $request->file->getClientOriginalName();
-        $nameFile = $request->file->store('uploads/ExcelCompra');
-        return response()->json($nameFile);
+    {    
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+
+        /*$nameFile = $request->file->store('uploads/ExcelCompra');
+        return response()->json($nameFile);*/
+
         /*return response()->json([
             'nombreFile' => $nameFile,
             'textoFile' => $textFile
@@ -62,8 +67,13 @@ class ExcelController extends Controller
 
     public function importFileListaPrecioVh(Request $request)
     {
-        $nameFile = $request->file->store('uploads/ExcelListaPrecio');
-        return response()->json($nameFile);
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+
+        /*$nameFile = $request->file->store('uploads/ExcelListaPrecio');
+        return response()->json($nameFile);*/
     }
     
     public function readFileListaPrecioVh(Request $request)

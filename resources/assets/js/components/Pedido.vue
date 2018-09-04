@@ -1024,7 +1024,6 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                someData: '',
                 attachment: [],
                 form: new FormData,
                 textFile: ''
