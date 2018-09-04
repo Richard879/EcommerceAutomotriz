@@ -415,8 +415,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Banco</label>
                                                     <div class="col-sm-8">
-                                                        <select name="account" v-model="formModalDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBancoEmpresa()">
-                                                            <option v-for="b in arrayBanco_Empresa" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
+                                                        <select name="account" v-model="formModalDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBanco_Destino()">
+                                                            <option v-for="b in arrayBanco_Destino" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -426,8 +426,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Moneda</label>
                                                     <div class="col-sm-8">
-                                                        <select name="account" v-model="formModalDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMonedaEmpresa()">
-                                                            <option v-for="m in arrayMoneda_Empresa" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
+                                                        <select name="account" v-model="formModalDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMoneda_Destino()">
+                                                            <option v-for="m in arrayMoneda_Destino" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -440,7 +440,7 @@
                                                     <label class="col-sm-4 form-control-label">Cuenta</label>
                                                     <div class="col-sm-8">
                                                         <select name="account" v-model="formModalDeposito.nidnumerocuenta_destino" class="form-control form-control-sm">
-                                                            <option v-for="c in arrayCuenta_Empresa" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
+                                                            <option v-for="c in arrayCuenta_Destino" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -538,7 +538,7 @@
             </div>
         </div>
 
-        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+        <!--<div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -554,8 +554,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Banco</label>
                                                     <div class="col-sm-8">
-                                                        <select name="account" v-model="formModalDeposito.nidbanco_origen" class="form-control form-control-sm" v-on:change="onchangeBancoEmpresa()">
-                                                            <option v-for="b in arrayBanco_Empresa" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
+                                                        <select name="account" v-model="formModalDeposito.nidbanco_origen" class="form-control form-control-sm" v-on:change="onchangeBanco_Destino()">
+                                                            <option v-for="b in arrayBanco_Destino" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -565,8 +565,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Moneda</label>
                                                     <div class="col-sm-8">
-                                                        <select name="account" v-model="formModalDeposito.nidmoneda_origen" class="form-control form-control-sm" v-on:change="onchangeMonedaEmpresa()">
-                                                            <option v-for="m in arrayMoneda_Empresa" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
+                                                        <select name="account" v-model="formModalDeposito.nidmoneda_origen" class="form-control form-control-sm" v-on:change="onchangeMoneda_Destino()">
+                                                            <option v-for="m in arrayMoneda_Destino" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -674,8 +674,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Banco</label>
                                                     <div class="col-sm-8">
-                                                        <select name="account" v-model="formModalDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBancoEmpresa()">
-                                                            <option v-for="b in arrayBanco_Empresa" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
+                                                        <select name="account" v-model="formModalDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBanco_Destino()">
+                                                            <option v-for="b in arrayBanco_Destino" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -685,8 +685,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Moneda</label>
                                                     <div class="col-sm-8">
-                                                        <select name="account" v-model="formModalDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMonedaEmpresa()">
-                                                            <option v-for="m in arrayMoneda_Empresa" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
+                                                        <select name="account" v-model="formModalDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMoneda_Destino()">
+                                                            <option v-for="m in arrayMoneda_Destino" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -699,7 +699,7 @@
                                                     <label class="col-sm-4 form-control-label">Cuenta</label>
                                                     <div class="col-sm-8">
                                                         <select name="account" v-model="formModalDeposito.nidnumerocuenta_destino" class="form-control form-control-sm">
-                                                            <option v-for="c in arrayCuenta_Empresa" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
+                                                            <option v-for="c in arrayCuenta_Destino" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -723,7 +723,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </main>
 </template>
 <script>
@@ -787,9 +787,9 @@
                     ftipocambiocomercial: '',
                     cglosa: ''
                 },
-                arrayBanco_Empresa: [],
-                arrayMoneda_Empresa: [],
-                arrayCuenta_Empresa: [],
+                arrayBanco_Destino: [],
+                arrayMoneda_Destino: [],
+                arrayCuenta_Destino: [],
                 arrayDeposito: [],
                 // =============================================================
                 pagination : {
@@ -992,8 +992,8 @@
             //=============== MODAL DEPOSITO ========================
             mostrarModal_3(){
                 this.getTipoCambio();
-                this.llenarComboBanco_Empresa();
-                this.llenarComboMoneda_Empresa();
+                this.llenarComboBanco_Destino();
+                this.llenarComboMoneda_Destino();
             },
             getTipoCambio(){
                 this.mostrarProgressBar();
@@ -1010,7 +1010,7 @@
                     console.log(error);
                 });
             },
-            llenarComboBanco_Empresa(){
+            llenarComboBanco_Destino(){
                 var url = this.ruta + '/parparametro/GetBancosByEmpresa';
                 axios.get(url, {
                     params: {
@@ -1019,12 +1019,12 @@
                         'opcion': 0
                     }
                 }).then(response => {
-                    this.arrayBanco_Empresa = response.data;
+                    this.arrayBanco_Destino = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            llenarComboMoneda_Empresa(){
+            llenarComboMoneda_Destino(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
@@ -1032,35 +1032,35 @@
                         'opcion': 0
                     }
                 }).then(response => {
-                    this.arrayMoneda_Empresa = response.data;
-                    this.formModalDeposito.nidmoneda_origen = 0;
+                    this.arrayMoneda_Destino = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            onchangeBancoEmpresa(){
-                this.formModalDeposito.nidmoneda_origen = 0;
-                this.arrayCuenta_Empresa = [];
+            onchangeBanco_Destino(){
+                this.formModalDeposito.nidmoneda_destino = 0;
+                this.llenarComboCuenta_Destino();
             },
-            onchangeMonedaEmpresa(){
-                this.llenarComboCuentaEmpresa();
+            onchangeMoneda_Destino(){
+                this.llenarComboCuenta_Destino();
             },
-            llenarComboCuentaEmpresa(){
+            llenarComboCuenta_Destino(){
                 var url = this.ruta + '/deposito/GetNumeroCuentaByBancoAndMoneda';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidbanco': this.formModalDeposito.nidbanco_origen,
-                        'nidmoneda': this.formModalDeposito.nidmoneda_origen,
+                        'nidbanco': this.formModalDeposito.nidbanco_destino,
+                        'nidmoneda': this.formModalDeposito.nidmoneda_destino,
                         'opcion': 0
                     }
                 }).then(response => {
-                    this.arrayCuenta_Empresa = response.data;
+                    this.arrayCuenta_Destino = response.data;
+                    this.formModalDeposito.nidnumerocuenta_destino = 0;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-             getFile(e){
+            getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
