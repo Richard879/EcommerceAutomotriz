@@ -393,7 +393,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                                         <div class="col-sm-8">
-                                                                            <el-select v-model="formEventoCamp.nidtipomoneda" filterable placeholder="Select">
+                                                                            <el-select v-model="formEventoCamp.nidmoneda" filterable placeholder="Select">
                                                                                 <el-option
                                                                                 v-for="item in arrayTipoMoneda"
                                                                                 :key="item.nIdPar"
@@ -401,6 +401,31 @@
                                                                                 :value="item.nIdPar">
                                                                                 </el-option>
                                                                             </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-select v-model="formEventoCamp.nidtipocambio" filterable placeholder="Select" v-on:change="onchangeTipoCambio()">
+                                                                                <el-option
+                                                                                v-for="item in arrayTipoCambio"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Valor Tipo Cambio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <label v-text="formEventoCamp.fvalortipocambio" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -986,9 +1011,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div class="col-lg-12">
+                                                        <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-lg-7">
+                                                                <div class="col-sm-7">
                                                                     <nav>
                                                                         <ul class="pagination">
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
@@ -1006,7 +1031,7 @@
                                                                         </ul>
                                                                     </nav>
                                                                 </div>
-                                                                <div class="col-lg-5">
+                                                                <div class="col-sm-5">
                                                                     <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                                 </div>
                                                             </div>
@@ -1076,9 +1101,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div class="col-lg-12">
+                                                        <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-lg-7">
+                                                                <div class="col-sm-7">
                                                                     <nav>
                                                                         <ul class="pagination">
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
@@ -1096,7 +1121,7 @@
                                                                         </ul>
                                                                     </nav>
                                                                 </div>
-                                                                <div class="col-lg-5">
+                                                                <div class="col-sm-5">
                                                                     <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                                 </div>
                                                             </div>
@@ -1166,9 +1191,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div class="col-lg-12">
+                                                        <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-lg-7">
+                                                                <div class="col-sm-7">
                                                                     <nav>
                                                                         <ul class="pagination">
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
@@ -1186,7 +1211,7 @@
                                                                         </ul>
                                                                     </nav>
                                                                 </div>
-                                                                <div class="col-lg-5">
+                                                                <div class="col-sm-5">
                                                                     <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                                 </div>
                                                             </div>
@@ -1337,6 +1362,7 @@
             </div>
         </div>
 
+        <!-- MODAL PROVEEDORES DISTRIBUCION POR ELEMENTO VENTA -->
         <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -1440,6 +1466,7 @@
             </div>
         </div>
 
+        <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑA -->
         <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -1585,11 +1612,15 @@
                     filedocumento:'',
                     ndetalle: 0,
                     cflagdetalleevento: 'CA',
-                    nidtipomoneda: 0,
+                    nidmoneda: 0,
+                    nidtipocambio: 0, 
+                    fvalortipocambio: 0.0
                 },
                 arrayEventoCampania: [],
                 arrayTipoEC: [],
                 arrayTipoMoneda: [],
+                arrayTipoCambio: [],
+                fValorTipoCambioTransaccion: 0.0,
                 // ============================================================
                 // =========== VARIABLES TAB ASIGNA DETALLE ===========
                 arrayDetalleEC: [],
@@ -1849,11 +1880,12 @@
             tabNuevoEventoCampania(){
                 this.limpiarFormulario();
                 this.llenarComboTipoEC();
-                this.llenarTipoMoneda();
+                this.llenarComboTipoMoneda();
+                this.llenarComboTipoCambio();
                 this.cargarTabAsignaDetalle();
                 this.cargarTabAsignaElemento();
             },
-            llenarTipoMoneda(){
+            llenarComboTipoMoneda(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
@@ -1862,6 +1894,39 @@
                     }
                 }).then(response => {
                     this.arrayTipoMoneda = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboTipoCambio(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110059,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayTipoCambio = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            onchangeTipoCambio(){
+                this.getTipoCambioById();
+            },
+            getTipoCambioById(){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/tipocambio/GetTipoCambioById';
+                axios.get(url, {
+                    params: {
+                        'nidtipotransaccion' : this.formEventoCamp.nidtipocambio
+                    }
+                }).then(response => {
+                    this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
+                    //PARA ENVIAR EN LA TRANSACCION
+                    this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2245,6 +2310,8 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+                
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -2255,16 +2322,66 @@
                     dFechaInicio: this.formEventoCamp.dfechainicio,
                     dFechaFin: this.formEventoCamp.dfechafin,
                     fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
+                    nIdMoneda: this.formEventoCamp.nidmoneda,
+                    nIdTipoCambio: this.formEventoCamp.nidtipocambio,
+                    fValorTipoCambio: this.formEventoCamp.fvalortipocambio,
                     cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
                 }).then(response => {
-                    this.registrarAsignaDetalle(response.data[0].nIdEventoCampania)
-                    this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
-                    swal('Evento Campaña registrado');
-                    this.activarTab3();
-                    this.formDistribucion.nideventocampania = response.data[0].nIdEventoCampania;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        this.registrarAsignaDetalle(response.data[0].nIdEventoCampania)
+                        this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
+                        $("#myBar").hide();
+                        swal('Evento Campaña registrado');
+                        this.activarTab3();
+                        this.formDistribucion.nideventocampania = response.data[0].nIdEventoCampania;
+                    }
+                    else{
+                        swal('NO se puede registrar Evento');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            validar(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formEventoCamp.dfechainicio == ''){
+                    this.mensajeError.push('Debes Ingresar Fecha Inicio');
+                };
+                if(this.formEventoCamp.dfechafin == ''){
+                    this.mensajeError.push('Debes Ingresar Fecha Fin');
+                };
+                if(this.formEventoCamp.nidproveedor == 0){
+                    this.mensajeError.push('Debes Seleccionar un Proveedor');
+                };
+                if(this.formEventoCamp.ntipo == 0){
+                    this.mensajeError.push('Debes Seleccionar un Tipo Evento');
+                };
+                if(!this.formEventoCamp.fvalorpresupuesto){
+                    this.mensajeError.push('Debes Ingresar Valor Presupuesto');
+                };
+                if(this.formEventoCamp.nidmoneda == 0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Moneda');
+                };
+                if(this.formEventoCamp.nidtipocambio == 0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Cambio');
+                };
+                if(this.formEventoCamp.fvalortipocambio == 0){
+                    this.mensajeError.push('Debes Enviar valor Tipo de Cambio');
+                };
+                if(!this.formEventoCamp.descripcion){
+                    this.mensajeError.push('Debes Ingresar Descripción');
+                };
+                if(this.formEventoCamp.dfechainicio > this.formEventoCamp.dfechafin){
+                    this.mensajeError.push('La Fecha Inicio debe ser menor a la Fecha Fin.');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             registrarAsignaDetalle(nIdEventoCampania){
                 if(this.arrayTemporalLinea.length > 0){
@@ -2540,37 +2657,6 @@
                     }
                 }
             },
-            validar(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.formEventoCamp.dfechainicio == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Inicio');
-                };
-                if(this.formEventoCamp.dfechafin == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Fin');
-                };
-                if(this.formEventoCamp.nidproveedor == 0){
-                    this.mensajeError.push('Debes Seleccionar un Proveedor');
-                };
-                if(this.formEventoCamp.ntipo == 0){
-                    this.mensajeError.push('Debes Seleccionar un Tipo E/C');
-                };
-                if(!this.formEventoCamp.fvalorpresupuesto){
-                    this.mensajeError.push('Debes Ingresar Valor Presupuesto');
-                };
-                if(!this.formEventoCamp.descripcion){
-                    this.mensajeError.push('Debes Ingresar Descripción');
-                };
-                if(this.formEventoCamp.dfechainicio > this.formEventoCamp.dfechafin){
-                    this.mensajeError.push('La Fecha Inicio debe ser menor a la Fecha Fin.');
-                };
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
             validarDistribucion(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -2701,6 +2787,10 @@
                 this.pagination.last_page = 0,
                 this.pagination.from  = 0,
                 this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         },
         mounted(){
