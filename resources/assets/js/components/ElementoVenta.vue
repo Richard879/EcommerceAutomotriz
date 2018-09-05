@@ -25,10 +25,18 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Tipo Elemento</label>
                                         <div class="col-sm-4">
-                                            <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
+                                            <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
+                                                <el-option
+                                                v-for="item in arrayTipoElemento"
+                                                :key="item.nIdPar"
+                                                :label="item.cParNombre"
+                                                :value="item.nIdPar">
+                                                </el-option>
+                                            </el-select>
+                                            <!--<select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
                                                 <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
                                                 </option>
-                                            </select>
+                                            </select>-->
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -823,5 +831,8 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
         }
 </style>

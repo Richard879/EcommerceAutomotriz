@@ -2,6 +2,11 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import ElementUI from 'element-ui';
+//import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/es';
+window.Vue.use(ElementUI, { locale })
+
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('versionvehiculo', require('./components/VersionVehiculo.vue'));
 Vue.component('elementoventa', require('./components/ElementoVenta.vue'));
