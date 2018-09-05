@@ -139,7 +139,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
+                                                                <div class="col-sm-9 offset-sm-6">
                                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();"><i class="fa fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
