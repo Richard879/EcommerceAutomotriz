@@ -40,14 +40,12 @@ class TurnoVentaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $turnoventa = DB::select('exec usp_TurnoVenta_SetTurno ?, ?, ? ,? ,?, ?, ?, ?',
+        $turnoventa = DB::select('exec usp_TurnoVenta_SetTurno ?, ?, ? ,? ,?, ?',
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdTurno,
                                                                     $request->cHoraInicio,
-                                                                    $request->nIdHoraInicio,
                                                                     $request->cHoraFin,
-                                                                    $request->nIdHoraFin,
                                                                     Auth::user()->id
                                                                     ));
         return response()->json($turnoventa);
@@ -73,15 +71,13 @@ class TurnoVentaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $turnoventa = DB::select('exec usp_TurnoVenta_UpdTurnoVentaById ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $turnoventa = DB::select('exec usp_TurnoVenta_UpdTurnoVentaById ?, ?, ?, ?, ?, ?, ?',
                                                             array($request->nIdTurnoVendedor,
                                                                     $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdTurno,
                                                                     $request->cHoraInicio,
-                                                                    $request->nIdHoraInicio,
                                                                     $request->cHoraFin,
-                                                                    $request->nIdHoraFin,
                                                                     Auth::user()->id
                                                                     ));
         return response()->json($turnoventa);

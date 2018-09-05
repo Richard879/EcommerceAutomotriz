@@ -62,7 +62,7 @@
                                                                             <el-date-picker
                                                                                 v-model="fillCartaCaracteristica.dfechainicio"
                                                                                 value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
+                                                                                format="dd-MM-yyyy"
                                                                                 type="date"
                                                                                 placeholder="Seleccionar fecha de inicio">
                                                                             </el-date-picker>

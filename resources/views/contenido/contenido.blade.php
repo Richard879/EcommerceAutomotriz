@@ -57,9 +57,9 @@
     <template v-if="menu==200216">
         <depositopedido :ruta="ruta"></depositopedido>
     </template>
-
-
-
+    <template v-if="menu==200217">
+        <vendedorlinea :ruta="ruta"></vendedorlinea>
+    </template>
     <template v-if="menu==200218">
         <solccjefeventa :ruta="ruta"></solccjefeventa>
     </template>

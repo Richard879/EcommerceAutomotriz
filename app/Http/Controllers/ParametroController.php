@@ -211,4 +211,24 @@ class ParametroController extends Controller
         $parametro = $this->arrayPaginator($parametro, $request);
         return ['arrayParametro'=>$parametro];
     }
+
+    public function GetParametroById(Request $request)
+    {
+        $nIdPar = $request->nidpar;
+
+        $data = DB::select('exec usp_Par_GetParametroById ?',  [$nIdPar]);
+
+        return response()->json($data);
+    }
+
+    public function GetListParametroByParParent(Request $request)
+    {
+        $nIdPar = $request->nidpar;
+        $nIdGrupoPar = $request->idgrupopar;
+
+        $arrayParametro = DB::select('exec usp_Par_GetParametroByParParent ?, ?',  [$nIdPar, $nIdGrupoPar]);
+
+        $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
+        return ['arrayParametro'=>$arrayParametro];
+    }
 }
