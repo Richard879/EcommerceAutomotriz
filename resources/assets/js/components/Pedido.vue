@@ -58,7 +58,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="fillPedido.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -66,7 +72,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillPedido.dfechafin" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="fillPedido.dfechafin"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -94,10 +106,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
-                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="formPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                <el-option
+                                                                                v-for="item in arrayMarca"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -105,10 +121,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
-                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="formPedido.nidmodelo" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayModelo"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -118,10 +138,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Estado Pedido</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="fillPedido.nidestadopedido" class="form-control form-control-sm">
-                                                                                <option v-for="estado in arrayEstadoPedido" :key="estado.nIdPar" :value="estado.nIdPar" v-text="estado.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="fillPedido.nidestadopedido" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayEstadoPedido"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -254,7 +278,13 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="date" v-model="formPedido.dfechainicio" class="form-control form-control-sm">
+                                                                                <el-date-picker
+                                                                                    v-model="formPedido.dfechainicio"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -262,7 +292,13 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="date" v-model="formPedido.dfechafin" class="form-control form-control-sm">
+                                                                                <el-date-picker
+                                                                                    v-model="formPedido.dfechafin"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -272,10 +308,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
-                                                                                    <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMarca"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -283,10 +323,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formPedido.nidmodelo" class="form-control form-control-sm">
-                                                                                    <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formPedido.nidmodelo" filterable placeholder="Select">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayModelo"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -348,9 +392,9 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -368,7 +412,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -1574,5 +1618,11 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
 </style>
