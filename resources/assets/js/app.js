@@ -17,9 +17,11 @@ Vue.component('pedido', require('./components/Pedido.vue'));
 Vue.component('aprobapedido', require('./components/PedidoAprobacion.vue'));
 Vue.component('comision', require('./components/Comision.vue'));
 Vue.component('objcomercial', require('./components/ObjComercial.vue'));
-Vue.component('solcaracteristica', require('./components/SolicitudCaracteristica.vue'));
+Vue.component('solccvendedor', require('./components/SolicitudCCVendedor.vue'));
+Vue.component('solccjefeventa', require('./components/SolicitudCCJefeVenta.vue'));
 Vue.component('asigvendedorturno', require('./components/AsigVendedorTurno.vue'));
 Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
+
 Vue.component('depositopedido', require('./components/PedidoDeposito.vue'));
 
 const app = new Vue({

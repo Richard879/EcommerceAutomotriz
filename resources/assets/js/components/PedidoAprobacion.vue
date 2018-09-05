@@ -559,7 +559,7 @@
                 let fecha_fin = moment(this.fillBusquedaPedido.dfechafin);
 
                 if(fecha_fin.diff(fecha_ini, 'days') < 0){
-                    this.mensajeError.push('La Fecha de inicio no puede ser menor a la fecha final');
+                    this.mensajeError.push('La Fecha de Fin no puede ser menor a la fecha de inicio');
                 }
 
                 if(this.mensajeError.length){

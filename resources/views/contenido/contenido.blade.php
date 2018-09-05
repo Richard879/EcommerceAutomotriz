@@ -46,7 +46,7 @@
         <objcomercial :ruta="ruta"></objcomercial>
     </template>
     <template v-if="menu==200213">
-        <solcaracteristica :ruta="ruta"></solcaracteristica>
+        <solccvendedor :ruta="ruta"></solccvendedor>
     </template>
     <template v-if="menu==200214">
         <asigvendedorturno :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorturno>
@@ -56,5 +56,11 @@
     </template>
     <template v-if="menu==200216">
         <depositopedido :ruta="ruta"></depositopedido>
+    </template>
+
+
+
+    <template v-if="menu==200218">
+        <solccjefeventa :ruta="ruta"></solccjefeventa>
     </template>
 @endsection

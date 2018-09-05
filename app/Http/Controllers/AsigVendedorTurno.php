@@ -33,8 +33,9 @@ class AsigVendedorTurno extends Controller
     public function GetParametroByParParent(Request $request)
     {
         $nidpar = $request->nidpar;
+        $nidgrupar = $request->nidgrupar;
 
-        $arrayVendedoresByIdJV = DB::select('exec usp_Par_GetParametroByParParent ?',  [$nidpar]);
+        $arrayVendedoresByIdJV = DB::select('exec usp_Par_GetParametroByParParent ?,?',  [$nidpar, $nidgrupar]);
 
         $arrayVendedoresByIdJV = $this->arrayPaginator($arrayVendedoresByIdJV, $request);
         return ['arrayVendedoresByIdJV'=>$arrayVendedoresByIdJV];
@@ -65,7 +66,7 @@ class AsigVendedorTurno extends Controller
             $arrayFechaTurnoLength = sizeof($data);
             if($arrayFechaTurnoLength > 0){
                 foreach ($data as $key => $value) {
-                    DB::select('exec usp_AsigVendedorTurno_SetRegistrar ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec usp_TurnoVendedor_SetRegistrar ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $nIdEmpresa,
                                 $nIdSucursal,

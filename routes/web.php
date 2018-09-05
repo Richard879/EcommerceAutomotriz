@@ -123,6 +123,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
     Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');
     Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
+    Route::get('/solicitudCartaCaracteristica/GeLstCompras', 'SolicitudCartaCaracteristica@GeLstCompras');
+    Route::get('/solicitudCartaCaracteristica/GetListContactos', 'SolicitudCartaCaracteristica@GetListContactos');
+    Route::post('/solicitudCartaCaracteristica/SetRegistrarSCC', 'SolicitudCartaCaracteristica@SetRegistrarSCC');
 
 
 
