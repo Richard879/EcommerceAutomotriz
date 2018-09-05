@@ -38,32 +38,28 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Inicio</label>
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorainicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>:
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminuinicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select v-model="formTur.nminicio" class="form-control form-control-sm">
-                                                <option v-for="item in arrayHoraInicio" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>
+                                        <div class="col-sm-4">
+                                            <el-time-picker
+                                                v-model="formTur.chorainicio"
+                                                value-format="HH:mm"
+                                                :picker-options="{
+                                                format: 'AM/PM'
+                                                }"
+                                                placeholder="Fecha de Inicio">
+                                            </el-time-picker>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Fin</label>
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorafin" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>:
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminufin" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select v-model="formTur.nmfin" class="form-control form-control-sm">
-                                                <option v-for="item in arrayHoraFin" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>
+                                        <div class="col-sm-4">
+                                            <el-time-picker
+                                                v-model="formTur.chorafin"
+                                                value-format="HH:mm"
+                                                :picker-options="{
+                                                format: 'AM/PM'
+                                                }"
+                                                placeholder="Fecha de Fin">
+                                            </el-time-picker>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -199,32 +195,28 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Inicio</label>
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorainicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>:
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminuinicio" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select v-model="formTur.nminicio" class="form-control form-control-sm">
-                                                <option v-for="item in arrayHoraInicio" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>
+                                        <div class="col-sm-4">
+                                            <el-time-picker
+                                                v-model="formTur.chorainicio"
+                                                value-format="HH:mm"
+                                                :picker-options="{
+                                                format: 'AM/PM'
+                                                }"
+                                                placeholder="Fecha de Inicio">
+                                            </el-time-picker>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Hora Fin</label>
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.chorafin" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>:
-                                        <div class="col-sm-1">
-                                            <input type="text" v-model="formTur.cminufin" class="form-control form-control-sm" placeholder="00" maxlength="2">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select v-model="formTur.nmfin" class="form-control form-control-sm">
-                                                <option v-for="item in arrayHoraFin" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>
+                                        <div class="col-sm-4">
+                                            <el-time-picker
+                                                v-model="formTur.chorafin"
+                                                value-format="HH:mm"
+                                                :picker-options="{
+                                                format: 'AM/PM'
+                                                }"
+                                                placeholder="Fecha de Fin">
+                                            </el-time-picker>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -258,26 +250,18 @@
                 csucursal: 'CHICLAYO',
                 arrayTurno: [],
                 chorainicio:'00',
-                cminuinicio:'00',
                 arrayHoraInicio:[],
                 chorafin:'00',
-                cminufin:'00',
-                arrayHoraFin:[],
                 arrayTurnoVenta: [],
-              
                 formTur:{
                     cempresa: 'SAISAC',
                     csucursal: 'CHICLAYO',
                     nidturnovendedor: 0,
                     nturno: 0,
-                    nminicio:1300153,
-                    nmfin:1300153,
                     nidempresa : '',
                     nidsucursal : '',
                     chorainicio:'',
                     chorafin:'',
-                    cminufin:'',
-                    cminuinicio:'',
                 },
                 pagination: {
                     'total': 0,
@@ -372,32 +356,6 @@
                     console.log(error);
                 });
             },
-            llenarComboHoraInicio(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110061,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayHoraInicio = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboHoraFin(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110061,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayHoraFin = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             buscarTurnoVenta(){
                 this.listarTurnosVenta(1);
             },
@@ -437,8 +395,6 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 1;
                                 this.llenarComboTurno();
-                                this.llenarComboHoraInicio();
-                                this.llenarComboHoraFin();
                                 this.tituloFormulario = 'NUEVO TURNO DE VENTA';
                                 this.limpiarFormulario();
                                 break;
@@ -451,14 +407,8 @@
                                 this.tituloFormulario = 'ACTUALIZAR TURNO DE VENTA';
                                 this.formTur.nidturnovendedor = data['nIdTurnoVendedor'];
                                 this.formTur.nturno = data['nIdTurno'];
-                                var aHraIni = data['cHoraInicio'].split(":");
-                                this.formTur.chorainicio = aHraIni[0];
-                                this.formTur.cminuinicio= aHraIni[1];
-                                this.formTur.nminicio = data['nIdHoraInicio'];
-                                var aHraFin = data['cHoraFin'].split(":");
-                                this.formTur.chorafin = aHraFin[0];
-                                this.formTur.cminufin = aHraFin[1];
-                                this.formTur.nmfin = data['nIdHoraFin'];
+                                this.formTur.chorainicio = data['cHoraInicio'];
+                                this.formTur.chorafin = data['cHoraFin'];
                                 break;
                             }
                         }
@@ -467,15 +417,9 @@
             },
             limpiarFormulario(){
                 this.formTur.nturno= 0,
-                this.formTur.nminicio=  0,
-                this.formTur.nmfin= 0,
                 this.formTur.chorainicio= '',
-                this.formTur.cminuinicio= '',
                 this.formTur.chorafin= '',
-                this.formTur.cminufin='',
-                this.arrayTurnoVenta= [],
-                this.aHraFin= [],
-                this.aHraIni = []
+                this.arrayTurnoVenta= []
             },
             cambiarVistaFormulario(){
                 if(this.accion == 1){
@@ -498,10 +442,8 @@
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
                     nIdTurno: parseInt(this.formTur.nturno),
-                    cHoraInicio: this.formTur.chorainicio +':'+ this.formTur.cminuinicio,
-                    nIdHoraInicio: parseInt(this.formTur.nminicio),
-                    cHoraFin: this.formTur.chorafin +':'+this.formTur.cminufin,
-                    nIdHoraFin: parseInt(this.formTur.nmfin)
+                    cHoraInicio: this.formTur.chorainicio,
+                    cHoraFin: this.formTur.chorafin,
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -517,31 +459,17 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
-
                 if(this.accion == 2 && this.formTur.nidturnovendedor == 0){
                     this.mensajeError.push('No ha seleccionado Turno de venta');
                 }
-
                 if(!this.formTur.nturno || this.formTur.nturno == 0){
                     this.mensajeError.push('Debes Ingresar el Turno');
                 };
                 if(!this.formTur.chorainicio){
                     this.mensajeError.push('Debes Ingresar una Hora de Inicio');
                 };
-                if(!this.formTur.cminuinicio){
-                    this.mensajeError.push('Debes Ingresar Minuto de Inicio');
-                };
-                if(this.formTur.nminicio == 0){
-                    this.mensajeError.push('Debes Ingresar un Horario de Inicio');
-                };
                 if(!this.formTur.chorafin){
                     this.mensajeError.push('Debes Ingresar una Hora de Fin');
-                };
-                if(!this.formTur.cminufin){
-                    this.mensajeError.push('Debes Ingresar Minuto de Fin');
-                };
-                if(this.formTur.nmfin == 0){
-                    this.mensajeError.push('Debes Ingresar un Horario de Fin');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -617,14 +545,13 @@
                     nIdSucursal: 1300013,
                     nIdTurnoVendedor: parseInt(this.formTur.nidturnovendedor),
                     nIdTurno: parseInt(this.formTur.nturno),
-                    cHoraInicio: this.formTur.chorainicio +':'+ this.formTur.cminuinicio,
-                    nIdHoraInicio: parseInt(this.formTur.nminicio),
-                    cHoraFin: this.formTur.chorafin +':'+this.formTur.cminufin,
-                    nIdHoraFin: parseInt(this.formTur.nmfin)
+                    cHoraInicio: this.formTur.chorainicio,
+                    cHoraFin: this.formTur.chorafin,
                 }).then(response => {
                     swal('Turno de Venta Actualizado');
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
+                    this.listarTurnosVenta(1);
                 }).catch(error => {
                     console.log(error);
                 });
@@ -636,8 +563,7 @@
         },
         mounted(){
             this.llenarComboTurno();
-            this.llenarComboHoraInicio();
-            this.llenarComboHoraFin();
+            this.listarTurnosVenta(1);
         }
     }
 </script>

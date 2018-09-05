@@ -22,10 +22,12 @@
         <li id="200210" @click="menu=200210" onclick="ActivarMenu('200210')"><a href="#">Aprobar Pedido</a></li>
         <li id="200211" @click="menu=200211" onclick="ActivarMenu('200211')"><a href="#">Comisión</a></li>
         <li id="200212" @click="menu=200212" onclick="ActivarMenu('200212')"><a href="#">Obj.Comercial Compra</a></li>
-        <li id="200213" @click="menu=200213" onclick="ActivarMenu('200213')"><a href="#">Solic.Carta Caracteristica</a></li>
+        <li id="200213" @click="menu=200213" onclick="ActivarMenu('200213')"><a href="#">Solic.CC V</a></li>
         <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asig.Vendedor Turno</a></li>
         <li id="200215" @click="menu=200215" onclick="ActivarMenu('200215')"><a href="#">Turno de Venta</a></li>
         <li id="200216" @click="menu=200216" onclick="ActivarMenu('200216')"><a href="#">Depósitos</a></li>
+        <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asig.Vendedor Linea</a></li>
+        <li id="200218" @click="menu=200218" onclick="ActivarMenu('200218')"><a href="#">Solic.CC JV</a></li>
       </ul>
     </li>
     <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

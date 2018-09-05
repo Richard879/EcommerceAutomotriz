@@ -246,8 +246,8 @@
                                                                                     </label>
                                                                                 </td>
                                                                                 <td v-text="turno.cTurno"></td>
-                                                                                <td> {{ turno.cHoraInicio }} {{ turno.cTiempoInicio}}  </td>
-                                                                                <td> {{ turno.cHoraFin }} {{ turno.cTiempoFin}}  </td>
+                                                                                <td v-text="turno.cHoraInicio"> </td>
+                                                                                <td v-text="turno.cHoraFin"> </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -609,6 +609,7 @@
                 axios.get(url, {
                     params: {
                         'nidpar' : this.fillFormularioGeneral.nidusuario,
+                        'nidgrupar' : 110026,
                         'page' : page
                     }
                 }).then(response => {
