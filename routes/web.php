@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetModelosByProveedor', 'ParametroController@GetModelosByProveedor');
     Route::get('/parametro/GetDocumentoNatural', 'ParametroController@GetDocumentoNatural');
     Route::get('/parametro/GetDocumentoJuridica', 'ParametroController@GetDocumentoJuridica');
+    Route::get('/parametro/GetParametroById', 'ParametroController@GetParametroById');
     Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo');
     Route::post('/elemento/SetElemento', 'ElementoController@store');
     Route::put('/elemento/desactivar','ElementoController@desactivar');
@@ -97,6 +98,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'DepositoPedidoController@GetNumeroCuentaByBancoAndMoneda');
+    Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
+    Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');

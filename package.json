@@ -22,6 +22,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "element-ui": "^2.4.6",
         "vue-simple-calendar": "^4.0.2"
     }
 }

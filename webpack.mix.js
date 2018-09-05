@@ -17,6 +17,7 @@ mix.styles([
     'resources/assets/template/css/fontdin.css',
     'resources/assets/template/css/toastr.css',
     'resources/assets/template/css/style.default.css',
+    'resources/assets/template/css/elementui.css',
     'resources/assets/template/css/custom.css',
     'resources/assets/template/css/simple-line-icons.min.css',
     'resources/assets/template/css/styleprogress.css'

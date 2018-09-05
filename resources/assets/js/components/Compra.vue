@@ -612,7 +612,6 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                someData: '',
                 attachment: null,
                 form: new FormData,
                 textFile: ''

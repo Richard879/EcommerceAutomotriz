@@ -10,8 +10,6 @@
     <meta name="keyword" content="Sistema de Gestión Comercial">
     <link rel="shortcut icon" href="img/favicon.ico">
     <title>Sistema Ventas - SAISAC</title>
-    <!-- import CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="css/plantilla.css">
 </head>
@@ -203,12 +201,6 @@
 </div>
     <script src="js/app.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!-- import JavaScript Element.io -->
-    <script src="//unpkg.com/element-ui"></script>
-    <script src="//unpkg.com/element-ui/lib/umd/locale/es.js"></script>
     <script src="js/plantilla.js"></script>
-    <script>
-        ELEMENT.locale(ELEMENT.lang.es)
-    </script>
 </body>
 </html>
