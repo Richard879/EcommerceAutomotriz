@@ -315,7 +315,13 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Depósito</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="date" v-model="formNuevoDeposito.dfechadeposito" class="form-control form-control-sm">
+                                                                                <el-date-picker
+                                                                                    v-model="formNuevoDeposito.dfechadeposito"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd-MM-yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1308,7 +1314,7 @@
                 this.formNuevoDeposito.dfechadeposito = '',
                 this.formNuevoDeposito.nnumerooperacion = '',
                 this.formNuevoDeposito.ftipocambiovoucher = '',
-                this.formNuevoDeposito.ftipocambiocomercial = '',
+                //this.formNuevoDeposito.ftipocambiocomercial = '',
                 this.formNuevoDeposito.cglosa = ''
             },
             limpiarPaginacion(){
@@ -1351,5 +1357,8 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
 </style>

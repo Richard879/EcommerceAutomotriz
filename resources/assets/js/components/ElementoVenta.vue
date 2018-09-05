@@ -33,10 +33,6 @@
                                                 :value="item.nIdPar">
                                                 </el-option>
                                             </el-select>
-                                            <!--<select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
-                                                <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>-->
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -188,10 +184,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Tipo Elemento</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formEle.ntpoelemen" class="form-control form-control-sm">
-                                                        <option v-for="tpoelemento in arrayTipoElemento" :key="tpoelemento.nIdPar" :value="tpoelemento.nIdPar" v-text="tpoelemento.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayTipoElemento"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -199,10 +199,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formEle.nidmoneda" class="form-control form-control-sm">
-                                                        <option v-for="tpomoneda in arrayTipoMoneda" :key="tpomoneda.nIdPar" :value="tpomoneda.nIdPar" v-text="tpomoneda.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formEle.nidmoneda" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="tpomoneda in arrayTipoMoneda"
+                                                        :key="tpomoneda.nIdPar"
+                                                        :label="tpomoneda.cParNombre"
+                                                        :value="tpomoneda.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
