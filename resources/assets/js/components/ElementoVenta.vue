@@ -688,7 +688,7 @@
             },
             desactivar(nIdElementoVenta){
                 swal({
-                    title: 'Estas seguro de desactivar esta categoría?',
+                    title: 'Estas seguro de desactivar este elemento?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
