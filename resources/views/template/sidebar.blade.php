@@ -26,6 +26,7 @@
         <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asig.Vendedor Turno</a></li>
         <li id="200215" @click="menu=200215" onclick="ActivarMenu('200215')"><a href="#">Turno de Venta</a></li>
         <li id="200216" @click="menu=200216" onclick="ActivarMenu('200216')"><a href="#">Depósitos</a></li>
+        <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asig.Vendedor Linea</a></li>
       </ul>
     </li>
     <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

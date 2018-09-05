@@ -21,6 +21,7 @@ Vue.component('solcaracteristica', require('./components/SolicitudCaracteristica
 Vue.component('asigvendedorturno', require('./components/AsigVendedorTurno.vue'));
 Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
 Vue.component('depositopedido', require('./components/PedidoDeposito.vue'));
+Vue.component('vendedorlinea', require('./components/VendedorLinea.vue'));
 
 const app = new Vue({
     el: '#app',

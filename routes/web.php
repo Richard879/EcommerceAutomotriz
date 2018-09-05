@@ -131,4 +131,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/turnoventa/UpdTurnoVentaById', 'TurnoVentaController@UpdTurnoVentaById');
     Route::put('/turnoventa/desactivar','TurnoVentaController@desactivar');
     Route::put('/turnoventa/activar','TurnoVentaController@activar');
+
+    //Route::put('/turnoventa/activar','TurnoVentaController@activar');
 });
