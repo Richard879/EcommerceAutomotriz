@@ -67,7 +67,7 @@
                                                                                 v-model="fillCompra.dfechainicio"
                                                                                 type="date"
                                                                                 value-format="yyyy-MM-dd"
-                                                                                format="dd-MM-yyyy"
+                                                                                format="dd/MM/yyyy"
                                                                                 placeholder="dd/mm/aaaa">
                                                                             </el-date-picker>
                                                                         </div>
@@ -81,7 +81,7 @@
                                                                                 v-model="fillCompra.dfechafin"
                                                                                 type="date"
                                                                                 value-format="yyyy-MM-dd"
-                                                                                format="dd-MM-yyyy"
+                                                                                format="dd/MM/yyyy"
                                                                                 placeholder="dd/mm/aaaa">
                                                                             </el-date-picker>
                                                                         </div>
@@ -113,10 +113,10 @@
                                                                         <div class="col-sm-8">
                                                                             <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
                                                                                 <el-option
-                                                                                v-for="marca in arrayMarca"
-                                                                                :key="marca.nIdPar"
-                                                                                :label="marca.cParNombre"
-                                                                                :value="marca.nIdPar">
+                                                                                v-for="item in arrayMarca"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
                                                                                 </el-option>
                                                                             </el-select>
                                                                         </div>
@@ -128,10 +128,10 @@
                                                                         <div class="col-sm-8">
                                                                             <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
                                                                                 <el-option
-                                                                                v-for="modelo in arrayModelo"
-                                                                                :key="modelo.nIdPar"
-                                                                                :label="modelo.cParNombre"
-                                                                                :value="modelo.nIdPar">
+                                                                                v-for="item in arrayModelo"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
                                                                                 </el-option>
                                                                             </el-select>
                                                                         </div>
@@ -312,10 +312,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formCompra.nidtipolista" class="form-control form-control-sm">
-                                                                                <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="formCompra.nidtipolista" filterable placeholder="Select" >
+                                                                                <el-option
+                                                                                v-for="item in arrayTipoLista"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>

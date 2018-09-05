@@ -75,10 +75,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Evento</label>
                                                                             <div class="col-sm-8">
-                                                                                <select v-model="formEventoCamp.ntipo" class="form-control form-control-sm">
-                                                                                    <option v-for="item in arrayTipoEC" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayTipoEC"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -309,7 +313,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="formEventoCamp.dfechainicio" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="formEventoCamp.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -317,7 +327,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="formEventoCamp.dfechafin" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="formEventoCamp.dfechafin"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -353,10 +369,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Tipo</label>
                                                                         <div class="col-sm-8">
-                                                                            <select v-model="formEventoCamp.ntipo" class="form-control form-control-sm">
-                                                                                <option v-for="item in arrayTipoEC" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayTipoEC"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2674,5 +2694,11 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
 </style>

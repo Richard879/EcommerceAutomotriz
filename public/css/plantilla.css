@@ -5565,7 +5565,7 @@ button.close {
 
 @media (min-width: 576px) {
   .modal-dialog {
-    max-width: 500px;
+    max-width: 680px;
     margin: 1.75rem auto;
   }
   .modal-dialog-centered {
@@ -9019,7 +9019,7 @@ a.text-dark:hover, a.text-dark:focus {
   vertical-align: -15%;
 }
 .fa-md {
-  font-size: 1.1rem;
+  font-size: 1.22rem;
 }
 .fa-2x {
   font-size: 2em;
