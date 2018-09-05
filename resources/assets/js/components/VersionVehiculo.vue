@@ -47,10 +47,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Clase</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidclase" class="form-control form-control-sm">
-                                                        <option v-for="clase in arrayClase" :key="clase.nIdPar" :value="clase.nIdPar" v-text="clase.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayClase"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,10 +62,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">SubClase</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidsubclase" class="form-control form-control-sm">
-                                                        <option v-for="subclase in arraySubClase" :key="subclase.nIdPar" :value="subclase.nIdPar" v-text="subclase.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arraySubClase"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,10 +79,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidlinea" class="form-control form-control-sm" v-on:change="llenarComboMarca();">
-                                                        <option v-for="linea in arrayLinea" :key="linea.nIdPar" :value="linea.nIdPar" v-text="linea.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                        <el-option
+                                                        v-for="item in arrayLinea"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,10 +94,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Marca</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                        <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-option
+                                                        v-for="item in arrayMarca"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -95,10 +111,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Modelo</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidmodelo" class="form-control form-control-sm">
-                                                        <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayModelo"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -257,10 +277,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Clase</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidclase" class="form-control form-control-sm">
-                                                        <option v-for="clase in arrayClase" :key="clase.nIdPar" :value="clase.nIdPar" v-text="clase.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayClase"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -268,10 +292,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sub Clase</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidsubclase" class="form-control form-control-sm">
-                                                        <option v-for="subclase in arraySubClase" :key="subclase.nIdPar" :value="subclase.nIdPar" v-text="subclase.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arraySubClase"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,10 +309,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Linea Vehículo</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidlinea" class="form-control form-control-sm" v-on:change="llenarComboMarca();">
-                                                        <option v-for="linea in arrayLinea" :key="linea.nIdPar" :value="linea.nIdPar" v-text="linea.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                        <el-option
+                                                        v-for="item in arrayLinea"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -292,10 +324,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Marca</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                        <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-option
+                                                        v-for="item in arrayMarca"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -305,10 +341,14 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Modelo</label>
                                                 <div class="col-sm-8">
-                                                    <select name="account" v-model="formVersion.nidmodelo" class="form-control form-control-sm">
-                                                        <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                    <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-option
+                                                        v-for="item in arrayModelo"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -1036,5 +1076,11 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
 </style>
