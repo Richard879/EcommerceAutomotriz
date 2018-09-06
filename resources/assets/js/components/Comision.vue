@@ -147,90 +147,86 @@
                         </div>
                         <div class="card-body">
                             <form class="form-horizontal">
-                                <div class="col-lg-12">
-                                    <template v-if="fillDetalleFlagComision.flagTipo == 'E'">
-                                        <template v-if="fillDetalleFlagComision.arrayElementoVenta.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Acción</th>
-                                                            <th>Codigo</th>
-                                                            <th>Elemento Venta</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="(elementoventa, index) in fillDetalleFlagComision.arrayElementoVenta" :key="elementoventa.nIdElemento">
-                                                            <td>
-                                                                <a href="#" @click="removerElementoVentaLista(index);">
-                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="elementoventa.nIdElemento"></td>
-                                                            <td v-text="elementoventa.cElemenNombre"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
+                                <template v-if="fillDetalleFlagComision.flagTipo == 'E'">
+                                    <template v-if="fillDetalleFlagComision.arrayElementoVenta.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
                                                     <tr>
-                                                        <td colspan="10">No existen registros!</td>
+                                                        <th>Acción</th>
+                                                        <th>Codigo</th>
+                                                        <th>Elemento Venta</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(elementoventa, index) in fillDetalleFlagComision.arrayElementoVenta" :key="elementoventa.nIdElemento">
+                                                        <td>
+                                                            <a href="#" @click="removerElementoVentaLista(index);">
+                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td v-text="elementoventa.nIdElemento"></td>
+                                                        <td v-text="elementoventa.cElemenNombre"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </template>
-                                    </template>
-                                    <template v-else-if="fillDetalleFlagComision.flagTipo == 'L'">
-                                        <template v-if="fillDetalleFlagComision.arrayLineas.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Acción</th>
-                                                            <th>Codigo</th>
-                                                            <th>Linea</th>
-                                                            <th>Abreviatura</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="(lineas, index) in fillDetalleFlagComision.arrayLineas" :key="lineas.nIdLinea">
-                                                            <td>
-                                                                <a href="#" @click="removerLineasByProveedorLista(index);">
-                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="lineas.nIdLinea"></td>
-                                                            <td v-text="lineas.cLineaNombre"></td>
-                                                            <td v-text="lineas.cLineaAbreviatura"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </template>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group row">
-                                        <div class="col-md-9 offset-md-5">
-                                            <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarComision(1)">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarComision(2)">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
                                         </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
+                                </template>
+                                <template v-else-if="fillDetalleFlagComision.flagTipo == 'L'">
+                                    <template v-if="fillDetalleFlagComision.arrayLineas.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Acción</th>
+                                                        <th>Codigo</th>
+                                                        <th>Linea</th>
+                                                        <th>Abreviatura</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(lineas, index) in fillDetalleFlagComision.arrayLineas" :key="lineas.nIdLinea">
+                                                        <td>
+                                                            <a href="#" @click="removerLineasByProveedorLista(index);">
+                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td v-text="lineas.nIdLinea"></td>
+                                                        <td v-text="lineas.cLineaNombre"></td>
+                                                        <td v-text="lineas.cLineaAbreviatura"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
+                                </template>
+                                <div class="form-group row">
+                                    <div class="col-md-9 offset-md-5">
+                                        <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(1)">
+                                            <i class="fa fa-save"></i> Registrar
+                                        </button>
+                                        <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(2)">
+                                            <i class="fa fa-save"></i> Registrar
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -974,8 +970,8 @@
                         nIdProveedor            : elemento.nIdProveedor
                     });
 
-                    toastr.options.progressBar = true;
-                    toastr.options.closeButton = true;
+                    //toastr.options.progressBar = true;
+                    //toastr.options.closeButton = true;
                     toastr.success('Agrego el elemento de venta "'+ elemento.cElemenNombre +'" exitosamente');
                 }
             },
@@ -1059,8 +1055,8 @@
                         cProveedorAbreviatura   : linea.cProveedorAbreviatura,
                     });
 
-                    toastr.options.progressBar = true;
-                    toastr.options.closeButton = true;
+                    //toastr.options.progressBar = true;
+                    //toastr.options.closeButton = true;
                     toastr.success('Agrego el linea de venta "'+ linea.cLineaNombre +'" exitosamente');
                 }
             },
