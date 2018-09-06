@@ -61,9 +61,10 @@ class ObjComercialController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor = $request->nidproveedor;
+        $nIdProveedor = $request->nidproveedor;
+        $nIdCronograma = $request->nidcronograma;
 
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculo ?', [$nidproveedor]);
+        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculo ?, ?', [$nIdProveedor, $nIdCronograma]);
         return response()->json($data);
     }
 

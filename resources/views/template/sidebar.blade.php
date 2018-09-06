@@ -20,7 +20,7 @@
         <li id="200208" @click="menu=200208" onclick="ActivarMenu('200208')"><a href="#">Generar Cotización</a></li>
         <li id="200209" @click="menu=200209" onclick="ActivarMenu('200209')"><a href="#">Generar Pedido</a></li>
         <li id="200210" @click="menu=200210" onclick="ActivarMenu('200210')"><a href="#">Aprobar Pedido</a></li>
-        <li id="200211" @click="menu=200211" onclick="ActivarMenu('200211')"><a href="#">Comisión</a></li>
+        <li id="200211" @click="menu=200211" onclick="ActivarMenu('200211')"><a href="#">Gestión Comisiones</a></li>
         <li id="200212" @click="menu=200212" onclick="ActivarMenu('200212')"><a href="#">Objetivos Comerciales</a></li>
         <li id="200213" @click="menu=200213" onclick="ActivarMenu('200213')"><a href="#">Solicitud CC V</a></li>
         <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asigna Vendedor a Turno</a></li>

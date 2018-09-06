@@ -309,7 +309,7 @@
                                                     <label class="col-sm-4 form-control-label">Nombre</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
-                                                            <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
                                                                 <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
                                                                     <i class="fa-lg fa fa-search"></i>
@@ -401,7 +401,7 @@
                 arrayElementoVenta: [],
                 arrayTipoMoneda: [],
                 arrayProveedor: [],
-                fillProvedor:{
+                fillProveedor:{
                     cnombreproveedor: ''
                 },
                 formEle:{
@@ -500,18 +500,26 @@
         },
         methods:{
             llenarComboTpoElemento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110027
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110027,
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayTipoElemento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboTpoMoneda(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110028
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110028,
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayTipoMoneda = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -521,12 +529,17 @@
                 this.listarProveedores(1);
             },
             listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011
-                                                                    + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString()
-                                                                    + '&opcion=' + 1
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetLstProveedor';
+                
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayProveedor = response.data.arrayProveedor.data;
                     this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
                     this.paginationModal.total = response.data.arrayProveedor.total;

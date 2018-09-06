@@ -14,12 +14,12 @@
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="tab01" href="#TabCompra" @click="tabCompra" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list"></i> COMPRA
+                                        <i class="fa fa-list"></i> OBJETIVO COMPRA
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="tab02" href="#TabVenta" @click="tabVenta" role="tab" data-toggle="tab">
-                                        <i class="fa fa-user"></i> VENTA
+                                        <i class="fa fa-bus"></i> OBJETIVO VENTA
                                     </a>
                                 </li>
                             </ul>
@@ -75,14 +75,22 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Tipo Beneficio</label>
                                                                         <div class="col-sm-8">
-                                                                            <div class="input-group">
+                                                                            <el-select v-model="fillTipoBeneficio.nidtipobeneficio" filterable placeholder="Select" >
+                                                                                <el-option
+                                                                                v-for="item in arrayTipoBeneficio"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                            <!--<div class="input-group">
                                                                                 <input type="text" v-model="fillTipoBeneficio.ctipobeneficionombre" disabled="disabled" class="form-control form-control-sm">
                                                                                 <div class="input-group-prepend">
                                                                                     <button type="button" title="Buscar Tipo de Beneficio" class="btn btn-info btn-corner btn-sm" @click="abrirModal('tipobeneficio','buscar')">
                                                                                         <i class="fa-lg fa fa-search"></i>
                                                                                     </button>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -161,7 +169,7 @@
                                                         <div class="col-lg-12" v-if="arrayDetalleVehiculoAdd.length">
                                                             <div class="form-group row">
                                                                 <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarObjComercial(1)">
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercial(1)">
                                                                         <i class="fa fa-save"></i> Registrar
                                                                     </button>
                                                                 </div>
@@ -224,14 +232,22 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Tipo Beneficio</label>
                                                                         <div class="col-sm-8">
-                                                                            <div class="input-group">
+                                                                            <el-select v-model="fillTipoBeneficio.nidtipobeneficio" filterable placeholder="Select" >
+                                                                                <el-option
+                                                                                v-for="item in arrayTipoBeneficio"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                            <!--<div class="input-group">
                                                                                 <input type="text" v-model="fillTipoBeneficio.ctipobeneficionombre" disabled="disabled" class="form-control form-control-sm">
                                                                                 <div class="input-group-prepend">
                                                                                     <button type="button" title="Buscar Tipo de Beneficio" class="btn btn-info btn-corner btn-sm" @click="abrirModal('tipobeneficio','buscar')">
                                                                                         <i class="fa-lg fa fa-search"></i>
                                                                                     </button>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -310,7 +326,7 @@
                                                         <div class="col-lg-12" v-if="arrayDetalleVehiculoAdd.length">
                                                             <div class="form-group row">
                                                                 <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarObjComercial(2)">
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercial(2)">
                                                                         <i class="fa fa-save"></i> Registrar
                                                                     </button>
                                                                 </div>
@@ -454,7 +470,7 @@
             </div>
         </div>
 
-        <!-- Modal Buscar Proveedores -->
+        <!-- Modal Buscar Tipo Beneficio -->
         <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -616,6 +632,7 @@
         },
         mounted(){
             this.llenarCompraActiva();
+            this.llenarComboTipoBeneficio();
         },
         computed:{
             isActived: function(){
@@ -699,9 +716,9 @@
                 this.limpiarProceso();
             },
             // =======================
-            // MODAL PROVEEDOR
+            // MODAL BENEFICIO
             // =======================
-            buscaTipoIncentivo(){
+            /*buscaTipoIncentivo(){
                 this.listarTipoBeneficio(1);
             },
             listarTipoBeneficio(page){
@@ -735,6 +752,19 @@
                 this.fillTipoBeneficio.ctipobeneficionombre = tipobeneficio.cParNombre;
                 this.fillObjComerciales.cflagtipobeneficio = tipobeneficio.cParAbreviatura;
                 this.cerrarModal();
+            },*/
+            llenarComboTipoBeneficio(){
+               var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110069,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayTipoBeneficio = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // =======================
             // MODAL PROVEEDOR
@@ -786,6 +816,7 @@
                 axios.get(url, {
                     params: {
                         'nidproveedor': this.fillProveedor.nidproveedor,
+                        'nidcronograma': this.fillObjComerciales.nidcronograma,
                         'page' : page
                     }
                 }).then(response => {
@@ -819,7 +850,7 @@
                 if(me.arrayDetalleVehiculo.length > 0){
                     me.arrayDetalleVehiculo.map(function(ev){
                         me.arrayDetalleVehiculoAdd.push({
-                            nIdVersionVeh   : ev.nIdVersionVeh,
+                            //nIdVersionVeh   : ev.nIdVersionVeh,
                             nIdProveedor    : ev.nIdProveedor,
                             Proveedor       : ev.Proveedor,
                             nIdLinea        : ev.nIdLinea,
@@ -828,8 +859,8 @@
                             Marca           : ev.Marca,
                             nIdModelo       : ev.nIdModelo,
                             Modelo          : ev.Modelo,
-                            cNombreComercial: ev.cNombreComercial,
-                            cantidad        : ''
+                            //cNombreComercial: ev.cNombreComercial,
+                            cantidad        : ev.nCantidadVehiculo
                         });
                     });
                 }
@@ -981,6 +1012,12 @@
     .barraLateral{
         height: 38vh;
         overflow-y: scroll;
+    }
+    .el-select{
+            width: 100%;
+        }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        width: 100% !important;
     }
 </style>
 
