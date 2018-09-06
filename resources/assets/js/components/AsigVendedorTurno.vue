@@ -715,8 +715,8 @@
 
                 this.agregarDiasAlVendedor(moment(d).format('YYYY-MM-DD'));
             },
-            agregarDiasAlVendedor(dia){
-                if(this.encontrarDiaRepetido(dia)){
+            agregarDiasAlVendedor(fecha){
+                if(this.encontrarDiaRepetido(fecha)){
                     swal({
                         type: 'error',
                         title: 'Error...',
@@ -724,15 +724,15 @@
                     })
                 } else {
                     this.arrayDiasSeleccionados.push({
-                        cdia : dia
+                        cdia : fecha
                     })
-                    toastr.success('Se Agregó el día"'+ dia +'" ');
+                    toastr.success('Se Agregó Fecha"'+ fecha +'" ');
                 }
             },
-            encontrarDiaRepetido(dia){
+            encontrarDiaRepetido(fecha){
                 var sw=0;
                 this.arrayDiasSeleccionados.map(function (x) {
-                    if(x.cdia == dia){
+                    if(x.cdia == fecha){
                         sw = true;
                     }
                 });
