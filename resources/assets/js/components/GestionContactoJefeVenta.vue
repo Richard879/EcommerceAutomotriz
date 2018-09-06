@@ -13,17 +13,17 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos();" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" id="Tab1" href="#TabMisContactos" @click="tabMisContactos()" role="tab" data-toggle="tab">
                                         <i class="fa fa-users"></i> MIS CONTACTOS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="Tab2" href="#TabContactosPorVendedor" @click="tabContactosPorVendedor()" role="tab" data-toggle="tab">
                                         <i class="fa fa-user-circle-o"></i> CONTACTOS POR VENDEDOR
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Tab3" href="#TabContactosLibres" @click="tabContactosLibres();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="Tab3" href="#TabContactosLibres" @click="tabContactosLibres()" role="tab" data-toggle="tab">
                                         <i class="fa fa-male"></i> CONTACTOS LIBRES
                                     </a>
                                 </li>
@@ -33,8 +33,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Tab5" href="#TabNuevoContacto" @click="tabNuevoContacto();" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="Tab5" href="#TabNuevoContacto" @click="tabNuevoContacto()" role="tab" data-toggle="tab">
                                         <i class="fa fa-user"></i> NUEVO CONTACTO
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="Tab5" href="#TabLeads" role="tab" data-toggle="tab">
+                                        <i class="fa fa-file-excel-o"></i> LEADS
                                     </a>
                                 </li>
                             </ul>
@@ -1873,6 +1878,118 @@
                                         </div>
                                     </section>
                                 </div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabLeads">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Importar Leads</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="row">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileLeads()">
+                                                                            <i class="fa fa-retweet"></i> Procesar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <!--<template v-if="arrayLeads.length">
+                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>OC</th>
+                                                                                <th>Línea</th>
+                                                                                <th>Almacén<nav></nav></th>
+                                                                                <th>Nro Reserva</th>
+                                                                                <th>Nro Vin</th>
+                                                                                <th>Forma Pago</th>
+                                                                                <th>Marca</th>
+                                                                                <th>Modelo</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Color</th>
+                                                                                <th>Año Fab</th>
+                                                                                <th>Año Mod</th>
+                                                                                <th>Mon</th>
+                                                                                <th>Total</th>
+                                                                                <th>Nro Factura</th>
+                                                                                <th>Fecha Facturado</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(compra, index) in arrayLeads" :key="compra.nOrdenCompra">
+                                                                                <td>
+                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +compra.nOrdenCompra">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                </td>
+                                                                                <td v-text="compra.nOrdenCompra"></td>
+                                                                                <td v-text="compra.cNombreLinea"></td>
+                                                                                <td v-text="compra.cNombreAlmacen"></td>
+                                                                                <td v-text="compra.nNumeroReserva"></td>
+                                                                                <td v-text="compra.cNumeroVin"></td>
+                                                                                <td v-text="compra.cFormaPago"></td>
+                                                                                <td v-text="compra.cNombreMarca"></td>
+                                                                                <td v-text="compra.cNombreModelo"></td>
+                                                                                <td v-text="compra.cNombreComercial"></td>
+                                                                                <td v-text="compra.cNombreColor"></td>
+                                                                                <td v-text="compra.nAnioFabricacion"></td>
+                                                                                <td v-text="compra.nAnioVersion"></td>
+                                                                                <td v-text="compra.cSimboloMoneda"></td>
+                                                                                <td v-text="compra.fTotalCompra"></td>
+                                                                                <td v-text="compra.cNumeroFactura"></td>
+                                                                                <td v-text="compra.dFechaFacturado"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Total: {{ contadorArrayExcel }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2331,6 +2448,7 @@
                     cmailprincipal: '',
                     ncelular : ''
                 },
+                vistaDatosPersonaNatural: 1,
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
@@ -2368,6 +2486,9 @@
                 arrayProv : [],
                 arrayDist: [],
                 // =============================================================
+                // ============== VARIABLES TAB LEADS ==============
+                arrayLeads: [],
+                // =============================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -2393,8 +2514,9 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                vistaModal: 0,
-                vistaDatosPersonaNatural: 1
+                attachment: null,
+                form: new FormData,
+                textFile: ''
             }
         },
         computed:{
@@ -3682,6 +3804,102 @@
                         console.log(error);
                     });
                 }
+            },
+            // ========================================================
+            // =============  TAB LEADS ======================
+            getFile(e){
+                //console.log(e);
+                let selectFile = e.target.files[0];
+                this.attachment = selectFile;
+                //this.textFile = e.target.files[0].name;
+            },
+            importFileLeads(){
+                if(this.validarReadFileLeads()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.form.append('file', this.attachment);
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                //var fd = new FormData();
+                //fd.append('file', this.fileExcel, this.fileExcel.name);
+                var url = this.ruta + '/gescontacto/importFileLeads';
+                axios.post(url, this.form, config).then(response=>{
+                    this.readFileLeads(response.data);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            readFileLeads(nameFile){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/gescontacto/readFileLeads';
+                axios.post(url, {
+                    nameFile: nameFile
+                }).then(response => {
+
+                    if(this.validaCamposExcel(response.data)){
+                        this.accionmodal=1;
+                        this.modal = 1;
+                        return;
+                    }
+
+                    this.$delete(response.data, 0)
+                    this.arrayLeads = response.data;
+                    this.contadorArrayExcel = response.data.length;
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validarReadFileLeads(){
+                this.error = 0;
+                this.mensajeError =[];
+                /*if(!this.textFile){
+                    this.mensajeError.push('No hay Archivos Seleccionados');
+                }*/
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaCamposExcel(foo){
+                this.error = 0;
+                this.mensajeError = [];
+                var list=[];
+
+                foo.map(function(value, key) {
+                    if(key==0){
+                        if(value.nOrdenCompra != "OC"){
+                            list.push('Falta celda OC, verifique el archivo.');
+                        };
+                        if(value.cNombreLinea != "Línea"){
+                            list.push('Falta celda Línea, verifique el archivo.');
+                        };
+                        if(value.cNombreAlmacen != "Almacén"){
+                            list.push('Falta celda Almacén, verifique el archivo.');
+                        };
+                        if(value.nNumeroReserva != "Nro Reserva"){
+                            list.push('Falta celda Nro Reserva, verifique el archivo.');
+                        };
+                        if(value.fTotalCompra != "Total"){
+                            list.push('Falta celda Total, verifique el archivo.');
+                        };
+                    };
+                    /*if(key != 0){
+                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalCompra)){
+                            list.push('Existe un error en el campo Total, verifique el archivo.');
+                        }
+                    };*/
+                });
+
+                if(list.length){
+                    this.mensajeError = list;
+                    this.error = 1;
+                }
+                return this.error;
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================
