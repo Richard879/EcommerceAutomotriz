@@ -1465,7 +1465,7 @@
                     cproveedornombre: ''
                 },
                 arrayProveedor: [],
-                //Modal Buscar Vehiculo
+                // ================= MODAL BUSCAR VEHICULO =================
                 arrayTipoLista: [
                     { value: '1300082', text: 'NORMAL'},
                     { value: '1300083', text: 'ESPECIAL'}
@@ -1482,17 +1482,15 @@
                     cnombrecomercial: ''
                 },
                 arrayVehiculoModal : [],
-                //SUBTAB Vehiculo
+                // ================= SUB TAB VEHICULO =================
                 arrayVehiculo: [],
                 montoTotalVehiculoDolar: 0,
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
                 fValorTipocambioComercial: 0,
                 montoTotalVehiculoSoles: 0,
-                //SUBTAB Elemento Venta
+                // ================= SUBTAB Elemento Venta =================
                 fillBusqTipoElemento: {
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
                     ntpoelemen: 0,
                     celementonombre: ''
                 },
@@ -1501,7 +1499,7 @@
                 arrayElementoVenta: [],
                 montoTotalElementoVenta: 0,
                 montoTotalElementoVentaSoles: 0,
-                //SUBTAB EVENTO CAMPAÑA
+                /// ================= SUBTAB EVENTO CAMPAÑA =================
                 arrayCampaniasByModelo: [],
                 arrayCampaniasByMarca: [],
                 arrayCampaniasByLinea: [],
