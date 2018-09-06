@@ -960,10 +960,14 @@
                                                                                     <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                                                     <div class="col-sm-8">
                                                                                         <input type="hidden" v-model="formNuevoContacto.nidcontacto">
-                                                                                        <select name="account" v-model="formNuevoContacto.nidlinea" class="form-control form-control-sm" v-on:change="llenarComboMarca();">
-                                                                                            <option v-for="linea in arrayLinea" :key="linea.nIdPar" :value="linea.nIdPar"> {{ linea.cParNombre }}
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                            <el-option
+                                                                                            v-for="item in arrayLinea"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -973,10 +977,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Marca</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                                                            <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                            <el-option
+                                                                                            v-for="item in arrayMarca"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -984,10 +992,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.nidmodelo" class="form-control form-control-sm">
-                                                                                            <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayModelo"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -997,10 +1009,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.naniofabricacion" class="form-control form-control-sm">
-                                                                                            <option v-for="fab in arrayAnioFabricacion" :key="fab.nIdPar" :value="fab.nIdPar" v-text="fab.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayAnioFabricacion"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1008,10 +1024,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.naniomodelo" class="form-control form-control-sm">
-                                                                                            <option v-for="version in arrayAnioModelo" :key="version.nIdPar" :value="version.nIdPar" v-text="version.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayAnioModelo"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1171,7 +1191,13 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Fecha Seguimiento</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="date" v-model="formNuevoSeguimiento.dfechaseguimiento" class="form-control form-control-sm">
+                                                                                        <el-date-picker
+                                                                                            v-model="formNuevoSeguimiento.dfechaseguimiento"
+                                                                                            type="date"
+                                                                                            value-format="yyyy-MM-dd"
+                                                                                            format="dd/MM/yyyy"
+                                                                                            placeholder="dd/mm/aaaa">
+                                                                                        </el-date-picker>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1179,7 +1205,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Hora Seguimiento</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoSeguimiento.choraseguimiento" class="form-control form-control-sm">
+                                                                                        <el-time-picker
+                                                                                            v-model="formNuevoSeguimiento.choraseguimiento"
+                                                                                            value-format="HH:mm"
+                                                                                            :picker-options="{
+                                                                                            format: 'AM/PM'
+                                                                                            }"
+                                                                                            placeholder="Fecha de Inicio">
+                                                                                        </el-time-picker>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -2432,8 +2465,8 @@
                 this.listarMisContactosJFV(page);
             },
             listarMisContactosJFV(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetListContactoByJFV';
-
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -2452,6 +2485,8 @@
                     this.pagination.last_page   = response.data.arrayContacto.last_page;
                     this.pagination.from        = response.data.arrayContacto.from;
                     this.pagination.to           = response.data.arrayContacto.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2494,8 +2529,8 @@
                 this.arrayVendedor = [];
             },
             listarContactosPorVendedor(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
-
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -2520,6 +2555,8 @@
                     this.pagination.to             =   info.to;
                     //Limpiar caja busqueda
                     //this.limpiarBuscarContactosCPV();
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2631,8 +2668,8 @@
                 this.listarContactosLibres(page);
             },
             listarContactosLibres(page){
-                 var url = this.ruta + '/gescontacto/GetListContactosLibres';
-
+                this.mostrarProgressBar();
+                var url = this.ruta + '/gescontacto/GetListContactosLibres';
                 axios.get(url, {
                     params: {
                         'ntipopersona' : this.fillContactoLibre.ntipopersona,
@@ -2649,6 +2686,8 @@
                     this.pagination.last_page   = response.data.arrayContactoLibre.last_page;
                     this.pagination.from        = response.data.arrayContactoLibre.from;
                     this.pagination.to           = response.data.arrayContactoLibre.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2828,6 +2867,7 @@
                 $('#Tab222').addClass("nav-link active");
                 $('#TabSegDatosContacto').removeClass('in active show');
                 $('#TabSegReferenciaVehiculo').addClass('in active show');
+                this.llenarComboLinea();
                 this.llenarComboAnioFabricacion();
                 this.llenarComboAnioModelo();
                 this.listarReferenciaVehiculoByContacto(1);
@@ -3855,6 +3895,10 @@
                 this.pagination.from  = 0,
                 this.pagination.to = 0
             },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            }
         },
         mounted(){
             //this.tabBuscarEventoCampania();
