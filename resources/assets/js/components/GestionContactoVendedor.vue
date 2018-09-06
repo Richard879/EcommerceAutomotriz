@@ -160,9 +160,9 @@
                                                                     </template>
                                                                 </table>
                                                             </div>
-                                                            <div class="col-lg-12">
+                                                            <div class="col-sm-12">
                                                                 <div class="row">
-                                                                    <div class="col-lg-7">
+                                                                    <div class="col-sm-7">
                                                                         <nav>
                                                                             <ul class="pagination">
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
@@ -180,7 +180,7 @@
                                                                             </ul>
                                                                         </nav>
                                                                     </div>
-                                                                    <div class="col-lg-5">
+                                                                    <div class="col-sm-5">
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
@@ -334,9 +334,9 @@
                                                                     </template>
                                                                 </table>
                                                             </div>
-                                                            <div class="col-lg-12">
+                                                            <div class="col-sm-12">
                                                                 <div class="row">
-                                                                    <div class="col-lg-7">
+                                                                    <div class="col-sm-7">
                                                                         <nav>
                                                                             <ul class="pagination">
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
@@ -354,7 +354,7 @@
                                                                             </ul>
                                                                         </nav>
                                                                     </div>
-                                                                    <div class="col-lg-5">
+                                                                    <div class="col-sm-5">
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
@@ -935,7 +935,13 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="date" v-model="formNuevoContacto.dfecnacimiento" class="form-control form-control-sm">
+                                                                                        <el-date-picker
+                                                                                            v-model="formNuevoContacto.dfecnacimiento"
+                                                                                            type="date"
+                                                                                            value-format="yyyy-MM-dd"
+                                                                                            format="dd/MM/yyyy"
+                                                                                            placeholder="dd/mm/aaaa">
+                                                                                        </el-date-picker>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -962,10 +968,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Departamento</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select v-model="formNuevoContacto.niddepartamento" class="form-control form-control-sm" v-on:change="llenarComboProv()">
-                                                                                            <option v-for="dpto in arrayDptos" :key="dpto.id" :value="dpto.id" v-text="dpto.text">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.niddepartamento" filterable placeholder="Select" v-on:change="llenarComboProv()">
+                                                                                            <el-option
+                                                                                            v-for="item in arrayDptos"
+                                                                                            :key="item.id"
+                                                                                            :label="item.text"
+                                                                                            :value="item.id">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -973,10 +983,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Provincia</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select v-model="formNuevoContacto.nidprovincia" class="form-control form-control-sm" v-on:change="llenarComboDist">
-                                                                                            <option v-for="prov in arrayProv" :key="prov.id" :value="prov.id" v-text="prov.text">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidprovincia" filterable placeholder="Select" v-on:change="llenarComboDist()">
+                                                                                            <el-option
+                                                                                            v-for="item in arrayProv"
+                                                                                            :key="item.id"
+                                                                                            :label="item.text"
+                                                                                            :value="item.id">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -986,10 +1000,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Distrito</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select v-model="formNuevoContacto.niddistrito" class="form-control form-control-sm">
-                                                                                            <option v-for="dist in arrayDist" :key="dist.id" :value="dist.id" v-text="dist.text">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.niddistrito" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayDist"
+                                                                                            :key="item.id"
+                                                                                            :label="item.text"
+                                                                                            :value="item.id">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1067,10 +1085,14 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Profesión</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoContacto.nprofesion" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayProfesion" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <el-select v-model="formNuevoContacto.nprofesion" filterable placeholder="Select" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayProfesion"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1204,10 +1226,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.nidlinea" class="form-control form-control-sm" v-on:change="llenarComboMarca();">
-                                                                                            <option v-for="linea in arrayLinea" :key="linea.nIdPar" :value="linea.nIdPar" v-text="linea.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                            <el-option
+                                                                                            v-for="item in arrayLinea"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1217,10 +1243,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Marca</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                                                            <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                            <el-option
+                                                                                            v-for="item in arrayMarca"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1228,10 +1258,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.nidmodelo" class="form-control form-control-sm">
-                                                                                            <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayModelo"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1241,10 +1275,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.naniofabricacion" class="form-control form-control-sm">
-                                                                                            <option v-for="fab in arrayAnioFabricacion" :key="fab.nIdPar" :value="fab.nIdPar" v-text="fab.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayAnioFabricacion"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1252,10 +1290,14 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <select name="account" v-model="formNuevoContacto.naniomodelo" class="form-control form-control-sm">
-                                                                                            <option v-for="version in arrayAnioModelo" :key="version.nIdPar" :value="version.nIdPar" v-text="version.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
+                                                                                        <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayAnioModelo"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -2370,6 +2412,7 @@
                 $('#Tab33').addClass("nav-link active");
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').addClass('in active show');
+                this.llenarComboLinea();
             },
             llenarComboLinea(){
                 this.nidempresa = 130011;
@@ -2803,5 +2846,11 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
 </style>
