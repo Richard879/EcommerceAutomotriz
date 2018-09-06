@@ -747,6 +747,8 @@
                     this.modal = 1;
                     return;
                 }
+
+                this.mostrarProgressBar();
                 var url = this.ruta + '/asigVendedorTurno/SetRegistrarVendedorTurno';
                 axios.post(url, {
                     nidempresa : this.fillFormularioGeneral.nidempresa,
@@ -756,6 +758,7 @@
                     nidturnovendedor : this.fillFormularioGeneral.nidturnovendedor,
                     arrayData : this.arrayDias
                 }).then(response => {
+                    $("#myBar").hide();
                     this.limpiarProceso();
                     swal({
                         type: 'success',
@@ -841,7 +844,11 @@
                 this.mensajeError = '';
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
-            }
+            },
+            mostrarProgressBar(){
+                    $("#myBar").show();
+                    progress();
+                }
         }
     }
 </script>
