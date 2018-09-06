@@ -266,11 +266,11 @@
                                                             <div class="row">
                                                                 <template v-if="fillFormularioGeneral.nidturnovendedor">
                                                                     <template v-if="arrayDias.length">
-                                                                        <div :class="[arrayDias.length ? 'col-lg-3' : '']">
+                                                                        <div :class="[arrayDias.length ? 'col-lg-4' : '']">
                                                                             <div class="card">
                                                                                 <div class="card-body">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-6 form-control-label">Día Seleccionado</label>
+                                                                                        <label class="col-sm-6 form-control-label">Fecha Seleccionada</label>
                                                                                         <div class="col-sm-6">
                                                                                             <label v-text="message" class="form-control-label-readonly"></label>
                                                                                         </div>
@@ -281,7 +281,7 @@
                                                                                                 <thead>
                                                                                                     <tr>
                                                                                                         <th>Eliminar</th>
-                                                                                                        <th>Día</th>
+                                                                                                        <th>Fecha</th>
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
@@ -301,7 +301,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </template>
-                                                                    <div :class="[arrayDias.length ? 'col-lg-9' : 'col-lg-12']">
+                                                                    <div :class="[arrayDias.length ? 'col-lg-8' : 'col-lg-12']">
                                                                         <div class="card">
                                                                             <div class="card-body">
                                                                                 <form class="form-horizontal">
@@ -700,8 +700,20 @@
 				this.showDate = d;
             },
             onClickDay(d) {
-                this.message = moment(d).format('YYYY-MM-DD');
-                this.agregarDiasAlVendedor(this.message);
+                //this.message = moment(d).format('YYYY-MM-DD');
+                var f = new Date(d);
+                var day = String(f.getDate());
+                var month = String((f.getMonth() +1));
+                
+                if (month.length < 2){
+                    month = "0" + "" + month;
+                }
+                if (day.length < 2){
+                    day = "0" + "" + day;
+                }
+                this.message = day + "/" + month + "/" + f.getFullYear();
+
+                this.agregarDiasAlVendedor(moment(d).format('YYYY-MM-DD'));
             },
             agregarDiasAlVendedor(dia){
                 if(this.encontrarDiaRepetido(dia)){
