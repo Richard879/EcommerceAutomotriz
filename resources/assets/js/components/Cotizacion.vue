@@ -1731,16 +1731,7 @@
                 this.getTipoCambio();
             },
             obtenerFechaInicioCotizacion(){
-                var f = new Date();
-                var day = String(f.getDate());
-                var month = String((f.getMonth() +1));
-                if (month.length < 2){
-                    month = "0" + "" + month;
-                }
-                if (day.length < 2){
-                    day = "0" + "" + day;
-                }
-                this.fillConfigBasica.fechaInicio = day + "/" + month + "/" + f.getFullYear();
+                this.fillConfigBasica.fechaInicio = moment().format('DD/MM/YYYY');
             },
             obtenerFechaFinCotizacion(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
@@ -1751,17 +1742,8 @@
                         'nidtipopar': 4
                     }
                 }).then(response => {
-                    var fecha = moment().add(parseInt(response.data[0].nDatoParNumerico), 'days').format('YYYY-MM-DD');
-                    var f = new Date(fecha);
-                    var day = String(f.getDate());
-                    var month = String((f.getMonth() +1));
-                    if (month.length < 2){
-                        month = "0" + "" + month;
-                    }
-                    if (day.length < 2){
-                        day = "0" + "" + day;
-                    }
-                    this.fillConfigBasica.fechaFin = day + "/" + month + "/" + f.getFullYear();
+                    var fecha = moment().add(parseInt(response.data[0].nDatoParNumerico), 'days').format('DD/MM/YYYY');
+                    this.fillConfigBasica.fechaFin = fecha;
                 }).catch(error => {
                     console.log(error);
                 });

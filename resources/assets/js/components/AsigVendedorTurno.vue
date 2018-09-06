@@ -700,19 +700,7 @@
 				this.showDate = d;
             },
             onClickDay(d) {
-                //this.message = moment(d).format('YYYY-MM-DD');
-                var f = new Date(d);
-                var day = String(f.getDate());
-                var month = String((f.getMonth() +1));
-                
-                if (month.length < 2){
-                    month = "0" + "" + month;
-                }
-                if (day.length < 2){
-                    day = "0" + "" + day;
-                }
-                this.message = day + "/" + month + "/" + f.getFullYear();
-
+                this.message = moment(d).format('DD/MM/YYYY');
                 this.agregarDiasAlVendedor(moment(d).format('YYYY-MM-DD'));
             },
             agregarDiasAlVendedor(fecha){
