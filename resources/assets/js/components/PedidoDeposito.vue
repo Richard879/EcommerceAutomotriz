@@ -58,7 +58,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillPedido.dfechainicio" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="fillPedido.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -66,7 +72,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillPedido.dfechafin" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="fillPedido.dfechafin"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -94,10 +106,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="fillPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
-                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="fillPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                <el-option
+                                                                                v-for="item in arrayMarca"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -105,10 +121,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="fillPedido.nidmodelo" class="form-control form-control-sm">
-                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="fillPedido.nidmodelo" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayModelo"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -118,10 +138,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Estado Pedido</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="fillPedido.nidestadopedido" class="form-control form-control-sm">
-                                                                                <option v-for="estado in arrayEstadoPedido" :key="estado.nIdPar" :value="estado.nIdPar" v-text="estado.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="fillPedido.nidestadopedido" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayEstadoPedido"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -270,10 +294,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Banco</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBanco_Destino()">
-                                                                                    <option v-for="b in arrayBanco_Destino" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="Select" v-on:change="onchangeBanco_Destino()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayBanco_Destino"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -281,10 +309,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMoneda_Destino()">
-                                                                                    <option v-for="m in arrayMoneda_Destino" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="Select" v-on:change="onchangeMoneda_Destino()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMoneda_Destino"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -294,10 +326,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Cuenta</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidnumerocuenta_destino" class="form-control form-control-sm">
-                                                                                    <option v-for="c in arrayCuenta_Destino" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="Select" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayCuenta_Destino"
+                                                                                    :key="item.nIdCuenta"
+                                                                                    :label="item.cNumeroCuenta"
+                                                                                    :value="item.nIdCuenta">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -401,10 +437,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Banco</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidbanco_origen" class="form-control form-control-sm" v-on:change="onchangeBanco_Destino()">
-                                                                                    <option v-for="b in arrayBanco_Origen" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable placeholder="Select" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayBanco_Origen"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -412,10 +452,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidmoneda_origen" class="form-control form-control-sm" v-on:change="onchangeMoneda_Destino()">
-                                                                                    <option v-for="m in arrayMoneda_Origen" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable placeholder="Select" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMoneda_Origen"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -443,7 +487,13 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Depósito</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="date" v-model="formNuevoDeposito.dfechadeposito" class="form-control form-control-sm">
+                                                                                <el-date-picker
+                                                                                    v-model="formNuevoDeposito.dfechadeposito"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd-MM-yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -514,10 +564,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Banco</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidbanco_destino" class="form-control form-control-sm" v-on:change="onchangeBanco_Destino()">
-                                                                                    <option v-for="b in arrayBanco_Destino" :key="b.nIdPar" :value="b.nIdPar" v-text="b.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="Select" v-on:change="onchangeBanco_Destino()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayBanco_Destino"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -525,10 +579,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidmoneda_destino" class="form-control form-control-sm" v-on:change="onchangeMoneda_Destino()">
-                                                                                    <option v-for="m in arrayMoneda_Destino" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="Select" v-on:change="onchangeMoneda_Destino()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMoneda_Destino"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -538,10 +596,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Cuenta</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formNuevoDeposito.nidnumerocuenta_destino" class="form-control form-control-sm">
-                                                                                    <option v-for="c in arrayCuenta_Destino" :key="c.nIdCuenta" :value="c.nIdCuenta" v-text="c.cNumeroCuenta">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="Select" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayCuenta_Destino"
+                                                                                    :key="item.nIdCuenta"
+                                                                                    :label="item.cNumeroCuenta"
+                                                                                    :value="item.nIdCuenta">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1357,6 +1419,9 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
         }
         .el-date-editor.el-input, .el-date-editor.el-input__inner{
             width: 100% !important;
