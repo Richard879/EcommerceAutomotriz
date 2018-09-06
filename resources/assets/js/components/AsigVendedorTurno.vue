@@ -14,7 +14,7 @@
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="tab01" href="#TabBusqueda" @click="tabBusqueda" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list"></i> BUSQUEDA
+                                        <i class="fa fa-users"></i> MIS VENDEDORES
                                     </a>
                                 </li>
                                 <li class="nav-item">
