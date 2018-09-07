@@ -650,6 +650,7 @@
                 // ============== VARIABLES PARA FLAG BENEFICIO ================
                 arrayIndexTipoBeneficioId: [],
                 arrayIndexTipoBeneficioNombre: [],
+                arrayIndexTipoBeneficioFlag: [],
                 arrayIndexValorBeneficio: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
@@ -975,15 +976,11 @@
                 this.paginationModal.current_page=page;
                 this.listarTipoBeneficio(page);
             },
-            asignarTipoBeneficio(tipobeneficio){
+            asignarTipoBeneficio(objTipoBeneficio){
                 var index = this.fillObjComercialCompra.nindex;
-                this.arrayIndexTipoBeneficioId[index] = tipobeneficio.nIdPar;
-                this.arrayIndexTipoBeneficioNombre[index] = tipobeneficio.cParNombre;
-
-                /*this.fillTipoBeneficio.nidtipobeneficio = tipobeneficio.nIdPar;
-                this.fillTipoBeneficio.ctipobeneficionombre = tipobeneficio.cParNombre;
-                this.fillObjComerciales.cflagtipobeneficio = tipobeneficio.cParAbreviatura;*/
-
+                this.arrayIndexTipoBeneficioId[index] = objTipoBeneficio.nIdPar;
+                this.arrayIndexTipoBeneficioNombre[index] = objTipoBeneficio.cParNombre;
+                this.arrayIndexTipoBeneficioFlag[index] = objTipoBeneficio.cParAbreviatura;
                 this.cerrarModal();
             },
             // ====================================================================
