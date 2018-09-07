@@ -84,22 +84,6 @@
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <!--<el-select v-model="fillTipoBeneficio.nidtipobeneficio" filterable placeholder="Select" >
-                                                                                <el-option
-                                                                                v-for="item in arrayTipoBeneficio"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>-->
-                                                                            <!--<div class="input-group">
-                                                                                <input type="text" v-model="fillTipoBeneficio.ctipobeneficionombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar Tipo de Beneficio" class="btn btn-info btn-corner btn-sm" @click="abrirModal('tipobeneficio','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -180,16 +164,44 @@
                                                                                 <th>Modelo</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Objetivo (Cantidad)</th>
+                                                                                <th>Tipo Beneficio</th>
+                                                                                <th>Valor Beneficio</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="detalle in arrayDetalleVehiculo" :key="detalle.nIdVersionVeh">
+                                                                            <tr v-for="(detalle, index) in arrayDetalleVehiculo" :key="detalle.nIdVersionVeh">
                                                                                 <td v-text="detalle.Proveedor"></td>
                                                                                 <td v-text="detalle.Linea"></td>
                                                                                 <td v-text="detalle.Marca"></td>
                                                                                 <td v-text="detalle.Modelo"></td>
                                                                                 <td v-text="detalle.cNombreComercial"></td>
-                                                                                <td><input type="number" min="0" class="form-control form-control-sm" v-model="detalle.nCantidadVehiculo"/></td>
+                                                                                <td>
+                                                                                    <input type="number" min="0" class="form-control form-control-sm" v-model="detalle.nCantidadVehiculo"/>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="input-group">
+                                                                                        <input type="hidden" v-model="arrayIndexTipoBeneficioId[index]">
+                                                                                        <input type="text" v-model="arrayIndexTipoBeneficioNombre[index]" class="form-control form-control-sm" readonly>
+                                                                                        <div class="input-group-prepend">
+                                                                                            <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscaTipoIncentivo(index)">
+                                                                                                <i class="fa-sm fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <!--<td>
+                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable placeholder="Select" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoBeneficio"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </td>-->
+                                                                                <td>
+                                                                                    <input type="number" v-model="arrayIndexValorBeneficio[index]" class="form-control form-control-sm">
+                                                                                </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -503,6 +515,108 @@
             </div>
         </div>
         
+        <!-- Modal Tipo Beneficio -->
+        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Nombre</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" v-model="fillTipoBeneficio.ctipobeneficionombre" @keyup.enter="buscaTipoIncentivo" class="form-control form-control-sm">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" title="Buscar Tipo Beneficio" class="btn btn-info btn-corner btn-sm" @click="buscaTipoIncentivo">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <template v-if="arrayTipoBeneficio.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Seleccione</th>
+                                                                    <th>Nombre Beneficio</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="tipobeneficio in arrayTipoBeneficio" :key="tipobeneficio.nIdPar">
+                                                                    <td>
+                                                                        <a href="#" @click="asignarTipoBeneficio(tipobeneficio);">
+                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td v-text="tipobeneficio.cParNombre"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-7">
+                                                                <nav>
+                                                                    <ul class="pagination">
+                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaTipoBeneficio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        </li>
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                        :class="[page==isActivedModal?'active':'']">
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaTipoBeneficio(page)"
+                                                                            v-text="page"></a>
+                                                                        </li>
+                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaTipoBeneficio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <div class="col-lg-5">
+                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -524,7 +638,8 @@
                     cflagtipobeneficio: 0,
                     nidlinea: 0,
                     nidmarca: 0,
-                    nidmodelo: 0
+                    nidmodelo: 0,
+                    nindex: 0
                 },
                 arrayTipoBeneficio: [],
                 arrayDetalleVehiculo: [],
@@ -532,6 +647,10 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
+                // ============== VARIABLES PARA FLAG BENEFICIO ================
+                arrayIndexTipoBeneficioId: [],
+                arrayIndexTipoBeneficioNombre: [],
+                arrayIndexValorBeneficio: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -575,7 +694,7 @@
         mounted(){
             this.llenarCompraActiva();
             this.llenarComboLinea();
-            //this.llenarComboTipoBeneficio();
+            this.llenarComboTipoBeneficio();
         },
         computed:{
             isActived: function(){
@@ -820,6 +939,52 @@
                         });
                     });
                 }
+            },
+            // =======================
+            // MODAL TIPO BENEFICIO
+            // =======================
+            buscaTipoIncentivo(index){
+                this.accionmodal=3;
+                this.modal=1;
+                this.fillObjComercialCompra.nindex = index;
+                this.listarTipoBeneficio(1);
+            },
+            listarTipoBeneficio(page){
+                var url = this.ruta + '/objComercial/GetLstTipoBeneficio';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110069,
+                        'ctipobeneficionombre' : this.fillTipoBeneficio.ctipobeneficionombre.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayTipoBeneficio = response.data.arrayTipoIncentivo.data;
+                    this.paginationModal.current_page   =  response.data.arrayTipoIncentivo.current_page;
+                    this.paginationModal.total          = response.data.arrayTipoIncentivo.total;
+                    this.paginationModal.per_page       = response.data.arrayTipoIncentivo.per_page;
+                    this.paginationModal.last_page      = response.data.arrayTipoIncentivo.last_page;
+                    this.paginationModal.from           = response.data.arrayTipoIncentivo.from;
+                    this.paginationModal.to             = response.data.arrayTipoIncentivo.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaTipoBeneficio(page){
+                this.paginationModal.current_page=page;
+                this.listarTipoBeneficio(page);
+            },
+            asignarTipoBeneficio(tipobeneficio){
+                var index = this.fillObjComercialCompra.nindex;
+                this.arrayIndexTipoBeneficioId[index] = tipobeneficio.nIdPar;
+                this.arrayIndexTipoBeneficioNombre[index] = tipobeneficio.cParNombre;
+
+                /*this.fillTipoBeneficio.nidtipobeneficio = tipobeneficio.nIdPar;
+                this.fillTipoBeneficio.ctipobeneficionombre = tipobeneficio.cParNombre;
+                this.fillObjComerciales.cflagtipobeneficio = tipobeneficio.cParAbreviatura;*/
+
+                this.cerrarModal();
             },
             // ====================================================================
             // ============== REGISTRAR OBJETIVO COMERCIAL COMPRA =================
