@@ -101,6 +101,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
+    Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
+    Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
+    Route::post('/gescontacto/SetLeads', 'ExcelController@SetLeads');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
@@ -118,11 +121,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
     Route::post('/getComision/SetRegistrarComision', 'ComisionController@SetRegistrarComision');
-    Route::get('/getObjComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
-    Route::get('/getObjComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
-    Route::get('/getObjComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
-    Route::get('/getObjComercial/getDetalleVehiculo', 'ObjComercialController@getDetalleVehiculo');
-    Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
+    Route::get('/objComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
+    Route::get('/objComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
+    Route::get('/objComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
+    Route::get('/objComercial/GetDetalleVehiculoCompra', 'ObjComercialController@GetDetalleVehiculoCompra');
+    Route::post('/objComercial/SetRegistrarObjComercialCompra', 'ObjComercialController@SetRegistrarObjComercialCompra');
     Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurno@GetParametroById');
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
     Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');

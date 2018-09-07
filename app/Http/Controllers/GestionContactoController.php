@@ -482,4 +482,44 @@ class GestionContactoController extends Controller
         $arraySegReferenciavehiculo = $this->arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
     }
+
+    public function SetLeads(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            array($request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $request->nIdCronograma,
+                                                                $request->nIdProveedor,
+                                                                $request->nIdTipoLista,
+                                                                $det['nOrdenCompra'],
+                                                                $det['cNombreLinea'],
+                                                                $det['cNombreAlmacen'],
+                                                                $det['nNumeroReserva'],
+                                                                $det['cNumeroVin'],
+                                                                $det['cFormaPago'],
+                                                                $det['cNombreMarca'],
+                                                                $det['cNombreModelo'],
+                                                                $det['cNombreComercial'],
+                                                                $det['cNombreColor'],
+                                                                $det['nAnioFabricacion'],
+                                                                $det['nAnioVersion'],
+                                                                $det['cSimboloMoneda'],
+                                                                $fTotalCompra,
+                                                                $det['cNumeroFactura'],
+                                                                $det['dFechaFacturado'],
+                                                                Auth::user()->id
+                                                            ));
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

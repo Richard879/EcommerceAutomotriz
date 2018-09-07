@@ -113,5 +113,44 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
+
+    public function importFileLeads(Request $request)
+    {
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelLeads', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+    }
     
+    public function readFileLeads(Request $request)
+    {
+        $nameFile = $request->nameFile;
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls = storage_path('app/'.$nameFile);
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+        $data = [];
+        foreach ($sheetData as $key => $value) {
+            $data[$key+1] =[
+                'cTipoDocumento'   => $value[0],
+                'cNumeroDocumento' => $value[1],
+                'cNombreCompleto' => $value[2],
+                'cTelefono' => $value[3],
+                'cCelular' => $value[4],
+                'cEmail' => $value[5],
+                'cDepartamentoNombre' => $value[6],
+                'cProvinciaNombre' => $value[7],
+                'cDistritoNombre' => $value[8],
+                'cDirección' => $value[9],
+                'cNombreMarca' => $value[10],
+                'cNombreModelo' => $value[11],
+                'cComentario' => $value[12]
+            ];
+        }
+
+        $data = new Collection($data);
+        $data = $data->values()->all();
+        return response()->json($data);
+    }
 }

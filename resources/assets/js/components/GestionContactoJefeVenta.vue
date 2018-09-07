@@ -1907,68 +1907,60 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
-                                                            <!--<template v-if="arrayLeads.length">
+                                                            <template v-if="arrayLeads.length">
                                                                 <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>OC</th>
-                                                                                <th>Línea</th>
-                                                                                <th>Almacén<nav></nav></th>
-                                                                                <th>Nro Reserva</th>
-                                                                                <th>Nro Vin</th>
-                                                                                <th>Forma Pago</th>
+                                                                                <th>Tipo Documento</th>
+                                                                                <th>Nro Documento</th>
+                                                                                <th>Nombre Completo<nav></nav></th>
+                                                                                <th>Teléfono</th>
+                                                                                <th>Celular</th>
+                                                                                <th>Email</th>
+                                                                                <th>Departamento</th>
+                                                                                <th>Provincia</th>
+                                                                                <th>Distrito</th>
+                                                                                <th>Dirección</th>
                                                                                 <th>Marca</th>
                                                                                 <th>Modelo</th>
-                                                                                <th>Nombre Comercial</th>
-                                                                                <th>Color</th>
-                                                                                <th>Año Fab</th>
-                                                                                <th>Año Mod</th>
-                                                                                <th>Mon</th>
-                                                                                <th>Total</th>
-                                                                                <th>Nro Factura</th>
-                                                                                <th>Fecha Facturado</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(compra, index) in arrayLeads" :key="compra.nOrdenCompra">
+                                                                            <tr v-for="(lead, index) in arrayLeads" :key="lead.cNumeroDocumento">
                                                                                 <td>
-                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +compra.nOrdenCompra">
+                                                                                    <a href="#" @click="eliminarItemLead(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lead.cNumeroDocumento">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                 </td>
-                                                                                <td v-text="compra.nOrdenCompra"></td>
-                                                                                <td v-text="compra.cNombreLinea"></td>
-                                                                                <td v-text="compra.cNombreAlmacen"></td>
-                                                                                <td v-text="compra.nNumeroReserva"></td>
-                                                                                <td v-text="compra.cNumeroVin"></td>
-                                                                                <td v-text="compra.cFormaPago"></td>
-                                                                                <td v-text="compra.cNombreMarca"></td>
-                                                                                <td v-text="compra.cNombreModelo"></td>
-                                                                                <td v-text="compra.cNombreComercial"></td>
-                                                                                <td v-text="compra.cNombreColor"></td>
-                                                                                <td v-text="compra.nAnioFabricacion"></td>
-                                                                                <td v-text="compra.nAnioVersion"></td>
-                                                                                <td v-text="compra.cSimboloMoneda"></td>
-                                                                                <td v-text="compra.fTotalCompra"></td>
-                                                                                <td v-text="compra.cNumeroFactura"></td>
-                                                                                <td v-text="compra.dFechaFacturado"></td>
+                                                                                <td v-text="lead.cTipoDocumento"></td>
+                                                                                <td v-text="lead.cNumeroDocumento"></td>
+                                                                                <td v-text="lead.cNombreCompleto"></td>
+                                                                                <td v-text="lead.cTelefono"></td>
+                                                                                <td v-text="lead.cCelular"></td>
+                                                                                <td v-text="lead.cEmail"></td>
+                                                                                <td v-text="lead.cDepartamentoNombre"></td>
+                                                                                <td v-text="lead.cProvinciaNombre"></td>
+                                                                                <td v-text="lead.cDistritoNombre"></td>
+                                                                                <td v-text="lead.cDirección"></td>
+                                                                                <td v-text="lead.cNombreMarca"></td>
+                                                                                <td v-text="lead.cNombreModelo"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                         </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Total: {{ contadorArrayExcel }} registros</div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Total: {{ contadorArrayLeads }} registros</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarLeads()">
                                                                             <i class="fa fa-save"></i> Registrar
                                                                         </button>
                                                                     </div>
@@ -1982,7 +1974,7 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                            </template>-->
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2488,6 +2480,8 @@
                 // =============================================================
                 // ============== VARIABLES TAB LEADS ==============
                 arrayLeads: [],
+                contadorArrayLeads: 0,
+                arrayTemporalLeads: [],
                 // =============================================================
                 pagination: {
                     'total': 0,
@@ -3532,11 +3526,13 @@
                 this.llenarComboLinea();
             },
             llenarComboLinea(){
-                this.nidempresa = 130011;
-
-                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor?nidempresa=' + this.nidempresa
-                                                                    + '&nidproveedor=' + this.formNuevoContacto.nidproveedor;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidproveedor' : this.formNuevoContacto.nidproveedor
+                    }
+                }).then(response => {
                     this.arrayLinea = response.data;
                     this.formNuevoContacto.nidlinea = 0;
                     this.llenarComboMarca();
@@ -3545,9 +3541,13 @@
                 });
             },
             llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea?nidlinea=' + this.formNuevoContacto.nidlinea;
+                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
 
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidlinea': this.formNuevoContacto.nidlinea
+                    }
+                }).then(response => {
                     this.arrayMarca = response.data;
                     this.formNuevoContacto.nidmarca = 0;
                     this.arrayModelo = [];
@@ -3557,8 +3557,12 @@
                 });
             },
             llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca?nidmarca=' + this.formNuevoContacto.nidmarca;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+                axios.get(url, {
+                    params: {
+                        'nidmarca': this.formNuevoContacto.nidmarca
+                    }
+                }).then(response => {
                     this.arrayModelo = response.data;
                     this.formNuevoContacto.nidmodelo = 0;
                 }).catch(error => {
@@ -3822,8 +3826,6 @@
 
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
-                //var fd = new FormData();
-                //fd.append('file', this.fileExcel, this.fileExcel.name);
                 var url = this.ruta + '/gescontacto/importFileLeads';
                 axios.post(url, this.form, config).then(response=>{
                     this.readFileLeads(response.data);
@@ -3832,22 +3834,43 @@
                 });
             },
             readFileLeads(nameFile){
-                this.mostrarProgressBar();
+                //this.mostrarProgressBar();
 
                 var url = this.ruta + '/gescontacto/readFileLeads';
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
 
-                    if(this.validaCamposExcel(response.data)){
+                    /*if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
-                    }
+                    }*/
 
-                    this.$delete(response.data, 0)
-                    this.arrayLeads = response.data;
-                    this.contadorArrayExcel = response.data.length;
+                    this.$delete(response.data, 0);
+                    this.arrayTemporalLeads = response.data;
+
+                    this.arrayTemporalLeads.map(function(value, key) {
+                            var arrayNombres = [];
+                            var Nombres, Apellidos;
+                            value.cNombreCompleto.replace(".", "");
+                            arrayNombres = value.cNombreCompleto.split(" ");
+
+                            if(arrayNombres.length > 2){
+                                //Nombres = arrayNombres[0];
+                                console.log(arrayNombres);
+                            }
+
+                            /*arrayLeads.push({
+                                cNombres: value.nIdEntidad,
+                                cApellidoPaterno: value.cFlagEntidad,
+                                cApellidoMaterno: value.listIndexProvValor
+                            });*/
+                    });
+
+                    
+                    /*this.arrayLeads = response.data;
+                    this.contadorArrayLeads = response.data.length;*/
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -3897,6 +3920,50 @@
 
                 if(list.length){
                     this.mensajeError = list;
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            eliminarItemLead(index){
+                this.$delete(this.arrayLeads, index);
+            },
+            registrarLeads(){
+                /*if(this.validarRegistroLead()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }*/
+
+                /*var url = this.ruta + '/gescontacto/SetLeads';
+                axios.post(url, {
+                    data: this.arrayLeads
+                }).then(response => {
+                    swal('Compra registrada');
+                    this.arrayLeads = [];
+                    $("#file-upload").val("");
+                }).catch(error => {
+                    console.log(error);
+                });*/
+
+
+            },
+            validarRegistroLead(){
+                this.error = 0;
+                this.mensajeError =[];
+                /*if(!this.textFile){
+                    this.mensajeError.push('No hay Archivos Seleccionados');
+                }*/
+                if(this.arrayCompra == []){
+                    this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.formCompra.nidproveedor == 0){
+                    this.mensajeError.push('Debes seleccionar un Proveedor');
+                };
+                if(this.formCompra.nidtipolista == 0){
+                    this.mensajeError.push('Debes seleccionar un Tipo Lista');
+                };
+
+                if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
