@@ -88,7 +88,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-4">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarEventoCampania();"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
                                                                 </div>
@@ -1780,8 +1780,8 @@
                 this.listarEventoCampania(1);
             },
             listarEventoCampania(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/ec/GetEventoCampania';
-
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -1797,6 +1797,8 @@
                     this.pagination.last_page   = response.data.arrayEventoCampania.last_page;
                     this.pagination.from        = response.data.arrayEventoCampania.from;
                     this.pagination.to           = response.data.arrayEventoCampania.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });

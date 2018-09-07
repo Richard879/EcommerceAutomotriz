@@ -570,7 +570,7 @@
             // TAB BUSQUEDA
             // ==============================================
             llenarVentaActiva(){
-                var url = this.ruta + '/getObjComercial/getVentaActiva';
+                var url = this.ruta + '/objComercial/getVentaActiva';
                 axios.get(url).then(response => {
                     this.fillFormularioGeneral.caño = response.data[0].cAnio;
                     this.fillFormularioGeneral.cmes = response.data[0].cMes;

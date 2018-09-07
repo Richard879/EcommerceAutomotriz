@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom"> OBJETIVOS COMERCIALES -  {{ fillObjComercialCompra.cempresa }} </h2>
+            <h2 class="no-margin-bottom"> OBJETIVOS COMERCIALES -  {{ cempresa }} </h2>
           </div>
         </header>
 
@@ -178,6 +178,16 @@
                                                                                 <td>
                                                                                     <input type="number" min="0" class="form-control form-control-sm" v-model="detalle.nCantidadVehiculo"/>
                                                                                 </td>
+                                                                                <!--<td>
+                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable placeholder="Select" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoBeneficio"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </td>-->
                                                                                 <td>
                                                                                     <div class="input-group">
                                                                                         <input type="hidden" v-model="arrayIndexTipoBeneficioId[index]">
@@ -189,16 +199,16 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
-                                                                                <!--<td>
-                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable placeholder="Select" >
+                                                                                <td>
+                                                                                    <el-select v-model="arrayIndexFlagTipoValorId[index]" filterable placeholder="Select" >
                                                                                         <el-option
-                                                                                        v-for="item in arrayTipoBeneficio"
+                                                                                        v-for="item in arrayFlagTipoValor"
                                                                                         :key="item.nIdPar"
                                                                                         :label="item.cParNombre"
                                                                                         :value="item.nIdPar">
                                                                                         </el-option>
                                                                                     </el-select>
-                                                                                </td>-->
+                                                                                </td>
                                                                                 <td>
                                                                                     <input type="number" v-model="arrayIndexValorBeneficio[index]" class="form-control form-control-sm">
                                                                                 </td>
@@ -641,6 +651,7 @@
                     nidmodelo: 0,
                     nindex: 0
                 },
+                arrayFlagTipoValor: [],
                 arrayTipoBeneficio: [],
                 arrayDetalleVehiculo: [],
                 arrayDetalleVehiculoAdd: [],
@@ -652,6 +663,8 @@
                 arrayIndexTipoBeneficioNombre: [],
                 arrayIndexTipoBeneficioFlag: [],
                 arrayIndexValorBeneficio: [],
+                // ============== VARIABLES PARA FLAG TIPO MONEDA ================
+                arrayIndexFlagTipoValorId: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -696,6 +709,7 @@
             this.llenarCompraActiva();
             this.llenarComboLinea();
             this.llenarComboTipoBeneficio();
+            this.llenarComboTipoValor();
         },
         computed:{
             isActived: function(){
@@ -831,6 +845,19 @@
                     }
                 }).then(response => {
                     this.arrayTipoBeneficio = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboTipoValor(){
+               var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110065,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayFlagTipoValor = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
