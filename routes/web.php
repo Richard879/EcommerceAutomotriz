@@ -127,10 +127,12 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');
     Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
     Route::get('/solicitudCartaCaracteristica/GeLstCompras', 'SolicitudCartaCaracteristica@GeLstCompras');
-    Route::get('/solicitudCartaCaracteristica/GetListContactos', 'SolicitudCartaCaracteristica@GetListContactos');
+    Route::get('/solicitudCartaCaracteristica/GetLstCotizacionAprobadas', 'SolicitudCartaCaracteristica@GetLstCotizacionAprobadas');
     Route::post('/solicitudCartaCaracteristica/SetRegistrarSCC', 'SolicitudCartaCaracteristica@SetRegistrarSCC');
-
-
+    Route::get('/solicitudCartaCaracteristica/GetLstCartaCaracteristica', 'SolicitudCartaCaracteristica@GetLstCartaCaracteristica');
+    Route::get('/solicitudCartaCaracteristica/GetDetalleSolicitud', 'SolicitudCartaCaracteristica@GetDetalleSolicitud');
+    Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristica@SetConformeNoConforme');
+    Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristica@SetAprobadoNoAprobado');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');

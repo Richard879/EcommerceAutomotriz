@@ -547,14 +547,6 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.fillBusquedaPedido.dfechainicio){
-                    this.mensajeError.push('Debe ingresar una fecha de inicio');
-                }
-
-                if(!this.fillBusquedaPedido.dfechafin){
-                    this.mensajeError.push('Debe ingresar una fecha de fin');
-                }
-
                 let fecha_ini = moment(this.fillBusquedaPedido.dfechainicio);
                 let fecha_fin = moment(this.fillBusquedaPedido.dfechafin);
 

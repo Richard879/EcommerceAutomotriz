@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA</h2>
+            <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA JEFE DE VENTAS</h2>
           </div>
         </header>
 
@@ -18,8 +18,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link disabled" id="tab02" href="#TabAprobacion" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list-ol"></i> APROBACIÓN SCC
+                                    <a class="nav-link" id="tab02" href="#TabCartaVendedores" @click="tabCartaVendedores" role="tab" data-toggle="tab">
+                                        <i class="fa fa-list-ol"></i> CARTA.C. VENDEDORES
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab03" href="#TabMisCartas" @click="tabMisCartas" role="tab" data-toggle="tab">
+                                        <i class="fa fa-list-ol"></i> MIS CARTAS C
                                     </a>
                                 </li>
                             </ul>
@@ -47,8 +52,8 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <el-input placeholder="Atendió" v-model="fillCartaCaracteristica.catencion" class="input-with-select col-sm-12">
-                                                                            <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref">
-                                                                                <el-option v-for="referencia in arrayReferencia" :key="referencia.nIdPar" :label="referencia.cParNombre" :value="referencia.nIdPar"></el-option>
+                                                                            <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref.">
+                                                                                <el-option v-for="referencia in arrayReferencia" :key="referencia.nIdPar" :label="referencia.cParAbreviatura" :value="referencia.nIdPar"></el-option>
                                                                             </el-select>
                                                                         </el-input>
                                                                     </div>
@@ -90,12 +95,9 @@
                                                                         <label class="col-sm-4 form-control-label">* VIN</label>
                                                                         <div class="col-sm-8">
                                                                             <div class="input-group">
-                                                                                <input type="text" v-model="fillCartaCaracteristica.cnumerovin" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar VIN" class="btn btn-info btn-corner btn-sm" @click="abrirModal('compra','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
-                                                                                </div>
+                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                </el-input>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -105,12 +107,9 @@
                                                                         <label class="col-sm-4 form-control-label">* Cotización</label>
                                                                         <div class="col-sm-8">
                                                                             <div class="input-group">
-                                                                                <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar Contacto" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
-                                                                                </div>
+                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                </el-input>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -167,10 +166,359 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAprobacion">
+                                <div role="tabpanel" class="tab-pane fade" id="TabCartaVendedores">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">BUSCAR SCC.</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de inicio">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechafin"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de fin">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">*Estado</label>
+                                                                        <div class="col-md-8 widthFull">
+                                                                            <el-select v-model="fillCartaCaracteristica.nidestado"
+                                                                                    filterable
+                                                                                    clearable
+                                                                                    loading-text
+                                                                                    placeholder="Seleccione un Estado">
+                                                                                <el-option
+                                                                                    v-for="estado in arrayEstado"
+                                                                                    :key="estado.nIdPar"
+                                                                                    :label="estado.cParNombre"
+                                                                                    :value="estado.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-9 offset-md-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarCartaVendedores(1)">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarCartaVendedores()">
+                                                                        <i class="fa fa-recycle"></i> Limpiar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayCartaCaracteristicas.length">
+                                                                    <div class="table-responsive barraLateral">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Fecha Inicio</th>
+                                                                                    <th>Fecha Fin</th>
+                                                                                    <th>N° Carta</th>
+                                                                                    <th>Vendedor</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>VIN</th>
+                                                                                    <th>Estado</th>
+                                                                                    <th>Evaluacion</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="carta in arrayCartaCaracteristicas" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                    <td v-text="carta.dFechaInicioCarta"></td>
+                                                                                    <td v-text="carta.dFechaVencimientoCarta"></td>
+                                                                                    <td v-text="carta.cNumeroCartaCaracteristica"></td>
+                                                                                    <td v-text="carta.Vendedor"></td>
+                                                                                    <td v-text="carta.cContacto"></td>
+                                                                                    <td v-text="carta.cNumeroVin"></td>
+                                                                                    <td v-text="carta.cEstado"></td>
+                                                                                    <td v-text="carta.cEvaluacion"></td>
+                                                                                    <td>
+                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='CO' || carta.cFlagEstadoAprobacion =='AP'" target="_blank">
+                                                                                            <i class='fa-md fa fa-file'></i>
+                                                                                        </a>
+                                                                                        <a href="#" v-if="carta.cFlagEstadoAprobacion !='CO' && carta.cFlagEstadoAprobacion !='NC' && carta.cFlagEstadoAprobacion !='AP' && carta.cFlagEstadoAprobacion !='DE'" @click="abrirModal('pediente', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
+                                                                                            <i class='fa-md fa fa-check'></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaCartaByVendedores(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaCartaByVendedores(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaCartaByVendedores(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabMisCartas">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">MIS CARTAS.</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de inicio">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechafin"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de fin">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-9 offset-md-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartas(1)">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarCartaVendedores()">
+                                                                        <i class="fa fa-recycle"></i> Limpiar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayMisCartas.length">
+                                                                    <div class="table-responsive barraLateral">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Fecha Inicio</th>
+                                                                                    <th>Fecha Fin</th>
+                                                                                    <th>N° Carta</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>VIN</th>
+                                                                                    <th>Estado</th>
+                                                                                    <th>Evaluacion</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="carta in arrayMisCartas" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                    <td v-text="carta.dFechaInicioCarta"></td>
+                                                                                    <td v-text="carta.dFechaVencimientoCarta"></td>
+                                                                                    <td v-text="carta.cNumeroCartaCaracteristica"></td>
+                                                                                    <td v-text="carta.cContacto"></td>
+                                                                                    <td v-text="carta.cNumeroVin"></td>
+                                                                                    <td v-text="carta.cEstado"></td>
+                                                                                    <td v-text="carta.cEvaluacion"></td>
+                                                                                    <td>
+                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='CO' || carta.cFlagEstadoAprobacion =='AP'" target="_blank">
+                                                                                            <i class='fa-md fa fa-file'></i>
+                                                                                        </a>
+                                                                                        <a href="#" v-if="carta.cFlagEstadoAprobacion !='PE' && carta.cFlagEstadoAprobacion !='NC' && carta.cFlagEstadoAprobacion !='AP' && carta.cFlagEstadoAprobacion !='DE'"  @click="abrirModal('aprobar', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
+                                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCC(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMisCC(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCC(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </section>
@@ -377,62 +725,60 @@
                                                             <template v-if="fillMisContactos.ntipopersona == 1">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Código</th>
-                                                                        <th>Apellidos</th>
-                                                                        <th>Nombres</th>
+                                                                        <th>Acciones</th>
+                                                                        <th>#Cotización</th>
+                                                                        <th>Contacto</th>
                                                                         <th>Nro Documento</th>
                                                                         <th>Telefono</th>
                                                                         <th>Dirección</th>
                                                                         <th>Email</th>
                                                                         <th>Vendedor</th>
-                                                                        <th>Acciones</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="c in arrayContacto" :key="c.nIdContacto">
-                                                                        <td v-text="c.nIdContacto"></td>
-                                                                        <td v-text="c.cPerApellidos"></td>
-                                                                        <td v-text="c.cNombres"></td>
+                                                                    <tr v-for="c in arrayContacto" :key="c.cNumeroCotizacion">
+                                                                        <td>
+                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
+                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td v-text="c.cNumeroCotizacion"></td>
+                                                                        <td v-text="c.cContacto"></td>
                                                                         <td v-text="c.cNumeroDocumento"></td>
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cDireccion"></td>
                                                                         <td v-text="c.cEmail"></td>
                                                                         <td v-text="c.cVendedor"></td>
-                                                                        <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                                <i class="fa-md fa fa-suitcase"></i>
-                                                                            </a>
-                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
                                                             <template v-else>
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Código</th>
+                                                                        <th>Acciones</th>
+                                                                        <th>#Cotización</th>
                                                                         <th>Razon Social</th>
                                                                         <th>Nro Documento</th>
                                                                         <th>Telefono</th>
                                                                         <th>Email</th>
                                                                         <th>Persona Contacto</th>
                                                                         <th>Vendedor</th>
-                                                                        <th>Acciones</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="c in arrayContacto" :key="c.nIdContacto">
-                                                                        <td v-text="c.nIdContacto"></td>
+                                                                    <tr v-for="c in arrayContacto" :key="c.cNumeroCotizacion">
+                                                                        <td>
+                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
+                                                                               <i class='fa-md fa fa-check-circle'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td v-text="c.cNumeroCotizacion"></td>
                                                                         <td v-text="c.cRazonSocial"></td>
                                                                         <td v-text="c.cNumeroDocumento"></td>
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cEmail"></td>
                                                                         <td v-text="c.cContacto"></td>
                                                                         <td v-text="c.cVendedor"></td>
-                                                                        <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                                <i class="fa-md fa fa-suitcase"></i>
-                                                                            </a>
-                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -486,6 +832,363 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Generar Carta Vendedores-->
+        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body menosPadding">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE SOLICITUD</h3>
+                                        <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-header d-flex align-items-center subCabecera">
+                                        <h3 class="h4">Carta de Características N° {{ fillCartaDetalleSolicitud.cNumCarta }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <div class="col-md-5 offset-md-7">
+                                                        <label class="form-control-label"> {{ fillCartaDetalleSolicitud.fecha }} </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-6">
+                                                        <label>Señores</label>
+                                                        <label class="form-control-label-readonly">
+                                                            <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-6">
+                                                        <label>Presente.-</label>
+                                                        <label class="form-control-label-readonly">
+                                                             Atención : <strong>{{ fillCartaDetalleSolicitud.cAtencion}}</strong>
+                                                        </label>
+                                                        <label class="form-control-label-readonly">
+                                                             Referencia - Cliente : <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label>Estimados Señores</label>
+                                                        <label class="form-control-label-readonly">
+                                                            Mediante la presente, les informamos que nuestro mutuo cliente <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong> con RUC <strong>{{ fillCartaDetalleSolicitud.cNumDocumento}}</strong> realizó la separación por el siguiente Vehículo Asignado:
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreMarca"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreModelo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.nAnioFabricacion"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Año del Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.nAnioModelo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Número de Chasis/Serie</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNumeroChasis"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Número de Motor</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNumeroMotor"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Color</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreColor"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Clase</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreClase"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Carrocería</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreSubClase"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="flexLeft">
+                                                            <h4 class="col-sm-4 form-control-label">VALORES</h4>
+                                                        </div>
+                                                        <hr>
+                                                        <label class="col-sm-4 form-control-label">Precio del Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong> {{ fillCartaDetalleSolicitud.cMoneda }}  {{fillCartaDetalleSolicitud.fPrecioBase}} </strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Cuota Inicial</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{ fillCartaDetalleSolicitud.fCuotaInicial}} </strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Monto a Desembolsar</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{fillCartaDetalleSolicitud.fMontoDesembolsado}} </strong>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly">
+                                                            Nos compremetemos a gestionar la Tarjeta de Propiedad del Vehículo a nombre de:
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly">
+                                                            <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly" >A la espera del desembolso correspondiente, quedamos de ustedes</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly" >Atentamente,</label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionConformeNoConforme(1)">CONFORME</button>
+                        <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionConformeNoConforme(2)">NO CONFORME</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Generar Mis Carta -->
+        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body menosPadding">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE</h3>
+                                        <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-header d-flex align-items-center subCabecera">
+                                        <h3 class="h4">Carta de Características</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-5 offset-md-7">
+                                                        <label class="form-control-label"> {{ fillCartaDetalleSolicitud.fecha }} </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-6">
+                                                        <label>Señores</label>
+                                                        <label class="form-control-label-readonly">
+                                                            <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-6">
+                                                        <label>Presente.-</label>
+                                                        <label class="form-control-label-readonly">
+                                                             Atención : <strong>{{ fillCartaDetalleSolicitud.cAtencion}}</strong>
+                                                        </label>
+                                                        <label class="form-control-label-readonly">
+                                                             Referencia - Cliente : <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label>Estimados Señores</label>
+                                                        <label class="form-control-label-readonly">
+                                                            Mediante la presente, les informamos que nuestro mutuo cliente <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong> con RUC <strong>{{ fillCartaDetalleSolicitud.cNumDocumento}}</strong> realizó la separación por el siguiente Vehículo Asignado:
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreMarca"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreModelo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.nAnioFabricacion"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Año del Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.nAnioModelo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Número de Chasis/Serie</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNumeroChasis"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Número de Motor</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNumeroMotor"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Color</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreColor"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Clase</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreClase"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Carrocería</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreSubClase"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="flexLeft">
+                                                            <h4 class="col-sm-4 form-control-label">VALORES</h4>
+                                                        </div>
+                                                        <hr>
+                                                        <label class="col-sm-4 form-control-label">Precio del Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong> {{ fillCartaDetalleSolicitud.cMoneda }}  {{fillCartaDetalleSolicitud.fPrecioBase}} </strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Cuota Inicial</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{ fillCartaDetalleSolicitud.fCuotaInicial}} </strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Monto a Desembolsar</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{fillCartaDetalleSolicitud.fMontoDesembolsado}} </strong>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly">
+                                                            Nos compremetemos a gestionar la Tarjeta de Propiedad del Vehículo a nombre de:
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly">
+                                                            <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly" >A la espera del desembolso correspondiente, quedamos de ustedes</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly" >Atentamente,</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-control-label-readonly" >Subir Archivo del Banco (Correo Electronico de aprobación)</label>
+                                                        <input type="file" id="file-upload" @change="getFile" accept="image/*" class="form-control form-control-sm"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionAprobacionNoAprobacion(1)">APROBAR</button>
+                        <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionAprobacionNoAprobacion(2)">NO APROBAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -499,7 +1202,7 @@
                 // =============================================================
                 fillCartaCaracteristica: {
                     cnumcarta: 1,
-                    nidref: 0,
+                    nidref: '',
                     catencion: '',
                     dfechainicio: '',
                     dfechafin: '',
@@ -510,7 +1213,8 @@
                     fpreciodolar: 1,
                     fcuotainicial: 1,
                     fmontodesembolar: 1,
-                    nidbanco: 0
+                    nidbanco: 0,
+                    nidestado: ''
                 },
                 arrayReferencia: [],
                 fillVIN:{
@@ -528,6 +1232,44 @@
                 ],
                 arrayContacto: [],
                 arrayBanco: [],
+                // =============================================================
+                // VARIABLES CARTA VENDEDORES
+                // =============================================================
+                arrayEstado: [],
+                arrayCartaCaracteristicas: [],
+                fillCartaDetalleSolicitud: {
+                    nIdSCC: 0,
+                    fecha: '',
+                    cNumCarta: '',
+                    nIdBanco: 0,
+                    cNombreBanco: '',
+                    cAtencion: '',
+                    nIdContacto: 0,
+                    cContacto: '',
+                    cNumDocumento: 0,
+                    nIdVersionVeh: 0,
+                    cNombreLinea: '',
+                    cNombreMarca: '',
+                    cNombreModelo: '',
+                    cNombreComercial: '',
+                    nAnioFabricacion: 0,
+                    nAnioModelo: 0,
+                    cNumeroChasis: '',
+                    cNumeroMotor: '',
+                    cNombreColor: '',
+                    cNombreClase: '',
+                    cNombreSubClase: '',
+                    cMoneda: '',
+                    fPrecioBase: 0,
+                    fCuotaInicial: 0,
+                    fMontoDesembolsado: 0
+                },
+                // =============================================================
+                // VARIABLES MIS CARTA
+                // =============================================================
+                arrayMisCartas: [],
+                attachment: null,
+                form: new FormData,
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -559,6 +1301,7 @@
         mounted() {
             this.llenarBancos();
             this.llenarReferencias();
+            this.llenarEstados();
         },
         computed:{
             isActived: function(){
@@ -613,7 +1356,20 @@
             },
         },
         methods: {
-            tabNuevaSCC(){},
+            tabNuevaSCC(){
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link active');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link ');
+
+                $('#TabRegistrarSCC').addClass("in active show");
+                $('#TabCartaVendedores').removeClass('in active show');
+                $('#TabMisCartas').removeClass('in active show');
+                this.limpiarProcesoRegistrarCC();
+                this.limpiarCartaVendedores();
+            },
             llenarBancos(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -628,7 +1384,7 @@
                 });
             },
             llenarReferencias(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                var url = this.ruta + '/getComision/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110072,
@@ -636,6 +1392,19 @@
                     }
                 }).then(response => {
                     this.arrayReferencia = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarEstados(){
+                var url = this.ruta + '/getComision/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110071,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayEstado = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -689,7 +1458,7 @@
                 this.listarContactos(page);
             },
             listarContactos(page){
-                var url = this.ruta + '/solicitudCartaCaracteristica/GetListContactos';
+                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCotizacionAprobadas';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -698,10 +1467,11 @@
                         'ntipopersona' : this.fillMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
                         'cfiltrodescripcion' : this.fillMisContactos.cfiltrodescripcion.toString(),
+                        'tipoRol': 2,
                         'page' : page
                     }
                 }).then(response => {
-                    let info = response.data.arrayContacto;
+                    let info = response.data.arrayContactosByCotizacionAprobada;
                     this.arrayContacto                = info.data;
                     this.paginationModal.current_page =  info.current_page;
                     this.paginationModal.total        = info.total;
@@ -716,10 +1486,10 @@
             asignarContacto(contacto){
                 if(this.fillMisContactos.ntipopersona == 1){
                     this.fillCartaCaracteristica.nidcontacto = contacto.nIdContacto;
-                    this.fillCartaCaracteristica.cnombrecontacto = contacto.cNombres;
+                    this.fillCartaCaracteristica.cnombrecontacto = contacto.cContacto;
                 } else {
                     this.fillCartaCaracteristica.nidcontacto = contacto.nIdContacto;
-                    this.fillCartaCaracteristica.cnombrecontacto = contacto.cContacto;
+                    this.fillCartaCaracteristica.cnombrecontacto = contacto.cRazonSocial;
                 }
                 this.fillMisContactos.ntipopersona = 1;
                 this.fillMisContactos.cnrodocumento = '';
@@ -748,11 +1518,12 @@
                     'fCuotaInicial'         :   this.fillCartaCaracteristica.fcuotainicial,
                     'fMontoDesembolsado'    :   this.fillCartaCaracteristica.fmontodesembolar,
                     'nIdBanco'              :   this.fillCartaCaracteristica.nidbanco,
-                    'nIdEstadoCarta'        :   1300194,
-                    'FlagEstadoApro'        :   'PE'
+                    'nIdEstadoCarta'        :   1300195,
+                    'FlagEstadoApro'        :   'CO'
                 }).then(response => {
                     swal('Solicitud Carta de Caracteristica registrada exitosamente');
-                    this.limpiarProceso();
+                    this.getDetalleSolicitudConforme(response.data);//Capturar datos para el Nombre PDF
+                    this.tabCartaVendedores();
                 }).catch(error => {
                     this.errors = error
                 });
@@ -767,7 +1538,7 @@
                 if(!this.fillCartaCaracteristica.cnumcarta){
                     this.mensajeError.push('El número de carta es obligatorio');
                 }
-                if(this.fillCartaCaracteristica.nidref == 0){
+                if(this.fillCartaCaracteristica.nidref == 0 || !this.fillCartaCaracteristica.nidref){
                     this.mensajeError.push('Debe seleccionar una referencia');
                 }
                 if(!this.fillCartaCaracteristica.catencion){
@@ -809,10 +1580,10 @@
                 }
                 return this.error;
             },
-            limpiarProceso(){
+            limpiarProcesoRegistrarCC(){
                 this.fillCartaCaracteristica.cnumcarta = 1;
                 this.fillCartaCaracteristica.catencion = '';
-                this.fillCartaCaracteristica.nidref = 0;
+                this.fillCartaCaracteristica.nidref = '';
                 this.fillCartaCaracteristica.dfechainicio = '';
                 this.fillCartaCaracteristica.dfechafin = '';
                 this.fillCartaCaracteristica.nidcompra = 0;
@@ -823,6 +1594,253 @@
                 this.fillCartaCaracteristica.fcuotainicial = 1;
                 this.fillCartaCaracteristica.fmontodesembolar = 1;
                 this.fillCartaCaracteristica.nidbanco = 0;
+            },
+            tabCartaVendedores(){
+                this.limpiarProcesoRegistrarCC();
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link');
+                $('#tab02').removeClass('nav-link ');
+                $('#tab02').addClass('nav-link active');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link ');
+
+                $('#TabRegistrarSCC').removeClass("in active show");
+                $('#TabCartaVendedores').addClass('in active show');
+                $('#TabMisCartas').removeClass('in active show');
+                this.buscarCartaVendedores(1);
+                this.limpiarCartaVendedores();
+            },
+            buscarCartaVendedores(page){
+                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCartaCaracteristica';
+                axios.get(url, {
+                    params: {
+                        'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
+                        'nIdContacto' : this.fillCartaCaracteristica.nidcontacto,
+                        'dFechaInicio' : this.fillCartaCaracteristica.dfechainicio,
+                        'dFechaFin' : this.fillCartaCaracteristica.dfechafin,
+                        'nIdEstado' : this.fillCartaCaracteristica.nidestado,
+                        'tipoRol': 21,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayCartaCaracteristicas;
+                    this.arrayCartaCaracteristicas    = info.data;
+                    this.pagination.current_page =  info.current_page;
+                    this.pagination.total        = info.total;
+                    this.pagination.per_page     = info.per_page;
+                    this.pagination.last_page    = info.last_page;
+                    this.pagination.from         = info.from;
+                    this.pagination.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaCartaByVendedores(page){
+                this.pagination.current_page=page;
+                this.buscarCartaVendedores(page);
+            },
+            limpiarCartaVendedores(){
+                this.fillCartaCaracteristica.nidcompra = 0;
+                this.fillCartaCaracteristica.cnumerovin = '';
+                this.fillCartaCaracteristica.nidcontacto = 0;
+                this.fillCartaCaracteristica.cnombrecontacto = '';
+                this.fillCartaCaracteristica.dfechainicio = '';
+                this.fillCartaCaracteristica.dfechafin = '';
+                this.fillCartaCaracteristica.nidestado = '';
+                //Limpiar Carta Detalle Solicitud
+                this.fillCartaDetalleSolicitud.nIdSCC             = 0;
+                this.fillCartaDetalleSolicitud.fecha              = '';
+                this.fillCartaDetalleSolicitud.cNumCarta          = '';
+                this.fillCartaDetalleSolicitud.nIdBanco           = 0;
+                this.fillCartaDetalleSolicitud.cAtencion          = '';
+                this.fillCartaDetalleSolicitud.cNombreBanco       = '';
+                this.fillCartaDetalleSolicitud.nIdContacto        = 0;
+                this.fillCartaDetalleSolicitud.cContacto          = '';
+                this.fillCartaDetalleSolicitud.cNumDocumento      = '';
+                this.fillCartaDetalleSolicitud.nIdVersionVeh      = 0;
+                this.fillCartaDetalleSolicitud.cNombreLinea       = '';
+                this.fillCartaDetalleSolicitud.cNombreMarca       = '';
+                this.fillCartaDetalleSolicitud.cNombreModelo      = '';
+                this.fillCartaDetalleSolicitud.cNombreComercial   = '';
+                this.fillCartaDetalleSolicitud.nAnioFabricacion   = 0;
+                this.fillCartaDetalleSolicitud.nAnioModelo        = 0;
+                this.fillCartaDetalleSolicitud.cNumeroChasis      = '';
+                this.fillCartaDetalleSolicitud.cNumeroMotor       = '';
+                this.fillCartaDetalleSolicitud.cNombreColor       = '';
+                this.fillCartaDetalleSolicitud.cNombreClase       = '';
+                this.fillCartaDetalleSolicitud.cNombreSubClase    = '';
+                this.fillCartaDetalleSolicitud.cMoneda            = '';
+                this.fillCartaDetalleSolicitud.fPrecioBase        = 0;
+                this.fillCartaDetalleSolicitud.fCuotaInicial      = 0;
+                this.fillCartaDetalleSolicitud.fMontoDesembolsado = 0;
+            },
+            getDetalleSolicitud(nIdSCartaC){
+                var url = this.ruta + '/solicitudCartaCaracteristica/GetDetalleSolicitud';
+                axios.get(url, {
+                    params: {
+                        'nIdScartaC' : nIdSCartaC
+                    }
+                }).then(response => {
+                    this.fillCartaDetalleSolicitud.nIdSCC             = response.data[0].nIdSCC;
+                    this.fillCartaDetalleSolicitud.fecha              = response.data[0].Fecha;
+                    this.fillCartaDetalleSolicitud.cNumCarta          = response.data[0].cNumCarta;
+                    this.fillCartaDetalleSolicitud.nIdBanco           = response.data[0].nIdBanco;
+                    this.fillCartaDetalleSolicitud.cAtencion          = response.data[0].cRef + ' ' + response.data[0].cAtencion;
+                    this.fillCartaDetalleSolicitud.cNombreBanco       = response.data[0].cNombreBanco;
+                    this.fillCartaDetalleSolicitud.nIdContacto        = response.data[0].nIdContacto;
+                    this.fillCartaDetalleSolicitud.cContacto          = response.data[0].cContacto;
+                    this.fillCartaDetalleSolicitud.cNumDocumento      = response.data[0].cNumDocumento;
+                    this.fillCartaDetalleSolicitud.nIdVersionVeh      = response.data[0].nIdVersionVeh;
+                    this.fillCartaDetalleSolicitud.cNombreLinea       = response.data[0].cNombreLinea;
+                    this.fillCartaDetalleSolicitud.cNombreMarca       = response.data[0].cNombreMarca;
+                    this.fillCartaDetalleSolicitud.cNombreModelo      = response.data[0].cNombreModelo;
+                    this.fillCartaDetalleSolicitud.cNombreComercial   = response.data[0].cNombreComercial;
+                    this.fillCartaDetalleSolicitud.nAnioFabricacion   = response.data[0].nAnioFabricacion
+                    this.fillCartaDetalleSolicitud.nAnioModelo        = response.data[0].nAnioModelo;
+                    this.fillCartaDetalleSolicitud.cNumeroChasis      = response.data[0].cNumeroChasis;
+                    this.fillCartaDetalleSolicitud.cNumeroMotor       = response.data[0].cNumeroMotor;
+                    this.fillCartaDetalleSolicitud.cNombreColor       = response.data[0].cNombreColor;
+                    this.fillCartaDetalleSolicitud.cNombreClase       = response.data[0].cNombreClase;
+                    this.fillCartaDetalleSolicitud.cNombreSubClase    = response.data[0].cNombreSubClase;
+                    this.fillCartaDetalleSolicitud.cMoneda            = response.data[0].cMoneda;
+                    this.fillCartaDetalleSolicitud.fPrecioBase        = response.data[0].fPrecioBase;
+                    this.fillCartaDetalleSolicitud.fCuotaInicial      = response.data[0].fCuotaInicial;
+                    this.fillCartaDetalleSolicitud.fMontoDesembolsado = response.data[0].fMontoDesembolsado;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            accionConformeNoConforme(data){
+                var url = this.ruta + '/solicitudCartaCaracteristica/SetConformeNoConforme';
+                axios.put(url, {
+                    'nIdScartaC' : this.fillCartaDetalleSolicitud.nIdSCC,
+                    'nIdEstadoCarta': (data == 1) ? 1300195 : 1300195,
+                    'FlagEstadoApro': (data == 1) ? 'CO' : 'NC',
+                    'nombre' : this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto
+                }).then(response => {
+                    this.cerrarModalSolicitud();
+                    this.buscarCartaVendedores(1);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            //INICIO -- Ejecutar Al momento de registrar como JV
+            getDetalleSolicitudConforme(nIdSCartaC){
+                var url = this.ruta + '/solicitudCartaCaracteristica/GetDetalleSolicitud';
+                axios.get(url, {
+                    params: {
+                        'nIdScartaC' : nIdSCartaC
+                    }
+                }).then(response => {
+                    let me = this;
+                    this.fillCartaDetalleSolicitud.cNumCarta  = response.data[0].cNumCarta;
+                    this.fillCartaDetalleSolicitud.cContacto  = response.data[0].cContacto;
+                    this.$nextTick(function () {
+                        me.accionConforme(response.data[0].nIdSCC);//Enviar Conforme por defecto
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            accionConforme(data){
+                var url = this.ruta + '/solicitudCartaCaracteristica/SetConformeNoConforme';
+                axios.put(url, {
+                    'nIdScartaC' : data,
+                    'nIdEstadoCarta': 1300195,
+                    'FlagEstadoApro': 'CO',
+                    'nombre' : this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto
+                }).then(response => {
+                    this.cerrarModalSolicitud();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            //FIN -- Ejecutar Al momento de registrar como JV
+            tabMisCartas(){
+                this.limpiarProcesoRegistrarCC();
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link ');
+                $('#tab03').removeClass('nav-link ');
+                $('#tab03').addClass('nav-link active');
+
+                $('#TabRegistrarSCC').removeClass("in active show");
+                $('#TabCartaVendedores').removeClass('in active show');
+                $('#TabMisCartas').addClass('in active show');
+                this.buscarMisCartas(1);
+                this.limpiarCartaVendedores();
+            },
+            buscarMisCartas(page){
+                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCartaCaracteristica';
+                axios.get(url, {
+                    params: {
+                        'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
+                        'nIdContacto' : this.fillCartaCaracteristica.nidcontacto,
+                        'dFechaInicio' : this.fillCartaCaracteristica.dfechainicio,
+                        'dFechaFin' : this.fillCartaCaracteristica.dfechafin,
+                        'nIdEstado' : this.fillCartaCaracteristica.nidestado,
+                        'tipoRol': 22,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayCartaCaracteristicas;
+                    this.arrayMisCartas    = info.data;
+                    this.pagination.current_page =  info.current_page;
+                    this.pagination.total        = info.total;
+                    this.pagination.per_page     = info.per_page;
+                    this.pagination.last_page    = info.last_page;
+                    this.pagination.from         = info.from;
+                    this.pagination.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaMisCC(page){
+                this.pagination.current_page=page;
+                this.buscarMisCartas(page);
+            },
+            getFile(e){
+                //console.log(e);
+                let selectFile = e.target.files[0];
+                this.attachment = selectFile;
+            },
+            accionAprobacionNoAprobacion(data){
+                if(this.validarAprobacionNoAprobacionSCC()){
+                    return;
+                }
+                this.form.append('file', this.attachment);
+
+                this.form.append('nIdScartaC', this.fillCartaDetalleSolicitud.nIdSCC);
+                this.form.append('nIdEstadoCarta', (data == 1) ? 1300195 : 1300199);
+                this.form.append('FlagEstadoApro', (data == 1) ? 'AP' : 'DE');
+                this.form.append('nombre', this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto);
+
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                var url = this.ruta + '/solicitudCartaCaracteristica/SetAprobadoNoAprobado';
+                axios.post(url, this.form, config).then(response => {
+                    console.log(response);
+                    this.buscarMisCartas(1);
+                    this.cerrarModalSolicitud();
+                    this.limpiarProcesoRegistrarCC();
+                    this.attachment = '';
+                    this.form = new FormData;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validarAprobacionNoAprobacionSCC(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.attachment){
+                    this.mensajeError.push('Debe subir una imagen antes de dar la Aprobación/Desaprobación');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =================================================================
             // METODOS GENERICOS
@@ -850,6 +1868,32 @@
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 this.listarContactos(1);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case "pediente":
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.getDetalleSolicitud(data);
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case "aprobar":
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.getDetalleSolicitud(data);
+                                this.accionmodal=5;
+                                this.modal = 1;
                                 break;
                             }
                         }
@@ -882,6 +1926,12 @@
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
             },
+            cerrarModalSolicitud(){
+                this.modal = 0;
+                this.accionmodal = 0;
+                this.error = 0;
+                this.mensajeError = '';
+            }
         }
     }
 </script>
@@ -923,6 +1973,36 @@
     }
     .el-date-editor.el-input, .el-date-editor.el-input__inner{
         width: 100%;
+    }
+    /* Estilos Modal */
+    .menosPadding{
+        padding: .31rem;
+    }
+    .subCabecera{
+        justify-content: center;
+        padding: 1rem;
+        background: white;
+    }
+    .subCabecera>h3{
+        color: black;
+        font-size: 1rem;
+        font-weight: bolder;
+    }
+    .flexRigth{
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        align-content: flex-end;
+    }
+    .flexLeft{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+    .flexLeft>h4{
+        font-weight: bolder;
     }
 </style>
 
