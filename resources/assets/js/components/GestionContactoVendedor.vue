@@ -112,7 +112,7 @@
                                                                             <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cPerApellidos"></td>
-                                                                                <td v-text="c.cNombres"></td>
+                                                                                <td v-text="c.cNombre"></td>
                                                                                 <td v-text="c.cNumeroDocumento"></td>
                                                                                 <td v-text="c.nTelefonoMovil"></td>
                                                                                 <td v-text="c.cDireccion"></td>
@@ -120,7 +120,7 @@
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="asignarCarteraMes(c.nIdContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Asignar a Cartera ' + c.cPerApellidos + ' ' + c.cNombres">
+                                                                                        :title="'Asignar a Cartera ' + c.cPerApellidos + ' ' + c.cNombre">
                                                                                         <i class="fa-md fa fa-suitcase"></i>
                                                                                     </a>
                                                                                 </td>
@@ -278,7 +278,7 @@
                                                                             <tr v-for="c in arrayContactoCarteraMes" :key="c.nIdReferenciaVehiculoContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cPerApellidos"></td>
-                                                                                <td v-text="c.cNombres"></td>
+                                                                                <td v-text="c.cNombre"></td>
                                                                                 <td v-text="c.cNumeroDocumento"></td>
                                                                                 <td v-text="c.nTelefonoMovil"></td>
                                                                                 <td v-text="c.cDireccion"></td>
@@ -286,11 +286,11 @@
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombres">
+                                                                                        :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombre">
                                                                                         <i class="fa-md fa fa-sign-out"></i>
                                                                                     </a>
                                                                                     <a href="#" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Anular de Cartera Mes ' + c.cPerApellidos + ' ' + c.cNombres">
+                                                                                        :title="'Anular de Cartera Mes ' + c.cPerApellidos + ' ' + c.cNombre">
                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </a>
                                                                                 </td>
@@ -325,7 +325,7 @@
                                                                                         <i class="fa-md fa fa-sign-out"></i>
                                                                                     </a>
                                                                                     <a href="#" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Anular de Cartera Mes ' + c.cPerApellidos + ' ' + c.cNombres">
+                                                                                        :title="'Anular de Cartera Mes ' + c.cPerApellidos + ' ' + c.cNombre">
                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </a>
                                                                                 </td>
@@ -960,7 +960,7 @@
                                                                                 <div class="row">
                                                                                     <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.cnombres" class="form-control form-control-sm">
+                                                                                        <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1194,7 +1194,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">* Nombres</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.cnombres" class="form-control form-control-sm">
+                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1594,7 +1594,7 @@
                     cnrodocumento: '',
                     capepaterno: '',
                     capematerno: '',
-                    cnombres: '',
+                    cnombre: '',
                     dfecnacimiento: '',
                     lblcnombres: '* Nombres',
                     niddepartamento: 0,
@@ -1623,7 +1623,7 @@
                     cnrodocumento: '',
                     capepaterno: '',
                     capematerno: '',
-                    cnombres: '',
+                    cnombre: '',
                     cmailprincipal: '',
                     ncelular : ''
                 },
@@ -1933,7 +1933,7 @@
                     if(!this.formNuevoContacto.capematerno){
                         this.mensajeError.push('Debes Ingresar Apellido Materno');
                     };
-                    if(!this.formNuevoContacto.cnombres){
+                    if(!this.formNuevoContacto.cnombre){
                         this.mensajeError.push('Debes Ingresar Nombres');
                     };
                 }
@@ -1942,7 +1942,7 @@
                     if(!this.formNuevoContacto.cnrodocumento){
                     this.mensajeError.push('Debes Ingresar Nro Documento');
                     };
-                    if(!this.formNuevoContacto.cnombres){
+                    if(!this.formNuevoContacto.cnombre){
                         this.mensajeError.push('Debes Ingresar Razon Social');
                     };
                 }*/
@@ -2261,7 +2261,7 @@
                     if(!this.formNuevoContacto.capematerno){
                         this.mensajeError.push('Debes Ingresar Apellido Materno');
                     };
-                    if(!this.formNuevoContacto.cnombres){
+                    if(!this.formNuevoContacto.cnombre){
                         this.mensajeError.push('Debes Ingresar Nombres');
                     };
                 }
@@ -2273,7 +2273,7 @@
                     if(nrodocumento.length < 11 || nrodocumento.length > 11) {
                         this.mensajeError.push('El Nro Documento debe contener (11) números');
                     };
-                    if(!this.formNuevoContacto.cnombres){
+                    if(!this.formNuevoContacto.cnombre){
                         this.mensajeError.push('Debes Ingresar Razon Social');
                     };
                 }
@@ -2410,7 +2410,7 @@
                     if(!this.formNuevoContactoJurifico.capematerno){
                         this.mensajeError.push('Debes escribir el apellido materno del contacto');
                     };
-                    if(!this.formNuevoContactoJurifico.cnombres){
+                    if(!this.formNuevoContactoJurifico.cnombre){
                         this.mensajeError.push('Debes escribir el nombre del contacto');
                     };
                     if(!this.formNuevoContactoJurifico.cmailprincipal){
@@ -2640,7 +2640,7 @@
                 axios.post(url, {
                     nIdTipoDocumento: this.formNuevoContacto.ntpodocumento,
                     cNumeroDocumento: String(this.formNuevoContacto.cnrodocumento),
-                    cNombre: this.formNuevoContacto.cnombres.toUpperCase().toString(),
+                    cNombre: this.formNuevoContacto.cnombre.toUpperCase().toString(),
                     cApellidoPaterno: this.formNuevoContacto.capepaterno.toUpperCase().toString(),
                     cApellidoMaterno: this.formNuevoContacto.capematerno.toUpperCase().toString(),
                     cUbigeo: this.formNuevoContacto.niddistrito,
@@ -2669,7 +2669,7 @@
                 axios.post(url, {
                     //Datos contacto Juridico
                     cRuc: String(this.formNuevoContacto.cnrodocumento),
-                    cRazonSocial: this.formNuevoContacto.cnombres.toUpperCase().toString(),
+                    cRazonSocial: this.formNuevoContacto.cnombre.toUpperCase().toString(),
                     cUbigeo: this.formNuevoContacto.niddistrito,
                     cDireccion: this.formNuevoContacto.cdireccion.toUpperCase().toString(),
                     cEmail: this.formNuevoContacto.cmailprincipal.toUpperCase().toString(),
@@ -2680,7 +2680,7 @@
                     //Datos Contacto Natural del Juridico
                     nIdTipoDocumentoContacto: this.formNuevoContactoJurifico.ntpodocumento,
                     cNumeroDocumentoContacto: String(this.formNuevoContactoJurifico.cnrodocumento),
-                    cNombreContacto: this.formNuevoContactoJurifico.cnombres.toUpperCase().toString(),
+                    cNombreContacto: this.formNuevoContactoJurifico.cnombre.toUpperCase().toString(),
                     cApellidoPaternoContacto: this.formNuevoContactoJurifico.capepaterno.toUpperCase().toString(),
                     cApellidoMaternoContacto: this.formNuevoContactoJurifico.capematerno.toUpperCase().toString(),
                     cEmailPrincipalContacto: this.formNuevoContactoJurifico.cmailprincipal.toUpperCase().toString(),
@@ -2813,7 +2813,7 @@
                 this.formNuevoContacto.cnrodocumento = '',
                 this.formNuevoContacto.capepaterno = '',
                 this.formNuevoContacto.capematerno = '',
-                this.formNuevoContacto.cnombres = '',
+                this.formNuevoContacto.cnombre = '',
                 this.formNuevoContacto.dfecnacimiento = '',
                 //Tab DATOS DE CONTACTO
                 this.formNuevoContacto.niddepartamento = 0,
@@ -2833,7 +2833,7 @@
                 this.formNuevoContactoJurifico.cnrodocumento = '',
                 this.formNuevoContactoJurifico.capematerno = '',
                 this.formNuevoContactoJurifico.capepaterno = '',
-                this.formNuevoContactoJurifico.cnombres = '',
+                this.formNuevoContactoJurifico.cnombre = '',
                 this.formNuevoContactoJurifico.cmailprincipal = '',
                 this.formNuevoContactoJurifico.ncelular = '',
                 //Tab REFERENCIA VEHICULO
