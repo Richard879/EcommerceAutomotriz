@@ -103,7 +103,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
     Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
     Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
-    Route::post('/gescontacto/SetLeads', 'ExcelController@SetLeads');
+    Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');

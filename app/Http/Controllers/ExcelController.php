@@ -136,16 +136,16 @@ class ExcelController extends Controller
                 'cTipoDocumento'   => $value[0],
                 'cNumeroDocumento' => $value[1],
                 'cNombreCompleto' => $value[2],
-                'cTelefono' => $value[3],
-                'cCelular' => $value[4],
+                'cTelefonoFijo' => $value[3],
+                'nTelefonoMovil' => $value[4],
                 'cEmail' => $value[5],
                 'cDepartamentoNombre' => $value[6],
                 'cProvinciaNombre' => $value[7],
                 'cDistritoNombre' => $value[8],
-                'cDirección' => $value[9],
-                'cNombreMarca' => $value[10],
-                'cNombreModelo' => $value[11],
-                'cComentario' => $value[12]
+                'cDireccion' => $value[9],
+                'cMarcaNombre' => $value[10],
+                'cModeloNombre' => $value[11],
+                'cGlosa' => $value[12]
             ];
         }
 

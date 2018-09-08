@@ -492,30 +492,25 @@ class GestionContactoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            array($request->nIdEmpresa,
-                                                                $request->nIdSucursal,
-                                                                $request->nIdCronograma,
-                                                                $request->nIdProveedor,
-                                                                $request->nIdTipoLista,
-                                                                $det['nOrdenCompra'],
-                                                                $det['cNombreLinea'],
-                                                                $det['cNombreAlmacen'],
-                                                                $det['nNumeroReserva'],
-                                                                $det['cNumeroVin'],
-                                                                $det['cFormaPago'],
-                                                                $det['cNombreMarca'],
-                                                                $det['cNombreModelo'],
-                                                                $det['cNombreComercial'],
-                                                                $det['cNombreColor'],
-                                                                $det['nAnioFabricacion'],
-                                                                $det['nAnioVersion'],
-                                                                $det['cSimboloMoneda'],
-                                                                $fTotalCompra,
-                                                                $det['cNumeroFactura'],
-                                                                $det['dFechaFacturado'],
+                DB::select('exec usp_Contacto_SetLeads ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $det['cTipoDocumento'],
+                                                                $det['cNumeroDocumento'],
+                                                                $det['cNombre'],
+                                                                $det['cApellidoPaterno'],
+                                                                $det['cApellidoMaterno'],
+                                                                $det['cTelefonoFijo'],
+                                                                $det['nTelefonoMovil'],
+                                                                $det['cEmail'],
+                                                                $det['cDepartamentoNombre'],
+                                                                $det['cProvinciaNombre'],
+                                                                $det['cDistritoNombre'],
+                                                                $det['cDireccion'],
+                                                                $det['cMarcaNombre'],
+                                                                $det['cModeloNombre'],
+                                                                $det['cGlosa'],
                                                                 Auth::user()->id
-                                                            ));
+                                                            ]);
             }
             DB::commit();
         } catch (Exception $e){

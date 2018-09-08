@@ -122,7 +122,7 @@
                                                                             <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                 <td v-text="c.nIdContacto"></td>
                                                                                 <td v-text="c.cPerApellidos"></td>
-                                                                                <td v-text="c.cNombres"></td>
+                                                                                <td v-text="c.cNombre"></td>
                                                                                 <td v-text="c.cNumeroDocumento"></td>
                                                                                 <td v-text="c.nTelefonoMovil"></td>
                                                                                 <td v-text="c.cDireccion"></td>
@@ -130,7 +130,7 @@
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
                                                                                     <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombres">
+                                                                                        :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombre">
                                                                                         <i class="fa-md fa fa-sign-out"></i>
                                                                                     </a>
                                                                                 </td>
@@ -309,14 +309,14 @@
                                                                                 <tr v-for="c in arrayContactosPorVendedor" :key="c.nIdContacto">
                                                                                     <td>{{ c.nIdContacto }}</td>
                                                                                     <td>{{ c.cPerApellidos }}</td>
-                                                                                    <td>{{ c.cNombres }}</td>
+                                                                                    <td>{{ c.cNombre }}</td>
                                                                                     <td>{{ c.cNumeroDocumento }}</td>
                                                                                     <td>{{ c.nTelefonoMovil }}</td>
                                                                                     <td>{{ c.cDireccion }}</td>
                                                                                     <td>{{ c.cEmail }}</td>
                                                                                     <td>{{ c.cVendedor }}</td>
                                                                                     <td>
-                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombres, c.cVendedor)"  data-placement="top"
+                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre, c.cVendedor)"  data-placement="top"
                                                                                             :title="'Reasignar Contacto'">
                                                                                             <i :style="'color:blue'" class="fa-md fa fa-street-view"></i>
                                                                                         </a>
@@ -630,13 +630,13 @@
                                                                                 <tr v-for="c in arrayContactoLibre" :key="c.nIdContacto">
                                                                                     <td v-text="c.nIdContacto"></td>
                                                                                     <td v-text="c.cPerApellidos"></td>
-                                                                                    <td v-text="c.cNombres"></td>
+                                                                                    <td v-text="c.cNombre"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td>
-                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombres)"  data-placement="top"
+                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre)"  data-placement="top"
                                                                                             :title="'Asignar Contacto a Vendedor'">
                                                                                             <i :style="'color:blue'" class="fa-md fa fa-user"></i>
                                                                                         </a>
@@ -1915,7 +1915,9 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Tipo Documento</th>
                                                                                 <th>Nro Documento</th>
-                                                                                <th>Nombre Completo<nav></nav></th>
+                                                                                <th>Nombres</th>
+                                                                                <th>Apellido Paterno</th>
+                                                                                <th>Apellido Materno</th>
                                                                                 <th>Teléfono</th>
                                                                                 <th>Celular</th>
                                                                                 <th>Email</th>
@@ -1935,16 +1937,18 @@
                                                                                 </td>
                                                                                 <td v-text="lead.cTipoDocumento"></td>
                                                                                 <td v-text="lead.cNumeroDocumento"></td>
-                                                                                <td v-text="lead.cNombreCompleto"></td>
-                                                                                <td v-text="lead.cTelefono"></td>
-                                                                                <td v-text="lead.cCelular"></td>
+                                                                                <td v-text="lead.cNombre"></td>
+                                                                                <td v-text="lead.cApellidoPaterno"></td>
+                                                                                <td v-text="lead.cApellidoMaterno"></td>
+                                                                                <td v-text="lead.cTelefonoFijo"></td>
+                                                                                <td v-text="lead.nTelefonoMovil"></td>
                                                                                 <td v-text="lead.cEmail"></td>
                                                                                 <td v-text="lead.cDepartamentoNombre"></td>
                                                                                 <td v-text="lead.cProvinciaNombre"></td>
                                                                                 <td v-text="lead.cDistritoNombre"></td>
-                                                                                <td v-text="lead.cDirección"></td>
-                                                                                <td v-text="lead.cNombreMarca"></td>
-                                                                                <td v-text="lead.cNombreModelo"></td>
+                                                                                <td v-text="lead.cDireccion"></td>
+                                                                                <td v-text="lead.cMarcaNombre"></td>
+                                                                                <td v-text="lead.cModeloNombre"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -2680,10 +2684,10 @@
             cambiarTipoPersonaContactosPorVendedor(){
                 this.arrayContactosPorVendedor = []
             },
-            mostrarVistaContactoPorVendedor(nIdContacto, cNombres, cVendedor){
+            mostrarVistaContactoPorVendedor(nIdContacto, cNombre, cVendedor){
                 this.vistaContactoPorVendedor = 0;
                 this.formReasignarContacto.nidcontacto = parseInt(nIdContacto);
-                this.formReasignarContacto.ccontacto = cNombres;
+                this.formReasignarContacto.ccontacto = cNombre;
                 this.formReasignarContacto.cvendedornombre = cVendedor;
                 this.listarReferenciaVehiculoPorReasignar(1);
             },
@@ -2820,10 +2824,10 @@
             cambiarTipoPersonaContactoLibre(){
                 this.arrayContactoLibre = []
             },
-            mostrarVistaAsignaContacto(nIdContacto, cNombres){
+            mostrarVistaAsignaContacto(nIdContacto, cNombre){
                 this.vistaContactoLibre = 0;
                 this.fillAsignarContacto.nidcontacto = nIdContacto;
-                this.fillAsignarContacto.ccontacto = cNombres;
+                this.fillAsignarContacto.ccontacto = cNombre;
                 this.listarReferenciasVehiculoLibre(1);
             },
             listarReferenciasVehiculoLibre(page){
@@ -3812,10 +3816,8 @@
             // ========================================================
             // =============  TAB LEADS ======================
             getFile(e){
-                //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
-                //this.textFile = e.target.files[0].name;
             },
             importFileLeads(){
                 if(this.validarReadFileLeads()){
@@ -3847,30 +3849,65 @@
                         return;
                     }*/
 
+                    let me = this;
+
                     this.$delete(response.data, 0);
                     this.arrayTemporalLeads = response.data;
 
                     this.arrayTemporalLeads.map(function(value, key) {
                             var arrayNombres = [];
-                            var Nombres, Apellidos;
-                            value.cNombreCompleto.replace(".", "");
-                            arrayNombres = value.cNombreCompleto.split(" ");
+                            var NuevoNombreCompleto;
+                            var cNombre, cApellidoPaterno, cApellidoMaterno;
+                            var cFlagActivaLead;
+                            NuevoNombreCompleto = value.cNombreCompleto.replace(".", "");
+                            NuevoNombreCompleto = NuevoNombreCompleto.replace("  ", " ");
+                            NuevoNombreCompleto = NuevoNombreCompleto.replace("   ", " ");
+                            NuevoNombreCompleto = NuevoNombreCompleto.trim();
+                            arrayNombres = NuevoNombreCompleto.split(" ");
 
-                            if(arrayNombres.length > 2){
-                                //Nombres = arrayNombres[0];
-                                console.log(arrayNombres);
+                            if(arrayNombres.length == 3){
+                                cNombre = arrayNombres[0];
+                                cApellidoPaterno = arrayNombres[1];
+                                cApellidoMaterno = arrayNombres[2];
+                                cFlagActivaLead = "SI";
+                            }
+                            else if(arrayNombres.length == 4){
+                                cNombre = arrayNombres[0] + " " + arrayNombres[1];
+                                cApellidoPaterno = arrayNombres[2];
+                                cApellidoMaterno = arrayNombres[3];
+                                cFlagActivaLead = "SI";
+                            }
+                            else{
+                                cNombre = "";
+                                cApellidoPaterno = "";
+                                cApellidoMaterno = "";
+                                cFlagActivaLead = "NO";
                             }
 
-                            /*arrayLeads.push({
-                                cNombres: value.nIdEntidad,
-                                cApellidoPaterno: value.cFlagEntidad,
-                                cApellidoMaterno: value.listIndexProvValor
-                            });*/
+                            if(cFlagActivaLead == "SI")
+                            {
+                                me.arrayLeads.push({
+                                    cTipoDocumento: value.cTipoDocumento,
+                                    cNumeroDocumento: value.cNumeroDocumento,
+                                    cNombre: cNombre.toUpperCase(),
+                                    cApellidoPaterno: cApellidoPaterno.toUpperCase(),
+                                    cApellidoMaterno: cApellidoMaterno.toUpperCase(),
+                                    cTelefonoFijo: value.cTelefonoFijo,
+                                    nTelefonoMovil: value.nTelefonoMovil,
+                                    cEmail: value.cEmail,
+                                    cDepartamentoNombre: value.cDepartamentoNombre,
+                                    cProvinciaNombre: value.cProvinciaNombre,
+                                    cDistritoNombre: value.cDistritoNombre,
+                                    cDireccion: value.cDireccion,
+                                    cMarcaNombre: value.cMarcaNombre,
+                                    cModeloNombre: value.cModeloNombre,
+                                    cGlosa: value.cGlosa
+                                });
+                            }     
                     });
-
                     
-                    /*this.arrayLeads = response.data;
-                    this.contadorArrayLeads = response.data.length;*/
+                    this.contadorArrayLeads = me.arrayLeads.length;
+
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -3880,9 +3917,7 @@
             validarReadFileLeads(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
+
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -3926,43 +3961,35 @@
             },
             eliminarItemLead(index){
                 this.$delete(this.arrayLeads, index);
+                this.contadorArrayLeads = this.arrayLeads.length;
             },
             registrarLeads(){
-                /*if(this.validarRegistroLead()){
+                if(this.validarRegistroLead()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }*/
+                }
 
-                /*var url = this.ruta + '/gescontacto/SetLeads';
+                var url = this.ruta + '/gescontacto/SetLeads';
                 axios.post(url, {
                     data: this.arrayLeads
                 }).then(response => {
-                    swal('Compra registrada');
+                    swal('Leads registrados');
                     this.arrayLeads = [];
                     $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
-                });*/
+                });
 
 
             },
             validarRegistroLead(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
-                if(this.arrayCompra == []){
+
+                if(this.arrayLeads == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.formCompra.nidproveedor == 0){
-                    this.mensajeError.push('Debes seleccionar un Proveedor');
-                };
-                if(this.formCompra.nidtipolista == 0){
-                    this.mensajeError.push('Debes seleccionar un Tipo Lista');
-                };
-
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
