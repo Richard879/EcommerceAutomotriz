@@ -163,6 +163,7 @@
                                                                 <table class="table table-striped table-sm">
                                                                     <thead>
                                                                         <tr>
+                                                                            <th>Acciones</th>
                                                                             <th>Código</th>
                                                                             <th>Periodo</th>
                                                                             <th>OC</th>
@@ -184,6 +185,11 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                                            <td>
+                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                </a>
+                                                                            </td>
                                                                             <td v-text="compra.nIdCompra"></td>
                                                                             <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
                                                                             <td v-text="compra.nOrdenCompra"></td>
