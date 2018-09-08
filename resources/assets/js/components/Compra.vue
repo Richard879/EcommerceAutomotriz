@@ -27,6 +27,11 @@
                                         <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
+                                        <i class="fa fa fa-clipboard"></i> LÍNEA FORUM
+                                    </a>
+                                </li>
                             </ul>
 
                             <div class="tab-content">
@@ -444,6 +449,115 @@
                                     </section>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">ccc</div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="TabForum">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Importar Forum</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFileForum" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="row">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileForum()">
+                                                                            <i class="fa fa-retweet"></i> Procesar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayForum.length">
+                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Tipo Documento</th>
+                                                                                <th>Nro Documento</th>
+                                                                                <th>Nombres</th>
+                                                                                <th>Apellido Paterno</th>
+                                                                                <th>Apellido Materno</th>
+                                                                                <th>Teléfono</th>
+                                                                                <th>Celular</th>
+                                                                                <th>Email</th>
+                                                                                <th>Departamento</th>
+                                                                                <th>Provincia</th>
+                                                                                <th>Distrito</th>
+                                                                                <th>Dirección</th>
+                                                                                <th>Marca</th>
+                                                                                <th>Modelo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(lead, index) in arrayForum" :key="lead.cNumeroDocumento">
+                                                                                <td>
+                                                                                    <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lead.cNumeroDocumento">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                </td>
+                                                                                <td v-text="lead.cTipoDocumento"></td>
+                                                                                <td v-text="lead.cNumeroDocumento"></td>
+                                                                                <td v-text="lead.cNombre"></td>
+                                                                                <td v-text="lead.cApellidoPaterno"></td>
+                                                                                <td v-text="lead.cApellidoMaterno"></td>
+                                                                                <td v-text="lead.cTelefonoFijo"></td>
+                                                                                <td v-text="lead.nTelefonoMovil"></td>
+                                                                                <td v-text="lead.cEmail"></td>
+                                                                                <td v-text="lead.cDepartamentoNombre"></td>
+                                                                                <td v-text="lead.cProvinciaNombre"></td>
+                                                                                <td v-text="lead.cDistritoNombre"></td>
+                                                                                <td v-text="lead.cDireccion"></td>
+                                                                                <td v-text="lead.cMarcaNombre"></td>
+                                                                                <td v-text="lead.cModeloNombre"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-7">
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Total: {{ contadorArrayForum }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarForum()">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -606,6 +720,11 @@
                     nidproveedor: 0,
                     cproveedornombre: ''
                 },
+                // ============================================================
+                // =========== TAB FORUM ============
+                arrayForum: [],
+                contadorArrayForum: 0,
+                // ============================================================
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -820,6 +939,8 @@
                     console.log(error);
                 });
             },
+            // ====================================================
+            // =============  GENERAR COMPRA ======================
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
@@ -990,6 +1111,133 @@
                     });
                 })
             },
+            // ====================================================
+            // =============  TAB FORUM ======================
+            getFileForum(e){
+                let selectFile = e.target.files[0];
+                this.attachment = selectFile;
+            },
+            importFileForum(){
+                if(this.validarReadFileForum()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.form.append('file', this.attachment);
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                var url = this.ruta + '/gescontacto/importFileForum';
+                axios.post(url, this.form, config).then(response=>{
+                    this.readFileForum(response.data);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            readFileForum(nameFile){
+                //this.mostrarProgressBar();
+
+                var url = this.ruta + '/gescontacto/readFileForum';
+                axios.post(url, {
+                    nameFile: nameFile
+                }).then(response => {
+
+                    /*if(this.validaCamposExcel(response.data)){
+                        this.accionmodal=1;
+                        this.modal = 1;
+                        return;
+                    }*/
+                    
+                    this.contadorArrayForum = me.arrayForum.length;
+
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validarReadFileForum(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaCamposExcel(foo){
+                this.error = 0;
+                this.mensajeError = [];
+                var list=[];
+
+                foo.map(function(value, key) {
+                    if(key==0){
+                        if(value.nOrdenCompra != "OC"){
+                            list.push('Falta celda OC, verifique el archivo.');
+                        };
+                        if(value.cNombreLinea != "Línea"){
+                            list.push('Falta celda Línea, verifique el archivo.');
+                        };
+                        if(value.cNombreAlmacen != "Almacén"){
+                            list.push('Falta celda Almacén, verifique el archivo.');
+                        };
+                        if(value.nNumeroReserva != "Nro Reserva"){
+                            list.push('Falta celda Nro Reserva, verifique el archivo.');
+                        };
+                        if(value.fTotalCompra != "Total"){
+                            list.push('Falta celda Total, verifique el archivo.');
+                        };
+                    };
+                    /*if(key != 0){
+                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalCompra)){
+                            list.push('Existe un error en el campo Total, verifique el archivo.');
+                        }
+                    };*/
+                });
+
+                if(list.length){
+                    this.mensajeError = list;
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            eliminarItemForum(index){
+                this.$delete(this.arrayForum, index);
+                this.contadorArrayForum = this.arrayForum.length;
+            },
+            registrarForum(){
+                if(this.validarRegistroForum()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/gescontacto/SetForum';
+                axios.post(url, {
+                    data: this.arrayForum
+                }).then(response => {
+                    swal('Forum registrados');
+                    this.arrayForum = [];
+                    $("#file-upload").val("");
+                }).catch(error => {
+                    console.log(error);
+                });
+
+
+            },
+            validarRegistroForum(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayForum == []){
+                    this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            // =============================================
+            // =============  MODAL ========================
             cerrarModal(){
                 this.modal = 0,
                 this.error = 0,
@@ -1011,6 +1259,7 @@
                     }
                 }
             },
+            // ===========================================================
             limpiarFormulario(){
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',

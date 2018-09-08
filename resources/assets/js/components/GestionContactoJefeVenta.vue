@@ -1947,6 +1947,7 @@
                                                                                 <td v-text="lead.cProvinciaNombre"></td>
                                                                                 <td v-text="lead.cDistritoNombre"></td>
                                                                                 <td v-text="lead.cDireccion"></td>
+                                                                                <td v-text="lead.cLineaNombre"></td>
                                                                                 <td v-text="lead.cMarcaNombre"></td>
                                                                                 <td v-text="lead.cModeloNombre"></td>
                                                                             </tr>
@@ -3849,6 +3850,11 @@
                         return;
                     }*/
 
+                    this.$delete(response.data, 0);
+                    this.arrayLeads = response.data;
+                    this.contadorArrayLeads = this.arrayLeads.length;
+
+                    /*
                     let me = this;
 
                     this.$delete(response.data, 0);
@@ -3906,7 +3912,8 @@
                             }     
                     });
                     
-                    this.contadorArrayLeads = me.arrayLeads.length;
+                    
+                    this.contadorArrayLeads = me.arrayLeads.length;*/
 
                 }).then(function (response) {
                     $("#myBar").hide();

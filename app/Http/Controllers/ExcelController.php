@@ -135,17 +135,20 @@ class ExcelController extends Controller
             $data[$key+1] =[
                 'cTipoDocumento'   => $value[0],
                 'cNumeroDocumento' => $value[1],
-                'cNombreCompleto' => $value[2],
-                'cTelefonoFijo' => $value[3],
-                'nTelefonoMovil' => $value[4],
-                'cEmail' => $value[5],
-                'cDepartamentoNombre' => $value[6],
-                'cProvinciaNombre' => $value[7],
-                'cDistritoNombre' => $value[8],
-                'cDireccion' => $value[9],
-                'cMarcaNombre' => $value[10],
-                'cModeloNombre' => $value[11],
-                'cGlosa' => $value[12]
+                'cNombre' => $value[2],
+                'cApellidoPaterno' => $value[3],
+                'cApellidoMaterno' => $value[4],
+                'cTelefonoFijo' => $value[5],
+                'nTelefonoMovil' => $value[6],
+                'cEmail' => $value[7],
+                'cDepartamentoNombre' => $value[8],
+                'cProvinciaNombre' => $value[9],
+                'cDistritoNombre' => $value[10],
+                'cDireccion' => $value[11],
+                'cLineaNombre' => $value[12],
+                'cMarcaNombre' => $value[13],
+                'cModeloNombre' => $value[14],
+                'cGlosa' => $value[15]
             ];
         }
 
