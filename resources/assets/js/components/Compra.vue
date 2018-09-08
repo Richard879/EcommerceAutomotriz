@@ -27,6 +27,11 @@
                                         <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
+                                        <i class="fa fa fa-clipboard"></i> LÍNEA FORUM
+                                    </a>
+                                </li>
                             </ul>
 
                             <div class="tab-content">
@@ -63,7 +68,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillCompra.dfechainicio" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="fillCompra.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -71,7 +82,13 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Fecha Fin</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="fillCompra.dfechafin" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="fillCompra.dfechafin"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -99,10 +116,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="fillCompra.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelos()">
-                                                                                <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                <el-option
+                                                                                v-for="item in arrayMarca"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -110,10 +131,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="fillCompra.nidmodelo" class="form-control form-control-sm">
-                                                                                <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayModelo"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -138,6 +163,7 @@
                                                                 <table class="table table-striped table-sm">
                                                                     <thead>
                                                                         <tr>
+                                                                            <th>Acciones</th>
                                                                             <th>Código</th>
                                                                             <th>Periodo</th>
                                                                             <th>OC</th>
@@ -159,6 +185,11 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                                            <td>
+                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                </a>
+                                                                            </td>
                                                                             <td v-text="compra.nIdCompra"></td>
                                                                             <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
                                                                             <td v-text="compra.nOrdenCompra"></td>
@@ -184,9 +215,9 @@
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            <div class="col-lg-12">
+                                                            <div class="col-sm-12">
                                                                 <div class="row">
-                                                                    <div class="col-lg-7">
+                                                                    <div class="col-sm-7">
                                                                         <nav>
                                                                             <ul class="pagination">
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
@@ -204,7 +235,7 @@
                                                                             </ul>
                                                                         </nav>
                                                                     </div>
-                                                                    <div class="col-lg-5">
+                                                                    <div class="col-sm-5">
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
@@ -292,10 +323,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                         <div class="col-sm-8">
-                                                                            <select name="account" v-model="formCompra.nidtipolista" class="form-control form-control-sm">
-                                                                                <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="formCompra.nidtipolista" filterable placeholder="Select" >
+                                                                                <el-option
+                                                                                v-for="item in arrayTipoLista"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -420,6 +455,115 @@
                                     </section>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">ccc</div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="TabForum">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Importar Forum</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="file" id="file-upload" @change="getFileForum" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="row">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileForum()">
+                                                                            <i class="fa fa-retweet"></i> Procesar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <template v-if="arrayForum.length">
+                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Acciones</th>
+                                                                                <th>Tipo Documento</th>
+                                                                                <th>Nro Documento</th>
+                                                                                <th>Nombres</th>
+                                                                                <th>Apellido Paterno</th>
+                                                                                <th>Apellido Materno</th>
+                                                                                <th>Teléfono</th>
+                                                                                <th>Celular</th>
+                                                                                <th>Email</th>
+                                                                                <th>Departamento</th>
+                                                                                <th>Provincia</th>
+                                                                                <th>Distrito</th>
+                                                                                <th>Dirección</th>
+                                                                                <th>Marca</th>
+                                                                                <th>Modelo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(lead, index) in arrayForum" :key="lead.cNumeroDocumento">
+                                                                                <td>
+                                                                                    <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lead.cNumeroDocumento">
+                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                </td>
+                                                                                <td v-text="lead.cTipoDocumento"></td>
+                                                                                <td v-text="lead.cNumeroDocumento"></td>
+                                                                                <td v-text="lead.cNombre"></td>
+                                                                                <td v-text="lead.cApellidoPaterno"></td>
+                                                                                <td v-text="lead.cApellidoMaterno"></td>
+                                                                                <td v-text="lead.cTelefonoFijo"></td>
+                                                                                <td v-text="lead.nTelefonoMovil"></td>
+                                                                                <td v-text="lead.cEmail"></td>
+                                                                                <td v-text="lead.cDepartamentoNombre"></td>
+                                                                                <td v-text="lead.cProvinciaNombre"></td>
+                                                                                <td v-text="lead.cDistritoNombre"></td>
+                                                                                <td v-text="lead.cDireccion"></td>
+                                                                                <td v-text="lead.cMarcaNombre"></td>
+                                                                                <td v-text="lead.cModeloNombre"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-7">
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Total: {{ contadorArrayForum }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarForum()">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -456,88 +600,83 @@
                     <div class="modal-body">
                         <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </div>
-                                                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayProveedor.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nombre Proveedor</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>{{proveedor.cParNombre}}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
-                                            </div>
                                         </div>
+                                        <hr/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
+                                                                    <i class='fa-md fa fa-check-circle'></i>
+                                                                </a>
+                                                            </td>
+                                                            <td>{{proveedor.cParNombre}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -587,6 +726,11 @@
                     nidproveedor: 0,
                     cproveedornombre: ''
                 },
+                // ============================================================
+                // =========== TAB FORUM ============
+                arrayForum: [],
+                contadorArrayForum: 0,
+                // ============================================================
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -801,6 +945,8 @@
                     console.log(error);
                 });
             },
+            // ====================================================
+            // =============  GENERAR COMPRA ======================
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
@@ -971,6 +1117,133 @@
                     });
                 })
             },
+            // ====================================================
+            // =============  TAB FORUM ======================
+            getFileForum(e){
+                let selectFile = e.target.files[0];
+                this.attachment = selectFile;
+            },
+            importFileForum(){
+                if(this.validarReadFileForum()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.form.append('file', this.attachment);
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                var url = this.ruta + '/gescontacto/importFileForum';
+                axios.post(url, this.form, config).then(response=>{
+                    this.readFileForum(response.data);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            readFileForum(nameFile){
+                //this.mostrarProgressBar();
+
+                var url = this.ruta + '/gescontacto/readFileForum';
+                axios.post(url, {
+                    nameFile: nameFile
+                }).then(response => {
+
+                    /*if(this.validaCamposExcel(response.data)){
+                        this.accionmodal=1;
+                        this.modal = 1;
+                        return;
+                    }*/
+                    
+                    this.contadorArrayForum = me.arrayForum.length;
+
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validarReadFileForum(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaCamposExcel(foo){
+                this.error = 0;
+                this.mensajeError = [];
+                var list=[];
+
+                foo.map(function(value, key) {
+                    if(key==0){
+                        if(value.nOrdenCompra != "OC"){
+                            list.push('Falta celda OC, verifique el archivo.');
+                        };
+                        if(value.cNombreLinea != "Línea"){
+                            list.push('Falta celda Línea, verifique el archivo.');
+                        };
+                        if(value.cNombreAlmacen != "Almacén"){
+                            list.push('Falta celda Almacén, verifique el archivo.');
+                        };
+                        if(value.nNumeroReserva != "Nro Reserva"){
+                            list.push('Falta celda Nro Reserva, verifique el archivo.');
+                        };
+                        if(value.fTotalCompra != "Total"){
+                            list.push('Falta celda Total, verifique el archivo.');
+                        };
+                    };
+                    /*if(key != 0){
+                        if(!/^([0-9])*[.]?[0-9]*$/.test(value.fTotalCompra)){
+                            list.push('Existe un error en el campo Total, verifique el archivo.');
+                        }
+                    };*/
+                });
+
+                if(list.length){
+                    this.mensajeError = list;
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            eliminarItemForum(index){
+                this.$delete(this.arrayForum, index);
+                this.contadorArrayForum = this.arrayForum.length;
+            },
+            registrarForum(){
+                if(this.validarRegistroForum()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/gescontacto/SetForum';
+                axios.post(url, {
+                    data: this.arrayForum
+                }).then(response => {
+                    swal('Forum registrados');
+                    this.arrayForum = [];
+                    $("#file-upload").val("");
+                }).catch(error => {
+                    console.log(error);
+                });
+
+
+            },
+            validarRegistroForum(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayForum == []){
+                    this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            // =============================================
+            // =============  MODAL ========================
             cerrarModal(){
                 this.modal = 0,
                 this.error = 0,
@@ -992,6 +1265,7 @@
                     }
                 }
             },
+            // ===========================================================
             limpiarFormulario(){
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',
@@ -1038,6 +1312,12 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
         /*input[type="file"] {
             display: none;

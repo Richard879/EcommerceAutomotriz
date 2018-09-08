@@ -14,12 +14,12 @@
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="tab01" href="#TabBusqueda" @click="tabBusqueda" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list"></i> BUSQUEDA
+                                        <i class="fa fa-users"></i> MIS VENDEDORES
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link disabled" id="tab02" href="#TabAsignacion" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list-ol"></i> ASIGNACIÓN
+                                        <i class="fa fa-calendar"></i> ASIGNAR TURNO
                                     </a>
                                 </li>
                             </ul>
@@ -95,68 +95,66 @@
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">LISTADO VENDEDORES ASIGNADOS AL JEFE DE VENTAS {{ fillFormularioGeneral.cusuarionombre }} </h3>
+                                                        <h3 class="h4">LISTADO MIS VENDEDORES</h3>
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayVendedoresByIdJV.length">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-striped table-sm">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Seleccionar</th>
-                                                                                    <th>Vendedor</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="vendedor in arrayVendedoresByIdJV" :key="vendedor.cParNombre">
-                                                                                    <td>
-                                                                                        <a href="#" @click="asigarVendedorByJefe(vendedor);">
-                                                                                            <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                    <td v-text="vendedor.cParNombre"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-7">
-                                                                                <nav>
-                                                                                    <ul class="pagination">
-                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                            <a @click.prevent="cambiarPaginaVendedoresByJV(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                        </li>
-                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                        :class="[page==isActived?'active':'']">
-                                                                                            <a class="page-link"
-                                                                                            href="#" @click.prevent="cambiarPaginaVendedoresByJV(page)"
-                                                                                            v-text="page"></a>
-                                                                                        </li>
-                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                            <a @click.prevent="cambiarPaginaVendedoresByJV(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </nav>
-                                                                            </div>
-                                                                            <div class="col-lg-5">
-                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <table>
-                                                                        <tbody>
+                                                            <template v-if="arrayVendedoresByIdJV.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
                                                                             <tr>
-                                                                                <td colspan="10">No existen registros!</td>
+                                                                                <th>Seleccionar</th>
+                                                                                <th>Vendedor</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="vendedor in arrayVendedoresByIdJV" :key="vendedor.cParNombre">
+                                                                                <td>
+                                                                                    <a href="#" @click="asigarVendedorByJefe(vendedor);">
+                                                                                        <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
+                                                                                    </a>
+                                                                                </td>
+                                                                                <td v-text="vendedor.cParNombre"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
-                                                                </template>
-                                                            </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaVendedoresByJV(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaVendedoresByJV(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaVendedoresByJV(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -227,6 +225,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <hr/>
                                                             <template v-if="fillFormularioGeneral.cnombreturno" :class="[fillFormularioGeneral.cnombreturno != '' ? 'col-xs-12' : '']">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
@@ -267,48 +266,42 @@
                                                             <div class="row">
                                                                 <template v-if="fillFormularioGeneral.nidturnovendedor">
                                                                     <template v-if="arrayDias.length">
-                                                                        <div :class="[arrayDias.length ? 'col-lg-3' : '']">
+                                                                        <div :class="[arrayDias.length ? 'col-lg-4' : '']">
                                                                             <div class="card">
                                                                                 <div class="card-body">
-                                                                                    <div class="col-sm-12">
-                                                                                        <div class="row">
-                                                                                            <label class="col-sm-6 form-control-label">Día Seleccionado</label>
-                                                                                            <div class="col-sm-6">
-                                                                                                <label v-text="message" class="form-control-label-readonly"></label>
-                                                                                            </div>
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-6 form-control-label">Fecha Seleccionada</label>
+                                                                                        <div class="col-sm-6">
+                                                                                            <label v-text="message" class="form-control-label-readonly"></label>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-sm-12">
-                                                                                        <form class="form-horizontal">
-                                                                                            <div class="col-lg-12">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Eliminar</th>
-                                                                                                                <th>Día</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="(dia, index) in arrayDias" :key="dia.cdia">
-                                                                                                                <td>
-                                                                                                                    <a href="#" @click.prevent="removerDiaLista(index);">
-                                                                                                                        <i class="fa-md fa fa-times-circle" aria-hidden="true"></i>
-                                                                                                                    </a>
-                                                                                                                </td>
-                                                                                                                <td v-text="dia.cdia"></td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </form>
-                                                                                    </div>
+                                                                                    <form class="form-horizontal">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Eliminar</th>
+                                                                                                        <th>Fecha</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(dia, index) in arrayDias" :key="dia.cdia">
+                                                                                                        <td>
+                                                                                                            <a href="#" @click.prevent="removerDiaLista(index);">
+                                                                                                                <i class="fa-md fa fa-times-circle" aria-hidden="true"></i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                        <td v-text="dia.cdia"></td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </template>
-                                                                    <div :class="[arrayDias.length ? 'col-lg-9' : 'col-lg-12']">
+                                                                    <div :class="[arrayDias.length ? 'col-lg-8' : 'col-lg-12']">
                                                                         <div class="card">
                                                                             <div class="card-body">
                                                                                 <form class="form-horizontal">
@@ -330,7 +323,7 @@
                                                                         <div class="col-lg-12">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-9 offset-md-5">
-                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarVendedorTurno()">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarVendedorTurno()">
                                                                                         <i class="fa fa-save"></i> Registrar
                                                                                     </button>
                                                                                 </div>
@@ -577,7 +570,7 @@
             // TAB BUSQUEDA
             // ==============================================
             llenarVentaActiva(){
-                var url = this.ruta + '/getObjComercial/getVentaActiva';
+                var url = this.ruta + '/objComercial/getVentaActiva';
                 axios.get(url).then(response => {
                     this.fillFormularioGeneral.caño = response.data[0].cAnio;
                     this.fillFormularioGeneral.cmes = response.data[0].cMes;
@@ -707,11 +700,11 @@
 				this.showDate = d;
             },
             onClickDay(d) {
-                this.message = moment(d).format('YYYY-MM-DD');
-                this.agregarDiasAlVendedor(this.message);
+                this.message = moment(d).format('DD/MM/YYYY');
+                this.agregarDiasAlVendedor(moment(d).format('YYYY-MM-DD'));
             },
-            agregarDiasAlVendedor(dia){
-                if(this.encontrarDiaRepetido(dia)){
+            agregarDiasAlVendedor(fecha){
+                if(this.encontrarDiaRepetido(fecha)){
                     swal({
                         type: 'error',
                         title: 'Error...',
@@ -719,15 +712,15 @@
                     })
                 } else {
                     this.arrayDiasSeleccionados.push({
-                        cdia : dia
+                        cdia : fecha
                     })
-                    toastr.success('Se Agregó el día"'+ dia +'" ');
+                    toastr.success('Se Agregó Fecha"'+ fecha +'" ');
                 }
             },
-            encontrarDiaRepetido(dia){
+            encontrarDiaRepetido(fecha){
                 var sw=0;
                 this.arrayDiasSeleccionados.map(function (x) {
-                    if(x.cdia == dia){
+                    if(x.cdia == fecha){
                         sw = true;
                     }
                 });
@@ -742,6 +735,8 @@
                     this.modal = 1;
                     return;
                 }
+
+                this.mostrarProgressBar();
                 var url = this.ruta + '/asigVendedorTurno/SetRegistrarVendedorTurno';
                 axios.post(url, {
                     nidempresa : this.fillFormularioGeneral.nidempresa,
@@ -751,6 +746,7 @@
                     nidturnovendedor : this.fillFormularioGeneral.nidturnovendedor,
                     arrayData : this.arrayDias
                 }).then(response => {
+                    $("#myBar").hide();
                     this.limpiarProceso();
                     swal({
                         type: 'success',
@@ -836,7 +832,11 @@
                 this.mensajeError = '';
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
-            }
+            },
+            mostrarProgressBar(){
+                    $("#myBar").show();
+                    progress();
+                }
         }
     }
 </script>

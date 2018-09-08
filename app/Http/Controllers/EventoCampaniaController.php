@@ -33,7 +33,7 @@ class EventoCampaniaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $eventocampania = DB::select('exec usp_EC_SetEventoCampania ?, ?, ? ,? ,?, ?, ?, ?, ?, ?', 
+        $eventocampania = DB::select('exec usp_EC_SetEventoCampania ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdProveedor,
@@ -42,6 +42,9 @@ class EventoCampaniaController extends Controller
                                                                     $request->dFechaInicio,
                                                                     $request->dFechaFin,
                                                                     $request->fValorPresupuesto,
+                                                                    $request->nIdMoneda,
+                                                                    $request->nIdTipoCambio,
+                                                                    $request->fValorTipoCambio,
                                                                     $request->cFlagDetalleEvento,
                                                                     Auth::user()->id
                                                                     ));

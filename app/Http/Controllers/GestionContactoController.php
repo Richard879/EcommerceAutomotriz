@@ -482,4 +482,40 @@ class GestionContactoController extends Controller
         $arraySegReferenciavehiculo = $this->arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
     }
+
+    public function SetLeads(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec usp_Contacto_SetLeads ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $det['cTipoDocumento'],
+                                                                $det['cNumeroDocumento'],
+                                                                $det['cNombre'],
+                                                                $det['cApellidoPaterno'],
+                                                                $det['cApellidoMaterno'],
+                                                                $det['cTelefonoFijo'],
+                                                                $det['nTelefonoMovil'],
+                                                                $det['cEmail'],
+                                                                $det['cDepartamentoNombre'],
+                                                                $det['cProvinciaNombre'],
+                                                                $det['cDistritoNombre'],
+                                                                $det['cDireccion'],
+                                                                $det['cLineaNombre'],
+                                                                $det['cMarcaNombre'],
+                                                                $det['cModeloNombre'],
+                                                                $det['cGlosa'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

@@ -113,5 +113,47 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
+
+    public function importFileLeads(Request $request)
+    {
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelLeads', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+    }
     
+    public function readFileLeads(Request $request)
+    {
+        $nameFile = $request->nameFile;
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls = storage_path('app/'.$nameFile);
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+        $data = [];
+        foreach ($sheetData as $key => $value) {
+            $data[$key+1] =[
+                'cTipoDocumento'   => $value[0],
+                'cNumeroDocumento' => $value[1],
+                'cNombre' => $value[2],
+                'cApellidoPaterno' => $value[3],
+                'cApellidoMaterno' => $value[4],
+                'cTelefonoFijo' => $value[5],
+                'nTelefonoMovil' => $value[6],
+                'cEmail' => $value[7],
+                'cDepartamentoNombre' => $value[8],
+                'cProvinciaNombre' => $value[9],
+                'cDistritoNombre' => $value[10],
+                'cDireccion' => $value[11],
+                'cLineaNombre' => $value[12],
+                'cMarcaNombre' => $value[13],
+                'cModeloNombre' => $value[14],
+                'cGlosa' => $value[15]
+            ];
+        }
+
+        $data = new Collection($data);
+        $data = $data->values()->all();
+        return response()->json($data);
+    }
 }
