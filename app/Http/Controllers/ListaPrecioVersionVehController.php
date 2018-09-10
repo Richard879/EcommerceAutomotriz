@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                     $nIdProveedor
                                                                     ));
         
-        $arrayListaPrecioVh = $this->arrayPaginator($arrayListaPrecioVh, $request);
+        $arrayListaPrecioVh = ParametroController::arrayPaginator($arrayListaPrecioVh, $request);
         return ['arrayListaPrecioVh'=>$arrayListaPrecioVh]; 
     }
 
@@ -39,19 +40,8 @@ class ListaPrecioVersionVehController extends Controller
                                                             array(  $nIdListaPrecioVersionVeh
                                                                     ));
         
-        $arrayListaPrecioVhDet = $this->arrayPaginator($arrayListaPrecioVhDet, $request);
+        $arrayListaPrecioVhDet = ParametroController::arrayPaginator($arrayListaPrecioVhDet, $request);
         return ['arrayListaPrecioVhDet'=>$arrayListaPrecioVhDet]; 
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function SetListaVh(Request $request)
