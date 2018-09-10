@@ -114,13 +114,15 @@ class SolicitudCartaCaracteristica extends Controller
         $dFechaFin = $request->dFechaFin;
         $nIdEstado = $request->nIdEstado;
         $nTipoRol = $request->tipoRol;
+        $cFlagEstado = $request->flagEstado;
+        $nIdVendedor = $request->nIdVendedor;
 
         switch ($nTipoRol) {
             case 1:
                 $nIdVendedor = Auth::user()->id;
                 break;
             case 21:
-                $nIdVendedor = 0;
+                $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
                 break;
             case 22:
                 $nIdVendedor = Auth::user()->id;
@@ -135,8 +137,9 @@ class SolicitudCartaCaracteristica extends Controller
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = ' ') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = ' ') : $dFechaFin;
         $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
+        $cFlagEstado = ($cFlagEstado == NULL) ? ($cFlagEstado = ' ') : $cFlagEstado;
 
-        $arrayCartaCaracteristicas = DB::select('exec usp_CartaCaracteristica_GetLstCartaCaracteristica ?, ?, ?, ?, ?, ?, ?',
+        $arrayCartaCaracteristicas = DB::select('exec usp_CartaCaracteristica_GetLstCartaCaracteristica ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $cNumeroVin,
                                                                             $nIdContacto,
@@ -144,6 +147,7 @@ class SolicitudCartaCaracteristica extends Controller
                                                                             $dFechaFin,
                                                                             $nIdEstado,
                                                                             $nTipoRol,
+                                                                            $cFlagEstado,
                                                                             $nIdVendedor
                                                                         ]);
 
@@ -168,11 +172,13 @@ class SolicitudCartaCaracteristica extends Controller
         $nIdEstadoCarta = $request->nIdEstadoCarta;
         $FlagEstadoApro = $request->FlagEstadoApro;
 
-        $data = DB::select('exec usp_CartaCaracteristica_SetCambiarEstado ?, ?, ?',
+        $data = DB::select('exec usp_CartaCaracteristica_SetCambiarEstado ?, ?, ?, ?, ?',
                                                 [
                                                     $nIdScartaC,
                                                     $nIdEstadoCarta,
-                                                    $FlagEstadoApro
+                                                    $FlagEstadoApro,
+                                                    null,
+                                                    null
                                                 ]);
 
         $lstSCC = DB::select('exec usp_CartaCaracteristica_GetDetalleSolicitud ?', [$nIdScartaC]);
@@ -206,11 +212,13 @@ class SolicitudCartaCaracteristica extends Controller
         $nIdEstadoCarta = $request->nIdEstadoCarta;
         $FlagEstadoApro = $request->FlagEstadoApro;
 
-        $data = DB::select('exec usp_CartaCaracteristica_SetCambiarEstado ?, ?, ?',
+        $data = DB::select('exec usp_CartaCaracteristica_SetCambiarEstado ?, ?, ?, ?, ?',
                                                 [
                                                     $nIdScartaC,
                                                     $nIdEstadoCarta,
-                                                    $FlagEstadoApro
+                                                    $FlagEstadoApro,
+                                                    null,
+                                                    null
                                                 ]);
 
         $lstSCC = DB::select('exec usp_CartaCaracteristica_GetDetalleSolicitud ?', [$nIdScartaC]);
@@ -238,5 +246,26 @@ class SolicitudCartaCaracteristica extends Controller
         $nIdDocumentoAdjunto =  $arrayDocumento[0]->nIdDocumentoAdjunto;
         //ACTUALIZO EL ID EN LA TABLA SCC
         DB::select('exec usp_CartaCaracteristica_SetIdDocumentoAdjunto ?, ?', [$nIdScartaC, $nIdDocumentoAdjunto]);
+    }
+
+    public function SetAnularSCC(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdScartaC = $request->nIdScartaC;
+        $nIdEstadoCarta = $request->nIdEstadoCarta;
+        $FlagEstadoApro = $request->FlagEstadoApro;
+        $nIdMotivo = $request->nIdMotivo;
+        $cDescripcion = $request->cDescripcion;
+
+        $data = DB::select('exec usp_CartaCaracteristica_SetCambiarEstado ?, ?, ?, ?, ?',
+                                                [
+                                                    $nIdScartaC,
+                                                    $nIdEstadoCarta,
+                                                    $FlagEstadoApro,
+                                                    $nIdMotivo,
+                                                    $cDescripcion
+                                                ]);
+
     }
 }

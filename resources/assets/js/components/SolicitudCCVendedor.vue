@@ -13,161 +13,30 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="tab01" href="#TabRegistrarSCC" @click="tabNuevaSCC" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list"></i> NUEVA SCC
+                                    <a class="nav-link active" id="tab01" href="#TabMisCartas" @click="tabMisCartas" role="tab" data-toggle="tab">
+                                        <i class="fa fa-search"></i> MIS CARTAS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabMisCartas" @click="tabMisCartas" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list-ol"></i> MIS CARTAS C
+                                    <a class="nav-link" id="tab02" href="#TabAnularSCC" @click="tabAnularSCC" role="tab" data-toggle="tab">
+                                        <i class="fa fa-search"></i> ANULAR SCC
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab03" href="#TabRegistrarSCC" @click="tabNuevaSCC" role="tab" data-toggle="tab">
+                                        <i class="fa fa-list-alt"></i> GENERAR SCC
                                     </a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active show" id="TabRegistrarSCC">
+                                <div role="tabpanel" class="tab-pane fade in active show" id="TabMisCartas">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">NUEVA SCC.</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* N° Carta</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.cnumcarta" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <el-input placeholder="Atendió" v-model="fillCartaCaracteristica.catencion" class="input-with-select col-sm-12">
-                                                                            <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref.">
-                                                                                <el-option v-for="referencia in arrayReferencia" :key="referencia.nIdPar" :label="referencia.cParAbreviatura" :value="referencia.nIdPar"></el-option>
-                                                                            </el-select>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de inicio">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechafin"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de fin">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                </el-input>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                </el-input>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fcuotainicial" class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fmontodesembolar" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-md-4 form-control-label">*Banco</label>
-                                                                        <div class="col-md-8 widthFull">
-                                                                            <el-select v-model="fillCartaCaracteristica.nidbanco"
-                                                                                    filterable
-                                                                                    clearable
-                                                                                    loading-text
-                                                                                    placeholder="Seleccione un banco">
-                                                                                <el-option
-                                                                                    v-for="banco in arrayBanco"
-                                                                                    :key="banco.nIdPar"
-                                                                                    :label="banco.cParNombre"
-                                                                                    :value="banco.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarSCC">
-                                                                        <i class="fa fa-save"></i> Registrar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabMisCartas">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BUSCAR SCC.</h3>
+                                                        <h3 class="h4">BUSCAR MIS CARTAS.</h3>
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
@@ -332,6 +201,303 @@
                                                                         </div>
                                                                     </div>
                                                                 </template>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabAnularSCC">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">ANULAR MIS CARTAS.</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de inicio">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechafin"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de fin">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-9 offset-md-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartasAnuladas(1)">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisCartas()">
+                                                                        <i class="fa fa-recycle"></i> Limpiar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayCartasAnuladas.length">
+                                                                    <div class="table-responsive barraLateral">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Fecha Inicio</th>
+                                                                                    <th>Fecha Fin</th>
+                                                                                    <th>N° Carta</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>VIN</th>
+                                                                                    <th>Estado</th>
+                                                                                    <th>Evaluacion</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="carta in arrayCartasAnuladas" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                    <td v-text="carta.dFechaInicioCarta"></td>
+                                                                                    <td v-text="carta.dFechaVencimientoCarta"></td>
+                                                                                    <td v-text="carta.cNumeroCartaCaracteristica"></td>
+                                                                                    <td v-text="carta.cContacto"></td>
+                                                                                    <td v-text="carta.cNumeroVin"></td>
+                                                                                    <td v-text="carta.cEstado"></td>
+                                                                                    <td v-text="carta.cEvaluacion"></td>
+                                                                                    <td>
+                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='DE' && carta.cEstado == 'ANULADO'" target="_blank">
+                                                                                            <i class='fa-md fa fa-file'></i>
+                                                                                        </a>
+                                                                                        <a href="#" v-if="carta.cFlagEstadoAprobacion =='DE' && carta.cEstado != 'ANULADO'"  @click="abrirModal('desaprobar', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
+                                                                                            <i class='fa-md fa fa-check-circle'></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <div class="col-lg-12">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMisCCAnuladas(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-lg-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <h1>No existen registros</h1>
+                                                                </template>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabRegistrarSCC">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">NUEVA CARTA DE CARACTERISTICAS.</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* N° Carta</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.cnumcarta" class="form-control form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <el-input placeholder="Atendió" v-model="fillCartaCaracteristica.catencion" class="input-with-select col-sm-12">
+                                                                            <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref.">
+                                                                                <el-option v-for="referencia in arrayReferencia" :key="referencia.nIdPar" :label="referencia.cParAbreviatura" :value="referencia.nIdPar"></el-option>
+                                                                            </el-select>
+                                                                        </el-input>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de inicio">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCartaCaracteristica.dfechafin"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="yyyy/MM/dd"
+                                                                                type="date"
+                                                                                placeholder="Seleccionar fecha de fin">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
+                                                                        </div>
+                                                                        <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fcuotainicial" class="form-control form-control-sm">
+                                                                        </div>
+                                                                        <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fmontodesembolar" class="form-control form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">*Banco</label>
+                                                                        <div class="col-md-8 widthFull">
+                                                                            <el-select v-model="fillCartaCaracteristica.nidbanco"
+                                                                                    filterable
+                                                                                    clearable
+                                                                                    loading-text
+                                                                                    placeholder="Seleccione un banco">
+                                                                                <el-option
+                                                                                    v-for="banco in arrayBanco"
+                                                                                    :key="banco.nIdPar"
+                                                                                    :label="banco.cParNombre"
+                                                                                    :value="banco.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-9 offset-md-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarSCC">
+                                                                        <i class="fa fa-save"></i> Registrar
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -834,6 +1000,81 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Anulación -->
+        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">Detalle de Anulación Carta de Caracteristicas</h3>
+                                            <button type="button" class="close" @click="cerrarModalSolicitud()" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">*Motivo</label>
+                                                        <div class="col-md-8 widthFull">
+                                                            <el-select v-model="fillCartaCaracteristica.nidmotivo"
+                                                                    filterable
+                                                                    clearable
+                                                                    loading-text
+                                                                    placeholder="Seleccione un Motivo">
+                                                                <el-option
+                                                                    v-for="motivo in arrayMotivo"
+                                                                    :key="motivo.nIdPar"
+                                                                    :label="motivo.cParNombre"
+                                                                    :value="motivo.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <label class="col-md-4 form-control-label">*Descripción</label>
+                                                        <div class="col-md-8 widthFull">
+                                                            <el-input
+                                                                type="textarea"
+                                                                autosize
+                                                                placeholder="Ingrese descripción de la anulación"
+                                                                v-model="fillCartaCaracteristica.cdescripcion">
+                                                            </el-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="registrarAnulación()">Aceptar</button>
+                        <button type="button" class="btn btn-default btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -859,7 +1100,9 @@
                     fcuotainicial: 1,
                     fmontodesembolar: 1,
                     nidbanco: 0,
-                    nidestado: ''
+                    nidestado: '',
+                    nidmotivo: '',
+                    cdescripcion: ''
                 },
                 arrayReferencia: [],
                 fillVIN:{
@@ -912,6 +1155,11 @@
                 attachment: null,
                 form: new FormData,
                 // =============================================================
+                // VARIABLES MIS CARTAS ANULADAS
+                // =============================================================
+                arrayCartasAnuladas: [],
+                arrayMotivo: [],
+                // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
                 pagination: {
@@ -943,6 +1191,7 @@
             this.llenarBancos();
             this.llenarReferencias();
             this.llenarEstados();
+            this.buscarMisCartas(1);
         },
         computed:{
             isActived: function(){
@@ -999,12 +1248,15 @@
         methods: {
             tabNuevaSCC(){
                 $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link active');
+                $('#tab01').addClass('nav-link');
                 $('#tab02').removeClass('nav-link active');
-                $('#tab02').addClass('nav-link');
+                $('#tab02').addClass('nav-link ');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link active');
 
-                $('#TabRegistrarSCC').addClass("in active show");
                 $('#TabMisCartas').removeClass('in active show');
+                $('#TabAnularSCC').removeClass("in active show");
+                $('#TabRegistrarSCC').addClass("in active show");
                 this.limpiarProcesoRegistrarCC();
             },
             llenarBancos(){
@@ -1236,13 +1488,16 @@
             // ======================
             tabMisCartas(){
                 this.limpiarProcesoRegistrarCC();
-                $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link');
-                $('#tab02').removeClass('nav-link ');
-                $('#tab02').addClass('nav-link active');
+                $('#tab01').removeClass('nav-link ');
+                $('#tab01').addClass('nav-link active');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link');
 
-                $('#TabRegistrarSCC').removeClass("in active show");
                 $('#TabMisCartas').addClass('in active show');
+                $('#TabAnularSCC').removeClass("in active show");
+                $('#TabRegistrarSCC').removeClass("in active show");
                 this.buscarMisCartas(1);
             },
             buscarMisCartas(page){
@@ -1255,10 +1510,10 @@
                         'dFechaFin' : this.fillCartaCaracteristica.dfechafin,
                         'nIdEstado' : this.fillCartaCaracteristica.nidestado,
                         'tipoRol': 1,
+                        'flagEstado' : '',
                         'page' : page
                     }
                 }).then(response => {
-                    console.log(response);
                     let info = response.data.arrayCartaCaracteristicas;
                     this.arrayCartaCaracteristicas    = info.data;
                     this.pagination.current_page =  info.current_page;
@@ -1332,7 +1587,7 @@
                 this.form.append('file', this.attachment);
 
                 this.form.append('nIdScartaC', this.fillCartaDetalleSolicitud.nIdSCC);
-                this.form.append('nIdEstadoCarta', (data == 1) ? 1300195 : 1300199);
+                this.form.append('nIdEstadoCarta', (data == 1) ? 1300195 : 1300195);
                 this.form.append('FlagEstadoApro', (data == 1) ? 'AP' : 'DE');
                 this.form.append('nombre', this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto);
 
@@ -1355,6 +1610,103 @@
 
                 if(!this.attachment){
                     this.mensajeError.push('Debe subir una imagen antes de dar la Aprobación/Desaprobación');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            // ======================
+            // TAB - MIS CARTAS ANULADAS
+            // ======================
+            tabAnularSCC(){
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link active');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link ');
+
+                $('#TabMisCartas').removeClass('in active show');
+                $('#TabAnularSCC').addClass("in active show");
+                $('#TabRegistrarSCC').removeClass("in active show");
+                this.limpiarProcesoRegistrarCC();
+                this.buscarMisCartasAnuladas(1);
+            },
+            buscarMisCartasAnuladas(page){
+                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCartaCaracteristica';
+                axios.get(url, {
+                    params: {
+                        'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
+                        'nIdContacto' : this.fillCartaCaracteristica.nidcontacto,
+                        'dFechaInicio' : this.fillCartaCaracteristica.dfechainicio,
+                        'dFechaFin' : this.fillCartaCaracteristica.dfechafin,
+                        'nIdEstado' : this.fillCartaCaracteristica.nidestado,
+                        'tipoRol': 1,
+                        'flagEstado' : 'DE',
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayCartaCaracteristicas;
+                    this.arrayCartasAnuladas     = info.data;
+                    this.pagination.current_page =  info.current_page;
+                    this.pagination.total        = info.total;
+                    this.pagination.per_page     = info.per_page;
+                    this.pagination.last_page    = info.last_page;
+                    this.pagination.from         = info.from;
+                    this.pagination.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaMisCCAnuladas(page){
+                this.pagination.current_page=page;
+                this.buscarMisCartasAnuladas(page);
+            },
+            llenarMotivos(idSCC){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110073,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayMotivo = response.data;
+                    this.fillCartaDetalleSolicitud.nIdSCC = idSCC;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registrarAnulación(){
+                if(this.validarRegistrarAnulacion()){
+                    return;
+                }
+                var url = this.ruta + '/solicitudCartaCaracteristica/SetAnularSCC';
+                axios.put(url, {
+                    'nIdScartaC' : this.fillCartaDetalleSolicitud.nIdSCC,
+                    'nIdEstadoCarta': 1300199,
+                    'FlagEstadoApro': 'DE',
+                    'nIdMotivo' : this.fillCartaCaracteristica.nidmotivo,
+                    'cDescripcion' : this.fillCartaCaracteristica.cdescripcion
+                }).then(response => {
+                    this.cerrarModalSolicitud();
+                    this.buscarMisCartasAnuladas(1);
+                    this.fillCartaCaracteristica.nidmotivo = '',
+                    this.fillCartaCaracteristica.cdescripcion = ''
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validarRegistrarAnulacion(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillCartaCaracteristica.nidmotivo == 0 || this.fillCartaCaracteristica.nidmotivo == ''){
+                    this.mensajeError.push('Debe seleccionar un Motivo');
+                }
+                if(!this.fillCartaCaracteristica.cdescripcion){
+                    this.mensajeError.push('La descripción no puede estar vacía');
                 }
 
                 if(this.mensajeError.length){
@@ -1400,6 +1752,19 @@
                             {
                                 this.getDetalleSolicitud(data);
                                 this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case "desaprobar":
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.llenarMotivos(data);
+                                this.accionmodal=5;
                                 this.modal = 1;
                                 break;
                             }
