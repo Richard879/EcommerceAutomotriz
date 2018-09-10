@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,7 @@ class ElementoController extends Controller
         $arrayElementoVenta = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?, ?', 
                                                                     [$nIdEmpresa, $nIdTipoElemento, $cElemenNombre]);
 
-        $arrayElementoVenta = $this->arrayPaginator($arrayElementoVenta, $request);
+        $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
 
         /*$data = $this->paginateArray($element = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?', 
@@ -38,17 +39,6 @@ class ElementoController extends Controller
                 'from'         => $pagination->firstItem(),
                 'to'           => $pagination->lastItem(),
          ],'elementos'=>$element];*/   
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function store(Request $request)

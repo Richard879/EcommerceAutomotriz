@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,7 @@ use App\Compra;
 
 class CompraController extends Controller
 {
+    
 
     public function GetCompra(Request $request)
     {
@@ -37,19 +39,8 @@ class CompraController extends Controller
                                                                     $nIdModelo
                                                                     ));
 
-        $arrayCompra = $this->arrayPaginator($arrayCompra, $request);
+        $arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function store(Request $request)
@@ -121,7 +112,7 @@ class CompraController extends Controller
                                                                                 $cNombreComercial
                                                                                 ));
 
-        $arrayVersionVehiculo = $this->arrayPaginator($arrayVersionVehiculo, $request);
+        $arrayVersionVehiculo = ParametroController::arrayPaginator($arrayVersionVehiculo, $request);
         return ['arrayVersionVehiculo'=>$arrayVersionVehiculo];
     }
 
@@ -143,7 +134,7 @@ class CompraController extends Controller
                                                                                 $cNombreComercial
                                                                                 ));
 
-        $arrayVersionVehiculo = $this->arrayPaginator($arrayVersionVehiculo, $request);
+        $arrayVersionVehiculo = ParametroController::arrayPaginator($arrayVersionVehiculo, $request);
         return ['arrayVersionVehiculo'=>$arrayVersionVehiculo];
     }
 
