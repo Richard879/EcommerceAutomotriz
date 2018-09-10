@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,17 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CotizacionController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetTipoLista(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -55,8 +45,8 @@ class CotizacionController extends Controller
                                                                             $nidmodelo,
                                                                             $cnombrecomercial
                                                                         ]);
-
-        $arrayListaVehiculos = $this->arrayPaginator($arrayListaVehiculos, $request);
+        
+        $arrayListaVehiculos = ParametroController::arrayPaginator($arrayListaVehiculos, $request);
         return ['arrayListaVehiculos'=>$arrayListaVehiculos];
     }
 

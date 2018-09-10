@@ -33,41 +33,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                            <div class="col-sm-8">
-                                                <div class="input-group">
-                                                    <input type="hidden" v-model="fillProveedor.nidproveedor">
-                                                    <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <label class="col-md-4 form-control-label">Linea</label>
-                                            <div class="col-md-8">
-                                                <select name="account" v-model="fillBusquedaPedido.nidlinea" class="form-control form-control-sm" v-on:change="llenarComboMarca();">
-                                                    <option v-for="linea in arrayLinea" :key="linea.nIdPar" :value="linea.nIdPar" v-text="linea.cParNombre">
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <div class="row">
                                             <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                             <div class="col-sm-8">
-                                                <input type="date" v-model="fillBusquedaPedido.dfechainicio" class="form-control form-control-sm">
+                                                <el-date-picker
+                                                    v-model="fillBusquedaPedido.dfechainicio"
+                                                    type="date"
+                                                    value-format="yyyy-MM-dd"
+                                                    format="dd/MM/yyyy"
+                                                    placeholder="dd/mm/aaaa">
+                                                </el-date-picker>
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +52,13 @@
                                         <div class="row">
                                             <label class="col-sm-4 form-control-label">Fecha Fin</label>
                                             <div class="col-sm-8">
-                                                <input type="date" v-model="fillBusquedaPedido.dfechafin" class="form-control form-control-sm">
+                                                <el-date-picker
+                                                    v-model="fillBusquedaPedido.dfechafin"
+                                                    type="date"
+                                                    value-format="yyyy-MM-dd"
+                                                    format="dd/MM/yyyy"
+                                                    placeholder="dd/mm/aaaa">
+                                                </el-date-picker>
                                             </div>
                                         </div>
                                     </div>
@@ -85,10 +68,14 @@
                                         <div class="row">
                                             <label class="col-md-4 form-control-label">Marca</label>
                                             <div class="col-md-8">
-                                                <select name="account" v-model="fillBusquedaPedido.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                    <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                    </option>
-                                                </select>
+                                                <el-select v-model="fillBusquedaPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                    <el-option
+                                                    v-for="item in arrayMarca"
+                                                    :key="item.nIdPar"
+                                                    :label="item.cParNombre"
+                                                    :value="item.nIdPar">
+                                                    </el-option>
+                                                </el-select>
                                             </div>
                                         </div>
                                     </div>
@@ -96,16 +83,20 @@
                                         <div class="row">
                                             <label class="col-md-4 form-control-label">Modelo</label>
                                             <div class="col-md-8">
-                                                <select name="account" v-model="fillBusquedaPedido.nidmodelo" class="form-control form-control-sm">
-                                                    <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                    </option>
-                                                </select>
+                                                <el-select v-model="fillBusquedaPedido.nidmodelo" filterable placeholder="Select">
+                                                    <el-option
+                                                    v-for="item in arrayModelo"
+                                                    :key="item.nIdPar"
+                                                    :label="item.cParNombre"
+                                                    :value="item.nIdPar">
+                                                    </el-option>
+                                                </el-select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-sm-9 offset-sm-4">
+                                    <div class="col-sm-9 offset-sm-5">
                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos(1)">
                                             <i class="fa fa-search"></i> Buscar
                                         </button>
@@ -156,9 +147,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-sm-12">
                                     <div class="row">
-                                        <div class="col-lg-7">
+                                        <div class="col-sm-7">
                                             <nav>
                                                 <ul class="pagination">
                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -176,7 +167,7 @@
                                                 </ul>
                                             </nav>
                                         </div>
-                                        <div class="col-lg-5">
+                                        <div class="col-sm-5">
                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                         </div>
                                     </div>
@@ -219,108 +210,6 @@
             </div>
         </div>
 
-        <!-- Modal Buscar Proveedores -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillProveedor.cproveedornombre" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayProveedor.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nombre Proveedor</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="proveedor.cParNombre"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 </template>
 
@@ -430,59 +319,6 @@
             },
         },
         methods: {
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': this.fillBusquedaPedido.nidempresa,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page   =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total          = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from           = response.data.arrayProveedor.from;
-                    this.paginationModal.to             = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.fillProveedor.nidproveedor = nProveedorId;
-                this.fillProveedor.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
-                this.llenarComboLinea();
-            },
-            llenarComboLinea(){
-                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': this.fillBusquedaPedido.nidempresa,
-                        'nidproveedor' : this.fillProveedor.nidproveedor
-                    }
-                }).then(response => {
-                    this.arrayLinea = response.data;
-                    this.fillBusquedaPedido.nidlinea = 0;
-                    this.llenarComboMarca();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -520,6 +356,8 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/pedido/GetLstPedidosPendienteAprobacion';
                 axios.get(url, {
                     params: {
@@ -539,6 +377,8 @@
                     this.pagination.last_page      = response.data.arrayPedido.last_page;
                     this.pagination.from           = response.data.arrayPedido.from;
                     this.pagination.to             = response.data.arrayPedido.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -547,19 +387,19 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.fillBusquedaPedido.dfechainicio){
+                /*if(!this.fillBusquedaPedido.dfechainicio){
                     this.mensajeError.push('Debe ingresar una fecha de inicio');
                 }
 
                 if(!this.fillBusquedaPedido.dfechafin){
                     this.mensajeError.push('Debe ingresar una fecha de fin');
-                }
+                }*/
 
                 let fecha_ini = moment(this.fillBusquedaPedido.dfechainicio);
                 let fecha_fin = moment(this.fillBusquedaPedido.dfechafin);
 
                 if(fecha_fin.diff(fecha_ini, 'days') < 0){
-                    this.mensajeError.push('La Fecha de inicio no puede ser menor a la fecha final');
+                    this.mensajeError.push('La Fecha de Fin no puede ser menor a la fecha de inicio');
                 }
 
                 if(this.mensajeError.length){
@@ -576,14 +416,10 @@
                     title: '¿Esta seguro de aprobar el pedido N°' + nIdPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#36A0FF',
+                    confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Aceptar!',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonClass: 'btn btn-success',
-                    cancelButtonClass: 'btn btn-danger',
-                    buttonsStyling: false,
-                    reverseButtons: true
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
                         let me = this;
@@ -604,7 +440,7 @@
                 })
             },
             // =================================================================
-            // METODOS GENERICOS
+            // MODAL
             // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
@@ -621,6 +457,12 @@
                         }
                     }
                 }
+            },
+            cerrarModal(){
+                this.modal = 0;
+                this.accionmodal = 0;
+                this.error = 0;
+                this.mensajeError = '';
             },
             //Limpiar Paginación
             limpiarPaginacion(){
@@ -639,17 +481,10 @@
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
             },
-            //Cerrar Modal
-            cerrarModal(){
-                this.modal = 0;
-                this.accionmodal = 0;
-                this.error = 0;
-                this.mensajeError = '';
-                this.limpiarPaginacion();
-                this.limpiarPaginacionModal();
-                //Modal Buscar Proveedores
-                this.arrayProveedor = [];
-            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            }
         },
         mounted(){
             this.llenarComboMarca();
@@ -681,4 +516,10 @@
         text-align: center;
         margin: auto;
     }
+    .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
+        }
 </style>

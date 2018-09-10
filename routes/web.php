@@ -100,6 +100,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'DepositoPedidoController@GetNumeroCuentaByBancoAndMoneda');
     Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
+    Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
+    Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
+    Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
+    Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
+    Route::post('/compra/importFileForum', 'ExcelController@importFileForum');
+    Route::post('/compra/readFileForum', 'ExcelController@readFileForum');
+    Route::post('/compra/SetForum', 'CompraController@SetForum');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
@@ -117,17 +124,22 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
     Route::post('/getComision/SetRegistrarComision', 'ComisionController@SetRegistrarComision');
-    Route::get('/getObjComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
-    Route::get('/getObjComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
-    Route::get('/getObjComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
-    Route::get('/getObjComercial/getDetalleVehiculo', 'ObjComercialController@getDetalleVehiculo');
-    Route::post('/getObjComercial/SetRegistrarObjeComercial', 'ObjComercialController@SetRegistrarObjeComercial');
+    Route::get('/objComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
+    Route::get('/objComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
+    Route::get('/objComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
+    Route::get('/objComercial/GetDetalleVehiculoCompra', 'ObjComercialController@GetDetalleVehiculoCompra');
+    Route::post('/objComercial/SetRegistrarObjComercialCompra', 'ObjComercialController@SetRegistrarObjComercialCompra');
     Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurno@GetParametroById');
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
     Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');
     Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
-
-
+    Route::get('/solicitudCartaCaracteristica/GeLstCompras', 'SolicitudCartaCaracteristica@GeLstCompras');
+    Route::get('/solicitudCartaCaracteristica/GetLstCotizacionAprobadas', 'SolicitudCartaCaracteristica@GetLstCotizacionAprobadas');
+    Route::post('/solicitudCartaCaracteristica/SetRegistrarSCC', 'SolicitudCartaCaracteristica@SetRegistrarSCC');
+    Route::get('/solicitudCartaCaracteristica/GetLstCartaCaracteristica', 'SolicitudCartaCaracteristica@GetLstCartaCaracteristica');
+    Route::get('/solicitudCartaCaracteristica/GetDetalleSolicitud', 'SolicitudCartaCaracteristica@GetDetalleSolicitud');
+    Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristica@SetConformeNoConforme');
+    Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristica@SetAprobadoNoAprobado');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,22 +59,8 @@ class VersionVehiculoController extends Controller
                                                                                 $cNombreComercial
                                                                                 ));
 
-        $arrayVersionVeh = $this->arrayPaginator($arrayVersionVeh, $request);
+        $arrayVersionVeh = ParametroController::arrayPaginator($arrayVersionVeh, $request);
         return ['arrayVersionVehiculo'=>$arrayVersionVeh];
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        /*return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
-            ['path' => $request->url(), 'query' => $request->query()]);*/
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function UpdVersionVehiculoById(Request $request)

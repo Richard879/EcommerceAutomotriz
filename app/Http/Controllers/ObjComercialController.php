@@ -57,17 +57,31 @@ class ObjComercialController extends Controller
         return ['arrayTipoIncentivo'=>$parametro];
     }
 
-    public function getDetalleVehiculo(Request $request)
+    public function GetDetalleVehiculoCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor = $request->nidproveedor;
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdCronograma = $request->nidcronograma;
+        $nIdProveedor = $request->nidproveedor;
+        $nIdLinea = $request->nidlinea;
+        $nIdMarca = $request->nidmarca;
+        $nIdModelo = $request->nidmodelo;
 
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculo ?', [$nidproveedor]);
+        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoCompra ?, ?, ?, ?, ?, ?, ?', 
+                                                             [  $nIdEmpresa, 
+                                                                $nIdSucursal,
+                                                                $nIdCronograma,
+                                                                $nIdProveedor,
+                                                                $nIdLinea,
+                                                                $nIdMarca,
+                                                                $nIdModelo
+                                                             ]);
         return response()->json($data);
     }
 
-    public function SetRegistrarObjeComercial(Request $request)
+    public function SetRegistrarObjComercialCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -90,7 +104,7 @@ class ObjComercialController extends Controller
             if($arrayDetalleVehiculoLength > 0){
                 foreach ($data as $key => $value) {
                     if($value['cantidad'] > 0){
-                        DB::select('exec usp_ObjComercial_SetRegistrar ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                        DB::select('exec usp_ObjComercial_SetRegistrarCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                 [
                                     $nIdEmpresa,
                                     $nIdSucursal,

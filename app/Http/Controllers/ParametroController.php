@@ -10,6 +10,17 @@ use App\Parametro;
 
 class ParametroController extends Controller
 {
+    static function arrayPaginator($array, $request)
+    {
+        $page = $request->page;
+        $perPage = 10;
+        $offset = ($page * $perPage) - $perPage;
+
+        $array = new Collection($array);
+        $result = $array->forPage($page, $perPage)->values()->all();
+        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
+    }
+    
     public function GetParametroByGrupo(Request $request)
     {
         $nIdGrupoPar = $request->ngrupoparid;
@@ -116,17 +127,6 @@ class ParametroController extends Controller
 
         $arrayModelo = $this->arrayPaginator($arrayModelo, $request);
         return ['arrayModelo'=>$arrayModelo];
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function GetDocumentoNatural(Request $request)

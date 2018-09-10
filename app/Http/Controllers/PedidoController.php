@@ -102,7 +102,7 @@ class PedidoController extends Controller
         $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosPendienteAprobacion ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nidempresa, $nidsucursal,
-                                        $nidmarca, $nidmodelo, 
+                                        $nidmarca, $nidmodelo,
                                         $dfechainicio, $dfechafin, Auth::user()->id
                                     ]);
 
@@ -141,7 +141,7 @@ class PedidoController extends Controller
     }
 
     public function subirArchivo(Request $request)
-    {             
+    {
         try{
             DB::beginTransaction();
 
@@ -155,7 +155,7 @@ class PedidoController extends Controller
                     $bandera = str_random(10);
 
                     $ruta = Storage::putFileAs('uploads/Pedido', $file, $bandera .'_'. $file->getClientOriginalName());
-            
+
                     $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',
                                                                     [  asset($ruta),
                                                                         $file->getClientOriginalName(),
@@ -172,27 +172,27 @@ class PedidoController extends Controller
                             $nIdTablaDocumento = $valorparametro['%22nIdPar%22'];
                             $nIdCabeceraPedido = $valorparametro['%22nIdCabeceraPedido%22'];
                         }
-                        
+
                     }
-                    
+
                     DB::select('exec usp_Pedido_SetDocumentoAdjuntoPedido ?, ?, ?, ?',
                                                                         [   $nIdCabeceraPedido,
                                                                             $nIdTablaDocumento,
                                                                             $nIdDocumentoAdjunto,
                                                                             Auth::user()->id
                                                                         ]);
-                                                                        
-                    
+
+
                 }
 
-                
-                
+
+
             }
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
         }
-        
+
     }
 
     public function GetListPedidoByTipoEstado(Request $request)
@@ -208,7 +208,7 @@ class PedidoController extends Controller
         $nIdMarca       =   $request->nidmarca;
         $nIdModelo      =   $request->nidmodelo;
         $nIdEstadoPedido  = $request->nidestadopedido;
-        
+
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
@@ -239,7 +239,7 @@ class PedidoController extends Controller
         $nIdMarca       =   $request->nidmarca;
         $nIdModelo      =   $request->nidmodelo;
         $nIdEstadoPedido  = $request->nidestadopedido;
-        
+
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
