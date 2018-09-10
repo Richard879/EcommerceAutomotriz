@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class EventoCampaniaController extends Controller
                                                                     $nIdProveedor
                                                                     ));
         
-        $arrayEventoCampania = $this->arrayPaginator($arrayEventoCampania, $request);
+        $arrayEventoCampania = ParametroController::arrayPaginator($arrayEventoCampania, $request);
         return ['arrayEventoCampania'=>$arrayEventoCampania]; 
     }
 
@@ -198,20 +199,6 @@ class EventoCampaniaController extends Controller
         
         $arrayElementoDistribucion = $this->arrayPaginator($arrayElementoDistribucion, $request);
         return ['arrayElementoDistribucion'=>$arrayElementoDistribucion]; 
-    }
-    
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        /*return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
-            ['path' => $request->url(), 'query' => $request->query()]);*/
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function desactivar (Request $request)

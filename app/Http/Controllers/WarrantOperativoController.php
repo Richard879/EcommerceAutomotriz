@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class WarrantOperativoController extends Controller
                                                                                 $cNroWarrant
                                                                                 ));
 
-        $arrayWOperativo = $this->arrayPaginator($arrayWOperativo, $request);
+        $arrayWOperativo = ParametroController::arrayPaginator($arrayWOperativo, $request);
         return ['arrayWOperativo'=>$arrayWOperativo];   
     }
 
@@ -48,19 +49,8 @@ class WarrantOperativoController extends Controller
                                                                                 $nIdEstadoWarrant
                                                                                 ));
 
-        $arrayWOperativoDetalle = $this->arrayPaginator($arrayWOperativoDetalle, $request);
+        $arrayWOperativoDetalle = ParametroController::arrayPaginator($arrayWOperativoDetalle, $request);
         return ['arrayWOperativoDetalle'=>$arrayWOperativoDetalle];   
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function SetWOperativo(Request $request)

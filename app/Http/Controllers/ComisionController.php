@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,17 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ComisionController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetLineasByProveedor(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -32,7 +22,7 @@ class ComisionController extends Controller
         $arrayLinea = DB::select('exec usp_Par_GetLineaByProveedor ?, ?, ?',
                                             [$nIdEmpresa, $nIdProveedor, $cLineaNombre]);
 
-        $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
+        $arrayLinea = ParametroController::arrayPaginator($arrayLinea, $request);
         return ['arrayLinea'=>$arrayLinea];
     }
 

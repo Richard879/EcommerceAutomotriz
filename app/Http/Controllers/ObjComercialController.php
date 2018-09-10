@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,17 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ObjComercialController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function getCompraActiva(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -53,7 +43,7 @@ class ObjComercialController extends Controller
         $parametro = DB::select('exec usp_TipoBeneficio_GetLstTipoBeneficio ?, ?, ?',
                                                             array($nIdEmpresa, $nIdGrupoPar, $ctipobeneficionombre));
 
-        $parametro = $this->arrayPaginator($parametro, $request);
+        $parametro = ParametroController::arrayPaginator($parametro, $request);
         return ['arrayTipoIncentivo'=>$parametro];
     }
 
