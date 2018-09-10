@@ -138,7 +138,7 @@
             </section>
         </template>
         <!--<template v-else>
-          
+
         </template>-->
         <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-md" role="document">
@@ -348,7 +348,7 @@
                                                             <tbody>
                                                                 <tr v-for="vendedor in arrayVendedorLinea" :key="vendedor.nIdMiVendedor">
                                                                     <td>
-                                                                        <template v-if="vendedor.nIdVendedor ==null">
+                                                                        <template v-if="vendedor.nIdVendedor == 0">
                                                                             <a href="#" @click="asignar(vendedor.nIdMiVendedor)" data-toggle="tooltip" data-placement="top"
                                                                             :title="'asignar ' +vendedor.cNombreMiVendedor">
                                                                                 <i :style="'color:red'" class="fa-md fa fa-square"></i>
@@ -690,9 +690,9 @@
                 this.pagination.current_page=page;
                 this.listarProveedorLinea(page);
             },
-            
+
             limpiarFormulario(){
-               
+
             },
             cambiarVistaFormulario(){
                 if(this.accion == 1){
