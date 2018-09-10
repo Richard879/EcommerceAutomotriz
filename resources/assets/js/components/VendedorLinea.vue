@@ -348,7 +348,7 @@
                                                             <tbody>
                                                                 <tr v-for="vendedor in arrayVendedorLinea" :key="vendedor.nIdMiVendedor">
                                                                     <td>
-                                                                        <template v-if="vendedor.nIdVendedor ==null">
+                                                                        <template v-if="vendedor.nIdVendedor == 0">
                                                                             <a href="#" @click="asignar(vendedor.nIdMiVendedor)" data-toggle="tooltip" data-placement="top"
                                                                             :title="'asignar ' +vendedor.cNombreMiVendedor">
                                                                                 <i :style="'color:red'" class="fa-md fa fa-square"></i>
