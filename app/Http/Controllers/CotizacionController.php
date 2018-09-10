@@ -229,7 +229,7 @@ class CotizacionController extends Controller
         return ['arrayCotizaciones'=>$arrayCotizaciones];
     }
 
-    public function GetRefVehiculoByContactoSinCotizacion(Request $request)
+    public function GetRefVehiculoByContacto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -237,7 +237,7 @@ class CotizacionController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $nIdContacto = $request->nidcontacto;
 
-        $arraySegReferenciavehiculo = DB::select('exec usp_Cotizacion_GetRefVehiculoByContactoSinCotizacion ?, ?, ?, ?',
+        $arraySegReferenciavehiculo = DB::select('exec usp_Cotizacion_GetRefVehiculoByContacto ?, ?, ?, ?',
                                                                         array(  $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $nIdContacto,

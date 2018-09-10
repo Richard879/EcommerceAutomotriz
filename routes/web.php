@@ -108,6 +108,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/readFileForum', 'ExcelController@readFileForum');
     Route::post('/compra/SetForum', 'CompraController@SetForum');
     Route::get('/gescotizacion/GetListCotizacionesByIdVendedor', 'CotizacionController@GetListCotizacionesByIdVendedor');
+    Route::get('/gescotizacion/GetRefVehiculoByContacto', 'CotizacionController@GetRefVehiculoByContacto');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');

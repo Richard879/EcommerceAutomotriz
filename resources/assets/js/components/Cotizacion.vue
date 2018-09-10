@@ -427,10 +427,21 @@
                                                                             <tbody>
                                                                                 <tr v-for="r in arrayReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
                                                                                     <td>
-                                                                                        <a href="#" @click="asingarReferenciaVehiculo(r.nIdAsignacionContactoVendedor, r.nIdProveedor, r.cProveedorNombre,
+                                                                                        <template v-if="r.nNroCotizacionesActivas == 0">
+                                                                                            <a href="#" data-toggle="tooltip" data-placement="top"
+                                                                                                :title="'Generar Cotizacion ' + r.cMarcaNombre + ' ' + r.cModeloNombre"
+                                                                                                @click="asingarReferenciaVehiculo(r.nIdAsignacionContactoVendedor, r.nIdProveedor, r.cProveedorNombre,
                                                                                                                                         r.nIdLinea, r.nIdMarca, r.nIdModelo);">
-                                                                                            <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
-                                                                                        </a>
+                                                                                                <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
+                                                                                            </a>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            <a href="#" data-toggle="tooltip" data-placement="top"
+                                                                                            :title="'Tiene Cotizaciones Activas ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
+                                                                                                <i :style="'color:yellow'" class="fa-md fa fa-warning"></i>
+                                                                                            </a>
+                                                                                        </template>
+                                                                                        
                                                                                     </td>
                                                                                     <td v-text="r.cProveedorNombre"></td>
                                                                                     <td v-text="r.cLineaNombre"></td>
@@ -1945,6 +1956,7 @@
                 this.llenarSoloComboMarca();
                 this.llenarSoloComboModelo();
                 this.llenarEstadoCotizacion();
+                this.arrayCotizaciones = [];
             },
             llenarSoloComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -2166,7 +2178,7 @@
                 });
             },
             llenarReferenciasVehiculo(){
-                var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
+                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
