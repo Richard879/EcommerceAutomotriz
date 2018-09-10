@@ -104,6 +104,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
     Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
     Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
+    Route::post('/compra/importFileForum', 'ExcelController@importFileForum');
+    Route::post('/compra/readFileForum', 'ExcelController@readFileForum');
+    Route::post('/compra/SetForum', 'CompraController@SetForum');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
@@ -126,17 +129,18 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/objComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
     Route::get('/objComercial/GetDetalleVehiculoCompra', 'ObjComercialController@GetDetalleVehiculoCompra');
     Route::post('/objComercial/SetRegistrarObjComercialCompra', 'ObjComercialController@SetRegistrarObjComercialCompra');
-    Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurno@GetParametroById');
-    Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurno@GetParametroByParParent');
-    Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurno@SetRegistrarVendedorTurno');
-    Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurno@GeLstDetalleTurno');
-    Route::get('/solicitudCartaCaracteristica/GeLstCompras', 'SolicitudCartaCaracteristica@GeLstCompras');
-    Route::get('/solicitudCartaCaracteristica/GetLstCotizacionAprobadas', 'SolicitudCartaCaracteristica@GetLstCotizacionAprobadas');
-    Route::post('/solicitudCartaCaracteristica/SetRegistrarSCC', 'SolicitudCartaCaracteristica@SetRegistrarSCC');
-    Route::get('/solicitudCartaCaracteristica/GetLstCartaCaracteristica', 'SolicitudCartaCaracteristica@GetLstCartaCaracteristica');
-    Route::get('/solicitudCartaCaracteristica/GetDetalleSolicitud', 'SolicitudCartaCaracteristica@GetDetalleSolicitud');
-    Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristica@SetConformeNoConforme');
-    Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristica@SetAprobadoNoAprobado');
+    Route::get('/asigVendedorTurno/GetParametroById', 'AsigVendedorTurnoController@GetParametroById');
+    Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurnoController@GetParametroByParParent');
+    Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurnoController@SetRegistrarVendedorTurno');
+    Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurnoController@GeLstDetalleTurno');
+    Route::get('/solicitudCartaCaracteristica/GeLstCompras', 'SolicitudCartaCaracteristicaController@GeLstCompras');
+    Route::get('/solicitudCartaCaracteristica/GetLstCotizacionAprobadas', 'SolicitudCartaCaracteristicaController@GetLstCotizacionAprobadas');
+    Route::post('/solicitudCartaCaracteristica/SetRegistrarSCC', 'SolicitudCartaCaracteristicaController@SetRegistrarSCC');
+    Route::get('/solicitudCartaCaracteristica/GetLstCartaCaracteristica', 'SolicitudCartaCaracteristicaController@GetLstCartaCaracteristica');
+    Route::get('/solicitudCartaCaracteristica/GetDetalleSolicitud', 'SolicitudCartaCaracteristicaController@GetDetalleSolicitud');
+    Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristicaController@SetConformeNoConforme');
+    Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristicaController@SetAprobadoNoAprobado');
+    Route::put('/solicitudCartaCaracteristica/SetAnularSCC', 'SolicitudCartaCaracteristicaController@SetAnularSCC');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
@@ -144,5 +148,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/turnoventa/desactivar','TurnoVentaController@desactivar');
     Route::put('/turnoventa/activar','TurnoVentaController@activar');
 
-    //Route::put('/turnoventa/activar','TurnoVentaController@activar');
+    Route::get('/vendedorlinea/GetLstVendedorLinea','VendedorLineaController@GetLstVendedorLinea');
+    Route::post('/vendedorlinea/SetVendedorLineaAsignar','VendedorLineaController@SetVendedorLineaAsignar');
+    Route::post('/vendedorlinea/SetVendedorLineaDesignar','VendedorLineaController@SetVendedorLineaDesignar');
 });

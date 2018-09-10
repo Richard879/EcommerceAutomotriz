@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,17 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetLstCotizacionIngresadas(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -43,7 +33,7 @@ class PedidoController extends Controller
                                                                     Auth::user()->id
                                                                     ));
 
-        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 
@@ -65,7 +55,7 @@ class PedidoController extends Controller
                                                                     $cNumeroVin
                                                                     ));
 
-        $arrayCompra = $this->arrayPaginator($arrayCompra, $request);
+        $arrayCompra = ParametroController::arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
     }
 
@@ -106,7 +96,7 @@ class PedidoController extends Controller
                                         $dfechainicio, $dfechafin, Auth::user()->id
                                     ]);
 
-        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 
@@ -222,7 +212,7 @@ class PedidoController extends Controller
                                         $nIdEstadoPedido, Auth::user()->id
                                     ]);
 
-        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 
@@ -253,7 +243,7 @@ class PedidoController extends Controller
                                         $nIdEstadoPedido, Auth::user()->id
                                     ]);
 
-        $arrayPedido = $this->arrayPaginator($arrayPedido, $request);
+        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
 }

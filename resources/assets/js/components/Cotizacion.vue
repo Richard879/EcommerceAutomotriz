@@ -13,24 +13,133 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="tab01" href="#TabCotizacion" @click="tabCotizacion" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" id="tab01" href="#TabMisCotizaciones" @click="tabMisCotizaciones" role="tab" data-toggle="tab">
+                                        <i class="fa fa-search"></i> MIS COTIZACIONES
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab02" href="#TabCotizacion" @click="tabCotizacion" role="tab" data-toggle="tab">
                                         <i class="fa fa-list"></i> COTIZACIÓN
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabAsignarContacto" @click="tabAsignarContacto" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="tab03" href="#TabAsignarContacto" @click="tabAsignarContacto" role="tab" data-toggle="tab">
                                         <i class="fa fa-user"></i> ASIGNAR CONTACTO
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link disabled" id="tab03" href="#TabDetalleCotizacion" @click="tabDetalleCotización" role="tab" data-toggle="tab">
+                                    <a class="nav-link disabled" id="tab04" href="#TabDetalleCotizacion" @click="tabDetalleCotización" role="tab" data-toggle="tab">
                                         <i class="fa fa-list-ol"></i> DETALLE COTIZACIÓN
                                     </a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active show" id="TabCotizacion">
+                                <div role="tabpanel" class="tab-pane fade in active show" id="TabMisCotizaciones">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">MIS COTIZACIONES</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="fillConfigBasica.cempresa" class="form-control form-control-sm" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="fillConfigBasica.csucursal" class="form-control form-control-sm" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillMisCotizaciones.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillMisCotizaciones.dfechafin"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-select v-model="fillMisCotizaciones.nidmarca" filterable placeholder="Select" v-on:change="llenarSoloComboModelo()">
+                                                                                <el-option
+                                                                                v-for="item in arrayMarca"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-select v-model="fillMisCotizaciones.nidmodelo" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayModelo"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-9 offset-sm-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarMisCotizaciones(1)">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabCotizacion">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
@@ -252,22 +361,22 @@
                                             <div class="col-lg-12">
                                                 <ul class="nav nav-tabs">
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="tab0301" href="#TabDCVehiculo" @click="tabDCVehiculo" role="tab" data-toggle="tab">
+                                                        <a class="nav-link active" id="tab0401" href="#TabDCVehiculo" @click="tabDCVehiculo" role="tab" data-toggle="tab">
                                                             <i class="fa fa-car"></i> VEHÍCULO
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link disabled" id="tab0302" href="#TabDCElementoVenta" role="tab" data-toggle="tab">
+                                                        <a class="nav-link disabled" id="tab0402" href="#TabDCElementoVenta" role="tab" data-toggle="tab">
                                                             <i class="fa fa fa-sign-out"></i> ELEMENTO VENTA
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link disabled" id="tab0303" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
+                                                        <a class="nav-link disabled" id="tab0403" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
                                                             <i class="fa fa-check-square"></i> VERIFICAR CAMPAÑA
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link disabled" id="tab0304" href="#TabDCConfirmarCotizacion" role="tab" data-toggle="tab">
+                                                        <a class="nav-link disabled" id="tab0404" href="#TabDCConfirmarCotizacion" role="tab" data-toggle="tab">
                                                             <i class="fa fa-check"></i> CONFIRMAR COTIZACIÓN
                                                         </a>
                                                     </li>
@@ -1421,6 +1530,17 @@
         data(){
             return {
                 // =============================================================
+                // VARIABLES TAB MIS COTIZACIONES
+                // =============================================================
+                fillMisCotizaciones: {
+                    cempresa: 'SAISAC',
+                    csucursal: 'CHICLAYO',
+                    fechaInicio: '',
+                    fechaFin: '',
+                    nidmarca: 0,
+                    nidmodelo: 0
+                },
+                // =============================================================
                 // VARIABLES TAB COTIZACIÓN
                 // =============================================================
                 fillConfigBasica: {
@@ -1563,7 +1683,8 @@
             }
         },
         mounted() {
-            this.configuracionInicial();
+            this.tabMisCotizaciones();
+            //this.configuracionInicial();
         },
         computed:{
             isActived: function(){
@@ -1710,15 +1831,86 @@
         },
         methods:{
             // =================================================================
+            // TAB MIS COTIZACIÓNES
+            // =================================================================
+            tabMisCotizaciones(){
+                this.llenarSoloComboMarca();
+                this.llenarSoloComboModelo();
+            },
+            llenarSoloComboMarca(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110032,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarSoloComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url,{
+                    params: {
+                        'nidmarca' : this.fillMisCotizaciones.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.fillMisCotizaciones.nidmodelo = 0;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            /*listarMisCotizaciones(page){
+                this.mostrarProgressBar();
+                if(this.fillCompra.nordencompra == ''){
+                    var nordencompra = 0;
+                }
+                else{
+                    var nordencompra = this.fillCompra.nordencompra;
+                }
+
+                var url = this.ruta + '/compra/GetCompra';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal' : 1300013,
+                        'dfechainicio' : this.fillCompra.dfechainicio,
+                        'dfechafin' : this.fillCompra.dfechafin,
+                        'nordencompra' : nordencompra,
+                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidmarca': this.fillCompra.nidmarca,
+                        'nidmodelo': this.fillCompra.nidmodelo,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayCompra = response.data.arrayCompra.data;
+                    this.pagination.current_page =  response.data.arrayCompra.current_page;
+                    this.pagination.total = response.data.arrayCompra.total;
+                    this.pagination.per_page    = response.data.arrayCompra.per_page;
+                    this.pagination.last_page   = response.data.arrayCompra.last_page;
+                    this.pagination.from        = response.data.arrayCompra.from;
+                    this.pagination.to           = response.data.arrayCompra.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },*/
+            // =================================================================
             // TAB COTIZACIÓN
             // =================================================================
             tabCotizacion(){
-                $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link active');
-                $('#tab02').removeClass('nav-link active');
-                $('#tab02').addClass('nav-link');
+                //$('#tab02').removeClass('nav-link active');
+                //$('#tab02').addClass('nav-link active');
                 $('#tab03').removeClass('nav-link active');
                 $('#tab03').addClass('nav-link');
+                $('#tab04').removeClass('nav-link active');
+                $('#tab04').addClass('nav-link');
 
                 $('#TabCotizacion').addClass("in active show");
                 $('#TabAsignarContacto').removeClass('in active show');
@@ -1774,11 +1966,11 @@
                     return;
                 }
 
-                $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass("nav-link");
-                $('#tab02').addClass('nav-link active');
-                $('#tab03').removeClass('nav-link active');
-                $('#tab03').addClass('nav-link disabled');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass("nav-link");
+                $('#tab03').addClass('nav-link active');
+                $('#tab04').removeClass('nav-link active');
+                $('#tab04').addClass('nav-link disabled');
                 $('#TabCotizacion').removeClass('in active show');
                 $('#TabAsignarContacto').addClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
@@ -1899,12 +2091,12 @@
                     return;
                 }
 
-                $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link');
                 $('#tab02').removeClass('nav-link active');
                 $('#tab02').addClass('nav-link');
-                $('#tab03').removeClass('nav-link disabled');
-                $('#tab03').addClass('nav-link active');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link');
+                $('#tab04').removeClass('nav-link disabled');
+                $('#tab04').addClass('nav-link active');
 
                 $('#TabCotizacion').removeClass('in active show');
                 $('#TabAsignarContacto').removeClass('in active show');
@@ -1946,13 +2138,13 @@
             // SUBTAB VEHÍCULO
             // ======================
             tabDCVehiculo(){
-                $('#tab0301').addClass('nav-link active');
-                $('#tab0302').removeClass('nav-link active');
-                $('#tab0302').addClass("nav-link disabled");
-                $('#tab0303').removeClass('nav-link active');
-                $('#tab0303').addClass('nav-link disabled');
-                $('#tab0304').removeClass('nav-link active');
-                $('#tab0304').addClass('nav-link disabled');
+                $('#tab0401').addClass('nav-link active');
+                $('#tab0402').removeClass('nav-link active');
+                $('#tab0402').addClass("nav-link disabled");
+                $('#tab0403').removeClass('nav-link active');
+                $('#tab0403').addClass('nav-link disabled');
+                $('#tab0404').removeClass('nav-link active');
+                $('#tab0404').addClass('nav-link disabled');
                 $('#TabDCVehiculo').addClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
@@ -2179,10 +2371,10 @@
                     return;
                 }
 
-                $('#tab0301').removeClass('nav-link active');
-                $('#tab0301').addClass('nav-link');
-                $('#tab0302').removeClass('nav-link disabled');
-                $('#tab0302').addClass('nav-link active');
+                $('#tab0401').removeClass('nav-link active');
+                $('#tab0401').addClass('nav-link');
+                $('#tab0402').removeClass('nav-link disabled');
+                $('#tab0402').addClass('nav-link active');
 
                 $('#TabDCVehiculo').removeClass('in active show');
                 $('#TabDCElementoVenta').addClass('in active show');
@@ -2309,12 +2501,12 @@
                     return;
                 }
 
-                $('#tab0301').removeClass('nav-link active');
-                $('#tab0301').addClass('nav-link');
-                $('#tab0302').removeClass('nav-link active');
-                $('#tab0302').addClass('nav-link');
-                $('#tab0303').removeClass('nav-link disabled');
-                $('#tab0303').addClass('nav-link active');
+                $('#tab0401').removeClass('nav-link active');
+                $('#tab0401').addClass('nav-link');
+                $('#tab0402').removeClass('nav-link active');
+                $('#tab0402').addClass('nav-link');
+                $('#tab0403').removeClass('nav-link disabled');
+                $('#tab0403').addClass('nav-link active');
 
                 $('#TabDCVehiculo').removeClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
@@ -2596,7 +2788,11 @@
                     'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
                     'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
                 }).then(response => {
-                    this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                    if(response.data[0].nFlagMsje == 1){
+                        this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                    }else{
+                        swal('EXISTE COTIZACION ACTIVA A ESTA REFERENCIA');
+                    }
                 }).catch(error => {
                     this.errors = error
                 });
@@ -2682,25 +2878,25 @@
                 this.montoTotalConfiCotiEventoEleVentaSoles= 0;
 
 
-                $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link active');
                 $('#tab02').removeClass('nav-link active');
-                $('#tab02').addClass('nav-link');
+                $('#tab02').addClass('nav-link active');
                 $('#tab03').removeClass('nav-link active');
-                $('#tab03').addClass('nav-link disabled');
+                $('#tab03').addClass('nav-link');
+                $('#tab04').removeClass('nav-link active');
+                $('#tab04').addClass('nav-link disabled');
 
                 $('#TabCotizacion').addClass("in active show");
                 $('#TabAsignarContacto').removeClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
 
-                $('#tab0301').removeClass('nav-link');
-                $('#tab0301').addClass('nav-link active');
-                $('#tab0302').removeClass('nav-link active');
-                $('#tab0302').addClass('nav-link disabled');
-                $('#tab0303').removeClass('nav-link active');
-                $('#tab0303').addClass('nav-link disabled');
-                $('#tab0304').removeClass('nav-link active');
-                $('#tab0304').addClass('nav-link disabled');
+                $('#tab0401').removeClass('nav-link');
+                $('#tab0401').addClass('nav-link active');
+                $('#tab0402').removeClass('nav-link active');
+                $('#tab0402').addClass('nav-link disabled');
+                $('#tab0403').removeClass('nav-link active');
+                $('#tab0403').addClass('nav-link disabled');
+                $('#tab0404').removeClass('nav-link active');
+                $('#tab0404').addClass('nav-link disabled');
 
                 $('#TabDCVehiculo').addClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
@@ -2838,14 +3034,14 @@
                     return;
                 }
 
-                $('#tab0301').removeClass('nav-link active');
-                $('#tab0301').addClass('nav-link');
-                $('#tab0302').removeClass('nav-link active');
-                $('#tab0302').addClass('nav-link');
-                $('#tab0303').removeClass('nav-link active');
-                $('#tab0303').addClass('nav-link');
-                $('#tab0304').removeClass('nav-link disabled');
-                $('#tab0304').addClass('nav-link active');
+                $('#tab0401').removeClass('nav-link active');
+                $('#tab0401').addClass('nav-link');
+                $('#tab0402').removeClass('nav-link active');
+                $('#tab0402').addClass('nav-link');
+                $('#tab0403').removeClass('nav-link active');
+                $('#tab0403').addClass('nav-link');
+                $('#tab0404').removeClass('nav-link disabled');
+                $('#tab0404').addClass('nav-link active');
 
                 $('#TabDCVehiculo').removeClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');

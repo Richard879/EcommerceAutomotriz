@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,17 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class GestionContactoController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     //Acciones nuevo contacto
     public function SetContactoPerNatural(Request $request)
     {
@@ -153,7 +143,7 @@ class GestionContactoController extends Controller
                                                                                             Auth::user()->id
                                                                                             ));
 
-        $arrayContacto = $this->arrayPaginator($arrayContacto, $request);
+        $arrayContacto = ParametroController::arrayPaginator($arrayContacto, $request);
         return ['arrayContacto'=>$arrayContacto];
     }
 
@@ -194,7 +184,7 @@ class GestionContactoController extends Controller
                                                                                 Auth::user()->id
                                                                                 ));
 
-        $arrayContactoCarteraMes = $this->arrayPaginator($arrayContactoCarteraMes, $request);
+        $arrayContactoCarteraMes = ParametroController::arrayPaginator($arrayContactoCarteraMes, $request);
         return ['arrayContactoCarteraMes'=>$arrayContactoCarteraMes];
     }
 
@@ -243,7 +233,7 @@ class GestionContactoController extends Controller
                                                                                 Auth::user()->id
                                                                                 ));
 
-        $arraySegReferenciavehiculo = $this->arrayPaginator($arraySegReferenciavehiculo, $request);
+        $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
     }
 
@@ -279,7 +269,7 @@ class GestionContactoController extends Controller
                                                                         array(  $nIdAsignacionContactoVendedor
                                                                                 ));
 
-        $arraySeguimiento = $this->arrayPaginator($arraySeguimiento, $request);
+        $arraySeguimiento = ParametroController::arrayPaginator($arraySeguimiento, $request);
         return ['arraySeguimiento'=>$arraySeguimiento];
     }
 
@@ -302,7 +292,7 @@ class GestionContactoController extends Controller
                                                                                 $nTipoContacto
                                                                                 ));
 
-        $arrayContactoLibre = $this->arrayPaginator($arrayContactoLibre, $request);
+        $arrayContactoLibre = ParametroController::arrayPaginator($arrayContactoLibre, $request);
         return ['arrayContactoLibre'=>$arrayContactoLibre];
     }
 
@@ -316,7 +306,7 @@ class GestionContactoController extends Controller
                                                                         array(  $nIdContacto
                                                                                 ));
 
-        $arrayReferenciaLibre = $this->arrayPaginator($arrayReferenciaLibre, $request);
+        $arrayReferenciaLibre = ParametroController::arrayPaginator($arrayReferenciaLibre, $request);
         return ['arrayReferenciaLibre'=>$arrayReferenciaLibre];
     }
 
@@ -352,7 +342,7 @@ class GestionContactoController extends Controller
                                                                                 $nIdVendedor
                                                                                 ));
 
-        $arrayReasignarReferencia = $this->arrayPaginator($arrayReasignarReferencia, $request);
+        $arrayReasignarReferencia = ParametroController::arrayPaginator($arrayReasignarReferencia, $request);
         return ['arrayReasignarReferencia'=>$arrayReasignarReferencia];
     }
 
@@ -397,7 +387,7 @@ class GestionContactoController extends Controller
                                                                             Auth::user()->id
                                                                     ));
 
-        $arrayContacto = $this->arrayPaginator($arrayContacto, $request);
+        $arrayContacto = ParametroController::arrayPaginator($arrayContacto, $request);
         return ['arrayContacto'=>$arrayContacto];
     }
 
@@ -427,7 +417,7 @@ class GestionContactoController extends Controller
                                                                                 $nIdVendedor
                                                                                 ));
 
-        $arrayContactosPorVendedor = $this->arrayPaginator($arrayContactosPorVendedor, $request);
+        $arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
         return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
     }
 
@@ -444,7 +434,7 @@ class GestionContactoController extends Controller
                                                                                 Auth::user()->id
                                                                                 ));
 
-        $arrayVendedor = $this->arrayPaginator($arrayVendedor, $request);
+        $arrayVendedor = ParametroController::arrayPaginator($arrayVendedor, $request);
         return ['arrayVendedor'=>$arrayVendedor];
     }
 
@@ -479,7 +469,7 @@ class GestionContactoController extends Controller
                                                                                 $nIdContacto
                                                                                 ));
 
-        $arraySegReferenciavehiculo = $this->arrayPaginator($arraySegReferenciavehiculo, $request);
+        $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
     }
 

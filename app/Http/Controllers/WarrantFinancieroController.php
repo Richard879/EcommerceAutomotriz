@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class WarrantFinancieroController extends Controller
                                                                                 $cNroWarrant
                                                                                 ));
 
-        $arrayWFinanciero = $this->arrayPaginator($arrayWFinanciero, $request);
+        $arrayWFinanciero = ParametroController::arrayPaginator($arrayWFinanciero, $request);
         return ['arrayWFinanciero'=>$arrayWFinanciero];   
     }
 
@@ -48,19 +49,8 @@ class WarrantFinancieroController extends Controller
                                                                                 $nIdEstadoWarrant
                                                                                 ));
 
-        $arrayWFinancieroDetalle = $this->arrayPaginator($arrayWFinancieroDetalle, $request);
+        $arrayWFinancieroDetalle = ParametroController::arrayPaginator($arrayWFinancieroDetalle, $request);
         return ['arrayWFinancieroDetalle'=>$arrayWFinancieroDetalle];   
-    }
-
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
     }
 
     public function SetWFinanciero(Request $request)
