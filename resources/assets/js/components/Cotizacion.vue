@@ -181,18 +181,12 @@
                                                                     <tbody>
                                                                         <tr v-for="cotizacion in arrayCotizaciones" :key="cotizacion.nIdCabeceraCotizacion">
                                                                             <td> 
-                                                                                <template v-if="cotizacion.cSituacionRegistro =='A'">
+                                                                                <!--<template v-if="cotizacion.cSituacionRegistro =='A'">
                                                                                     <a href="#" @click="desactivar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
                                                                                     :title="'Desactivar ' +cotizacion.nIdCabeceraCotizacion">
                                                                                         <i class="fa-md fa fa-check-square"></i>
                                                                                     </a>
-                                                                                </template>
-                                                                                <template v-else>
-                                                                                    <a href="#" @click="activar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
-                                                                                    :title="'Activar ' +cotizacion.nIdCabeceraCotizacion">
-                                                                                        <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                    </a>
-                                                                                </template>
+                                                                                </template>-->
                                                                             </td>
                                                                             <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                             <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo"></td>
@@ -3223,10 +3217,10 @@
     }
     .el-select{
             width: 100%;
-        }
-        .el-date-editor.el-input, .el-date-editor.el-input__inner{
-            width: 100% !important;
-        }
+    }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        width: 100% !important;
+    }
 </style>
 
 

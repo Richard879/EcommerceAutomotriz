@@ -228,4 +228,23 @@ class CotizacionController extends Controller
         $arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
         return ['arrayCotizaciones'=>$arrayCotizaciones];
     }
+
+    public function GetRefVehiculoByContactoSinCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdContacto = $request->nidcontacto;
+
+        $arraySegReferenciavehiculo = DB::select('exec usp_Cotizacion_GetRefVehiculoByContactoSinCotizacion ?, ?, ?, ?',
+                                                                        array(  $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $nIdContacto,
+                                                                                Auth::user()->id
+                                                                                ));
+
+        $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
+        return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
+    }
 }
