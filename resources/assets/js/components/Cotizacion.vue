@@ -2596,7 +2596,11 @@
                     'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
                     'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
                 }).then(response => {
-                    this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                    if(response.data[0].nFlagMsje == 1){
+                        this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
+                    }else{
+                        swal('EXISTE COTIZACION ACTIVA A ESTA REFERENCIA');
+                    }
                 }).catch(error => {
                     this.errors = error
                 });

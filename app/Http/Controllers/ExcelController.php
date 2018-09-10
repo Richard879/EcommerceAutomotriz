@@ -71,9 +71,6 @@ class ExcelController extends Controller
         $bandera = str_random(10);
         $ruta = Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
-
-        /*$nameFile = $request->file->store('uploads/ExcelListaPrecio');
-        return response()->json($nameFile);*/
     }
     
     public function readFileListaPrecioVh(Request $request)
@@ -149,6 +146,44 @@ class ExcelController extends Controller
                 'cMarcaNombre' => $value[13],
                 'cModeloNombre' => $value[14],
                 'cGlosa' => $value[15]
+            ];
+        }
+
+        $data = new Collection($data);
+        $data = $data->values()->all();
+        return response()->json($data);
+    }
+
+    public function importFileForum(Request $request)
+    {
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelForum', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+    }
+
+    public function readFileForum(Request $request)
+    {
+        $nameFile = $request->nameFile;
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls = storage_path('app/'.$nameFile);
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+        $data = [];
+        foreach ($sheetData as $key => $value) {
+            $data[$key+1] =[
+                'cNombreModelo'   => $value[0],
+                'cNumeroVin' => $value[1],
+                'cNumeroMotor' => $value[2],
+                'cNombreColor' => $value[3],
+                'dFechaFactura' => $value[4],
+                'cNumeroFactura' => $value[5],
+                'nNumeroPedido' => $value[6],
+                'cFlagFloorPlan' => $value[7],
+                'dFechaInicioFloorPlan' => $value[8],
+                'dFechaVenceFloorPlan' => $value[9],
+                'fMonto' => $value[10]
             ];
         }
 

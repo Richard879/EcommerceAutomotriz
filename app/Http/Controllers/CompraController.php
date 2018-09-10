@@ -156,4 +156,35 @@ class CompraController extends Controller
                                                                     ));
         return response()->json($arrayCompra);
     }
+
+    public function SetForum (Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec usp_Compra_SetForum ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $det['cNombreModelo'],
+                                                                $det['cNumeroVin'],
+                                                                $det['cNumeroMotor'],
+                                                                $det['cNombreColor'],
+                                                                $det['dFechaFactura'],
+                                                                $det['cNumeroFactura'],
+                                                                $det['nNumeroPedido'],
+                                                                $det['cFlagFloorPlan'],
+                                                                $det['dFechaInicioFloorPlan'],
+                                                                $det['dFechaVenceFloorPlan'],
+                                                                $det['fMonto'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

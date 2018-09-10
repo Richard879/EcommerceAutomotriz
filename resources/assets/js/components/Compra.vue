@@ -491,42 +491,36 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>Tipo Documento</th>
-                                                                                <th>Nro Documento</th>
-                                                                                <th>Nombres</th>
-                                                                                <th>Apellido Paterno</th>
-                                                                                <th>Apellido Materno</th>
-                                                                                <th>Teléfono</th>
-                                                                                <th>Celular</th>
-                                                                                <th>Email</th>
-                                                                                <th>Departamento</th>
-                                                                                <th>Provincia</th>
-                                                                                <th>Distrito</th>
-                                                                                <th>Dirección</th>
-                                                                                <th>Marca</th>
                                                                                 <th>Modelo</th>
+                                                                                <th>VIN</th>
+                                                                                <th>Nro. Motor</th>
+                                                                                <th>Color</th>
+                                                                                <th>Fec. Factura</th>
+                                                                                <th>Nro Factura</th>
+                                                                                <th>Nro. Nota Pedido</th>
+                                                                                <th>Declarado Floor Plan</th>
+                                                                                <th>Fecha Declarado Floor Plan</th>
+                                                                                <th>Fecha Vencimiento</th>
+                                                                                <th>Monto</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(lead, index) in arrayForum" :key="lead.cNumeroDocumento">
+                                                                            <tr v-for="(forum, index) in arrayForum" :key="forum.cNumeroVin">
                                                                                 <td>
-                                                                                    <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lead.cNumeroDocumento">
+                                                                                    <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +forum.cNumeroVin">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                 </td>
-                                                                                <td v-text="lead.cTipoDocumento"></td>
-                                                                                <td v-text="lead.cNumeroDocumento"></td>
-                                                                                <td v-text="lead.cNombre"></td>
-                                                                                <td v-text="lead.cApellidoPaterno"></td>
-                                                                                <td v-text="lead.cApellidoMaterno"></td>
-                                                                                <td v-text="lead.cTelefonoFijo"></td>
-                                                                                <td v-text="lead.nTelefonoMovil"></td>
-                                                                                <td v-text="lead.cEmail"></td>
-                                                                                <td v-text="lead.cDepartamentoNombre"></td>
-                                                                                <td v-text="lead.cProvinciaNombre"></td>
-                                                                                <td v-text="lead.cDistritoNombre"></td>
-                                                                                <td v-text="lead.cDireccion"></td>
-                                                                                <td v-text="lead.cMarcaNombre"></td>
-                                                                                <td v-text="lead.cModeloNombre"></td>
+                                                                                <td v-text="forum.cNombreModelo"></td>
+                                                                                <td v-text="forum.cNumeroVin"></td>
+                                                                                <td v-text="forum.cNumeroMotor"></td>
+                                                                                <td v-text="forum.cNombreColor"></td>
+                                                                                <td v-text="forum.dFechaFactura"></td>
+                                                                                <td v-text="forum.cNumeroFactura"></td>
+                                                                                <td v-text="forum.nNumeroPedido"></td>
+                                                                                <td v-text="forum.cFlagFloorPlan"></td>
+                                                                                <td v-text="forum.dFechaInicioFloorPlan"></td>
+                                                                                <td v-text="forum.dFechaVenceFloorPlan"></td>
+                                                                                <td v-text="forum.fMonto"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1132,7 +1126,7 @@
 
                 this.form.append('file', this.attachment);
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
-                var url = this.ruta + '/gescontacto/importFileForum';
+                var url = this.ruta + '/compra/importFileForum';
                 axios.post(url, this.form, config).then(response=>{
                     this.readFileForum(response.data);
                 }).catch(error => {
@@ -1142,7 +1136,7 @@
             readFileForum(nameFile){
                 //this.mostrarProgressBar();
 
-                var url = this.ruta + '/gescontacto/readFileForum';
+                var url = this.ruta + '/compra/readFileForum';
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
@@ -1153,7 +1147,9 @@
                         return;
                     }*/
                     
-                    this.contadorArrayForum = me.arrayForum.length;
+                    this.$delete(response.data, 0);
+                    this.arrayForum = response.data;
+                    this.contadorArrayForum = this.arrayForum.length;
 
                 }).then(function (response) {
                     $("#myBar").hide();
@@ -1217,7 +1213,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/gescontacto/SetForum';
+                var url = this.ruta + '/compra/SetForum';
                 axios.post(url, {
                     data: this.arrayForum
                 }).then(response => {

@@ -104,6 +104,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
     Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
     Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
+    Route::post('/compra/importFileForum', 'ExcelController@importFileForum');
+    Route::post('/compra/readFileForum', 'ExcelController@readFileForum');
+    Route::post('/compra/SetForum', 'CompraController@SetForum');
 
 
     Route::get('/gescontacto/UpdReasignarContacto', 'GestionContactoController@UpdReasignarContacto');
