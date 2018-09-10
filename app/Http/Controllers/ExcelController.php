@@ -182,8 +182,7 @@ class ExcelController extends Controller
                 'nNumeroPedido' => $value[6],
                 'cFlagFloorPlan' => $value[7],
                 'dFechaInicioFloorPlan' => $value[8],
-                'dFechaVenceFloorPlan' => $value[9],
-                'fMonto' => $value[10]
+                'fMonto' => $value[9]
             ];
         }
 

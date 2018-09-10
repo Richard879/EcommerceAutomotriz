@@ -157,7 +157,7 @@ class CompraController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_Compra_SetForum ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                DB::select('exec usp_Compra_SetForum ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $det['cNombreModelo'],
                                                                 $det['cNumeroVin'],
@@ -166,7 +166,6 @@ class CompraController extends Controller
                                                                 $det['dFechaFactura'],
                                                                 $det['cNumeroFactura'],
                                                                 $det['nNumeroPedido'],
-                                                                $det['cFlagFloorPlan'],
                                                                 $det['dFechaInicioFloorPlan'],
                                                                 $det['dFechaVenceFloorPlan'],
                                                                 $det['fMonto'],

@@ -29,6 +29,11 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
+                                        <i class="fa fa fa-clipboard"></i> LÍNEA DE CRÉDITO
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
                                         <i class="fa fa fa-clipboard"></i> LÍNEA FORUM
                                     </a>
                                 </li>
@@ -116,7 +121,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                         <div class="col-sm-8">
-                                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
                                                                                 <el-option
                                                                                 v-for="item in arrayMarca"
                                                                                 :key="item.nIdPar"
@@ -456,6 +461,8 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">ccc</div>
 
+
+
                                 <div role="tabpanel" class="tab-pane fade" id="TabForum">
                                     <section class="forms">
                                         <div class="container-fluid">
@@ -519,7 +526,7 @@
                                                                                 <td v-text="forum.nNumeroPedido"></td>
                                                                                 <td v-text="forum.cFlagFloorPlan"></td>
                                                                                 <td v-text="forum.dFechaInicioFloorPlan"></td>
-                                                                                <td v-text="forum.dFechaVenceFloorPlan"></td>
+                                                                                <td></td>
                                                                                 <td v-text="forum.fMonto"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -818,7 +825,7 @@
             buscarCompras(){
                 this.listarCompras(1);
             },
-            llenarComboMarcas(){
+            llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 
                 axios.get(url, {
@@ -832,7 +839,7 @@
                     console.log(error);
                 });
             },
-            llenarComboModelos(){
+            llenarComboModelo(){
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
 
                 axios.get(url,{
@@ -1283,8 +1290,8 @@
             }
         },
         mounted(){
-            this.llenarComboMarcas();
-            this.llenarComboModelos();
+            this.llenarComboMarca();
+            this.llenarComboModelo();
         }
     }
 </script>
