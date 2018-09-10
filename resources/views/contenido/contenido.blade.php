@@ -63,4 +63,7 @@
     <template v-if="menu==200218">
         <solccjefeventa :ruta="ruta"></solccjefeventa>
     </template>
+    <template v-if="menu==200219">
+        <maestrovehiculo :ruta="ruta"></maestrovehiculo>
+    </template>
 @endsection

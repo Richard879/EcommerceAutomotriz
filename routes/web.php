@@ -140,6 +140,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/solicitudCartaCaracteristica/GetDetalleSolicitud', 'SolicitudCartaCaracteristica@GetDetalleSolicitud');
     Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristica@SetConformeNoConforme');
     Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristica@SetAprobadoNoAprobado');
+    Route::put('/solicitudCartaCaracteristica/SetAnularSCC', 'SolicitudCartaCaracteristica@SetAnularSCC');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
