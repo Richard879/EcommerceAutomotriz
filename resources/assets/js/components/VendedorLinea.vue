@@ -30,10 +30,18 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Jefe de ventas</label>
                                         <div class="col-sm-4">
-                                            <select v-model="formVenLin.nJefeVentas" class="form-control form-control-sm">
+                                            <el-select v-model="formVenLin.nJefeVentas" filterable placeholder="Select" v-on:change="mostrarNombreJefeV();">
+                                                <el-option
+                                                v-for="item in arrayJefeVentas"
+                                                :key="item.nIdPar"
+                                                :label="item.cParNombre"
+                                                :value="item.nIdPar">
+                                                </el-option>
+                                            </el-select>
+                                            <!--<select v-model="formVenLin.nJefeVentas" class="form-control form-control-sm" v-on:change="mostrarNombreJefeV();">
                                                 <option v-for="item in arrayJefeVentas" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
                                                 </option>
-                                            </select>
+                                            </select>-->
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -76,11 +84,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="vendedorlinea in arrayProveedorLinea" :key="vendedorlinea.nIdLinea">
-                                                    <td v-text="vendedorlinea.nIdLinea"></td>
-                                                    <td v-text="vendedorlinea.cLineaNombre"></td>
+                                                <tr v-for="proveedorlinea in arrayProveedorLinea" :key="proveedorlinea.nIdLinea">
+                                                    <td v-text="proveedorlinea.nIdLinea"></td>
+                                                    <td v-text="proveedorlinea.cLineaNombre"></td>
                                                     <td>
-                                                        <a href="#" @click="abrirModal('vendedor','buscar');">
+                                                        <a href="#" @click="abrirModalVendedor('vendedor','asignar',proveedorlinea);">
                                                             <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
                                                         </a>
                                                     </td>
@@ -261,44 +269,99 @@
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
+                                            <h3 class="h4">ASIGNACION VENDEDOR LINEA</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="col-lg-12">
                                                 <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombreeeeeeeeeeeeeee</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    <label class="col-sm-2 form-control-label">Proveedor</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" v-model="fillVendedor.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <template v-if="arrayProveedor.length">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 form-control-label">Linea Venta</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" v-model="fillVendedor.cnombrelineaventa" class="form-control form-control-sm" readonly>
+                                                        <input type="hidden" v-model="fillVendedor.nidlineaventa" class="form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 form-control-label">Jefe de ventas</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" v-model="fillVendedor.cnombrejefeventas" class="form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 form-control-label">Marca</label>
+                                                    <div class="col-sm-4">
+                                                        <el-select v-model="fillVendedor.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo();">
+                                                            <el-option
+                                                            v-for="marca in arrayMarca"
+                                                            :key="marca.nIdPar"
+                                                            :label="marca.cParNombre"
+                                                            :value="marca.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                        <!--<select v-model="fillVendedor.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
+                                                            <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
+                                                        </option>
+                                                        </select>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 form-control-label">Modelo</label>
+                                                    <div class="col-sm-4">
+                                                        <el-select v-model="fillVendedor.nidmodelo" filterable placeholder="Select" v-on:change="listarVendedorLinea(1);">
+                                                            <el-option
+                                                            v-for="modelo in arrayModelo"
+                                                            :key="modelo.nIdPar"
+                                                            :label="modelo.cParNombre"
+                                                            :value="modelo.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                        <!--<select v-model="fillVendedor.nidmodelo" class="form-control form-control-sm" v-on:change="listarVendedorLinea(1);">
+                                                            <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
+                                                            </option>
+                                                        </select>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <template v-if="arrayVendedorLinea.length">
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-sm">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nombre Proveedor</th>
+                                                                    <th>Asignar</th>
+                                                                    <th>Asesor comercial</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <tr v-for="vendedor in arrayVendedorLinea" :key="vendedor.nIdMiVendedor">
                                                                     <td>
-                                                                        <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
+                                                                        <template v-if="vendedor.nIdVendedor ==null">
+                                                                            <a href="#" @click="asignar(vendedor.nIdMiVendedor)" data-toggle="tooltip" data-placement="top"
+                                                                            :title="'asignar ' +vendedor.cNombreMiVendedor">
+                                                                                <i :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                            </a>
+                                                                        </template>
+                                                                        <template v-else>
+                                                                            <a href="#" @click="designar(vendedor.nIdAsignacionVendedorModelo)" data-toggle="tooltip" data-placement="top"
+                                                                            :title="'designar ' +vendedor.cNombreMiVendedor">
+                                                                                <i class="fa-md fa fa-check-square"></i>
+                                                                            </a>
+                                                                        </template>
                                                                     </td>
-                                                                    <td v-text="proveedor.cParNombre"></td>
+                                                                    <td v-text="vendedor.cNombreMiVendedor"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -309,16 +372,16 @@
                                                                 <nav>
                                                                     <ul class="pagination">
                                                                         <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                         </li>
                                                                         <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                         :class="[page==isActivedModal?'active':'']">
                                                                             <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                            href="#" @click.prevent="cambiarPaginaVendedor(page)"
                                                                             v-text="page"></a>
                                                                         </li>
                                                                         <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                         </li>
                                                                     </ul>
                                                                 </nav>
@@ -364,8 +427,19 @@
                 arrayProveedorLinea: [],
                 arrayJefeVentas: [],
                 arrayProveedor: [],
+                arrayMarca: [],
+                arrayModelo: [],
+                arrayVendedorLinea: [],
                 fillProveedor:{
                     cnombreproveedor: ''
+                },
+                fillVendedor:{
+                    cnombreproveedor: '',
+                    cnombrelineaventa: '',
+                    nidlineaventa: 0,
+                    cnombrejefeventas: '',
+                    nidmarca: 0,
+                    nidmodelo: 0,
                 },
                 formVenLin:{
                     cempresa: 'SAISAC',
@@ -453,10 +527,10 @@
         },
         methods:{
             llenarComboJefeVentas(){
-                var url = this.ruta + '/parametro/GetLineasByProveedor';//por definir
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110060,
+                        'ngrupoparid' : 110025,
                         'opcion' : 0
                     }
                 }).then(response => {
@@ -494,13 +568,38 @@
                     console.log(error);
                 });
             },
+            listarVendedorLinea(page){
+                var url = this.ruta + '/vendedorlinea/GetLstVendedorLinea';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': 1300013,
+                        'nidproveedor': this.formVenLin.nidproveedor,
+                        'nidlinea': this.fillVendedor.nidlineaventa,
+                        'nidmarca': this.fillVendedor.nidmarca,
+                        'nidmodelo': this.fillVendedor.nidmodelo,
+                        'nidjefeventas': this.formVenLin.nJefeVentas
+                        //'page' : page
+                    }
+                }).then(response => {
+                    this.arrayVendedorLinea = response.data.arrayVendedorLinea.data;
+                    this.paginationModal.current_page =  response.data.arrayVendedorLinea.current_page;
+                    this.paginationModal.total = response.data.arrayVendedorLinea.total;
+                    this.paginationModal.per_page    = response.data.arrayVendedorLinea.per_page;
+                    this.paginationModal.last_page   = response.data.arrayVendedorLinea.last_page;
+                    this.paginationModal.from        = response.data.arrayVendedorLinea.from;
+                    this.paginationModal.to           = response.data.arrayVendedorLinea.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             validarbuscarProveedorLinea(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(this.formVenLin.nJefeVentas == 0 || this.formVenLin.nJefeVentas == ''){
+                if(this.formVenLin.nJefeVentas == 0 || this.formVenLin.nJefeVentas == ''){
                     this.mensajeError.push('Debe seleccionar Jefe de Ventas para realizar la busqueda');
-                }*/
+                }
                 if(!this.formVenLin.nidproveedor){
                     this.mensajeError.push('Debe seleccionar proveedor para realizar la busqueda');
                 }
@@ -522,15 +621,23 @@
                                 break;
                             }
                         }
-                    };
+                    }
+                }
+            },
+            abrirModalVendedor(modelo, accion, data =[]){
+                switch(modelo){
                     case 'vendedor':
                     {
                         switch(accion){
-                            case 'buscar':
+                            case 'asignar':
                             {
                                 this.accionmodal=3;
                                 this.modal = 1;
-                                //this.listarProveedores(1);
+                                this.fillVendedor.cnombreproveedor= this.formVenLin.cproveedornombre;
+                                this.fillVendedor.cnombrelineaventa = data['cLineaNombre'];
+                                this.fillVendedor.nidlineaventa = data['nIdLinea'];
+                                this.llenarComboMarca();
+                                this.arrayVendedorLinea=[];
                                 break;
                             }
                         }
@@ -576,6 +683,8 @@
                 this.formVenLin.nidproveedor = nProveedorId;
                 this.formVenLin.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
+                this.arrayMarca = [];
+                this.arrayModelo = [];
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
@@ -594,10 +703,123 @@
                     this.vistaFormulario = 1;
                 }
             },
+            llenarComboMarca(){
+                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea' : this.fillVendedor.nidlineaventa
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                    if(this.vistaFormulario){
+                        this.fillVendedor.nidmarca = 0;
+                    }
+                    this.arrayModelo = [];
+                    this.llenarComboModelo();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url, {
+                    params: {
+                        'nidmarca' : this.fillVendedor.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    if(this.vistaFormulario){
+                        this.fillVendedor.nidmodelo = 0;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaProveedor(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedores(page);
+            },
+            cambiarPaginaVendedor(page){
+                this.paginationModal.current_page=page;
+                this.listarVendedorLinea(page);
+            },
+            asignar(nIdMiVendedor){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/vendedorlinea/SetVendedorLineaAsignar';
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    nIdProveedor: parseInt(this.formVenLin.nidproveedor),
+                    nIdVendedor: nIdMiVendedor,
+                    nIdLinea: parseInt(this.fillVendedor.nidlineaventa),
+                    nIdMarca: parseInt(this.fillVendedor.nidmarca),
+                    nIdModelo: parseInt(this.fillVendedor.nidmodelo),
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Asignación Vendedor Linea registrado Con Exito');
+                        this.listarVendedorLinea();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            designar(nIdAsignacionVendedorModelo){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/vendedorlinea/SetVendedorLineaDesignar';
+                axios.post(url, {
+                    nIdAsignacion: nIdAsignacionVendedorModelo,
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Designacion Vendedor Linea Realizado Con Exito');
+                        this.listarVendedorLinea();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validar(){
+                this.error = 0;
+                this.mensajeError =[];
+                if(!this.fillVendedor.nidmarca || this.fillVendedor.nidmarca == 0){
+                    this.mensajeError.push('No ha seleccionado Marca');
+                }
+                if(!this.fillVendedor.nidmodelo || this.fillVendedor.nidmodelo == 0){
+                    this.mensajeError.push('No ha seleccionado Modelo');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
-            }
+            },
+            mostrarNombreJefeV(){
+                //var opcion_seleccionada = arrayJefeVentas[2].nIdPar=1300020;
+                var nomb='';
+                for(var i=0;i<this.arrayJefeVentas.length;i++){
+                    if(this.arrayJefeVentas[i].nIdPar==this.formVenLin.nJefeVentas){
+                        nomb=this.arrayJefeVentas[i].cParNombre;
+                        this.fillVendedor.cnombrejefeventas= nomb;
+                        this.arrayProveedorLinea=[];
+                    }
+                }
+            },
         },
         mounted(){
             this.llenarComboJefeVentas();
