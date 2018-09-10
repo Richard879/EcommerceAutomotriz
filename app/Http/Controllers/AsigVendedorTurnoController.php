@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class AsigVendedorTurno extends Controller
+class AsigVendedorTurnoController extends Controller
 {
     public function arrayPaginator($array, $request)
     {

@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class SolicitudCartaCaracteristica extends Controller
+class SolicitudCartaCaracteristicaController extends Controller
 {
     public function arrayPaginator($array, $request)
     {
