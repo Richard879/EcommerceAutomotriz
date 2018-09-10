@@ -203,4 +203,29 @@ class CotizacionController extends Controller
 
         return response()->json($arrayEventoEleVenta);
     }
+
+    public function GetListCotizacionesByIdVendedor(Request $request)
+    {
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
+        $nIdMarca = $request->nidmarca;
+        $nIdModelo = $request->nidmodelo;
+        $nIdEstadoCotizacion = $request->nidestadocotizacion;
+
+        $arrayCotizaciones = DB::select('exec usp_Cotizacion_GetListCotizacionesByIdVendedor ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            array(  $nIdEmpresa,
+                                                                    $nIdSucursal,
+                                                                    $dFechaInicio,
+                                                                    $dFechaFin,
+                                                                    $nIdMarca,
+                                                                    $nIdModelo,
+                                                                    $nIdEstadoCotizacion,
+                                                                    Auth::user()->id
+                                                                    ));
+
+        $arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
+        return ['arrayCotizaciones'=>$arrayCotizaciones];
+    }
 }

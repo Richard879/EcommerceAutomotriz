@@ -126,6 +126,23 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
+                                                                <div class="col-sm-6"> 
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Estado Cotizacion</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-select v-model="fillMisCotizaciones.nidestadocotizacion" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayEstadoCotizacion"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarMisCotizaciones(1)">
                                                                         <i class="fa fa-search"></i> Buscar
@@ -133,6 +150,100 @@
                                                                 </div>
                                                             </div>
                                                         </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <template v-if="arrayCotizaciones.length">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Acciones</th>
+                                                                            <th>Nro Cotizacion</th>
+                                                                            <th>Vehiculo</th>
+                                                                            <th>Contacto</th>
+                                                                            <th>Dirección</th>
+                                                                            <th>Celular</th>
+                                                                            <th>Email</th>
+                                                                            <th>Fecha Inicio</th>
+                                                                            <th>Fecha Venc.</th>
+                                                                            <th>Estado Cotización</th>
+                                                                            <th>Estado Aprobación</th>
+                                                                            <th>Vendedor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="cotizacion in arrayCotizaciones" :key="cotizacion.nIdCabeceraCotizacion">
+                                                                            <td> 
+                                                                                <template v-if="cotizacion.cSituacionRegistro =='A'">
+                                                                                    <a href="#" @click="desactivar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
+                                                                                    :title="'Desactivar ' +cotizacion.nIdCabeceraCotizacion">
+                                                                                        <i class="fa-md fa fa-check-square"></i>
+                                                                                    </a>
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    <a href="#" @click="activar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
+                                                                                    :title="'Activar ' +cotizacion.nIdCabeceraCotizacion">
+                                                                                        <i :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                    </a>
+                                                                                </template>
+                                                                            </td>
+                                                                            <td v-text="cotizacion.cNumeroCotizacion"></td>
+                                                                            <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo"></td>
+                                                                            <td v-text="cotizacion.cContacto"></td>
+                                                                            <td v-text="cotizacion.cDireccion"></td>
+                                                                            <td v-text="cotizacion.nTelefonoMovil"></td>
+                                                                            <td v-text="cotizacion.cEmail"></td>
+                                                                            <td v-text="cotizacion.dFechaCotizacion"></td>
+                                                                            <td v-text="cotizacion.dFechaVencimientoCotizacion"></td>
+                                                                            <td v-text="cotizacion.cEstadoCotizacion"></td>
+                                                                            <td v-text="cotizacion.cEstadoAprobacion"></td>
+                                                                            <td v-text="cotizacion.cVendedorNombre"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-sm-7">
+                                                                        <nav>
+                                                                            <ul class="pagination">
+                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                </li>
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                :class="[page==isActived?'active':'']">
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaCotizacion(page)"
+                                                                                    v-text="page"></a>
+                                                                                </li>
+                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                        <template v-else>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td colspan="10">No existen registros!</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </template>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1538,8 +1649,11 @@
                     fechaInicio: '',
                     fechaFin: '',
                     nidmarca: 0,
-                    nidmodelo: 0
+                    nidmodelo: 0,
+                    nidestadocotizacion: 0
                 },
+                arrayCotizaciones: [],
+                arrayEstadoCotizacion: [],
                 // =============================================================
                 // VARIABLES TAB COTIZACIÓN
                 // =============================================================
@@ -1836,6 +1950,7 @@
             tabMisCotizaciones(){
                 this.llenarSoloComboMarca();
                 this.llenarSoloComboModelo();
+                this.llenarEstadoCotizacion();
             },
             llenarSoloComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -1865,42 +1980,49 @@
                     console.log(error);
                 });
             },
-            /*listarMisCotizaciones(page){
+            llenarEstadoCotizacion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110058,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayEstadoCotizacion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            listarMisCotizaciones(page){
                 this.mostrarProgressBar();
-                if(this.fillCompra.nordencompra == ''){
-                    var nordencompra = 0;
-                }
-                else{
-                    var nordencompra = this.fillCompra.nordencompra;
-                }
 
-                var url = this.ruta + '/compra/GetCompra';
+                var url = this.ruta + '/gescotizacion/GetListCotizacionesByIdVendedor';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
-                        'nidmarca': this.fillCompra.nidmarca,
-                        'nidmodelo': this.fillCompra.nidmodelo,
+                        'nidsucursal': 1300013,
+                        'dfechainicio': this.fillMisCotizaciones.dfechainicio,
+                        'dfechafin': this.fillMisCotizaciones.dfechafin,
+                        'nidmarca': this.fillMisCotizaciones.nidmarca,
+                        'nidmodelo': this.fillMisCotizaciones.nidmodelo,
+                        'nidestadocotizacion': this.fillMisCotizaciones.nidestadocotizacion,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
-                    this.pagination.current_page =  response.data.arrayCompra.current_page;
-                    this.pagination.total = response.data.arrayCompra.total;
-                    this.pagination.per_page    = response.data.arrayCompra.per_page;
-                    this.pagination.last_page   = response.data.arrayCompra.last_page;
-                    this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;
+                    this.arrayCotizaciones = response.data.arrayCotizaciones.data;
+                    this.pagination.current_page =  response.data.arrayCotizaciones.current_page;
+                    this.pagination.total = response.data.arrayCotizaciones.total;
+                    this.pagination.per_page    = response.data.arrayCotizaciones.per_page;
+                    this.pagination.last_page   = response.data.arrayCotizaciones.last_page;
+                    this.pagination.from        = response.data.arrayCotizaciones.from;
+                    this.pagination.to           = response.data.arrayCotizaciones.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
-            },*/
+            },
             // =================================================================
             // TAB COTIZACIÓN
             // =================================================================
