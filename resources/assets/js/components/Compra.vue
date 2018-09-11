@@ -354,6 +354,18 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-8">
                                                                     <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                        <div class="col-sm-8">
+                                                                            <a href="#" @click="descargaFormatoCompra">
+                                                                                <i class="fa-md fa fa-file-excel-o"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Ordenes de Compra</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
@@ -1207,6 +1219,9 @@
                         console.log(error);
                     });
                 })
+            },
+            descargaFormatoCompra(){
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoCompraExcel.xlsx');
             },
             // ====================================================
             // =============  TAB FORUM ======================

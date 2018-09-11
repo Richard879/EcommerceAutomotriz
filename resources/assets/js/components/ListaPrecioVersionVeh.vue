@@ -392,23 +392,29 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-8">
                                                                     <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                        <div class="col-sm-8">
+                                                                            <a href="#" @click="descargaFormatoListaPrecio">
+                                                                                <i class="fa-md fa fa-file-excel-o"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Adjunte Lista de Precios</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
-                                                                                <i class="fa fa-upload"></i> Seleccione Archivo
-                                                                            </label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="row">
-                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <div class="col-sm-6">-->
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
-                                                                                <i class="fa fa-retweet"></i> Procesar
-                                                                            </button>
-                                                                        <!--</div>-->
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
+                                                                            <i class="fa fa-retweet"></i> Procesar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1299,6 +1305,9 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            descargaFormatoListaPrecio(){
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoListaPrecioExcel.xlsx');
             },
             validarRegistroDetalle(){
                 this.error = 0;

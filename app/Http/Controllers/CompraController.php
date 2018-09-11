@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+namespace App\Exports;
 use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
@@ -8,7 +9,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Compra;
+
 
 class CompraController extends Controller
 {
