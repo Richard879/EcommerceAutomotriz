@@ -308,7 +308,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
+                                                            <!--<div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Ref. Cotización</label>
@@ -317,7 +317,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>-->
                                                             <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                     <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
@@ -475,6 +475,8 @@
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
+                                                <h2 class="no-margin-bottom" v-text="fillAsignarContacto.ccontacto"></h2>
+                                                <hr/>
                                                 <ul class="nav nav-tabs">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" id="tab0401" href="#TabDCVehiculo" @click="tabDCVehiculo" role="tab" data-toggle="tab">

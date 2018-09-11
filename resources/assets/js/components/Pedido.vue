@@ -437,7 +437,8 @@
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
-                                                    <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2><hr/>
+                                                    <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2>
+                                                    <hr/>
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="Tab1" href="#TabAsignarCompra" @click="tabAsignarCompra()" role="tab" data-toggle="tab">
