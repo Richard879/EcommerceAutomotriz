@@ -9,9 +9,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class VendedorLineaController extends Controller
+class AsignaVendedorModeloController extends Controller
 {
-    public function GetLstVendedorLinea(Request $request)
+    public function GetLstVendedorModelo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
         $nIdEmpresa = $request->nidempresa;
@@ -33,11 +33,12 @@ class VendedorLineaController extends Controller
         $arrayVendedorLinea = ParametroController::arrayPaginator($arrayVendedorLinea, $request);
         return ['arrayVendedorLinea'=>$arrayVendedorLinea];
     }
-    public function SetVendedorLineaAsignar(Request $request)
+
+    public function SetAsignaModelo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-
-        $vendedorlinea = DB::select('exec [usp_LineaVendedor_SetAsignar] ?, ?, ?, ?, ?, ?, ?, ?',
+        
+        $vendedorlinea = DB::select('exec [usp_AsignaVendedorModelo_SetAsignaModelo] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdProveedor,
@@ -49,11 +50,12 @@ class VendedorLineaController extends Controller
                                                                     ));
         return response()->json($vendedorlinea);
     }
-    public function SetVendedorLineaDesignar(Request $request)
+
+    public function SetDesasignaModelo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $vendedorlinea = DB::select('exec [usp_LineaVendedor_SetDesignar] ?',
+        $vendedorlinea = DB::select('exec [usp_AsignaVendedorModelo_SetDesasignaModelo] ?',
                                                             array($request->nIdAsignacion));
         return response()->json($vendedorlinea);
     }

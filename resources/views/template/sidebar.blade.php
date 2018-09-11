@@ -26,7 +26,7 @@
         <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asigna Vendedor a Turno</a></li>
         <li id="200215" @click="menu=200215" onclick="ActivarMenu('200215')"><a href="#">Turno de Venta</a></li>
         <li id="200216" @click="menu=200216" onclick="ActivarMenu('200216')"><a href="#">Depósitos</a></li>
-        <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asigna Vendedor a Linea</a></li>
+        <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asigna Vendedor a Modelo</a></li>
         <li id="200218" @click="menu=200218" onclick="ActivarMenu('200218')"><a href="#">Solicitud CC JFV</a></li>
         <li id="200219" @click="menu=200219" onclick="ActivarMenu('200219')"><a href="#">Maestro Vehículo</a></li>
       </ul>

@@ -150,7 +150,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/turnoventa/desactivar','TurnoVentaController@desactivar');
     Route::put('/turnoventa/activar','TurnoVentaController@activar');
 
-    Route::get('/vendedorlinea/GetLstVendedorLinea','VendedorLineaController@GetLstVendedorLinea');
-    Route::post('/vendedorlinea/SetVendedorLineaAsignar','VendedorLineaController@SetVendedorLineaAsignar');
-    Route::post('/vendedorlinea/SetVendedorLineaDesignar','VendedorLineaController@SetVendedorLineaDesignar');
+    Route::get('/asignavendedormodelo/GetLstVendedorModelo','AsignaVendedorModeloController@GetLstVendedorModelo');
+    Route::post('/asignavendedormodelo/SetAsignaModelo','AsignaVendedorModeloController@SetAsignaModelo');
+    Route::post('/asignavendedormodelo/SetDesasignaModelo','AsignaVendedorModeloController@SetDesasignaModelo');
 });

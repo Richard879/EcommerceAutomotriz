@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">ASIGNACION VENDEDOR A LINEA</h2>
+            <h2 class="no-margin-bottom">ASIGNACION VENDEDOR A MODELO</h2>
           </div>
         </header>
         <template v-if="vistaFormulario">
@@ -137,9 +137,7 @@
                 </div>
             </section>
         </template>
-        <!--<template v-else>
 
-        </template>-->
         <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-md" role="document">
                 <div class="modal-content">
@@ -569,7 +567,7 @@
                 });
             },
             listarVendedorLinea(page){
-                var url = this.ruta + '/vendedorlinea/GetLstVendedorLinea';
+                var url = this.ruta + '/asignavendedormodelo/GetLstVendedorModelo';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -690,7 +688,6 @@
                 this.pagination.current_page=page;
                 this.listarProveedorLinea(page);
             },
-
             limpiarFormulario(){
 
             },
@@ -752,7 +749,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/vendedorlinea/SetVendedorLineaAsignar';
+                var url = this.ruta + '/asignavendedormodelo/SetAsignaModelo';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
@@ -778,7 +775,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/vendedorlinea/SetVendedorLineaDesignar';
+                var url = this.ruta + '/asignavendedormodelo/SetDesasignaModelo';
                 axios.post(url, {
                     nIdAsignacion: nIdAsignacionVendedorModelo,
                 }).then(response => {
@@ -846,5 +843,11 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner{
+            width: 100% !important;
         }
 </style>
