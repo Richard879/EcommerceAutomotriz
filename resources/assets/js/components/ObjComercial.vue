@@ -165,6 +165,7 @@
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Objetivo (Cantidad)</th>
                                                                                 <th>Tipo Beneficio</th>
+                                                                                <th>Tipo Valor</th>
                                                                                 <th>Valor Beneficio</th>
                                                                             </tr>
                                                                         </thead>
@@ -178,8 +179,8 @@
                                                                                 <td>
                                                                                     <input type="number" min="0" class="form-control form-control-sm" v-model="detalle.nCantidadVehiculo"/>
                                                                                 </td>
-                                                                                <!--<td>
-                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable placeholder="Select" >
+                                                                                <td>
+                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable clearable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayTipoBeneficio"
                                                                                         :key="item.nIdPar"
@@ -187,8 +188,8 @@
                                                                                         :value="item.nIdPar">
                                                                                         </el-option>
                                                                                     </el-select>
-                                                                                </td>-->
-                                                                                <td>
+                                                                                </td>
+                                                                                <!--<td>
                                                                                     <div class="input-group">
                                                                                         <input type="hidden" v-model="arrayIndexTipoBeneficioId[index]">
                                                                                         <input type="text" v-model="arrayIndexTipoBeneficioNombre[index]" class="form-control form-control-sm" readonly>
@@ -198,9 +199,9 @@
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
-                                                                                </td>
+                                                                                </td>-->
                                                                                 <td>
-                                                                                    <el-select v-model="arrayIndexFlagTipoValorId[index]" filterable placeholder="Select" >
+                                                                                    <el-select v-model="arrayIndexFlagTipoValorId[index]" filterable clearable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayFlagTipoValor"
                                                                                         :key="item.nIdPar"
@@ -841,7 +842,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110069,
-                        'opcion' : 0
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayTipoBeneficio = response.data;
@@ -854,7 +855,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110065,
-                        'opcion' : 0
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayFlagTipoValor = response.data;
@@ -1154,8 +1155,10 @@
         margin: auto;
     }
     .barraLateral{
-        height: 38vh;
-        overflow-y: scroll;
+        height: 45vh;
+        max-width:1200px;
+        overflow-x: auto;
+        overflow-y: auto;
     }
     .el-select{
             width: 100%;

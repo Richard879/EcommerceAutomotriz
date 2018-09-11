@@ -595,6 +595,7 @@
             </div>
         </div>
 
+        <!-- MODAL PROVEEDORES -->
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -690,6 +691,59 @@
             </div>
         </div>
 
+        <!-- MODAL RESPUESTAS DE GENERAR COMPRA-->
+        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Automotores INKA</h4>
+                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped table-sm">
+                                        <tbody>
+                                            <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
+                                                <td v-text="compra.cNumeroVin"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped table-sm">
+                                        <tbody>
+                                            <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
+                                                <td v-text="compra.cNumeroVin"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </template>
 <script>
@@ -727,6 +781,9 @@
                     nidproveedor: 0,
                     cproveedornombre: ''
                 },
+                // ============ VARIABLES DE RESPUESTA =================
+                arrayCompraPrecioLista: [],
+                arrayCompraVin: [],
                 // ============================================================
                 // =========== TAB FORUM ============
                 arrayForum: [],
@@ -1052,10 +1109,43 @@
                     nIdTipoLista: parseInt(this.formCompra.nidtipolista),
                     data: this.arrayCompra
                 }).then(response => {
-                    swal('Compra registrada');
-                    this.arrayExcel = [];
-                    this.arrayCompra = [];
-                    $("#file-upload").val("");
+                    let me = this;
+                    var arrayTempVinExiste = [];
+                    var arrayTempVinListaPrecio = [];
+
+                    if(response.data.arrayVinExiste.length > 0)
+                    {
+                        me.arrayTempVinExiste = response.data.arrayVinExiste;
+                        me.arrayTempVinExiste.map(function(value, key) {
+                            me.arrayCompraVin.push({
+                                cNumeroVin: me.arrayTempVinExiste[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayPrecioLista.length > 0){
+                        me.arrayTempVinListaPrecio = response.data.arrayPrecioLista;
+                        me.arrayTempVinListaPrecio.map(function(value, key) {
+                            me.arrayCompraPrecioLista.push({
+                                cNumeroVin: me.arrayTempVinListaPrecio[key]
+                            });
+                        });
+                    }
+
+                    //============= RESULTADO PARA MOSTRAR ================
+                    if(this.arrayCompraVin.length > 0 || this.arrayCompraPrecioLista.length > 0){
+                        this.accionmodal=3;
+                        this.modal = 1;
+                        this.arrayExcel = [];
+                        this.arrayCompra = [];
+                        $("#file-upload").val("");
+                    }else{
+                        swal('Compra registrada correctamente');
+                        this.accionmodal=3;
+                        this.modal = 1;
+                        this.arrayExcel = [];
+                        this.arrayCompra = [];
+                        $("#file-upload").val("");
+                    }
                 }).catch(error => {
                     console.log(error);
                 });

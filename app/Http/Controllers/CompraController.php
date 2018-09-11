@@ -50,8 +50,13 @@ class CompraController extends Controller
         try{
             DB::beginTransaction();
             $detalles = $request->data;
+
+            $arrayVinExiste = [];
+            $arrayPrecioLista = [];
+
             foreach($detalles as $ep=>$det)
             {
+                
                 //$detalle = new Compra();
                 //$detalle->nOrdenCompra = $det['nOrdenCompra'];
                 //$detalle->cNombreLinea = $det['cNombreLinea'];
@@ -63,7 +68,7 @@ class CompraController extends Controller
                 $fTotalCompra = str_replace(",", "", $fTotalCompra);
                 //echo $fTotalCompra. " ";
 
-                DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array($request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdCronograma,
@@ -87,7 +92,20 @@ class CompraController extends Controller
                                                                 $det['dFechaFacturado'],
                                                                 Auth::user()->id
                                                             ));
+                if($objCompra[0]->nFlagMsje == 0){
+                    array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
+                }    
+                if($objCompra[0]->nFlagMsje == 2){
+                    array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
+                }               
             }
+            $data = [
+                'arrayVinExiste'=>$arrayVinExiste,
+                'arrayPrecioLista'=>$arrayPrecioLista
+            ];
+
+            return response()->json($data);
+            
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
