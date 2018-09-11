@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-namespace App\Exports;
 use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
@@ -17,8 +16,6 @@ use App\Compra;
 
 class CompraController extends Controller
 {
-    
-
     public function GetCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -199,5 +196,22 @@ class CompraController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function UpdCompraById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $compra = DB::select('exec usp_Compra_UpdCompraById ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            array($request->nIdEmpresa,
+                                                                    $request->nIdProveedor,
+                                                                    $request->nIdCompra,
+                                                                    $request->cNumeroVin,
+                                                                    $request->cNumeroMotor,
+                                                                    $request->cNumeroDua,
+                                                                    $request->cNombreColor,
+                                                                    Auth::user()->id
+                                                                    ));
+        return response()->json($compra);
     }
 }

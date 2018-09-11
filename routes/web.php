@@ -111,6 +111,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
+    Route::post('/compra/UpdCompraById', 'CompraController@UpdCompraById');
     
 
 

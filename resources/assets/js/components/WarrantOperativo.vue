@@ -907,19 +907,17 @@
                     cNumeroWarrant: this.formWOperativo.cnrowarrant,
                     dFechaInicio: this.formWOperativo.dfechainicio,
                     dFechaVence: this.formWOperativo.dfechafin,
-                    //data: this.arrayTemporal,
+                    data: this.arrayTemporal,
                     nIdUsuario: 190011
                 }).then(response => {
-                    /*swal('Warrant Operativo registrado');
-                    this.arrayTemporal = [];;*/
-                    //console.log(response.data[0]);
-                    //alert(response.data[0].nIdWarrantOperativo);
-                    this.registrarDetalle(response.data[0].nIdWarrantOperativo);
+                    swal('Warrant Operativo registrado');
+                    this.arrayTemporal = [];
+                    //this.registrarDetalle(response.data[0].nIdWarrantOperativo);
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            registrarDetalle(nIdWarrantOperativo){
+            /*registrarDetalle(nIdWarrantOperativo){
                 var url = this.ruta + '/woperativo/SetWOperativoDetalle';
                 axios.post(url, {
                     nIdWarrantOperativo: nIdWarrantOperativo,
@@ -931,7 +929,7 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
+            },*/
             validar(){
                 this.error = 0;
                 this.mensajeError =[];

@@ -185,7 +185,6 @@
                                                                             <th>Nro Factura</th>
                                                                             <th>Fecha Facturado</th>
                                                                             <th>Fecha Compra</th>
-                                                                            <th>Acciones</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -193,6 +192,9 @@
                                                                             <td>
                                                                                 <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
                                                                                     <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                </a>&nbsp;
+                                                                                <a href="#" @click="abrirModal('compra','editar', compra)" data-toggle="tooltip" data-placement="top" :title="'Editar O/C ' +compra.nOrdenCompra">
+                                                                                    <i class="fa-md fa fa-edit"></i>
                                                                                 </a>
                                                                             </td>
                                                                             <td v-text="compra.nIdCompra"></td>
@@ -211,11 +213,6 @@
                                                                             <td v-text="compra.cNumeroFactura"></td>
                                                                             <td v-text="compra.dFechaFacturado"></td>
                                                                             <td v-text="compra.dFechaCompra"></td>
-                                                                            <td>
-                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                </a>
-                                                                            </td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -715,42 +712,127 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped table-sm">
-                                        <tbody>
-                                            <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
-                                                <td v-text="compra.cNumeroVin"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped table-sm">
-                                        <tbody>
-                                            <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
-                                                <td v-text="compra.cNumeroVin"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped table-sm">
+                                            <tbody>
+                                                <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
+                                                    <td v-text="compra.cNumeroVin"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped table-sm">
+                                            <tbody>
+                                                <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
+                                                    <td v-text="compra.cNumeroVin"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  MODAL EDITAR COMPRA -->
+        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">EDITAR DATOS DE COMPRA</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* O/C</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Número VIN</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Número Motor</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnumeromotor" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Número DUA</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnumerodua" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre Color</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizar();">
+                                                    <i class="fa fa-save"></i> Actualizar
+                                                </button>
+                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                    <i class="fa fa-close"></i> Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -792,6 +874,17 @@
                     nidtipolista: 0,
                     nidproveedor: 0,
                     cproveedornombre: ''
+                },
+                // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
+                formModalCompra:{
+                    nidcompra: 0,
+                    cnombrecomercial:'',
+                    cnumerovin:'',
+                    cnumeromotor: '',
+                    cnumerodua: '',
+                    cnombrecolor: '',
+                    cnumerodua: '',
+                    nordencompra: ''
                 },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
@@ -1112,6 +1205,8 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -1145,12 +1240,14 @@
 
                     //============= RESULTADO PARA MOSTRAR ================
                     if(this.arrayCompraVin.length > 0 || this.arrayCompraPrecioLista.length > 0){
+                        $("#myBar").hide();
                         this.accionmodal=3;
                         this.modal = 1;
                         this.arrayExcel = [];
                         this.arrayCompra = [];
                         $("#file-upload").val("");
                     }else{
+                        $("#myBar").hide();
                         swal('Compra registrada correctamente');
                         this.accionmodal=3;
                         this.modal = 1;
@@ -1222,6 +1319,39 @@
             },
             descargaFormatoCompra(){
                 window.open(this.ruta + '/storage/FormatosDescarga/FormatoCompraExcel.xlsx');
+            },
+            // =============  ACTUALIZAR COMPRA ======================
+            actualizar(){
+                this.arrayCompra = this.arrayExcel;
+
+                /*
+                if(this.validarRegistro()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                */
+
+                var url = this.ruta + '/compra/UpdCompraById';
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    nIdCompra: this.formModalCompra.nidcompra,
+                    cNumeroVin: this.formModalCompra.cnumerovin,
+                    cNumeroMotor: this.formModalCompra.cnumeromotor,
+                    cNumeroDua: this.formModalCompra.cnumerodua,
+                    cNombreColor: this.formModalCompra.cnombrecolor
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Compra actualizada correctamente');
+                    }
+                    else{
+                        swal('Ya existe VIN');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // ====================================================
             // =============  TAB FORUM ======================
@@ -1367,6 +1497,24 @@
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    };
+                    case 'compra':
+                    {
+                        switch(accion){
+                            case 'editar':
+                            {
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                this.formModalCompra.nidcompra = data['nIdCompra'];
+                                this.formModalCompra.nordencompra = data['nOrdenCompra'];
+                                this.formModalCompra.cnombrecomercial = data['cNombreComercial'];
+                                this.formModalCompra.cnumerovin = data['cNumeroVin'];
+                                this.formModalCompra.cnumeromotor = data['cNumeroMotor'];
+                                this.formModalCompra.cnumerodua = data['cNumeroDua'];
+                                this.formModalCompra.cnombrecolor = data['cNombreColor'];
                                 break;
                             }
                         }
