@@ -28,13 +28,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
-                                        <i class="fa fa fa-clipboard"></i> LÍNEA DE CRÉDITO
+                                    <a class="nav-link" href="#TabLineaCredito" @click="tabLineaCredito()" role="tab" data-toggle="tab">
+                                        <i class="fa fa-file-text-o"></i> LÍNEA DE CRÉDITO
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
-                                        <i class="fa fa fa-clipboard"></i> LÍNEA FORUM
+                                        <i class="fa fa fa-signal"></i> LÍNEA FORUM
                                     </a>
                                 </li>
                             </ul>
@@ -150,7 +150,9 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();"><i class="fa fa-search"></i> Buscar</button>
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -468,9 +470,229 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">ccc</div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">EN MANTENIMIENTO</div>
 
 
+                                <div role="tabpanel" class="tab-pane fade" id="TabLineaCredito">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">BUSCAR COMPRA SIN LINEA CREDITO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCompra.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillCompra.dfechafin"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                <el-option
+                                                                                v-for="item in arrayMarca"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                <el-option
+                                                                                v-for="item in arrayModelo"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-9 offset-sm-5">
+                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompraNoLineaCredito(1);"><i class="fa fa-search"></i> Buscar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <template v-if="arrayLineaCredito.length">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Seleccione</th>
+                                                                            <th>Código</th>
+                                                                            <th>Periodo</th>
+                                                                            <th>OC</th>
+                                                                            <th>Línea</th>
+                                                                            <th>Almacén<nav></nav></th>
+                                                                            <th>Nro Reserva</th>
+                                                                            <th>Nro Vin</th>
+                                                                            <th>Forma Pago</th>
+                                                                            <th>Nombre Comercial</th>
+                                                                            <th>Año Fab</th>
+                                                                            <th>Año Mod</th>
+                                                                            <th>Moneda</th>
+                                                                            <th>Total</th>
+                                                                            <th>Nro Factura</th>
+                                                                            <th>Fecha Facturado</th>
+                                                                            <th>Fecha Compra</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="compra in arrayLineaCredito" :key="compra.nIdCompra">
+                                                                            <td>
+                                                                                <input type="checkbox" class="checkbox-template">
+                                                                            </td>
+                                                                            <td v-text="compra.nIdCompra"></td>
+                                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
+                                                                            <td v-text="compra.nOrdenCompra"></td>
+                                                                            <td v-text="compra.cNombreLinea"></td>
+                                                                            <td v-text="compra.cNombreAlmacen"></td>
+                                                                            <td v-text="compra.nNumeroReserva"></td>
+                                                                            <td v-text="compra.cNumeroVin"></td>
+                                                                            <td v-text="compra.cFormaPago"></td>
+                                                                            <td v-text="compra.cNombreComercial"></td>
+                                                                            <td v-text="compra.nAnioFabricacion"></td>
+                                                                            <td v-text="compra.nAnioVersion"></td>
+                                                                            <td v-text="compra.cSimboloMoneda"></td>
+                                                                            <td v-text="compra.fTotalCompra"></td>
+                                                                            <td v-text="compra.cNumeroFactura"></td>
+                                                                            <td v-text="compra.dFechaFacturado"></td>
+                                                                            <td v-text="compra.dFechaCompra"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-sm-7">
+                                                                        <nav>
+                                                                            <ul class="pagination">
+                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaLineaCredito(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                </li>
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                :class="[page==isActived?'active':'']">
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaLineaCredito(page)"
+                                                                                    v-text="page"></a>
+                                                                                </li>
+                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaLineaCredito(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-9 offset-sm-5">
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarLineaCredito(1);">
+                                                                        <i class="fa fa-save"></i> Linea Crédito
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                        <template v-else>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td colspan="10">No existen registros!</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
 
                                 <div role="tabpanel" class="tab-pane fade" id="TabForum">
                                     <section class="forms">
@@ -889,6 +1111,9 @@
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
                 arrayCompraVin: [],
+                // ============================================================
+                // =========== TAB LINEA CREDITO ============
+                arrayLineaCredito: [],
                 // ============================================================
                 // =========== TAB FORUM ============
                 arrayForum: [],
@@ -1322,15 +1547,11 @@
             },
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
-                this.arrayCompra = this.arrayExcel;
-
-                /*
-                if(this.validarRegistro()){
+                if(this.validarActualizar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-                */
 
                 var url = this.ruta + '/compra/UpdCompraById';
                 axios.post(url, {
@@ -1352,6 +1573,66 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            validarActualizar(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formModalCompra.cnumerovin){
+                    this.mensajeError.push('Debes ingresar Nro Vin');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            // ====================================================
+            // =============  TAB LINEA CREDITO ======================
+            tabLineaCredito(){
+                this.arrayLineaCredito = [];
+                this.fillCompra.nidmarca = 0;
+                this.fillCompra.nidmodelo = 0;
+            },
+            listarCompraNoLineaCredito(page){
+                this.mostrarProgressBar();
+                if(this.fillCompra.nordencompra == ''){
+                    var nordencompra = 0;
+                }
+                else{
+                    var nordencompra = this.fillCompra.nordencompra;
+                }
+
+                var url = this.ruta + '/compra/GetLstCompraNoLineaCredito';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal' : 1300013,
+                        'dfechainicio' : this.fillCompra.dfechainicio,
+                        'dfechafin' : this.fillCompra.dfechafin,
+                        'nordencompra' : nordencompra,
+                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidmarca': this.fillCompra.nidmarca,
+                        'nidmodelo': this.fillCompra.nidmodelo,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayLineaCredito = response.data.arrayLineaCredito.data;
+                    this.pagination.current_page =  response.data.arrayLineaCredito.current_page;
+                    this.pagination.total = response.data.arrayLineaCredito.total;
+                    this.pagination.per_page    = response.data.arrayLineaCredito.per_page;
+                    this.pagination.last_page   = response.data.arrayLineaCredito.last_page;
+                    this.pagination.from        = response.data.arrayLineaCredito.from;
+                    this.pagination.to           = response.data.arrayLineaCredito.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaLineaCredito(page){
+                this.pagination.current_page=page;
+                this.listarCompraNoLineaCredito(page);
             },
             // ====================================================
             // =============  TAB FORUM ======================

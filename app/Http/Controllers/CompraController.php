@@ -214,4 +214,34 @@ class CompraController extends Controller
                                                                     ));
         return response()->json($compra);
     }
+
+    public function GetLstCompraNoLineaCredito(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
+        $nOrdenCompra = $request->nordencompra;
+        $cNumeroVin = $request->cnumerovin;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+
+        $arrayLineaCredito = DB::select('exec usp_Compra_GetLstCompraNoLineaCredito ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [       
+                                                                    $nIdEmpresa,
+                                                                    $nIdSucursal,
+                                                                    $dFechaInicio,
+                                                                    $dFechaFin,
+                                                                    $nOrdenCompra,
+                                                                    $cNumeroVin,
+                                                                    $nIdMarca,
+                                                                    $nIdModelo
+                                                                ]);
+
+        $arrayLineaCredito = Parametro::arrayPaginator($arrayLineaCredito, $request);
+        return ['arrayLineaCredito'=>$arrayLineaCredito];
+    }
 }
