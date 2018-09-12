@@ -192,12 +192,14 @@
                                                                     <tbody>
                                                                         <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                             <td>
-                                                                                <a href="#" @click="desactivar(compra.nIdCompra)" data-toggle="tooltip" data-placement="top" :title="'Anular O/C ' +compra.nOrdenCompra">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                </a>&nbsp;
-                                                                                <a href="#" @click="abrirModal('compra','editar', compra)" data-toggle="tooltip" data-placement="top" :title="'Editar O/C ' +compra.nOrdenCompra">
-                                                                                    <i class="fa-md fa fa-edit"></i>
-                                                                                </a>
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                    <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                </el-tooltip>&nbsp;
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                    <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                </el-tooltip>
                                                                             </td>
                                                                             <td v-text="compra.nIdCompra"></td>
                                                                             <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
