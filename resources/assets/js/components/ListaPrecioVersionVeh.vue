@@ -450,9 +450,12 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(lista, index) in arrayExcel" :key="lista.nIdVersionVh">
-                                                                                <td><a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lista.nOrdenListaPrecioVh">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                            <tr v-for="(lista, index) in arrayExcel" :key="lista.cNombreComercial">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar {{ lista.cNombreComercial }}</div>
+                                                                                        <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="lista.nIdVersionVeh"></td>
                                                                                 <td v-text="lista.cNombreComercial"></td>
@@ -723,9 +726,10 @@
                                                     <tbody>
                                                         <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                             <td>
-                                                                <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <td>{{proveedor.cParNombre}}</td>
                                                         </tr>
