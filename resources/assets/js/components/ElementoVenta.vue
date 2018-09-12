@@ -611,9 +611,15 @@
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
                     cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
-                    swal('Elemento registrado');
-                    this.listarElementos(1);
-                    this.vistaFormulario = 1;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Elemento registrado');
+                        this.listarElementos(1);
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Elemento Venta');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -663,10 +669,15 @@
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
                     cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
-                    swal('Elemento Actualizado');
-                    this.limpiarFormulario();
-                    //this.listarElementos(1);
-                    this.vistaFormulario = 1;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Elemento Actualizado');
+                        this.limpiarFormulario();
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Elemento Venta');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
