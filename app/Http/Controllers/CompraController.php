@@ -244,4 +244,29 @@ class CompraController extends Controller
         $arrayLineaCredito = Parametro::arrayPaginator($arrayLineaCredito, $request);
         return ['arrayLineaCredito'=>$arrayLineaCredito];
     }
+
+    public function UpdCompraLineaCreditoById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec usp_Compra_UpdCompraLineaCreditoById ?, ?, ?, ?, ?',
+                                                            array($request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $det['nIdCompra'],
+                                                                $det['cNumeroVin'],
+                                                                Auth::user()->id
+                                                            ));             
+            }
+            //return response()->json($data);
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

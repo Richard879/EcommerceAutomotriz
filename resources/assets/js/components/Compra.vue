@@ -625,9 +625,9 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr v-for="compra in arrayLineaCredito" :key="compra.nIdCompra">
+                                                                        <tr v-for="(compra, index) in arrayLineaCredito" :key="compra.nIdCompra">
                                                                             <td>
-                                                                                <input type="checkbox" class="checkbox-template">
+                                                                                <input type="checkbox" v-model="checkBoxLinea[index]" class="checkbox-template">
                                                                             </td>
                                                                             <td v-text="compra.nIdCompra"></td>
                                                                             <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
@@ -676,7 +676,7 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarLineaCredito(1);">
+                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="seleccionaCheckBox()">
                                                                         <i class="fa fa-save"></i> Linea Crédito
                                                                     </button>
                                                                 </div>
@@ -1119,6 +1119,8 @@
                 // ============================================================
                 // =========== TAB LINEA CREDITO ============
                 arrayLineaCredito: [],
+                arrayTempLineaCredito: [],
+                checkBoxLinea: [],
                 // ============================================================
                 // =========== TAB FORUM ============
                 arrayForum: [],
@@ -1638,6 +1640,38 @@
             cambiarPaginaLineaCredito(page){
                 this.pagination.current_page=page;
                 this.listarCompraNoLineaCredito(page);
+            },
+            seleccionaCheckBox(){
+                let me = this;
+
+                me.arrayLineaCredito.map(function(value, key) {
+                    if(me.checkBoxLinea[key] == true)
+                    {
+                        me.arrayTempLineaCredito.push({
+                                nIdCompra: value.nIdCompra,
+                                cNumeroVin: value.cNumeroVin
+                        });
+                    }
+                });
+
+                this.registrarLineaCredito();
+            },
+            registrarLineaCredito(){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/compra/UpdCompraLineaCreditoById';
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    data: this.arrayTempLineaCredito
+                }).then(response => {
+                    this.listarCompraNoLineaCredito(1);
+                    swal('Compras actualizadas a Linea Credito');
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // ====================================================
             // =============  TAB FORUM ======================

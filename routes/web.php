@@ -45,6 +45,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/SetForum', 'CompraController@SetForum');
     Route::get('/compra/GetCompraSinWOperativo', 'CompraController@GetCompraSinWOperativo');
     Route::get('/compra/GetCompraSinWFinanciero', 'CompraController@GetCompraSinWFinanciero');
+    Route::post('/compra/UpdCompraById', 'CompraController@UpdCompraById');
+    Route::get('/compra/GetLstCompraNoLineaCredito', 'CompraController@GetLstCompraNoLineaCredito');
+    Route::post('/compra/UpdCompraLineaCreditoById', 'CompraController@UpdCompraLineaCreditoById');
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
     Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');
     Route::post('/listapreciovh/importFileListaPrecioVh', 'ExcelController@importFileListaPrecioVh');
@@ -111,8 +114,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
-    Route::post('/compra/UpdCompraById', 'CompraController@UpdCompraById');
-    Route::get('/compra/GetLstCompraNoLineaCredito', 'CompraController@GetLstCompraNoLineaCredito');
 
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
