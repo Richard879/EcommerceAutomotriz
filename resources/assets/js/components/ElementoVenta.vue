@@ -80,10 +80,10 @@
                                                     <td v-text="elemento.fElemenValorVenta"></td>
                                                     <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                     <td>
-                                                         <el-tooltip class="item" effect="dark" placement="top-start">
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
                                                              <div slot="content">Editar {{ elemento.cElemenNombre }}</div>
                                                              <i @click="abrirFormulario('elemento','actualizar', elemento)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                        </el-tooltip>
+                                                        </el-tooltip>&nbsp;
                                                         <template v-if="elemento.cElementoEstado=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Desactivar {{ elemento.cElemenNombre }}</div>

@@ -122,30 +122,32 @@
                                                                                 <td v-text="lista.dFechaInicio"></td>
                                                                                 <td v-text="lista.dFechaFin"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                        :title="'Agregar Detalle a Lista'">
-                                                                                        <i class="fa-md fa fa-sign-in"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Agregar Detalle</div>
+                                                                                        <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                            lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
+                                                                                    </el-tooltip>&nbsp;                                                       
+                                                                                    <template v-if="lista.cListaEstado=='A'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Desactivar Lista {{ lista.nIdListaPrecioVh }}</div>
+                                                                                            <i @click="desactivar(lista.nIdListaPrecioVh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Activar Lista {{ lista.nIdListaPrecioVh }}</div>
+                                                                                            <i @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>&nbsp; 
                                                                                     <template v-if="lista.nListadoDetalleContador > 0">
-                                                                                        <a href="#" @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                            :title="'Ver Detalle Lista ' +lista.nNroListaPrecio">
-                                                                                            <i class="fa-md fa fa-eye"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Ver Detalle</div>
+                                                                                            <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                                lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                        </el-tooltip>
                                                                                     </template>
                                                                                     <template v-else>
                                                                                         SD
-                                                                                    </template>
-                                                                                    <template v-if="lista.cListaEstado=='A'">
-                                                                                        <a href="#" @click="desactivar(lista.nIdListaPrecioVh)" data-toggle="tooltip" data-placement="top" 
-                                                                                            :title="'Desactivar Lista ' +lista.nNroListaPrecio">
-                                                                                            <i class="fa-md fa fa-check-square"></i>
-                                                                                        </a>
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        <a href="#" @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" data-toggle="tooltip" data-placement="top" 
-                                                                                            :title="'Activar Lista ' +lista.nNroListaPrecio">
-                                                                                            <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                        </a>
                                                                                     </template>
                                                                                 </td>
                                                                             </tr>

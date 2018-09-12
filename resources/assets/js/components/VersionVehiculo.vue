@@ -176,7 +176,7 @@
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                              <div slot="content">Editar {{ vehiculo.cNombreComercial }}</div>
                                                              <i @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                        </el-tooltip>
+                                                        </el-tooltip>&nbsp;
                                                         <template v-if="vehiculo.cVersionVehEstado=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Desactivar {{ vehiculo.nIdVersionVeh }}</div>
