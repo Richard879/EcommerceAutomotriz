@@ -179,13 +179,13 @@
                                                         </el-tooltip>&nbsp;
                                                         <template v-if="vehiculo.cVersionVehEstado=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ vehiculo.nIdVersionVeh }}</div>
+                                                                <div slot="content">Desactivar {{ vehiculo.cNombreComercial }}</div>
                                                                 <i @click="desactivar(vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ vehiculo.nIdVersionVeh }}</div>
+                                                                <div slot="content">Activar {{ vehiculo.cNombreComercial }}</div>
                                                                 <i @click="activar(vehiculo.nIdVersionVeh)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
