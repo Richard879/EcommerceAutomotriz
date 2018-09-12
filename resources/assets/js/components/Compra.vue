@@ -416,8 +416,10 @@
                                                                         <tbody>
                                                                             <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenCompra">
                                                                                 <td>
-                                                                                    <a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +compra.nOrdenCompra">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                        <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="compra.nOrdenCompra"></td>
                                                                                 <td v-text="compra.cNombreLinea"></td>

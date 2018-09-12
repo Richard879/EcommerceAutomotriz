@@ -93,7 +93,7 @@
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Activar {{ elemento.cElemenNombre }}</div>
-                                                                <i @click="activar(elemento.nIdElemento)" :style="'color:#796AEE'" class="fa-md fa fa-square"></i>
+                                                                <i @click="activar(elemento.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
