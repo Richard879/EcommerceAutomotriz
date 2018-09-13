@@ -2583,65 +2583,61 @@
             },
            // =============  REGISTRAR DISTRIBUCION ===================
             registrarAsignaDistribucion(){
-                if(this.formDistribucion.ntipodistribucion==1){
+                let me = this;
 
-                    if(this.arrayProveedorPorEC.length > 0){
+                if(me.formDistribucion.ntipodistribucion==1){
+
+                    if(me.arrayProveedorPorEC.length > 0){
                         var list=[];
-                        var listIndexEntidadValor=[];
-                        listIndexProvValor = this.arrayIndexEntidadValor;
                         var valorPorEC = 0;
 
-                        this.arrayProveedorPorEC.map(function(value, key) {
+                        me.arrayProveedorPorEC.map(function(value, key) {
                             list.push({
                                 nIdEntidad: value.nIdEntidad,
                                 cFlagEntidad: value.cFlagEntidad,
-                                fValorPorcentual: listIndexProvValor[key]
+                                fValorPorcentual: me.arrayIndexEntidadValor[key]
                             });
-                            valorPorEC = valorPorEC + parseInt(listIndexProvValor[key]);
+                            valorPorEC = valorPorEC + parseInt(me.arrayIndexEntidadValor[key]);
                         });
 
-                        if(this.validaRegistroDistribuionPorEC(valorPorEC)){
-                            this.accionmodal=1;
-                            this.modal = 1;
+                        if(me.validaRegistroDistribuionPorEC(valorPorEC)){
+                            me.accionmodal=1;
+                            me.modal = 1;
                             return;
                         }
 
-                        var url = this.ruta + '/ec/SetDistribucionEventoByEC';
+                        var url = me.ruta + '/ec/SetDistribucionEventoByEC';
                         axios.post(url, {
-                            nIdEventoCampania: this.formDistribucion.nideventocampania,
+                            nIdEventoCampania: me.formDistribucion.nideventocampania,
                             data: list
                         }).then(response => {
                             swal('Distribución registrada');
-                            this.limpiarFormulario();
-                            this.inicio();
+                            me.limpiarFormulario();
+                            me.inicio();
                         }).catch(error => {
                             console.log(error);
                         });
                     }
                 }
                 else{
-                    if(this.arrayElementoDistribucion.length > 0){
+                    if(me.arrayElementoDistribucion.length > 0){
                         var list=[];
-                        var listIndexProvId=[];
-                        var listIndexProvValor=[];
-                        listIndexProvId = this.arrayIndexProvId;
-                        listIndexProvValor = this.arrayIndexProvValor;
 
-                        this.arrayElementoDistribucion.map(function(value, key) {
+                        me.arrayElementoDistribucion.map(function(value, key) {
                             list.push({
                                 nIdEventoElementoVenta: value.nIdEventoElementoVenta,
-                                nIdEntidad: listIndexProvId[key],
-                                fValorPorcentual: listIndexProvValor[key]
+                                nIdEntidad: me.arrayIndexProvId[key],
+                                fValorPorcentual: me.arrayIndexProvValor[key]
                             });
                         });
 
-                        var url = this.ruta + '/ec/SetDistribucionEventoByElemento';
+                        var url = me.ruta + '/ec/SetDistribucionEventoByElemento';
                         axios.post(url, {
                             data: list
                         }).then(response => {
                             swal('Distribución registrada');
-                            this.limpiarFormulario();
-                            this.inicio();
+                            me.limpiarFormulario();
+                            me.inicio();
                         }).catch(error => {
                             console.log(error);
                         });

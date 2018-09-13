@@ -926,7 +926,6 @@
                 }).then(response => {
                     let info = response.data;
                     this.arrayDetalleVehiculo  = info;
-                    //this.llenarArrayDetalleVehiculo();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -947,26 +946,6 @@
                     this.error = 1;
                 }
                 return this.error;
-            },
-            llenarArrayDetalleVehiculo(){
-                let me = this;
-                if(me.arrayDetalleVehiculo.length > 0){
-                    me.arrayDetalleVehiculo.map(function(ev){
-                        me.arrayDetalleVehiculoAdd.push({
-                            nIdVersionVeh   : ev.nIdVersionVeh,
-                            nIdProveedor    : ev.nIdProveedor,
-                            Proveedor       : ev.Proveedor,
-                            nIdLinea        : ev.nIdLinea,
-                            Linea           : ev.Linea,
-                            nIdMarca        : ev.nIdMarca,
-                            Marca           : ev.Marca,
-                            nIdModelo       : ev.nIdModelo,
-                            Modelo          : ev.Modelo,
-                            cNombreComercial: ev.cNombreComercial,
-                            cantidad        : ev.nCantidadVehiculo
-                        });
-                    });
-                }
             },
             // =======================
             // MODAL TIPO BENEFICIO
@@ -1012,12 +991,42 @@
             },
             // ====================================================================
             // ============== REGISTRAR OBJETIVO COMERCIAL COMPRA =================
+            llenarArrayDetalleVehiculo(){
+                let me = this;
+                if(me.arrayDetalleVehiculo.length > 0){
+                    me.arrayDetalleVehiculo.map(function(value, key){
+                        me.arrayDetalleVehiculoAdd.push({
+                            nIdVersionVeh       : value.nIdVersionVeh,
+                            nIdProveedor        : value.nIdProveedor,
+                            Proveedor           : value.Proveedor,
+                            nIdLinea            : value.nIdLinea,
+                            Linea               : value.Linea,
+                            nIdMarca            : value.nIdMarca,
+                            Marca               : value.Marca,
+                            nIdModelo           : value.nIdModelo,
+                            Modelo              : value.Modelo,
+                            cNombreComercial    : value.cNombreComercial,
+                            nCantidadVehiculo   : value.nCantidadVehiculo,
+                            cTipoBeneficio      : me.arrayIndexTipoBeneficioId[key],
+                            cFlagTipoValor      : me.arrayIndexFlagTipoValorId[key],
+                            fValorBeneficio     : me.arrayIndexValorBeneficio[key]
+                        });
+                    });
+                }
+            },
             registrarObjComercialCompra(data){
+
+                //======= Valido informacion correcta ==========
                 if(this.validarRegistrarObjComercial(data)){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
+                
+                //======= LLeno el array para enviar ==========
+                this.llenarArrayDetalleVehiculo();
+
+
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialCompra';
                 axios.post(url, {
                     'nIdEmpresa'            :   this.fillObjComercialCompra.nidempresa,
@@ -1040,23 +1049,33 @@
                 });
             },
             validarRegistrarObjComercial(){
-                this.error = 0;
-                this.mensajeError =[];
+                let me = this;
 
-                if(this.fillTipoBeneficio.nidtipobeneficio == 0 && !this.fillTipoBeneficio.ctipobeneficionombre){
-                    this.mensajeError.push('Debe seleccionar un tipo de beneficio');
-                }
-                if(this.fillProveedor.nidproveedor == 0 && !this.fillProveedor.cproveedornombre){
-                    this.mensajeError.push('Debe seleccionar un proveedor');
-                }
-                if(this.arrayDetalleVehiculoAdd.length == 0){
-                    this.mensajeError.push('Debe agregar Detalle de Vehículos');
+                me.error = 0;
+                me.mensajeError =[];
+
+                if(me.arrayDetalleVehiculo.length > 0){
+                    me.arrayDetalleVehiculo.map(function(value, key){
+                        if(me.arrayIndexValorBeneficio[key] != null)
+                        {
+                            if(!me.arrayIndexTipoBeneficioId[key]){
+                                me.mensajeError.push('Seleccione Tipo Beneficio para ' + value.cNombreComercial);
+                            }
+                            if(!me.arrayIndexFlagTipoValorId[key]){
+                                me.mensajeError.push('Seleccione Tipo Valor para' + value.cNombreComercial);
+                            }
+                        }
+                    });
                 }
 
-                if(this.mensajeError.length){
-                    this.error = 1;
+                if(me.fillProveedor.nidproveedor == 0 && !me.fillProveedor.cproveedornombre){
+                    me.mensajeError.push('Debe seleccionar un proveedor');
                 }
-                return this.error;
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
             },
             // =================================================================
             // METODOS GENERICOS
