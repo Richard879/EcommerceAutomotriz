@@ -172,7 +172,6 @@
                                                                         <tr>
                                                                             <!--<th>Acciones</th>-->
                                                                             <th>Nro Pedido</th>
-                                                                            <th>Vendedor</th>
                                                                             <th>Contacto</th>
                                                                             <th>Vehiculo</th>
                                                                             <th>Número VIN</th>
@@ -180,6 +179,7 @@
                                                                             <th>Fecha Pedido</th>
                                                                             <th>Estado Pedido</th>
                                                                             <th>Estado Aprobación</th>
+                                                                            <th>Vendedor</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -191,7 +191,6 @@
                                                                                 </a>
                                                                             </td>-->
                                                                             <td v-text="pedido.cNumeroPedido"></td>
-                                                                            <td v-text="pedido.cVendedorNombre"></td>
                                                                             <td v-text="pedido.cContacto"></td>
                                                                             <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                             <td v-text="pedido.cNumeroVin"></td>
@@ -199,6 +198,7 @@
                                                                             <td v-text="pedido.dFechaPedido"></td>
                                                                             <td v-text="pedido.cEstadoPedido"></td>
                                                                             <td v-text="pedido.cEstadoAprobacion"></td>
+                                                                            <td v-text="pedido.cVendedorNombre"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -357,9 +357,8 @@
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Cotizacion</th>
-                                                                                <th>Vendedor</th>
-                                                                                <th>Vehiculo</th>
                                                                                 <th>Contacto</th>
+                                                                                <th>Vehiculo</th>
                                                                                 <th>Dirección</th>
                                                                                 <th>Celular</th>
                                                                                 <th>Email</th>
@@ -367,20 +366,20 @@
                                                                                 <th>Fecha Venc.</th>
                                                                                 <th>Estado Cotización</th>
                                                                                 <th>Estado Aprobación</th>
+                                                                                <th>Vendedor</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraCotizacion">
-                                                                                <td> 
-                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top" 
-                                                                                        :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
-                                                                                        <i class="fa-md fa fa-check-circle"></i>
-                                                                                    </a>
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Aprobar Cotización {{ pedido.cNumeroCotizacion }}</div>
+                                                                                        <i @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroCotizacion"></td>
-                                                                                <td v-text="pedido.cVendedorNombre"></td>
-                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
+                                                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cDireccion"></td>
                                                                                 <td v-text="pedido.nTelefonoMovil"></td>
                                                                                 <td v-text="pedido.cEmail"></td>
@@ -388,6 +387,7 @@
                                                                                 <td v-text="pedido.dFechaVencimientoCotizacion"></td>
                                                                                 <td v-text="pedido.cEstadoCotizacion"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
+                                                                                <td v-text="pedido.cVendedorNombre"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -437,7 +437,8 @@
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
-                                                    <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2><hr/>
+                                                    <h2 class="no-margin-bottom" v-text="formPedido.cnombrecontacto"></h2>
+                                                    <hr/>
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="Tab1" href="#TabAsignarCompra" @click="tabAsignarCompra()" role="tab" data-toggle="tab">
@@ -521,12 +522,12 @@
                                                                                             <tbody>
                                                                                                 <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                                                     <td> 
-                                                                                                        <a href="#" @click="activarTabDocReferencias(compra.nIdCompra, compra.cNumeroVin, compra.nOrdenCompra, 
-                                                                                                                                                    compra.cNombreComercial, compra.nAnioFabricacion, compra.nAnioVersion,
-                                                                                                                                                    compra.cNombreColor, compra.cNumeroMotor)" 
-                                                                                                            data-toggle="tooltip" data-placement="top" :title="'Seleccionar Compra ' + compra.nIdCompra">
-                                                                                                            <i class="fa-md fa fa-check-circle"></i>
-                                                                                                        </a>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Seleccionar Compra {{ compra.cNumeroVin }}</div>
+                                                                                                            <i @click="activarTabDocReferencias(compra.nIdCompra, compra.cNumeroVin, compra.nOrdenCompra, 
+                                                                                                                                                compra.cNombreComercial, compra.nAnioFabricacion, compra.nAnioVersion,
+                                                                                                                                                compra.cNombreColor, compra.cNumeroMotor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                                        </el-tooltip>
                                                                                                     </td>
                                                                                                     <td v-text="compra.nIdCompra"></td>
                                                                                                     <td v-text="compra.nOrdenCompra"></td>
@@ -541,9 +542,9 @@
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
-                                                                                    <div class="col-lg-12">
+                                                                                    <div class="col-sm-12">
                                                                                         <div class="row">
-                                                                                            <div class="col-lg-7">
+                                                                                            <div class="col-sm-7">
                                                                                                 <nav>
                                                                                                     <ul class="pagination">
                                                                                                         <li v-if="pagination.current_page > 1" class="page-item">
@@ -561,7 +562,7 @@
                                                                                                     </ul>
                                                                                                 </nav>
                                                                                             </div>
-                                                                                            <div class="col-lg-5">
+                                                                                            <div class="col-sm-5">
                                                                                                 <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                             </div>
                                                                                         </div>

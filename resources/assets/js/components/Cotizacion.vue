@@ -181,18 +181,12 @@
                                                                     <tbody>
                                                                         <tr v-for="cotizacion in arrayCotizaciones" :key="cotizacion.nIdCabeceraCotizacion">
                                                                             <td>
-                                                                                <template v-if="cotizacion.cSituacionRegistro =='A'">
+                                                                                <!--<template v-if="cotizacion.cSituacionRegistro =='A'">
                                                                                     <a href="#" @click="desactivar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
                                                                                     :title="'Desactivar ' +cotizacion.nIdCabeceraCotizacion">
                                                                                         <i class="fa-md fa fa-check-square"></i>
                                                                                     </a>
-                                                                                </template>
-                                                                                <template v-else>
-                                                                                    <a href="#" @click="activar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
-                                                                                    :title="'Activar ' +cotizacion.nIdCabeceraCotizacion">
-                                                                                        <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                    </a>
-                                                                                </template>
+                                                                                </template>-->
                                                                             </td>
                                                                             <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                             <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo"></td>
@@ -314,7 +308,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
+                                                            <!--<div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Ref. Cotización</label>
@@ -323,7 +317,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>-->
                                                             <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                     <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
@@ -433,10 +427,19 @@
                                                                             <tbody>
                                                                                 <tr v-for="r in arrayReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
                                                                                     <td>
-                                                                                        <a href="#" @click="asingarReferenciaVehiculo(r.nIdAsignacionContactoVendedor, r.nIdProveedor, r.cProveedorNombre,
-                                                                                                                                        r.nIdLinea, r.nIdMarca, r.nIdModelo);">
-                                                                                            <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
-                                                                                        </a>
+                                                                                        <template v-if="r.nNroCotizacionesActivas == 0">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Generar Cotizacion {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                <i @click="asingarReferenciaVehiculo(r.nIdAsignacionContactoVendedor, r.nIdProveedor, r.cProveedorNombre,
+                                                                                                                                        r.nIdLinea, r.nIdMarca, r.nIdModelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Tiene Cotizaciones Activas {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                <i :style="'color:yellow'" class="fa-md fa fa-warning"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>
                                                                                     </td>
                                                                                     <td v-text="r.cProveedorNombre"></td>
                                                                                     <td v-text="r.cLineaNombre"></td>
@@ -470,6 +473,8 @@
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
+                                                <h2 class="no-margin-bottom" v-text="fillAsignarContacto.ccontacto"></h2>
+                                                <hr/>
                                                 <ul class="nav nav-tabs">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" id="tab0401" href="#TabDCVehiculo" @click="tabDCVehiculo" role="tab" data-toggle="tab">
@@ -557,9 +562,10 @@
                                                                                                 <tbody>
                                                                                                     <tr v-for="(vehiculo, index) in arrayVehiculo" :key="vehiculo.nIdContacto">
                                                                                                         <td>
-                                                                                                            <a href="#" @click="removerVehiculoLista(index);">
-                                                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle" aria-hidden="true"></i>
-                                                                                                            </a>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Eliminar Vehiculo  {{ vehiculo.NombreComercial }}</div>
+                                                                                                                <i @click="removerVehiculoLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                            </el-tooltip>
                                                                                                         </td>
                                                                                                         <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
                                                                                                         <td v-text="vehiculo.cantidad"></td>
@@ -666,9 +672,10 @@
                                                                                                 <tbody>
                                                                                                     <tr v-for="(elementoventa, index) in arrayElementoVenta" :key="elementoventa.nIdContacto">
                                                                                                         <td>
-                                                                                                            <a href="#" @click="removerElementoVentaLista(index);">
-                                                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                            </a>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
+                                                                                                                <i @click="removerElementoVentaLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                            </el-tooltip>
                                                                                                         </td>
                                                                                                         <td v-text="elementoventa.cElemenNombre"></td>
                                                                                                         <td colspan="2"><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
@@ -749,9 +756,10 @@
                                                                                                         <td v-text="evento.cNombreEventoCampania"></td>
                                                                                                         <td v-text="evento.TipoEvento"></td>
                                                                                                         <td>
-                                                                                                            <a href="#" @click="abrirModal('campaña', 'detalle', evento);">
-                                                                                                                <i class="fa-md fa fa-search-plus" aria-hidden="true"></i>
-                                                                                                            </a>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Ver Detalle {{ evento.cNombreEventoCampania }}</div>
+                                                                                                                <i @click="abrirModal('campaña', 'detalle', evento)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                                            </el-tooltip>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </tbody>
@@ -1072,9 +1080,10 @@
                                                     <tbody>
                                                         <tr v-for="contactos in arrayContactosPorVendedor" :key="contactos.nIdContacto">
                                                             <td>
-                                                                <a href="#" @click="abrirModal('contacto', 'asignar', contactos);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar Contacto</div>
+                                                                    <i @click.prevent="abrirModal('contacto', 'asignar', contactos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <template v-if="contactos.cPerApellidos">
                                                                 <td v-text="contactos.cContacto"></td>
@@ -1179,9 +1188,10 @@
                                                         <tbody>
                                                             <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                                 <td>
-                                                                    <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
                                                                 </td>
                                                                 <td v-text="proveedor.cParNombre"></td>
                                                             </tr>
@@ -1363,9 +1373,10 @@
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayVehiculoModal" :key="vehiculo.nIdContacto">
                                                             <td>
-                                                                <a href="#" @click.prevent="agregarVehículoLista(vehiculo);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar Vehiculo {{ vehiculo.NombreComercial }}</div>
+                                                                    <i @click.prevent="agregarVehículoLista(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <td v-text="vehiculo.codListaPrecioVD"></td>
                                                             <td v-text="vehiculo.NombreComercial"></td>
@@ -1495,9 +1506,10 @@
                                                     <tbody>
                                                         <tr v-for="elemento in arrayElementoVentaModal" :key="elemento.nIdContacto">
                                                             <td>
-                                                                <a href="#" @click.prevent="agregarElementoVentaLista(elemento);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Agregar {{ elemento.cElemenNombre }}</div>
+                                                                    <i @click.prevent="agregarElementoVentaLista(elemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <td v-text="elemento.nIdElemento"></td>
                                                             <td v-text="elemento.cProveedorNombre"></td>
@@ -1598,9 +1610,10 @@
                                                                 <tr v-for="(eleventa, index) in arrayEventoEleVentaModal" :key="eleventa.nIdContacto">
                                                                     <template v-if="eleventa.nIdEventoCampania == fillEventoCampania.nIdEventoCampania">
                                                                         <td>
-                                                                            <a href="#" @click.prevent="removerElementoVentaCampania(index);">
-                                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Eliminar {{ eleventa.cNombre }}</div>
+                                                                                <i @click="removerElementoVentaCampania(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                            </el-tooltip>
                                                                         </td>
                                                                         <td v-text="eleventa.cNombre"></td>
                                                                         <td v-text="eleventa.fValorVenta"></td>
@@ -1951,6 +1964,7 @@
                 this.llenarSoloComboMarca();
                 this.llenarSoloComboModelo();
                 this.llenarEstadoCotizacion();
+                this.arrayCotizaciones = [];
             },
             llenarSoloComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -2088,11 +2102,14 @@
                     return;
                 }
 
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass("nav-link");
                 $('#tab02').removeClass('nav-link active');
                 $('#tab02').addClass("nav-link");
                 $('#tab03').addClass('nav-link active');
                 $('#tab04').removeClass('nav-link active');
                 $('#tab04').addClass('nav-link disabled');
+                $('#TabMisCotizaciones').removeClass('in active show');
                 $('#TabCotizacion').removeClass('in active show');
                 $('#TabAsignarContacto').addClass('in active show');
                 $('#TabDetalleCotizacion').removeClass('in active show');
@@ -2172,7 +2189,7 @@
                 });
             },
             llenarReferenciasVehiculo(){
-                var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
+                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -3223,10 +3240,10 @@
     }
     .el-select{
             width: 100%;
-        }
-        .el-date-editor.el-input, .el-date-editor.el-input__inner{
-            width: 100% !important;
-        }
+    }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        width: 100% !important;
+    }
 </style>
 
 

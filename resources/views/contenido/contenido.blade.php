@@ -58,7 +58,7 @@
         <depositopedido :ruta="ruta"></depositopedido>
     </template>
     <template v-if="menu==200217">
-        <vendedorlinea :ruta="ruta"></vendedorlinea>
+        <asignavendedormodelo :ruta="ruta" :usuario="{{ auth()->user() }}"></asignavendedormodelo>
     </template>
     <template v-if="menu==200218">
         <solccjefeventa :ruta="ruta"></solccjefeventa>

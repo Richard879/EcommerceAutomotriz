@@ -80,21 +80,21 @@
                                                     <td v-text="elemento.fElemenValorVenta"></td>
                                                     <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                     <td>
-                                                        <a href="#" @click="abrirFormulario('elemento','actualizar', elemento)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Editar ' +elemento.cElemenNombre">
-                                                            <i class="fa-md fa fa-edit"></i>
-                                                        </a>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                             <div slot="content">Editar {{ elemento.cElemenNombre }}</div>
+                                                             <i @click="abrirFormulario('elemento','actualizar', elemento)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                        </el-tooltip>&nbsp;
                                                         <template v-if="elemento.cElementoEstado=='A'">
-                                                            <a href="#" @click="desactivar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Desactivar ' +elemento.cElemenNombre">
-                                                                <i class="fa-md fa fa-check-square"></i>
-                                                            </a>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Desactivar {{ elemento.cElemenNombre }}</div>
+                                                                <i @click="desactivar(elemento.nIdElemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                            </el-tooltip>
                                                         </template>
                                                         <template v-else>
-                                                            <a href="#" @click="activar(elemento.nIdElemento)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Activar ' +elemento.cElemenNombre">
-                                                                <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                            </a>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Activar {{ elemento.cElemenNombre }}</div>
+                                                                <i @click="activar(elemento.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                            </el-tooltip>
                                                         </template>
                                                     </td>
                                                 </tr>
@@ -333,9 +333,10 @@
                                                     <tbody>
                                                         <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                             <td>
-                                                                <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <td v-text="proveedor.cParNombre"></td>
                                                         </tr>
@@ -611,9 +612,15 @@
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
                     cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
-                    swal('Elemento registrado');
-                    this.listarElementos(1);
-                    this.vistaFormulario = 1;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Elemento registrado');
+                        this.listarElementos(1);
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Elemento Venta');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -663,10 +670,15 @@
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
                     cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
-                    swal('Elemento Actualizado');
-                    this.limpiarFormulario();
-                    //this.listarElementos(1);
-                    this.vistaFormulario = 1;
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Elemento Actualizado');
+                        this.limpiarFormulario();
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Elemento Venta');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });

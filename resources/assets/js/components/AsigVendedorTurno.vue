@@ -111,9 +111,10 @@
                                                                         <tbody>
                                                                             <tr v-for="vendedor in arrayVendedoresByIdJV" :key="vendedor.cParNombre">
                                                                                 <td>
-                                                                                    <a href="#" @click="asigarVendedorByJefe(vendedor);">
-                                                                                        <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seleccionar {{ vendedor.cParNombre }}</div>
+                                                                                        <i @click="asigarVendedorByJefe(vendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="vendedor.cParNombre"></td>
                                                                             </tr>
@@ -444,7 +445,7 @@
                     caño: '',
                     cmes: '',
                     nidusuario: '',
-                    cusuarionombre: '',
+                    cusuarionombre: 'NO ES JEFE DE VENTAS',
                     nidturno: 0,
                     cnombreturno: '',
                     nidturnovendedor: 0,
@@ -580,10 +581,11 @@
                 });
             },
             informacionUsuario(){
-                var url = this.ruta + '/asigVendedorTurno/GetParametroById';
+                var url = this.ruta + '/parametro/GetParametroById';
                 axios.get(url, {
                     params: {
-                        'nidpar' : this.usuario.id
+                        'nidpar' : this.usuario.id,
+                        'nidgrupopar': 110025
                     }
                 }).then(response => {
                     this.fillFormularioGeneral.nidusuario = response.data[0].nIdPar;

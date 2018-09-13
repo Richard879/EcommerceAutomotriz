@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ParametroController as Parametro;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,22 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AsigVendedorTurnoController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetParametroById(Request $request)
     {
-        $nidpar = $request->nidpar;
+        $nIdPar = $request->nidpar;
+        $nIdGrupoPar = $request->nidgrupopar;
 
-        $data = DB::select('exec usp_Par_GetParametroById ?',  [$nidpar]);
+        $data = DB::select('exec usp_Par_GetParametroById ?, ?',  [$nIdPar, $nIdGrupoPar]);
 
         return response()->json($data);
     }
@@ -37,7 +28,7 @@ class AsigVendedorTurnoController extends Controller
 
         $arrayVendedoresByIdJV = DB::select('exec usp_Par_GetParametroByParParent ?,?',  [$nidpar, $nidgrupar]);
 
-        $arrayVendedoresByIdJV = $this->arrayPaginator($arrayVendedoresByIdJV, $request);
+        $arrayVendedoresByIdJV = ParametroController::arrayPaginator($arrayVendedoresByIdJV, $request);
         return ['arrayVendedoresByIdJV'=>$arrayVendedoresByIdJV];
     }
 

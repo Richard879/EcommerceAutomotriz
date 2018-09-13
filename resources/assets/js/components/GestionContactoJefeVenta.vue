@@ -38,7 +38,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Tab5" href="#TabLeads" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="Tab5" href="#TabLeads" @click="tabLeads()" role="tab" data-toggle="tab">
                                         <i class="fa fa-file-excel-o"></i> LEADS
                                     </a>
                                 </li>
@@ -129,10 +129,10 @@
                                                                                 <td v-text="c.cEmail"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombre">
-                                                                                        <i class="fa-md fa fa-sign-out"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seguimiento {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -160,19 +160,19 @@
                                                                                 <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Seguimiento ' + c.cRazonSocial">
-                                                                                        <i class="fa-md fa fa-sign-out"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seguimiento {{ c.cRazonSocial }}</div>
+                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </template>
                                                                 </table>
                                                             </div>
-                                                            <div class="col-lg-12">
+                                                            <div class="col-sm-12">
                                                                 <div class="row">
-                                                                    <div class="col-lg-7">
+                                                                    <div class="col-sm-7">
                                                                         <nav>
                                                                             <ul class="pagination">
                                                                                 <li v-if="pagination.current_page > 1" class="page-item">
@@ -190,7 +190,7 @@
                                                                             </ul>
                                                                         </nav>
                                                                     </div>
-                                                                    <div class="col-lg-5">
+                                                                    <div class="col-sm-5">
                                                                         <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                     </div>
                                                                 </div>
@@ -316,10 +316,10 @@
                                                                                     <td>{{ c.cEmail }}</td>
                                                                                     <td>{{ c.cVendedor }}</td>
                                                                                     <td>
-                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre, c.cVendedor)"  data-placement="top"
-                                                                                            :title="'Reasignar Contacto'">
-                                                                                            <i :style="'color:blue'" class="fa-md fa fa-street-view"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Reasignar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre, c.cVendedor)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -347,19 +347,19 @@
                                                                                     <td>{{ c.cContacto }}</td>
                                                                                     <td>{{ c.cVendedor }}</td>
                                                                                     <td>
-                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cRazonSocial, c.cVendedor)"  data-placement="top"
-                                                                                            :title="'Reasignar Contacto'">
-                                                                                            <i :style="'color:blue'" class="fa-md fa fa-street-view"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Reasignar Contacto {{ c.cRazonSocial }}</div>
+                                                                                            <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cRazonSocial, c.cVendedor)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -377,7 +377,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -487,18 +487,18 @@
                                                                                 <td v-text="referencia.nAnioFabricacion"></td>
                                                                                 <td v-text="referencia.nAnioModelo"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Reasignar Referencia'">
-                                                                                        <i :style="'color:blue'" class="fa-md fa fa-car"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Reasignar Referencia {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
+                                                                                        <i @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" :style="'color:blue'" class="fa-md fa fa-car"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -516,7 +516,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -636,10 +636,10 @@
                                                                                     <td v-text="c.cDireccion"></td>
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td>
-                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre)"  data-placement="top"
-                                                                                            :title="'Asignar Contacto a Vendedor'">
-                                                                                            <i :style="'color:blue'" class="fa-md fa fa-user"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Asignar Contacto {{ c.cPerApellidos + ' ' +  c.cNombre }} a Vendedor</div>
+                                                                                            <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre)" :style="'color:blue'" class="fa-md fa fa-user"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -665,19 +665,19 @@
                                                                                     <td v-text="c.cEmail"></td>
                                                                                     <td v-text="c.cContacto"></td>
                                                                                     <td>
-                                                                                        <a href="#" data-toggle="tooltip" @click.prevent="mostrarVistaAsignaContacto(c.nIdContacto, c.cRazonSocial)"  data-placement="top"
-                                                                                            :title="'Asignar Contacto a Vendedor'">
-                                                                                            <i :style="'color:blue'" class="fa-md fa fa-user"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Asignar Contacto {{ c.cRazonSocial }} a Vendedor</div>
+                                                                                            <i @click="mostrarVistaAsignaContacto(c.nIdContacto, c.cRazonSocial)" :style="'color:blue'" class="fa-md fa fa-user"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </template>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -695,7 +695,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -792,18 +792,18 @@
                                                                                 <td v-text="referencia.nAnioFabricacion"></td>
                                                                                 <td v-text="referencia.nAnioModelo"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignarReferenciaLibre(referencia.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Asignar Referencia'">
-                                                                                        <i :style="'color:blue'" class="fa-md fa fa-car"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Asignar Referencia {{ referencia.cMarcaNombre + ' ' +  referencia.cModeloNombre }}</div>
+                                                                                        <i @click="asignarReferenciaLibre(referencia.nIdReferenciaVehiculoContacto)" :style="'color:blue'" class="fa-md fa fa-car"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -821,7 +821,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -1081,24 +1081,24 @@
                                                                                                 <td v-text="r.nAnioFabricacion"></td>
                                                                                                 <td v-text="r.nAnioModelo"></td>
                                                                                                 <td>
-                                                                                                    <a href="#" @click="activarTab333(r.nIdAsignacionContactoVendedor)" data-toggle="tooltip" data-placement="top"
-                                                                                                        :title="'Nuevo Seguimiento ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
-                                                                                                        <i class="fa-md fa fa-sign-out"></i>
-                                                                                                    </a>
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Nuevo Seguimiento {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                        <i @click="activarTab333(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                                    </el-tooltip>
                                                                                                     <template v-if="r.cReferenciaVehEstado=='A'">
-                                                                                                        <a href="#" @click="desactivar(r.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                                        :title="'Desactivar ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
-                                                                                                            <i class="fa-md fa fa-check-square"></i>
-                                                                                                        </a>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Desactivar {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                            <i @click="desactivar(r.nIdReferenciaVehiculoContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                                        </el-tooltip>
                                                                                                     </template>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
                                                                                 </div>
-                                                                                <div class="col-lg-12">
+                                                                                <div class="col-sm-12">
                                                                                     <div class="row">
-                                                                                        <div class="col-lg-7">
+                                                                                        <div class="col-sm-7">
                                                                                             <nav>
                                                                                                 <ul class="pagination">
                                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -1116,7 +1116,7 @@
                                                                                                 </ul>
                                                                                             </nav>
                                                                                         </div>
-                                                                                        <div class="col-lg-5">
+                                                                                        <div class="col-sm-5">
                                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                         </div>
                                                                                     </div>
@@ -1891,6 +1891,18 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-8">
                                                                     <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                        <div class="col-sm-8">
+                                                                            <a href="#" @click="descargaFormatoLeads">
+                                                                                <i class="fa-md fa fa-file-excel-o"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Importar Leads</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
@@ -1927,6 +1939,8 @@
                                                                                 <th>Dirección</th>
                                                                                 <th>Marca</th>
                                                                                 <th>Modelo</th>
+                                                                                <th>Año Fab</th>
+                                                                                <th>Año Modelo</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -1950,6 +1964,8 @@
                                                                                 <td v-text="lead.cLineaNombre"></td>
                                                                                 <td v-text="lead.cMarcaNombre"></td>
                                                                                 <td v-text="lead.cModeloNombre"></td>
+                                                                                <td v-text="lead.nAnioFabricacion"></td>
+                                                                                <td v-text="lead.nAnioModelo"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -3816,6 +3832,10 @@
             },
             // ========================================================
             // =============  TAB LEADS ======================
+            tabLeads(){
+                $("#file-upload").val("");
+                this.arrayLeads = [];
+            },
             getFile(e){
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
@@ -4001,6 +4021,9 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            descargaFormatoLeads(){
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoLeads.xlsx');
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================

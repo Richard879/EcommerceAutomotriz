@@ -37,32 +37,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Hora Inicio</label>
-                                        <div class="col-sm-4">
-                                            <el-time-picker
-                                                v-model="formTur.chorainicio"
-                                                value-format="HH:mm"
-                                                :picker-options="{
-                                                format: 'AM/PM'
-                                                }"
-                                                placeholder="Fecha de Inicio">
-                                            </el-time-picker>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Hora Fin</label>
-                                        <div class="col-sm-4">
-                                            <el-time-picker
-                                                v-model="formTur.chorafin"
-                                                value-format="HH:mm"
-                                                :picker-options="{
-                                                format: 'AM/PM'
-                                                }"
-                                                placeholder="Fecha de Fin">
-                                            </el-time-picker>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTurnoVenta();"><i class="fa fa-search"></i> Buscar</button>
                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('turnoventa','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
@@ -99,21 +73,21 @@
                                                     <td v-text="turnoventa.cHoraInicio"></td>
                                                     <td v-text="turnoventa.cHoraFin"></td>
                                                     <td>
-                                                        <a href="#" @click="abrirFormulario('turnoventa','actualizar', turnoventa)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Actualizar ' +turnoventa.nIdTurnoVendedor">
-                                                            <i class="fa-md fa fa-edit"></i>
-                                                        </a>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                             <div slot="content">Editar</div>
+                                                             <i @click="abrirFormulario('turnoventa','actualizar', turnoventa)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                        </el-tooltip>&nbsp;
                                                         <template v-if="turnoventa.cTurnoVenEstado=='A'">
-                                                            <a href="#" @click="desactivar(turnoventa.nIdTurnoVendedor)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Desactivar ' +turnoventa.nIdTurnoVendedor">
-                                                                <i class="fa-md fa fa-check-square"></i>
-                                                            </a>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Desactivar</div>
+                                                                <i @click="desactivar(turnoventa.nIdTurnoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                            </el-tooltip>
                                                         </template>
                                                         <template v-else>
-                                                            <a href="#" @click="activar(turnoventa.nIdTurnoVendedor)" data-toggle="tooltip" data-placement="top"
-                                                            :title="'Activar ' +turnoventa.nIdTurnoVendedor">
-                                                                <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                            </a>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Activar</div>
+                                                                <i @click="activar(turnoventa.nIdTurnoVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                            </el-tooltip>
                                                         </template>
                                                     </td>
                                                 </tr>
@@ -563,7 +537,6 @@
         },
         mounted(){
             this.llenarComboTurno();
-            this.listarTurnosVenta(1);
         }
     }
 </script>

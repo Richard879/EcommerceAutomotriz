@@ -18,7 +18,7 @@ class ExcelController extends Controller
     {    
         $file = $request->file;
         $bandera = str_random(10);
-        $ruta = Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
+        $ruta = Storage::putFileAs('uploads/ExcelCompra', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
 
         /*$nameFile = $request->file->store('uploads/ExcelCompra');
@@ -145,7 +145,9 @@ class ExcelController extends Controller
                 'cLineaNombre' => $value[12],
                 'cMarcaNombre' => $value[13],
                 'cModeloNombre' => $value[14],
-                'cGlosa' => $value[15]
+                'nAnioFabricacion' => $value[15],
+                'nAnioModelo' => $value[16],
+                'cGlosa' => $value[17]
             ];
         }
 

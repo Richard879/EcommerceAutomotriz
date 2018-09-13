@@ -122,30 +122,32 @@
                                                                                 <td v-text="lista.dFechaInicio"></td>
                                                                                 <td v-text="lista.dFechaFin"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                        :title="'Agregar Detalle a Lista'">
-                                                                                        <i class="fa-md fa fa-sign-in"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Agregar Detalle</div>
+                                                                                        <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                            lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
+                                                                                    </el-tooltip>&nbsp;                                                       
+                                                                                    <template v-if="lista.cListaEstado=='A'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Desactivar Lista {{ lista.nIdListaPrecioVh }}</div>
+                                                                                            <i @click="desactivar(lista.nIdListaPrecioVh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Activar Lista {{ lista.nIdListaPrecioVh }}</div>
+                                                                                            <i @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>&nbsp; 
                                                                                     <template v-if="lista.nListadoDetalleContador > 0">
-                                                                                        <a href="#" @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" data-toggle="tooltip" data-placement="top" 
-                                                                                            :title="'Ver Detalle Lista ' +lista.nNroListaPrecio">
-                                                                                            <i class="fa-md fa fa-eye"></i>
-                                                                                        </a>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Ver Detalle</div>
+                                                                                            <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                                lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                        </el-tooltip>
                                                                                     </template>
                                                                                     <template v-else>
                                                                                         SD
-                                                                                    </template>
-                                                                                    <template v-if="lista.cListaEstado=='A'">
-                                                                                        <a href="#" @click="desactivar(lista.nIdListaPrecioVh)" data-toggle="tooltip" data-placement="top" 
-                                                                                            :title="'Desactivar Lista ' +lista.nNroListaPrecio">
-                                                                                            <i class="fa-md fa fa-check-square"></i>
-                                                                                        </a>
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        <a href="#" @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" data-toggle="tooltip" data-placement="top" 
-                                                                                            :title="'Activar Lista ' +lista.nNroListaPrecio">
-                                                                                            <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                        </a>
                                                                                     </template>
                                                                                 </td>
                                                                             </tr>
@@ -392,23 +394,29 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-8">
                                                                     <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                        <div class="col-sm-8">
+                                                                            <a href="#" @click="descargaFormatoListaPrecio">
+                                                                                <i class="fa-md fa fa-file-excel-o"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Adjunte Lista de Precios</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
-                                                                                <i class="fa fa-upload"></i> Seleccione Archivo
-                                                                            </label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="row">
-                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <div class="col-sm-6">-->
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
-                                                                                <i class="fa fa-retweet"></i> Procesar
-                                                                            </button>
-                                                                        <!--</div>-->
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
+                                                                            <i class="fa fa-retweet"></i> Procesar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -442,9 +450,12 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(lista, index) in arrayExcel" :key="lista.nIdVersionVh">
-                                                                                <td><a href="#" @click="eliminarItemExcel(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +lista.nOrdenListaPrecioVh">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                            <tr v-for="(lista, index) in arrayExcel" :key="lista.cNombreComercial">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar {{ lista.cNombreComercial }}</div>
+                                                                                        <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="lista.nIdVersionVeh"></td>
                                                                                 <td v-text="lista.cNombreComercial"></td>
@@ -715,9 +726,10 @@
                                                     <tbody>
                                                         <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                             <td>
-                                                                <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <td>{{proveedor.cParNombre}}</td>
                                                         </tr>
@@ -1299,6 +1311,9 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            descargaFormatoListaPrecio(){
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoListaPrecioExcel.xlsx');
             },
             validarRegistroDetalle(){
                 this.error = 0;

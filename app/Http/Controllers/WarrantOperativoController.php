@@ -55,10 +55,10 @@ class WarrantOperativoController extends Controller
 
     public function SetWOperativo(Request $request)
     {
-        /*if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
  
-        try{*/
-           // DB::beginTransaction();
+        try{
+           DB::beginTransaction();
 
             $wo = DB::select('exec usp_WO_SetWOperativo ?, ?, ?, ?, ?', 
                                                             array($request->nIdBanco,
@@ -66,26 +66,23 @@ class WarrantOperativoController extends Controller
                                                                 $request->dFechaInicio,
                                                                 $request->dFechaVence,
                                                                 Auth::user()->id
-                                                            ));
-                                   
-            return response()->json($wo);
-            
+                                                            ));                                                 
+            $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
-            /*$detalles = $request->data;
-
+            $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
                 DB::select('exec usp_WO_SetWOperativoDetalle ?, ?, ?, ?', 
-                                                            array(wo[0].nIdWarrantOperativo,
+                                                            array($nIdWarrantOperativo,
                                                                 $det['nIdCompra'],
-                                                                $det['fValorWarrant'],
+                                                                $det['fTotalCompra'],
                                                                 Auth::user()->id
                                                             ));
-            }  */
-           // DB::commit(); 
-        /*} catch (Exception $e){
+            }  
+            DB::commit(); 
+        } catch (Exception $e){
             DB::rollBack();
-        }  */   
+        }    
     }
 
     public function SetWOperativoDetalle(Request $request)

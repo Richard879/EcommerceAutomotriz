@@ -119,30 +119,31 @@
                                             <tr>
                                                 <th>Acciones</th>
                                                 <th>Nro Pedido</th>
-                                                <th>Vendedor</th>
                                                 <th>Contacto</th>
                                                 <th>Vehiculo</th>
                                                 <th>Número VIN</th>
                                                 <th>Número DUA</th>
                                                 <th>Fecha Pedido</th>
                                                 <th>Estado Aprobación</th>
+                                                <th>Vendedor</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
                                                 <td>
-                                                    <a href="#" @click.prevent="aprobarPedido(pedido.nIdCabeceraPedido)" :title="'Aprobar ' +pedido.nIdCabeceraPedido">
-                                                        <i class="fa-md fa fa-check" aria-hidden="true"></i>
-                                                    </a>
+                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                        <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
+                                                        <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                    </el-tooltip>
                                                 </td>
                                                 <td v-text="pedido.cNumeroPedido"></td>
-                                                <td v-text="pedido.Vendedor"></td>
                                                 <td v-text="pedido.cContacto"></td>
                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                 <td v-text="pedido.cNumeroVin"></td>
                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                 <td v-text="pedido.dFechaPedido"></td>
                                                 <td v-text="pedido.cEstadoAprobacion"></td>
+                                                <td v-text="pedido.Vendedor"></td>
                                             </tr>
                                         </tbody>
                                     </table>

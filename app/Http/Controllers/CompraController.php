@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Compra;
+
 
 class CompraController extends Controller
 {
-    
-
     public function GetCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -50,8 +52,13 @@ class CompraController extends Controller
         try{
             DB::beginTransaction();
             $detalles = $request->data;
+
+            $arrayVinExiste = [];
+            $arrayPrecioLista = [];
+
             foreach($detalles as $ep=>$det)
             {
+                
                 //$detalle = new Compra();
                 //$detalle->nOrdenCompra = $det['nOrdenCompra'];
                 //$detalle->cNombreLinea = $det['cNombreLinea'];
@@ -63,7 +70,7 @@ class CompraController extends Controller
                 $fTotalCompra = str_replace(",", "", $fTotalCompra);
                 //echo $fTotalCompra. " ";
 
-                DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array($request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdCronograma,
@@ -87,7 +94,20 @@ class CompraController extends Controller
                                                                 $det['dFechaFacturado'],
                                                                 Auth::user()->id
                                                             ));
+                if($objCompra[0]->nFlagMsje == 0){
+                    array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
+                }    
+                if($objCompra[0]->nFlagMsje == 2){
+                    array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
+                }               
             }
+            $data = [
+                'arrayVinExiste'=>$arrayVinExiste,
+                'arrayPrecioLista'=>$arrayPrecioLista
+            ];
+
+            return response()->json($data);
+            
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
@@ -172,6 +192,78 @@ class CompraController extends Controller
                                                                 Auth::user()->id
                                                             ]);
             }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function UpdCompraById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $compra = DB::select('exec usp_Compra_UpdCompraById ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            array($request->nIdEmpresa,
+                                                                    $request->nIdProveedor,
+                                                                    $request->nIdCompra,
+                                                                    $request->cNumeroVin,
+                                                                    $request->cNumeroMotor,
+                                                                    $request->cNumeroDua,
+                                                                    $request->cNombreColor,
+                                                                    Auth::user()->id
+                                                                    ));
+        return response()->json($compra);
+    }
+
+    public function GetLstCompraNoLineaCredito(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
+        $nOrdenCompra = $request->nordencompra;
+        $cNumeroVin = $request->cnumerovin;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+
+        $arrayLineaCredito = DB::select('exec usp_Compra_GetLstCompraNoLineaCredito ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [       
+                                                                    $nIdEmpresa,
+                                                                    $nIdSucursal,
+                                                                    $dFechaInicio,
+                                                                    $dFechaFin,
+                                                                    $nOrdenCompra,
+                                                                    $cNumeroVin,
+                                                                    $nIdMarca,
+                                                                    $nIdModelo
+                                                                ]);
+
+        $arrayLineaCredito = Parametro::arrayPaginator($arrayLineaCredito, $request);
+        return ['arrayLineaCredito'=>$arrayLineaCredito];
+    }
+
+    public function UpdCompraLineaCreditoById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec usp_Compra_UpdCompraLineaCreditoById ?, ?, ?, ?, ?',
+                                                            array($request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $det['nIdCompra'],
+                                                                $det['cNumeroVin'],
+                                                                Auth::user()->id
+                                                            ));             
+            }
+            //return response()->json($data);
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();

@@ -186,10 +186,10 @@
                                                                         <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
                                                                             <td>
                                                                                 <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
-                                                                                    <a href="#" @click="activarTabDeposito(pedido.nIdCabeceraPedido, pedido.cContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Realizar Depósito ' + pedido.cNumeroPedido">
-                                                                                        <i class="fa-md fa fa-check-circle"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seleccionar Pedido {{ pedido.cNumeroPedido }}</div>
+                                                                                        <i @click="activarTabDeposito(pedido.nIdCabeceraPedido, pedido.cContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </template>
                                                                             </td>
                                                                             <td v-text="pedido.cNumeroPedido"></td>
