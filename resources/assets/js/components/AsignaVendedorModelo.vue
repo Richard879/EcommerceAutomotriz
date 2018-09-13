@@ -16,40 +16,55 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="formAsignaModelo.cempresa" class="form-control form-control-sm" readonly>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="formAsignaModelo.cempresa" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="formAsignaModelo.csucursal" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Sucursal</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="formAsignaModelo.csucursal" class="form-control form-control-sm" readonly>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Jefe de ventas</label>
+                                                <div class="col-sm-8">
+                                                    <label v-text="formAsignaModelo.cJefeVentaNombre" class="form-control-label-readonly"></label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Jefe de ventas</label>
-                                        <div class="col-sm-4">
-                                                <label v-text="formAsignaModelo.cJefeVentaNombre" class="form-control-label-readonly"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Proveedor</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <input type="hidden" v-model="formAsignaModelo.nidproveedor">
-                                                <input type="text" v-model="formAsignaModelo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                <div class="input-group-prepend">
-                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                        <i class="fa-lg fa fa-search"></i>
-                                                    </button>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="hidden" v-model="formAsignaModelo.nidproveedor">
+                                                        <input type="text" v-model="formAsignaModelo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-3">
-                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarProveedorLinea();"><i class="fa fa-search"></i> Buscar</button>
+                                        <div class="col-sm-9 offset-sm-5">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarProveedorLinea()">
+                                                <i class="fa fa-search"></i> Buscar
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
