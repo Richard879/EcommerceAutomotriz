@@ -30,6 +30,7 @@ Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
 Vue.component('depositopedido', require('./components/PedidoDeposito.vue'));
 Vue.component('vendedorlinea', require('./components/VendedorLinea.vue'));
 Vue.component('maestrovehiculo', require('./components/MaestroVehiculo.vue'));
+Vue.component('autorizacion', require('./components/Autorizacion.vue'));
 
 const app = new Vue({
     el: '#app',

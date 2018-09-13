@@ -126,7 +126,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <div class="col-sm-6"> 
+                                                                <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Estado Cotizacion</label>
                                                                         <div class="col-sm-8">
@@ -180,7 +180,7 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="cotizacion in arrayCotizaciones" :key="cotizacion.nIdCabeceraCotizacion">
-                                                                            <td> 
+                                                                            <td>
                                                                                 <template v-if="cotizacion.cSituacionRegistro =='A'">
                                                                                     <a href="#" @click="desactivar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
                                                                                     :title="'Desactivar ' +cotizacion.nIdCabeceraCotizacion">
@@ -1954,7 +1954,7 @@
             },
             llenarSoloComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110032,
@@ -1982,7 +1982,7 @@
             },
             llenarEstadoCotizacion(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110058,

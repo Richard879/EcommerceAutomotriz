@@ -29,6 +29,7 @@
         <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asigna Vendedor a Linea</a></li>
         <li id="200218" @click="menu=200218" onclick="ActivarMenu('200218')"><a href="#">Solicitud CC JFV</a></li>
         <li id="200219" @click="menu=200219" onclick="ActivarMenu('200219')"><a href="#">Maestro Vehículo</a></li>
+        <li id="200220" @click="menu=200220" onclick="ActivarMenu('200220')"><a href="#">Autorización</a></li>
       </ul>
     </li>
     <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

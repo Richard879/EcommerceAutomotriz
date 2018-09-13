@@ -142,6 +142,11 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristicaController@SetConformeNoConforme');
     Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristicaController@SetAprobadoNoAprobado');
     Route::put('/solicitudCartaCaracteristica/SetAnularSCC', 'SolicitudCartaCaracteristicaController@SetAnularSCC');
+    Route::post('/maestrovehiculo/SetRegistrarVehiculoPlaca', 'MaestroVehiculoController@SetRegistrarVehiculoPlaca');
+    Route::post('/maestrovehiculo/SetRegistrarPerNatural', 'MaestroVehiculoController@SetRegistrarPerNatural');
+    Route::post('/maestrovehiculo/SetRegistrarPerJuridica', 'MaestroVehiculoController@SetRegistrarPerJuridica');
+    Route::post('/maestrovehiculo/SetRegistrarSoat', 'MaestroVehiculoController@SetRegistrarSoat');
+    Route::get('/maestrovehiculo/GetDetalleMaestroVehiculo', 'MaestroVehiculoController@GetDetalleMaestroVehiculo');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');

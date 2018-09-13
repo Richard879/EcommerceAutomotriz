@@ -59,8 +59,8 @@ class ObjComercialController extends Controller
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
 
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoCompra ?, ?, ?, ?, ?, ?, ?', 
-                                                             [  $nIdEmpresa, 
+        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoCompra ?, ?, ?, ?, ?, ?, ?',
+                                                             [  $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nIdCronograma,
                                                                 $nIdProveedor,
@@ -109,21 +109,6 @@ class ObjComercialController extends Controller
                                     $fValorMoneda,
                                     Auth::user()->id
                                 ]);
-
-                                $a = [
-                                    'nIdEmpresa' => $nIdEmpresa,
-                                    'nIdSucursal' => $nIdSucursal,
-                                    'nIdProveedor' => $nIdProveedor,
-                                    'nIdCronograma' => $nIdCronograma,
-                                    'nIdVersionVeh' => $value['nIdVersionVeh'],
-                                    'cFlagTipoOperacion' => $cFlagTipoOperacion,
-                                    'nCantidadVehiculo' => $value['cantidad'],
-                                    'cFlagTipoBeneficio' => $cFlagTipoBeneficio,
-                                    'cFlagTipoValor' => $cFlagTipoValor,
-                                    'fValorPorcentual' => $fValorPorcentual,
-                                    'fValorMoneda' => $fValorMoneda
-                                ];
-                                var_dump($a);
                     }
                 }
             }

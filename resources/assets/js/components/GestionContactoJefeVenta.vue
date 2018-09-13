@@ -3909,10 +3909,10 @@
                                     cModeloNombre: value.cModeloNombre,
                                     cGlosa: value.cGlosa
                                 });
-                            }     
+                            }
                     });
-                    
-                    
+
+
                     this.contadorArrayLeads = me.arrayLeads.length;*/
 
                 }).then(function (response) {
