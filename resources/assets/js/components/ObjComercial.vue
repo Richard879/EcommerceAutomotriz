@@ -775,6 +775,8 @@
             llenarArrayDetalleVehiculoCompra(){
                 let me = this;
                       
+                me.arrayDetalleVehiculoCompra = [];
+
                 me.arrayListaVehiculoCompra.map(function(value, key){
                     me.arrayDetalleVehiculoCompra.push({
                             nIdVersionVeh   : value.nIdVersionVeh,
@@ -809,6 +811,8 @@
             llenarArrayDetalleVehiculo(){
                 let me = this;
 
+                me.arrayTempDetalleVehiculo = [];
+                
                 me.arrayDetalleVehiculoCompra.map(function(value, key){
                     if(value.nCantidadVehiculo > 0){
                         me.arrayTempDetalleVehiculo.push({
