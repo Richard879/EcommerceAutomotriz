@@ -66,4 +66,13 @@
     <template v-if="menu==200219">
         <maestrovehiculo :ruta="ruta"></maestrovehiculo>
     </template>
+    <template v-if="menu==200220">
+        <autorizacionv :ruta="ruta"></autorizacionv>
+    </template>
+    <template v-if="menu==200221">
+        <autorizacionjv :ruta="ruta"></autorizacionjv>
+    </template>
+    <template v-if="menu==200222">
+        <autorizacionadv :ruta="ruta"></autorizacionadv>
+    </template>
 @endsection
