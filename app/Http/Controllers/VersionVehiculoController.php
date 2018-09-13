@@ -25,8 +25,6 @@ class VersionVehiculoController extends Controller
                                                                     $request->nIdLinea,
                                                                     $request->nIdMarca,
                                                                     $request->nIdModelo,
-                                                                    /*$request->nIdAnioFabricacion,
-                                                                    $request->nIdAnioVersion,*/
                                                                     $request->cNombreComercial,
                                                                     Auth::user()->id
                                                                     ));

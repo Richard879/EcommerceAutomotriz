@@ -137,7 +137,7 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarDetalleVehículo(1)">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleVehiculoCompra(1)">
                                                                         <i class="fa fa-search"></i> Buscar
                                                                     </button>
                                                                 </div>
@@ -153,7 +153,7 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
-                                                            <template v-if="arrayDetalleVehiculo.length">
+                                                            <template v-if="arrayDetalleVehiculoCompra.length">
                                                                 <div class="table-responsive barraLateral">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -170,7 +170,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(detalle, index) in arrayDetalleVehiculo" :key="detalle.nIdVersionVeh">
+                                                                            <tr v-for="(detalle, index) in arrayDetalleVehiculoCompra" :key="detalle.nIdVersionVeh">
                                                                                 <td v-text="detalle.Proveedor"></td>
                                                                                 <td v-text="detalle.Linea"></td>
                                                                                 <td v-text="detalle.Marca"></td>
@@ -331,7 +331,7 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarDetalleVehículo(1)">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleVehiculoCompra(1)">
                                                                         <i class="fa fa-search"></i> Buscar
                                                                     </button>
                                                                 </div>
@@ -348,7 +348,7 @@
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="col-lg-12">
-                                                                <template v-if="arrayDetalleVehiculoAdd.length">
+                                                                <template v-if="arrayTempDetalleVehiculo.length">
                                                                     <div class="table-responsive barraLateral">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
@@ -361,7 +361,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="detalle in arrayDetalleVehiculoAdd" :key="detalle.nIdVersionVeh">
+                                                                                <tr v-for="detalle in arrayTempDetalleVehiculo" :key="detalle.nIdVersionVeh">
                                                                                     <td v-text="detalle.Proveedor"></td>
                                                                                     <td v-text="detalle.Linea"></td>
                                                                                     <td v-text="detalle.Marca"></td>
@@ -384,7 +384,7 @@
                                                             </div>
                                                         </form>
                                                         <hr>
-                                                        <div class="col-lg-12" v-if="arrayDetalleVehiculoAdd.length">
+                                                        <div class="col-lg-12" v-if="arrayTempDetalleVehiculo.length">
                                                             <div class="form-group row">
                                                                 <div class="col-md-9 offset-md-5">
                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercialCompra(2)">
@@ -654,8 +654,8 @@
                 },
                 arrayFlagTipoValor: [],
                 arrayTipoBeneficio: [],
-                arrayDetalleVehiculo: [],
-                arrayDetalleVehiculoAdd: [],
+                arrayDetalleVehiculoCompra: [],
+                arrayTempDetalleVehiculo: [],
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
@@ -863,50 +863,10 @@
                     console.log(error);
                 });
             },
-            // =======================
-            // MODAL PROVEEDOR
-            // =======================
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': this.fillObjComercialCompra.nidempresa,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page   =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total          = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from           = response.data.arrayProveedor.from;
-                    this.paginationModal.to             = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.fillProveedor.nidproveedor = nProveedorId;
-                this.fillProveedor.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
-                this.llenarComboLinea();
-            },
             // ==============================================================
             // ========== BUSCAR DETALLE VEHICULO TAB COMPRA ================
-            buscarDetalleVehículo(page){
-                if(this.validaBuscarDetalleVehículo()){
+            listarDetalleVehiculoCompra(page){
+                if(this.validaBuscaDetalleVehiculoCompra()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -925,16 +885,16 @@
                     }
                 }).then(response => {
                     let info = response.data;
-                    this.arrayDetalleVehiculo  = info;
+                    this.arrayDetalleVehiculoCompra  = info;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            cambiarPaginaDetalleVehiculo(page){
+            cambiarPaginaDetalleVehiculoCompra(page){
                 this.pagination.current_page=page;
-                // this.buscarDetalleVehículo(page);
+                // this.listarDetalleVehiculoCompra(page);
             },
-            validaBuscarDetalleVehículo(){
+            validaBuscaDetalleVehiculoCompra(){
                 this.error = 0;
                 this.mensajeError =[];
 
@@ -946,6 +906,85 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            // ====================================================================
+            // ============== REGISTRAR OBJETIVO COMERCIAL COMPRA =================
+            llenarArrayDetalleVehiculo(){
+                let me = this;
+
+                me.arrayDetalleVehiculoCompra.map(function(value, key){
+                    if(value.nCantidadVehiculo > 0){
+                        me.arrayTempDetalleVehiculo.push({
+                            nIdVersionVeh       : value.nIdVersionVeh,
+                            cNombreComercial    : value.cNombreComercial,
+                            nCantidadVehiculo   : value.nCantidadVehiculo,
+                            nIdFlagTipoBeneficio  : me.arrayIndexTipoBeneficioId[key],
+                            nIdFlagTipoValor      : me.arrayIndexFlagTipoValorId[key],
+                            fValorBeneficio     : me.arrayIndexValorBeneficio[key]
+                        });
+                        console.log(me.arrayIndexFlagTipoValorId[key]);
+                    }
+                });
+                //console.log(me.arrayTempDetalleVehiculo.length);
+            },
+            registrarObjComercialCompra(data){
+
+                //======= Valido informacion correcta ==========
+                if(this.validarRegistrarObjComercial(data)){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
+                //======= LLeno el array para enviar ==========
+                this.llenarArrayDetalleVehiculo();
+
+
+                var url = this.ruta + '/objComercial/SetRegistrarObjComercialCompra';
+                axios.post(url, {
+                    'nIdEmpresa'            :   1300011,
+                    'nIdSucursal'           :   1300013,
+                    'nIdProveedor'          :   this.fillProveedor.nidproveedor,
+                    'nIdCronograma'         :   this.fillObjComercialCompra.nidcronograma,
+                    'cFlagTipoOperacion'    :   (data) == 1 ? 'C' : 'V',
+                    'arrayData'             :   this.arrayTempDetalleVehiculo
+                }).then(response => {
+                    (data) == 1 ?
+                        swal('Objetivo Comercial - Compra registrada exitosamente') :
+                        swal('Objetivo Comercial - Venta registrada exitosamente');
+                    this.limpiarProceso();
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            validarRegistrarObjComercial(){
+                let me = this;
+
+                me.error = 0;
+                me.mensajeError =[];
+
+                if(me.arrayDetalleVehiculoCompra.length > 0){
+                    me.arrayDetalleVehiculoCompra.map(function(value, key){
+                        if(me.arrayIndexValorBeneficio[key] != null)
+                        {
+                            if(!me.arrayIndexTipoBeneficioId[key]){
+                                me.mensajeError.push('Seleccione Tipo Beneficio para ' + value.cNombreComercial);
+                            }
+                            if(!me.arrayIndexFlagTipoValorId[key]){
+                                me.mensajeError.push('Seleccione Tipo Valor para' + value.cNombreComercial);
+                            }
+                        }
+                    });
+                }
+
+                if(me.fillProveedor.nidproveedor == 0 && !me.fillProveedor.cproveedornombre){
+                    me.mensajeError.push('Debe seleccionar un proveedor');
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
             },
             // =======================
             // MODAL TIPO BENEFICIO
@@ -989,93 +1028,45 @@
                 this.arrayIndexTipoBeneficioFlag[index] = objTipoBeneficio.cParAbreviatura;
                 this.cerrarModal();
             },
-            // ====================================================================
-            // ============== REGISTRAR OBJETIVO COMERCIAL COMPRA =================
-            llenarArrayDetalleVehiculo(){
-                let me = this;
-                if(me.arrayDetalleVehiculo.length > 0){
-                    me.arrayDetalleVehiculo.map(function(value, key){
-                        me.arrayDetalleVehiculoAdd.push({
-                            nIdVersionVeh       : value.nIdVersionVeh,
-                            nIdProveedor        : value.nIdProveedor,
-                            Proveedor           : value.Proveedor,
-                            nIdLinea            : value.nIdLinea,
-                            Linea               : value.Linea,
-                            nIdMarca            : value.nIdMarca,
-                            Marca               : value.Marca,
-                            nIdModelo           : value.nIdModelo,
-                            Modelo              : value.Modelo,
-                            cNombreComercial    : value.cNombreComercial,
-                            nCantidadVehiculo   : value.nCantidadVehiculo,
-                            cTipoBeneficio      : me.arrayIndexTipoBeneficioId[key],
-                            cFlagTipoValor      : me.arrayIndexFlagTipoValorId[key],
-                            fValorBeneficio     : me.arrayIndexValorBeneficio[key]
-                        });
-                    });
-                }
+            // =======================
+            // MODAL PROVEEDOR
+            // =======================
+            buscaProveedores(){
+                this.listarProveedores(1);
             },
-            registrarObjComercialCompra(data){
-
-                //======= Valido informacion correcta ==========
-                if(this.validarRegistrarObjComercial(data)){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-                
-                //======= LLeno el array para enviar ==========
-                this.llenarArrayDetalleVehiculo();
-
-
-                var url = this.ruta + '/objComercial/SetRegistrarObjComercialCompra';
-                axios.post(url, {
-                    'nIdEmpresa'            :   this.fillObjComercialCompra.nidempresa,
-                    'nIdSucursal'           :   this.fillObjComercialCompra.nidsucursal,
-                    'nIdProveedor'          :   this.fillProveedor.nidproveedor,
-                    'nIdCronograma'         :   this.fillObjComercialCompra.nidcronograma,
-                    'cFlagTipoOperacion'    :   (data) == 1 ? 'C' : 'V',
-                    'cFlagTipoBeneficio'    :   this.fillObjComercialCompra.cflagtipobeneficio,
-                    'cFlagTipoValor'        :   '',
-                    'fValorPorcentual'      :   0,
-                    'fValorMoneda'          :   0,
-                    'arrayData'             :   this.arrayDetalleVehiculoAdd
+            listarProveedores(page){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillObjComercialCompra.nidempresa,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
+                        'opcion' : 1,
+                        'page' : page
+                    }
                 }).then(response => {
-                    (data) == 1 ?
-                        swal('Objetivo Comercial - Compra registrada exitosamente') :
-                        swal('Objetivo Comercial - Venta registrada exitosamente');
-                    this.limpiarProceso();
+                    this.arrayProveedor = response.data.arrayProveedor.data;
+                    this.paginationModal.current_page   =  response.data.arrayProveedor.current_page;
+                    this.paginationModal.total          = response.data.arrayProveedor.total;
+                    this.paginationModal.per_page       = response.data.arrayProveedor.per_page;
+                    this.paginationModal.last_page      = response.data.arrayProveedor.last_page;
+                    this.paginationModal.from           = response.data.arrayProveedor.from;
+                    this.paginationModal.to             = response.data.arrayProveedor.to;
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
                 });
             },
-            validarRegistrarObjComercial(){
-                let me = this;
-
-                me.error = 0;
-                me.mensajeError =[];
-
-                if(me.arrayDetalleVehiculo.length > 0){
-                    me.arrayDetalleVehiculo.map(function(value, key){
-                        if(me.arrayIndexValorBeneficio[key] != null)
-                        {
-                            if(!me.arrayIndexTipoBeneficioId[key]){
-                                me.mensajeError.push('Seleccione Tipo Beneficio para ' + value.cNombreComercial);
-                            }
-                            if(!me.arrayIndexFlagTipoValorId[key]){
-                                me.mensajeError.push('Seleccione Tipo Valor para' + value.cNombreComercial);
-                            }
-                        }
-                    });
-                }
-
-                if(me.fillProveedor.nidproveedor == 0 && !me.fillProveedor.cproveedornombre){
-                    me.mensajeError.push('Debe seleccionar un proveedor');
-                }
-
-                if(me.mensajeError.length){
-                    me.error = 1;
-                }
-                return me.error;
+            cambiarPaginaProveedor(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedores(page);
+            },
+            asignarProveedor(nProveedorId, cProveedorNombre){
+                this.fillProveedor.nidproveedor = nProveedorId;
+                this.fillProveedor.cproveedornombre = cProveedorNombre;
+                this.cerrarModal();
+                this.arrayMarca = [];
+                this.arrayModelo = [];
+                this.llenarComboLinea();
             },
             // =================================================================
             // METODOS GENERICOS
@@ -1132,7 +1123,7 @@
                 this.fillTipoBeneficio.ctipobeneficionombre = '';
                 this.fillProveedor.nidproveedor = 0;
                 this.fillProveedor.cproveedornombre = '';
-                this.arrayDetalleVehiculoAdd = [];
+                this.arrayTempDetalleVehiculo = [];
             },
             //Cerrar Modal
             cerrarModal(){

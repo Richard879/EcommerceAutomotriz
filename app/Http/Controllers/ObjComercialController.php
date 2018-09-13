@@ -75,57 +75,32 @@ class ObjComercialController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa             = $request->nIdEmpresa;
-        $nIdSucursal            = $request->nIdSucursal;
-        $nIdProveedor           = $request->nIdProveedor;
-        $nIdCronograma          = $request->nIdCronograma;
-        $cFlagTipoOperacion     = $request->cFlagTipoOperacion;
-        $cFlagTipoBeneficio     = $request->cFlagTipoBeneficio;
-        $cFlagTipoValor         = $request->cFlagTipoValor;
-        $fValorPorcentual       = $request->fValorPorcentual;
-        $fValorMoneda           = $request->fValorMoneda;
-        $data                   = $request->arrayData;
-
-        $cFlagTipoValor         = ($cFlagTipoValor) == null ? " " : $cFlagTipoValor;
-
         try{
             DB::beginTransaction();
-            $arrayDetalleVehiculoLength = sizeof($data);
-            if($arrayDetalleVehiculoLength > 0){
-                foreach ($data as $key => $value) {
-                    if($value['cantidad'] > 0){
-                        DB::select('exec usp_ObjComercial_SetRegistrarCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                [
-                                    $nIdEmpresa,
-                                    $nIdSucursal,
-                                    $nIdProveedor,
-                                    $nIdCronograma,
-                                    $value['nIdVersionVeh'],
-                                    $cFlagTipoOperacion,
-                                    $value['cantidad'],
-                                    $cFlagTipoBeneficio,
-                                    $cFlagTipoValor,
-                                    $fValorPorcentual,
-                                    $fValorMoneda,
-                                    Auth::user()->id
-                                ]);
+            $detalles = $request->arrayData;
 
-                                $a = [
-                                    'nIdEmpresa' => $nIdEmpresa,
-                                    'nIdSucursal' => $nIdSucursal,
-                                    'nIdProveedor' => $nIdProveedor,
-                                    'nIdCronograma' => $nIdCronograma,
-                                    'nIdVersionVeh' => $value['nIdVersionVeh'],
-                                    'cFlagTipoOperacion' => $cFlagTipoOperacion,
-                                    'nCantidadVehiculo' => $value['cantidad'],
-                                    'cFlagTipoBeneficio' => $cFlagTipoBeneficio,
-                                    'cFlagTipoValor' => $cFlagTipoValor,
-                                    'fValorPorcentual' => $fValorPorcentual,
-                                    'fValorMoneda' => $fValorMoneda
-                                ];
-                                var_dump($a);
-                    }
-                }
+            foreach($detalles as $key => $det){
+                //if($value['nCantidadVehiculo'] > 0){
+
+                    //$cFlagTipoBeneficio = ($det['cFlagTipoBeneficio'] == NULL) ? ($det['cFlagTipoBeneficio'] = ' ') : $det['cFlagTipoBeneficio'];
+                    /*$cFlagTipoValor         = ($value['cFlagTipoValor']) == NULL ? " " : $value['cFlagTipoValor'];
+                    $fValorBeneficio        = ($value['fValorBeneficio']) == NULL ? " " : $value['fValorBeneficio'];*/
+                    
+                    DB::select('exec usp_ObjComercial_SetRegistrarCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                            [
+                                $request->nIdEmpresa,
+                                $request->nIdSucursal,
+                                $request->nIdProveedor,
+                                $request->nIdCronograma,
+                                $request->cFlagTipoOperacion,
+                                $det['nIdVersionVeh'],
+                                $det['nCantidadVehiculo'],
+                                $det['nIdFlagTipoBeneficio'],
+                                $det['nIdFlagTipoValor'],
+                                $det['fValorBeneficio'],
+                                Auth::user()->id
+                            ]);
+                // }
             }
             DB::commit();
         } catch (Exception $e){
