@@ -70,7 +70,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
+                                <h3 class="h4">LISTADO LINEAS</h3>
                             </div>
                             <div class="card-body">
                                 <template v-if="arrayProveedorLinea.length">
@@ -78,27 +78,28 @@
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th>Código</th>
-                                                    <th>Linea</th>
                                                     <th>Acciones</th>
+                                                    <th>Código</th>
+                                                    <th>Linea</th>  
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="proveedorlinea in arrayProveedorLinea" :key="proveedorlinea.nIdLinea">
+                                                    <td>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Seleccionar {{ proveedorlinea.cLineaNombre }}</div>
+                                                            <i @click="abrirModalVendedor('vendedor','asignar',proveedorlinea)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                        </el-tooltip>
+                                                    </td>
                                                     <td v-text="proveedorlinea.nIdLinea"></td>
                                                     <td v-text="proveedorlinea.cLineaNombre"></td>
-                                                    <td>
-                                                        <a href="#" @click="abrirModalVendedor('vendedor','asignar',proveedorlinea);">
-                                                            <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
-                                                        </a>
-                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-sm-12">
                                         <div class="row">
-                                            <div class="col-lg-7">
+                                            <div class="col-sm-7">
                                                 <nav>
                                                     <ul class="pagination">
                                                         <li v-if="pagination.current_page > 1" class="page-item">
@@ -116,7 +117,7 @@
                                                     </ul>
                                                 </nav>
                                             </div>
-                                            <div class="col-lg-5">
+                                            <div class="col-sm-5">
                                                 <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                             </div>
                                         </div>
@@ -159,6 +160,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL PROVEEDOR -->
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -258,6 +261,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL ASIGNAR MODELOS -->
         <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -267,7 +272,7 @@
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">ASIGNACION VENDEDOR LINEA</h3>
+                                            <h3 class="h4">ASIGNACION MODELO A VENDEDOR</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="col-lg-12">
@@ -307,10 +312,6 @@
                                                             :value="marca.nIdPar">
                                                             </el-option>
                                                         </el-select>
-                                                        <!--<select v-model="fillVendedor.nidmarca" class="form-control form-control-sm" v-on:change="llenarComboModelo();">
-                                                            <option v-for="marca in arrayMarca" :key="marca.nIdPar" :value="marca.nIdPar" v-text="marca.cParNombre">
-                                                        </option>
-                                                        </select>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,10 +327,6 @@
                                                             :value="modelo.nIdPar">
                                                             </el-option>
                                                         </el-select>
-                                                        <!--<select v-model="fillVendedor.nidmodelo" class="form-control form-control-sm" v-on:change="listarVendedorLinea(1);">
-                                                            <option v-for="modelo in arrayModelo" :key="modelo.nIdPar" :value="modelo.nIdPar" v-text="modelo.cParNombre">
-                                                            </option>
-                                                        </select>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -347,16 +344,16 @@
                                                                 <tr v-for="vendedor in arrayVendedorLinea" :key="vendedor.nIdMiVendedor">
                                                                     <td>
                                                                         <template v-if="vendedor.nIdVendedor == 0">
-                                                                            <a href="#" @click="asignar(vendedor.nIdMiVendedor)" data-toggle="tooltip" data-placement="top"
-                                                                            :title="'asignar ' +vendedor.cNombreMiVendedor">
-                                                                                <i :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Asignar {{ vendedor.cNombreMiVendedor }}</div>
+                                                                                <i @click="asignar(vendedor.nIdMiVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                            </el-tooltip>
                                                                         </template>
                                                                         <template v-else>
-                                                                            <a href="#" @click="designar(vendedor.nIdAsignacionVendedorModelo)" data-toggle="tooltip" data-placement="top"
-                                                                            :title="'designar ' +vendedor.cNombreMiVendedor">
-                                                                                <i class="fa-md fa fa-check-square"></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Desasignar {{ vendedor.cNombreMiVendedor }}</div>
+                                                                                <i @click="designar(vendedor.nIdAsignacionVendedorModelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                            </el-tooltip>
                                                                         </template>
                                                                     </td>
                                                                     <td v-text="vendedor.cNombreMiVendedor"></td>
@@ -761,7 +758,7 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Asignación Vendedor Linea registrado Con Exito');
+                        swal('Asignación Vendedor Modelo registrado Con Exito');
                         this.listarVendedorLinea();
                     }
                 }).catch(error => {
@@ -781,7 +778,7 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Designacion Vendedor Linea Realizado Con Exito');
+                        swal('Desasignación Vendedor Modelo Realizado Con Exito');
                         this.listarVendedorLinea();
                     }
                 }).catch(error => {

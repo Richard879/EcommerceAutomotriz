@@ -131,9 +131,10 @@
                                         <tbody>
                                             <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
                                                 <td>
-                                                    <a href="#" @click.prevent="aprobarPedido(pedido.nIdCabeceraPedido)" :title="'Aprobar ' +pedido.nIdCabeceraPedido">
-                                                        <i class="fa-md fa fa-check" aria-hidden="true"></i>
-                                                    </a>
+                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                        <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
+                                                        <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                    </el-tooltip>
                                                 </td>
                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                 <td v-text="pedido.cContacto"></td>

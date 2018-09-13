@@ -111,9 +111,10 @@
                                                                         <tbody>
                                                                             <tr v-for="vendedor in arrayVendedoresByIdJV" :key="vendedor.cParNombre">
                                                                                 <td>
-                                                                                    <a href="#" @click="asigarVendedorByJefe(vendedor);">
-                                                                                        <i class="fa-md fa fa-check-circle" aria-hidden="true"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seleccionar {{ vendedor.cParNombre }}</div>
+                                                                                        <i @click="asigarVendedorByJefe(vendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="vendedor.cParNombre"></td>
                                                                             </tr>
