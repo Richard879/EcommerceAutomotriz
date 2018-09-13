@@ -863,6 +863,8 @@
                     this.modal = 1;
                     return;
                 }
+
+                this.mostrarProgressBar();
                 var url = this.ruta + '/objComercial/GetDetalleVehiculoCompra';
                 axios.get(url, {
                     params: {
@@ -879,6 +881,8 @@
                     let info = response.data;
                     this.arrayListaVehiculoCompra = info;
                     this.llenarArrayDetalleVehiculoCompra();
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -902,10 +906,6 @@
                     me.arrayIndexValorBeneficio[key] = value.fValorBeneficio == 0 ? '' : value.fValorBeneficio                 
                 });
             },
-            /*cambiarPaginaDetalleVehiculoCompra(page){
-                this.pagination.current_page=page;
-                this.listarDetalleVehiculoCompra(page);
-            },*/
             validaBuscaDetalleVehiculoCompra(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -961,8 +961,8 @@
                     'cFlagTipoOperacion'    :   (data) == 1 ? 'C' : 'V',
                     'arrayData'             :   this.arrayTempDetalleVehiculo
                 }).then(response => {
-                        swal('Objetivo Comercial - Compra registrada exitosamente');
-                        
+                    swal('Objetivo Comercial - Compra registrada exitosamente');
+                    this.limpiarTabCompra();
                 }).catch(error => {
                     this.errors = error
                 });
@@ -995,48 +995,6 @@
                     me.error = 1;
                 }
                 return me.error;
-            },
-            // =======================
-            // MODAL TIPO BENEFICIO
-            // =======================
-            buscaTipoIncentivo(index){
-                this.accionmodal=3;
-                this.modal=1;
-                this.fillObjComercialCompra.nindex = index;
-                this.listarTipoBeneficio(1);
-            },
-            listarTipoBeneficio(page){
-                var url = this.ruta + '/objComercial/GetLstTipoBeneficio';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110069,
-                        'ctipobeneficionombre' : this.fillTipoBeneficio.ctipobeneficionombre.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayTipoBeneficio = response.data.arrayTipoIncentivo.data;
-                    this.paginationModal.current_page   =  response.data.arrayTipoIncentivo.current_page;
-                    this.paginationModal.total          = response.data.arrayTipoIncentivo.total;
-                    this.paginationModal.per_page       = response.data.arrayTipoIncentivo.per_page;
-                    this.paginationModal.last_page      = response.data.arrayTipoIncentivo.last_page;
-                    this.paginationModal.from           = response.data.arrayTipoIncentivo.from;
-                    this.paginationModal.to             = response.data.arrayTipoIncentivo.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaTipoBeneficio(page){
-                this.paginationModal.current_page=page;
-                this.listarTipoBeneficio(page);
-            },
-            asignarTipoBeneficio(objTipoBeneficio){
-                var index = this.fillObjComercialCompra.nindex;
-                this.arrayIndexTipoBeneficioId[index] = objTipoBeneficio.nIdPar;
-                this.arrayIndexTipoBeneficioNombre[index] = objTipoBeneficio.cParNombre;
-                this.arrayIndexTipoBeneficioFlag[index] = objTipoBeneficio.cParAbreviatura;
-                this.cerrarModal();
             },
             // =======================
             // MODAL PROVEEDOR
@@ -1149,6 +1107,10 @@
                 this.limpiarPaginacionModal();
                 //Modal Buscar Proveedores
                 this.arrayProveedor = [];
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         }
     }

@@ -80,12 +80,7 @@ class ObjComercialController extends Controller
             $detalles = $request->arrayData;
 
             foreach($detalles as $key => $det){
-                //if($value['nCantidadVehiculo'] > 0){
-
-                    //$cFlagTipoBeneficio = ($det['cFlagTipoBeneficio'] == NULL) ? ($det['cFlagTipoBeneficio'] = ' ') : $det['cFlagTipoBeneficio'];
-                    /*$cFlagTipoValor         = ($value['cFlagTipoValor']) == NULL ? " " : $value['cFlagTipoValor'];
-                    $fValorBeneficio        = ($value['fValorBeneficio']) == NULL ? " " : $value['fValorBeneficio'];*/
-                    
+                if($det['nCantidadVehiculo'] > 0){                    
                     DB::select('exec usp_ObjComercial_SetRegistrarCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $request->nIdEmpresa,
@@ -100,7 +95,7 @@ class ObjComercialController extends Controller
                                 $det['fValorBeneficio'],
                                 Auth::user()->id
                             ]);
-                // }
+                }
             }
             DB::commit();
         } catch (Exception $e){
