@@ -445,7 +445,7 @@
                     caño: '',
                     cmes: '',
                     nidusuario: '',
-                    cusuarionombre: '',
+                    cusuarionombre: 'NO ES JEFE DE VENTAS',
                     nidturno: 0,
                     cnombreturno: '',
                     nidturnovendedor: 0,

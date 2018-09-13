@@ -1666,11 +1666,19 @@
                     data: this.arrayTempLineaCredito
                 }).then(response => {
                     this.listarCompraNoLineaCredito(1);
+                    this.unCheckBox();
                     swal('Compras actualizadas a Linea Credito');
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                });
+            },
+            unCheckBox(){
+                let me = this;
+
+                me.arrayLineaCredito.map(function(value, key) {
+                    me.checkBoxLinea[key] == false;
                 });
             },
             // ====================================================

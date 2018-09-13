@@ -28,7 +28,7 @@ Vue.component('asigvendedorturno', require('./components/AsigVendedorTurno.vue')
 Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
 
 Vue.component('depositopedido', require('./components/PedidoDeposito.vue'));
-Vue.component('vendedorlinea', require('./components/AsignaVendedorModelo.vue'));
+Vue.component('asignavendedormodelo', require('./components/AsignaVendedorModelo.vue'));
 Vue.component('maestrovehiculo', require('./components/MaestroVehiculo.vue'));
 
 const app = new Vue({
