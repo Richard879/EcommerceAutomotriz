@@ -180,7 +180,7 @@
                                                                                     <input type="number" min="0" class="form-control form-control-sm" v-model="detalle.nCantidadVehiculo"/>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable clearable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="arrayIndexTipoBeneficioId[index]" filterable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayTipoBeneficio"
                                                                                         :key="item.nIdPar"
@@ -189,19 +189,8 @@
                                                                                         </el-option>
                                                                                     </el-select>
                                                                                 </td>
-                                                                                <!--<td>
-                                                                                    <div class="input-group">
-                                                                                        <input type="hidden" v-model="arrayIndexTipoBeneficioId[index]">
-                                                                                        <input type="text" v-model="arrayIndexTipoBeneficioNombre[index]" class="form-control form-control-sm" readonly>
-                                                                                        <div class="input-group-prepend">
-                                                                                            <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscaTipoIncentivo(index)">
-                                                                                                <i class="fa-sm fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>-->
                                                                                 <td>
-                                                                                    <el-select v-model="arrayIndexFlagTipoValorId[index]" filterable clearable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="arrayIndexFlagTipoValorId[index]" filterable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayFlagTipoValor"
                                                                                         :key="item.nIdPar"
@@ -470,9 +459,10 @@
                                                     <tbody>
                                                         <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                             <td>
-                                                                <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
                                                             </td>
                                                             <td v-text="proveedor.cParNombre"></td>
                                                         </tr>
@@ -643,7 +633,7 @@
                 caño: '',
                 cmes: '',
                 // ===========================================================
-                // ===================== VARUABLES TAB COMPRA ================
+                // ===================== VARIABLES TAB COMPRA ================
                 fillObjComercialCompra:{
                     nidcronograma: 0,
                     cflagtipobeneficio: 0,
@@ -654,6 +644,7 @@
                 },
                 arrayFlagTipoValor: [],
                 arrayTipoBeneficio: [],
+                arrayListaVehiculoCompra: [],
                 arrayDetalleVehiculoCompra: [],
                 arrayTempDetalleVehiculo: [],
                 arrayLinea: [],
@@ -787,7 +778,8 @@
             },
             tabCompra(){
                 this.llenarCompraActiva();
-                this.limpiarProceso();
+                this.limpiarProveedor();
+                this.limpiarTabCompra();
             },
             tabVenta(){
                 this.llenarVentaActiva();
@@ -842,7 +834,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110069,
-                        'opcion' : 1
+                        'opcion' : 0
                     }
                 }).then(response => {
                     this.arrayTipoBeneficio = response.data;
@@ -855,7 +847,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110065,
-                        'opcion' : 1
+                        'opcion' : 0
                     }
                 }).then(response => {
                     this.arrayFlagTipoValor = response.data;
@@ -885,15 +877,35 @@
                     }
                 }).then(response => {
                     let info = response.data;
-                    this.arrayDetalleVehiculoCompra  = info;
+                    this.arrayListaVehiculoCompra = info;
+                    this.llenarArrayDetalleVehiculoCompra();
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            cambiarPaginaDetalleVehiculoCompra(page){
-                this.pagination.current_page=page;
-                // this.listarDetalleVehiculoCompra(page);
+            llenarArrayDetalleVehiculoCompra(){
+                let me = this;
+                      
+                me.arrayListaVehiculoCompra.map(function(value, key){
+                    me.arrayDetalleVehiculoCompra.push({
+                            nIdVersionVeh   : value.nIdVersionVeh,
+                            Proveedor       : value.Proveedor,
+                            Linea           : value.Linea,
+                            Marca           : value.Marca,
+                            Modelo          : value.Modelo,
+                            cNombreComercial: value.cNombreComercial,
+                            nCantidadVehiculo: value.nCantidadVehiculo
+                    });
+
+                    me.arrayIndexTipoBeneficioId[key] = value.nIdFlagTipoBeneficio == 0 ? 0 : value.nIdFlagTipoBeneficio,
+                    me.arrayIndexFlagTipoValorId[key] = value.nIdFlagTipoValor == 0 ? 0 : value.nIdFlagTipoValor,
+                    me.arrayIndexValorBeneficio[key] = value.fValorBeneficio == 0 ? '' : value.fValorBeneficio                 
+                });
             },
+            /*cambiarPaginaDetalleVehiculoCompra(page){
+                this.pagination.current_page=page;
+                this.listarDetalleVehiculoCompra(page);
+            },*/
             validaBuscaDetalleVehiculoCompra(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -949,10 +961,8 @@
                     'cFlagTipoOperacion'    :   (data) == 1 ? 'C' : 'V',
                     'arrayData'             :   this.arrayTempDetalleVehiculo
                 }).then(response => {
-                    (data) == 1 ?
-                        swal('Objetivo Comercial - Compra registrada exitosamente') :
-                        swal('Objetivo Comercial - Venta registrada exitosamente');
-                    this.limpiarProceso();
+                        swal('Objetivo Comercial - Compra registrada exitosamente');
+                        
                 }).catch(error => {
                     this.errors = error
                 });
@@ -965,12 +975,12 @@
 
                 if(me.arrayDetalleVehiculoCompra.length > 0){
                     me.arrayDetalleVehiculoCompra.map(function(value, key){
-                        if(me.arrayIndexValorBeneficio[key] != null)
+                        if(me.arrayIndexValorBeneficio[key] != "")
                         {
-                            if(!me.arrayIndexTipoBeneficioId[key]){
+                            if(me.arrayIndexTipoBeneficioId[key] == 0){
                                 me.mensajeError.push('Seleccione Tipo Beneficio para ' + value.cNombreComercial);
                             }
-                            if(!me.arrayIndexFlagTipoValorId[key]){
+                            if(me.arrayIndexFlagTipoValorId[key] == 0){
                                 me.mensajeError.push('Seleccione Tipo Valor para' + value.cNombreComercial);
                             }
                         }
@@ -1117,13 +1127,17 @@
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
             },
-            limpiarProceso(){
-                this.fillObjComercialCompra.cflagtipobeneficio = '';
-                this.fillTipoBeneficio.nidtipobeneficio = 0;
-                this.fillTipoBeneficio.ctipobeneficionombre = '';
-                this.fillProveedor.nidproveedor = 0;
-                this.fillProveedor.cproveedornombre = '';
-                this.arrayTempDetalleVehiculo = [];
+            limpiarProveedor(){
+              this.fillProveedor.nidproveedor = 0;
+              this.fillProveedor.cproveedornombre = '';
+            },
+            limpiarTabCompra(){
+                this.arrayListaVehiculoCompra = [],
+                this.arrayTempDetalleVehiculo = [],
+                this.arrayDetalleVehiculoCompra = []
+            },
+            limpiarTabVenta(){
+
             },
             //Cerrar Modal
             cerrarModal(){
