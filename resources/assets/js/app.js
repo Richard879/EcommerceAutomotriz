@@ -30,7 +30,9 @@ Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
 Vue.component('depositopedido', require('./components/PedidoDeposito.vue'));
 Vue.component('asignavendedormodelo', require('./components/AsignaVendedorModelo.vue'));
 Vue.component('maestrovehiculo', require('./components/MaestroVehiculo.vue'));
-Vue.component('autorizacion', require('./components/Autorizacion.vue'));
+Vue.component('autorizacionv', require('./components/AutorizacionV.vue'));
+Vue.component('autorizacionjv', require('./components/AutorizacionJV.vue'));
+Vue.component('autorizacionadv', require('./components/AutorizacionADV.vue'));
 
 const app = new Vue({
     el: '#app',
