@@ -215,8 +215,9 @@ class ParametroController extends Controller
     public function GetParametroById(Request $request)
     {
         $nIdPar = $request->nidpar;
+        $nIdGrupoPar = $request->nidgrupopar;
 
-        $data = DB::select('exec usp_Par_GetParametroById ?',  [$nIdPar]);
+        $data = DB::select('exec usp_Par_GetParametroById ?, ?',  [$nIdPar, $nIdGrupoPar]);
 
         return response()->json($data);
     }

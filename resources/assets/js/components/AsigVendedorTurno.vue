@@ -581,10 +581,11 @@
                 });
             },
             informacionUsuario(){
-                var url = this.ruta + '/asigVendedorTurno/GetParametroById';
+                var url = this.ruta + '/parametro/GetParametroById';
                 axios.get(url, {
                     params: {
-                        'nidpar' : this.usuario.id
+                        'nidpar' : this.usuario.id,
+                        'nidgrupopar': 110025
                     }
                 }).then(response => {
                     this.fillFormularioGeneral.nidusuario = response.data[0].nIdPar;

@@ -507,10 +507,11 @@
         },
         methods:{
             informacionUsuario(){
-                var url = this.ruta + '/asigVendedorTurno/GetParametroById';
+                var url = this.ruta + '/parametro/GetParametroById';
                 axios.get(url, {
                     params: {
-                        'nidpar' : this.usuario.id
+                        'nidpar' : this.usuario.id,
+                        'nidgrupopar': 110025
                     }
                 }).then(response => {
                     this.formAsignaModelo.nJefeVentaId = response.data[0].nIdPar;
@@ -545,12 +546,12 @@
                     }
                 }).then(response => {
                     this.arrayProveedorLinea = response.data.arrayLinea.data;
-                    this.pagination.current_page =  response.data.arrayProveedorLinea.current_page;
-                    this.pagination.total = response.data.arrayProveedorLinea.total;
-                    this.pagination.per_page    = response.data.arrayProveedorLinea.per_page;
-                    this.pagination.last_page   = response.data.arrayProveedorLinea.last_page;
-                    this.pagination.from        = response.data.arrayProveedorLinea.from;
-                    this.pagination.to           = response.data.arrayProveedorLinea.to;
+                    this.pagination.current_page =  response.data.arrayLinea.current_page;
+                    this.pagination.total = response.data.arrayLinea.total;
+                    this.pagination.per_page    = response.data.arrayLinea.per_page;
+                    this.pagination.last_page   = response.data.arrayLinea.last_page;
+                    this.pagination.from        = response.data.arrayLinea.from;
+                    this.pagination.to           = response.data.arrayLinea.to;
                 }).catch(error => {
                     console.log(error);
                 });

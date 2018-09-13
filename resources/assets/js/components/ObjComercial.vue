@@ -948,7 +948,6 @@
                 }
                 return this.error;
             },
-
             llenarArrayDetalleVehiculo(){
                 let me = this;
                 if(me.arrayDetalleVehiculo.length > 0){
