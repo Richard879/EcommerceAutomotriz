@@ -482,7 +482,7 @@ class GestionContactoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_Contacto_SetLeads ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                DB::select('exec usp_Contacto_SetLeads ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $det['cTipoDocumento'],
                                                                 $det['cNumeroDocumento'],
@@ -499,6 +499,8 @@ class GestionContactoController extends Controller
                                                                 $det['cLineaNombre'],
                                                                 $det['cMarcaNombre'],
                                                                 $det['cModeloNombre'],
+                                                                $det['nAnioFabricacion'],
+                                                                $det['nAnioModelo'],
                                                                 $det['cGlosa'],
                                                                 Auth::user()->id
                                                             ]);

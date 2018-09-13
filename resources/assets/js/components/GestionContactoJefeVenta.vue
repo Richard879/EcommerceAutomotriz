@@ -38,7 +38,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Tab5" href="#TabLeads" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="Tab5" href="#TabLeads" @click="tabLeads()" role="tab" data-toggle="tab">
                                         <i class="fa fa-file-excel-o"></i> LEADS
                                     </a>
                                 </li>
@@ -1891,6 +1891,18 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-8">
                                                                     <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                        <div class="col-sm-8">
+                                                                            <a href="#" @click="descargaFormatoLeads">
+                                                                                <i class="fa-md fa fa-file-excel-o"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Importar Leads</label>
                                                                         <div class="col-sm-8">
                                                                             <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
@@ -1927,6 +1939,8 @@
                                                                                 <th>Dirección</th>
                                                                                 <th>Marca</th>
                                                                                 <th>Modelo</th>
+                                                                                <th>Año Fab</th>
+                                                                                <th>Año Modelo</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -1950,6 +1964,8 @@
                                                                                 <td v-text="lead.cLineaNombre"></td>
                                                                                 <td v-text="lead.cMarcaNombre"></td>
                                                                                 <td v-text="lead.cModeloNombre"></td>
+                                                                                <td v-text="lead.nAnioFabricacion"></td>
+                                                                                <td v-text="lead.nAnioModelo"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -3816,6 +3832,10 @@
             },
             // ========================================================
             // =============  TAB LEADS ======================
+            tabLeads(){
+                $("#file-upload").val("");
+                this.arrayLeads = [];
+            },
             getFile(e){
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
@@ -4001,6 +4021,9 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            descargaFormatoLeads(){
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoLeads.xlsx');
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================

@@ -145,7 +145,9 @@ class ExcelController extends Controller
                 'cLineaNombre' => $value[12],
                 'cMarcaNombre' => $value[13],
                 'cModeloNombre' => $value[14],
-                'cGlosa' => $value[15]
+                'nAnioFabricacion' => $value[15],
+                'nAnioModelo' => $value[16],
+                'cGlosa' => $value[17]
             ];
         }
 
