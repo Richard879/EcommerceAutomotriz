@@ -102,4 +102,57 @@ class ObjComercialController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetDetalleVehiculoVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdCronograma = $request->nidcronograma;
+        $nIdProveedor = $request->nidproveedor;
+        $nIdLinea = $request->nidlinea;
+        $nIdMarca = $request->nidmarca;
+        $nIdModelo = $request->nidmodelo;
+
+        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoVenta ?, ?, ?, ?, ?, ?, ?',
+                                                             [  $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCronograma,
+                                                                $nIdProveedor,
+                                                                $nIdLinea,
+                                                                $nIdMarca,
+                                                                $nIdModelo
+                                                             ]);
+        return response()->json($data);
+    }
+
+    public function SetRegistrarObjComercialVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->arrayData;
+
+            foreach($detalles as $key => $det){
+                if($det['nCantidadVehiculo'] > 0){                    
+                    DB::select('exec usp_ObjComercial_SetRegistrarVenta ?, ?, ?, ?, ?, ?, ?, ?',
+                            [
+                                $request->nIdEmpresa,
+                                $request->nIdSucursal,
+                                $request->nIdProveedor,
+                                $request->nIdCronograma,
+                                $request->cFlagTipoOperacion,
+                                $det['nIdVersionVeh'],
+                                $det['nCantidadVehiculo'],
+                                Auth::user()->id
+                            ]);
+                }
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

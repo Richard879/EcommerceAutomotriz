@@ -57,7 +57,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Año</label>
                                                                         <div class="col-sm-8">
-                                                                            <label v-text="fillObjComercialCompra.caño" class="form-control-label-readonly"></label>
+                                                                            <label v-text="fillObjComercialCompra.canio" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -209,7 +209,7 @@
                                                                 <br>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercialCompra(1)">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercialCompra()">
                                                                             <i class="fa fa-save"></i> Registrar
                                                                         </button>
                                                                     </div>
@@ -246,7 +246,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Empresa</label>
                                                                         <div class="col-sm-8">
-                                                                            <label v-text="fillObjComercialCompra.cempresa" class="form-control-label-readonly"></label>
+                                                                            <label v-text="cempresa" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -254,7 +254,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Sucursal</label>
                                                                         <div class="col-sm-8">
-                                                                            <label v-text="fillObjComercialCompra.csucursal" class="form-control-label-readonly"></label>
+                                                                            <label v-text="csucursal" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -264,7 +264,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Año</label>
                                                                         <div class="col-sm-8">
-                                                                            <label v-text="fillObjComercialCompra.caño" class="form-control-label-readonly"></label>
+                                                                            <label v-text="fillObjComercialVenta.canio" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -272,35 +272,12 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">Mes</label>
                                                                         <div class="col-sm-8">
-                                                                            <label v-text="fillObjComercialCompra.cmes" class="form-control-label-readonly"></label>
+                                                                            <label v-text="fillObjComercialVenta.cmes" class="form-control-label-readonly"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Beneficio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="fillTipoBeneficio.nidtipobeneficio" filterable placeholder="Select" >
-                                                                                <el-option
-                                                                                v-for="item in arrayTipoBeneficio"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                            <!--<div class="input-group">
-                                                                                <input type="text" v-model="fillTipoBeneficio.ctipobeneficionombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar Tipo de Beneficio" class="btn btn-info btn-corner btn-sm" @click="abrirModal('tipobeneficio','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>-->
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
@@ -320,7 +297,7 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleVehiculoCompra(1)">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarDetalleVehiculoVenta(1)">
                                                                         <i class="fa fa-search"></i> Buscar
                                                                     </button>
                                                                 </div>
@@ -336,52 +313,52 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayTempDetalleVehiculo.length">
-                                                                    <div class="table-responsive barraLateral">
-                                                                        <table class="table table-striped table-sm">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Proveedor</th>
-                                                                                    <th>Linea</th>
-                                                                                    <th>Marca</th>
-                                                                                    <th>Modelo</th>
-                                                                                    <th>Objetivo (Cantidad)</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="detalle in arrayTempDetalleVehiculo" :key="detalle.nIdVersionVeh">
-                                                                                    <td v-text="detalle.Proveedor"></td>
-                                                                                    <td v-text="detalle.Linea"></td>
-                                                                                    <td v-text="detalle.Marca"></td>
-                                                                                    <td v-text="detalle.Modelo"></td>
-                                                                                    <td><input type="number" min="0" class="form-control form-control-sm" v-model="detalle.cantidad"/></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <table>
-                                                                        <tbody>
+                                                            <template v-if="arrayDetalleVehiculoVenta.length">
+                                                                <div class="table-responsive barraLateral">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
                                                                             <tr>
-                                                                                <td colspan="10">No existen registros!</td>
+                                                                                <th>Proveedor</th>
+                                                                                <th>Linea</th>
+                                                                                <th>Marca</th>
+                                                                                <th>Modelo</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Objetivo (Cantidad)</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="detalle in arrayDetalleVehiculoVenta" :key="detalle.nIdVersionVeh">
+                                                                                <td v-text="detalle.Proveedor"></td>
+                                                                                <td v-text="detalle.Linea"></td>
+                                                                                <td v-text="detalle.Marca"></td>
+                                                                                <td v-text="detalle.Modelo"></td>
+                                                                                <td v-text="detalle.cNombreComercial"></td>
+                                                                                <td>
+                                                                                    <input type="number" min="0" class="form-control form-control-sm" v-model="detalle.nCantidadVehiculo"/>
+                                                                                </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
-                                                                </template>
-                                                            </div>
-                                                        </form>
-                                                        <hr>
-                                                        <div class="col-lg-12" v-if="arrayTempDetalleVehiculo.length">
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercialCompra(2)">
-                                                                        <i class="fa fa-save"></i> Registrar
-                                                                    </button>
                                                                 </div>
-                                                            </div>
-                                                        </div>
+                                                                <br>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarObjComercialVenta()">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -516,108 +493,6 @@
             </div>
         </div>
 
-        <!-- Modal Tipo Beneficio -->
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillTipoBeneficio.ctipobeneficionombre" @keyup.enter="buscaTipoIncentivo" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Tipo Beneficio" class="btn btn-info btn-corner btn-sm" @click="buscaTipoIncentivo">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayTipoBeneficio.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nombre Beneficio</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="tipobeneficio in arrayTipoBeneficio" :key="tipobeneficio.nIdPar">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarTipoBeneficio(tipobeneficio);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="tipobeneficio.cParNombre"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaTipoBeneficio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaTipoBeneficio(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaTipoBeneficio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 </template>
 
@@ -630,8 +505,6 @@
                 cempresa: 'SAISAC',
                 nidsucursal: 1300013,
                 csucursal: 'CHICLAYO',
-                caño: '',
-                cmes: '',
                 // ===========================================================
                 // ===================== VARIABLES TAB COMPRA ================
                 fillObjComercialCompra:{
@@ -640,7 +513,9 @@
                     nidlinea: 0,
                     nidmarca: 0,
                     nidmodelo: 0,
-                    nindex: 0
+                    nindex: 0,
+                    canio: '',
+                    cmes: ''
                 },
                 arrayFlagTipoValor: [],
                 arrayTipoBeneficio: [],
@@ -657,8 +532,21 @@
                 arrayIndexValorBeneficio: [],
                 // ============== VARIABLES PARA FLAG TIPO MONEDA ================
                 arrayIndexFlagTipoValorId: [],
+                // ===========================================================
+                // ===================== VARIABLES TAB COMPRA ================
+                fillObjComercialVenta:{
+                    nidcronograma: 0,
+                    cflagtipobeneficio: 0,
+                    nidlinea: 0,
+                    nidmarca: 0,
+                    nidmodelo: 0,
+                    nindex: 0,
+                    canio: '',
+                    cmes: ''
+                },
+                arrayDetalleVehiculoVenta: [],
                 // =============================================================
-                // VARIABLES GENÉRICAS
+                // MODAL PROVEEDOR
                 // =============================================================
                 fillProveedor:{
                     nidproveedor: 0,
@@ -668,10 +556,6 @@
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
-                fillTipoBeneficio: {
-                    nidtipobeneficio: 0,
-                    ctipobeneficionombre: ''
-                },
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -759,7 +643,7 @@
             llenarCompraActiva(){
                 var url = this.ruta + '/objComercial/getCompraActiva';
                 axios.get(url).then(response => {
-                    this.fillObjComercialCompra.caño = response.data[0].cAnio;
+                    this.fillObjComercialCompra.canio = response.data[0].cAnio;
                     this.fillObjComercialCompra.cmes = response.data[0].cMes;
                     this.fillObjComercialCompra.nidcronograma = response.data[0].nIdCronograma;
                 }).catch(error => {
@@ -769,9 +653,9 @@
             llenarVentaActiva(){
                 var url = this.ruta + '/objComercial/getVentaActiva';
                 axios.get(url).then(response => {
-                    this.fillObjComercialCompra.caño = response.data[0].cAnio;
-                    this.fillObjComercialCompra.cmes = response.data[0].cMes;
-                    this.fillObjComercialCompra.nidcronograma = response.data[0].nIdCronograma;
+                    this.fillObjComercialVenta.canio = response.data[0].cAnio;
+                    this.fillObjComercialVenta.cmes = response.data[0].cMes;
+                    this.fillObjComercialVenta.nidcronograma = response.data[0].nIdCronograma;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -783,7 +667,8 @@
             },
             tabVenta(){
                 this.llenarVentaActiva();
-                this.limpiarProceso();
+                this.limpiarProveedor();
+                this.limpiarTabVenta();
             },
             llenarComboLinea(){
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
@@ -939,10 +824,10 @@
                 });
                 //console.log(me.arrayTempDetalleVehiculo.length);
             },
-            registrarObjComercialCompra(data){
+            registrarObjComercialCompra(){
 
                 //======= Valido informacion correcta ==========
-                if(this.validarRegistrarObjComercial(data)){
+                if(this.validarRegistrarObjComercial()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -958,7 +843,7 @@
                     'nIdSucursal'           :   1300013,
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialCompra.nidcronograma,
-                    'cFlagTipoOperacion'    :   (data) == 1 ? 'C' : 'V',
+                    'cFlagTipoOperacion'    :   'C',
                     'arrayData'             :   this.arrayTempDetalleVehiculo
                 }).then(response => {
                     swal('Objetivo Comercial - Compra registrada exitosamente');
@@ -986,6 +871,91 @@
                         }
                     });
                 }
+
+                if(me.fillProveedor.nidproveedor == 0 && !me.fillProveedor.cproveedornombre){
+                    me.mensajeError.push('Debe seleccionar un proveedor');
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            // ==============================================================
+            // ========== BUSCAR DETALLE VEHICULO TAB VENTA ================
+            listarDetalleVehiculoVenta(page){
+                if(this.validaBuscaDetalleVehiculoVenta()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.mostrarProgressBar();
+                var url = this.ruta + '/objComercial/GetDetalleVehiculoVenta';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': 1300013,
+                        'nidcronograma': this.fillObjComercialVenta.nidcronograma,
+                        'nidproveedor': this.fillProveedor.nidproveedor,
+                        'nidlinea': this.fillObjComercialVenta.nidlinea,
+                        'nidmarca': this.fillObjComercialVenta.nidmarca,
+                        'nidmodelo': this.fillObjComercialVenta.nidmodelo,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data;
+                    this.arrayDetalleVehiculoVenta = info;
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            validaBuscaDetalleVehiculoVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillProveedor.nidproveedor == 0 && !this.fillProveedor.cproveedornombre){
+                    this.mensajeError.push('Debe seleccionar un proveedor');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            // ====================================================================
+            // ============== REGISTRAR OBJETIVO COMERCIAL COMPRA =================
+            registrarObjComercialVenta(){
+
+                //======= Valido informacion correcta ==========
+                if(this.validarRegistrarObjComercialVenta()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
+                var url = this.ruta + '/objComercial/SetRegistrarObjComercialVenta';
+                axios.post(url, {
+                    'nIdEmpresa'            :   1300011,
+                    'nIdSucursal'           :   1300013,
+                    'nIdProveedor'          :   this.fillProveedor.nidproveedor,
+                    'nIdCronograma'         :   this.fillObjComercialVenta.nidcronograma,
+                    'cFlagTipoOperacion'    :   'V',
+                    'arrayData'             :   this.arrayDetalleVehiculoVenta
+                }).then(response => {
+                    swal('Objetivo Comercial - Venta registrada exitosamente');
+                    this.limpiarTabVenta();
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            validarRegistrarObjComercialVenta(){
+                let me = this;
+
+                me.error = 0;
+                me.mensajeError =[];
 
                 if(me.fillProveedor.nidproveedor == 0 && !me.fillProveedor.cproveedornombre){
                     me.mensajeError.push('Debe seleccionar un proveedor');
@@ -1095,7 +1065,7 @@
                 this.arrayDetalleVehiculoCompra = []
             },
             limpiarTabVenta(){
-
+                this.arrayDetalleVehiculoVenta = []
             },
             //Cerrar Modal
             cerrarModal(){
