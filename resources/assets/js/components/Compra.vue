@@ -742,7 +742,6 @@
                                                                                 <th>Nro. Nota Pedido</th>
                                                                                 <th>Declarado Floor Plan</th>
                                                                                 <th>Fecha Declarado Floor Plan</th>
-                                                                                <th>Fecha Vencimiento</th>
                                                                                 <th>Monto</th>
                                                                             </tr>
                                                                         </thead>
@@ -1374,42 +1373,44 @@
                     nameFile: nameFile
                 }).then(response => {
 
-                    if(this.validaCamposExcel(response.data)){
+                    this.arrayExcel = response.data;
+
+                    if(this.validaCamposExcel()){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
                     }
 
-                    this.$delete(response.data, 0)
-                    this.arrayExcel = response.data;
-                    this.contadorArrayExcel = response.data.length;
+                    this.$delete(this.arrayExcel, 0)
+                    this.contadorArrayExcel = this.arrayExcel.length;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            validaCamposExcel(foo){
-                this.error = 0;
-                this.mensajeError = [];
-                var list=[];
+            validaCamposExcel(){
+                let me = this;
+                me.error = 0;
+                me.mensajeError = [];
+                var i = 1;
 
-                foo.map(function(value, key) {
+                me.arrayExcel.map(function(value, key) {
                     if(key==0){
                         if(value.nOrdenCompra != "OC"){
-                            list.push('Falta celda OC, verifique el archivo.');
+                            me.mensajeError.push('Falta celda OC, verifique el archivo.');
                         };
                         if(value.cNombreLinea != "Línea"){
-                            list.push('Falta celda Línea, verifique el archivo.');
+                            me.mensajeError.push('Falta celda Línea, verifique el archivo.');
                         };
                         if(value.cNombreAlmacen != "Almacén"){
-                            list.push('Falta celda Almacén, verifique el archivo.');
+                            me.mensajeError.push('Falta celda Almacén, verifique el archivo.');
                         };
                         if(value.nNumeroReserva != "Nro Reserva"){
-                            list.push('Falta celda Nro Reserva, verifique el archivo.');
+                            me.mensajeError.push('Falta celda Nro Reserva, verifique el archivo.');
                         };
                         if(value.fTotalCompra != "Total"){
-                            list.push('Falta celda Total, verifique el archivo.');
+                            me.mensajeError.push('Falta celda Total, verifique el archivo.');
                         };
                     };
                     /*if(key != 0){
@@ -1419,11 +1420,10 @@
                     };*/
                 });
 
-                if(list.length){
-                    this.mensajeError = list;
-                    this.error = 1;
+                if(me.mensajeError.length){
+                    me.error = 1;
                 }
-                return this.error;
+                return me.error;
             },
             eliminarItemExcel(index){
                 this.$delete(this.arrayExcel, index);
@@ -1736,7 +1736,7 @@
                 }
                 return this.error;
             },
-            validaCamposExcel(foo){
+            validaCamposExcelForum(foo){
                 this.error = 0;
                 this.mensajeError = [];
                 var list=[];
