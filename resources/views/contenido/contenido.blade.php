@@ -75,4 +75,13 @@
     <template v-if="menu==200222">
         <autorizacionadv :ruta="ruta"></autorizacionadv>
     </template>
+    <template v-if="menu==200223">
+        <cierreventa :ruta="ruta"></cierreventa>
+    </template>
+    <template v-if="menu==200224">
+        <cierrecompra :ruta="ruta"></cierrecompra>
+    </template>
+    <template v-if="menu==200225">
+        <procesoinspeccion :ruta="ruta"></procesoinspeccion>
+    </template>
 @endsection

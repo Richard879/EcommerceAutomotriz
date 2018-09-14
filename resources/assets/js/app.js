@@ -26,13 +26,15 @@ Vue.component('solccvendedor', require('./components/SolicitudCCVendedor.vue'));
 Vue.component('solccjefeventa', require('./components/SolicitudCCJefeVenta.vue'));
 Vue.component('asigvendedorturno', require('./components/AsigVendedorTurno.vue'));
 Vue.component('turnoventa', require('./components/TurnoVenta.vue'));
-
 Vue.component('depositopedido', require('./components/PedidoDeposito.vue'));
 Vue.component('asignavendedormodelo', require('./components/AsignaVendedorModelo.vue'));
 Vue.component('maestrovehiculo', require('./components/MaestroVehiculo.vue'));
 Vue.component('autorizacionv', require('./components/AutorizacionV.vue'));
 Vue.component('autorizacionjv', require('./components/AutorizacionJV.vue'));
 Vue.component('autorizacionadv', require('./components/AutorizacionADV.vue'));
+Vue.component('cierreventa', require('./components/CierreVenta.vue'));
+Vue.component('cierrecompra', require('./components/CierreCompra.vue'));
+Vue.component('procesoinspeccion', require('./components/ProcesoInspeccion.vue'));
 
 const app = new Vue({
     el: '#app',
