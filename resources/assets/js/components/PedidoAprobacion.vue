@@ -517,10 +517,4 @@
         text-align: center;
         margin: auto;
     }
-    .el-select{
-            width: 100%;
-        }
-        .el-date-editor.el-input, .el-date-editor.el-input__inner{
-            width: 100% !important;
-        }
 </style>

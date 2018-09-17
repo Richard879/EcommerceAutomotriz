@@ -1389,12 +1389,6 @@
             font-weight: bold;
             font-size: 0.75rem;
         }
-        .el-select{
-            width: 100%;
-        }
-        .el-date-editor.el-input, .el-date-editor.el-input__inner{
-            width: 100% !important;
-        }
         /*input[type="file"] {
             display: none;
         }*/

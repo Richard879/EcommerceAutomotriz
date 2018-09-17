@@ -856,7 +856,4 @@
             font-weight: bold;
             font-size: 0.75rem;
         }
-        .el-select{
-            width: 100%;
-        }
 </style>
