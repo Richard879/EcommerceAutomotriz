@@ -1937,6 +1937,7 @@
                                                                                 <th>Provincia</th>
                                                                                 <th>Distrito</th>
                                                                                 <th>Dirección</th>
+                                                                                <th>Linea</th>
                                                                                 <th>Marca</th>
                                                                                 <th>Modelo</th>
                                                                                 <th>Año Fab</th>
