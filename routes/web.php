@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/woperativo/GetWOperativo', 'WarrantOperativoController@GetWOperativo');
     Route::post('/woperativo/SetWOperativo', 'WarrantOperativoController@SetWOperativo');
     Route::post('/woperativo/SetWOperativoDetalle', 'WarrantOperativoController@SetWOperativoDetalle');
-    Route::get('/woperativo/GetWOperativoDetalle', 'WarrantOperativoController@GetWOperativoDetalle');   
+    Route::get('/woperativo/GetWOperativoDetalle', 'WarrantOperativoController@GetWOperativoDetalle');
     Route::get('/wfinanciero/GetWFinanciero', 'WarrantFinancieroController@GetWFinanciero');
     Route::post('/wfinanciero/SetWFinanciero', 'WarrantFinancieroController@SetWFinanciero');
     Route::post('/wfinanciero/SetWFinancieroDetalle', 'WarrantFinancieroController@SetWFinancieroDetalle');
@@ -150,6 +150,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/maestrovehiculo/SetRegistrarPerJuridica', 'MaestroVehiculoController@SetRegistrarPerJuridica');
     Route::post('/maestrovehiculo/SetRegistrarSoat', 'MaestroVehiculoController@SetRegistrarSoat');
     Route::get('/maestrovehiculo/GetDetalleMaestroVehiculo', 'MaestroVehiculoController@GetDetalleMaestroVehiculo');
+    Route::get('/autorizacion/GetLstVehiculosByCriterio', 'AutorizacionController@GetLstVehiculosByCriterio');
+    Route::get('/autorizacion/GetLstContactosByUsuario', 'AutorizacionController@GetLstContactosByUsuario');
+    Route::get('/autorizacion/GetLstSolicitudes', 'AutorizacionController@GetLstSolicitudes');
+    Route::post('/autorizacion/SetRegistrarSolicitudAutorizacion', 'AutorizacionController@SetRegistrarSolicitudAutorizacion');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
