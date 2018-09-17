@@ -260,7 +260,6 @@
                                                 <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="hidden" v-model="formVersion.nidproveedor">
                                                         <input type="text" v-model="formVersion.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
                                                             <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
@@ -356,7 +355,6 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Nombre Comercial</label>
                                                 <div class="col-sm-8">
-                                                    <input type="hidden" v-model="formVersion.nidversionveh">
                                                     <input type="text" v-model="formVersion.cnombrecomercial" class="form-control form-control-sm" placeholder="">
                                                 </div>
                                             </div>

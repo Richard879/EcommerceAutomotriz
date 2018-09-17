@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">ELEMENTO VENTA</h2>
+            <h2 class="no-margin-bottom">TIPO DE INSPECCIÓN</h2>
           </div>
         </header>
 
@@ -12,7 +12,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
+                                <h3 class="h4">BUSCAR</h3>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
@@ -25,7 +25,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Tipo Elemento</label>
                                         <div class="col-sm-4">
-                                            <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
+                                            <el-select v-model="formTipoInsp.ntpoelemen" filterable placeholder="Select" >
                                                 <el-option
                                                 v-for="item in arrayTipoElemento"
                                                 :key="item.nIdPar"
@@ -38,13 +38,13 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Nombre Elemento</label>
                                         <div class="col-sm-4">
-                                            <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                            <input type="text" v-model="formTipoInsp.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento()"><i class="fa fa-search"></i> Buscar</button>
-                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('inspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
                                 </form>
@@ -57,7 +57,7 @@
                                 <h3 class="h4">LISTADO</h3>
                             </div>
                             <div class="card-body">
-                                <template v-if="arrayElementoVenta.length">
+                                <template v-if="arrayTipoInspeccion.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
@@ -72,28 +72,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
-                                                    <td v-text="elemento.nIdElemento"></td>
-                                                    <td v-text="elemento.cProveedorNombre"></td>
-                                                    <td v-text="elemento.cTipoElemenNombre"></td>
-                                                    <td v-text="elemento.cElemenNombre"></td>
-                                                    <td v-text="elemento.fElemenValorVenta"></td>
-                                                    <td v-text="elemento.fElemenValorMinimoVenta"></td>
+                                                <tr v-for="inspeccion in arrayTipoInspeccion" :key="inspeccion.nIdElemento">
+                                                    <td v-text="inspeccion.nIdElemento"></td>
+                                                    <td v-text="inspeccion.cProveedorNombre"></td>
+                                                    <td v-text="inspeccion.cTipoElemenNombre"></td>
+                                                    <td v-text="inspeccion.cElemenNombre"></td>
+                                                    <td v-text="inspeccion.fElemenValorVenta"></td>
+                                                    <td v-text="inspeccion.fElemenValorMinimoVenta"></td>
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ elemento.cElemenNombre }}</div>
-                                                             <i @click="abrirFormulario('elemento','actualizar', elemento)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                             <div slot="content">Editar {{ inspeccion.cElemenNombre }}</div>
+                                                             <i @click="abrirFormulario('inspeccion','actualizar', inspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
-                                                        <template v-if="elemento.cElementoEstado=='A'">
+                                                        <template v-if="inspeccion.cElementoEstado=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ elemento.cElemenNombre }}</div>
-                                                                <i @click="desactivar(elemento.nIdElemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ inspeccion.cElemenNombre }}</div>
+                                                                <i @click="desactivar(inspeccion.nIdElemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ elemento.cElemenNombre }}</div>
-                                                                <i @click="activar(elemento.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ inspeccion.cElemenNombre }}</div>
+                                                                <i @click="activar(inspeccion.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -164,86 +164,9 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                <label class="col-sm-4 form-control-label">* Nombre Tipo Inspección</label>
                                                 <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="hidden" v-model="formEle.nidproveedor">
-                                                        <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Elemento</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayTipoElemento"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formEle.nidmoneda" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="tpomoneda in arrayTipoMoneda"
-                                                        :key="tpomoneda.nIdPar"
-                                                        :label="tpomoneda.cParNombre"
-                                                        :value="tpomoneda.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
-                                                <div class="col-sm-8">
-                                                    <input type="hidden" v-model="formEle.nidelemento">
-                                                    <input type="text" v-model="formEle.celenombre" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Código ERP</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="formEle.celecodigoerp" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Valor Venta</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" v-model="formEle.felevalorventa" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Valor Mínimo Venta</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" v-model="formEle.felevarlorminventa" class="form-control form-control-sm" placeholder="">
+                                                    <input type="text" v-model="formTipoInsp.celenombre" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -399,13 +322,13 @@
             return {
                 cempresa: 'SAISAC',
                 arrayTipoElemento: [],
-                arrayElementoVenta: [],
+                arrayTipoInspeccion: [],
                 arrayTipoMoneda: [],
                 arrayProveedor: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
-                formEle:{
+                formTipoInsp:{
                     cempresa: 'SAISAC',
                     csucursal: 'CHICLAYO',
                     nidempresa : '',
@@ -557,8 +480,8 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formEle.nidproveedor = nProveedorId;
-                this.formEle.cproveedornombre = cProveedorNombre;
+                this.formTipoInsp.nidproveedor = nProveedorId;
+                this.formTipoInsp.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
             },
             buscarElemento(){
@@ -567,23 +490,23 @@
             listarElementos(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/elemento/GetElementoByTipo';
+                var url = this.ruta + '/inspeccion/GetElementoByTipo';
 
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidtipoelemen': this.formEle.ntpoelemen,
-                        'celementonombre': this.formEle.celementonombre,
+                        'nidtipoelemen': this.formTipoInsp.ntpoelemen,
+                        'celementonombre': this.formTipoInsp.celementonombre,
                         'page': page
                     }
                 }).then(response => {
-                    this.arrayElementoVenta = response.data.arrayElementoVenta.data;
-                    this.pagination.current_page =  response.data.arrayElementoVenta.current_page;
-                    this.pagination.total = response.data.arrayElementoVenta.total;
-                    this.pagination.per_page    = response.data.arrayElementoVenta.per_page;
-                    this.pagination.last_page   = response.data.arrayElementoVenta.last_page;
-                    this.pagination.from        = response.data.arrayElementoVenta.from;
-                    this.pagination.to           = response.data.arrayElementoVenta.to;
+                    this.arrayTipoInspeccion = response.data.arrayTipoInspeccion.data;
+                    this.pagination.current_page =  response.data.arrayTipoInspeccion.current_page;
+                    this.pagination.total = response.data.arrayTipoInspeccion.total;
+                    this.pagination.per_page    = response.data.arrayTipoInspeccion.per_page;
+                    this.pagination.last_page   = response.data.arrayTipoInspeccion.last_page;
+                    this.pagination.from        = response.data.arrayTipoInspeccion.from;
+                    this.pagination.to           = response.data.arrayTipoInspeccion.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -601,16 +524,16 @@
                     return;
                 }
 
-                var url = this.ruta + '/elemento/SetElemento';
+                var url = this.ruta + '/inspeccion/SetElemento';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formEle.nidproveedor),
-                    nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
-                    nIdMoneda: parseInt(this.formEle.nidmoneda),
-                    cElemenNombre: this.formEle.celenombre.toUpperCase(),
-                    fElemenValorVenta: this.formEle.felevalorventa,
-                    fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp
+                    nIdProveedor: parseInt(this.formTipoInsp.nidproveedor),
+                    nIdTipoElemento: parseInt(this.formTipoInsp.ntpoelemen),
+                    nIdMoneda: parseInt(this.formTipoInsp.nidmoneda),
+                    cElemenNombre: this.formTipoInsp.celenombre.toUpperCase(),
+                    fElemenValorVenta: this.formTipoInsp.felevalorventa,
+                    fElemenValorMinimoVenta: this.formTipoInsp.felevarlorminventa,
+                    cCodigoERP: this.formTipoInsp.celecodigoerp
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -628,22 +551,22 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(this.formEle.nidproveedor == 0){
+                if(this.formTipoInsp.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formEle.ntpoelemen == '0'){
+                if(this.formTipoInsp.ntpoelemen == '0'){
                     this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
                 };
-                if(this.formEle.nidmoneda == '0'){
+                if(this.formTipoInsp.nidmoneda == '0'){
                     this.mensajeError.push('Debes Ingresar un Tipo de Moneda');
                 };
-                if(!this.formEle.celenombre){
+                if(!this.formTipoInsp.celenombre){
                     this.mensajeError.push('Debes Ingresar un nombre');
                 };
-                if(!this.formEle.felevalorventa){
+                if(!this.formTipoInsp.felevalorventa){
                     this.mensajeError.push('Debes Ingresar un valor de Venta');
                 };
-                if(this.formEle.felevarlorminventa > this.formEle.felevalorventa){
+                if(this.formTipoInsp.felevarlorminventa > this.formTipoInsp.felevalorventa){
                     this.mensajeError.push('El Valor Venta debe ser mayor al Valor Mínimo Venta');
                 };
                 if(this.mensajeError.length){
@@ -652,7 +575,7 @@
                 return this.error;
             },
             actualizar(){
-                var url = this.ruta + '/elemento/UpdElementoById';
+                var url = this.ruta + '/inspeccion/UpdElementoById';
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -661,14 +584,14 @@
 
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formEle.nidproveedor),
-                    nIdElementoVenta: parseInt(this.formEle.nidelemento),
-                    nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
-                    nIdMoneda: parseInt(this.formEle.nidmoneda),
-                    cElemenNombre: this.formEle.celenombre.toUpperCase(),
-                    fElemenValorVenta: this.formEle.felevalorventa,
-                    fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp
+                    nIdProveedor: parseInt(this.formTipoInsp.nidproveedor),
+                    nIdElementoVenta: parseInt(this.formTipoInsp.nidelemento),
+                    nIdTipoElemento: parseInt(this.formTipoInsp.ntpoelemen),
+                    nIdMoneda: parseInt(this.formTipoInsp.nidmoneda),
+                    cElemenNombre: this.formTipoInsp.celenombre.toUpperCase(),
+                    fElemenValorVenta: this.formTipoInsp.felevalorventa,
+                    fElemenValorMinimoVenta: this.formTipoInsp.felevarlorminventa,
+                    cCodigoERP: this.formTipoInsp.celecodigoerp
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -685,7 +608,7 @@
             },
             activar(nIdElementoVenta){
                 swal({
-                    title: 'Estas seguro de activar este elemento?',
+                    title: 'Estas seguro de activar este inspeccion?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -694,7 +617,7 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/elemento/activar';
+                        var url = this.ruta + '/inspeccion/activar';
                         axios.put(url , {
                             nIdElementoVenta: nIdElementoVenta
                         }).then(response => {
@@ -713,7 +636,7 @@
             },
             desactivar(nIdElementoVenta){
                 swal({
-                    title: 'Estas seguro de desactivar este elemento?',
+                    title: 'Estas seguro de desactivar este inspeccion?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -722,7 +645,7 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/elemento/desactivar';
+                        var url = this.ruta + '/inspeccion/desactivar';
                         axios.put(url , {
                             nIdElementoVenta: nIdElementoVenta
                         }).then(response => {
@@ -766,7 +689,7 @@
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'elemento':
+                    case 'inspeccion':
                     {
                         switch(accion){
                             case 'registrar':
@@ -786,15 +709,15 @@
                                 this.llenarComboTpoElemento();
                                 this.llenarComboTpoMoneda();
                                 this.tituloFormulario = 'ACTUALIZAR ELEMENTO VENTA';
-                                this.formEle.nidelemento = data['nIdElemento'];
-                                this.formEle.ntpoelemen = data['nIdTipoElemento'];
-                                this.formEle.nidproveedor  = data['nIdProveedor'];
-                                this.formEle.cproveedornombre = data['cProveedorNombre'];
-                                this.formEle.nidmoneda = data['nIdMoneda'];
-                                this.formEle.celenombre = data['cElemenNombre'];
-                                this.formEle.celecodigoerp = data['cCodigoERP'];
-                                this.formEle.felevalorventa = data['fElemenValorVenta'];
-                                this.formEle.felevarlorminventa = data['fElemenValorMinimoVenta'];
+                                this.formTipoInsp.nidelemento = data['nIdElemento'];
+                                this.formTipoInsp.ntpoelemen = data['nIdTipoElemento'];
+                                this.formTipoInsp.nidproveedor  = data['nIdProveedor'];
+                                this.formTipoInsp.cproveedornombre = data['cProveedorNombre'];
+                                this.formTipoInsp.nidmoneda = data['nIdMoneda'];
+                                this.formTipoInsp.celenombre = data['cElemenNombre'];
+                                this.formTipoInsp.celecodigoerp = data['cCodigoERP'];
+                                this.formTipoInsp.felevalorventa = data['fElemenValorVenta'];
+                                this.formTipoInsp.felevarlorminventa = data['fElemenValorMinimoVenta'];
                                 break;
                             }
                         }
@@ -802,15 +725,15 @@
                 }
             },
             limpiarFormulario(){
-                this.formEle.nidproveedor= 0,
-                this.formEle.cproveedornombre=  '',
-                this.formEle.ntpoelemen= 0,
-                this.formEle.nidmoneda= 0,
-                this.formEle.celenombre= '',
-                this.formEle.celecodigoerp= '',
-                this.formEle.felevalorventa= '',
-                this.formEle.felevarlorminventa='',
-                this.arrayElementoVenta = []
+                this.formTipoInsp.nidproveedor= 0,
+                this.formTipoInsp.cproveedornombre=  '',
+                this.formTipoInsp.ntpoelemen= 0,
+                this.formTipoInsp.nidmoneda= 0,
+                this.formTipoInsp.celenombre= '',
+                this.formTipoInsp.celecodigoerp= '',
+                this.formTipoInsp.felevalorventa= '',
+                this.formTipoInsp.felevarlorminventa='',
+                this.arrayTipoInspeccion = []
             },
             cambiarVistaFormulario(){
                 //this.limpiarFormulario();
