@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">VERSIÓN VEHÍCULO</h2>
+            <h2 class="no-margin-bottom">PROCESO DE INSPECCIÓN</h2>
           </div>
         </header>
 
