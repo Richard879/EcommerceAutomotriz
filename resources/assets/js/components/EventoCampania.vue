@@ -1906,21 +1906,27 @@
                 this.getTipoCambioById();
             },
             getTipoCambioById(){
-                this.mostrarProgressBar();
-                var url = this.ruta + '/tipocambio/GetTipoCambioById';
-                axios.get(url, {
-                    params: {
-                        'nidtipotransaccion' : this.formEventoCamp.nidtipocambio
-                    }
-                }).then(response => {
-                    this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
-                    //PARA ENVIAR EN LA TRANSACCION
-                    this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
-                }).then(function (response) {
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                });
+                if(this.formEventoCamp.nidtipocambio != 0){
+                    this.mostrarProgressBar();
+                    var url = this.ruta + '/tipocambio/GetTipoCambioById';
+                    axios.get(url, {
+                        params: {
+                            'nidtipotransaccion' : this.formEventoCamp.nidtipocambio
+                        }
+                    }).then(response => {
+                        this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
+                        //PARA ENVIAR EN LA TRANSACCION
+                        this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
+                    }).then(function (response) {
+                        $("#myBar").hide();
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+                else if(this.formEventoCamp.nidtipocambio == 0){
+                    this.formEventoCamp.fvalortipocambio = 0;
+                    this.fValorTipoCambioTransaccion = 0;
+                }
             },
             // =============  TAB ASIGNA DETALLE ========================
             cargarTabAsignaDetalle(){
