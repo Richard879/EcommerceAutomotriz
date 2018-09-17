@@ -42,24 +42,24 @@ class TipoInspeccionController extends Controller
         return ['arrayTipoInspeccion'=>$arrayTipoInspeccion];
     }
 
-    public function desactivar (Request $request)
+    public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec usp_Element_DesactivaById ?', 
-                                                            array(  $request->nIdElementoVenta
+        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_DesactivaById ?', 
+                                                            array(  $request->nIdTipoInspeccion
                                                                     ));
-        return response()->json($elementoVenta);   
+        return response()->json($objTpoInspecion);   
     }
 
-    public function activar (Request $request)
+    public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec usp_Element_ActivaById ?', 
-                                                            array(  $request->nIdElementoVenta
+        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_ActivaById ?', 
+                                                            array(  $request->nIdTipoInspeccion
                                                                     ));
-        return response()->json($elementoVenta);   
+        return response()->json($objTpoInspecion);   
     }
     
     public function UpdElementoById(Request $request)
@@ -69,7 +69,7 @@ class TipoInspeccionController extends Controller
         $element = DB::select('exec usp_Elemen_UpdElementoById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdProveedor,
-                                                                    $request->nIdElementoVenta,
+                                                                    $request->nIdTipoInspeccion,
                                                                     $request->nIdTipoElemento, 
                                                                     $request->nIdMoneda,
                                                                     $request->cElemenNombre,

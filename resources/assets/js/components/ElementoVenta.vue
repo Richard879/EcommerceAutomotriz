@@ -404,9 +404,6 @@
                     cnombreproveedor: ''
                 },
                 formEle:{
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
-                    nidempresa : '',
                     nidproveedor: 0,
                     cproveedornombre: '',
                     ntpoelemen: 0,

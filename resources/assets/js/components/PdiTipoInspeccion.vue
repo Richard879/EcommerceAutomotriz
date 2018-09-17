@@ -73,7 +73,7 @@
                                                              <div slot="content">Editar {{ inspeccion.cNombreTipoInspeccion }}</div>
                                                              <i @click="abrirFormulario('inspeccion','actualizar', inspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
-                                                        <template v-if="inspeccion.cElementoEstado=='A'">
+                                                        <template v-if="inspeccion.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Desactivar {{ inspeccion.cNombreTipoInspeccion }}</div>
                                                                 <i @click="desactivar(inspeccion.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
@@ -255,8 +255,7 @@
                     cnombre: ''
                 },
                 formTipoInsp:{
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
+                    cnombre: '',
                     nflagalmacen: 0,
                     nflagaccesorio: 0,
                     nflagtestdrive: 0,

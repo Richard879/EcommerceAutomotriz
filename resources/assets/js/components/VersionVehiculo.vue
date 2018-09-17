@@ -521,7 +521,6 @@
                     cnombreproveedor: ''
                 },
                 formVersion:{
-                    nidempresa: 0,
                     nidproveedor: 0,
                     cproveedornombre: '',
                     nidclase: 0,
