@@ -15,7 +15,7 @@ class TipoInspeccionController extends Controller
         
         $element = DB::select('exec usp_TipoInspeccion_SetTipoInspeccion ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdEmpresa,
-                                                                    $request->cNombreTipoInspeccion    ,
+                                                                    $request->cNombreTipoInspeccion,
                                                                     $request->nFlagAlmacen, 
                                                                     $request->nFlagAccesorio,
                                                                     $request->nFlagTestDrive,
@@ -62,22 +62,21 @@ class TipoInspeccionController extends Controller
         return response()->json($objTpoInspecion);   
     }
     
-    public function UpdElementoById(Request $request)
+    public function UpdTipoInspeccionById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_Elemen_UpdElementoById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+        $element = DB::select('exec usp_TipoInspeccion_UpdTipoInspeccionById ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdEmpresa,
-                                                                    $request->nIdProveedor,
                                                                     $request->nIdTipoInspeccion,
-                                                                    $request->nIdTipoElemento, 
-                                                                    $request->nIdMoneda,
-                                                                    $request->cElemenNombre,
-                                                                    $request->fElemenValorVenta,
-                                                                    $request->fElemenValorMinimoVenta,
-                                                                    $request->cCodigoERP,
+                                                                    $request->cNombreTipoInspeccion,
+                                                                    $request->nFlagAlmacen, 
+                                                                    $request->nFlagAccesorio,
+                                                                    $request->nFlagTestDrive,
+                                                                    $request->nFlagSeccion,
+                                                                    $request->nFlagFichaTecnica,
                                                                     Auth::user()->id
                                                                     ));
-        return response()->json($element);         
+        return response()->json($element); 
     }
 }

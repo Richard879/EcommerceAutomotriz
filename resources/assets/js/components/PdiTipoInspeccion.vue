@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento()"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTipoInspeccion()"><i class="fa fa-search"></i> Buscar</button>
                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('inspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
@@ -255,6 +255,7 @@
                     cnombre: ''
                 },
                 formTipoInsp:{
+                    nidtipoinspeccion: 0,
                     cnombre: '',
                     nflagalmacen: 0,
                     nflagaccesorio: 0,
@@ -343,7 +344,7 @@
             }
         },
         methods:{
-            buscarElemento(){
+            buscarTipoInspeccion(){
                 this.listarTipoInspeccion(1);
             },
             listarTipoInspeccion(page){
@@ -354,7 +355,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'cnombre': this.formTipoInsp.cnombre,
+                        'cnombre': this.fillTipoInsp.cnombre,
                         'page': page
                     }
                 }).then(response => {
@@ -383,36 +384,6 @@
                 }
 
                 var url = this.ruta + '/tipoinspeccion/SetTipoInspeccion';
-
-                /*if(this.formTipoInsp.nflagalmacen == true){
-                    this.formTipoInsp.nflagalmacen = 1;
-                }else{
-                    this.formTipoInsp.nflagalmacen = 0;
-                };
-
-                if(this.formTipoInsp.nflagaccesorio == true){
-                    this.formTipoInsp.nflagaccesorio = 1;
-                }else{
-                    this.formTipoInsp.nflagaccesorio = 0;
-                };
-                
-                if(this.formTipoInsp.nflagtestdrive == true){
-                    this.formTipoInsp.nflagtestdrive = 1;
-                }else{
-                    this.formTipoInsp.nflagtestdrive = 0;
-                };
-
-                if(this.formTipoInsp.nflagseccion == true){
-                    this.formTipoInsp.nflagseccion = 1;
-                }else{
-                    this.formTipoInsp.nflagseccion = 0;
-                };
-
-                if(this.formTipoInsp.nflagfichatecnica == true){
-                    this.formTipoInsp.nflagfichatecnica = 1;
-                }else{
-                    this.formTipoInsp.nflagfichatecnica = 0;
-                };*/
 
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -449,7 +420,7 @@
                 return this.error;
             },
             actualizar(){
-                var url = this.ruta + '/inspeccion/UpdElementoById';
+                var url = this.ruta + '/tipoinspeccion/UpdTipoInspeccionById';
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -458,23 +429,22 @@
 
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formTipoInsp.nidproveedor),
-                    nIdTipoInspeccion: parseInt(this.formTipoInsp.nidelemento),
-                    nIdTipoElemento: parseInt(this.formTipoInsp.ntpoelemen),
-                    nIdMoneda: parseInt(this.formTipoInsp.nidmoneda),
-                    cNombreTipoInspeccion: this.formTipoInsp.cnombre.toUpperCase(),
-                    fElemenValorVenta: this.formTipoInsp.felevalorventa,
-                    fElemenValorMinimoVenta: this.formTipoInsp.felevarlorminventa,
-                    cCodigoERP: this.formTipoInsp.celecodigoerp
+                    nIdTipoInspeccion: parseInt(this.formTipoInsp.nidtipoinspeccion),
+                    cNombreTipoInspeccion: this.formTipoInsp.cnombre,
+                    nFlagAlmacen: this.formTipoInsp.nflagalmacen,
+                    nFlagAccesorio: this.formTipoInsp.nflagaccesorio,
+                    nFlagTestDrive: this.formTipoInsp.nflagtestdrive,
+                    nFlagSeccion: this.formTipoInsp.nflagseccion,
+                    nFlagFichaTecnica: this.formTipoInsp.nflagfichatecnica
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Elemento Actualizado');
+                        swal('Tipo Inspección Actualizado');
                         this.limpiarFormulario();
                         this.vistaFormulario = 1;
                     }
                     else{
-                        swal('Ya existe Elemento Venta');
+                        swal('Ya existe Tipo Inspección');
                     }
                 }).catch(error => {
                     console.log(error);
@@ -554,15 +524,13 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR TIPO DE INSPECCIÓN';
-                                this.formTipoInsp.nidelemento = data['nIdTipoInspeccion'];
-                                this.formTipoInsp.ntpoelemen = data['nIdTipoElemento'];
-                                this.formTipoInsp.nidproveedor  = data['nIdProveedor'];
-                                this.formTipoInsp.cproveedornombre = data['cProveedorNombre'];
-                                this.formTipoInsp.nidmoneda = data['nIdMoneda'];
+                                this.formTipoInsp.nidtipoinspeccion = data['nIdTipoInspeccion'];
                                 this.formTipoInsp.cnombre = data['cNombreTipoInspeccion'];
-                                this.formTipoInsp.celecodigoerp = data['cCodigoERP'];
-                                this.formTipoInsp.felevalorventa = data['fElemenValorVenta'];
-                                this.formTipoInsp.felevarlorminventa = data['fElemenValorMinimoVenta'];
+                                this.formTipoInsp.nflagalmacen = (data['nFlagAlmacen'] == 1 ? true : false);
+                                this.formTipoInsp.nflagaccesorio = (data['nFlagAccesorio'] == 1 ? true : false);
+                                this.formTipoInsp.nflagtestdrive = (data['nFlagTestDrive'] == 1 ? true : false);
+                                this.formTipoInsp.nFlagSeccion = (data['nFlagSeccionInspeccion'] == 1 ? true : false);
+                                this.formTipoInsp.nflagfichatecnica = (data['nFlagValidarFichaTecnica'] == 1 ? true : false);
                                 break;
                             }
                         }

@@ -691,7 +691,7 @@
                     if (result.value) {
                         var url = this.ruta + '/elemento/activar';
                         axios.put(url , {
-                            nIdElementoVenta: nIdElementoVenta
+                            nIdElementoVenta: parseInt(nIdElementoVenta)
                         }).then(response => {
                             swal(
                             'Activado!',
@@ -719,7 +719,7 @@
                     if (result.value) {
                         var url = this.ruta + '/elemento/desactivar';
                         axios.put(url , {
-                            nIdElementoVenta: nIdElementoVenta
+                            nIdElementoVenta: parseInt(nIdElementoVenta)
                         }).then(response => {
                             swal(
                             'Desactivado!',

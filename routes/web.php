@@ -118,6 +118,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/tipoinspeccion/GetListTipoInspeccion', 'TipoInspeccionController@GetListTipoInspeccion');
     Route::put('/tipoinspeccion/activar', 'TipoInspeccionController@activar');
     Route::put('/tipoinspeccion/desactivar', 'TipoInspeccionController@desactivar');
+    Route::post('/tipoinspeccion/UpdTipoInspeccionById', 'TipoInspeccionController@UpdTipoInspeccionById');
 
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
