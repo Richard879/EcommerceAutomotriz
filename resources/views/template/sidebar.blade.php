@@ -6,6 +6,7 @@
       <ul id="2001" class="collapse list-unstyled ">
         <li id="200101" @click="menu=200101" onclick="ActivarMenu('200101')"><a href="#">Elemento Venta</a></li>
         <li id="200102" @click="menu=200102" onclick="ActivarMenu('200102')"><a href="#">Versión Vehículo</a></li>
+        <li id="200103" @click="menu=200103" onclick="ActivarMenu('200103')"><a href="#">Turno de Venta</a></li>
       </ul>
     </li>
     <li><a href="#2002" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-home"></i>Configuración Sucursal</a>
@@ -24,7 +25,6 @@
         <li id="200212" @click="menu=200212" onclick="ActivarMenu('200212')"><a href="#">Objetivos Comerciales</a></li>
         <li id="200213" @click="menu=200213" onclick="ActivarMenu('200213')"><a href="#">Solicitud CC V</a></li>
         <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asigna Vendedor a Turno</a></li>
-        <li id="200215" @click="menu=200215" onclick="ActivarMenu('200215')"><a href="#">Turno de Venta</a></li>
         <li id="200216" @click="menu=200216" onclick="ActivarMenu('200216')"><a href="#">Depósitos</a></li>
         <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asigna Vendedor a Modelo</a></li>
         <li id="200218" @click="menu=200218" onclick="ActivarMenu('200218')"><a href="#">Solicitud CC JFV</a></li>

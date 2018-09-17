@@ -17,7 +17,7 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Empresa</label>
+                                        <label class="col-sm-2 form-control-label">* Empresa</label>
                                         <div class="col-sm-4">
                                             <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                         </div>

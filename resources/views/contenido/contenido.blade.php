@@ -51,7 +51,7 @@
     <template v-if="menu==200214">
         <asigvendedorturno :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorturno>
     </template>
-    <template v-if="menu==200215">
+    <template v-if="menu==200103">
         <turnoventa :ruta="ruta"></turnoventa>
     </template>
     <template v-if="menu==200216">

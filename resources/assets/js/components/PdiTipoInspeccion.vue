@@ -23,22 +23,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Tipo Elemento</label>
+                                        <label class="col-sm-2 form-control-label">Nombre Tipo Inspección</label>
                                         <div class="col-sm-4">
-                                            <el-select v-model="formTipoInsp.ntpoelemen" filterable placeholder="Select" >
-                                                <el-option
-                                                v-for="item in arrayTipoElemento"
-                                                :key="item.nIdPar"
-                                                :label="item.cParNombre"
-                                                :value="item.nIdPar">
-                                                </el-option>
-                                            </el-select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Nombre Elemento</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="formTipoInsp.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                            <input type="text" v-model="fillTipoInsp.cnombre" class="form-control form-control-sm">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -154,21 +141,60 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
+                                        <label class="col-sm-3 form-control-label">* Empresa</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Tipo Inspección</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="formTipoInsp.celenombre" class="form-control form-control-sm">
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-control-label">* Nombre Tipo Inspección</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" v-model="formTipoInsp.cnombre" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-control-label">Almacén</label>
+                                        <div class="col-sm-4">
+                                            <span class="switch">
+                                                <el-switch v-model="formTipoInsp.nflagalmacen">
+                                                </el-switch>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-control-label">Accesorio</label>
+                                        <div class="col-sm-4">
+                                            <span class="switch">
+                                                <el-switch v-model="formTipoInsp.nflagaccesorio">
+                                                </el-switch>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-control-label">Test Drive</label>
+                                        <div class="col-sm-4">
+                                            <span class="switch">
+                                                <el-switch v-model="formTipoInsp.nflagtestdrive">
+                                                </el-switch>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-control-label">Sección Inspección</label>
+                                        <div class="col-sm-4">
+                                            <span class="switch">
+                                                <el-switch v-model="formTipoInsp.nflagseccion">
+                                                </el-switch>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-control-label">Ficha Técnica</label>
+                                        <div class="col-sm-4">
+                                            <span class="switch">
+                                                <el-switch v-model="formTipoInsp.nflagfichatecnica">
+                                                </el-switch>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -215,104 +241,6 @@
             </div>
         </div>
 
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 </template>
 <script>
@@ -321,28 +249,19 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                arrayTipoElemento: [],
-                arrayTipoInspeccion: [],
-                arrayTipoMoneda: [],
-                arrayProveedor: [],
-                fillProveedor:{
-                    cnombreproveedor: ''
+                fillTipoInsp:{
+                    cnombre: ''
                 },
                 formTipoInsp:{
                     cempresa: 'SAISAC',
                     csucursal: 'CHICLAYO',
-                    nidempresa : '',
-                    nidproveedor: 0,
-                    cproveedornombre: '',
-                    ntpoelemen: 0,
-                    nidmoneda: 0,
-                    nidelemento: 0,
-                    celenombre: '',
-                    celecodigoerp: '',
-                    felevalorventa: '',
-                    felevarlorminventa: '',
-                    celementonombre: ''
+                    nflagalmacen: 0,
+                    nflagaccesorio: 0,
+                    nflagtestdrive: 0,
+                    nflagseccion: 0,
+                    nflagfichatecnica: 0
                 },
+                arrayTipoInspeccion: [],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -423,71 +342,10 @@
             }
         },
         methods:{
-            llenarComboTpoElemento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110027,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayTipoElemento = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboTpoMoneda(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110028,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayTipoMoneda = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-                
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formTipoInsp.nidproveedor = nProveedorId;
-                this.formTipoInsp.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-            },
             buscarElemento(){
-                this.listarElementos(1);
+                this.listarTipoInspeccion(1);
             },
-            listarElementos(page){
+            listarTipoInspeccion(page){
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/inspeccion/GetElementoByTipo';
@@ -515,7 +373,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarElementos(page);
+                this.listarTipoInspeccion(page);
             },
             registrar(){
                 if(this.validar()){
@@ -524,25 +382,55 @@
                     return;
                 }
 
-                var url = this.ruta + '/inspeccion/SetElemento';
+                var url = this.ruta + '/tipoinspeccion/SetTipoInspeccion';
+
+                /*if(this.formTipoInsp.nflagalmacen == true){
+                    this.formTipoInsp.nflagalmacen = 1;
+                }else{
+                    this.formTipoInsp.nflagalmacen = 0;
+                };
+
+                if(this.formTipoInsp.nflagaccesorio == true){
+                    this.formTipoInsp.nflagaccesorio = 1;
+                }else{
+                    this.formTipoInsp.nflagaccesorio = 0;
+                };
+                
+                if(this.formTipoInsp.nflagtestdrive == true){
+                    this.formTipoInsp.nflagtestdrive = 1;
+                }else{
+                    this.formTipoInsp.nflagtestdrive = 0;
+                };
+
+                if(this.formTipoInsp.nflagseccion == true){
+                    this.formTipoInsp.nflagseccion = 1;
+                }else{
+                    this.formTipoInsp.nflagseccion = 0;
+                };
+
+                if(this.formTipoInsp.nflagfichatecnica == true){
+                    this.formTipoInsp.nflagfichatecnica = 1;
+                }else{
+                    this.formTipoInsp.nflagfichatecnica = 0;
+                };*/
+
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formTipoInsp.nidproveedor),
-                    nIdTipoElemento: parseInt(this.formTipoInsp.ntpoelemen),
-                    nIdMoneda: parseInt(this.formTipoInsp.nidmoneda),
-                    cElemenNombre: this.formTipoInsp.celenombre.toUpperCase(),
-                    fElemenValorVenta: this.formTipoInsp.felevalorventa,
-                    fElemenValorMinimoVenta: this.formTipoInsp.felevarlorminventa,
-                    cCodigoERP: this.formTipoInsp.celecodigoerp
+                    cNombreTipoInspeccion: this.formTipoInsp.cnombre,
+                    nFlagAlmacen: this.formTipoInsp.nflagalmacen,
+                    nFlagAccesorio: this.formTipoInsp.nflagaccesorio,
+                    nFlagTestDrive: this.formTipoInsp.nflagtestdrive,
+                    nFlagSeccion: this.formTipoInsp.nflagseccion,
+                    nFlagFichaTecnica: this.formTipoInsp.nflagfichatecnica
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Elemento registrado');
-                        this.listarElementos(1);
+                        swal('Tipo Inspección registrado');
+                        this.listarTipoInspeccion(1);
                         this.vistaFormulario = 1;
                     }
                     else{
-                        swal('Ya existe Elemento Venta');
+                        swal('Ya existe Tipo Inspección');
                     }
                 }).catch(error => {
                     console.log(error);
@@ -551,23 +439,9 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(this.formTipoInsp.nidproveedor == 0){
-                    this.mensajeError.push('Debes Ingresar el Proveedor');
-                };
-                if(this.formTipoInsp.ntpoelemen == '0'){
-                    this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
-                };
-                if(this.formTipoInsp.nidmoneda == '0'){
-                    this.mensajeError.push('Debes Ingresar un Tipo de Moneda');
-                };
-                if(!this.formTipoInsp.celenombre){
+
+                if(!this.formTipoInsp.cnombre){
                     this.mensajeError.push('Debes Ingresar un nombre');
-                };
-                if(!this.formTipoInsp.felevalorventa){
-                    this.mensajeError.push('Debes Ingresar un valor de Venta');
-                };
-                if(this.formTipoInsp.felevarlorminventa > this.formTipoInsp.felevalorventa){
-                    this.mensajeError.push('El Valor Venta debe ser mayor al Valor Mínimo Venta');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -588,7 +462,7 @@
                     nIdElementoVenta: parseInt(this.formTipoInsp.nidelemento),
                     nIdTipoElemento: parseInt(this.formTipoInsp.ntpoelemen),
                     nIdMoneda: parseInt(this.formTipoInsp.nidmoneda),
-                    cElemenNombre: this.formTipoInsp.celenombre.toUpperCase(),
+                    cElemenNombre: this.formTipoInsp.cnombre.toUpperCase(),
                     fElemenValorVenta: this.formTipoInsp.felevalorventa,
                     fElemenValorMinimoVenta: this.formTipoInsp.felevarlorminventa,
                     cCodigoERP: this.formTipoInsp.celecodigoerp
@@ -625,7 +499,7 @@
                             'Activado!',
                             'El registro fue activado.'
                             );
-                            this.listarElementos(1);
+                            this.listarTipoInspeccion(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -653,7 +527,7 @@
                             'Desactivado!',
                             'El registro fue desactivado.'
                             );
-                            this.listarElementos(1);
+                            this.listarTipoInspeccion(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -661,31 +535,6 @@
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
-            },
-            cerrarModal(){
-                //this.accionmodal==1;
-                this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
-                this.error = 0,
-                this.mensajeError = ''
-            },
-            abrirModal(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'proveedor':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                this.accionmodal=2;
-                                this.modal = 1;
-                                this.listarProveedores(1);
-                                break;
-                            }
-                        }
-                    }
-                }
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
@@ -696,9 +545,7 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 1;
-                                this.llenarComboTpoElemento();
-                                this.llenarComboTpoMoneda();
-                                this.tituloFormulario = 'NUEVO ELEMENTO VENTA';
+                                this.tituloFormulario = 'NUEVO TIPO DE INSPECCIÓN';
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -706,15 +553,13 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
-                                this.llenarComboTpoElemento();
-                                this.llenarComboTpoMoneda();
-                                this.tituloFormulario = 'ACTUALIZAR ELEMENTO VENTA';
+                                this.tituloFormulario = 'ACTUALIZAR TIPO DE INSPECCIÓN';
                                 this.formTipoInsp.nidelemento = data['nIdElemento'];
                                 this.formTipoInsp.ntpoelemen = data['nIdTipoElemento'];
                                 this.formTipoInsp.nidproveedor  = data['nIdProveedor'];
                                 this.formTipoInsp.cproveedornombre = data['cProveedorNombre'];
                                 this.formTipoInsp.nidmoneda = data['nIdMoneda'];
-                                this.formTipoInsp.celenombre = data['cElemenNombre'];
+                                this.formTipoInsp.cnombre = data['cElemenNombre'];
                                 this.formTipoInsp.celecodigoerp = data['cCodigoERP'];
                                 this.formTipoInsp.felevalorventa = data['fElemenValorVenta'];
                                 this.formTipoInsp.felevarlorminventa = data['fElemenValorMinimoVenta'];
@@ -729,7 +574,7 @@
                 this.formTipoInsp.cproveedornombre=  '',
                 this.formTipoInsp.ntpoelemen= 0,
                 this.formTipoInsp.nidmoneda= 0,
-                this.formTipoInsp.celenombre= '',
+                this.formTipoInsp.cnombre= '',
                 this.formTipoInsp.celecodigoerp= '',
                 this.formTipoInsp.felevalorventa= '',
                 this.formTipoInsp.felevarlorminventa='',
@@ -737,7 +582,7 @@
             },
             cambiarVistaFormulario(){
                 //this.limpiarFormulario();
-                this.listarElementos(1);
+                this.listarTipoInspeccion(1);
                 this.vistaFormulario = 1;
             },
             limpiarPaginacion(){
@@ -752,9 +597,6 @@
                 $("#myBar").show();
                 progress();
             }
-        },
-        mounted(){
-            this.llenarComboTpoElemento();
         }
     }
 </script>
