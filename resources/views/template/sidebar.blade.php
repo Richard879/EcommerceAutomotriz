@@ -34,7 +34,10 @@
         <li id="200222" @click="menu=200222" onclick="ActivarMenu('200222')"><a href="#">Autorización ADV</a></li>
         <li id="200223" @click="menu=200223" onclick="ActivarMenu('200223')"><a href="#">Cierre Venta</a></li>
         <li id="200224" @click="menu=200224" onclick="ActivarMenu('200224')"><a href="#">Cierre Compra</a></li>
-        <li id="200225" @click="menu=200225" onclick="ActivarMenu('200225')"><a href="#">Proceso de Inspección</a></li>
+        <li id="200225" @click="menu=200225" onclick="ActivarMenu('200225')"><a href="#">Tipo Inspección</a></li>
+        <li id="200226" @click="menu=200226" onclick="ActivarMenu('200226')"><a href="#">Plantilla Inspección</a></li>
+        <li id="200227" @click="menu=200227" onclick="ActivarMenu('200227')"><a href="#">Punto de Inspección</a></li>
+        <li id="200228" @click="menu=200228" onclick="ActivarMenu('200228')"><a href="#">Proceso de Inspección</a></li>
       </ul>
     </li>
     <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>

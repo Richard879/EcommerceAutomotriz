@@ -82,6 +82,15 @@
         <cierrecompra :ruta="ruta"></cierrecompra>
     </template>
     <template v-if="menu==200225">
-        <procesoinspeccion :ruta="ruta"></procesoinspeccion>
+        <pditipoinspeccion :ruta="ruta"></pditipoinspeccion>
+    </template>
+    <template v-if="menu==200226">
+        <pdiplantilla :ruta="ruta"></pdiplantilla>
+    </template>
+    <template v-if="menu==200227">
+        <pdipuntoinspeccion :ruta="ruta"></pdipuntoinspeccion>
+    </template>
+    <template v-if="menu==200227">
+        <pdiprocesoinspeccion :ruta="ruta"></pdiprocesoinspeccion>
     </template>
 @endsection

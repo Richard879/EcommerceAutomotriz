@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">VERSIÓN VEHÍCULO</h2>
+            <h2 class="no-margin-bottom">ELEMENTO VENTA</h2>
           </div>
         </header>
 
@@ -12,134 +12,39 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">BUSCAR VERSION VEHICULO</h3>
+                                <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="hidden" v-model="formVersion.nidproveedor">
-                                                        <input type="text" v-model="formVersion.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <label class="col-sm-2 form-control-label">Empresa</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Clase</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayClase"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">SubClase</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arraySubClase"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
+                                        <label class="col-sm-2 form-control-label">Tipo Elemento</label>
+                                        <div class="col-sm-4">
+                                            <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
+                                                <el-option
+                                                v-for="item in arrayTipoElemento"
+                                                :key="item.nIdPar"
+                                                :label="item.cParNombre"
+                                                :value="item.nIdPar">
+                                                </el-option>
+                                            </el-select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
-                                                        <el-option
-                                                        v-for="item in arrayLinea"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Marca</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                        <el-option
-                                                        v-for="item in arrayMarca"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
+                                        <label class="col-sm-2 form-control-label">Nombre Elemento</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Modelo</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayModelo"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Comercial</label>
-                                                <div class="col-sm-8">
-                                                    <input type="hidden" v-model="formVersion.nidversionveh">
-                                                    <input type="text" v-model="formVersion.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-4">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVersionVehiculo();">
-                                                <i class="fa fa-search"></i> Buscar
-                                            </button>
-                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('versionvehiculo','registrar')">
-                                                <i class="fa fa-file-o"></i> Nuevo
-                                            </button>
+                                        <div class="col-sm-9 offset-sm-3">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento()"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
                                 </form>
@@ -152,41 +57,43 @@
                                 <h3 class="h4">LISTADO</h3>
                             </div>
                             <div class="card-body">
-                                <template v-if="arrayVersionVehiculo.length">
+                                <template v-if="arrayElementoVenta.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th>Codigo</th>
-                                                    <th>Línea</th>
-                                                    <th>Marca</th>
-                                                    <th>Modelo</th>
-                                                    <th>Nombre Comercial</th>
+                                                    <th>Código</th>
+                                                    <th>Proveedor</th>
+                                                    <th>Tipo Elemento</th>
+                                                    <th>Nombre Elemento</th>
+                                                    <th>Precio de Venta</th>
+                                                    <th>Precio de Venta Mínimo</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdVersionVeh">
-                                                    <td v-text="vehiculo.nIdVersionVeh"></td>
-                                                    <td v-text="vehiculo.cLineaNombre"></td>
-                                                    <td v-text="vehiculo.cMarcaNombre"></td>
-                                                    <td v-text="vehiculo.cModeloNombre"></td>
-                                                    <td v-text="vehiculo.cNombreComercial"></td>
+                                                <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
+                                                    <td v-text="elemento.nIdElemento"></td>
+                                                    <td v-text="elemento.cProveedorNombre"></td>
+                                                    <td v-text="elemento.cTipoElemenNombre"></td>
+                                                    <td v-text="elemento.cElemenNombre"></td>
+                                                    <td v-text="elemento.fElemenValorVenta"></td>
+                                                    <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ vehiculo.cNombreComercial }}</div>
-                                                             <i @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                             <div slot="content">Editar {{ elemento.cElemenNombre }}</div>
+                                                             <i @click="abrirFormulario('elemento','actualizar', elemento)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
-                                                        <template v-if="vehiculo.cVersionVehEstado=='A'">
+                                                        <template v-if="elemento.cElementoEstado=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ vehiculo.cNombreComercial }}</div>
-                                                                <i @click="desactivar(vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ elemento.cElemenNombre }}</div>
+                                                                <i @click="desactivar(elemento.nIdElemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ vehiculo.cNombreComercial }}</div>
-                                                                <i @click="activar(vehiculo.nIdVersionVeh)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ elemento.cElemenNombre }}</div>
+                                                                <i @click="activar(elemento.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -251,7 +158,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,8 +167,8 @@
                                                 <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="hidden" v-model="formVersion.nidproveedor">
-                                                        <input type="text" v-model="formVersion.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <input type="hidden" v-model="formEle.nidproveedor">
+                                                        <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
                                                             <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
                                                                 <i class="fa-lg fa fa-search"></i>
@@ -275,11 +182,11 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Clase</label>
+                                                <label class="col-sm-4 form-control-label">* Tipo Elemento</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                    <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
                                                         <el-option
-                                                        v-for="item in arrayClase"
+                                                        v-for="item in arrayTipoElemento"
                                                         :key="item.nIdPar"
                                                         :label="item.cParNombre"
                                                         :value="item.nIdPar">
@@ -290,46 +197,14 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Sub Clase</label>
+                                                <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                    <el-select v-model="formEle.nidmoneda" filterable placeholder="Select" >
                                                         <el-option
-                                                        v-for="item in arraySubClase"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Linea Vehículo</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
-                                                        <el-option
-                                                        v-for="item in arrayLinea"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Marca</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                        <el-option
-                                                        v-for="item in arrayMarca"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
+                                                        v-for="tpomoneda in arrayTipoMoneda"
+                                                        :key="tpomoneda.nIdPar"
+                                                        :label="tpomoneda.cParNombre"
+                                                        :value="tpomoneda.nIdPar">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -339,25 +214,36 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Modelo</label>
+                                                <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                        <el-option
-                                                        v-for="item in arrayModelo"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
+                                                    <input type="hidden" v-model="formEle.nidelemento">
+                                                    <input type="text" v-model="formEle.celenombre" class="form-control form-control-sm" placeholder="">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Comercial</label>
+                                                <label class="col-sm-4 form-control-label">Código ERP</label>
                                                 <div class="col-sm-8">
-                                                    <input type="hidden" v-model="formVersion.nidversionveh">
-                                                    <input type="text" v-model="formVersion.cnombrecomercial" class="form-control form-control-sm" placeholder="">
+                                                    <input type="text" v-model="formEle.celecodigoerp" class="form-control form-control-sm" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Valor Venta</label>
+                                                <div class="col-sm-8">
+                                                    <input type="number" v-model="formEle.felevalorventa" class="form-control form-control-sm" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Valor Mínimo Venta</label>
+                                                <div class="col-sm-8">
+                                                    <input type="number" v-model="formEle.felevarlorminventa" class="form-control form-control-sm" placeholder="">
                                                 </div>
                                             </div>
                                         </div>
@@ -395,6 +281,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
+
                             </div>
                         </div>
                     </div>
@@ -424,7 +311,9 @@
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -501,7 +390,6 @@
             </div>
         </div>
 
-
     </main>
 </template>
 <script>
@@ -510,39 +398,35 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                arrayVersionVehiculo: [],
-                arrayClase: [],
-                arraySubClase: [],
-                arrayLinea: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                arrayAnioFabricacion: [],
-                arrayAnioVersion: [],
+                arrayTipoElemento: [],
+                arrayElementoVenta: [],
+                arrayTipoMoneda: [],
                 arrayProveedor: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
-                formVersion:{
-                    nidempresa: 0,
+                formEle:{
+                    cempresa: 'SAISAC',
+                    csucursal: 'CHICLAYO',
+                    nidempresa : '',
                     nidproveedor: 0,
                     cproveedornombre: '',
-                    nidclase: 0,
-                    nidsubclase: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    nidaniofabricacion: 0,
-                    nidanioversion: 0,
-                    nidversionveh: 0,
-                    cnombrecomercial:''
+                    ntpoelemen: 0,
+                    nidmoneda: 0,
+                    nidelemento: 0,
+                    celenombre: '',
+                    celecodigoerp: '',
+                    felevalorventa: '',
+                    felevarlorminventa: '',
+                    celementonombre: ''
                 },
                 pagination: {
-                    'total' : 0,
-                    'current_page' : 0,
-                    'per_page' : 0,
-                    'last_page' : 0,
-                    'from' : 0,
-                    'to' : 0,
+                    'total': 0,
+                    'current_page': 0,
+                    'per_page': 0,
+                    'last_page': 0,
+                    'from': 0,
+                    'to': 0,
                 },
                 paginationModal: {
                     'total' : 0,
@@ -553,7 +437,6 @@
                     'to' : 0,
                 },
                 offset:3,
-                accion: 0,
                 modal:0,
                 tituloModal:'',
                 tituloFormulario: '',
@@ -617,82 +500,28 @@
             }
         },
         methods:{
-            llenarComboClase(){
+            llenarComboTpoElemento(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110029,
+                        'ngrupoparid' : 110027,
                         'opcion' : 0
                     }
                 }).then(response => {
-                    this.arrayClase = response.data;
+                    this.arrayTipoElemento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            llenarComboSubClase(){
+            llenarComboTpoMoneda(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110030,
+                        'ngrupoparid' : 110028,
                         'opcion' : 0
                     }
                 }).then(response => {
-                    this.arraySubClase = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboLinea(){
-                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa' : 1300011,
-                        'nidproveedor' : this.formVersion.nidproveedor
-                    }
-                }).then(response => {
-                    this.arrayLinea = response.data;
-                    if(this.vistaFormulario){
-                        this.formVersion.nidlinea = 0;
-                    }
-                    this.llenarComboMarca();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
-
-                axios.get(url, {
-                    params: {
-                        'nidlinea' : this.formVersion.nidlinea
-                    }
-                }).then(response => {
-                    this.arrayMarca = response.data;
-                    if(this.vistaFormulario){
-                        this.formVersion.nidmarca = 0;
-                    }
-                    this.arrayModelo = [];
-                    this.llenarComboModelo();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
-
-                axios.get(url, {
-                    params: {
-                        'nidmarca' : this.formVersion.nidmarca
-                    }
-                }).then(response => {
-                    this.arrayModelo = response.data;
-                    if(this.vistaFormulario){
-                        this.formVersion.nidmodelo = 0;
-                    }
+                    this.arrayTipoMoneda = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -702,7 +531,7 @@
             },
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
-
+                
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -728,66 +557,42 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formVersion.nidproveedor = nProveedorId;
-                this.formVersion.cproveedornombre = cProveedorNombre;
+                this.formEle.nidproveedor = nProveedorId;
+                this.formEle.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
-                this.arrayMarca = [];
-                this.arrayModelo = [];
-                this.llenarComboLinea();
             },
-            buscarVersionVehiculo(){
-                if(this.validarBusqueda()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.listarVersionVehiculo(1);
+            buscarElemento(){
+                this.listarElementos(1);
             },
-            validarBusqueda(){
-                this.error = 0;
-                this.mensajeError =[];
-                if(this.formVersion.nidproveedor == 0){
-                    this.mensajeError.push('Debes Seleccionar el Proveedor');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            listarVersionVehiculo(page){
+            listarElementos(page){
                 this.mostrarProgressBar();
-                var url = this.ruta + '/versionvehiculo/GetVersionVehiculo';
-                
+
+                var url = this.ruta + '/elemento/GetElementoByTipo';
+
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidproveedor' : this.formVersion.nidproveedor,
-                        'nidclase' : this.formVersion.nidclase,
-                        'nidsubclase' : this.formVersion.nidsubclase,
-                        'nidlinea' : this.formVersion.nidlinea,
-                        'nidmarca' : this.formVersion.nidmarca,
-                        'nidmodelo' : this.formVersion.nidmodelo,
-                        'cnombrecomercial' : this.formVersion.cnombrecomercial.toString(),
-                        'page' : page
+                        'nidempresa': 1300011,
+                        'nidtipoelemen': this.formEle.ntpoelemen,
+                        'celementonombre': this.formEle.celementonombre,
+                        'page': page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
-                    this.pagination.current_page =  response.data.arrayVersionVehiculo.current_page;
-                    this.pagination.total = response.data.arrayVersionVehiculo.total;
-                    this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
-                    this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
-                    this.pagination.from        = response.data.arrayVersionVehiculo.from;
-                    this.pagination.to           = response.data.arrayVersionVehiculo.to;
+                    this.arrayElementoVenta = response.data.arrayElementoVenta.data;
+                    this.pagination.current_page =  response.data.arrayElementoVenta.current_page;
+                    this.pagination.total = response.data.arrayElementoVenta.total;
+                    this.pagination.per_page    = response.data.arrayElementoVenta.per_page;
+                    this.pagination.last_page   = response.data.arrayElementoVenta.last_page;
+                    this.pagination.from        = response.data.arrayElementoVenta.from;
+                    this.pagination.to           = response.data.arrayElementoVenta.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
-                    console.log(error);
+                    this.errors = error
                 });
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarVersionVehiculo(page);
+                this.listarElementos(page);
             },
             registrar(){
                 if(this.validar()){
@@ -796,26 +601,25 @@
                     return;
                 }
 
-                var url = this.ruta + '/versionvehiculo/SetVersion';
+                var url = this.ruta + '/elemento/SetElemento';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formVersion.nidproveedor),
-                    nIdClase: parseInt(this.formVersion.nidclase),
-                    nIdSubClase: parseInt(this.formVersion.nidsubclase),
-                    nIdLinea: parseInt(this.formVersion.nidlinea),
-                    nIdMarca: parseInt(this.formVersion.nidmarca),
-                    nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
+                    nIdProveedor: parseInt(this.formEle.nidproveedor),
+                    nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
+                    nIdMoneda: parseInt(this.formEle.nidmoneda),
+                    cElemenNombre: this.formEle.celenombre.toUpperCase(),
+                    fElemenValorVenta: this.formEle.felevalorventa,
+                    fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
+                    cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Versión Vehículo registrado');
-                        this.limpiarFormulario();
-                        this.listarVersionVehiculo(1);
+                        swal('Elemento registrado');
+                        this.listarElementos(1);
                         this.vistaFormulario = 1;
                     }
                     else{
-                        swal('Ya existe Vehiculo');
+                        swal('Ya existe Elemento Venta');
                     }
                 }).catch(error => {
                     console.log(error);
@@ -824,31 +628,23 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
-
-                if(this.accion == 2 && this.formVersion.nidversionveh == 0){
-                    this.mensajeError.push('No ha seleccionado el Vehiculo');
-                }
-
-                if(!this.formVersion.nidproveedor || this.formVersion.nidproveedor == 0){
+                if(this.formEle.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formVersion.nidclase == 0){
-                    this.mensajeError.push('Debes Ingresar una Clase');
+                if(this.formEle.ntpoelemen == '0'){
+                    this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
                 };
-                if(this.formVersion.nidsubclase == 0){
-                    this.mensajeError.push('Debes Ingresar una Sub clase');
+                if(this.formEle.nidmoneda == '0'){
+                    this.mensajeError.push('Debes Ingresar un Tipo de Moneda');
                 };
-                if(this.formVersion.nidlinea == 0){
-                    this.mensajeError.push('Debes Ingresar una Línea');
+                if(!this.formEle.celenombre){
+                    this.mensajeError.push('Debes Ingresar un nombre');
                 };
-                if(this.formVersion.nidmarca == 0){
-                    this.mensajeError.push('Debes Ingresar una Marca');
+                if(!this.formEle.felevalorventa){
+                    this.mensajeError.push('Debes Ingresar un valor de Venta');
                 };
-                if(this.formVersion.nidmodelo == 0){
-                    this.mensajeError.push('Debes Ingresar un Modelo');
-                };
-                if(!this.formVersion.cnombrecomercial){
-                    this.mensajeError.push('Debes Ingresar un Nombre comercial');
+                if(this.formEle.felevarlorminventa > this.formEle.felevalorventa){
+                    this.mensajeError.push('El Valor Venta debe ser mayor al Valor Mínimo Venta');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -856,8 +652,7 @@
                 return this.error;
             },
             actualizar(){
-                var url = this.ruta + '/versionvehiculo/UpdVersionVehiculoById';
-
+                var url = this.ruta + '/elemento/UpdElementoById';
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -865,87 +660,84 @@
                 }
 
                 axios.post(url, {
-                    nIdVersionVeh: parseInt(this.formVersion.nidversionveh),
                     nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formVersion.nidproveedor),
-                    nIdClase: parseInt(this.formVersion.nidclase),
-                    nIdSubClase: parseInt(this.formVersion.nidsubclase),
-                    nIdLinea: parseInt(this.formVersion.nidlinea),
-                    nIdMarca: parseInt(this.formVersion.nidmarca),
-                    nIdModelo: parseInt(this.formVersion.nidmodelo),
-                    cNombreComercial: this.formVersion.cnombrecomercial.toUpperCase().toString()
+                    nIdProveedor: parseInt(this.formEle.nidproveedor),
+                    nIdElementoVenta: parseInt(this.formEle.nidelemento),
+                    nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
+                    nIdMoneda: parseInt(this.formEle.nidmoneda),
+                    cElemenNombre: this.formEle.celenombre.toUpperCase(),
+                    fElemenValorVenta: this.formEle.felevalorventa,
+                    fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
+                    cCodigoERP: this.formEle.celecodigoerp
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Versión Vehículo Actualizado');
+                        swal('Elemento Actualizado');
                         this.limpiarFormulario();
-                        this.listarVersionVehiculo(1);
                         this.vistaFormulario = 1;
                     }
                     else{
-                        swal('Ya existe Vehiculo');
+                        swal('Ya existe Elemento Venta');
                     }
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            activar(nIdVersionVeh){
+            activar(nIdElementoVenta){
                 swal({
-                    title: 'Estas seguro de activar este vehículo?',
+                    title: 'Estas seguro de activar este elemento?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Activar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/versionvehiculo/activar';
-                            axios.put(url, {
-                                nIdVersionVeh: parseInt(nIdVersionVeh)
-                            }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarVersionVehiculo(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/elemento/activar';
+                        axios.put(url , {
+                            nIdElementoVenta: nIdElementoVenta
+                        }).then(response => {
+                            swal(
+                            'Activado!',
+                            'El registro fue activado.'
+                            );
+                            this.listarElementos(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
-            desactivar(nIdVersionVeh){
+            desactivar(nIdElementoVenta){
                 swal({
-                    title: 'Estas seguro de desactivar este vehículo?',
+                    title: 'Estas seguro de desactivar este elemento?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/versionvehiculo/desactivar';
-                            axios.put(url, {
-                                nIdVersionVeh: parseInt(nIdVersionVeh)
-                            }).then(response => {
-                                swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
-                                );
-                                this.listarVersionVehiculo(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/elemento/desactivar';
+                        axios.put(url , {
+                            nIdElementoVenta: nIdElementoVenta
+                        }).then(response => {
+                            swal(
+                            'Desactivado!',
+                            'El registro fue desactivado.'
+                            );
+                            this.listarElementos(1);
+                            this.vistaFormulario = 1;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel){}
+                })
             },
             cerrarModal(){
                 //this.accionmodal==1;
@@ -974,19 +766,16 @@
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'versionvehiculo':
+                    case 'elemento':
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 1;
-                                this.llenarComboClase();
-                                this.llenarComboSubClase();
-                                this.llenarComboLinea();
-                                this.llenarComboMarca();
-                                this.llenarComboModelo();
-                                this.tituloFormulario = 'NUEVO VERSION VEHICULO';
+                                this.llenarComboTpoElemento();
+                                this.llenarComboTpoMoneda();
+                                this.tituloFormulario = 'NUEVO ELEMENTO VENTA';
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -994,49 +783,47 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
-                                this.formVersion.nidproveedor = data['nIdProveedor'];
-                                this.formVersion.cproveedornombre = data['cProveedorNombre'];
-                                this.llenarComboClase();
-                                this.llenarComboSubClase();
-                                this.llenarComboLinea();
-                                this.formVersion.nidclase = data['nIdClase'];
-                                this.formVersion.nidsubclase = data['nIdSubClase'];
-                                this.formVersion.nidlinea = data['nIdLinea'];
-                                //this.llenarComboMarca();
-                                this.formVersion.nidmarca = data['nIdMarca'];
-                                //this.llenarComboModelo();
-                                this.tituloFormulario = 'ACTUALIZAR VERSION VEHICULO';
-                                this.formVersion.nidmodelo = data['nIdModelo'];
-                                this.formVersion.nidversionveh = data['nIdVersionVeh'];
-                                this.formVersion.cnombrecomercial = data['cNombreComercial'];
+                                this.llenarComboTpoElemento();
+                                this.llenarComboTpoMoneda();
+                                this.tituloFormulario = 'ACTUALIZAR ELEMENTO VENTA';
+                                this.formEle.nidelemento = data['nIdElemento'];
+                                this.formEle.ntpoelemen = data['nIdTipoElemento'];
+                                this.formEle.nidproveedor  = data['nIdProveedor'];
+                                this.formEle.cproveedornombre = data['cProveedorNombre'];
+                                this.formEle.nidmoneda = data['nIdMoneda'];
+                                this.formEle.celenombre = data['cElemenNombre'];
+                                this.formEle.celecodigoerp = data['cCodigoERP'];
+                                this.formEle.felevalorventa = data['fElemenValorVenta'];
+                                this.formEle.felevarlorminventa = data['fElemenValorMinimoVenta'];
                                 break;
                             }
                         }
                     }
                 }
             },
-            cambiarVistaFormulario(){
-                if(this.accion == 1){
-                    this.limpiarFormulario();
-                    this.vistaFormulario = 1;
-                }else{
-                    this.limpiarFormulario();
-                    this.vistaFormulario = 1;
-                }
-
-            },
             limpiarFormulario(){
-                //this.formVersion.nidproveedor= 0,
-                //this.formVersion.cproveedornombre= '',
-                this.formVersion.nidclase=  0,
-                this.formVersion.nidsubclase= 0,
-                this.formVersion.nidlinea= 0,
-                this.formVersion.nidmarca= 0,
-                this.formVersion.nidmodelo= 0,
-                this.formVersion.cnombrecomercial= '',
-                this.formVersion.nidaniofabricacion= 0,
-                this.formVersion.nidanioversion= 0
-                //this.arrayVersionVehiculo = []
+                this.formEle.nidproveedor= 0,
+                this.formEle.cproveedornombre=  '',
+                this.formEle.ntpoelemen= 0,
+                this.formEle.nidmoneda= 0,
+                this.formEle.celenombre= '',
+                this.formEle.celecodigoerp= '',
+                this.formEle.felevalorventa= '',
+                this.formEle.felevarlorminventa='',
+                this.arrayElementoVenta = []
+            },
+            cambiarVistaFormulario(){
+                //this.limpiarFormulario();
+                this.listarElementos(1);
+                this.vistaFormulario = 1;
+            },
+            limpiarPaginacion(){
+                this.pagination.current_page =  0,
+                this.pagination.total = 0,
+                this.pagination.per_page = 0,
+                this.pagination.last_page = 0,
+                this.pagination.from  = 0,
+                this.pagination.to = 0
             },
             mostrarProgressBar(){
                 $("#myBar").show();
@@ -1044,11 +831,7 @@
             }
         },
         mounted(){
-            this.llenarComboClase();
-            this.llenarComboSubClase();
-            this.llenarComboLinea();
-            this.llenarComboMarca();
-            this.llenarComboModelo();
+            this.llenarComboTpoElemento();
         }
     }
 </script>
