@@ -538,18 +538,16 @@
                 }
             },
             limpiarFormulario(){
-                this.formTipoInsp.nidproveedor= 0,
-                this.formTipoInsp.cproveedornombre=  '',
-                this.formTipoInsp.ntpoelemen= 0,
-                this.formTipoInsp.nidmoneda= 0,
+                this.formTipoInsp.nidtipoinspeccion= 0,
                 this.formTipoInsp.cnombre= '',
-                this.formTipoInsp.celecodigoerp= '',
-                this.formTipoInsp.felevalorventa= '',
-                this.formTipoInsp.felevarlorminventa='',
+                this.formTipoInsp.nflagalmacen=  0,
+                this.formTipoInsp.nflagaccesorio= 0,
+                this.formTipoInsp.nflagtestdrive= 0,
+                this.formTipoInsp.nflagseccion= 0,
+                this.formTipoInsp.nflagfichatecnica= 0,
                 this.arrayTipoInspeccion = []
             },
             cambiarVistaFormulario(){
-                //this.limpiarFormulario();
                 this.listarTipoInspeccion(1);
                 this.vistaFormulario = 1;
             },

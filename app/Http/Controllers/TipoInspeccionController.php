@@ -79,4 +79,30 @@ class TipoInspeccionController extends Controller
                                                                     ));
         return response()->json($element); 
     }
+
+    public function GetFillTipoInspeccion(Request $request)
+    {
+        $nIdEmpresa   = $request->nidempresa;
+        $cNombreTipoInspeccion = $request->cnombre;
+        $variable   = $request->opcion;
+
+        $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
+
+        $parametro = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ? ', 
+                                                                        [$nIdEmpresa, $cNombreTipoInspeccion]);
+        $data = [];
+        if($variable == "0"){
+            $data[0] = [
+                'nIdTipoInspeccion'   => 0,
+                'cNombreTipoInspeccion' =>'SELECCIONE',
+            ];
+        }
+        foreach ($parametro as $key => $value) {
+           $data[$key+1] =[
+                'nIdTipoInspeccion'   => $value->nIdTipoInspeccion,
+                'cNombreTipoInspeccion' => $value->cNombreTipoInspeccion,
+            ];
+        }
+        return response()->json($data);
+    }
 }
