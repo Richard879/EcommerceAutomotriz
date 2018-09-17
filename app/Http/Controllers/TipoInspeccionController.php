@@ -25,4 +25,59 @@ class TipoInspeccionController extends Controller
                                                                     ));
         return response()->json($element);         
     }
+
+    public function GetListTipoInspeccion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa   = $request->nidempresa;
+        $cNombreTipoInspeccion = $request->cnombre;
+
+        $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
+                
+        $arrayTipoInspeccion = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ?', 
+                                                                    [$nIdEmpresa, $cNombreTipoInspeccion]);
+
+        $arrayTipoInspeccion = ParametroController::arrayPaginator($arrayTipoInspeccion, $request);
+        return ['arrayTipoInspeccion'=>$arrayTipoInspeccion];
+    }
+
+    public function desactivar (Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $elementoVenta = DB::select('exec usp_Element_DesactivaById ?', 
+                                                            array(  $request->nIdElementoVenta
+                                                                    ));
+        return response()->json($elementoVenta);   
+    }
+
+    public function activar (Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $elementoVenta = DB::select('exec usp_Element_ActivaById ?', 
+                                                            array(  $request->nIdElementoVenta
+                                                                    ));
+        return response()->json($elementoVenta);   
+    }
+    
+    public function UpdElementoById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $element = DB::select('exec usp_Elemen_UpdElementoById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                            array($request->nIdEmpresa,
+                                                                    $request->nIdProveedor,
+                                                                    $request->nIdElementoVenta,
+                                                                    $request->nIdTipoElemento, 
+                                                                    $request->nIdMoneda,
+                                                                    $request->cElemenNombre,
+                                                                    $request->fElemenValorVenta,
+                                                                    $request->fElemenValorMinimoVenta,
+                                                                    $request->cCodigoERP,
+                                                                    Auth::user()->id
+                                                                    ));
+        return response()->json($element);         
+    }
 }

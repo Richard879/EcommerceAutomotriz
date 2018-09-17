@@ -115,6 +115,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
     Route::post('/tipoinspeccion/SetTipoInspeccion', 'TipoInspeccionController@SetTipoInspeccion');
+    Route::get('/tipoinspeccion/GetListTipoInspeccion', 'TipoInspeccionController@GetListTipoInspeccion');
+    Route::get('/tipoinspeccion/activar', 'TipoInspeccionController@activar');
+    Route::get('/tipoinspeccion/desactivar', 'TipoInspeccionController@desactivar');
 
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');

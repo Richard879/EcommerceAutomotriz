@@ -50,37 +50,39 @@
                                             <thead>
                                                 <tr>
                                                     <th>Código</th>
-                                                    <th>Proveedor</th>
-                                                    <th>Tipo Elemento</th>
-                                                    <th>Nombre Elemento</th>
-                                                    <th>Precio de Venta</th>
-                                                    <th>Precio de Venta Mínimo</th>
+                                                    <th>Nombre</th>
+                                                    <th>Almacén</th>
+                                                    <th>Accesorio</th>
+                                                    <th>Test Drive</th>
+                                                    <th>Sección Inspección</th>
+                                                    <th>Ficha Técnica</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="inspeccion in arrayTipoInspeccion" :key="inspeccion.nIdElemento">
-                                                    <td v-text="inspeccion.nIdElemento"></td>
-                                                    <td v-text="inspeccion.cProveedorNombre"></td>
-                                                    <td v-text="inspeccion.cTipoElemenNombre"></td>
-                                                    <td v-text="inspeccion.cElemenNombre"></td>
-                                                    <td v-text="inspeccion.fElemenValorVenta"></td>
-                                                    <td v-text="inspeccion.fElemenValorMinimoVenta"></td>
+                                                <tr v-for="inspeccion in arrayTipoInspeccion" :key="inspeccion.nIdTipoInspeccion">
+                                                    <td v-text="inspeccion.nIdTipoInspeccion"></td>
+                                                    <td v-text="inspeccion.cNombreTipoInspeccion"></td>
+                                                    <td v-text="inspeccion.cFlagAlmacen"></td>
+                                                    <td v-text="inspeccion.cFlagAccesorio"></td>
+                                                    <td v-text="inspeccion.cFlagTestDrive"></td>
+                                                    <td v-text="inspeccion.cFlagSeccionInspeccion"></td>
+                                                    <td v-text="inspeccion.cFlagValidarFichaTecnica"></td>
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ inspeccion.cElemenNombre }}</div>
+                                                             <div slot="content">Editar {{ inspeccion.cNombreTipoInspeccion }}</div>
                                                              <i @click="abrirFormulario('inspeccion','actualizar', inspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
                                                         <template v-if="inspeccion.cElementoEstado=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ inspeccion.cElemenNombre }}</div>
-                                                                <i @click="desactivar(inspeccion.nIdElemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ inspeccion.cNombreTipoInspeccion }}</div>
+                                                                <i @click="desactivar(inspeccion.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ inspeccion.cElemenNombre }}</div>
-                                                                <i @click="activar(inspeccion.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ inspeccion.cNombreTipoInspeccion }}</div>
+                                                                <i @click="activar(inspeccion.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -348,13 +350,12 @@
             listarTipoInspeccion(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/inspeccion/GetElementoByTipo';
+                var url = this.ruta + '/tipoinspeccion/GetListTipoInspeccion';
 
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidtipoelemen': this.formTipoInsp.ntpoelemen,
-                        'celementonombre': this.formTipoInsp.celementonombre,
+                        'cnombre': this.formTipoInsp.cnombre,
                         'page': page
                     }
                 }).then(response => {
@@ -459,10 +460,10 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdProveedor: parseInt(this.formTipoInsp.nidproveedor),
-                    nIdElementoVenta: parseInt(this.formTipoInsp.nidelemento),
+                    nIdTipoInspeccion: parseInt(this.formTipoInsp.nidelemento),
                     nIdTipoElemento: parseInt(this.formTipoInsp.ntpoelemen),
                     nIdMoneda: parseInt(this.formTipoInsp.nidmoneda),
-                    cElemenNombre: this.formTipoInsp.cnombre.toUpperCase(),
+                    cNombreTipoInspeccion: this.formTipoInsp.cnombre.toUpperCase(),
                     fElemenValorVenta: this.formTipoInsp.felevalorventa,
                     fElemenValorMinimoVenta: this.formTipoInsp.felevarlorminventa,
                     cCodigoERP: this.formTipoInsp.celecodigoerp
@@ -480,7 +481,7 @@
                     console.log(error);
                 });
             },
-            activar(nIdElementoVenta){
+            activar(nIdTipoInspeccion){
                 swal({
                     title: 'Estas seguro de activar este inspeccion?',
                     type: 'warning',
@@ -491,9 +492,9 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/inspeccion/activar';
+                        var url = this.ruta + '/tipoinspeccion/activar';
                         axios.put(url , {
-                            nIdElementoVenta: nIdElementoVenta
+                            nIdTipoInspeccion: nIdTipoInspeccion
                         }).then(response => {
                             swal(
                             'Activado!',
@@ -508,7 +509,7 @@
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
-            desactivar(nIdElementoVenta){
+            desactivar(nIdTipoInspeccion){
                 swal({
                     title: 'Estas seguro de desactivar este inspeccion?',
                     type: 'warning',
@@ -519,9 +520,9 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/inspeccion/desactivar';
+                        var url = this.ruta + '/tipoinspeccion/desactivar';
                         axios.put(url , {
-                            nIdElementoVenta: nIdElementoVenta
+                            nIdTipoInspeccion: nIdTipoInspeccion
                         }).then(response => {
                             swal(
                             'Desactivado!',
@@ -554,12 +555,12 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR TIPO DE INSPECCIÓN';
-                                this.formTipoInsp.nidelemento = data['nIdElemento'];
+                                this.formTipoInsp.nidelemento = data['nIdTipoInspeccion'];
                                 this.formTipoInsp.ntpoelemen = data['nIdTipoElemento'];
                                 this.formTipoInsp.nidproveedor  = data['nIdProveedor'];
                                 this.formTipoInsp.cproveedornombre = data['cProveedorNombre'];
                                 this.formTipoInsp.nidmoneda = data['nIdMoneda'];
-                                this.formTipoInsp.cnombre = data['cElemenNombre'];
+                                this.formTipoInsp.cnombre = data['cNombreTipoInspeccion'];
                                 this.formTipoInsp.celecodigoerp = data['cCodigoERP'];
                                 this.formTipoInsp.felevalorventa = data['fElemenValorVenta'];
                                 this.formTipoInsp.felevarlorminventa = data['fElemenValorMinimoVenta'];
