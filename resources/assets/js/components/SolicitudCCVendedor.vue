@@ -1831,19 +1831,10 @@
         text-align: center;
         margin: auto;
     }
-    .el-select {
-        width: 100%;
-    }
-    .el-select .el-input {
-        width: 120px;
-    }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;
     }
     .widthFull>.el-select>.el-input {
-        width: 100%;
-    }
-    .el-date-editor.el-input, .el-date-editor.el-input__inner{
         width: 100%;
     }
     /* Estilos Modal */

@@ -2,26 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class SolicitudCartaCaracteristicaController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GeLstCompras(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -38,7 +26,7 @@ class SolicitudCartaCaracteristicaController extends Controller
                                                                 $cNumeroVin
                                                             ]);
 
-        $arrayCompra = $this->arrayPaginator($arrayCompra, $request);
+        $arrayCompra = ParametroController::arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
     }
 
@@ -73,7 +61,7 @@ class SolicitudCartaCaracteristicaController extends Controller
                                                                                 $nIdVendedor
                                                                                 ));
 
-        $arrayContactosByCotizacionAprobada = $this->arrayPaginator($arrayContactosByCotizacionAprobada, $request);
+        $arrayContactosByCotizacionAprobada = ParametroController::arrayPaginator($arrayContactosByCotizacionAprobada, $request);
         return ['arrayContactosByCotizacionAprobada'=>$arrayContactosByCotizacionAprobada];
     }
 
@@ -151,7 +139,7 @@ class SolicitudCartaCaracteristicaController extends Controller
                                                                             $nIdVendedor
                                                                         ]);
 
-        $arrayCartaCaracteristicas = $this->arrayPaginator($arrayCartaCaracteristicas, $request);
+        $arrayCartaCaracteristicas = ParametroController::arrayPaginator($arrayCartaCaracteristicas, $request);
         return ['arrayCartaCaracteristicas'=>$arrayCartaCaracteristicas];
     }
 
