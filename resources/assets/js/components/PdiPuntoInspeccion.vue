@@ -16,7 +16,7 @@
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
-                                    <div class="form-group row">
+                                    <!--<div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
@@ -57,7 +57,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <!--<div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="h4">LISTADO ITEMS</h3>
@@ -184,7 +184,7 @@
                                 </template>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </section>
         </template>
@@ -222,7 +222,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Ingreso Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflag" filterable placeholder="Select" >
+                                                    <el-select v-model="formPunto.nidflagingreso" filterable placeholder="Select" >
                                                         <el-option
                                                         v-for="item in arrayFlag"
                                                         :key="item.nIdPar"
@@ -237,7 +237,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Salida Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflag" filterable placeholder="Select" >
+                                                    <el-select v-model="formPunto.nidflagsalida" filterable placeholder="Select" >
                                                         <el-option
                                                         v-for="item in arrayFlag"
                                                         :key="item.nIdPar"
@@ -254,9 +254,9 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflag" filterable placeholder="Select" >
+                                                    <el-select v-model="formPunto.nidflagmovimiento" filterable placeholder="Select" >
                                                         <el-option
-                                                        v-for="item in arrayFlag"
+                                                        v-for="item in arrayTipoMovimiento"
                                                         :key="item.nIdPar"
                                                         :label="item.cParNombre"
                                                         :value="item.nIdPar">
@@ -429,17 +429,13 @@
                     cnombre: ''
                 },
                 formPunto:{
-                    nidtipoinspeccion: 0,
-                    nidflag: 0,
-                    nidseccion: 0,
-                    niditem: 0,
-                    citemnombre: '',
+                    nidflagingreso: 0,
+                    nidflagsalida: 0,
+                    nidflagmovimiento: 0,
                     cnombre: ''
                 },
-                arrayTipoInspeccion: [],
                 arrayFlag: [],
-                arraySeccion: [],
-                arrayPlantilla: [],
+                arrayTipoMovimiento: [],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -475,7 +471,6 @@
          mounted(){
             this.llenarComboTipoInspeccion();
             this.llenarFlag();
-            this.llenarComboSeccion();
         },
         computed:{
             isActived: function(){
@@ -531,15 +526,14 @@
         },
         methods:{
             llenarComboTipoInspeccion(){
-                var url = this.ruta + '/tipoinspeccion/GetFillTipoInspeccion';
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'cnombre': '',
+                        'ngrupoparid' : 110084,
                         'opcion' : 0
                     }
                 }).then(response => {
-                    this.arrayTipoInspeccion = response.data;
+                    this.arrayTipoMovimiento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -548,24 +542,11 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110080,
+                        'ngrupoparid' : 110085,
                         'opcion' : 0
                     }
                 }).then(response => {
                     this.arrayFlag = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboSeccion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110081,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arraySeccion = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
