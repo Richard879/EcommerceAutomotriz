@@ -110,9 +110,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
     Route::get('/pedido/GetLstPedidosPendienteAprobacion', 'PedidoController@GetLstPedidosPendienteAprobacion');
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
-    Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'DepositoPedidoController@GetNumeroCuentaByBancoAndMoneda');
-    Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
-    Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
+    Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
+    Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');
+    Route::post('/deposito/SetDepositoPedido', 'PedidoDepositoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
     Route::post('/tipoinspeccion/SetTipoInspeccion', 'PdiTipoInspeccionController@SetTipoInspeccion');
     Route::get('/tipoinspeccion/GetListTipoInspeccion', 'PdiTipoInspeccionController@GetListTipoInspeccion');

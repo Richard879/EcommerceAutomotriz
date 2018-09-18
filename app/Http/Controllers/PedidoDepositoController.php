@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-class DepositoPedidoController extends Controller
+class PedidoDepositoController extends Controller
 {
     public function GetNumeroCuentaByBancoAndMoneda(Request $request)
     {
