@@ -114,12 +114,12 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
-    Route::post('/tipoinspeccion/SetTipoInspeccion', 'TipoInspeccionController@SetTipoInspeccion');
-    Route::get('/tipoinspeccion/GetListTipoInspeccion', 'TipoInspeccionController@GetListTipoInspeccion');
-    Route::put('/tipoinspeccion/activar', 'TipoInspeccionController@activar');
-    Route::put('/tipoinspeccion/desactivar', 'TipoInspeccionController@desactivar');
-    Route::post('/tipoinspeccion/UpdTipoInspeccionById', 'TipoInspeccionController@UpdTipoInspeccionById');
-    Route::get('/tipoinspeccion/GetFillTipoInspeccion', 'TipoInspeccionController@GetFillTipoInspeccion');
+    Route::post('/tipoinspeccion/SetTipoInspeccion', 'PdiTipoInspeccionController@SetTipoInspeccion');
+    Route::get('/tipoinspeccion/GetListTipoInspeccion', 'PdiTipoInspeccionController@GetListTipoInspeccion');
+    Route::put('/tipoinspeccion/activar', 'PdiTipoInspeccionController@activar');
+    Route::put('/tipoinspeccion/desactivar', 'PdiTipoInspeccionController@desactivar');
+    Route::post('/tipoinspeccion/UpdTipoInspeccionById', 'PdiTipoInspeccionController@UpdTipoInspeccionById');
+    Route::get('/tipoinspeccion/GetFillTipoInspeccion', 'PdiTipoInspeccionController@GetFillTipoInspeccion');
 
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');

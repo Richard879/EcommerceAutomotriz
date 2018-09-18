@@ -17,34 +17,98 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">* Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                <div class="col-sm-8">
+                                                    <input v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Tipo Inspección</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayTipoInspeccion"
+                                                        :key="item.nIdTipoInspeccion"
+                                                        :label="item.cNombreTipoInspeccion"
+                                                        :value="item.nIdTipoInspeccion">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">* Tipo Inspección</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="fillTipoInsp.cnombre" class="form-control form-control-sm">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Área de Inspección</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayFlag"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>-->
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Sección</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPlantilla.nidseccion" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arraySeccion"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-3">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTipoInspeccion()"><i class="fa fa-search"></i> Buscar</button>
-                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('inspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
+                                            <!--<button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('plantila','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>-->
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
+                                <h3 class="h4">LISTADO ITEMS</h3>
                             </div>
                             <div class="card-body">
-                                <template v-if="arrayTipoInspeccion.length">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Agregar Item</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                        
+                                <template v-if="arrayPlantilla.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
@@ -60,29 +124,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="inspeccion in arrayTipoInspeccion" :key="inspeccion.nIdTipoInspeccion">
-                                                    <td v-text="inspeccion.nIdTipoInspeccion"></td>
-                                                    <td v-text="inspeccion.cNombreTipoInspeccion"></td>
-                                                    <td v-text="inspeccion.cFlagAlmacen"></td>
-                                                    <td v-text="inspeccion.cFlagAccesorio"></td>
-                                                    <td v-text="inspeccion.cFlagTestDrive"></td>
-                                                    <td v-text="inspeccion.cFlagSeccionInspeccion"></td>
-                                                    <td v-text="inspeccion.cFlagValidarFichaTecnica"></td>
+                                                <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
+                                                    <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
+                                                    <td v-text="plantilla.nIdTipoInspeccion"></td>
+                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
+                                                    <td v-text="plantilla.nIdSeccion"></td>
+                                                    <td v-text="plantilla.nIdItem"></td>
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ inspeccion.cNombreTipoInspeccion }}</div>
-                                                             <i @click="abrirFormulario('inspeccion','actualizar', inspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                             <div slot="content">Editar {{ plantilla.cNombreTipoInspeccion }}</div>
+                                                             <i @click="abrirFormulario('plantilla','actualizar', plantilla)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
-                                                        <template v-if="inspeccion.cSituacionRegistro=='A'">
+                                                        <template v-if="plantilla.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ inspeccion.cNombreTipoInspeccion }}</div>
-                                                                <i @click="desactivar(inspeccion.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ plantilla.cNombreTipoInspeccion }}</div>
+                                                                <i @click="desactivar(plantilla.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ inspeccion.cNombreTipoInspeccion }}</div>
-                                                                <i @click="activar(inspeccion.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ plantilla.cNombreTipoInspeccion }}</div>
+                                                                <i @click="activar(plantilla.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -127,7 +189,7 @@
                                 </template>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </section>
         </template>
@@ -142,65 +204,6 @@
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Tipo Inspección</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayTipoInspeccion"
-                                                        :key="item.nIdTipoInspeccion"
-                                                        :label="item.cNombreTipoInspeccion"
-                                                        :value="item.nIdTipoInspeccion">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Sección</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidseccion" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arraySeccion"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Item</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
                                             <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
@@ -354,12 +357,15 @@
                 },
                 formPlantilla:{
                     nidtipoinspeccion: 0,
+                    nidflag: 0,
                     nidseccion: 0,
                     niditem: 0,
                     citemnombre: ''
                 },
                 arrayTipoInspeccion: [],
+                arrayFlag: [],
                 arraySeccion: [],
+                arrayPlantilla: [],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -394,6 +400,7 @@
         },
          mounted(){
             this.llenarComboTipoInspeccion();
+            this.llenarFlag();
             this.llenarComboSeccion();
         },
         computed:{
@@ -463,6 +470,19 @@
                     console.log(error);
                 });
             },
+            llenarFlag(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110080,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayFlag = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             llenarComboSeccion(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
@@ -472,6 +492,30 @@
                     }
                 }).then(response => {
                     this.arraySeccion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            buscarPlantilla(){
+                this.listarPlantilla(1);
+            },
+            listarPlantilla(page){
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110082,
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayItem = response.data.arrayParametro.data;
+                    this.paginationModal.current_page =  response.data.arrayParametro.current_page;
+                    this.paginationModal.total = response.data.arrayParametro.total;
+                    this.paginationModal.per_page    = response.data.arrayParametro.per_page;
+                    this.paginationModal.last_page   = response.data.arrayParametro.last_page;
+                    this.paginationModal.from        = response.data.arrayParametro.from;
+                    this.paginationModal.to           = response.data.arrayParametro.to;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -505,38 +549,31 @@
                 this.listarItems(page);
             },
             asignarItem(nItemId, cItemNombre){
-                this.formPlantilla.niditem = nItemId;
-                this.formPlantilla.citemnombre = cItemNombre;
-                this.cerrarModal();
-            },
+                /*if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }*/
 
+                var url = this.ruta + '/plantillainspeccion/SetPlantilla';
 
-            buscarTipoInspeccion(){
-                this.listarTipoInspeccion(1);
-            },
-            listarTipoInspeccion(page){
-                this.mostrarProgressBar();
-
-                var url = this.ruta + '/tipoinspeccion/GetListTipoInspeccion';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'cnombre': this.fillTipoInsp.cnombre,
-                        'page': page
-                    }
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
+                    nIdFlag: this.formPlantilla.nidflag,
+                    nIdSeccion: this.formPlantilla.nidseccion,
+                    nIdItem: this.formPlantilla.niditem,
                 }).then(response => {
-                    this.arrayTipoInspeccion = response.data.arrayTipoInspeccion.data;
-                    this.pagination.current_page =  response.data.arrayTipoInspeccion.current_page;
-                    this.pagination.total = response.data.arrayTipoInspeccion.total;
-                    this.pagination.per_page    = response.data.arrayTipoInspeccion.per_page;
-                    this.pagination.last_page   = response.data.arrayTipoInspeccion.last_page;
-                    this.pagination.from        = response.data.arrayTipoInspeccion.from;
-                    this.pagination.to           = response.data.arrayTipoInspeccion.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Item Agregado registrada');
+                        this.vistaFormulario = 1;
+                    }
+                    else{
+                        swal('Ya existe Item');
+                    }
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
                 });
             },
             cambiarPagina(page){
@@ -544,35 +581,7 @@
                 this.listarTipoInspeccion(page);
             },
             registrar(){
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                var url = this.ruta + '/tipoinspeccion/SetTipoInspeccion';
-
-                axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    cNombreTipoInspeccion: this.formPlantilla.cnombre,
-                    nFlagAlmacen: this.formPlantilla.nflagalmacen,
-                    nFlagAccesorio: this.formPlantilla.nflagaccesorio,
-                    nFlagTestDrive: this.formPlantilla.nflagtestdrive,
-                    nFlagSeccion: this.formPlantilla.nflagseccion,
-                    nFlagFichaTecnica: this.formPlantilla.nflagfichatecnica
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Tipo Inspección registrado');
-                        this.listarTipoInspeccion(1);
-                        this.vistaFormulario = 1;
-                    }
-                    else{
-                        swal('Ya existe Tipo Inspección');
-                    }
-                }).catch(error => {
-                    console.log(error);
-                });
+                
             },
             validar(){
                 this.error = 0;
@@ -675,7 +684,7 @@
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'inspeccion':
+                    case 'plantila':
                     {
                         switch(accion){
                             case 'registrar':
@@ -735,7 +744,7 @@
                 this.formPlantilla.nflagfichatecnica= 0
             },
             cambiarVistaFormulario(){
-                this.listarTipoInspeccion(1);
+                //this.listarTipoInspeccion(1);
                 this.vistaFormulario = 1;
             },
             limpiarPaginacion(){
