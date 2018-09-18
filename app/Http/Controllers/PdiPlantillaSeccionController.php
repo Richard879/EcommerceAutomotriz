@@ -13,7 +13,7 @@ class PdiPlantillaSeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_PlantillaInspeccion_SetPlantilla ?, ?, ?, ?, ?, ?', 
+        $element = DB::select('exec [usp_PlantillaInspeccion_SetPlantilla] ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdEmpresa,
                                                                     $request->nIdTipoInspeccion,
                                                                     $request->nIdFlag, 
@@ -32,7 +32,7 @@ class PdiPlantillaSeccionController extends Controller
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdSeccion = $request->nidseccion;
                 
-        $arrayPlantilla = DB::select('exec usp_PlantillaInspeccion_GetListItems ?, ?, ?', 
+        $arrayPlantilla = DB::select('exec [usp_PlantillaInspeccion_GetListItems] ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
                                                                         $nIdTipoInspeccion,
                                                                         $nIdSeccion

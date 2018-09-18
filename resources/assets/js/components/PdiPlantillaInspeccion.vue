@@ -525,7 +525,7 @@
                     nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
                     nIdFlag: this.formPlantilla.nidflag,
                     nIdSeccion: this.formPlantilla.nidseccion,
-                    nIdItem: nItemId,
+                    nIdItem: nItemId
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {

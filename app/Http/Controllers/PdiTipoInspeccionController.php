@@ -13,7 +13,7 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_TipoInspeccion_SetTipoInspeccion ?, ?, ?, ?, ?, ?, ?, ?', 
+        $element = DB::select('exec [usp_TipoInspeccion_SetTipoInspeccion] ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             array($request->nIdEmpresa,
                                                                     $request->cNombreTipoInspeccion,
                                                                     $request->nFlagAlmacen, 
@@ -35,7 +35,7 @@ class PdiTipoInspeccionController extends Controller
 
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
                 
-        $arrayTipoInspeccion = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ?', 
+        $arrayTipoInspeccion = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ?', 
                                                                     [$nIdEmpresa, $cNombreTipoInspeccion]);
 
         $arrayTipoInspeccion = ParametroController::arrayPaginator($arrayTipoInspeccion, $request);

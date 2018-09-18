@@ -603,15 +603,15 @@
             },
             //================= REGISTRO =======================
             registrar(){
-                var url = this.ruta + '/plantilla/SetItemPlantilla';
+                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';
 
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
-                    nIdTipoInspeccion: this.formPunto.nidtipoinspeccion,
-                    nIdFlag: this.formPunto.nidflag,
-                    nIdSeccion: this.formPunto.nidseccion,
-                    nIdItem: nItemId,
+                    cNombrePuntoInspeccion: this.formPunto.cnombre,
+                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
+                    nFlagIngresoSucursal: this.formPunto.nidflagingreso,
+                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
