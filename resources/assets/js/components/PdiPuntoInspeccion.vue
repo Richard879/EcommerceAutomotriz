@@ -16,51 +16,27 @@
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
-                                    <!--<div class="form-group row">
+                                    <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Inspección</label>
+                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidtipoinspeccion" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayTipoInspeccion"
-                                                        :key="item.nIdTipoInspeccion"
-                                                        :label="item.cNombreTipoInspeccion"
-                                                        :value="item.nIdTipoInspeccion">
-                                                        </el-option>
-                                                    </el-select>
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Sección</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidseccion" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arraySeccion"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
-                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPuntoInspeccion(1)"><i class="fa fa-search"></i> Buscar</button>
                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('puntoinspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
@@ -434,6 +410,7 @@
                     nidflagmovimiento: 0,
                     cnombre: ''
                 },
+                arrayPuntoInspeccion: [],
                 arrayFlag: [],
                 arrayTipoMovimiento: [],
                 pagination: {
@@ -470,7 +447,7 @@
         },
          mounted(){
             this.llenarComboTipoInspeccion();
-            this.llenarFlag();
+            this.llenarFlag(); 
         },
         computed:{
             isActived: function(){
@@ -552,50 +529,28 @@
                 });
             },
             //================= BUSQUEDA PLANTILLA =======================
-            buscarPlantilla(){
-                if(this.validarBusqueda()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.listarItemPlantilla(1);
-            },
-            listarItemPlantilla(page){
+            listarPuntoInspeccion(page){
                 this.mostrarProgressBar();
-                var url = this.ruta + '/plantilla/GetListItems';
+                var url = this.ruta + '/puntoinspeccion/GetListPuntoInspeccion';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidtipoinspeccion' : this.formPunto.nidtipoinspeccion,
-                        'nidseccion': this.formPunto.nidseccion,
+                        'nidempresa': 1300011,
+                        'nidsucursal': 1300013,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPlantilla = response.data.arrayPlantilla.data;
-                    this.paginationModal.current_page =  response.data.arrayPlantilla.current_page;
-                    this.paginationModal.total = response.data.arrayPlantilla.total;
-                    this.paginationModal.per_page    = response.data.arrayPlantilla.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPlantilla.last_page;
-                    this.paginationModal.from        = response.data.arrayPlantilla.from;
-                    this.paginationModal.to           = response.data.arrayPlantilla.to;
+                    this.arrayPuntoInspeccion = response.data.arrayPuntoInspeccion.data;
+                    this.paginationModal.current_page =  response.data.arrayPuntoInspeccion.current_page;
+                    this.paginationModal.total = response.data.arrayPuntoInspeccion.total;
+                    this.paginationModal.per_page    = response.data.arrayPuntoInspeccion.per_page;
+                    this.paginationModal.last_page   = response.data.arrayPuntoInspeccion.last_page;
+                    this.paginationModal.from        = response.data.arrayPuntoInspeccion.from;
+                    this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            validarBusqueda(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.formPunto.nIdTipoInspeccion == 0){
-                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;

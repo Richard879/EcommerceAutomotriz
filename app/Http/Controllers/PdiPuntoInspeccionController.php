@@ -25,22 +25,22 @@ class PdiPuntoInspeccionController extends Controller
         return response()->json($element);         
     }
 
-    public function GetListTipoInspeccion(Request $request)
+    public function GetListPuntoInspeccion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
  
-        $nIdEmpresa   = $request->nidempresa;
-        $cNombreTipoInspeccion = $request->cnombre;
+        $nIdEmpresa  = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
 
-        $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
+        //$cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
                 
-        $arrayTipoInspeccion = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ?', 
+        $arrayPuntoInspeccion = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ?', 
                                                                                     [   $nIdEmpresa, 
-                                                                                        $cNombreTipoInspeccion
+                                                                                        $nIdSucursal
                                                                                     ]);
 
-        $arrayTipoInspeccion = ParametroController::arrayPaginator($arrayTipoInspeccion, $request);
-        return ['arrayTipoInspeccion'=>$arrayTipoInspeccion];
+        $arrayPuntoInspeccion = ParametroController::arrayPaginator($arrayPuntoInspeccion, $request);
+        return ['arrayPuntoInspeccion'=>$arrayPuntoInspeccion];
     }
 
     public function desactivar(Request $request)
