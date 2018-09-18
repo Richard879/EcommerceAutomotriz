@@ -34,7 +34,7 @@ class AsigVendedorTurnoController extends Controller
     {
         $nidturno = $request->nidturno;
 
-        $data = DB::select('exec usp_TurnoVendedor_GeLstDetalleTurno ?',  [$nidturno]);
+        $data = DB::select('exec [usp_AsignaVendedorTurno_GeLstDetalleTurno] ?',  [$nidturno]);
 
         return response()->json($data);
     }
@@ -55,7 +55,7 @@ class AsigVendedorTurnoController extends Controller
             $arrayFechaTurnoLength = sizeof($data);
             if($arrayFechaTurnoLength > 0){
                 foreach ($data as $key => $value) {
-                    DB::select('exec usp_TurnoVendedor_SetRegistrar ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_AsignaVendedorTurno_SetRegistrar] ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $nIdEmpresa,
                                 $nIdSucursal,

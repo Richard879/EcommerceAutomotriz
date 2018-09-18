@@ -17,13 +17,17 @@ class TurnoVentaController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $nIdTurno = $request->nidturno;
 
-        $arrayTurnoVenta = DB::select('exec usp_TurnoVentas_GetLstTurnoVenta ?, ?, ?',
-                                 array($nIdEmpresa, $nIdSucursal, $nIdTurno));
+        $arrayTurnoVenta = DB::select('exec [usp_TurnoVenta_GetLstTurnoVenta] ?, ?, ?',
+                                            [   $nIdEmpresa, 
+                                                $nIdSucursal, 
+                                                $nIdTurno
+                                            ]);
 
         $arrayTurnoVenta = ParametroController::arrayPaginator($arrayTurnoVenta, $request);
 
          return ['arrayTurnoVenta'=>$arrayTurnoVenta];
     }
+
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -38,6 +42,7 @@ class TurnoVentaController extends Controller
                                                                     ));
         return response()->json($turnoventa);
     }
+
     public function desactivar (Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -55,6 +60,7 @@ class TurnoVentaController extends Controller
                                 array(  $request->nIdTurnoVenta ));
         return response()->json($turnoventa);
     }
+    
     public function UpdTurnoVentaById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

@@ -35,6 +35,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Nombre</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="fillPunto.cnombre" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPuntoInspeccion(1)"><i class="fa fa-search"></i> Buscar</button>
                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('puntoinspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
@@ -44,78 +54,47 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="h4">LISTADO ITEMS</h3>
                             </div>
-                            <div class="card-body">
-                                <div class="col-lg-12">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Área</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflag" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayFlag"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Agregar Item</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="formPunto.citemnombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr/>                       
-                                <template v-if="arrayPlantilla.length">
+                            <div class="card-body">                   
+                                <template v-if="arrayPuntoInspeccion.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
                                                     <th>Código</th>
-                                                    <th>Tipo Inspección</th>
-                                                    <th>Sección</th>
-                                                    <th>Área</th>
-                                                    <th>Item Nombre</th>
+                                                    <th>Nombre</th>
+                                                    <th>Tipo Movimiento</th>
+                                                    <th>Ingreso Sucursal</th>
+                                                    <th>Salida Sucursal</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
-                                                    <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
-                                                    <td v-text="plantilla.cNombreTipoInspeccion"></td>
-                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
-                                                    <td v-text="plantilla.cSeccionNombre"></td>
-                                                    <td v-text="plantilla.cItemNombre"></td>
+                                                <tr v-for="punto in arrayPuntoInspeccion" :key="punto.nIdPuntoInspeccion">
+                                                    <td v-text="punto.nIdPuntoInspeccion"></td>
+                                                    <td v-text="punto.cNombrePuntoInspeccion"></td>
+                                                    <td v-text="punto.cFlagTipoMovimiento"></td>
+                                                    <td v-text="punto.cFlagIngresoSucursal"></td>
+                                                    <td v-text="punto.cFlagSalidaSucursal"></td>
                                                     <td>
-                                                        <template v-if="plantilla.cSituacionRegistro=='A'">
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                             <div slot="content">Editar {{ punto.cNombrePuntoInspeccion }}</div>
+                                                             <i @click="abrirFormulario('puntoinspeccion','actualizar', punto)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                        </el-tooltip>&nbsp;
+                                                        <template v-if="punto.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                                <i @click="desactivar(plantilla.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ punto.cNombreTipoInspeccion }}</div>
+                                                                <i @click="desactivar(punto.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                                <i @click="activar(plantilla.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ punto.cNombreTipoInspeccion }}</div>
+                                                                <i @click="activar(punto.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -160,7 +139,7 @@
                                 </template>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </section>
         </template>
@@ -401,7 +380,7 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: 'CHICLAYO',
-                fillTipoInsp:{
+                fillPunto:{
                     cnombre: ''
                 },
                 formPunto:{
@@ -536,6 +515,7 @@
                     params: {
                         'nidempresa': 1300011,
                         'nidsucursal': 1300013,
+                        'cnombre': this.fillPunto.cnombre,
                         'page' : page
                     }
                 }).then(response => {

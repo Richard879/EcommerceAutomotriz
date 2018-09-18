@@ -31,12 +31,14 @@ class PdiPuntoInspeccionController extends Controller
  
         $nIdEmpresa  = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
+        $cNombrePuntoInspeccion = $request->cnombre;
 
-        //$cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
+        $cNombrePuntoInspeccion = ($cNombrePuntoInspeccion == NULL) ? ($cNombrePuntoInspeccion = '') : $cNombrePuntoInspeccion;
                 
-        $arrayPuntoInspeccion = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ?', 
+        $arrayPuntoInspeccion = DB::select('exec [usp_PuntoInspeccion_GetListPuntoInspeccion] ?, ?, ?', 
                                                                                     [   $nIdEmpresa, 
-                                                                                        $nIdSucursal
+                                                                                        $nIdSucursal,
+                                                                                        $cNombrePuntoInspeccion
                                                                                     ]);
 
         $arrayPuntoInspeccion = ParametroController::arrayPaginator($arrayPuntoInspeccion, $request);
