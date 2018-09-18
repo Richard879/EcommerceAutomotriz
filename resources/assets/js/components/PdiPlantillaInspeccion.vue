@@ -185,9 +185,16 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Tipo Inspección</label>
+                                                <label class="col-sm-4 form-control-label">* Item</label>
                                                 <div class="col-sm-8">
-                                                    
+                                                    <div class="input-group">
+                                                        <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -238,6 +245,102 @@
             </div>
         </div>
 
+        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA ITEM</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="fillItem.citemnombre" @keyup.enter="buscaItems()" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaItems();"><i class="fa-lg fa fa-search"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <template v-if="arrayItem.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="item in arrayItem" :key="item.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ item.cParNombre }}</div>
+                                                                    <i @click="asignarItem(item.nIdPar, item.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="item.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaItem(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaItem(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaItem(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </template>
 <script>
@@ -251,7 +354,9 @@
                 },
                 formPlantilla:{
                     nidtipoinspeccion: 0,
-                    nidseccion: 0
+                    nidseccion: 0,
+                    niditem: 0,
+                    citemnombre: ''
                 },
                 arrayTipoInspeccion: [],
                 arraySeccion: [],
@@ -263,6 +368,11 @@
                     'from': 0,
                     'to': 0,
                 },
+                fillItem:{
+                    niditem: 0,
+                    citemnombre: ''
+                },
+                arrayItem: [],
                 paginationModal: {
                     'total' : 0,
                     'current_page' : 0,
@@ -366,6 +476,41 @@
                     console.log(error);
                 });
             },
+            buscaItems(){
+                this.listarItems(1);
+            },
+            listarItems(page){
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110082,
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayItem = response.data.arrayParametro.data;
+                    this.paginationModal.current_page =  response.data.arrayParametro.current_page;
+                    this.paginationModal.total = response.data.arrayParametro.total;
+                    this.paginationModal.per_page    = response.data.arrayParametro.per_page;
+                    this.paginationModal.last_page   = response.data.arrayParametro.last_page;
+                    this.paginationModal.from        = response.data.arrayParametro.from;
+                    this.paginationModal.to           = response.data.arrayParametro.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaItem(page){
+                this.paginationModal.current_page=page;
+                this.listarItems(page);
+            },
+            asignarItem(nItemId, cItemNombre){
+                this.formPlantilla.niditem = nItemId;
+                this.formPlantilla.citemnombre = cItemNombre;
+                this.cerrarModal();
+            },
+
+
             buscarTipoInspeccion(){
                 this.listarTipoInspeccion(1);
             },
@@ -553,6 +698,27 @@
                                 this.formPlantilla.nflagtestdrive = (data['nFlagTestDrive'] == 1 ? true : false);
                                 this.formPlantilla.nFlagSeccion = (data['nFlagSeccionInspeccion'] == 1 ? true : false);
                                 this.formPlantilla.nflagfichatecnica = (data['nFlagValidarFichaTecnica'] == 1 ? true : false);
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            cerrarModal(){
+                this.modal = 0
+                this.error = 0,
+                this.mensajeError = ''
+            },
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'item':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                this.listarItems(1);
                                 break;
                             }
                         }

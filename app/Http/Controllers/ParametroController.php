@@ -194,7 +194,7 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->ngrupoparid;
         $variable   = $request->opcion;
 
-        $parametro = DB::select('exec usp_Par_GetParametroByGrupo ?', array($nIdGrupoPar));
+        $arrayParametro = DB::select('exec usp_Par_GetParametroByGrupo ?', array($nIdGrupoPar));
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -202,14 +202,14 @@ class ParametroController extends Controller
                 'cParNombre' =>'SELECCIONE',
             ];
         }
-        foreach ($parametro as $key => $value) {
+        foreach ($arrayParametro as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdPar,
                 'cParNombre' => $value->cParNombre,
             ];
         }
-        $parametro = $this->arrayPaginator($parametro, $request);
-        return ['arrayParametro'=>$parametro];
+        $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
+        return ['arrayParametro'=>$arrayParametro];
     }
 
     public function GetParametroById(Request $request)

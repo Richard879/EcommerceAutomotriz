@@ -1573,6 +1573,8 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Compra actualizada correctamente');
+                        this.cerrarModal();
+                        this.listarCompras(1);
                     }
                     else{
                         swal('Ya existe VIN');
