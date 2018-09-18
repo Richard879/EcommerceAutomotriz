@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\ParametroController as Parametro;
 
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class ParParametroController extends Controller
 {

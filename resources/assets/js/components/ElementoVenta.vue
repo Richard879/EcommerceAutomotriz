@@ -17,7 +17,7 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Empresa</label>
+                                        <label class="col-sm-2 form-control-label">* Empresa</label>
                                         <div class="col-sm-4">
                                             <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                         </div>
@@ -167,7 +167,6 @@
                                                 <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="hidden" v-model="formEle.nidproveedor">
                                                         <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
                                                             <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
@@ -216,7 +215,6 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
                                                 <div class="col-sm-8">
-                                                    <input type="hidden" v-model="formEle.nidelemento">
                                                     <input type="text" v-model="formEle.celenombre" class="form-control form-control-sm" placeholder="">
                                                 </div>
                                             </div>
@@ -406,9 +404,6 @@
                     cnombreproveedor: ''
                 },
                 formEle:{
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
-                    nidempresa : '',
                     nidproveedor: 0,
                     cproveedornombre: '',
                     ntpoelemen: 0,
@@ -696,7 +691,7 @@
                     if (result.value) {
                         var url = this.ruta + '/elemento/activar';
                         axios.put(url , {
-                            nIdElementoVenta: nIdElementoVenta
+                            nIdElementoVenta: parseInt(nIdElementoVenta)
                         }).then(response => {
                             swal(
                             'Activado!',
@@ -724,7 +719,7 @@
                     if (result.value) {
                         var url = this.ruta + '/elemento/desactivar';
                         axios.put(url , {
-                            nIdElementoVenta: nIdElementoVenta
+                            nIdElementoVenta: parseInt(nIdElementoVenta)
                         }).then(response => {
                             swal(
                             'Desactivado!',
@@ -855,8 +850,5 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
-        }
-        .el-select{
-            width: 100%;
         }
 </style>

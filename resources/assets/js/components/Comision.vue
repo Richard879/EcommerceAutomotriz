@@ -20,7 +20,7 @@
                                         <div class="row">
                                             <label class="col-sm-4 form-control-label">Empresa</label>
                                             <div class="col-sm-8">
-                                                <input type="text" v-model="fillConfigurarComision.cempresa" class="form-control form-control-sm" readonly>
+                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -28,7 +28,7 @@
                                         <div class="row">
                                             <label class="col-sm-4 form-control-label">Sucursal</label>
                                             <div class="col-sm-8">
-                                                <input type="text" v-model="fillConfigurarComision.csucursal" class="form-control form-control-sm" readonly>
+                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -635,14 +635,12 @@
         props:['ruta'],
         data(){
             return {
+                cempresa: 'SAISAC',
+                csucursal: 'CHICLAYO',
                 // =======================
                 // VARIABLES FORMULARIO
                 // =======================
                 fillConfigurarComision:{
-                    nidempresa: 1300011,
-                    cempresa: 'SAISAC',
-                    nidsucursal: 1300013,
-                    csucursal: 'CHICLAYO',
                     nidconcepto: 0,
                     nidturnovendedor: 0,
                     cflagturno: '',
@@ -834,7 +832,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillConfigurarComision.nidempresa,
+                        'nidempresa': 1300011,
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 1,
@@ -1017,7 +1015,7 @@
                 var url = this.ruta + '/getComision/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillConfigurarComision.nidempresa,
+                        'nidempresa': 1300011,
                         'nidproveedor' : this.fillProveedor.nidproveedor
                     }
                 }).then(response => {

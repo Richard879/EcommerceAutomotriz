@@ -34,7 +34,11 @@ Vue.component('autorizacionjv', require('./components/PdiAutorizacionJV.vue'));
 Vue.component('autorizacionadv', require('./components/PdiAutorizacionADV.vue'));
 Vue.component('cierreventa', require('./components/CierreVenta.vue'));
 Vue.component('cierrecompra', require('./components/CierreCompra.vue'));
-Vue.component('procesoinspeccion', require('./components/ProcesoInspeccion.vue'));
+Vue.component('cuotavendedor', require('./components/CuotaVendedor.vue'));
+Vue.component('pditipoinspeccion', require('./components/pditipoinspeccion.vue'));
+Vue.component('pdiplantilla', require('./components/PdiPlantillaInspeccion.vue'));
+Vue.component('pdipuntoinspeccion', require('./components/PdiPuntoInspeccion.vue'));
+Vue.component('pdiprocesoinspeccion', require('./components/PdiProcesoInspeccion.vue'));
 
 const app = new Vue({
     el: '#app',

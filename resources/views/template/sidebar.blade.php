@@ -10,36 +10,38 @@
     </li>
     <li><a href="#2002" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-home"></i>Configuración Sucursal</a>
       <ul id="2002" class="collapse list-unstyled ">
-        <li id="200201" @click="menu=200201" onclick="ActivarMenu('200201')"><a href="#">Lista de Precios</a></li>
-        <li id="200202" @click="menu=200202" onclick="ActivarMenu('200202')"><a href="#">Compra</a></li>
-        <li id="200203" @click="menu=200203" onclick="ActivarMenu('200203')"><a href="#">Warrant Operativo</a></li>
-        <li id="200204" @click="menu=200204" onclick="ActivarMenu('200204')"><a href="#">Warrant Financiero</a></li>
-        <li id="200205" @click="menu=200205" onclick="ActivarMenu('200205')"><a href="#">Evento Campaña</a></li>
-        <li id="200206" @click="menu=200206" onclick="ActivarMenu('200206')"><a href="#">Gestión Contactos JFV</a></li>
-        <li id="200207" @click="menu=200207" onclick="ActivarMenu('200207')"><a href="#">Gestión Contactos V</a></li>
-        <li id="200208" @click="menu=200208" onclick="ActivarMenu('200208')"><a href="#">Generar Cotización</a></li>
-        <li id="200209" @click="menu=200209" onclick="ActivarMenu('200209')"><a href="#">Generar Pedido</a></li>
-        <li id="200210" @click="menu=200210" onclick="ActivarMenu('200210')"><a href="#">Aprobar Pedido</a></li>
-        <li id="200211" @click="menu=200211" onclick="ActivarMenu('200211')"><a href="#">Gestión Comisiones</a></li>
-        <li id="200212" @click="menu=200212" onclick="ActivarMenu('200212')"><a href="#">Objetivos Comerciales</a></li>
-        <li id="200213" @click="menu=200213" onclick="ActivarMenu('200213')"><a href="#">Solicitud CC V</a></li>
-        <li id="200214" @click="menu=200214" onclick="ActivarMenu('200214')"><a href="#">Asigna Vendedor a Turno</a></li>
-        <li id="200215" @click="menu=200215" onclick="ActivarMenu('200215')"><a href="#">Turno de Venta</a></li>
-        <li id="200216" @click="menu=200216" onclick="ActivarMenu('200216')"><a href="#">Depósitos</a></li>
-        <li id="200217" @click="menu=200217" onclick="ActivarMenu('200217')"><a href="#">Asigna Vendedor a Modelo</a></li>
-        <li id="200218" @click="menu=200218" onclick="ActivarMenu('200218')"><a href="#">Solicitud CC JFV</a></li>
-        <li id="200219" @click="menu=200219" onclick="ActivarMenu('200219')"><a href="#">Maestro Vehículo</a></li>
-        <li id="200220" @click="menu=200220" onclick="ActivarMenu('200220')"><a href="#">Autorización V</a></li>
-        <li id="200221" @click="menu=200221" onclick="ActivarMenu('200221')"><a href="#">Autorización JV</a></li>
-        <li id="200222" @click="menu=200222" onclick="ActivarMenu('200222')"><a href="#">Autorización ADV</a></li>
-        <li id="200223" @click="menu=200223" onclick="ActivarMenu('200223')"><a href="#">Cierre Venta</a></li>
-        <li id="200224" @click="menu=200224" onclick="ActivarMenu('200224')"><a href="#">Cierre Compra</a></li>
-        <li id="200225" @click="menu=200225" onclick="ActivarMenu('200225')"><a href="#">Proceso de Inspección</a></li>
+        <li id="200201" @click="menu=200201" onclick="ActivarMenu('200201')"><a href="#">Turno de Venta</a></li>
+        <li id="200202" @click="menu=200202" onclick="ActivarMenu('200202')"><a href="#">Asigna Vendedor a Modelo</a></li>
+        <li id="200203" @click="menu=200203" onclick="ActivarMenu('200203')"><a href="#">Objetivos Comerciales</a></li>
+        <li id="200204" @click="menu=200204" onclick="ActivarMenu('200204')"><a href="#">Gestión Comisiones</a></li>
       </ul>
     </li>
     <li><a href="#2003" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bus"></i>Operaciones</a>
       <ul id="2003" class="collapse list-unstyled ">
-        <li id="200301" @click="menu=2003" onclick="ActivarMenu('200301')"><a href="#">Ventas</a></li>
+        <li id="200301" @click="menu=200301" onclick="ActivarMenu('200301')"><a href="#">Lista de Precios</a></li>
+        <li id="200302" @click="menu=200302" onclick="ActivarMenu('200302')"><a href="#">Compra</a></li>
+        <li id="200303" @click="menu=200303" onclick="ActivarMenu('200303')"><a href="#">Warrant Operativo</a></li>
+        <li id="200304" @click="menu=200304" onclick="ActivarMenu('200304')"><a href="#">Warrant Financiero</a></li>
+        <li id="200305" @click="menu=200305" onclick="ActivarMenu('200305')"><a href="#">Evento Campaña</a></li>
+        <li id="200306" @click="menu=200306" onclick="ActivarMenu('200306')"><a href="#">Gestión Contactos JFV</a></li>
+        <li id="200307" @click="menu=200307" onclick="ActivarMenu('200307')"><a href="#">Gestión Contactos V</a></li>
+        <li id="200308" @click="menu=200308" onclick="ActivarMenu('200308')"><a href="#">Generar Cotización</a></li>
+        <li id="200309" @click="menu=200309" onclick="ActivarMenu('200309')"><a href="#">Generar Pedido</a></li>
+        <li id="200310" @click="menu=200310" onclick="ActivarMenu('200310')"><a href="#">Aprobar Pedido</a></li>
+        <li id="200311" @click="menu=200311" onclick="ActivarMenu('200311')"><a href="#">Depósitos</a></li>
+        <li id="200312" @click="menu=200312" onclick="ActivarMenu('200312')"><a href="#">Solicitud CC JFV</a></li>
+        <li id="200313" @click="menu=200313" onclick="ActivarMenu('200313')"><a href="#">Solicitud CC V</a></li>
+        <li id="200314" @click="menu=200314" onclick="ActivarMenu('200314')"><a href="#">Asigna Vendedor a Turno</a></li>
+        <li id="200316" @click="menu=200316" onclick="ActivarMenu('200316')"><a href="#">Maestro Vehículo</a></li>
+        <li id="200317" @click="menu=200317" onclick="ActivarMenu('200317')"><a href="#">Autorización ADV</a></li>
+        <li id="200318" @click="menu=200318" onclick="ActivarMenu('200318')"><a href="#">Autorización JV</a></li>
+        <li id="200319" @click="menu=200319" onclick="ActivarMenu('200319')"><a href="#">Autorización V</a></li>
+        <li id="200320" @click="menu=200320" onclick="ActivarMenu('200320')"><a href="#">Cierre Venta</a></li>
+        <li id="200321" @click="menu=200321" onclick="ActivarMenu('200321')"><a href="#">Cierre Compra</a></li>
+        <li id="200322" @click="menu=200322" onclick="ActivarMenu('200322')"><a href="#">Tipo Inspección</a></li>
+        <li id="200323" @click="menu=200323" onclick="ActivarMenu('200323')"><a href="#">Plantilla Inspección</a></li>
+        <li id="200324" @click="menu=200324" onclick="ActivarMenu('200324')"><a href="#">Punto de Inspección</a></li>
+        <li id="200325" @click="menu=200325" onclick="ActivarMenu('200325')"><a href="#">Proceso de Inspección</a></li>
       </ul>
     </li>
   </ul>

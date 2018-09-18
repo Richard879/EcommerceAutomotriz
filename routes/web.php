@@ -110,10 +110,19 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
     Route::get('/pedido/GetLstPedidosPendienteAprobacion', 'PedidoController@GetLstPedidosPendienteAprobacion');
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
-    Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'DepositoPedidoController@GetNumeroCuentaByBancoAndMoneda');
-    Route::post('/deposito/subirArchivo', 'DepositoPedidoController@subirArchivo');
-    Route::post('/deposito/SetDepositoPedido', 'DepositoPedidoController@SetDepositoPedido');
+    Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
+    Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');
+    Route::post('/deposito/SetDepositoPedido', 'PedidoDepositoController@SetDepositoPedido');
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
+    Route::post('/tipoinspeccion/SetTipoInspeccion', 'PdiTipoInspeccionController@SetTipoInspeccion');
+    Route::get('/tipoinspeccion/GetListTipoInspeccion', 'PdiTipoInspeccionController@GetListTipoInspeccion');
+    Route::put('/tipoinspeccion/activar', 'PdiTipoInspeccionController@activar');
+    Route::put('/tipoinspeccion/desactivar', 'PdiTipoInspeccionController@desactivar');
+    Route::post('/tipoinspeccion/UpdTipoInspeccionById', 'PdiTipoInspeccionController@UpdTipoInspeccionById');
+    Route::get('/tipoinspeccion/GetFillTipoInspeccion', 'PdiTipoInspeccionController@GetFillTipoInspeccion');
+    Route::get('/plantilla/GetListItems', 'PdiPlantillaSeccionController@GetListItems');
+    Route::post('/plantilla/SetItemPlantilla', 'PdiPlantillaSeccionController@SetItemPlantilla');
+
 
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
@@ -139,14 +148,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurnoController@GetParametroByParParent');
     Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurnoController@SetRegistrarVendedorTurno');
     Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurnoController@GeLstDetalleTurno');
-    Route::get('/solicitudCartaCaracteristica/GeLstCompras', 'SolicitudCartaCaracteristicaController@GeLstCompras');
-    Route::get('/solicitudCartaCaracteristica/GetLstCotizacionAprobadas', 'SolicitudCartaCaracteristicaController@GetLstCotizacionAprobadas');
-    Route::post('/solicitudCartaCaracteristica/SetRegistrarSCC', 'SolicitudCartaCaracteristicaController@SetRegistrarSCC');
-    Route::get('/solicitudCartaCaracteristica/GetLstCartaCaracteristica', 'SolicitudCartaCaracteristicaController@GetLstCartaCaracteristica');
-    Route::get('/solicitudCartaCaracteristica/GetDetalleSolicitud', 'SolicitudCartaCaracteristicaController@GetDetalleSolicitud');
-    Route::put('/solicitudCartaCaracteristica/SetConformeNoConforme', 'SolicitudCartaCaracteristicaController@SetConformeNoConforme');
-    Route::post('/solicitudCartaCaracteristica/SetAprobadoNoAprobado', 'SolicitudCartaCaracteristicaController@SetAprobadoNoAprobado');
-    Route::put('/solicitudCartaCaracteristica/SetAnularSCC', 'SolicitudCartaCaracteristicaController@SetAnularSCC');
+    Route::get('/cartacaracteristica/GeLstCompras', 'CartaCaracteristicaController@GeLstCompras');
+    Route::get('/cartacaracteristica/GetLstCotizacionAprobadas', 'CartaCaracteristicaController@GetLstCotizacionAprobadas');
+    Route::post('/cartacaracteristica/SetRegistrarSCC', 'CartaCaracteristicaController@SetRegistrarSCC');
+    Route::get('/cartacaracteristica/GetLstCartaCaracteristica', 'CartaCaracteristicaController@GetLstCartaCaracteristica');
+    Route::get('/cartacaracteristica/GetDetalleSolicitud', 'CartaCaracteristicaController@GetDetalleSolicitud');
+    Route::put('/cartacaracteristica/SetConformeNoConforme', 'CartaCaracteristicaController@SetConformeNoConforme');
+    Route::post('/cartacaracteristica/SetAprobadoNoAprobado', 'CartaCaracteristicaController@SetAprobadoNoAprobado');
+    Route::put('/cartacaracteristica/SetAnularSCC', 'CartaCaracteristicaController@SetAnularSCC');
     Route::post('/maestrovehiculo/SetRegistrarVehiculoPlaca', 'MaestroVehiculoController@SetRegistrarVehiculoPlaca');
     Route::post('/maestrovehiculo/SetRegistrarPerNatural', 'MaestroVehiculoController@SetRegistrarPerNatural');
     Route::post('/maestrovehiculo/SetRegistrarPerJuridica', 'MaestroVehiculoController@SetRegistrarPerJuridica');
