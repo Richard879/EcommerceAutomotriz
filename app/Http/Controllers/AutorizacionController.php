@@ -80,9 +80,12 @@ class AutorizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdAsigContacto = $request->nIdAsigContacto;
+        $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = NULL) : $nIdAsigContacto;
+
         $data = DB::select('exec usp_Autorizacion_SetRegistrarSolicitudAutorizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $request->nIdAsigContacto,
+                                        $nIdAsigContacto,
                                         $request->nIdVehiculoPlaca,
                                         $request->nIdCompra,
                                         $request->nIdEmpresa,
@@ -111,49 +114,75 @@ class AutorizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdTipoBusqueda = $request->nIdTipoBusqueda;
-        $nIdVehiculo = $request->nIdVehiculo;
+        $nIdTipoBusquedaVehiculo = $request->nIdTipoBusquedaVehiculo;
+        $cNroVehiculo = $request->cNroVehiculo;
         $dFecha = $request->dFecha;
         $nIdAsigContacto = $request->nIdAsigContacto;
         $nIdEstado = $request->nIdEstado;
         $nTipoRol = $request->tipoRol;
+        $nIdTipoBusquedaAutorizacion = $request->nIdTipoBusquedaAutorizacion;
         $nIdVendedor = $request->nIdVendedor;
 
         switch ($nTipoRol) {
             case 1:
-                $nIdVendedor = Auth::user()->id;
+                swItch ($nIdTipoBusquedaAutorizacion) {
+                    case 1:
+                        $nIdVendedor = Auth::user()->id;
+                        break;
+                    default:
+                        $nIdVendedor = 0;
+                        break;
+                }
                 break;
-            case 21:
-                $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
+            case 2:
+                swItch ($nIdTipoBusquedaAutorizacion) {
+                    case 1:
+                        $nIdVendedor = Auth::user()->id;
+                        break;
+                    case 2:
+                        $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
+                        break;
+                    default:
+                        $nIdVendedor = 0;
+                        break;
+                }
                 break;
-            case 22:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            case 31:
-                $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
-                break;
-            case 32:
-                $nIdVendedor = Auth::user()->id;
+            case 3:
+                swItch ($nIdTipoBusquedaAutorizacion) {
+                    case 1:
+                        $nIdVendedor = Auth::user()->id;
+                        break;
+                    case 2:
+                        $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
+                        break;
+                    default:
+                        $nIdVendedor = 0;
+                        break;
+                }
                 break;
             default:
                 $nIdVendedor = 0;
                 break;
         }
 
-        $nIdTipoBusqueda = ($nIdTipoBusqueda == NULL) ? ($nIdTipoBusqueda = ' ') : $nIdTipoBusqueda;
-        $nIdVehiculo = ($nIdVehiculo == NULL) ? ($nIdVehiculo = 0) : $nIdVehiculo;
+        $nIdTipoBusquedaVehiculo = ($nIdTipoBusquedaVehiculo == NULL) ? ($nIdTipoBusquedaVehiculo = 0) : $nIdTipoBusquedaVehiculo;
+        $cNroVehiculo = ($cNroVehiculo == NULL) ? ($cNroVehiculo = '') : $cNroVehiculo;
         $dFecha = ($dFecha == NULL) ? ($dFecha = ' ') : $dFecha;
-        $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = ' ') : $nIdAsigContacto;
+        $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = 0) : $nIdAsigContacto;
+        $nIdTipoBusquedaAutorizacion = ($nIdTipoBusquedaAutorizacion == NULL) ? ($nIdTipoBusquedaAutorizacion = 0) : $nIdTipoBusquedaAutorizacion;
         $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
 
-        $arrayMisSolicitudes = DB::select('exec usp_CartaCaracteristica_GetLstCartaCaracteristica ?, ?, ?, ?, ?, ?, ?',
+
+
+        $arrayMisSolicitudes = DB::select('exec usp_Autorizacion_GetLstAutorizaciones ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
-                                                                            $nIdTipoBusqueda,
-                                                                            $nIdVehiculo,
+                                                                            $nIdTipoBusquedaVehiculo,
+                                                                            $cNroVehiculo,
                                                                             $dFecha,
                                                                             $nIdAsigContacto,
                                                                             $nIdEstado,
                                                                             $nTipoRol,
+                                                                            $nIdTipoBusquedaAutorizacion,
                                                                             $nIdVendedor
                                                                         ]);
 

@@ -67,13 +67,13 @@
         <maestrovehiculo :ruta="ruta"></maestrovehiculo>
     </template>
     <template v-if="menu==200220">
-        <autorizacionv :ruta="ruta" :usuario="{{ auth()->user() }}"></autorizacionv>
+        <autorizacionv :ruta="ruta" @menu="CambiarMenu" :usuario="{{ auth()->user() }}"></autorizacionv>
     </template>
     <template v-if="menu==200221">
-        <autorizacionjv :ruta="ruta" :usuario="{{ auth()->user() }}"></autorizacionjv>
+        <autorizacionjv :ruta="ruta" @menu="CambiarMenu" :usuario="{{ auth()->user() }}"></autorizacionjv>
     </template>
     <template v-if="menu==200222">
-        <autorizacionadv :ruta="ruta" :usuario="{{ auth()->user() }}"></autorizacionadv>
+        <autorizacionadv :ruta="ruta" @menu="CambiarMenu" :usuario="{{ auth()->user() }}"></autorizacionadv>
     </template>
     <template v-if="menu==200223">
         <cierreventa :ruta="ruta"></cierreventa>

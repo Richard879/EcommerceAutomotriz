@@ -41,5 +41,11 @@ const app = new Vue({
     data: {
         menu: 0,
         ruta: 'http://localhost:8080/saisacsys/public'
-    }
+    },
+    methods: {
+        CambiarMenu: function(data) {
+            let me = this;
+            me.menu = data;
+        }
+    },
 });

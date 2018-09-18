@@ -93,9 +93,9 @@
                                                                                     placeholder="Seleccione un Estado">
                                                                                 <el-option
                                                                                     v-for="estado in arrayEstado"
-                                                                                    :key="estado.value"
-                                                                                    :label="estado.text"
-                                                                                    :value="estado.value">
+                                                                                    :key="estado.nIdPar"
+                                                                                    :label="estado.cParNombre"
+                                                                                    :value="estado.nIdPar">
                                                                                 </el-option>
                                                                             </el-select>
                                                                         </div>
@@ -125,7 +125,7 @@
                                                         <form class="form-horizontal">
                                                             <div class="col-lg-12">
                                                                 <template v-if="arrayMisSolicitudes.length">
-                                                                    <div class="table-responsive barraLateral">
+                                                                    <div class="table-responsive">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
@@ -141,15 +141,15 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="carta in arrayMisSolicitudes" :key="carta.nIdSolicitudCartaCaracteristica">
-                                                                                    <td v-text="carta.dFecha"></td>
-                                                                                    <td v-text="carta.cTipo"></td>
+                                                                                    <td v-text="carta.cFechaSolicitud"></td>
+                                                                                    <td v-text="carta.cTipoSolicitud"></td>
                                                                                     <td v-text="carta.cNroSolicitud"></td>
                                                                                     <td v-text="carta.cContacto"></td>
-                                                                                    <td v-text="carta.nidvehiculo"></td>
+                                                                                    <td v-text="carta.cNroVehiculo"></td>
                                                                                     <td v-text="carta.cEstado"></td>
-                                                                                    <td v-text="carta.cResponsable"></td>
+                                                                                    <td v-text="carta.AprobadoPor"></td>
                                                                                     <td>
-                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='CO' || carta.cFlagEstadoAprobacion =='AP'" target="_blank">
+                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cEstado == '1300238' || carta.cEstado == '1300240'" target="_blank">
                                                                                             <i class='fa-md fa fa-file'></i>
                                                                                         </a>
                                                                                     </td>
@@ -283,15 +283,23 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-md-6">
                                                                                 <div class="row">
+                                                                                    <label class="col-sm-8 form-control-label">* La Autorización Requiere Contacto ?</label>
+                                                                                    <div class="col-sm-4">
+                                                                                        <el-checkbox v-model="checked" @change="updateEstadoChecked" :label="checked ? 'No' : 'Si'"></el-checkbox>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Contacto</label>
-                                                                                    <div class="col-sm-8">
+                                                                                    <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
                                                                                         <el-row>
-                                                                                            <div class="input-group">
+                                                                                            <div class="input-group" :class="[checked ? 'disabled' : '']">
                                                                                                 <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar', 2)"></el-button>
+                                                                                                    <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
                                                                                                 </el-input>
                                                                                             </div>
-                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo')" circle></el-button>
+                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
                                                                                         </el-row>
                                                                                     </div>
                                                                                 </div>
@@ -771,146 +779,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Buscar Contactos -->
-        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">BUSQUEDA CONTACTOS</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <form class="form-horizontal">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                <div class="col-sm-8">
-                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                        <input type="radio" class="radio-template" v-model="fillContacto.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersona()">
-                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                <div class="col-sm-8 widthFull">
-                                                                    <el-select v-model="fillContacto.ntpodocumento"
-                                                                                filterable
-                                                                                clearable
-                                                                                placeholder="Seleccione un Tipo de Documento">
-                                                                        <el-option
-                                                                            v-for="item in arrayTipoDocumento"
-                                                                            :key="item.nIdPar"
-                                                                            :label="item.cParNombre"
-                                                                            :value="item.nIdPar">
-                                                                        </el-option>
-                                                                    </el-select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                <div class="col-sm-8">
-                                                                    <el-input
-                                                                        placeholder="Nro del Documento"
-                                                                        v-model="fillContacto.cnrodocumento"
-                                                                        clearable>
-                                                                    </el-input>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <template v-if="vistaDatosPersonaNatural">
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            placeholder="Ingrese el Apellido Paterno"
-                                                                            v-model="fillContacto.capepaterno"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            placeholder="Ingrese el Apellido Materno"
-                                                                            v-model="fillContacto.capematerno"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label v-text="fillContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            :placeholder="'Ingrese' + fillContacto.lblcnombres"
-                                                                            v-model="fillContacto.cnombre"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label v-text="fillContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            :placeholder="'Ingrese' + fillContacto.lblcnombres"
-                                                                            v-model="fillContacto.cnombre"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-5">
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarContacto(1);">
-                                                                <i class="fa fa-save"></i> Registrar
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 </template>
 
@@ -935,13 +803,7 @@
                     { value: '1', text: 'VIN'},
                     { value: '2', text: 'PLACA'}
                 ],
-                arrayEstado: [
-                    { value: 'P', text: 'PENDIENTE'},
-                    { value: 'C', text: 'CONFORME'},
-                    { value: 'A', text: 'APROBADO'},
-                    { value: 'D', text: 'DESAPROBADO'},
-                    { value: 'T', text: 'ATENDIDO'}
-                ],
+                arrayEstado: [],
                 arrayMisSolicitudes : [],
                 // ===============================
                 // VARIABLES MODAL CONTACTO
@@ -989,19 +851,8 @@
                     cobservacion: '',
                     nidmovervehiculo: ''
                 },
+                checked: true,
                 arrayTipoSolicitudes: [],
-                fillContacto: {
-                    //Tab DATOS PERSONALES
-                    ntipopersona: '1',
-                    ntpodocumento : '',
-                    cnrodocumento : '',
-                    capepaterno : '',
-                    capematerno : '',
-                    cnombre : '',
-                    lblcnombres: '* Nombres',
-                },
-                arrayTipoDocumento: [],
-                vistaDatosPersonaNatural: 1,
                 // ===============================
                 // VARIABLES DATOS VEHICULO
                 // ===============================
@@ -1132,18 +983,33 @@
                 $('#TabMisSolicitudes').addClass('in active show');
                 $('#TabNuevaSolicitud').removeClass('in active show');
                 this.limpiarMisSolicitudes();
+                this.llenarEstados();
                 this.buscarMisSolicitudes(1);
+            },
+            llenarEstados(){
+                var url = this.ruta + '/getComision/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110079,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayEstado = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             buscarMisSolicitudes(page){
                 var url = this.ruta + '/autorizacion/GetLstSolicitudes';
                 axios.get(url, {
                     params: {
-                        'nIdTipoBusqueda': this.fillBusquedaSolicitud.nidtipobusqueda,
-                        'nIdVehiculo' : this.fillBusquedaSolicitud.nidvehiculo,
+                        'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'cNroVehiculo' : this.fillBusquedaSolicitud.cnrovehiculo,
                         'dFecha' : this.fillBusquedaSolicitud.dfecha,
                         'nIdAsigContacto' : this.fillBusquedaSolicitud.nidasigcontacto,
                         'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
                         'tipoRol': 1,
+                        'nIdTipoBusquedaAutorizacion': 1,
                         'page' : page
                     }
                 }).then(response => {
@@ -1341,51 +1207,10 @@
                     console.log(error);
                 });
             },
-            // ============================
-            // MODAL NUEVO CONTACTO
-            // ============================
-            cambiarTipoPersona(){
-                this.limpiarNuevoContacto();
-                this.llenarComboTpoDocumento();
-                if(this.fillContacto.ntipopersona == '1') {
-                    this.fillContacto.lblcnombres = '* Nombres',
-                    this.vistaDatosPersonaNatural = 1
-                } else {
-                    this.fillContacto.lblcnombres = '* Razón Social',
-                    this.vistaDatosPersonaNatural = 0
-                }
-            },
-            limpiarNuevoContacto(){
-                //Tab Nuevo Contacto
-                this.fillContacto.ntpodocumento = '';
-                this.fillContacto.cnrodocumento = '';
-                this.fillContacto.capepaterno = '';
-                this.fillContacto.capematerno = '';
-                this.fillContacto.cnombre = '';
-            },
-            llenarComboTpoDocumento(){
-                if(this.fillContacto.ntipopersona == 1) {
-                    var url = this.ruta + '/parametro/GetDocumentoNatural';
-                    axios.get(url,{
-                        params: {
-                            'ngrupoparid' : 110047,
-                        }
-                    }).then(response => {
-                        this.arrayTipoDocumento = response.data;
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                } else {
-                    var url = this.ruta + '/parametro/GetDocumentoJuridica';
-                    axios.get(url,{
-                        params: {
-                            'ngrupoparid' : 110047,
-                        }
-                    }).then(response => {
-                        this.arrayTipoDocumento = response.data;
-                    }).catch(error => {
-                        console.log(error);
-                    });
+            updateEstadoChecked(){
+                if(this.checked){
+                    this.fillNuevaSolicitud.nidasigcontacto = 0;
+                    this.fillNuevaSolicitud.cnombrecontacto = '';
                 }
             },
             activarTab0202(){
@@ -1424,10 +1249,11 @@
                 if(this.fillNuevaSolicitud.nidjefeinmediato == 0 && !this.fillNuevaSolicitud.cnombrejefeinmediato){
                     this.mensajeError.push('Debe tener asignado un Jefe de Ventas');
                 }
-                if(this.fillNuevaSolicitud.nidasigcontacto == 0 && !this.fillNuevaSolicitud.cnombrecontacto){
-                    this.mensajeError.push('Debe asignar un Contacto');
+                if(!this.checked) {
+                    if(this.fillNuevaSolicitud.nidasigcontacto == 0 && !this.fillNuevaSolicitud.cnombrecontacto){
+                        this.mensajeError.push('Debe asignar un Contacto');
+                    }
                 }
-
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1468,7 +1294,7 @@
                     'nIdTipoSolicitud'      :   this.fillNuevaSolicitud.nidtiposolicitud,
                     'cNumeroSolicitud'      :   this.fillNuevaSolicitud.cnrosolicitud,
                     'dFechaSolicitud'       :   this.fillNuevaSolicitud.dfechasolicitud,
-                    'cFlagContacto'         :   'S',
+                    'cFlagContacto'         :   (this.fillNuevaSolicitud.nidasigcontacto) ? 'S' : 'N',
                     'cFlagVinPlaca'         :   (this.fillNuevaSolicitud.nidtipobusqueda == 1) ? 'V' : 'P',
                     'dFechaMovVehiculo'     :   this.fillNuevaSolicitud.dfechamovimiento,
                     'cHoraMovVehiculo'      :   this.fillNuevaSolicitud.choraMovimiento,
@@ -1563,10 +1389,21 @@
                             break;
                             case 'nuevo':
                             {
-                                this.fillContacto.ntipopersona = 1;
-                                this.llenarComboTpoDocumento();
-                                this.accionmodal=4;
-                                this.modal = 1;
+                                let me = this;
+
+                                switch (data) {
+                                    case 110026:
+                                        me.$emit('menu', 200207);//VENDEDORES
+                                        break;
+                                    case 110025:
+                                        me.$emit('menu', 200206);//JEFE DE VENTAS
+                                        break;
+                                    case 110083:
+                                        me.$emit('menu', 200222);//ADMINISTRADOR DE VENDEDORES
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                     }
@@ -1677,6 +1514,11 @@
         display: flex;
         justify-content: space-between;
         align-content: space-around;
+    }
+    .disabled{
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events:none;
     }
 </style>
 
