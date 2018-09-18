@@ -602,11 +602,12 @@
                 this.listarTipoInspeccion(page);
             },
             //================= REGISTRO =======================
-            asignarItem(nItemId, cItemNombre){
+            registrar(){
                 var url = this.ruta + '/plantilla/SetItemPlantilla';
 
                 axios.post(url, {
                     nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
                     nIdTipoInspeccion: this.formPunto.nidtipoinspeccion,
                     nIdFlag: this.formPunto.nidflag,
                     nIdSeccion: this.formPunto.nidseccion,
@@ -616,7 +617,7 @@
                     {
                         swal('Item Agregado registrada');
                         this.vistaFormulario = 1;
-                        this.listarItemPlantilla();
+                        //this.listarItemPlantilla();
                     }
                     else{
                         swal('Ya existe Item');
@@ -624,34 +625,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            //================= LISTADO ITEMS =======================
-            listarItems(page){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110082,
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayItem = response.data.arrayParametro.data;
-                    this.paginationModal.current_page =  response.data.arrayParametro.current_page;
-                    this.paginationModal.total = response.data.arrayParametro.total;
-                    this.paginationModal.per_page    = response.data.arrayParametro.per_page;
-                    this.paginationModal.last_page   = response.data.arrayParametro.last_page;
-                    this.paginationModal.from        = response.data.arrayParametro.from;
-                    this.paginationModal.to           = response.data.arrayParametro.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaItem(page){
-                this.paginationModal.current_page=page;
-                this.listarItems(page);
-            },
-            registrar(){
             },
             validar(){
                 this.error = 0;

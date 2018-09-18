@@ -9,6 +9,12 @@
     <template v-if="menu==200102">
         <versionvehiculo :ruta="ruta"></versionvehiculo>
     </template>
+    <template v-if="menu==200103">
+        <pditipoinspeccion :ruta="ruta"></pditipoinspeccion>
+    </template>
+    <template v-if="menu==200104">
+        <pdiplantilla :ruta="ruta"></pdiplantilla>
+    </template>
 
     <template v-if="menu==200201">
         <turnoventa :ruta="ruta"></turnoventa>
@@ -21,6 +27,9 @@
     </template>
     <template v-if="menu==200204">
         <comision :ruta="ruta"></comision>
+    </template>
+    <template v-if="menu==200205">
+        <pdipuntoinspeccion :ruta="ruta"></pdipuntoinspeccion>
     </template>
 
     <template v-if="menu==200301">
@@ -84,15 +93,6 @@
         <cierrecompra :ruta="ruta"></cierrecompra>
     </template>
     <template v-if="menu==200322">
-        <pditipoinspeccion :ruta="ruta"></pditipoinspeccion>
-    </template>
-    <template v-if="menu==200323">
-        <pdiplantilla :ruta="ruta"></pdiplantilla>
-    </template>
-    <template v-if="menu==200324">
-        <pdipuntoinspeccion :ruta="ruta"></pdipuntoinspeccion>
-    </template>
-    <template v-if="menu==200325">
         <pdiprocesoinspeccion :ruta="ruta"></pdiprocesoinspeccion>
     </template>
 @endsection
