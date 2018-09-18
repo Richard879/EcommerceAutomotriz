@@ -1305,7 +1305,7 @@
                 this.listarCompra(1);
             },
             listarCompra(page){
-                var url = this.ruta + '/solicitudCartaCaracteristica/GeLstCompras';
+                var url = this.ruta + '/cartacaracteristica/GeLstCompras';
 
                 axios.get(url, {
                     params: {
@@ -1347,7 +1347,7 @@
                 this.listarContactos(page);
             },
             listarContactos(page){
-                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCotizacionAprobadas';
+                var url = this.ruta + '/cartacaracteristica/GetLstCotizacionAprobadas';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -1394,7 +1394,7 @@
                     this.modal = 1;
                     return;
                 }
-                var url = this.ruta + '/solicitudCartaCaracteristica/SetRegistrarSCC';
+                var url = this.ruta + '/cartacaracteristica/SetRegistrarSCC';
                 axios.post(url, {
                     'cNumeroCarta'          :   this.fillCartaCaracteristica.cnumcarta,
                     'cAtencion'             :   this.fillCartaCaracteristica.catencion,
@@ -1501,7 +1501,7 @@
                 this.buscarMisCartas(1);
             },
             buscarMisCartas(page){
-                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCartaCaracteristica';
+                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
                 axios.get(url, {
                     params: {
                         'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
@@ -1540,7 +1540,7 @@
                 this.fillCartaCaracteristica.nidestado = '';
             },
             getDetalleSolicitud(nIdSCartaC){
-                var url = this.ruta + '/solicitudCartaCaracteristica/GetDetalleSolicitud';
+                var url = this.ruta + '/cartacaracteristica/GetDetalleSolicitud';
                 axios.get(url, {
                     params: {
                         'nIdScartaC' : nIdSCartaC
@@ -1592,7 +1592,7 @@
                 this.form.append('nombre', this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto);
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
-                var url = this.ruta + '/solicitudCartaCaracteristica/SetAprobadoNoAprobado';
+                var url = this.ruta + '/cartacaracteristica/SetAprobadoNoAprobado';
                 axios.post(url, this.form, config).then(response => {
                     console.log(response);
                     this.buscarMisCartas(1);
@@ -1635,7 +1635,7 @@
                 this.buscarMisCartasAnuladas(1);
             },
             buscarMisCartasAnuladas(page){
-                var url = this.ruta + '/solicitudCartaCaracteristica/GetLstCartaCaracteristica';
+                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
                 axios.get(url, {
                     params: {
                         'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
@@ -1682,7 +1682,7 @@
                 if(this.validarRegistrarAnulacion()){
                     return;
                 }
-                var url = this.ruta + '/solicitudCartaCaracteristica/SetAnularSCC';
+                var url = this.ruta + '/cartacaracteristica/SetAnularSCC';
                 axios.put(url, {
                     'nIdScartaC' : this.fillCartaDetalleSolicitud.nIdSCC,
                     'nIdEstadoCarta': 1300199,
