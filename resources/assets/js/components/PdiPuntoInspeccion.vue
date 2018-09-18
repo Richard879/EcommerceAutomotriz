@@ -384,6 +384,7 @@
                     cnombre: ''
                 },
                 formPunto:{
+                    nidpuntoinspeccion: 0,
                     nidflagingreso: 0,
                     nidflagsalida: 0,
                     nidflagmovimiento: 0,
@@ -632,6 +633,37 @@
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
+            actualizar(){
+                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                axios.post(url, {
+                    nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    cNombrePuntoInspeccion: this.formPunto.cnombre,
+                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
+                    nFlagIngresoSucursal: this.formPunto.nidflagingreso,
+                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Punto Inspección Actualizado');
+                        //this.limpiarFormulario();
+                        this.vistaFormulario = 1;
+                        this.listarPuntoInspeccion();
+                    }
+                    else{
+                        swal('Ya existe Punto Inspección');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
                     case 'puntoinspeccion':
@@ -649,14 +681,12 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
-                                this.tituloFormulario = 'ACTUALIZAR TIPO DE INSPECCIÓN';
-                                this.formPunto.nidtipoinspeccion = data['nIdTipoInspeccion'];
-                                this.formPunto.cnombre = data['cNombreTipoInspeccion'];
-                                this.formPunto.nflagalmacen = (data['nFlagAlmacen'] == 1 ? true : false);
-                                this.formPunto.nflagaccesorio = (data['nFlagAccesorio'] == 1 ? true : false);
-                                this.formPunto.nflagtestdrive = (data['nFlagTestDrive'] == 1 ? true : false);
-                                this.formPunto.nFlagSeccion = (data['nFlagSeccionInspeccion'] == 1 ? true : false);
-                                this.formPunto.nflagfichatecnica = (data['nFlagValidarFichaTecnica'] == 1 ? true : false);
+                                this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
+                                this.formPunto.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
+                                this.formPunto.cnombre = data['cNombrePuntoInspeccion'];
+                                this.formPunto.nidflagmovimiento = data['nFlagTipoMovimiento'];
+                                this.formPunto.nidflagingreso = data['nFlagIngresoSucursal'];
+                                this.formPunto.nidflagsalida = data['nFlagSalidaSucursal'];
                                 break;
                             }
                         }

@@ -65,21 +65,20 @@ class PdiPuntoInspeccionController extends Controller
         return response()->json($objTpoInspecion);   
     }
     
-    public function UpdTipoInspeccionById(Request $request)
+    public function UpdPuntoInspeccionById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_TipoInspeccion_UpdTipoInspeccionById ?, ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdTipoInspeccion,
-                                                                    $request->cNombreTipoInspeccion,
-                                                                    $request->nFlagAlmacen, 
-                                                                    $request->nFlagAccesorio,
-                                                                    $request->nFlagTestDrive,
-                                                                    $request->nFlagSeccion,
-                                                                    $request->nFlagFichaTecnica,
+        $element = DB::select('exec [usp_PuntoInspeccion_UpdPuntoInspeccionById] ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->nIdPuntoInspeccion,
+                                                                    $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->cNombrePuntoInspeccion, 
+                                                                    $request->nFlagTipoMovimiento,
+                                                                    $request->nFlagIngresoSucursal,
+                                                                    $request->nFlagSalidaSucursal,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
         return response()->json($element); 
     }
 
