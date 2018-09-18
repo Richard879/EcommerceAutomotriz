@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-class SolicitudCartaCaracteristicaController extends Controller
+class CartaCaracteristicaController extends Controller
 {
     public function GeLstCompras(Request $request)
     {
