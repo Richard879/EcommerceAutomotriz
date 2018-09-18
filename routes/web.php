@@ -120,6 +120,9 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/tipoinspeccion/desactivar', 'PdiTipoInspeccionController@desactivar');
     Route::post('/tipoinspeccion/UpdTipoInspeccionById', 'PdiTipoInspeccionController@UpdTipoInspeccionById');
     Route::get('/tipoinspeccion/GetFillTipoInspeccion', 'PdiTipoInspeccionController@GetFillTipoInspeccion');
+    Route::get('/plantilla/GetListItems', 'PdiPlantillaSeccionController@GetListItems');
+    Route::post('/plantilla/SetItemPlantilla', 'PdiPlantillaSeccionController@SetItemPlantilla');
+
 
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');

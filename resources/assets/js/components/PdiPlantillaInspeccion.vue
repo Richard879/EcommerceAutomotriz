@@ -44,21 +44,6 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Área de Inspección</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayFlag"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sección</label>
                                                 <div class="col-sm-8">
                                                     <el-select v-model="formPlantilla.nidseccion" filterable placeholder="Select" >
@@ -74,7 +59,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-3">
+                                        <div class="col-sm-9 offset-sm-5">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
                                             <!--<button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('plantila','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>-->
                                         </div>
@@ -93,6 +78,21 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
+                                                <label class="col-sm-4 form-control-label">Área</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayFlag"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
                                                 <label class="col-sm-4 form-control-label">Agregar Item</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
@@ -107,34 +107,33 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>                        
+                                </div>
+                                <hr/>                       
                                 <template v-if="arrayPlantilla.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
                                                     <th>Código</th>
-                                                    <th>Nombre</th>
-                                                    <th>Almacén</th>
-                                                    <th>Accesorio</th>
-                                                    <th>Test Drive</th>
-                                                    <th>Sección Inspección</th>
-                                                    <th>Ficha Técnica</th>
+                                                    <th>Tipo Inspección</th>
+                                                    <th>Sección</th>
+                                                    <th>Área</th>
+                                                    <th>Item Nombre</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
                                                     <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
-                                                    <td v-text="plantilla.nIdTipoInspeccion"></td>
+                                                    <td v-text="plantilla.cNombreTipoInspeccion"></td>
                                                     <td v-text="plantilla.cFlagInteriorExterior"></td>
-                                                    <td v-text="plantilla.nIdSeccion"></td>
-                                                    <td v-text="plantilla.nIdItem"></td>
+                                                    <td v-text="plantilla.cSeccionNombre"></td>
+                                                    <td v-text="plantilla.cItemNombre"></td>
                                                     <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                        <!--<el-tooltip class="item" effect="dark" placement="top-start">
                                                              <div slot="content">Editar {{ plantilla.cNombreTipoInspeccion }}</div>
                                                              <i @click="abrirFormulario('plantilla','actualizar', plantilla)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                        </el-tooltip>&nbsp;
+                                                        </el-tooltip>&nbsp;-->
                                                         <template v-if="plantilla.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Desactivar {{ plantilla.cNombreTipoInspeccion }}</div>
@@ -265,9 +264,11 @@
                                                     <label class="col-sm-4 form-control-label">Nombre</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
-                                                            <input type="text" v-model="fillItem.citemnombre" @keyup.enter="buscaItems()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillItem.citemnombre" @keyup.enter="listarItems(1)" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaItems();"><i class="fa-lg fa fa-search"></i></button>
+                                                                <button type="button" title="Buscar Items" class="btn btn-info btn-corner btn-sm" @click="listarItems(1)">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -496,33 +497,81 @@
                     console.log(error);
                 });
             },
+            //================= BUSQUEDA PLANTILLA =======================
             buscarPlantilla(){
-                this.listarPlantilla(1);
-            },
-            listarPlantilla(page){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                if(this.validarBusqueda()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
 
+                this.listarItemPlantilla(1);
+            },
+            listarItemPlantilla(page){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/plantilla/GetListItems';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110082,
-                        'opcion' : 1,
+                        'nidempresa' : 1300011,
+                        'nidtipoinspeccion' : this.formPlantilla.nidtipoinspeccion,
+                        'nidseccion': this.formPlantilla.nidseccion,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayItem = response.data.arrayParametro.data;
-                    this.paginationModal.current_page =  response.data.arrayParametro.current_page;
-                    this.paginationModal.total = response.data.arrayParametro.total;
-                    this.paginationModal.per_page    = response.data.arrayParametro.per_page;
-                    this.paginationModal.last_page   = response.data.arrayParametro.last_page;
-                    this.paginationModal.from        = response.data.arrayParametro.from;
-                    this.paginationModal.to           = response.data.arrayParametro.to;
+                    this.arrayPlantilla = response.data.arrayPlantilla.data;
+                    this.paginationModal.current_page =  response.data.arrayPlantilla.current_page;
+                    this.paginationModal.total = response.data.arrayPlantilla.total;
+                    this.paginationModal.per_page    = response.data.arrayPlantilla.per_page;
+                    this.paginationModal.last_page   = response.data.arrayPlantilla.last_page;
+                    this.paginationModal.from        = response.data.arrayPlantilla.from;
+                    this.paginationModal.to           = response.data.arrayPlantilla.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            buscaItems(){
-                this.listarItems(1);
+            validarBusqueda(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formPlantilla.nIdTipoInspeccion == 0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
+            cambiarPagina(page){
+                this.pagination.current_page=page;
+                this.listarTipoInspeccion(page);
+            },
+            //================= REGISTRO =======================
+            asignarItem(nItemId, cItemNombre){
+                var url = this.ruta + '/plantilla/SetItemPlantilla';
+
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
+                    nIdFlag: this.formPlantilla.nidflag,
+                    nIdSeccion: this.formPlantilla.nidseccion,
+                    nIdItem: nItemId,
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Item Agregado registrada');
+                        this.vistaFormulario = 1;
+                        this.listarItemPlantilla();
+                    }
+                    else{
+                        swal('Ya existe Item');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            //================= LISTADO ITEMS =======================
             listarItems(page){
                 var url = this.ruta + '/parametro/GetListParametroByGrupo';
 
@@ -548,83 +597,22 @@
                 this.paginationModal.current_page=page;
                 this.listarItems(page);
             },
-            asignarItem(nItemId, cItemNombre){
-                /*if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }*/
-
-                var url = this.ruta + '/plantillainspeccion/SetPlantilla';
-
-                axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
-                    nIdFlag: this.formPlantilla.nidflag,
-                    nIdSeccion: this.formPlantilla.nidseccion,
-                    nIdItem: this.formPlantilla.niditem,
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Item Agregado registrada');
-                        this.vistaFormulario = 1;
-                    }
-                    else{
-                        swal('Ya existe Item');
-                    }
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPagina(page){
-                this.pagination.current_page=page;
-                this.listarTipoInspeccion(page);
-            },
             registrar(){
-                
             },
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.formPlantilla.cnombre){
-                    this.mensajeError.push('Debes Ingresar un nombre');
+                if(this.formPlantilla.nIdTipoInspeccion == 0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
+                };
+                if(this.formPlantilla.nidseccion == 0){
+                    this.mensajeError.push('Debes Seleccionar Sección');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
-            },
-            actualizar(){
-                var url = this.ruta + '/tipoinspeccion/UpdTipoInspeccionById';
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdTipoInspeccion: parseInt(this.formPlantilla.nidtipoinspeccion),
-                    cNombreTipoInspeccion: this.formPlantilla.cnombre,
-                    nFlagAlmacen: this.formPlantilla.nflagalmacen,
-                    nFlagAccesorio: this.formPlantilla.nflagaccesorio,
-                    nFlagTestDrive: this.formPlantilla.nflagtestdrive,
-                    nFlagSeccion: this.formPlantilla.nflagseccion,
-                    nFlagFichaTecnica: this.formPlantilla.nflagfichatecnica
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Tipo Inspección Actualizado');
-                        this.limpiarFormulario();
-                        this.vistaFormulario = 1;
-                    }
-                    else{
-                        swal('Ya existe Tipo Inspección');
-                    }
-                }).catch(error => {
-                    console.log(error);
-                });
             },
             activar(nIdTipoInspeccion){
                 swal({
@@ -725,6 +713,12 @@
                         switch(accion){
                             case 'buscar':
                             {
+                                if(this.validar()){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
                                 this.accionmodal=3;
                                 this.modal = 1;
                                 this.listarItems(1);
@@ -744,7 +738,6 @@
                 this.formPlantilla.nflagfichatecnica= 0
             },
             cambiarVistaFormulario(){
-                //this.listarTipoInspeccion(1);
                 this.vistaFormulario = 1;
             },
             limpiarPaginacion(){
