@@ -14,13 +14,13 @@ class PdiPlantillaSeccionController extends Controller
         if (!$request->ajax()) return redirect('/');
         
         $element = DB::select('exec [usp_PlantillaInspeccion_SetPlantilla] ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
+                                                                [   $request->nIdEmpresa,
                                                                     $request->nIdTipoInspeccion,
                                                                     $request->nIdFlag, 
                                                                     $request->nIdSeccion,
                                                                     $request->nIdItem,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
         return response()->json($element);         
     }
 

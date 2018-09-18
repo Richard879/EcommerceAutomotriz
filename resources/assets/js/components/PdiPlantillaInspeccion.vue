@@ -504,7 +504,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formPlantilla.nIdTipoInspeccion == 0){
+                if(this.formPlantilla.nidtipoinspeccion == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Inspección');
                 };
                 if(this.mensajeError.length){
@@ -572,7 +572,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formPlantilla.nIdTipoInspeccion == 0){
+                if(this.formPlantilla.nidtipoinspeccion == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Inspección');
                 };
                 if(this.formPlantilla.nidseccion == 0){

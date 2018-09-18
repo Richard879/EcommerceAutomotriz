@@ -14,14 +14,14 @@ class PdiPuntoInspeccionController extends Controller
         if (!$request->ajax()) return redirect('/');
         
         $element = DB::select('exec [usp_PuntoInspeccion_SetPuntoInspeccion] ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
+                                                                [   $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->cNombrePuntoInspeccion,
                                                                     $request->nFlagTipoMovimiento, 
                                                                     $request->nFlagIngresoSucursal,
                                                                     $request->nFlagSalidaSucursal,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
         return response()->json($element);         
     }
 
@@ -35,7 +35,9 @@ class PdiPuntoInspeccionController extends Controller
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
                 
         $arrayTipoInspeccion = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ?', 
-                                                                    [$nIdEmpresa, $cNombreTipoInspeccion]);
+                                                                                    [   $nIdEmpresa, 
+                                                                                        $cNombreTipoInspeccion
+                                                                                    ]);
 
         $arrayTipoInspeccion = ParametroController::arrayPaginator($arrayTipoInspeccion, $request);
         return ['arrayTipoInspeccion'=>$arrayTipoInspeccion];
