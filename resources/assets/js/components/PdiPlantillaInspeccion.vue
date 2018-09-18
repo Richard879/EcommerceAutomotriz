@@ -193,37 +193,6 @@
             </section>
         </template>
 
-        <template v-else>
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4" v-text="tituloFormulario"></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-4">
-                                            <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
-                                                <i class="fa fa-save"></i> Actualizar
-                                            </button>
-                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
-                                                <i class="fa fa-close"></i> Cancelar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </template>
-
         <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-md" role="document">
                 <div class="modal-content">
