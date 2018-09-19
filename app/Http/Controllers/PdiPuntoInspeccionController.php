@@ -49,8 +49,8 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_DesactivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
+        $objTpoInspecion = DB::select('exec usp_PuntoInspeccion_DesactivaById ?', 
+                                                            array(  $request->nIdPuntoInspeccion
                                                                     ));
         return response()->json($objTpoInspecion);   
     }
@@ -59,8 +59,8 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_ActivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
+        $objTpoInspecion = DB::select('exec usp_PuntoInspeccion_ActivaById ?', 
+                                                            array(  $request->nIdPuntoInspeccion
                                                                     ));
         return response()->json($objTpoInspecion);   
     }
@@ -82,29 +82,4 @@ class PdiPuntoInspeccionController extends Controller
         return response()->json($element); 
     }
 
-    public function GetFillTipoInspeccion(Request $request)
-    {
-        $nIdEmpresa   = $request->nidempresa;
-        $cNombreTipoInspeccion = $request->cnombre;
-        $variable   = $request->opcion;
-
-        $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
-
-        $parametro = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ? ', 
-                                                                        [$nIdEmpresa, $cNombreTipoInspeccion]);
-        $data = [];
-        if($variable == "0"){
-            $data[0] = [
-                'nIdTipoInspeccion'   => 0,
-                'cNombreTipoInspeccion' =>'SELECCIONE',
-            ];
-        }
-        foreach ($parametro as $key => $value) {
-           $data[$key+1] =[
-                'nIdTipoInspeccion'   => $value->nIdTipoInspeccion,
-                'cNombreTipoInspeccion' => $value->cNombreTipoInspeccion,
-            ];
-        }
-        return response()->json($data);
-    }
 }

@@ -125,7 +125,6 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Nombre Comercial</label>
                                                 <div class="col-sm-8">
-                                                    <input type="hidden" v-model="formVersion.nidversionveh">
                                                     <input type="text" v-model="formVersion.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm" placeholder="">
                                                 </div>
                                             </div>

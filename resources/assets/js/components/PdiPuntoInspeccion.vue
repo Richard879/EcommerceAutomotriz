@@ -88,13 +88,13 @@
                                                         <template v-if="punto.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Desactivar {{ punto.cNombreTipoInspeccion }}</div>
-                                                                <i @click="desactivar(punto.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <i @click="desactivar(punto.nIdPuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Activar {{ punto.cNombreTipoInspeccion }}</div>
-                                                                <i @click="activar(punto.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <i @click="activar(punto.nIdPuntoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -539,8 +539,13 @@
             },
             //================= REGISTRO =======================
             registrar(){
-                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
 
+                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';    
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: 1300013,
@@ -566,20 +571,23 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formPunto.nIdTipoInspeccion == 0){
-                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
-                };
-                if(this.formPunto.nidseccion == 0){
+                if(!this.formPunto.cnombre){
                     this.mensajeError.push('Debes Seleccionar Sección');
+                };
+                if(this.formPunto.nFlagIngresoSucursal == 0){
+                    this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
+                };
+                if(this.formPunto.nFlagSalidaSucursal == 0){
+                    this.mensajeError.push('Debes Seleccionar Salida Sucursal');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
             },
-            activar(nIdTipoInspeccion){
+            activar(nIdPuntoInspeccion){
                 swal({
-                    title: 'Estas seguro de activar este inspeccion?',
+                    title: 'Estas seguro de activar este Punto Inspección?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -588,15 +596,15 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/tipoinspeccion/activar';
+                        var url = this.ruta + '/puntoinspeccion/activar';
                         axios.put(url , {
-                            nIdTipoInspeccion: nIdTipoInspeccion
+                            nIdPuntoInspeccion: nIdPuntoInspeccion
                         }).then(response => {
                             swal(
                             'Activado!',
                             'El registro fue activado.'
                             );
-                            this.listarTipoInspeccion(1);
+                            this.listarPuntoInspeccion(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -605,9 +613,9 @@
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
-            desactivar(nIdTipoInspeccion){
+            desactivar(nIdPuntoInspeccion){
                 swal({
-                    title: 'Estas seguro de desactivar este inspeccion?',
+                    title: 'Estas seguro de desactivar este Punto Inspección?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -616,15 +624,15 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/tipoinspeccion/desactivar';
+                        var url = this.ruta + '/puntoinspeccion/desactivar';
                         axios.put(url , {
-                            nIdTipoInspeccion: nIdTipoInspeccion
+                            nIdPuntoInspeccion: nIdPuntoInspeccion
                         }).then(response => {
                             swal(
                             'Desactivado!',
                             'El registro fue desactivado.'
                             );
-                            this.listarTipoInspeccion(1);
+                            this.listarPuntoInspeccion(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -634,13 +642,13 @@
                 })
             },
             actualizar(){
-                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
+                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';            
                 axios.post(url, {
                     nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
                     nIdEmpresa: 1300011,
@@ -723,7 +731,7 @@
             limpiarFormulario(){
                 this.formPunto.nidpuntoinspeccion= 0,
                 this.formPunto.cnombre= '',
-                this.formPunto.nidflagmovimiento= '',
+                this.formPunto.nidflagmovimiento= 0,
                 this.formPunto.nidflagingreso=  0,
                 this.formPunto.nidflagsalida= 0
             },
