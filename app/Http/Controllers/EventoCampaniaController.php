@@ -120,11 +120,11 @@ class EventoCampaniaController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_EC_SetEventoElementoVenta ?, ?, ?', 
-                                                            array($request->nIdEventoCampania,
-                                                                $det['nIdElemento'],
-                                                                Auth::user()->id
-                                                            ));
+                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?', 
+                                                    [   $request->nIdEventoCampania,
+                                                        $det['nIdElemento'],
+                                                        Auth::user()->id
+                                                    ]);
             }  
 
             DB::commit(); 
@@ -144,13 +144,13 @@ class EventoCampaniaController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_EC_SetDistribucionEventoByEC ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEventoCampania,
-                                                                $det['cFlagEntidad'],
-                                                                $det['nIdEntidad'],
-                                                                $det['fValorPorcentual'],
-                                                                Auth::user()->id
-                                                            ));
+                DB::select('exec [usp_EC_SetDistribucionEventoByEC] ?, ?, ?, ?, ?', 
+                                                    [   $request->nIdEventoCampania,
+                                                        $det['cFlagEntidad'],
+                                                        $det['nIdEntidad'],
+                                                        $det['fValorPorcentual'],
+                                                        Auth::user()->id
+                                                    ]);
             }  
 
             DB::commit(); 
@@ -170,12 +170,12 @@ class EventoCampaniaController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_EC_SetDistribucionEventoByElemento ?, ?, ?, ?', 
-                                                            array($det['nIdEventoElementoVenta'],
-                                                                $det['nIdEntidad'],
-                                                                $det['fValorPorcentual'],
-                                                                Auth::user()->id
-                                                            ));
+                DB::select('exec [usp_EC_SetDistribucionEventoByElemento] ?, ?, ?, ?', 
+                                                    [   $det['nIdEventoElementoVenta'],
+                                                        $det['nIdEntidad'],
+                                                        $det['fValorPorcentual'],
+                                                        Auth::user()->id
+                                                    ]);
             }  
 
             DB::commit(); 
@@ -190,9 +190,9 @@ class EventoCampaniaController extends Controller
 
         $nIdEventoCampania = $request->nideventocampania;
         
-        $arrayElementoDistribucion = DB::select('exec usp_EC_GetDistribucionByElementoVenta ?', 
-                                                            array(  $nIdEventoCampania
-                                                                    ));
+        $arrayElementoDistribucion = DB::select('exec [usp_EC_GetDistribucionByElementoVenta] ?', 
+                                                            [   $nIdEventoCampania
+                                                            ]);
         
         $arrayElementoDistribucion = $this->arrayPaginator($arrayElementoDistribucion, $request);
         return ['arrayElementoDistribucion'=>$arrayElementoDistribucion]; 
@@ -202,9 +202,9 @@ class EventoCampaniaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEventoCampania = DB::select('exec usp_EC_DesactivaById ?', 
-                                                            array(  $request->nIdEventoCampania
-                                                                    ));
+        $nIdEventoCampania = DB::select('exec [usp_EC_DesactivaById] ?', 
+                                            [   $request->nIdEventoCampania
+                                            ]);
         return response()->json($nIdEventoCampania);   
     }
 
@@ -212,9 +212,9 @@ class EventoCampaniaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEventoCampania = DB::select('exec usp_EC_ActivaById ?', 
-                                                            array(  $request->nIdEventoCampania
-                                                                    ));
+        $nIdEventoCampania = DB::select('exec [usp_EC_ActivaById] ?', 
+                                            [   $request->nIdEventoCampania
+                                            ]);
         return response()->json($nIdEventoCampania);   
     }
 }

@@ -16,7 +16,10 @@ class CotizacionController extends Controller
         $nidproveedor = $request->nidproveedor;
         $tipoLista = $request->nidtipolista;
 
-        $arrayTipoLista = DB::select('exec usp_Cotizacion_GetListTipoLista ?, ?', [$nidproveedor, $tipoLista]);
+        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?', 
+                                                        [   $nidproveedor, 
+                                                            $tipoLista
+                                                        ]);
 
         return response()->json($arrayTipoLista);
     }
@@ -34,9 +37,8 @@ class CotizacionController extends Controller
 
         $cnombrecomercial = ($cnombrecomercial == "") ? ($cnombrecomercial = '') : $cnombrecomercial;
 
-        $arrayListaVehiculos = DB::select('exec usp_Cotizacion_GetListVehiculos ?, ?, ?, ?, ?, ?',
-                                                                        [
-                                                                            $nidproveedor,
+        $arrayListaVehiculos = DB::select('exec [usp_Cotizacion_GetListVehiculos] ?, ?, ?, ?, ?, ?',
+                                                                        [   $nidproveedor,
                                                                             $nidtipolista,
                                                                             $nidlinea,
                                                                             $nidmarca,
@@ -59,23 +61,22 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCabeceraCotizacion = DB::select('exec usp_Cotizacion_SetCabeceraCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                    array(
-                                        $request->nIdAsignacionContactoVendedor,
-                                        $request->cNumeroCotizacion,
-                                        $request->nIdEmpresa,
-                                        $request->nIdSucursal,
-                                        $request->nIdReferencia,
-                                        $request->dFechaCotizacion,
-                                        $request->dFechaVencimientoCotizacion,
-                                        $request->fTipoCambioVenta,
-                                        $request->fTipoCambioCompra,
-                                        $request->fTotalCotizacionVehiculoDolar,
-                                        $request->fTotalCotizacionVehiculoSol,
-                                        $request->fTotalElementoVentaDolar,
-                                        $request->fTotalElementoVentaSol,
-                                        Auth::user()->id
-                                    ));
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $request->nIdAsignacionContactoVendedor,
+                                                                    $request->cNumeroCotizacion,
+                                                                    $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdReferencia,
+                                                                    $request->dFechaCotizacion,
+                                                                    $request->dFechaVencimientoCotizacion,
+                                                                    $request->fTipoCambioVenta,
+                                                                    $request->fTipoCambioCompra,
+                                                                    $request->fTotalCotizacionVehiculoDolar,
+                                                                    $request->fTotalCotizacionVehiculoSol,
+                                                                    $request->fTotalElementoVentaDolar,
+                                                                    $request->fTotalElementoVentaSol,
+                                                                    Auth::user()->id
+                                                                ]);
 
         return response()->json($arrayCabeceraCotizacion);
     }
@@ -87,51 +88,47 @@ class CotizacionController extends Controller
         try{
             DB::beginTransaction();
             $arrayvehiculos = $request->arrayvehiculos;
-            //Itera todas las referencias de vehiculos
             foreach($arrayvehiculos as $ep=>$det)
             {
-                DB::select('exec usp_Cotizacion_SetDetalleCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                            [
-                                                $request->nIdCabeCoti,
-                                                $det['flagTipoItem'],
-                                                $det['codigo'],
-                                                0,
-                                                0,
-                                                'N',
-                                                0,
-                                                'N',
-                                                $det['nidmoneda'],
-                                                $det['cantidad'],
-                                                $det['preciofinal'],
-                                                $det['dscto'],
-                                                $det['subtotal'],
-                                                Auth::user()->id
-                                            ]);
+                DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdCabeCoti,
+                                                                        $det['flagTipoItem'],
+                                                                        $det['codigo'],
+                                                                        0,
+                                                                        0,
+                                                                        'N',
+                                                                        0,
+                                                                        'N',
+                                                                        $det['nidmoneda'],
+                                                                        $det['cantidad'],
+                                                                        $det['preciofinal'],
+                                                                        $det['dscto'],
+                                                                        $det['subtotal'],
+                                                                        Auth::user()->id
+                                                                    ]);
             }
 
             $arrayelemventalength = sizeof($request->arrayelemventa);
             if($arrayelemventalength > 0){
                 $arrayelemventa = $request->arrayelemventa;
-                //Itera todas las referencias de vehiculos
                 foreach($arrayelemventa as $ep=>$det)
                 {
-                    DB::select('exec usp_Cotizacion_SetDetalleCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                [
-                                                    $request->nIdCabeCoti,
-                                                    $det['flagTipoItem'],
-                                                    0,
-                                                    0,
-                                                    $det['codigo'],
-                                                    'N',
-                                                    0,
-                                                    'N',
-                                                    $det['nidmoneda'],
-                                                    $det['cantidad'],
-                                                    $det['preciofinal'],
-                                                    $det['dscto'],
-                                                    $det['subtotal'],
-                                                    Auth::user()->id
-                                                ]);
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdCabeCoti,
+                                                                        $det['flagTipoItem'],
+                                                                        0,
+                                                                        0,
+                                                                        $det['codigo'],
+                                                                        'N',
+                                                                        0,
+                                                                        'N',
+                                                                        $det['nidmoneda'],
+                                                                        $det['cantidad'],
+                                                                        $det['preciofinal'],
+                                                                        $det['dscto'],
+                                                                        $det['subtotal'],
+                                                                        Auth::user()->id
+                                                                    ]);
                 }
             }
 
@@ -141,23 +138,22 @@ class CotizacionController extends Controller
                 //Itera todas las referencias de vehiculos
                 foreach($arrayeventoeleventa as $ep=>$det)
                 {
-                    DB::select('exec usp_Cotizacion_SetDetalleCotizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                [
-                                                    $request->nIdCabeCoti,
-                                                    $det['flagTipoItem'],
-                                                    0,
-                                                    0,
-                                                    $det['codigoEV'],
-                                                    'S',
-                                                    $det['codigoEEV'],
-                                                    'N',
-                                                    $det['nidmoneda'],
-                                                    $det['cantidad'],
-                                                    $det['preciofinal'],
-                                                    $det['dscto'],
-                                                    $det['preciofinal'],
-                                                    Auth::user()->id
-                                                ]);
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdCabeCoti,
+                                                                        $det['flagTipoItem'],
+                                                                        0,
+                                                                        0,
+                                                                        $det['codigoEV'],
+                                                                        'S',
+                                                                        $det['codigoEEV'],
+                                                                        'N',
+                                                                        $det['nidmoneda'],
+                                                                        $det['cantidad'],
+                                                                        $det['preciofinal'],
+                                                                        $det['dscto'],
+                                                                        $det['preciofinal'],
+                                                                        Auth::user()->id
+                                                                    ]);
                 }
             }
             DB::commit();
@@ -175,9 +171,8 @@ class CotizacionController extends Controller
         $nidcodigo      = $request->nidcodigo;
         $tipo           = $request->tipo;
 
-        $arrayEventoCampania = DB::select('exec usp_Cotizacion_GetListCampañasByVehiculo ?, ?, ?, ?',
-                                                                        [
-                                                                            $nidproveedor,
+        $arrayEventoCampania = DB::select('exec [usp_Cotizacion_GetListCampañasByVehiculo] ?, ?, ?, ?',
+                                                                        [   $nidproveedor,
                                                                             $fecha,
                                                                             $nidcodigo,
                                                                             $tipo
@@ -193,9 +188,8 @@ class CotizacionController extends Controller
         $fecha              = $request->fecha;
         $nideventocampania  = $request->nideventocampania;
 
-        $arrayEventoEleVenta = DB::select('exec usp_Cotizacion_GetListEventoElementoVenta ?, ?',
-                                                                        [
-                                                                            $fecha,
+        $arrayEventoEleVenta = DB::select('exec [usp_Cotizacion_GetListEventoElementoVenta] ?, ?',
+                                                                        [   $fecha,
                                                                             $nideventocampania
                                                                         ]);
 
@@ -212,8 +206,8 @@ class CotizacionController extends Controller
         $nIdModelo = $request->nidmodelo;
         $nIdEstadoCotizacion = $request->nidestadocotizacion;
 
-        $arrayCotizaciones = DB::select('exec usp_Cotizacion_GetListCotizacionesByIdVendedor ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            array(  $nIdEmpresa,
+        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
@@ -221,7 +215,7 @@ class CotizacionController extends Controller
                                                                     $nIdModelo,
                                                                     $nIdEstadoCotizacion,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
 
         $arrayCotizaciones = ParametroController::arrayPaginator($arrayCotizaciones, $request);
         return ['arrayCotizaciones'=>$arrayCotizaciones];
@@ -235,12 +229,12 @@ class CotizacionController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $nIdContacto = $request->nidcontacto;
 
-        $arraySegReferenciavehiculo = DB::select('exec usp_Cotizacion_GetRefVehiculoByContacto ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
+        $arraySegReferenciavehiculo = DB::select('exec [usp_Cotizacion_GetRefVehiculoByContacto] ?, ?, ?, ?',
+                                                                            [   $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $nIdContacto,
                                                                                 Auth::user()->id
-                                                                                ));
+                                                                            ]);
 
         $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];

@@ -28,16 +28,16 @@ class CompraController extends Controller
         $nIdModelo  = $request->nidmodelo;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayCompra = DB::select('exec usp_Compra_GetCompra ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            array(  $nIdEmpresa,
-                                                                    $nIdSucursal,
-                                                                    $dFechaInicio,
-                                                                    $dFechaFin,
-                                                                    $nOrdenCompra,
-                                                                    $cNumeroVin,
-                                                                    $nIdMarca,
-                                                                    $nIdModelo
-                                                                    ));
+        $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
+                                                                $nOrdenCompra,
+                                                                $cNumeroVin,
+                                                                $nIdMarca,
+                                                                $nIdModelo
+                                                            ]);
 
         $arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
@@ -68,8 +68,8 @@ class CompraController extends Controller
                 $fTotalCompra = str_replace(",", "", $fTotalCompra);
                 //echo $fTotalCompra. " ";
 
-                $objCompra = DB::select('exec usp_Compra_SetCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            array($request->nIdEmpresa,
+                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdCronograma,
                                                                 $request->nIdProveedor,
@@ -91,7 +91,7 @@ class CompraController extends Controller
                                                                 $det['cNumeroFactura'],
                                                                 $det['dFechaFacturado'],
                                                                 Auth::user()->id
-                                                            ));
+                                                            ]);
                 if($objCompra[0]->nFlagMsje == 0){
                     array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
                 }    
@@ -123,12 +123,12 @@ class CompraController extends Controller
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
         $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
 
-        $arrayVersionVehiculo = DB::select('exec usp_Compra_GetVehiculosSinWOperativo ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
-                                                                                $nIdSucursal,
-                                                                                $cNumeroVin,
-                                                                                $cNombreComercial
-                                                                                ));
+        $arrayVersionVehiculo = DB::select('exec [usp_Compra_GetVehiculosSinWOperativo] ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $cNumeroVin,
+                                                                            $cNombreComercial
+                                                                        ]);
 
         $arrayVersionVehiculo = ParametroController::arrayPaginator($arrayVersionVehiculo, $request);
         return ['arrayVersionVehiculo'=>$arrayVersionVehiculo];
@@ -145,12 +145,12 @@ class CompraController extends Controller
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
         $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
 
-        $arrayVersionVehiculo = DB::select('exec usp_Compra_GetVehiculosSinWFinanciero ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
-                                                                                $nIdSucursal,
-                                                                                $cNumeroVin,
-                                                                                $cNombreComercial
-                                                                                ));
+        $arrayVersionVehiculo = DB::select('exec [usp_Compra_GetVehiculosSinWFinanciero] ?, ?, ?, ?',
+                                                                        [   $nIdEmpresa,
+                                                                            $nIdSucursal,
+                                                                            $cNumeroVin,
+                                                                            $cNombreComercial
+                                                                        ]);
 
         $arrayVersionVehiculo = ParametroController::arrayPaginator($arrayVersionVehiculo, $request);
         return ['arrayVersionVehiculo'=>$arrayVersionVehiculo];
@@ -160,9 +160,9 @@ class CompraController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCompra = DB::select('exec usp_Compra_DesactivaById ?',
-                                                            array(  $request->nIdCompra
-                                                                    ));
+        $arrayCompra = DB::select('exec [usp_Compra_DesactivaById] ?',
+                                                [   $request->nIdCompra
+                                                ]);
         return response()->json($arrayCompra);
     }
 
@@ -175,9 +175,8 @@ class CompraController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_Compra_SetForum ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [
-                                                                $det['cNombreModelo'],
+                DB::select('exec [usp_Compra_SetForum] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cNombreModelo'],
                                                                 $det['cNumeroVin'],
                                                                 $det['cNumeroMotor'],
                                                                 $det['cNombreColor'],
@@ -200,16 +199,16 @@ class CompraController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $compra = DB::select('exec usp_Compra_UpdCompraById ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdProveedor,
-                                                                    $request->nIdCompra,
-                                                                    $request->cNumeroVin,
-                                                                    $request->cNumeroMotor,
-                                                                    $request->cNumeroDua,
-                                                                    $request->cNombreColor,
-                                                                    Auth::user()->id
-                                                                    ));
+        $compra = DB::select('exec [usp_Compra_UpdCompraById] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                        [   $request->nIdEmpresa,
+                                                            $request->nIdProveedor,
+                                                            $request->nIdCompra,
+                                                            $request->cNumeroVin,
+                                                            $request->cNumeroMotor,
+                                                            $request->cNumeroDua,
+                                                            $request->cNombreColor,
+                                                            Auth::user()->id
+                                                        ]);
         return response()->json($compra);
     }
 
@@ -227,9 +226,8 @@ class CompraController extends Controller
         $nIdModelo  = $request->nidmodelo;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayLineaCredito = DB::select('exec usp_Compra_GetLstCompraNoLineaCredito ?, ?, ?, ?, ?, ?, ?, ?',
-                                                                [       
-                                                                    $nIdEmpresa,
+        $arrayLineaCredito = DB::select('exec [usp_Compra_GetLstCompraNoLineaCredito] ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
@@ -253,13 +251,13 @@ class CompraController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec usp_Compra_UpdCompraLineaCreditoById ?, ?, ?, ?, ?',
-                                                            array($request->nIdEmpresa,
+                $objCompra = DB::select('exec [usp_Compra_UpdCompraLineaCreditoById] ?, ?, ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $det['nIdCompra'],
                                                                 $det['cNumeroVin'],
                                                                 Auth::user()->id
-                                                            ));             
+                                                            ]);             
             }
             //return response()->json($data);
             DB::commit();

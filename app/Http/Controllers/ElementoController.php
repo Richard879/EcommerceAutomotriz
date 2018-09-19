@@ -20,8 +20,11 @@ class ElementoController extends Controller
 
         $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = ' ') : $cElemenNombre;
                 
-        $arrayElementoVenta = DB::select('exec usp_Elemen_GetElementoByTipo ?, ?, ?', 
-                                                                    [$nIdEmpresa, $nIdTipoElemento, $cElemenNombre]);
+        $arrayElementoVenta = DB::select('exec [usp_Elemen_GetElementoByTipo] ?, ?, ?', 
+                                                                [   $nIdEmpresa, 
+                                                                    $nIdTipoElemento, 
+                                                                    $cElemenNombre
+                                                                ]);
 
         $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
@@ -43,17 +46,17 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_Elemen_SetElemento ?, ?, ? ,? ,?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdProveedor,
-                                                                    $request->nIdTipoElemento, 
-                                                                    $request->nIdMoneda,
-                                                                    $request->cElemenNombre,
-                                                                    $request->fElemenValorVenta,
-                                                                    $request->fElemenValorMinimoVenta,
-                                                                    $request->cCodigoERP,
-                                                                    Auth::user()->id
-                                                                    ));
+        $element = DB::select('exec [usp_Elemen_SetElemento] ?, ?, ? ,? ,?, ?, ?, ?, ?', 
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdProveedor,
+                                                                $request->nIdTipoElemento, 
+                                                                $request->nIdMoneda,
+                                                                $request->cElemenNombre,
+                                                                $request->fElemenValorVenta,
+                                                                $request->fElemenValorMinimoVenta,
+                                                                $request->cCodigoERP,
+                                                                Auth::user()->id
+                                                            ]);
         return response()->json($element);         
     }
 
@@ -61,9 +64,9 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec usp_Element_DesactivaById ?', 
-                                                            array(  $request->nIdElementoVenta
-                                                                    ));
+        $elementoVenta = DB::select('exec [usp_Element_DesactivaById] ?', 
+                                                    [   $request->nIdElementoVenta
+                                                    ]);
         return response()->json($elementoVenta);   
     }
 
@@ -71,9 +74,9 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec usp_Element_ActivaById ?', 
-                                                            array(  $request->nIdElementoVenta
-                                                                    ));
+        $elementoVenta = DB::select('exec [usp_Element_ActivaById] ?', 
+                                                        [   $request->nIdElementoVenta
+                                                        ]);
         return response()->json($elementoVenta);   
     }
     
@@ -81,18 +84,18 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_Elemen_UpdElementoById ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdProveedor,
-                                                                    $request->nIdElementoVenta,
-                                                                    $request->nIdTipoElemento, 
-                                                                    $request->nIdMoneda,
-                                                                    $request->cElemenNombre,
-                                                                    $request->fElemenValorVenta,
-                                                                    $request->fElemenValorMinimoVenta,
-                                                                    $request->cCodigoERP,
-                                                                    Auth::user()->id
-                                                                    ));
+        $element = DB::select('exec [usp_Elemen_UpdElementoById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdProveedor,
+                                                                $request->nIdElementoVenta,
+                                                                $request->nIdTipoElemento, 
+                                                                $request->nIdMoneda,
+                                                                $request->cElemenNombre,
+                                                                $request->fElemenValorVenta,
+                                                                $request->fElemenValorMinimoVenta,
+                                                                $request->cCodigoERP,
+                                                                Auth::user()->id
+                                                            ]);
         return response()->json($element);         
     }
 }
