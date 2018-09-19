@@ -39,7 +39,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Nombre</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillPunto.cnombre" class="form-control form-control-sm">
+                                                    <input type="text" v-model="fillPunto.cnombre" @keyup.enter="listarPuntoInspeccion(1)" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -655,7 +655,7 @@
                         swal('Punto Inspección Actualizado');
                         //this.limpiarFormulario();
                         this.vistaFormulario = 1;
-                        this.listarPuntoInspeccion();
+                        this.listarPuntoInspeccion(1);
                     }
                     else{
                         swal('Ya existe Punto Inspección');
@@ -684,7 +684,7 @@
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
                                 this.formPunto.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
                                 this.formPunto.cnombre = data['cNombrePuntoInspeccion'];
-                                this.formPunto.nidflagmovimiento = data['nFlagTipoMovimiento'];
+                                this.formPunto.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
                                 this.formPunto.nidflagingreso = data['nFlagIngresoSucursal'];
                                 this.formPunto.nidflagsalida = data['nFlagSalidaSucursal'];
                                 break;
@@ -721,13 +721,11 @@
                 }
             },
             limpiarFormulario(){
-                this.formPunto.nidtipoinspeccion= 0,
+                this.formPunto.nidpuntoinspeccion= 0,
                 this.formPunto.cnombre= '',
-                this.formPunto.nflagalmacen=  0,
-                this.formPunto.nflagaccesorio= 0,
-                this.formPunto.nflagtestdrive= 0,
-                this.formPunto.nflagseccion= 0,
-                this.formPunto.nflagfichatecnica= 0
+                this.formPunto.nidflagmovimiento= '',
+                this.formPunto.nidflagingreso=  0,
+                this.formPunto.nidflagsalida= 0
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;
