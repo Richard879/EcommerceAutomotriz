@@ -49,9 +49,9 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_PuntoInspeccion_DesactivaById ?', 
-                                                            array(  $request->nIdPuntoInspeccion
-                                                                    ));
+        $objTpoInspecion = DB::select('exec [usp_PuntoInspeccion_DesactivaById] ?', 
+                                                    [   $request->nIdPuntoInspeccion
+                                                    ]);
         return response()->json($objTpoInspecion);   
     }
 
@@ -59,9 +59,9 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_PuntoInspeccion_ActivaById ?', 
-                                                            array(  $request->nIdPuntoInspeccion
-                                                                    ));
+        $objTpoInspecion = DB::select('exec [usp_PuntoInspeccion_ActivaById] ?', 
+                                                        [   $request->nIdPuntoInspeccion
+                                                        ]);
         return response()->json($objTpoInspecion);   
     }
     
