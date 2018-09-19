@@ -18,11 +18,11 @@ class ListaPrecioVersionVehController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $nIdProveedor = $request->nidproveedor;
         
-        $arrayListaPrecioVh = DB::select('exec usp_ListaPrecioVh_GetListaPrecio ?, ?, ?', 
-                                                            array(  $nIdEmpresa,
-                                                                    $nIdSucursal,
-                                                                    $nIdProveedor
-                                                                    ));
+        $arrayListaPrecioVh = DB::select('exec [usp_ListaPrecioVh_GetListaPrecio] ?, ?, ?', 
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdProveedor
+                                                            ]);
         
         $arrayListaPrecioVh = ParametroController::arrayPaginator($arrayListaPrecioVh, $request);
         return ['arrayListaPrecioVh'=>$arrayListaPrecioVh]; 
@@ -34,9 +34,9 @@ class ListaPrecioVersionVehController extends Controller
 
         $nIdListaPrecioVersionVeh = $request->nidlistaprecioversionveh;
         
-        $arrayListaPrecioVhDet = DB::select('exec usp_ListaPrecioVh_GetDetalleById ?', 
-                                                            array(  $nIdListaPrecioVersionVeh
-                                                                    ));
+        $arrayListaPrecioVhDet = DB::select('exec [usp_ListaPrecioVh_GetDetalleById] ?', 
+                                                        [   $nIdListaPrecioVersionVeh
+                                                        ]);
         
         $arrayListaPrecioVhDet = ParametroController::arrayPaginator($arrayListaPrecioVhDet, $request);
         return ['arrayListaPrecioVhDet'=>$arrayListaPrecioVhDet]; 
@@ -46,16 +46,16 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
  
-        $versionvehiculo = DB::select('exec usp_ListaPrecioVh_SetListaPrecio ?, ?, ? ,? , ?, ?, ?',
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdSucursal,
-                                                                    $request->nIdProveedor,
-                                                                    $request->nIdCronograma,
-                                                                    $request->nNroListaPrecio,
-                                                                    $request->dFechaInicio,
-                                                                    $request->nIdTipoLista,
-                                                                    Auth::user()->id
-                                                                    ));
+        $versionvehiculo = DB::select('exec [usp_ListaPrecioVh_SetListaPrecio] ?, ?, ? ,? , ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $request->nIdProveedor,
+                                                                $request->nIdCronograma,
+                                                                $request->nNroListaPrecio,
+                                                                $request->dFechaInicio,
+                                                                $request->nIdTipoLista,
+                                                                Auth::user()->id
+                                                            ]);
         return response()->json($versionvehiculo);          
     }
 
@@ -70,9 +70,8 @@ class ListaPrecioVersionVehController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                //
-                DB::select('exec usp_ListaPrecioVh_SetDetalle ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdListaPrecioVersionVeh,
+                DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                            [   $request->nIdListaPrecioVersionVeh,
                                                                 $det['nIdVersionVeh'],
                                                                 $det['cNombreComercial'],
                                                                 $det['nAnioFabricacion'],
@@ -93,7 +92,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['fPrecioBonoDealer'],   
                                                                 $det['fBonoEspecial'],
                                                                 Auth::user()->id
-                                                            ));
+                                                            ]);
             }    
             DB::commit(); 
         } catch (Exception $e){
@@ -105,9 +104,9 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $listapreciovh = DB::select('exec usp_ListaPrecioVh_DesactivaById ?', 
-                                                            array(  $request->nIdListaPrecioVersionVeh
-                                                                    ));
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaById] ?', 
+                                                [  $request->nIdListaPrecioVersionVeh
+                                                ]);
         return response()->json($listapreciovh);   
     }
 
@@ -115,11 +114,11 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $listapreciovh = DB::select('exec usp_ListaPrecioVh_ActivaById ?, ?, ?', 
-                                                            array(  $request->nIdListaPrecioVersionVeh,
-                                                                    $request->nIdProveedor,
-                                                                    $request->nIdTipoLista
-                                                                    ));
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_ActivaById] ?, ?, ?', 
+                                                    [   $request->nIdListaPrecioVersionVeh,
+                                                        $request->nIdProveedor,
+                                                        $request->nIdTipoLista
+                                                    ]);
         return response()->json($listapreciovh);   
     }
 }
