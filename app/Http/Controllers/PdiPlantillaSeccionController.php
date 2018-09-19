@@ -46,20 +46,20 @@ class PdiPlantillaSeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_DesactivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
-        return response()->json($objTpoInspecion);   
+        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_DesactivaById] ?', 
+                                                            [  $request->nIdPlantillaInspeccionSeccionItem
+                                                            ]);
+        return response()->json($objPlantilla);   
     }
 
     public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_ActivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
-        return response()->json($objTpoInspecion);   
+        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_ActivaById] ?', 
+                                                            [   $request->nIdPlantillaInspeccionSeccionItem
+                                                            ]);
+        return response()->json($objPlantilla);   
     }
     
     public function UpdTipoInspeccionById(Request $request)
@@ -88,8 +88,10 @@ class PdiPlantillaSeccionController extends Controller
 
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
 
-        $parametro = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ? ', 
-                                                                        [$nIdEmpresa, $cNombreTipoInspeccion]);
+        $parametro = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ? ', 
+                                                                        [   $nIdEmpresa, 
+                                                                            $cNombreTipoInspeccion
+                                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
