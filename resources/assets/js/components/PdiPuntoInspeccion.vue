@@ -393,6 +393,11 @@
                 arrayPuntoInspeccion: [],
                 arrayFlag: [],
                 arrayTipoMovimiento: [],
+                fillItem:{
+                    niditem: 0,
+                    citemnombre: ''
+                },
+                arrayItem: [],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -401,11 +406,6 @@
                     'from': 0,
                     'to': 0,
                 },
-                fillItem:{
-                    niditem: 0,
-                    citemnombre: ''
-                },
-                arrayItem: [],
                 paginationModal: {
                     'total' : 0,
                     'current_page' : 0,
