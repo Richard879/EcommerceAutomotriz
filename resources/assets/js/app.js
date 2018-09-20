@@ -40,6 +40,7 @@ Vue.component('pditipoinspeccion', require('./components/pditipoinspeccion.vue')
 Vue.component('pdiplantilla', require('./components/PdiPlantillaInspeccion.vue'));
 Vue.component('pdipuntoinspeccion', require('./components/PdiPuntoInspeccion.vue'));
 Vue.component('pdiprocesoinspeccion', require('./components/PdiProcesoInspeccion.vue'));
+Vue.component('permisos', require('./components/AdmPermisos.vue'));
 
 const app = new Vue({
     el: '#app',

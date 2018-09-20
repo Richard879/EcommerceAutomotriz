@@ -1,5 +1,8 @@
 @extends('principal')
 @section('contenido')
+    <template v-if="menu==100101">
+        <permisos :ruta="ruta"></permisos>
+    </template>
     <template v-if="menu==0">
         <dashBoard></dashBoard>
     </template>
