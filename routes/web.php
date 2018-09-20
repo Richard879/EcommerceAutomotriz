@@ -129,6 +129,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/puntoinspeccion/UpdPuntoInspeccionById', 'PdiPuntoInspeccionController@UpdPuntoInspeccionById');
     Route::put('/puntoinspeccion/activar', 'PdiPuntoInspeccionController@activar');
     Route::put('/puntoinspeccion/desactivar', 'PdiPuntoInspeccionController@desactivar');
+    Route::get('/puga/GetListPermisosByUser', 'PerUsuGruAccController@GetListPermisosByUser');
 
 
 

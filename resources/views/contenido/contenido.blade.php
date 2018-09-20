@@ -1,7 +1,7 @@
 @extends('principal')
 @section('contenido')
     <template v-if="menu==0">
-        <dashBoard>DashBoard</dashBoard>
+        <dashBoard></dashBoard>
     </template>
     <template v-if="menu==200101">
         <elementoventa :ruta="ruta"></elementoventa>

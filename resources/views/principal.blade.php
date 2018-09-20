@@ -175,7 +175,7 @@
         </header>
         <div class="page-content d-flex align-items-stretch">
             <!-- Side Navbar -->
-            @include('template.sidebar')
+            @include('menu.menu')
             <div class="content-inner">
                 <!-- Contenido Principal -->
                 @yield('contenido')
