@@ -202,5 +202,6 @@
     <script src="js/app.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plantilla.js"></script>
+    <script src="js/treeview.js"></script>
 </body>
 </html>

@@ -20,6 +20,8 @@ mix.styles([
     'resources/assets/template/css/elementui.css',
     'resources/assets/template/css/custom.css',
     'resources/assets/template/css/simple-line-icons.min.css',
+    'resources/assets/template/css/treeview.css',
+    'resources/assets/template/css/jstreeview.css',
     'resources/assets/template/css/styleprogress.css'
 ], 'public/css/plantilla.css')
 .scripts([
@@ -35,6 +37,7 @@ mix.styles([
     'resources/assets/template/js/toastr.js',
     'resources/assets/template/js/sweetalert2.js',
     'resources/assets/template/js/moment.min.js',
+    'resources/assets/template/js/treeview.js'
 ], 'public/js/plantilla.js')
 .js('resources/assets/js/app.js', 'public/js/app.js')
 /*.copyDirectory([

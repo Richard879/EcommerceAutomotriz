@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">ELEMENTO VENTA</h2>
+            <h2 class="no-margin-bottom">Administración de Permisos</h2>
           </div>
         </header>
 
@@ -54,7 +54,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
+                                <h3 class="h4">LISTADO USUARIOS</h3>
                             </div>
                             <div class="card-body">
                                 <template v-if="arrayUsuarios.length">
@@ -74,7 +74,7 @@
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                              <div slot="content">Ver Permisos {{ usuario.cNombreUsuario }}</div>
-                                                             <i @click="abrirFormulario('usuario','permisos', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                             <i @click="abrirFormulario('usuario','permisos', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                         </el-tooltip>&nbsp;
                                                     </td>
                                                 </tr>
@@ -126,113 +126,27 @@
         <template v-else>
             <section class="forms">
                 <div class="container-fluid">
-                    <!--<div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="h4" v-text="tituloFormulario"></h3>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Elemento</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayTipoElemento"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formEle.nidmoneda" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="tpomoneda in arrayTipoMoneda"
-                                                        :key="tpomoneda.nIdPar"
-                                                        :label="tpomoneda.cParNombre"
-                                                        :value="tpomoneda.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="formEle.celenombre" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Código ERP</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="formEle.celecodigoerp" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Valor Venta</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" v-model="formEle.felevalorventa" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Valor Mínimo Venta</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" v-model="formEle.felevarlorminventa" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div id="lsttreegrupo">
+                                        <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
+                                            <li>{{ permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
+                                                <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
+                                                    <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
+                                                    {{ subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
-                                            <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                            <button type="button" v-if="accion==2" class="btn btn-success btn-corner btn-sm" @click="seleccionaPermisos()">
                                                 <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
-                                                <i class="fa fa-save"></i> Actualizar
                                             </button>
                                             <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
                                                 <i class="fa fa-close"></i> Cancelar
@@ -242,7 +156,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </section>
         </template>
@@ -377,17 +291,14 @@
             return {
                 cempresa: 'SAISAC',
                 arrayUsuarios: [],
-                formEle:{
-                    nidproveedor: 0,
-                    cproveedornombre: '',
-                    ntpoelemen: 0,
-                    nidmoneda: 0,
-                    nidelemento: 0,
-                    celenombre: '',
-                    celecodigoerp: '',
-                    felevalorventa: '',
-                    felevarlorminventa: '',
-                    celementonombre: ''
+                arrayPermisos: [],
+                arraySubPermisos: [],
+                arrayCheckPermisos: [],
+                arrayCheckSubPermisos: [],
+                arrayRegistraPermisos: [],
+                formPuga:{
+                    nidusuario: 0,
+                    cnombreclase: 'treeview'
                 },
                 pagination: {
                     'total': 0,
@@ -493,45 +404,69 @@
                 this.pagination.current_page=page;
                 this.listarUsuarios(page);
             },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formEle.nidproveedor = nProveedorId;
-                this.formEle.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-            },
-            listarElementos(page){
+            listarPermisos(nlenjerarquia){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/elemento/GetElementoByTipo';
+                var url = this.ruta + '/puga/GetListPermisosByUsuario';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidtipoelemen': this.formEle.ntpoelemen,
-                        'celementonombre': this.formEle.celementonombre,
-                        'page': page
+                        'nidusuario': this.formPuga.nidusuario,
+                        'nlenjerarquia': nlenjerarquia
                     }
                 }).then(response => {
-                    this.arrayElementoVenta = response.data.arrayElementoVenta.data;
-                    this.pagination.current_page =  response.data.arrayElementoVenta.current_page;
-                    this.pagination.total = response.data.arrayElementoVenta.total;
-                    this.pagination.per_page    = response.data.arrayElementoVenta.per_page;
-                    this.pagination.last_page   = response.data.arrayElementoVenta.last_page;
-                    this.pagination.from        = response.data.arrayElementoVenta.from;
-                    this.pagination.to           = response.data.arrayElementoVenta.to;
+                    this.arrayPermisos = response.data.arrayPermisos.data;
+                    this.listarSubPermisos(6);
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
                 });
             },
-            registrar(){
-                if(this.validar()){
+            listarSubPermisos(nlenjerarquia){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/puga/GetListPermisosByUsuario';
+
+                axios.get(url, {
+                    params: {
+                        'nidusuario': this.formPuga.nidusuario,
+                        'nlenjerarquia': nlenjerarquia
+                    }
+                }).then(response => {
+                    this.arraySubPermisos = response.data.arrayPermisos.data;
+                    jQuery(function ($) {
+                                    $("#lsttreegrupo").treeview();
+                                });
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            seleccionaPermisos(){
+                let me = this;
+
+                me.arrayPermisos.map(function(value, key) {
+                    if(me.arrayCheckPermisos[key] == true)
+                    {
+                        me.arrayRegistraPermisos.push({
+                                nIdUsuario: value.nIdUsuario,
+                                nIdPar: value.nIdPar
+                        });
+                    }
+                });
+
+                this.registrarPermisos();
+            },
+            registrarPermisos(){
+                /*if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }
+                }*/
 
-                var url = this.ruta + '/elemento/SetElemento';
+                var url = this.ruta + '/puga/SetPermisosByUsuario';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdProveedor: parseInt(this.formEle.nidproveedor),
@@ -696,15 +631,13 @@
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'elemento':
+                    case 'usuario':
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 1;
-                                this.llenarComboTpoElemento();
-                                this.llenarComboTpoMoneda();
                                 this.tituloFormulario = 'NUEVO ELEMENTO VENTA';
                                 this.limpiarFormulario();
                                 break;
@@ -713,18 +646,9 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
-                                this.llenarComboTpoElemento();
-                                this.llenarComboTpoMoneda();
-                                this.tituloFormulario = 'ACTUALIZAR ELEMENTO VENTA';
-                                this.formEle.nidelemento = data['nIdElemento'];
-                                this.formEle.ntpoelemen = data['nIdTipoElemento'];
-                                this.formEle.nidproveedor  = data['nIdProveedor'];
-                                this.formEle.cproveedornombre = data['cProveedorNombre'];
-                                this.formEle.nidmoneda = data['nIdMoneda'];
-                                this.formEle.celenombre = data['cElemenNombre'];
-                                this.formEle.celecodigoerp = data['cCodigoERP'];
-                                this.formEle.felevalorventa = data['fElemenValorVenta'];
-                                this.formEle.felevarlorminventa = data['fElemenValorMinimoVenta'];
+                                this.tituloFormulario = 'PERMISOS';
+                                this.formPuga.nidusuario = data['nIdUsuario'];
+                                this.listarPermisos(4);
                                 break;
                             }
                         }

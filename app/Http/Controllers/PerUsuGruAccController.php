@@ -25,4 +25,30 @@ class PerUsuGruAccController extends Controller
         $arrayMenu = ParametroController::arrayPaginator($arrayMenu, $request);
         return ['arrayMenu'=>$arrayMenu];
     }
+
+    public function GetLstUsuarios(Request $request)
+    { 
+        $nIdEmpresa = $request->nidempresa;
+
+        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios] ?', 
+                                                        [   $nIdEmpresa
+                                                        ]);
+
+        $arrayUsuarios = ParametroController::arrayPaginator($arrayUsuarios, $request);
+        return ['arrayUsuarios'=>$arrayUsuarios];
+    }
+
+    public function GetListPermisosByUsuario(Request $request)
+    { 
+        $nIdUsuario = $request->nidusuario;
+        $nLenJeraquia = $request->nlenjerarquia;
+
+        $arrayPermisos = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?', 
+                                                        [   $nIdUsuario,
+                                                            $nLenJeraquia
+                                                        ]);
+
+        $arrayPermisos = ParametroController::arrayPaginator($arrayPermisos, $request);
+        return ['arrayPermisos'=>$arrayPermisos];
+    }
 }
