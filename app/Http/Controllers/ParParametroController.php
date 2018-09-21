@@ -14,7 +14,10 @@ class ParParametroController extends Controller
         $nIdGrupoPar = $request->nidgrupopar;
         $variable   = $request->opcion;
 
-        $parparametro = DB::select('exec usp_ParParametro_GetBancosByEmpresa ?, ?', [$nIdEmpresa, $nIdGrupoPar]);
+        $parparametro = DB::select('exec [usp_ParParametro_GetBancosByEmpresa] ?, ?', 
+                                                                        [   $nIdEmpresa, 
+                                                                            $nIdGrupoPar
+                                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -38,7 +41,11 @@ class ParParametroController extends Controller
         $nParDstCodigo = $request->npardstcodigo;
         $variable   = $request->opcion;
 
-        $parparametro = DB::select('exec usp_ParParametro_GetParParametro ?, ?, ?', [$nParSrcCodigo, $nParSrcGrupoParametro, $nParDstCodigo]);
+        $parparametro = DB::select('exec [usp_ParParametro_GetParParametro] ?, ?, ?', 
+                                                                [   $nParSrcCodigo, 
+                                                                    $nParSrcGrupoParametro, 
+                                                                    $nParDstCodigo
+                                                                ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [

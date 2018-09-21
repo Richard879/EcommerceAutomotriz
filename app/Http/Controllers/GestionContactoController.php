@@ -9,30 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class GestionContactoController extends Controller
 {
-    //Acciones nuevo contacto
     public function SetContactoPerNatural(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec usp_Contacto_SetPerNaturalContacto ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                array(  $request->nIdTipoDocumento,
-                                                        $request->cNumeroDocumento,
-                                                        $request->cNombre,
-                                                        $request->cApellidoPaterno,
-                                                        $request->cApellidoMaterno,
-                                                        $request->cUbigeo,
-                                                        $request->cDireccion,
-                                                        $request->cEmail,
-                                                        $request->cEmailAlternativo,
-                                                        $request->dFechaNacimiento,
-                                                        $request->nIdEstadoCivil,
-                                                        $request->cTelefonoFijo,
-                                                        $request->nTelefonoMovil,
-                                                        $request->nTelefonoMovilAlternativo,
-                                                        $request->cCentroLaboral,
-                                                        $request->nIdProfesion,
-                                                        Auth::user()->id
-                                                        ));
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPerNaturalContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $request->nIdTipoDocumento,
+                                                                $request->cNumeroDocumento,
+                                                                $request->cNombre,
+                                                                $request->cApellidoPaterno,
+                                                                $request->cApellidoMaterno,
+                                                                $request->cUbigeo,
+                                                                $request->cDireccion,
+                                                                $request->cEmail,
+                                                                $request->cEmailAlternativo,
+                                                                $request->dFechaNacimiento,
+                                                                $request->nIdEstadoCivil,
+                                                                $request->cTelefonoFijo,
+                                                                $request->nTelefonoMovil,
+                                                                $request->nTelefonoMovilAlternativo,
+                                                                $request->cCentroLaboral,
+                                                                $request->nIdProfesion,
+                                                                Auth::user()->id
+                                                            ]);
 
         return response()->json($arrayContacto);
     }
@@ -41,26 +40,26 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec usp_Contacto_SetPerJuridicaContacto ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                    array(  $request->cRuc,
-                                            $request->cRazonSocial,
-                                            $request->cUbigeo,
-                                            $request->cDireccion,
-                                            $request->cEmail,
-                                            $request->cEmailAlternativo,
-                                            $request->cTelefonoFijo,
-                                            $request->nTelefonoMovil,
-                                            $request->nTelefonoMovilAlternativo,
-                                            //Datos Contacto
-                                            $request->nIdTipoDocumentoContacto,
-                                            $request->cNumeroDocumentoContacto,
-                                            $request->cNombreContacto,
-                                            $request->cApellidoPaternoContacto,
-                                            $request->cApellidoMaternoContacto,
-                                            $request->cEmailPrincipalContacto,
-                                            $request->cTelefonoMovilContacto,
-                                            Auth::user()->id
-                                        ));
+        $arrayContacto = DB::select('exec [usp_Contacto_SetPerJuridicaContacto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $request->cRuc,
+                                                                    $request->cRazonSocial,
+                                                                    $request->cUbigeo,
+                                                                    $request->cDireccion,
+                                                                    $request->cEmail,
+                                                                    $request->cEmailAlternativo,
+                                                                    $request->cTelefonoFijo,
+                                                                    $request->nTelefonoMovil,
+                                                                    $request->nTelefonoMovilAlternativo,
+                                                                    //Datos Contacto
+                                                                    $request->nIdTipoDocumentoContacto,
+                                                                    $request->cNumeroDocumentoContacto,
+                                                                    $request->cNombreContacto,
+                                                                    $request->cApellidoPaternoContacto,
+                                                                    $request->cApellidoMaternoContacto,
+                                                                    $request->cEmailPrincipalContacto,
+                                                                    $request->cTelefonoMovilContacto,
+                                                                    Auth::user()->id
+                                                                ]);
 
         return response()->json($arrayContacto);
     }
@@ -72,23 +71,21 @@ class GestionContactoController extends Controller
         try{
             DB::beginTransaction();
             $detalles = $request->data;
-            //Itera todas las referencias de vehiculos
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_Contacto_SetReferenciaVehiculo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                        array(
-                                                            $request->nIdEmpresa,
-                                                            $request->nIdSucursal,
-                                                            $request->nIdCronograma,
-                                                            $request->nIdContacto,
-                                                            $det['nIdProveedor'],
-                                                            $det['nIdLinea'],
-                                                            $det['nIdMarca'],
-                                                            $det['nIdModelo'],
-                                                            $det['nAnioFabricacion'],
-                                                            $det['nAnioModelo'],
-                                                            Auth::user()->id
-                                                        ));
+                DB::select('exec [usp_Contacto_SetReferenciaVehiculo] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $request->nIdCronograma,
+                                                                $request->nIdContacto,
+                                                                $det['nIdProveedor'],
+                                                                $det['nIdLinea'],
+                                                                $det['nIdMarca'],
+                                                                $det['nIdModelo'],
+                                                                $det['nAnioFabricacion'],
+                                                                $det['nAnioModelo'],
+                                                                Auth::user()->id
+                                                            ]);
             }
             DB::commit();
         } catch (Exception $e){
@@ -100,20 +97,19 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayContacto = DB::select('exec usp_Contacto_SetReferenciaVehiculo ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                    array(
-                                                        $request->nIdEmpresa,
-                                                        $request->nIdSucursal,
-                                                        $request->nIdCronograma,
-                                                        $request->nIdContacto,
-                                                        $request->nIdProveedor,
-                                                        $request->nIdLinea,
-                                                        $request->nIdMarca,
-                                                        $request->nIdModelo,
-                                                        $request->nAnioFabricacion,
-                                                        $request->nAnioModelo,
-                                                        Auth::user()->id
-                                                    ));
+        $arrayContacto = DB::select('exec [usp_Contacto_SetReferenciaVehiculo] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                        [   $request->nIdEmpresa,
+                                                            $request->nIdSucursal,
+                                                            $request->nIdCronograma,
+                                                            $request->nIdContacto,
+                                                            $request->nIdProveedor,
+                                                            $request->nIdLinea,
+                                                            $request->nIdMarca,
+                                                            $request->nIdModelo,
+                                                            $request->nAnioFabricacion,
+                                                            $request->nAnioModelo,
+                                                            Auth::user()->id
+                                                        ]);
         return response()->json($arrayContacto);
     }
 
@@ -131,15 +127,15 @@ class GestionContactoController extends Controller
         $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
-        $arrayContacto = DB::select('exec usp_Contacto_GetListContactoBySinCarteraMes ?, ?, ?, ?, ?, ?, ?',
-                                                                                    array(  $nIdEmpresa,
-                                                                                            $nIdSucursal,
-                                                                                            $nIdCronograma,
-                                                                                            $nTipoPersona,
-                                                                                            $cNroDocumento,
-                                                                                            $cFiltroDescripcion,
-                                                                                            Auth::user()->id
-                                                                                            ));
+        $arrayContacto = DB::select('exec [usp_Contacto_GetListContactoBySinCarteraMes] ?, ?, ?, ?, ?, ?, ?',
+                                                                                [   $nIdEmpresa,
+                                                                                    $nIdSucursal,
+                                                                                    $nIdCronograma,
+                                                                                    $nTipoPersona,
+                                                                                    $cNroDocumento,
+                                                                                    $cFiltroDescripcion,
+                                                                                    Auth::user()->id
+                                                                                ]);
 
         $arrayContacto = ParametroController::arrayPaginator($arrayContacto, $request);
         return ['arrayContacto'=>$arrayContacto];

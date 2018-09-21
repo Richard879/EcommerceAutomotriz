@@ -21,22 +21,15 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Tipo Inspección</label>
+                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayTipoInspeccion"
-                                                        :key="item.nIdTipoInspeccion"
-                                                        :label="item.cNombreTipoInspeccion"
-                                                        :value="item.nIdTipoInspeccion">
-                                                        </el-option>
-                                                    </el-select>
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -44,102 +37,64 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Sección</label>
+                                                <label class="col-sm-4 form-control-label">* Nombre</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidseccion" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arraySeccion"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
+                                                    <input type="text" v-model="fillPunto.cnombre" @keyup.enter="listarPuntoInspeccion(1)" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
-                                            <!--<button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('plantila','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>-->
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPuntoInspeccion(1)"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('puntoinspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="h4">LISTADO ITEMS</h3>
                             </div>
-                            <div class="card-body">
-                                <div class="col-lg-12">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Área</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayFlag"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Agregar Item</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr/>                       
-                                <template v-if="arrayPlantilla.length">
+                            <div class="card-body">                   
+                                <template v-if="arrayPuntoInspeccion.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
                                                     <th>Código</th>
-                                                    <th>Tipo Inspección</th>
-                                                    <th>Sección</th>
-                                                    <th>Área</th>
-                                                    <th>Item Nombre</th>
+                                                    <th>Nombre</th>
+                                                    <th>Tipo Movimiento</th>
+                                                    <th>Ingreso Sucursal</th>
+                                                    <th>Salida Sucursal</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
-                                                    <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
-                                                    <td v-text="plantilla.cNombreTipoInspeccion"></td>
-                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
-                                                    <td v-text="plantilla.cSeccionNombre"></td>
-                                                    <td v-text="plantilla.cItemNombre"></td>
+                                                <tr v-for="punto in arrayPuntoInspeccion" :key="punto.nIdPuntoInspeccion">
+                                                    <td v-text="punto.nIdPuntoInspeccion"></td>
+                                                    <td v-text="punto.cNombrePuntoInspeccion"></td>
+                                                    <td v-text="punto.cFlagTipoMovimiento"></td>
+                                                    <td v-text="punto.cFlagIngresoSucursal"></td>
+                                                    <td v-text="punto.cFlagSalidaSucursal"></td>
                                                     <td>
-                                                        <template v-if="plantilla.cSituacionRegistro=='A'">
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                             <div slot="content">Editar {{ punto.cNombrePuntoInspeccion }}</div>
+                                                             <i @click="abrirFormulario('puntoinspeccion','actualizar', punto)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                        </el-tooltip>&nbsp;
+                                                        <template v-if="punto.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                                <i @click="desactivar(plantilla.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ punto.cNombreTipoInspeccion }}</div>
+                                                                <i @click="desactivar(punto.nIdPuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                                <i @click="activar(plantilla.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ punto.cNombreTipoInspeccion }}</div>
+                                                                <i @click="activar(punto.nIdPuntoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -184,7 +139,7 @@
                                 </template>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </section>
         </template>
@@ -199,6 +154,81 @@
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Ingreso Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPunto.nidflagingreso" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayFlag"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Salida Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPunto.nidflagsalida" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayFlag"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPunto.nidflagmovimiento" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayTipoMovimiento"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Nombre</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="formPunto.cnombre" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
                                             <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
@@ -349,20 +379,25 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                fillTipoInsp:{
+                csucursal: 'CHICLAYO',
+                fillPunto:{
                     cnombre: ''
                 },
-                formPlantilla:{
-                    nidtipoinspeccion: 0,
-                    nidflag: 0,
-                    nidseccion: 0,
+                formPunto:{
+                    nidpuntoinspeccion: 0,
+                    nidflagingreso: 0,
+                    nidflagsalida: 0,
+                    nidflagmovimiento: 0,
+                    cnombre: ''
+                },
+                arrayPuntoInspeccion: [],
+                arrayFlag: [],
+                arrayTipoMovimiento: [],
+                fillItem:{
                     niditem: 0,
                     citemnombre: ''
                 },
-                arrayTipoInspeccion: [],
-                arrayFlag: [],
-                arraySeccion: [],
-                arrayPlantilla: [],
+                arrayItem: [],
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -371,11 +406,6 @@
                     'from': 0,
                     'to': 0,
                 },
-                fillItem:{
-                    niditem: 0,
-                    citemnombre: ''
-                },
-                arrayItem: [],
                 paginationModal: {
                     'total' : 0,
                     'current_page' : 0,
@@ -397,8 +427,7 @@
         },
          mounted(){
             this.llenarComboTipoInspeccion();
-            this.llenarFlag();
-            this.llenarComboSeccion();
+            this.llenarFlag(); 
         },
         computed:{
             isActived: function(){
@@ -454,15 +483,14 @@
         },
         methods:{
             llenarComboTipoInspeccion(){
-                var url = this.ruta + '/tipoinspeccion/GetFillTipoInspeccion';
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'cnombre': '',
+                        'ngrupoparid' : 110084,
                         'opcion' : 0
                     }
                 }).then(response => {
-                    this.arrayTipoInspeccion = response.data;
+                    this.arrayTipoMovimiento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -471,7 +499,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110080,
+                        'ngrupoparid' : 110085,
                         'opcion' : 0
                     }
                 }).then(response => {
@@ -480,85 +508,57 @@
                     console.log(error);
                 });
             },
-            llenarComboSeccion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110081,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arraySeccion = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             //================= BUSQUEDA PLANTILLA =======================
-            buscarPlantilla(){
-                if(this.validarBusqueda()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.listarItemPlantilla(1);
-            },
-            listarItemPlantilla(page){
+            listarPuntoInspeccion(page){
                 this.mostrarProgressBar();
-                var url = this.ruta + '/plantilla/GetListItems';
+                var url = this.ruta + '/puntoinspeccion/GetListPuntoInspeccion';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidtipoinspeccion' : this.formPlantilla.nidtipoinspeccion,
-                        'nidseccion': this.formPlantilla.nidseccion,
+                        'nidempresa': 1300011,
+                        'nidsucursal': 1300013,
+                        'cnombre': this.fillPunto.cnombre,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPlantilla = response.data.arrayPlantilla.data;
-                    this.paginationModal.current_page =  response.data.arrayPlantilla.current_page;
-                    this.paginationModal.total = response.data.arrayPlantilla.total;
-                    this.paginationModal.per_page    = response.data.arrayPlantilla.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPlantilla.last_page;
-                    this.paginationModal.from        = response.data.arrayPlantilla.from;
-                    this.paginationModal.to           = response.data.arrayPlantilla.to;
+                    this.arrayPuntoInspeccion = response.data.arrayPuntoInspeccion.data;
+                    this.paginationModal.current_page =  response.data.arrayPuntoInspeccion.current_page;
+                    this.paginationModal.total = response.data.arrayPuntoInspeccion.total;
+                    this.paginationModal.per_page    = response.data.arrayPuntoInspeccion.per_page;
+                    this.paginationModal.last_page   = response.data.arrayPuntoInspeccion.last_page;
+                    this.paginationModal.from        = response.data.arrayPuntoInspeccion.from;
+                    this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            validarBusqueda(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.formPlantilla.nIdTipoInspeccion == 0){
-                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
                 this.listarTipoInspeccion(page);
             },
             //================= REGISTRO =======================
-            asignarItem(nItemId, cItemNombre){
-                var url = this.ruta + '/plantilla/SetItemPlantilla';
+            registrar(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
 
+                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';    
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
-                    nIdFlag: this.formPlantilla.nidflag,
-                    nIdSeccion: this.formPlantilla.nidseccion,
-                    nIdItem: nItemId,
+                    nIdSucursal: 1300013,
+                    cNombrePuntoInspeccion: this.formPunto.cnombre,
+                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
+                    nFlagIngresoSucursal: this.formPunto.nidflagingreso,
+                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Item Agregado registrada');
                         this.vistaFormulario = 1;
-                        this.listarItemPlantilla();
+                        //this.listarItemPlantilla();
                     }
                     else{
                         swal('Ya existe Item');
@@ -567,52 +567,27 @@
                     console.log(error);
                 });
             },
-            //================= LISTADO ITEMS =======================
-            listarItems(page){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110082,
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayItem = response.data.arrayParametro.data;
-                    this.paginationModal.current_page =  response.data.arrayParametro.current_page;
-                    this.paginationModal.total = response.data.arrayParametro.total;
-                    this.paginationModal.per_page    = response.data.arrayParametro.per_page;
-                    this.paginationModal.last_page   = response.data.arrayParametro.last_page;
-                    this.paginationModal.from        = response.data.arrayParametro.from;
-                    this.paginationModal.to           = response.data.arrayParametro.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaItem(page){
-                this.paginationModal.current_page=page;
-                this.listarItems(page);
-            },
-            registrar(){
-            },
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formPlantilla.nIdTipoInspeccion == 0){
-                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
-                };
-                if(this.formPlantilla.nidseccion == 0){
+                if(!this.formPunto.cnombre){
                     this.mensajeError.push('Debes Seleccionar Sección');
+                };
+                if(this.formPunto.nFlagIngresoSucursal == 0){
+                    this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
+                };
+                if(this.formPunto.nFlagSalidaSucursal == 0){
+                    this.mensajeError.push('Debes Seleccionar Salida Sucursal');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
             },
-            activar(nIdTipoInspeccion){
+            activar(nIdPuntoInspeccion){
                 swal({
-                    title: 'Estas seguro de activar este inspeccion?',
+                    title: 'Estas seguro de activar este Punto Inspección?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -621,15 +596,15 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/tipoinspeccion/activar';
+                        var url = this.ruta + '/puntoinspeccion/activar';
                         axios.put(url , {
-                            nIdTipoInspeccion: nIdTipoInspeccion
+                            nIdPuntoInspeccion: nIdPuntoInspeccion
                         }).then(response => {
                             swal(
                             'Activado!',
                             'El registro fue activado.'
                             );
-                            this.listarTipoInspeccion(1);
+                            this.listarPuntoInspeccion(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -638,9 +613,9 @@
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
-            desactivar(nIdTipoInspeccion){
+            desactivar(nIdPuntoInspeccion){
                 swal({
-                    title: 'Estas seguro de desactivar este inspeccion?',
+                    title: 'Estas seguro de desactivar este Punto Inspección?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -649,15 +624,15 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/tipoinspeccion/desactivar';
+                        var url = this.ruta + '/puntoinspeccion/desactivar';
                         axios.put(url , {
-                            nIdTipoInspeccion: nIdTipoInspeccion
+                            nIdPuntoInspeccion: nIdPuntoInspeccion
                         }).then(response => {
                             swal(
                             'Desactivado!',
                             'El registro fue desactivado.'
                             );
-                            this.listarTipoInspeccion(1);
+                            this.listarPuntoInspeccion(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -666,16 +641,47 @@
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
+            actualizar(){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';            
+                axios.post(url, {
+                    nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: 1300013,
+                    cNombrePuntoInspeccion: this.formPunto.cnombre,
+                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
+                    nFlagIngresoSucursal: this.formPunto.nidflagingreso,
+                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Punto Inspección Actualizado');
+                        //this.limpiarFormulario();
+                        this.vistaFormulario = 1;
+                        this.listarPuntoInspeccion(1);
+                    }
+                    else{
+                        swal('Ya existe Punto Inspección');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
-                    case 'plantila':
+                    case 'puntoinspeccion':
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 1;
-                                this.tituloFormulario = 'NUEVA PLANTILLA DE INSPECCIÓN';
+                                this.tituloFormulario = 'NUEVO PUNTO DE INSPECCIÓN';
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -683,14 +689,12 @@
                             {
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
-                                this.tituloFormulario = 'ACTUALIZAR TIPO DE INSPECCIÓN';
-                                this.formPlantilla.nidtipoinspeccion = data['nIdTipoInspeccion'];
-                                this.formPlantilla.cnombre = data['cNombreTipoInspeccion'];
-                                this.formPlantilla.nflagalmacen = (data['nFlagAlmacen'] == 1 ? true : false);
-                                this.formPlantilla.nflagaccesorio = (data['nFlagAccesorio'] == 1 ? true : false);
-                                this.formPlantilla.nflagtestdrive = (data['nFlagTestDrive'] == 1 ? true : false);
-                                this.formPlantilla.nFlagSeccion = (data['nFlagSeccionInspeccion'] == 1 ? true : false);
-                                this.formPlantilla.nflagfichatecnica = (data['nFlagValidarFichaTecnica'] == 1 ? true : false);
+                                this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
+                                this.formPunto.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
+                                this.formPunto.cnombre = data['cNombrePuntoInspeccion'];
+                                this.formPunto.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
+                                this.formPunto.nidflagingreso = data['nFlagIngresoSucursal'];
+                                this.formPunto.nidflagsalida = data['nFlagSalidaSucursal'];
                                 break;
                             }
                         }
@@ -725,13 +729,11 @@
                 }
             },
             limpiarFormulario(){
-                this.formPlantilla.nidtipoinspeccion= 0,
-                this.formPlantilla.cnombre= '',
-                this.formPlantilla.nflagalmacen=  0,
-                this.formPlantilla.nflagaccesorio= 0,
-                this.formPlantilla.nflagtestdrive= 0,
-                this.formPlantilla.nflagseccion= 0,
-                this.formPlantilla.nflagfichatecnica= 0
+                this.formPunto.nidpuntoinspeccion= 0,
+                this.formPunto.cnombre= '',
+                this.formPunto.nidflagmovimiento= 0,
+                this.formPunto.nidflagingreso=  0,
+                this.formPunto.nidflagsalida= 0
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;

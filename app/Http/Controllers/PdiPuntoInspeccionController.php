@@ -9,46 +9,49 @@ use Illuminate\Support\Facades\Auth;
 
 class PdiPuntoInspeccionController extends Controller
 {
-    public function SetTipoInspeccion(Request $request)
+    public function SetPuntoInspeccion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_TipoInspeccion_SetTipoInspeccion ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->cNombreTipoInspeccion,
-                                                                    $request->nFlagAlmacen, 
-                                                                    $request->nFlagAccesorio,
-                                                                    $request->nFlagTestDrive,
-                                                                    $request->nFlagSeccion,
-                                                                    $request->nFlagFichaTecnica,
+        $element = DB::select('exec [usp_PuntoInspeccion_SetPuntoInspeccion] ?, ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->cNombrePuntoInspeccion,
+                                                                    $request->nFlagTipoMovimiento, 
+                                                                    $request->nFlagIngresoSucursal,
+                                                                    $request->nFlagSalidaSucursal,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
         return response()->json($element);         
     }
 
-    public function GetListTipoInspeccion(Request $request)
+    public function GetListPuntoInspeccion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
  
-        $nIdEmpresa   = $request->nidempresa;
-        $cNombreTipoInspeccion = $request->cnombre;
+        $nIdEmpresa  = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $cNombrePuntoInspeccion = $request->cnombre;
 
-        $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
+        $cNombrePuntoInspeccion = ($cNombrePuntoInspeccion == NULL) ? ($cNombrePuntoInspeccion = '') : $cNombrePuntoInspeccion;
                 
-        $arrayTipoInspeccion = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ?', 
-                                                                    [$nIdEmpresa, $cNombreTipoInspeccion]);
+        $arrayPuntoInspeccion = DB::select('exec [usp_PuntoInspeccion_GetListPuntoInspeccion] ?, ?, ?', 
+                                                                                    [   $nIdEmpresa, 
+                                                                                        $nIdSucursal,
+                                                                                        $cNombrePuntoInspeccion
+                                                                                    ]);
 
-        $arrayTipoInspeccion = ParametroController::arrayPaginator($arrayTipoInspeccion, $request);
-        return ['arrayTipoInspeccion'=>$arrayTipoInspeccion];
+        $arrayPuntoInspeccion = ParametroController::arrayPaginator($arrayPuntoInspeccion, $request);
+        return ['arrayPuntoInspeccion'=>$arrayPuntoInspeccion];
     }
 
     public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_DesactivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
+        $objTpoInspecion = DB::select('exec [usp_PuntoInspeccion_DesactivaById] ?', 
+                                                    [   $request->nIdPuntoInspeccion
+                                                    ]);
         return response()->json($objTpoInspecion);   
     }
 
@@ -56,53 +59,27 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_ActivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
+        $objTpoInspecion = DB::select('exec [usp_PuntoInspeccion_ActivaById] ?', 
+                                                        [   $request->nIdPuntoInspeccion
+                                                        ]);
         return response()->json($objTpoInspecion);   
     }
     
-    public function UpdTipoInspeccionById(Request $request)
+    public function UpdPuntoInspeccionById(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_TipoInspeccion_UpdTipoInspeccionById ?, ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdTipoInspeccion,
-                                                                    $request->cNombreTipoInspeccion,
-                                                                    $request->nFlagAlmacen, 
-                                                                    $request->nFlagAccesorio,
-                                                                    $request->nFlagTestDrive,
-                                                                    $request->nFlagSeccion,
-                                                                    $request->nFlagFichaTecnica,
+        $element = DB::select('exec [usp_PuntoInspeccion_UpdPuntoInspeccionById] ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->nIdPuntoInspeccion,
+                                                                    $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->cNombrePuntoInspeccion, 
+                                                                    $request->nFlagTipoMovimiento,
+                                                                    $request->nFlagIngresoSucursal,
+                                                                    $request->nFlagSalidaSucursal,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
         return response()->json($element); 
     }
 
-    public function GetFillTipoInspeccion(Request $request)
-    {
-        $nIdEmpresa   = $request->nidempresa;
-        $cNombreTipoInspeccion = $request->cnombre;
-        $variable   = $request->opcion;
-
-        $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
-
-        $parametro = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ? ', 
-                                                                        [$nIdEmpresa, $cNombreTipoInspeccion]);
-        $data = [];
-        if($variable == "0"){
-            $data[0] = [
-                'nIdTipoInspeccion'   => 0,
-                'cNombreTipoInspeccion' =>'SELECCIONE',
-            ];
-        }
-        foreach ($parametro as $key => $value) {
-           $data[$key+1] =[
-                'nIdTipoInspeccion'   => $value->nIdTipoInspeccion,
-                'cNombreTipoInspeccion' => $value->cNombreTipoInspeccion,
-            ];
-        }
-        return response()->json($data);
-    }
 }

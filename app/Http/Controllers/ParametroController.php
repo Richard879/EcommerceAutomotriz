@@ -26,7 +26,9 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->ngrupoparid;
         $variable   = $request->opcion;
 
-        $parametro = DB::select('exec usp_Par_GetParametroByGrupo ?', array($nIdGrupoPar));
+        $parametro = DB::select('exec [usp_Par_GetParametroByGrupo] ?', 
+                                            [   $nIdGrupoPar
+                                            ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -51,11 +53,13 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->nidgrupopar;
         $cNombreProveedor = $request->cnombreproveedor;
         $variable   = $request->opcion;
-
         $cNombreProveedor = ($cNombreProveedor == NULL) ? ($cNombreProveedor = ' ') : $cNombreProveedor;
 
-        $parametro = DB::select('exec usp_Proveedor_GetLstProveedor ?, ?, ?',
-                                                            array($nIdEmpresa, $nIdGrupoPar, $cNombreProveedor));
+        $parametro = DB::select('exec [usp_Proveedor_GetLstProveedor] ?, ?, ?',
+                                                        [   $nIdEmpresa, 
+                                                            $nIdGrupoPar, 
+                                                            $cNombreProveedor
+                                                        ]);
 
         $parametro = $this->arrayPaginator($parametro, $request);
         return ['arrayProveedor'=>$parametro];
@@ -67,7 +71,10 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->nidgrupopar;
         $variable   = $request->opcion;
 
-        $parametro = DB::select('exec usp_Proveedor_GetLstProveedor ?, ?', array($nIdEmpresa, $nIdGrupoPar));
+        $parametro = DB::select('exec [usp_Proveedor_GetLstProveedor] ?, ?', 
+                                                        [   $nIdEmpresa, 
+                                                            $nIdGrupoPar
+                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -89,11 +96,13 @@ class ParametroController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cLineaNombre = $request->clineanombre;
-
         $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
 
-        $arrayLinea = DB::select('exec usp_Par_GetLineaByProveedor ?, ?, ?',
-                                                            array($nIdEmpresa, $nIdProveedor, $cLineaNombre));
+        $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
+                                                            [   $nIdEmpresa, 
+                                                                $nIdProveedor, 
+                                                                $cLineaNombre
+                                                            ]);
 
         $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
         return ['arrayLinea'=>$arrayLinea];
@@ -104,11 +113,13 @@ class ParametroController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cMarcaNombre = $request->cmarcanombre;
-
         $cMarcaNombre = ($cMarcaNombre == NULL) ? ($cMarcaNombre = ' ') : $cMarcaNombre;
 
-        $arrayMarca = DB::select('exec usp_Par_GetMarcaByProveedor ?, ?, ?',
-                                                            array($nIdEmpresa, $nIdProveedor, $cMarcaNombre));
+        $arrayMarca = DB::select('exec [usp_Par_GetMarcaByProveedor] ?, ?, ?',
+                                                            [   $nIdEmpresa, 
+                                                                $nIdProveedor, 
+                                                                $cMarcaNombre
+                                                            ]);
 
         $arrayMarca = $this->arrayPaginator($arrayMarca, $request);
         return ['arrayMarca'=>$arrayMarca];
@@ -119,11 +130,13 @@ class ParametroController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cModeloNombre = $request->cmodelonombre;
-
         $cModeloNombre = ($cModeloNombre == NULL) ? ($cModeloNombre = ' ') : $cModeloNombre;
 
-        $arrayModelo = DB::select('exec usp_Par_GetModeloByProveedor ?, ?, ?',
-                                                            array($nIdEmpresa, $nIdProveedor, $cModeloNombre));
+        $arrayModelo = DB::select('exec [usp_Par_GetModeloByProveedor] ?, ?, ?',
+                                                            [   $nIdEmpresa, 
+                                                                $nIdProveedor, 
+                                                                $cModeloNombr
+                                                            ]);
 
         $arrayModelo = $this->arrayPaginator($arrayModelo, $request);
         return ['arrayModelo'=>$arrayModelo];
@@ -134,7 +147,9 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->ngrupoparid;
         $variable   = $request->opcion;
 
-        $parametro = DB::select('exec usp_Par_GetDocumentoNatural ?', array($nIdGrupoPar));
+        $parametro = DB::select('exec [usp_Par_GetDocumentoNatural] ?', 
+                                                        [   $nIdGrupoPar
+                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -156,7 +171,9 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->ngrupoparid;
         $variable   = $request->opcion;
 
-        $parametro = DB::select('exec usp_Par_GetDocumentoJuridica ?', array($nIdGrupoPar));
+        $parametro = DB::select('exec [usp_Par_GetDocumentoJuridica] ?', 
+                                                        [   $nIdGrupoPar
+                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -180,11 +197,13 @@ class ParametroController extends Controller
         $nIdPar = $request->nidpar;
         $cTipoParametro = $request->ctipoparametro;
         $nIdTipoPar = $request->nidtipopar;
-
         $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = ' ') : $cTipoParametro;
 
-        $tipoparametro = DB::select('exec usp_TipoPar_GetTipoByIdParametro ?, ?, ?',
-                                                            [$nIdPar, $cTipoParametro, $nIdTipoPar]);
+        $tipoparametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
+                                                            [   $nIdPar, 
+                                                                $cTipoParametro, 
+                                                                $nIdTipoPar
+                                                            ]);
 
         return response()->json($tipoparametro);
     }
@@ -194,7 +213,9 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->ngrupoparid;
         $variable   = $request->opcion;
 
-        $arrayParametro = DB::select('exec usp_Par_GetParametroByGrupo ?', array($nIdGrupoPar));
+        $arrayParametro = DB::select('exec [usp_Par_GetParametroByGrupo] ?', 
+                                                        [   $nIdGrupoPar
+                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
@@ -217,7 +238,10 @@ class ParametroController extends Controller
         $nIdPar = $request->nidpar;
         $nIdGrupoPar = $request->nidgrupopar;
 
-        $data = DB::select('exec usp_Par_GetParametroById ?, ?',  [$nIdPar, $nIdGrupoPar]);
+        $data = DB::select('exec [usp_Par_GetParametroById] ?, ?',  
+                                                [   $nIdPar, 
+                                                    $nIdGrupoPar
+                                                ]);
 
         return response()->json($data);
     }
@@ -227,9 +251,36 @@ class ParametroController extends Controller
         $nIdPar = $request->nidpar;
         $nIdGrupoPar = $request->idgrupopar;
 
-        $arrayParametro = DB::select('exec usp_Par_GetParametroByParParent ?, ?',  [$nIdPar, $nIdGrupoPar]);
+        $arrayParametro = DB::select('exec [usp_Par_GetParametroByParParent] ?, ?',  
+                                                                [   $nIdPar, 
+                                                                    $nIdGrupoPar
+                                                                ]);
 
         $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
         return ['arrayParametro'=>$arrayParametro];
+    }
+
+    public function GetListSucursalByEmpresa(Request $request)
+    {
+        $nIdEmpresa = $request->nidempresa;
+        $variable   = $request->opcion;
+
+        $parametro = DB::select('exec [usp_Par_GetListSucursalByEmpresa] ?', 
+                                            [   $nIdEmpresa
+                                            ]);
+        $data = [];
+        if($variable == "0"){
+            $data[0] = [
+                'nIdPar'   => 0,
+                'cParNombre' =>'SELECCIONE',
+            ];
+        }
+        foreach ($parametro as $key => $value) {
+           $data[$key+1] =[
+                'nIdPar'   => $value->nIdPar,
+                'cParNombre' => $value->cParNombre,
+            ];
+        }
+        return response()->json($data);
     }
 }

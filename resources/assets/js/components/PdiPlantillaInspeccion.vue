@@ -130,20 +130,16 @@
                                                     <td v-text="plantilla.cSeccionNombre"></td>
                                                     <td v-text="plantilla.cItemNombre"></td>
                                                     <td>
-                                                        <!--<el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                             <i @click="abrirFormulario('plantilla','actualizar', plantilla)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                        </el-tooltip>&nbsp;-->
                                                         <template v-if="plantilla.cSituacionRegistro=='A'">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                                <i @click="desactivar(plantilla.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                <div slot="content">Desactivar {{ plantilla.cItemNombre }}</div>
+                                                                <i @click="desactivar(plantilla.nIdPlantillaInspeccionSeccionItem)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ plantilla.cNombreTipoInspeccion }}</div>
-                                                                <i @click="activar(plantilla.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <div slot="content">Activar {{ plantilla.cItemNombre }}</div>
+                                                                <i @click="activar(plantilla.nIdPlantillaInspeccionSeccionItem)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                     </td>
@@ -504,7 +500,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formPlantilla.nIdTipoInspeccion == 0){
+                if(this.formPlantilla.nidtipoinspeccion == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Inspección');
                 };
                 if(this.mensajeError.length){
@@ -525,7 +521,7 @@
                     nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
                     nIdFlag: this.formPlantilla.nidflag,
                     nIdSeccion: this.formPlantilla.nidseccion,
-                    nIdItem: nItemId,
+                    nIdItem: nItemId
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -572,7 +568,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formPlantilla.nIdTipoInspeccion == 0){
+                if(this.formPlantilla.nidtipoinspeccion == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Inspección');
                 };
                 if(this.formPlantilla.nidseccion == 0){
@@ -583,9 +579,9 @@
                 }
                 return this.error;
             },
-            activar(nIdTipoInspeccion){
+            activar(nIdPlantillaInspeccionSeccionItem){
                 swal({
-                    title: 'Estas seguro de activar este inspeccion?',
+                    title: 'Estas seguro de activar este Item?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -594,15 +590,15 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/tipoinspeccion/activar';
+                        var url = this.ruta + '/plantilla/activar';
                         axios.put(url , {
-                            nIdTipoInspeccion: nIdTipoInspeccion
+                            nIdPlantillaInspeccionSeccionItem: nIdPlantillaInspeccionSeccionItem
                         }).then(response => {
                             swal(
                             'Activado!',
                             'El registro fue activado.'
                             );
-                            this.listarTipoInspeccion(1);
+                            this.listarItemPlantilla(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {
@@ -611,9 +607,9 @@
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
             },
-            desactivar(nIdTipoInspeccion){
+            desactivar(nIdPlantillaInspeccionSeccionItem){
                 swal({
-                    title: 'Estas seguro de desactivar este inspeccion?',
+                    title: 'Estas seguro de desactivar este Item?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -622,15 +618,15 @@
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
-                        var url = this.ruta + '/tipoinspeccion/desactivar';
+                        var url = this.ruta + '/plantilla/desactivar';
                         axios.put(url , {
-                            nIdTipoInspeccion: nIdTipoInspeccion
+                            nIdPlantillaInspeccionSeccionItem: nIdPlantillaInspeccionSeccionItem
                         }).then(response => {
                             swal(
                             'Desactivado!',
                             'El registro fue desactivado.'
                             );
-                            this.listarTipoInspeccion(1);
+                            this.listarItemPlantilla(1);
                             this.vistaFormulario = 1;
                         })
                         .catch(function (error) {

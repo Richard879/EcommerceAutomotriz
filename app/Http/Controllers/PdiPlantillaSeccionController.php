@@ -13,14 +13,14 @@ class PdiPlantillaSeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_PlantillaInspeccion_SetPlantilla ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
+        $element = DB::select('exec [usp_PlantillaInspeccion_SetPlantilla] ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->nIdEmpresa,
                                                                     $request->nIdTipoInspeccion,
                                                                     $request->nIdFlag, 
                                                                     $request->nIdSeccion,
                                                                     $request->nIdItem,
                                                                     Auth::user()->id
-                                                                    ));
+                                                                ]);
         return response()->json($element);         
     }
 
@@ -32,7 +32,7 @@ class PdiPlantillaSeccionController extends Controller
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdSeccion = $request->nidseccion;
                 
-        $arrayPlantilla = DB::select('exec usp_PlantillaInspeccion_GetListItems ?, ?, ?', 
+        $arrayPlantilla = DB::select('exec [usp_PlantillaInspeccion_GetListItems] ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
                                                                         $nIdTipoInspeccion,
                                                                         $nIdSeccion
@@ -46,20 +46,20 @@ class PdiPlantillaSeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_DesactivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
-        return response()->json($objTpoInspecion);   
+        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_DesactivaById] ?', 
+                                                            [  $request->nIdPlantillaInspeccionSeccionItem
+                                                            ]);
+        return response()->json($objPlantilla);   
     }
 
     public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_ActivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
-        return response()->json($objTpoInspecion);   
+        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_ActivaById] ?', 
+                                                            [   $request->nIdPlantillaInspeccionSeccionItem
+                                                            ]);
+        return response()->json($objPlantilla);   
     }
     
     public function UpdTipoInspeccionById(Request $request)
@@ -88,8 +88,10 @@ class PdiPlantillaSeccionController extends Controller
 
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
 
-        $parametro = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ? ', 
-                                                                        [$nIdEmpresa, $cNombreTipoInspeccion]);
+        $parametro = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ? ', 
+                                                                        [   $nIdEmpresa, 
+                                                                            $cNombreTipoInspeccion
+                                                                        ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [

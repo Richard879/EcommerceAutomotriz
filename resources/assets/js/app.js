@@ -7,6 +7,7 @@ import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/es';
 window.Vue.use(ElementUI, { locale })
 
+Vue.component('mimenu', require('./components/Menu.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('versionvehiculo', require('./components/VersionVehiculo.vue'));
 Vue.component('elementoventa', require('./components/ElementoVenta.vue'));
@@ -39,6 +40,7 @@ Vue.component('pditipoinspeccion', require('./components/pditipoinspeccion.vue')
 Vue.component('pdiplantilla', require('./components/PdiPlantillaInspeccion.vue'));
 Vue.component('pdipuntoinspeccion', require('./components/PdiPuntoInspeccion.vue'));
 Vue.component('pdiprocesoinspeccion', require('./components/PdiProcesoInspeccion.vue'));
+Vue.component('permisos', require('./components/AdmPermisos.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -47,6 +49,10 @@ const app = new Vue({
         ruta: 'http://localhost:8080/saisacsys/public'
     },
     methods: {
+        mostrarMenu: function(data) {
+            let me = this;
+            me.menu = data;
+        },
         CambiarMenu: function(data) {
             let me = this;
             me.menu = data;

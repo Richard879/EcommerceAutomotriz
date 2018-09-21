@@ -935,9 +935,13 @@
                 this.cerrarModal();
             },
             listarTipoLista(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110044 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110044,
+                        'opcion' : 0
+                    }
+                }).then(response => {
                     this.arrayTipoLista = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -948,14 +952,16 @@
             },
             listarListaPrecioVh(page){
                 this.mostrarProgressBar();
-                this.nidempresa = 1300011;
-                this.nidsucursal = 1300013;
 
-                var url = this.ruta + '/listapreciovh/GetListaVh?nidempresa=' + this.nidempresa
-                                                                + '&nidsucursal=' + this.nidsucursal
-                                                                + '&nidproveedor=' + this.formListaPrecioVh.nidproveedor
-                                                                + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/listapreciovh/GetListaVh';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': 1300013,
+                        'nidproveedor': this.formListaPrecioVh.nidproveedor,
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayListaPrecioVh = response.data.arrayListaPrecioVh.data;
                     this.pagination.current_page =  response.data.arrayListaPrecioVh.current_page;
                     this.pagination.total = response.data.arrayListaPrecioVh.total;
@@ -1193,9 +1199,13 @@
             listarListaPrecioVhDetalle(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/listapreciovh/GetListaVhDetalle?nidlistaprecioversionveh=' + this.formListaPrecioVh.nidlistaprecioversionVeh
-                                                                                            + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/listapreciovh/GetListaVhDetalle';
+                axios.get(url, {
+                    params: {
+                        'nidlistaprecioversionveh': this.formListaPrecioVh.nidlistaprecioversionVeh,
+                        'page' : page
+                    }
+                }).then(response => {
                     this.arrayListaPrecioVhDet = response.data.arrayListaPrecioVhDet.data;
                     this.pagination.current_page =  response.data.arrayListaPrecioVhDet.current_page;
                     this.pagination.total = response.data.arrayListaPrecioVhDet.total;

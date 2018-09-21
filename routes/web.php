@@ -122,6 +122,19 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/tipoinspeccion/GetFillTipoInspeccion', 'PdiTipoInspeccionController@GetFillTipoInspeccion');
     Route::get('/plantilla/GetListItems', 'PdiPlantillaSeccionController@GetListItems');
     Route::post('/plantilla/SetItemPlantilla', 'PdiPlantillaSeccionController@SetItemPlantilla');
+    Route::put('/plantilla/activar', 'PdiPlantillaSeccionController@activar');
+    Route::put('/plantilla/desactivar', 'PdiPlantillaSeccionController@desactivar');
+    Route::get('/puntoinspeccion/GetListPuntoInspeccion', 'PdiPuntoInspeccionController@GetListPuntoInspeccion');
+    Route::post('/puntoinspeccion/SetPuntoInspeccion', 'PdiPuntoInspeccionController@SetPuntoInspeccion');
+    Route::post('/puntoinspeccion/UpdPuntoInspeccionById', 'PdiPuntoInspeccionController@UpdPuntoInspeccionById');
+    Route::put('/puntoinspeccion/activar', 'PdiPuntoInspeccionController@activar');
+    Route::put('/puntoinspeccion/desactivar', 'PdiPuntoInspeccionController@desactivar');
+    Route::get('/puga/GetListPermisosByUser', 'PerUsuGruAccController@GetListPermisosByUser');
+    Route::get('/puga/GetLstUsuarios', 'PerUsuGruAccController@GetLstUsuarios');
+    Route::get('/puga/GetListPermisosByUsuario', 'PerUsuGruAccController@GetListPermisosByUsuario');
+    Route::post('/puga/SetPermisosByUsuario', 'PerUsuGruAccController@SetPermisosByUsuario');
+    Route::post('/puga/DeletePermisosByUsuario', 'PerUsuGruAccController@DeletePermisosByUsuario');
+    Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
 
 
 

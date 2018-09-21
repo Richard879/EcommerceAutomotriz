@@ -13,16 +13,16 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_TipoInspeccion_SetTipoInspeccion ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->cNombreTipoInspeccion,
-                                                                    $request->nFlagAlmacen, 
-                                                                    $request->nFlagAccesorio,
-                                                                    $request->nFlagTestDrive,
-                                                                    $request->nFlagSeccion,
-                                                                    $request->nFlagFichaTecnica,
-                                                                    Auth::user()->id
-                                                                    ));
+        $element = DB::select('exec [usp_TipoInspeccion_SetTipoInspeccion] ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                            [   $request->nIdEmpresa,
+                                                                $request->cNombreTipoInspeccion,
+                                                                $request->nFlagAlmacen, 
+                                                                $request->nFlagAccesorio,
+                                                                $request->nFlagTestDrive,
+                                                                $request->nFlagSeccion,
+                                                                $request->nFlagFichaTecnica,
+                                                                Auth::user()->id
+                                                            ]);
         return response()->json($element);         
     }
 
@@ -35,8 +35,10 @@ class PdiTipoInspeccionController extends Controller
 
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
                 
-        $arrayTipoInspeccion = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ?', 
-                                                                    [$nIdEmpresa, $cNombreTipoInspeccion]);
+        $arrayTipoInspeccion = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ?', 
+                                                                    [   $nIdEmpresa, 
+                                                                        $cNombreTipoInspeccion
+                                                                    ]);
 
         $arrayTipoInspeccion = ParametroController::arrayPaginator($arrayTipoInspeccion, $request);
         return ['arrayTipoInspeccion'=>$arrayTipoInspeccion];
@@ -46,9 +48,9 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_DesactivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
+        $objTpoInspecion = DB::select('exec [usp_TipoInspeccion_DesactivaById] ?', 
+                                                            [   $request->nIdTipoInspeccion
+                                                            ]);
         return response()->json($objTpoInspecion);   
     }
 
@@ -56,9 +58,9 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec usp_TipoInspeccion_ActivaById ?', 
-                                                            array(  $request->nIdTipoInspeccion
-                                                                    ));
+        $objTpoInspecion = DB::select('exec [usp_TipoInspeccion_ActivaById] ?', 
+                                                        [   $request->nIdTipoInspeccion
+                                                        ]);
         return response()->json($objTpoInspecion);   
     }
     
@@ -66,17 +68,17 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec usp_TipoInspeccion_UpdTipoInspeccionById ?, ?, ?, ?, ?, ?, ?, ?, ?', 
-                                                            array($request->nIdEmpresa,
-                                                                    $request->nIdTipoInspeccion,
-                                                                    $request->cNombreTipoInspeccion,
-                                                                    $request->nFlagAlmacen, 
-                                                                    $request->nFlagAccesorio,
-                                                                    $request->nFlagTestDrive,
-                                                                    $request->nFlagSeccion,
-                                                                    $request->nFlagFichaTecnica,
-                                                                    Auth::user()->id
-                                                                    ));
+        $element = DB::select('exec [usp_TipoInspeccion_UpdTipoInspeccionById] ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdTipoInspeccion,
+                                                                $request->cNombreTipoInspeccion,
+                                                                $request->nFlagAlmacen, 
+                                                                $request->nFlagAccesorio,
+                                                                $request->nFlagTestDrive,
+                                                                $request->nFlagSeccion,
+                                                                $request->nFlagFichaTecnica,
+                                                                Auth::user()->id
+                                                            ]);
         return response()->json($element); 
     }
 
@@ -85,11 +87,12 @@ class PdiTipoInspeccionController extends Controller
         $nIdEmpresa   = $request->nidempresa;
         $cNombreTipoInspeccion = $request->cnombre;
         $variable   = $request->opcion;
-
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
 
-        $parametro = DB::select('exec usp_TipoInspeccion_GetListTipoInspeccion ?, ? ', 
-                                                                        [$nIdEmpresa, $cNombreTipoInspeccion]);
+        $parametro = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ? ', 
+                                                                [   $nIdEmpresa, 
+                                                                    $cNombreTipoInspeccion
+                                                                ]);
         $data = [];
         if($variable == "0"){
             $data[0] = [
