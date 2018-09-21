@@ -178,6 +178,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/autorizacion/GetLstContactosByUsuario', 'AutorizacionController@GetLstContactosByUsuario');
     Route::get('/autorizacion/GetLstSolicitudes', 'AutorizacionController@GetLstSolicitudes');
     Route::post('/autorizacion/SetRegistrarSolicitudAutorizacion', 'AutorizacionController@SetRegistrarSolicitudAutorizacion');
+    Route::put('/autorizacion/SetConformeNoConforme', 'AutorizacionController@SetConformeNoConforme');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');

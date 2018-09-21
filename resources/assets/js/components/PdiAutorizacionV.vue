@@ -140,47 +140,29 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="carta in arrayMisSolicitudes" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                <tr v-for="carta in arrayMisSolicitudes" :key="carta.nIdSolicitudAutorizacion">
                                                                                     <td v-text="carta.cFechaSolicitud"></td>
                                                                                     <td v-text="carta.cTipoSolicitud"></td>
                                                                                     <td v-text="carta.cNroSolicitud"></td>
                                                                                     <td v-text="carta.cContacto"></td>
                                                                                     <td v-text="carta.cNroVehiculo"></td>
                                                                                     <td v-text="carta.cEstado"></td>
-                                                                                    <td v-text="carta.AprobadoPor"></td>
+                                                                                    <template v-if="carta.cEstadoEvolucion == ''">
+                                                                                        <td>------</td>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <td v-text="carta.cEstadoEvolucion"></td>
+                                                                                    </template>
                                                                                     <td>
-                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cEstado == '1300238' || carta.cEstado == '1300240'" target="_blank">
+                                                                                        <a :href="carta.cRutaDocumento"
+                                                                                                  v-if="carta.cFlagEstadoAutorizacionControl != 'P '"
+                                                                                                        target="_blank">
                                                                                             <i class='fa-md fa fa-file'></i>
                                                                                         </a>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
-                                                                        <div class="col-lg-12">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-7">
-                                                                                    <nav>
-                                                                                        <ul class="pagination">
-                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                            </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                            :class="[page==isActived?'active':'']">
-                                                                                                <a class="page-link"
-                                                                                                href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
-                                                                                                v-text="page"></a>
-                                                                                            </li>
-                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </nav>
-                                                                                </div>
-                                                                                <div class="col-lg-5">
-                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                 </template>
                                                                 <template v-else>
@@ -188,6 +170,31 @@
                                                                         <td>No existen registros</td>
                                                                     </tr>
                                                                 </template>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-7">
+                                                                        <nav>
+                                                                            <ul class="pagination">
+                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                </li>
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                :class="[page==isActived?'active':'']">
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
+                                                                                    v-text="page"></a>
+                                                                                </li>
+                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    <div class="col-lg-5">
+                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -222,18 +229,6 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* N° de Solicitud</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Solicitud"
-                                                                                            v-model="fillNuevaSolicitud.cnrosolicitud"
-                                                                                            clearable>
-                                                                                        </el-input>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">*Fecha</label>
                                                                                     <div class="col-sm-8 widthFull">
                                                                                         <el-date-picker
@@ -246,8 +241,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Solicitud</label>
@@ -266,6 +259,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Enviar a</label>
@@ -305,14 +300,50 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">
+                                                                        <div class="form-group row" v-if="checked">
                                                                             <div class="col-md-9 offset-md-5">
-                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="activarTab0202">
+                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="activarTab0202('')">
                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
                                                                                 </button>
                                                                             </div>
                                                                         </div>
                                                                     </form>
+                                                                </div>
+                                                                <hr/>
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayReferenciavehiculo.length">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Proovedor</th>
+                                                                                        <th>Linea</th>
+                                                                                        <th>Marca</th>
+                                                                                        <th>Modelo</th>
+                                                                                        <th>Año Fab</th>
+                                                                                        <th>Año Modelo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="r in arrayReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
+                                                                                        <td>
+                                                                                            <el-tooltip class="item" effect="dark" placement="left-start">
+                                                                                                <div slot="content">Ir a Datos Vehículo</div>
+                                                                                                <i @click="activarTab0202(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            </el-tooltip>
+                                                                                        </td>
+                                                                                        <td v-text="r.cProveedorNombre"></td>
+                                                                                        <td v-text="r.cLineaNombre"></td>
+                                                                                        <td v-text="r.cMarcaNombre"></td>
+                                                                                        <td v-text="r.cModeloNombre"></td>
+                                                                                        <td v-text="r.nAnioFabricacion"></td>
+                                                                                        <td v-text="r.nAnioModelo"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </template>
                                                                 </div>
                                                             </div>
                                                         </section>
@@ -686,20 +717,25 @@
                                                                         <th>Telefono</th>
                                                                         <th>Dirección</th>
                                                                         <th>Email</th>
+                                                                        <th>Marca</th>
+                                                                        <th>Modelo</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                                         <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Seleccionar Contacto</div>
+                                                                                <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>
                                                                         </td>
                                                                         <td v-text="c.cContacto"></td>
                                                                         <td v-text="c.cNumeroDocumento"></td>
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cDireccion"></td>
                                                                         <td v-text="c.cEmail"></td>
+                                                                        <td v-text="c.cMarca"></td>
+                                                                        <td v-text="c.cModelo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -712,20 +748,25 @@
                                                                         <th>Telefono</th>
                                                                         <th>Email</th>
                                                                         <th>Persona Contacto</th>
+                                                                        <th>Marca</th>
+                                                                        <th>Modelo</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                                         <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                               <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Seleccionar Contacto</div>
+                                                                                <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>
                                                                         </td>
                                                                         <td v-text="c.cRazonSocial"></td>
                                                                         <td v-text="c.cNumeroDocumento"></td>
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cEmail"></td>
                                                                         <td v-text="c.cContacto"></td>
+                                                                        <td v-text="c.cMarca"></td>
+                                                                        <td v-text="c.cModelo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -796,6 +837,7 @@
                     cnrovehiculo: '',
                     dfecha: '',
                     nidasigcontacto: '',
+                    nidcontacto: '',
                     cnombrecontacto: '',
                     nidestado: ''
                 },
@@ -833,10 +875,10 @@
                 // ===============================
                 fillNuevaSolicitud: {
                     //datos solicitud
-                    cnrosolicitud: '',
                     dfechasolicitud: '',
                     nidtiposolicitud: '',
                     nidasigcontacto: '',
+                    nidcontacto: '',
                     cnombrecontacto: '',
                     nidjefeinmediato: 0,
                     cnombrejefeinmediato: '',
@@ -853,6 +895,7 @@
                 },
                 checked: true,
                 arrayTipoSolicitudes: [],
+                arrayReferenciavehiculo: [],
                 // ===============================
                 // VARIABLES DATOS VEHICULO
                 // ===============================
@@ -1010,6 +1053,8 @@
                         'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
                         'tipoRol': 1,
                         'nIdTipoBusquedaAutorizacion': 1,
+                        'cFlagEstadoAutorizacion' : '',
+                        'nIdSolicitudAutorizacion' : 0,
                         'page' : page
                     }
                 }).then(response => {
@@ -1135,28 +1180,34 @@
                     console.log(error);
                 });
             },
-            asignarContacto(contacto){
-                if(this.modalMisContactos.ntipopersona == 1){
-                    if (this.flagBuscarContacto == 1) {
-                        this.fillBusquedaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillBusquedaSolicitud.cnombrecontacto = contacto.cContacto;
-                    } else {
-                        this.fillNuevaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillNuevaSolicitud.cnombrecontacto = contacto.cContacto;
+            limpiarAlAsignarContacto(){
+                //Limpiar Asignación contacto cada vez que se asigne
+                this.fillNuevaSolicitud.nidasigcontacto = '';
+                this.fillNuevaSolicitud.nidcontacto = '';
+                this.fillNuevaSolicitud.cnombrecontacto = '';
+            },
+            llenarReferenciasVehiculo(){
+                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidsucursal' : 1300013,
+                        'nidcontacto' : this.fillNuevaSolicitud.nidcontacto
                     }
-                } else {
-                    if (this.flagBuscarContacto == 1) {
-                        this.fillBusquedaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillBusquedaSolicitud.cnombrecontacto = contacto.cRazonSocial;
-                    } else {
-                        this.fillNuevaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillNuevaSolicitud.cnombrecontacto = contacto.cRazonSocial;
-                    }
-                }
-                this.modalMisContactos.ntipopersona = 1;
-                this.modalMisContactos.cnrodocumento = '';
-                this.modalMisContactos.cfiltrodescripcion = '';
-                this.cerrarModal();
+                }).then(response => {
+                    let info = response.data.arraySegReferenciavehiculo;
+                    //Data
+                    this.arrayReferenciavehiculo = info.data;
+                    //Pagination
+                    this.pagination.current_page   =   info.current_page;
+                    this.pagination.total          =   info.total;
+                    this.pagination.per_page       =   info.per_page;
+                    this.pagination.last_page      =   info.last_page;
+                    this.pagination.from           =   info.from;
+                    this.pagination.to             =   info.to;
+                }).catch(error => {
+                    this.errors = error.response.data
+                });
             },
             // =================================================================
             // METODOS TAB NUEVA SOLICITUD
@@ -1164,13 +1215,15 @@
             tabNuevaSolicitud(){
                 this.limpiarNuevaSolicitud();
                 this.tabDatosSolicitud();
+                this.checked = true;
+                this.updateEstadoChecked();
             },
             limpiarNuevaSolicitud(){
                 //datos solicitud
-                this.fillNuevaSolicitud.cnrosolicitud = '';
                 this.fillNuevaSolicitud.dfechasolicitud = '';
                 this.fillNuevaSolicitud.nidtiposolicitud = '';
                 this.fillNuevaSolicitud.nidasigcontacto = '';
+                this.fillNuevaSolicitud.nidcontacto = '';
                 this.fillNuevaSolicitud.cnombrecontacto = '';
                 this.fillNuevaSolicitud.nidtipobusqueda = '1';
                 this.fillNuevaSolicitud.nidvehiculo = '';
@@ -1209,11 +1262,15 @@
             },
             updateEstadoChecked(){
                 if(this.checked){
-                    this.fillNuevaSolicitud.nidasigcontacto = 0;
+                    this.fillNuevaSolicitud.nidasigcontacto = '';
+                    this.fillNuevaSolicitud.nidcontacto = '';
                     this.fillNuevaSolicitud.cnombrecontacto = '';
+                    this.arrayReferenciavehiculo = [];
                 }
             },
-            activarTab0202(){
+            activarTab0202(nIdAsignacionContactoVendedor = ''){
+                this.fillNuevaSolicitud.nidasigcontacto = (nIdAsignacionContactoVendedor == '') ? '' : nIdAsignacionContactoVendedor;
+
                 if(this.validarTab0201()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1232,9 +1289,6 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.fillNuevaSolicitud.cnrosolicitud){
-                    this.mensajeError.push('El número de solicitud es obligatorio');
-                }
                 if(!this.fillNuevaSolicitud.dfechasolicitud){
                     this.mensajeError.push('La fecha de solicitud es obligatoria');
                 }
@@ -1250,7 +1304,7 @@
                     this.mensajeError.push('Debe tener asignado un Jefe de Ventas');
                 }
                 if(!this.checked) {
-                    if(this.fillNuevaSolicitud.nidasigcontacto == 0 && !this.fillNuevaSolicitud.cnombrecontacto){
+                    if(!this.fillNuevaSolicitud.nidasigcontacto && !this.fillNuevaSolicitud.nidcontacto && !this.fillNuevaSolicitud.cnombrecontacto){
                         this.mensajeError.push('Debe asignar un Contacto');
                     }
                 }
@@ -1292,7 +1346,6 @@
                     'nIdEmpresa'            :   1300011,
                     'nIdSucursal'           :   1300013,
                     'nIdTipoSolicitud'      :   this.fillNuevaSolicitud.nidtiposolicitud,
-                    'cNumeroSolicitud'      :   this.fillNuevaSolicitud.cnrosolicitud,
                     'dFechaSolicitud'       :   this.fillNuevaSolicitud.dfechasolicitud,
                     'cFlagContacto'         :   (this.fillNuevaSolicitud.nidasigcontacto) ? 'S' : 'N',
                     'cFlagVinPlaca'         :   (this.fillNuevaSolicitud.nidtipobusqueda == 1) ? 'V' : 'P',
@@ -1303,6 +1356,7 @@
                     'cLugarLlegada'         :   this.fillNuevaSolicitud.clugarllegada,
                     'nIdMoverVehiculo'      :   this.fillNuevaSolicitud.nidmovervehiculo,
                     'nIdEstadoSolAutori'    :   1300237,
+                    'cFlagEstadoSolAutori'  :   'P'
                 }).then(response => {
                     swal('Solicitud de Autorización registrada exitosamente');
                     this.limpiarMisSolicitudes();
@@ -1384,6 +1438,40 @@
                                 this.listarContactos(1);
                                 this.accionmodal=3;
                                 this.modal = 1;
+                                break;
+                            }
+                            break;
+                            case 'asignar':
+                            {
+                                if(this.modalMisContactos.ntipopersona == 1){
+                                    if (this.flagBuscarContacto == 1) {
+                                        this.fillBusquedaSolicitud.nidasigcontacto = data['nIdAsignacionContactoVendedor'];
+                                        this.fillBusquedaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillBusquedaSolicitud.cnombrecontacto = data['cContacto'];
+                                    } else {
+                                        //Limpiar Asignación contacto cada vez que se asigne
+                                        this.limpiarAlAsignarContacto();
+                                        this.fillNuevaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillNuevaSolicitud.cnombrecontacto = data['cContacto'];
+                                        this.llenarReferenciasVehiculo();
+                                    }
+                                } else {
+                                    if (this.flagBuscarContacto == 1) {
+                                        this.fillBusquedaSolicitud.nidasigcontacto = data['nIdAsignacionContactoVendedor'];
+                                        this.fillBusquedaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillBusquedaSolicitud.cnombrecontacto = data['cRazonSocial'];
+                                    } else {
+                                        //Limpiar Asignación contacto cada vez que se asigne
+                                        this.limpiarAlAsignarContacto();
+                                        this.fillNuevaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillNuevaSolicitud.cnombrecontacto = data['cRazonSocial'];
+                                        this.llenarReferenciasVehiculo();
+                                    }
+                                }
+                                this.modalMisContactos.ntipopersona = 1;
+                                this.modalMisContactos.cnrodocumento = '';
+                                this.modalMisContactos.cfiltrodescripcion = '';
+                                this.cerrarModal();
                                 break;
                             }
                             break;
