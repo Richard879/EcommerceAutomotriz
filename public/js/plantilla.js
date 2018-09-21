@@ -299,14 +299,6 @@ $(document).ready(function () {
     });
 
 });
-
-function ActivarMenu(cIntJerarquia)
-{
-    var menu = document.getElementById(cIntJerarquia);
-    $('ul li.active').removeClass('active');
-    $(menu).addClass("active");
-}
-
 function progress(){
     var elem = document.getElementById("myBar");   
     var width = 1;
