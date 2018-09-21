@@ -297,7 +297,6 @@
                 arraySubPermisos: [],
                 arrayCheckPermisos: [],
                 arrayCheckSubPermisos: [],
-                arrayRegistraPermisos: [],
                 formPuga:{
                     nidusuario: 0,
                     cnombreclase: 'treeview'
@@ -454,19 +453,41 @@
                 });
             },
             seleccionaPermisos(){
-                /*let me = this;
+                let me = this;
+
+                me.arrayTemproralPermisos = [];
 
                 me.arrayPermisos.map(function(value, key) {
                     if(me.arrayCheckPermisos[key] == true)
                     {
-                        me.arrayRegistraPermisos.push({
-                                nIdUsuario: value.nIdUsuario,
-                                nIdPar: value.nIdPar
+                        me.arrayTemproralPermisos.push({
+                                nIdMenu: value.nIdPar
                         });
                     }
                 });
 
-                this.registrarPermisos();*/
+                me.arraySubPermisos.map(function(value, key) {
+                    if(me.arrayCheckSubPermisos[key] == true)
+                    {
+                        me.arrayTemproralPermisos.push({
+                                nIdMenu: value.nIdPar
+                        });
+                    }
+                });
+                this.eliminarPermisos();
+            },
+            eliminarPermisos(){
+                var url = this.ruta + '/puga/DeletePermisosByUsuario';
+                axios.post(url, {
+                    'nIdEmpresa': 1300011,
+                    'nIdSucursal': 1300013,
+                    'nIdPerfil' : 0,
+                    'nIdUsuario': this.formPuga.nidusuario
+                }).then(response => {   
+                    this.registrarPermisos();                 
+                }).catch(error => {
+                    this.errors = error
+                });
             },
             registrarPermisos(){
                 /*if(this.validar()){
@@ -474,29 +495,20 @@
                     this.modal = 1;
                     return;
                 }*/
-
+                this.mostrarProgressBar();
                 var url = this.ruta + '/puga/SetPermisosByUsuario';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formEle.nidproveedor),
-                    nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
-                    nIdMoneda: parseInt(this.formEle.nidmoneda),
-                    cElemenNombre: this.formEle.celenombre.toUpperCase(),
-                    fElemenValorVenta: this.formEle.felevalorventa,
-                    fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp
+                    'nIdEmpresa': 1300011,
+                    'nIdSucursal': 1300013,
+                    'nIdPerfil' : 0,
+                    'nIdUsuario': this.formPuga.nidusuario,
+                    'arrayData':   this.arrayTemproralPermisos
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Elemento registrado');
-                        this.listarElementos(1);
-                        this.vistaFormulario = 1;
-                    }
-                    else{
-                        swal('Ya existe Elemento Venta');
-                    }
+                    swal('Permisos Registrados');
+                }).then(function (response) {
+                    $("#myBar").hide();
                 }).catch(error => {
-                    console.log(error);
+                    this.errors = error
                 });
             },
             validar(){
@@ -524,94 +536,6 @@
                     this.error = 1;
                 }
                 return this.error;
-            },
-            actualizar(){
-                var url = this.ruta + '/elemento/UpdElementoById';
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdProveedor: parseInt(this.formEle.nidproveedor),
-                    nIdElementoVenta: parseInt(this.formEle.nidelemento),
-                    nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
-                    nIdMoneda: parseInt(this.formEle.nidmoneda),
-                    cElemenNombre: this.formEle.celenombre.toUpperCase(),
-                    fElemenValorVenta: this.formEle.felevalorventa,
-                    fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Elemento Actualizado');
-                        this.limpiarFormulario();
-                        this.vistaFormulario = 1;
-                    }
-                    else{
-                        swal('Ya existe Elemento Venta');
-                    }
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            activar(nIdElementoVenta){
-                swal({
-                    title: 'Estas seguro de activar este elemento?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Activar!',
-                    cancelButtonText: 'No, cancelar!'
-                }).then((result) => {
-                    if (result.value) {
-                        var url = this.ruta + '/elemento/activar';
-                        axios.put(url , {
-                            nIdElementoVenta: parseInt(nIdElementoVenta)
-                        }).then(response => {
-                            swal(
-                            'Activado!',
-                            'El registro fue activado.'
-                            );
-                            this.listarElementos(1);
-                            this.vistaFormulario = 1;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    } else if (result.dismiss === swal.DismissReason.cancel){}
-                })
-            },
-            desactivar(nIdElementoVenta){
-                swal({
-                    title: 'Estas seguro de desactivar este elemento?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Desactivar!',
-                    cancelButtonText: 'No, cancelar!'
-                }).then((result) => {
-                    if (result.value) {
-                        var url = this.ruta + '/elemento/desactivar';
-                        axios.put(url , {
-                            nIdElementoVenta: parseInt(nIdElementoVenta)
-                        }).then(response => {
-                            swal(
-                            'Desactivado!',
-                            'El registro fue desactivado.'
-                            );
-                            this.listarElementos(1);
-                            this.vistaFormulario = 1;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    } else if (result.dismiss === swal.DismissReason.cancel){}
-                })
             },
             cerrarModal(){
                 //this.accionmodal==1;

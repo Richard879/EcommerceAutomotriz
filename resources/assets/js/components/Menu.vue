@@ -31,7 +31,7 @@ export default {
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'idsucursal': 1300014,
+                        'idsucursal': 1300013,
                         'nidusuario': this.usuario.id,
                         'nlenjerarquia': 4
                     }
@@ -47,7 +47,7 @@ export default {
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'idsucursal': 1300014,
+                        'idsucursal': 1300013,
                         'nidusuario': this.usuario.id,
                         'nlenjerarquia': 6
                     }
