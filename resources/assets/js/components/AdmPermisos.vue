@@ -135,10 +135,10 @@
                                 <form class="form-horizontal">
                                     <div id="lsttreegrupo">
                                         <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
-                                            <li>{{ permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
+                                            <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
                                                 <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
                                                     <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
-                                                    {{ subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
+                                                    {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -291,7 +291,9 @@
             return {
                 cempresa: 'SAISAC',
                 arrayUsuarios: [],
+                arrayTemproralPermisos: [],
                 arrayPermisos: [],
+                arrayTemporalSubPermisos: [],
                 arraySubPermisos: [],
                 arrayCheckPermisos: [],
                 arrayCheckSubPermisos: [],
@@ -406,16 +408,14 @@
             },
             listarPermisos(nlenjerarquia){
                 this.mostrarProgressBar();
-
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
-
                 axios.get(url, {
                     params: {
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
                     }
                 }).then(response => {
-                    this.arrayPermisos = response.data.arrayPermisos.data;
+                    this.arrayPermisos = response.data;
                     this.listarSubPermisos(6);
                 }).then(function (response) {
                     $("#myBar").hide();
@@ -425,27 +425,36 @@
             },
             listarSubPermisos(nlenjerarquia){
                 this.mostrarProgressBar();
-
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
-
                 axios.get(url, {
                     params: {
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
                     }
                 }).then(response => {
-                    this.arraySubPermisos = response.data.arrayPermisos.data;
-                    jQuery(function ($) {
-                                    $("#lsttreegrupo").treeview();
-                                });
+                    this.arraySubPermisos = response.data;
+                    this.llenarCheckBox();
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
                 });
             },
+            llenarCheckBox(){
+                let me = this;  
+                me.arrayPermisos.map(function(value, key){
+                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica               
+                });
+                me.arraySubPermisos.map(function(value, key){
+                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica               
+                });
+
+                jQuery(function ($) {
+                    $("#lsttreegrupo").treeview();
+                });
+            },
             seleccionaPermisos(){
-                let me = this;
+                /*let me = this;
 
                 me.arrayPermisos.map(function(value, key) {
                     if(me.arrayCheckPermisos[key] == true)
@@ -457,7 +466,7 @@
                     }
                 });
 
-                this.registrarPermisos();
+                this.registrarPermisos();*/
             },
             registrarPermisos(){
                 /*if(this.validar()){

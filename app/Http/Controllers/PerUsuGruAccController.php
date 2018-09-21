@@ -43,12 +43,12 @@ class PerUsuGruAccController extends Controller
         $nIdUsuario = $request->nidusuario;
         $nLenJeraquia = $request->nlenjerarquia;
 
-        $arrayPermisos = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?', 
+        $data = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?', 
                                                         [   $nIdUsuario,
                                                             $nLenJeraquia
                                                         ]);
-
-        $arrayPermisos = ParametroController::arrayPaginator($arrayPermisos, $request);
-        return ['arrayPermisos'=>$arrayPermisos];
+        return response()->json($data);
+        //$arrayPermisos = ParametroController::arrayPaginator($arrayPermisos, $request);
+        //return ['arrayPermisos'=>$arrayPermisos];
     }
 }
