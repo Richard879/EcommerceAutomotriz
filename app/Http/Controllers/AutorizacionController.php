@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -82,6 +83,7 @@ class AutorizacionController extends Controller
 
         $nIdAsigContacto = $request->nIdAsigContacto;
         $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = NULL) : $nIdAsigContacto;
+        $cFlagJeveVentas = $request->cFlagJeveVentas;
 
         $data = DB::select('exec usp_Autorizacion_SetRegistrarSolicitudAutorizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
@@ -91,7 +93,6 @@ class AutorizacionController extends Controller
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
                                         $request->nIdTipoSolicitud,
-                                        $request->cNumeroSolicitud,
                                         $request->dFechaSolicitud,
                                         $request->cFlagContacto,
                                         $request->cFlagVinPlaca,
@@ -102,10 +103,24 @@ class AutorizacionController extends Controller
                                         $request->cLugarLlegada,
                                         $request->nIdMoverVehiculo,
                                         $request->nIdEstadoSolAutori,
+                                        trim($request->cFlagEstadoSolAutori),
                                         Auth::user()->id
                                     ]);
-        //OBTENGO EL ID DE LA SOLICITUD AUTORIZACIÓN
-        $nIdSolicitudAutorizacion =  $data[0]->nIdSolicitudAutorizacion;
+
+        switch ($cFlagJeveVentas) {
+            case 'JV':
+                //OBTENGO DATA DE LA SOLICITUD AUTORIZACIÓN
+                $nIdSolicitudAutorizacion =  $data[0];
+                break;
+            case 'ADV':
+                //OBTENGO DATA DE LA SOLICITUD AUTORIZACIÓN
+                $nIdSolicitudAutorizacion =  $data[0];
+                break;
+            default:
+                //OBTENGO EL ID DE LA SOLICITUD AUTORIZACIÓN
+                $nIdSolicitudAutorizacion =  $data[0]->nIdSolicitudAutorizacion;
+                break;
+        }
 
         return response()->json($nIdSolicitudAutorizacion);
     }
@@ -121,11 +136,13 @@ class AutorizacionController extends Controller
         $nIdEstado = $request->nIdEstado;
         $nTipoRol = $request->tipoRol;
         $nIdTipoBusquedaAutorizacion = $request->nIdTipoBusquedaAutorizacion;
+        $cFlagEstadoAutorizacion = $request->cFlagEstadoAutorizacion;
+        $nIdSolicitudAutorizacion = $request->nIdSolicitudAutorizacion;
         $nIdVendedor = $request->nIdVendedor;
 
         switch ($nTipoRol) {
             case 1:
-                swItch ($nIdTipoBusquedaAutorizacion) {
+                switch ($nIdTipoBusquedaAutorizacion) {
                     case 1:
                         $nIdVendedor = Auth::user()->id;
                         break;
@@ -135,12 +152,12 @@ class AutorizacionController extends Controller
                 }
                 break;
             case 2:
-                swItch ($nIdTipoBusquedaAutorizacion) {
+                switch ($nIdTipoBusquedaAutorizacion) {
                     case 1:
                         $nIdVendedor = Auth::user()->id;
                         break;
                     case 2:
-                        $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
+                        $nIdVendedor = Auth::user()->id;
                         break;
                     default:
                         $nIdVendedor = 0;
@@ -148,7 +165,7 @@ class AutorizacionController extends Controller
                 }
                 break;
             case 3:
-                swItch ($nIdTipoBusquedaAutorizacion) {
+                switch ($nIdTipoBusquedaAutorizacion) {
                     case 1:
                         $nIdVendedor = Auth::user()->id;
                         break;
@@ -170,11 +187,11 @@ class AutorizacionController extends Controller
         $dFecha = ($dFecha == NULL) ? ($dFecha = ' ') : $dFecha;
         $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = 0) : $nIdAsigContacto;
         $nIdTipoBusquedaAutorizacion = ($nIdTipoBusquedaAutorizacion == NULL) ? ($nIdTipoBusquedaAutorizacion = 0) : $nIdTipoBusquedaAutorizacion;
+        $cFlagEstadoAutorizacion = ($cFlagEstadoAutorizacion == NULL) ? ($cFlagEstadoAutorizacion = 0) : $cFlagEstadoAutorizacion;
+        $nIdSolicitudAutorizacion = ($nIdSolicitudAutorizacion == NULL) ? ($nIdSolicitudAutorizacion = 0) : $nIdSolicitudAutorizacion;
         $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
 
-
-
-        $arrayMisSolicitudes = DB::select('exec usp_Autorizacion_GetLstAutorizaciones ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayMisSolicitudes = DB::select('exec usp_Autorizacion_GetLstAutorizaciones ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdTipoBusquedaVehiculo,
                                                                             $cNroVehiculo,
@@ -183,6 +200,8 @@ class AutorizacionController extends Controller
                                                                             $nIdEstado,
                                                                             $nTipoRol,
                                                                             $nIdTipoBusquedaAutorizacion,
+                                                                            $cFlagEstadoAutorizacion,
+                                                                            $nIdSolicitudAutorizacion,
                                                                             $nIdVendedor
                                                                         ]);
 
@@ -190,5 +209,45 @@ class AutorizacionController extends Controller
         return ['arrayMisSolicitudes'=>$arrayMisSolicitudes];
     }
 
+    public function SetConformeNoConforme(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
 
+        $nIdSolicitudAutorizacion = $request->nIdSolicitudAutorizacion;
+        $nIdEstadoSolicitudAutorizacion = $request->nIdEstadoSolicitudAutorizacion;
+        $cFlagEstadoAutorizacionControl = $request->cFlagEstadoAutorizacionControl;
+        $cNombreSupervisorInmediato = $request->cNombreSupervisorInmediato;
+        $nIdSupervisorInmediato = Auth::user()->id;
+        $objDetalleSolicitudAutorizacion = $request->objDetalleSolicitudAutorizacion;
+        $modalidadRecibirData = $request->modalidadRecibirData;
+
+        $data = DB::select('exec usp_Autorizacion_SetCambiarEstado ?, ?, ?, ?, ?, ?',
+                                                [
+                                                    $nIdSolicitudAutorizacion,
+                                                    $nIdEstadoSolicitudAutorizacion,
+                                                    trim($cFlagEstadoAutorizacionControl),
+                                                    $cNombreSupervisorInmediato,
+                                                    $nIdSupervisorInmediato,
+                                                    $modalidadRecibirData
+                                                ]);
+
+        $ruta = Storage::makeDirectory('public/SolicitudAutorizacion/conformeNOconforme');//CONSTRUYO EL DIRECTORIO DINAMICAMENTE
+        $bandera = str_random(10);//RANDOM 10 ALPHA NÚMERICO
+        $nombrePDFOriginal  = $request->cNombreSolicitudAutorizacion . '.pdf';//NOMBRE ORIGINAL DEL ARCHIVO
+        $nombrePDFToken     = $bandera .'_'. $nombrePDFOriginal;//NOMBRE ORIGINAL DEL ARCHIVO + TOKEN
+        $path = storage_path("app/public/SolicitudAutorizacion/conformeNOconforme/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
+        $pdf = \PDF::loadView('pdf.solicitudautorizacion.detallesolicitud', ['objDetalleSolicitudAutorizacion'   =>  $objDetalleSolicitudAutorizacion])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
+
+        //REGISTRO EN LA DB LA RUTA, NOMBRE Y USUARIO
+        $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',
+                                                        [
+                                                            asset('storage/SolicitudAutorizacion/conformeNOconforme/'. $nombrePDFToken),
+                                                            $nombrePDFOriginal,
+                                                            $nIdSupervisorInmediato
+                                                        ]);
+        //OBTENGO EL ID DEL DOCUMENTO GUARDADO
+        $nIdDocumentoAdjunto =  $arrayDocumento[0]->nIdDocumentoAdjunto;
+        //ACTUALIZO EL ID EN LA TABLA SCC
+        DB::select('exec usp_Autorizacion_SetIdDocumentoAdjunto ?, ?', [$nIdSolicitudAutorizacion, $nIdDocumentoAdjunto]);
+    }
 }
