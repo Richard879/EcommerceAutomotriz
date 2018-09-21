@@ -9,7 +9,7 @@
         <template v-if="vistaFormulario">
             <section class="forms">
                 <div class="container-fluid">
-                    <!--<div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
@@ -17,40 +17,51 @@
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">* Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="fillPuga.nidsucursal" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arraySucursal"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Tipo Elemento</label>
-                                        <div class="col-sm-4">
-                                            <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
-                                                <el-option
-                                                v-for="item in arrayTipoElemento"
-                                                :key="item.nIdPar"
-                                                :label="item.cParNombre"
-                                                :value="item.nIdPar">
-                                                </el-option>
-                                            </el-select>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Apellidos</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="fillPuga.cdescripcion" @keyup.enter="listarUsuarios(1)" class="form-control form-control-sm" placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Nombre Elemento</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-3">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento()"><i class="fa fa-search"></i> Buscar</button>
-                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('elemento','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                        <div class="col-sm-9 offset-sm-5">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarUsuarios(1)">
+                                                <i class="fa fa-search"></i> Buscar
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
@@ -63,6 +74,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Código</th>
+                                                    <th>Apellidos y Nombres</th>
                                                     <th>Usuario</th>
                                                     <th>Acciones</th>
                                                 </tr>
@@ -71,6 +83,7 @@
                                                 <tr v-for="usuario in arrayUsuarios" :key="usuario.nIdUsuario">
                                                     <td v-text="usuario.nIdUsuario"></td>
                                                     <td v-text="usuario.cNombreUsuario"></td>
+                                                    <td v-text="usuario.cUsuario"></td>
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                              <div slot="content">Ver Permisos {{ usuario.cNombreUsuario }}</div>
@@ -290,17 +303,27 @@
         data(){
             return {
                 cempresa: 'SAISAC',
+                //==========================================================
+                //===================== LISTAR USUARIOS ====================
+                fillPuga:{
+                    nidempresa: 1300011,
+                    nidsucursal: 0,
+                    cdescripcion: ''
+                },
                 arrayUsuarios: [],
+                arraySucursal: [],
+                //==========================================================
+                //================== REGISTRO PERMISOS =====================
+                formPuga:{
+                    nidusuario: 0
+                },
                 arrayTemproralPermisos: [],
                 arrayPermisos: [],
                 arrayTemporalSubPermisos: [],
                 arraySubPermisos: [],
                 arrayCheckPermisos: [],
                 arrayCheckSubPermisos: [],
-                formPuga:{
-                    nidusuario: 0,
-                    cnombreclase: 'treeview'
-                },
+                //==========================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -380,13 +403,31 @@
                 return pagesArray;
             }
         },
+        mounted(){
+            this.listarSucursal();
+        },
         methods:{
+            listarSucursal(){
+                var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arraySucursal = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             listarUsuarios(page){
                 var url = this.ruta + '/puga/GetLstUsuarios';
                 
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
+                        'nidsucursal': this.fillPuga.nidsucursal,
+                        'cdescripcion': this.fillPuga.cdescripcion,
                         'page' : page
                     }
                 }).then(response => {
@@ -601,7 +642,7 @@
             },
             cambiarVistaFormulario(){
                 //this.limpiarFormulario();
-                this.listarElementos(1);
+                this.listarUsuarios(1);
                 this.vistaFormulario = 1;
             },
             limpiarPaginacion(){
@@ -616,9 +657,6 @@
                 $("#myBar").show();
                 progress();
             }
-        },
-        mounted(){
-            this.listarUsuarios(1);
         }
     }
 </script>

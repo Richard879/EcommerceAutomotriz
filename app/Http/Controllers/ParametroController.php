@@ -259,4 +259,28 @@ class ParametroController extends Controller
         $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
         return ['arrayParametro'=>$arrayParametro];
     }
+
+    public function GetListSucursalByEmpresa(Request $request)
+    {
+        $nIdEmpresa = $request->nidempresa;
+        $variable   = $request->opcion;
+
+        $parametro = DB::select('exec [usp_Par_GetListSucursalByEmpresa] ?', 
+                                            [   $nIdEmpresa
+                                            ]);
+        $data = [];
+        if($variable == "0"){
+            $data[0] = [
+                'nIdPar'   => 0,
+                'cParNombre' =>'SELECCIONE',
+            ];
+        }
+        foreach ($parametro as $key => $value) {
+           $data[$key+1] =[
+                'nIdPar'   => $value->nIdPar,
+                'cParNombre' => $value->cParNombre,
+            ];
+        }
+        return response()->json($data);
+    }
 }

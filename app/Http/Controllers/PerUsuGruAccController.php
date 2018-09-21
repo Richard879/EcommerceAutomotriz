@@ -30,9 +30,14 @@ class PerUsuGruAccController extends Controller
     public function GetLstUsuarios(Request $request)
     { 
         $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $cDescripcion = $request->cdescripcion;
+        $cDescripcion = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
 
-        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios] ?', 
-                                                        [   $nIdEmpresa
+        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios] ?, ?, ?', 
+                                                        [   $nIdEmpresa,
+                                                            $nIdSucursal,
+                                                            $cDescripcion
                                                         ]);
 
         $arrayUsuarios = ParametroController::arrayPaginator($arrayUsuarios, $request);
