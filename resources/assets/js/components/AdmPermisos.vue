@@ -540,7 +540,7 @@
                 var url = this.ruta + '/puga/SetPermisosByUsuario';
                 axios.post(url, {
                     'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
+                    'nIdSucursal': this.fillPuga.nidsucursal,
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario,
                     'arrayData':   this.arrayTemproralPermisos
