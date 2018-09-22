@@ -273,12 +273,14 @@ class ParametroController extends Controller
             $data[0] = [
                 'nIdPar'   => 0,
                 'cParNombre' =>'SELECCIONE',
+                'cParAbreviatura' =>'SELECCIONE',
             ];
         }
         foreach ($parametro as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdPar,
                 'cParNombre' => $value->cParNombre,
+                'cParAbreviatura' => $value->cParAbreviatura,
             ];
         }
         return response()->json($data);

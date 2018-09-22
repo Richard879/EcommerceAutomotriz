@@ -439,7 +439,7 @@
                 fillFormularioGeneral: {
                     nidempresa: 1300011,
                     cempresa: 'SAISAC',
-                    nidsucursal: 1300013,
+                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
                     csucursal: 'CHICLAYO',
                     nidcronograma: 0,
                     caño: '',

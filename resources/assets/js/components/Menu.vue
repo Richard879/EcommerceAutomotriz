@@ -22,8 +22,13 @@ export default {
                 arraySubMenu:[]
             }
         },
-        mounted(){
-            this.listarPermisosByUsuario();
+        created(){
+            let me = this;
+            this.$bus.$on('event', function (data) { 
+               //console.log(data);
+               me.listarPermisosByUsuario();
+            })
+           //this.$bus.$on('logged-in', this.mostrar);
         },
         methods:{
             listarPermisosByUsuario(){
@@ -31,7 +36,7 @@ export default {
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'idsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'nidusuario': this.usuario.id,
                         'nlenjerarquia': 4
                     }
@@ -47,7 +52,7 @@ export default {
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'idsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'nidusuario': this.usuario.id,
                         'nlenjerarquia': 6
                     }

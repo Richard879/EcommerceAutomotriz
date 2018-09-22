@@ -1156,7 +1156,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -1230,7 +1230,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio' : this.formPedido.dfechainicio,
                         'dfechafin' : this.formPedido.dfechafin,
                         'nidmarca' : this.formPedido.nidmarca,
@@ -1306,7 +1306,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion,
                         'cnumerovin' : this.formCompra.cnumerovin,
                         'page' : page
@@ -1369,7 +1369,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
                     }
                 }).then(response => {
@@ -1468,7 +1468,7 @@
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
                     'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
+                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
                     'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
                     'nIdCompra': this.formDocRef.nidcompra,
                     'cNumeroPedido': 'PEDIDO-001',
