@@ -966,7 +966,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -1193,7 +1193,7 @@
                 var url = this.ruta + '/deposito/SetDepositoPedido';
                 axios.post(url, {
                     'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
+                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
                     'nIdTipoMovimiento': this.formDeposito.nidtipomovimiento,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,
@@ -1291,7 +1291,7 @@
                 var url = this.ruta + '/deposito/SetDepositoPedido';
                 axios.post(url, {
                     'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
+                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
                     'nIdTipoMovimiento': this.formDeposito.nidtipomovimiento,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,

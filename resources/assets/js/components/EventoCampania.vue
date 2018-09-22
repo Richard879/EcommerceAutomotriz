@@ -1783,7 +1783,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidproveedor' : this.formEventoCamp.nidproveedor,
                         'page' : page
                     }
@@ -2312,7 +2312,7 @@
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
                     cNombreEventoCampania: this.formEventoCamp.descripcion,
                     nIdTipoEvento: this.formEventoCamp.ntipo,

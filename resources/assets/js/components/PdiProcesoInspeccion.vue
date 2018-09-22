@@ -544,7 +544,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'cnombre': this.fillPunto.cnombre,
                         'page' : page
                     }
@@ -577,7 +577,7 @@
                 var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';    
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     cNombrePuntoInspeccion: this.formPunto.cnombre,
                     nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
                     nFlagIngresoSucursal: this.formPunto.nidflagingreso,
@@ -681,7 +681,7 @@
                 axios.post(url, {
                     nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     cNombrePuntoInspeccion: this.formPunto.cnombre,
                     nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
                     nFlagIngresoSucursal: this.formPunto.nidflagingreso,

@@ -589,7 +589,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'nidproveedor': this.formAsignaModelo.nidproveedor,
                         'nidlinea': this.fillVendedor.nidlineaventa,
                         'nidmarca': this.fillVendedor.nidmarca,
@@ -769,7 +769,7 @@
                 var url = this.ruta + '/asignavendedormodelo/SetAsignaModelo';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdProveedor: parseInt(this.formAsignaModelo.nidproveedor),
                     nIdVendedor: nIdMiVendedor,
                     nIdLinea: parseInt(this.fillVendedor.nidlineaventa),

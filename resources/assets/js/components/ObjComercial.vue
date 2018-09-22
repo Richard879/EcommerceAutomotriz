@@ -503,7 +503,7 @@
             return {
                 nidempresa: 1300011,
                 cempresa: 'SAISAC',
-                nidsucursal: 1300013,
+                nidsucursal: sessionStorage.getItem("nIdSucursal"),
                 csucursal: 'CHICLAYO',
                 // ===========================================================
                 // ===================== VARIABLES TAB COMPRA ================
@@ -754,7 +754,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'nidcronograma': this.fillObjComercialCompra.nidcronograma,
                         'nidproveedor': this.fillProveedor.nidproveedor,
                         'nidlinea': this.fillObjComercialCompra.nidlinea,
@@ -844,7 +844,7 @@
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialCompra';
                 axios.post(url, {
                     'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   1300013,
+                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialCompra.nidcronograma,
                     'cFlagTipoOperacion'    :   'C',
@@ -899,7 +899,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'nidcronograma': this.fillObjComercialVenta.nidcronograma,
                         'nidproveedor': this.fillProveedor.nidproveedor,
                         'nidlinea': this.fillObjComercialVenta.nidlinea,
@@ -943,7 +943,7 @@
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialVenta';
                 axios.post(url, {
                     'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   1300013,
+                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialVenta.nidcronograma,
                     'cFlagTipoOperacion'    :   'V',

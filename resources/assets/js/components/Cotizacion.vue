@@ -2015,7 +2015,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': 1300013,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio': this.fillMisCotizaciones.dfechainicio,
                         'dfechafin': this.fillMisCotizaciones.dfechafin,
                         'nidmarca': this.fillMisCotizaciones.nidmarca,
@@ -2131,7 +2131,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillBusqContacto.ntipopersona,
                         'cnrodocumento' : String(this.fillBusqContacto.ccontactodocumento.toString()),
@@ -2193,7 +2193,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcontacto' : this.fillAsignarContacto.nidcontacto
                     }
                 }).then(response => {
@@ -2916,7 +2916,7 @@
                     'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
                     'cNumeroCotizacion' : 'COT-001',
                     'nIdEmpresa' : 1300011,
-                    'nIdSucursal':1300013,
+                    'nIdSucursal':sessionStorage.getItem("nIdSucursal"),
                     'nIdReferencia':1300129,
                     'dFechaCotizacion':moment().format('YYYY-MM-DD'),
                     'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),

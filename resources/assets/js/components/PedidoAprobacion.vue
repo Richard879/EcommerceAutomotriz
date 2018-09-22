@@ -230,7 +230,7 @@
                 fillBusquedaPedido:{
                     nidempresa: 1300011,
                     cempresa: 'SAISAC',
-                    nidsucursal: 1300013,
+                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
                     csucursal: 'CHICLAYO',
                     nidlinea: 0,
                     nidmarca: 0,

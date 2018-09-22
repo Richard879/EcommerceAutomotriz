@@ -1259,7 +1259,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio' : this.fillCompra.dfechainicio,
                         'dfechafin' : this.fillCompra.dfechafin,
                         'nordencompra' : nordencompra,
@@ -1442,7 +1442,7 @@
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdCronograma: 220011,
                     nIdProveedor: parseInt(this.formCompra.nidproveedor),
                     nIdTipoLista: parseInt(this.formCompra.nidtipolista),
@@ -1563,7 +1563,7 @@
                 var url = this.ruta + '/compra/UpdCompraById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdCompra: this.formModalCompra.nidcompra,
                     cNumeroVin: this.formModalCompra.cnumerovin,
                     cNumeroMotor: this.formModalCompra.cnumeromotor,
@@ -1616,7 +1616,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio' : this.fillCompra.dfechainicio,
                         'dfechafin' : this.fillCompra.dfechafin,
                         'nordencompra' : nordencompra,
@@ -1664,7 +1664,7 @@
                 var url = this.ruta + '/compra/UpdCompraLineaCreditoById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: 1300013,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     data: this.arrayTempLineaCredito
                 }).then(response => {
                     this.listarCompraNoLineaCredito(1);

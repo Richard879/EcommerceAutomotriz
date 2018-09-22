@@ -829,7 +829,7 @@
             },
             listarVersionVehiculo(page){
                 this.nidempresa = 1300011;
-                this.nidsucursal = 1300013;
+                this.nidsucursal = sessionStorage.getItem("nIdSucursal");
 
                 var url = this.ruta + '/compra/GetCompraSinWOperativo?nidempresa=' + this.nidempresa
                                                                     + '&nidsucursal=' + this.nidsucursal

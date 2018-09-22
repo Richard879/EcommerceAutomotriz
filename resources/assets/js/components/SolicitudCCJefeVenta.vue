@@ -1869,7 +1869,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'cnumberovin' : this.fillVIN.cvin.toString(),
                         'page' : page
                     }
@@ -1910,7 +1910,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
