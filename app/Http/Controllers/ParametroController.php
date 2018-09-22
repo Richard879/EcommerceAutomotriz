@@ -135,7 +135,7 @@ class ParametroController extends Controller
         $arrayModelo = DB::select('exec [usp_Par_GetModeloByProveedor] ?, ?, ?',
                                                             [   $nIdEmpresa, 
                                                                 $nIdProveedor, 
-                                                                $cModeloNombr
+                                                                $cModeloNombre
                                                             ]);
 
         $arrayModelo = $this->arrayPaginator($arrayModelo, $request);
