@@ -16,8 +16,8 @@ class CotizacionController extends Controller
         $nidproveedor = $request->nidproveedor;
         $tipoLista = $request->nidtipolista;
 
-        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?', 
-                                                        [   $nidproveedor, 
+        $arrayTipoLista = DB::select('exec [usp_Cotizacion_GetListTipoLista] ?, ?',
+                                                        [   $nidproveedor,
                                                             $tipoLista
                                                         ]);
 
@@ -45,7 +45,7 @@ class CotizacionController extends Controller
                                                                             $nidmodelo,
                                                                             $cnombrecomercial
                                                                         ]);
-        
+
         $arrayListaVehiculos = ParametroController::arrayPaginator($arrayListaVehiculos, $request);
         return ['arrayListaVehiculos'=>$arrayListaVehiculos];
     }
@@ -228,12 +228,13 @@ class CotizacionController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdContacto = $request->nidcontacto;
+        $nIdUsuario = $request->nidusuario;
 
         $arraySegReferenciavehiculo = DB::select('exec [usp_Cotizacion_GetRefVehiculoByContacto] ?, ?, ?, ?',
                                                                             [   $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $nIdContacto,
-                                                                                Auth::user()->id
+                                                                                ($nIdUsuario == 'ADV') ? 0 : Auth::user()->id
                                                                             ]);
 
         $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);

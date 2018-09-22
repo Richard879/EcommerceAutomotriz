@@ -483,7 +483,7 @@
                                                                                                     <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
                                                                                                 </el-input>
                                                                                             </div>
-                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110025)" circle></el-button>
+                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110083)" circle></el-button>
                                                                                         </el-row>
                                                                                     </div>
                                                                                 </div>
@@ -1340,20 +1340,6 @@
                     console.log(error);
                 });
             },
-            informacionJefeInmediato(data){
-                var url = this.ruta + '/parametro/GetParametroById';
-                axios.get(url, {
-                    params: {
-                        'nidpar' : data.nIdParParent,
-                        'nidgrupopar': 110083
-                    }
-                }).then(response => {
-                    this.fillNuevaSolicitud.nidjefeinmediato = response.data[0].nIdPar;
-                    this.fillNuevaSolicitud.cnombrejefeinmediato = response.data[0].cParNombre;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             // =================================================================
             // METODOS TAB MIS SOLICTIDUES
             // =================================================================
@@ -1481,24 +1467,24 @@
                 let info = data;
                 let op = modalidad;
                 this.$nextTick().then(function () {
-                    me.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion    = (op == 1) ? info.nIdSolicitudAutorizacion : info[0].nIdSolicitudAutorizacion;
-                    me.fillModalSolicitudAutorizacion.cNroSolicitud               = (op == 1) ? info.cNroSolicitud : info[0].cNroSolicitud;
-                    me.fillModalSolicitudAutorizacion.cTipoSolicitud              = (op == 1) ? info.cTipoSolicitud : info[0].cTipoSolicitud;
-                    me.fillModalSolicitudAutorizacion.cNombreMarca                = (op == 1) ? info.cNombreMarca : info[0].cNombreMarca;
-                    me.fillModalSolicitudAutorizacion.cNombreModelo               = (op == 1) ? info.cNombreModelo : info[0].cNombreModelo;
+                    me.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion    = (op == 1) ? info.nIdSolicitudAutorizacion   : info[0].nIdSolicitudAutorizacion;
+                    me.fillModalSolicitudAutorizacion.cNroSolicitud               = (op == 1) ? info.cNroSolicitud              : info[0].cNroSolicitud;
+                    me.fillModalSolicitudAutorizacion.cTipoSolicitud              = (op == 1) ? info.cTipoSolicitud             : info[0].cTipoSolicitud;
+                    me.fillModalSolicitudAutorizacion.cNombreMarca                = (op == 1) ? info.cNombreMarca               : info[0].cNombreMarca;
+                    me.fillModalSolicitudAutorizacion.cNombreModelo               = (op == 1) ? info.cNombreModelo              : info[0].cNombreModelo;
                     me.fillModalSolicitudAutorizacion.cAnioModelo                 = (op == 1) ? info.nAnioFabricacion + ' ' + info.nAnioVersion :
                                                                                                         info[0].nAnioFabricacion + ' ' + info[0].nAnioVersion;
-                    me.fillModalSolicitudAutorizacion.cNombreColor                = (op == 1) ? info.cNombreColor : info[0].cNombreColor;
-                    me.fillModalSolicitudAutorizacion.cNroVehiculo                = (op == 1) ? info.cNroVehiculo : info[0].cNroVehiculo;
-                    me.fillModalSolicitudAutorizacion.cContacto                   = (op == 1) ? info.cContacto : info[0].cContacto;
-                    me.fillModalSolicitudAutorizacion.cNumeroDocumento            = (op == 1) ? info.cNumeroDocumento : info[0].cNumeroDocumento;
-                    me.fillModalSolicitudAutorizacion.cNumeroLicenciaConducir     = (op == 1) ? info.cNumeroLicenciaConducir : info[0].cNumeroLicenciaConducir;
-                    me.fillModalSolicitudAutorizacion.cAsesorEncargado            = (op == 1) ? info.Vendedor : info[0].Vendedor;
-                    me.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato  = (op == 1) ? info.cNombreSupervisorInmediato : info[0].Vendedor;
-                    me.fillModalSolicitudAutorizacion.cLugarPartida               = (op == 1) ? info.cLugarPartida : info[0].cLugarPartida;
-                    me.fillModalSolicitudAutorizacion.cLugarLlegada               = (op == 1) ? info.cLugarLlegada : info[0].cLugarLlegada;
-                    me.fillModalSolicitudAutorizacion.cFechaSolicitud             = (op == 1) ? info.cFechaSolicitud : info[0].cFechaSolicitud;
-                    me.fillModalSolicitudAutorizacion.cHoraMovimientoVehiculo     = (op == 1) ? info.cHoraMovimientoVehiculo : info[0].cHoraMovimientoVehiculo;
+                    me.fillModalSolicitudAutorizacion.cNombreColor                = (op == 1) ? info.cNombreColor               : info[0].cNombreColor;
+                    me.fillModalSolicitudAutorizacion.cNroVehiculo                = (op == 1) ? info.cNroVehiculo               : info[0].cNroVehiculo;
+                    me.fillModalSolicitudAutorizacion.cContacto                   = (op == 1) ? info.cContacto                  : info[0].cContacto;
+                    me.fillModalSolicitudAutorizacion.cNumeroDocumento            = (op == 1) ? info.cNumeroDocumento           : info[0].cNumeroDocumento;
+                    me.fillModalSolicitudAutorizacion.cNumeroLicenciaConducir     = (op == 1) ? info.cNumeroLicenciaConducir    : info[0].cNumeroLicenciaConducir;
+                    me.fillModalSolicitudAutorizacion.cAsesorEncargado            = (op == 1) ? info.Vendedor                   : info[0].Vendedor;
+                    me.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato  = (op == 1) ? info.cNombreSupervisorInmediato : info[0].cNombreSupervisorInmediato;
+                    me.fillModalSolicitudAutorizacion.cLugarPartida               = (op == 1) ? info.cLugarPartida              : info[0].cLugarPartida;
+                    me.fillModalSolicitudAutorizacion.cLugarLlegada               = (op == 1) ? info.cLugarLlegada              : info[0].cLugarLlegada;
+                    me.fillModalSolicitudAutorizacion.cFechaSolicitud             = (op == 1) ? info.cFechaSolicitud            : info[0].cFechaSolicitud;
+                    me.fillModalSolicitudAutorizacion.cHoraMovimientoVehiculo     = (op == 1) ? info.cHoraMovimientoVehiculo    : info[0].cHoraMovimientoVehiculo;
                 })
                 //Solo si es JV
                 if(op == 2){
@@ -1513,9 +1499,9 @@
                     'nIdSolicitudAutorizacion' : this.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion,
                     'nIdEstadoSolicitudAutorizacion': (data == 1) ? 1300240 : 1300241,
                     'cFlagEstadoAutorizacionControl': (data == 1) ? 'A' : 'D',
-                    'cNombreSupervisorInmediato': this.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato,
+                    'cNombreSupervisorInmediato': this.fillNuevaSolicitud.cnombrejefeinmediato,
                     'cNombreSolicitudAutorizacion' : (!this.fillModalSolicitudAutorizacion.cContacto) ?
-                                                                this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cAsesorEncargado :
+                                                                this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillNuevaSolicitud.cnombrejefeinmediato :
                                                                 this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cContacto,
                     'objDetalleSolicitudAutorizacion' : this.fillModalSolicitudAutorizacion,
                     'modalidadRecibirData' : op
@@ -1656,7 +1642,8 @@
                     params: {
                         'nidempresa' : 1300011,
                         'nidsucursal' : 1300013,
-                        'nidcontacto' : this.fillNuevaSolicitud.nidcontacto
+                        'nidcontacto' : this.fillNuevaSolicitud.nidcontacto,
+                        'nidusuario' : 'ADV'
                     }
                 }).then(response => {
                     let info = response.data.arraySegReferenciavehiculo;
@@ -1679,6 +1666,8 @@
             tabNuevaSolicitud(){
                 this.limpiarNuevaSolicitud();
                 this.tabDatosSolicitud();
+                this.checked = true;
+                this.updateEstadoChecked();
             },
             limpiarNuevaSolicitud(){
                 //datos solicitud
@@ -1822,6 +1811,7 @@
                     'cFlagEstadoSolAutori'  :   'A',
                     'cFlagJeveVentas'       :   'ADV'
                 }).then(response => {
+                    console.log(response.data);
                     swal('Solicitud de Autorización registrada exitosamente');
                     this.getDetalleSolicitudConforme(response.data);//Capturar datos para la generación del PDF
                     this.limpiarMisSolicitudes();
@@ -1883,7 +1873,7 @@
                         'dFecha' : '',
                         'nIdAsigContacto' : '',
                         'nIdEstado' : '',
-                        'tipoRol': 2,
+                        'tipoRol': 3,
                         'nIdTipoBusquedaAutorizacion': 1,
                         'cFlagEstadoAutorizacion' : '',
                         'nIdSolicitudAutorizacion' : data['nIdSolicitudAutorizacion'],
@@ -1892,6 +1882,7 @@
                 }).then(response => {
                     let me = this;
                     let info = response.data.arrayMisSolicitudes.data;
+                    console.log(info);
                     me.getDetalleSolicitud(info, 2);
                 }).catch(error => {
                     console.log(error);
@@ -1972,10 +1963,10 @@
                                         me.$emit('vista', 200307);//VENDEDORES
                                         break;
                                     case 110025:
-                                        me.$emit('vista', 200206);//JEFE DE VENTAS
+                                        me.$emit('vista', 200306);//JEFE DE VENTAS
                                         break;
                                     case 110083:
-                                        me.$emit('vista', 200222);//ADMINISTRADOR DE VENDEDORES
+                                        me.$emit('vista', 200323);//ADMINISTRADOR DE VENDEDORES
                                         break;
                                     default:
                                         break;
@@ -2059,9 +2050,6 @@
     }
     .el-select {
         width: 100%;
-    }
-    .el-select .el-input {
-        width: 120px;
     }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;

@@ -3,10 +3,14 @@
             <span class="heading">MENÚ PRINCIPAL</span>
             <ul class="list-unstyled">
                 <li v-for="menu in arrayMenu" :key="menu.nIdPar">
-                    <a v-bind:href="menu.cReferencia" aria-expanded="false" data-toggle="collapse"> <i v-bind:class="menu.cParIcon"></i>{{ menu.cParNombre }}</a>
+                    <a v-bind:href="menu.cReferencia" aria-expanded="false" data-toggle="collapse">
+                        <i v-bind:class="menu.cParIcon"></i>{{ menu.cParNombre }}
+                    </a>
                     <ul v-bind:id="menu.cParJerarquia" class="collapse list-unstyled ">
                         <div v-for="submenu in arraySubMenu" :key="submenu.nIdPar">
-                            <li v-if="submenu.nCanJerarquia==menu.cParJerarquia" v-bind:id="submenu.cParJerarquia" @click="activaMenu(submenu.nIdPar,submenu.cParJerarquia)"><a href="#">{{ submenu.cParNombre }}</a></li>
+                            <li v-if="submenu.nCanJerarquia==menu.cParJerarquia" v-bind:id="submenu.cParJerarquia" @click="activaMenu(submenu.nIdPar,submenu.cParJerarquia)">
+                                <a href="#">{{ submenu.cParNombre }}</a>
+                            </li>
                         </div>
                     </ul>
                 </li>
@@ -24,7 +28,7 @@ export default {
         },
         created(){
             let me = this;
-            this.$bus.$on('event', function (data) { 
+            this.$bus.$on('event', function (data) {
                //console.log(data);
                me.listarPermisosByUsuario();
             })

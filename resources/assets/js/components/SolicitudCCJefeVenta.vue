@@ -2605,9 +2605,6 @@
         text-align: center;
         margin: auto;
     }
-    .el-select .el-input {
-        width: 120px;
-    }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;
     }

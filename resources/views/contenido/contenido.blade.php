@@ -98,4 +98,7 @@
     <template v-if="menu==200322">
         <pdiprocesoinspeccion :ruta="ruta"></pdiprocesoinspeccion>
     </template>
+    <template v-if="menu==200323">
+        <gestioncontactoadv :ruta="ruta"></gestioncontactoadv>
+    </template>
 @endsection

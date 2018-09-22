@@ -1484,10 +1484,10 @@
                                         me.$emit('vista', 200307);//VENDEDORES
                                         break;
                                     case 110025:
-                                        me.$emit('vista', 200206);//JEFE DE VENTAS
+                                        me.$emit('vista', 200306);//JEFE DE VENTAS
                                         break;
                                     case 110083:
-                                        me.$emit('vista', 200222);//ADMINISTRADOR DE VENDEDORES
+                                        me.$emit('vista', 200323);//ADMINISTRADOR DE VENDEDORES
                                         break;
                                     default:
                                         break;
@@ -1558,9 +1558,6 @@
     }
     .el-select {
         width: 100%;
-    }
-    .el-select .el-input {
-        width: 120px;
     }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;
