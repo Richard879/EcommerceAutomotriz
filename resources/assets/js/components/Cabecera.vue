@@ -40,7 +40,7 @@ export default {
             },
             changeSucursal(){
                 sessionStorage.setItem("nIdSucursal", this.formCabecera.nidsucursal);
-                //this.$emit('cabecera', this.formCabecera.nidsucursal);
+                this.$emit('cabecera', this.formCabecera.nidsucursal);
                 this.$bus.$emit('event', this.formCabecera);
             }
         },

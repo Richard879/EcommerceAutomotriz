@@ -51,13 +51,12 @@ const app = new Vue({
     data: {
         menu: 0,
         ruta: 'http://localhost:8080/saisacsys/public'
-        //changeMenu: 0
     },
     methods: {
-        /*listarMenu: function(data) {
+        reiniciaMenu: function(data) {
             let me = this;
-            me.changeMenu = data;
-        },*/
+            me.menu = 0;
+        },
         mostrarMenu: function(data) {
             let me = this;
             me.menu = data;
