@@ -50,14 +50,14 @@ const app = new Vue({
     el: '#app',
     data: {
         menu: 0,
-        ruta: 'http://localhost:8080/saisacsys/public',
-        changeMenu: 0
+        ruta: 'http://localhost:8080/saisacsys/public'
+        //changeMenu: 0
     },
     methods: {
-        listarMenu: function(data) {
+        /*listarMenu: function(data) {
             let me = this;
             me.changeMenu = data;
-        },
+        },*/
         mostrarMenu: function(data) {
             let me = this;
             me.menu = data;

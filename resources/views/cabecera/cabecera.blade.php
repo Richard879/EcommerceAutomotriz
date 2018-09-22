@@ -1,3 +1,3 @@
 <template>
-    <cabecera :ruta="ruta" @cabecera="listarMenu" :usuario="{{ auth()->user() }}"></cabecera>
+    <cabecera :ruta="ruta" :usuario="{{ auth()->user() }}"></cabecera>
 </template>
