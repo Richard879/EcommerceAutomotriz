@@ -56,7 +56,21 @@ class AutorizacionController extends Controller
         $cNroDocumento = $request->cnrodocumento;
         $cFiltroDescripcion = $request->cfiltrodescripcion;
         $nIdTipoRol  = $request->tipoRol;
-        $nIdVendedor = Auth::user()->id;
+
+        switch ($nIdTipoRol) {
+            case 1:
+                $nIdVendedor = Auth::user()->id;
+                break;
+            case 2:
+                $nIdVendedor = Auth::user()->id;
+                break;
+            case 3:
+                $nIdVendedor = 0;
+                break;
+            default:
+                $nIdVendedor = 0;
+                break;
+        }
 
         $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
@@ -170,7 +184,7 @@ class AutorizacionController extends Controller
                         $nIdVendedor = Auth::user()->id;
                         break;
                     case 2:
-                        $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
+                        $nIdVendedor = ($nIdVendedor == null) ? Auth::user()->id : $nIdVendedor;
                         break;
                     default:
                         $nIdVendedor = 0;

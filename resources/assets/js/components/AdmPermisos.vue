@@ -422,7 +422,7 @@
             },
             listarUsuarios(page){
                 var url = this.ruta + '/puga/GetLstUsuarios';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -481,12 +481,12 @@
                 });
             },
             llenarCheckBox(){
-                let me = this;  
+                let me = this;
                 me.arrayPermisos.map(function(value, key){
-                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica               
+                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica
                 });
                 me.arraySubPermisos.map(function(value, key){
-                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica               
+                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica
                 });
 
                 jQuery(function ($) {
@@ -524,8 +524,8 @@
                     'nIdSucursal': 1300013,
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario
-                }).then(response => {   
-                    this.registrarPermisos();                 
+                }).then(response => {
+                    this.registrarPermisos();
                 }).catch(error => {
                     this.errors = error
                 });
