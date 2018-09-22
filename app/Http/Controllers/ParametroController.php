@@ -122,7 +122,7 @@ class ParametroController extends Controller
                                                             ]);
 
         $arrayMarca = $this->arrayPaginator($arrayMarca, $request);
-        return ['arrayMarca'=>$arrayMarca];
+        return ['arrayMarca'=>$arrayMarca]; 
     }
 
     public function GetModelosByProveedor(Request $request)
