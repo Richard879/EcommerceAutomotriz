@@ -40,6 +40,12 @@ export default {
             },
             changeSucursal(){
                 sessionStorage.setItem("nIdSucursal", this.formCabecera.nidsucursal);
+                /*$.each(this.arraySucursal, function (index, value) {
+                    if(value.nIdPar == this.formCabecera.nidsucursal){
+                        sessionStorage.setItem("cNombreSucursal", value.cParAbreviatura);
+                        alert(sessionStorage.getItem("cNombreSucursal"));
+                    }
+                });*/
                 this.$emit('cabecera', this.formCabecera.nidsucursal);
                 this.$bus.$emit('event', this.formCabecera);
             }

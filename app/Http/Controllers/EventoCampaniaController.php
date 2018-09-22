@@ -194,7 +194,7 @@ class EventoCampaniaController extends Controller
                                                             [   $nIdEventoCampania
                                                             ]);
         
-        $arrayElementoDistribucion = $this->arrayPaginator($arrayElementoDistribucion, $request);
+        $arrayElementoDistribucion = ParametroController::arrayPaginator($arrayElementoDistribucion, $request);
         return ['arrayElementoDistribucion'=>$arrayElementoDistribucion]; 
     }
 
