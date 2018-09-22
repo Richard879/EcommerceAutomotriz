@@ -146,16 +146,19 @@
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
-                                    <div id="lsttreegrupo">
-                                        <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
-                                            <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
-                                                <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
-                                                    <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
-                                                    {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                    <div class="col-lg-6"  style="max-height: 515px; overflow-x: auto;">
+                                        <div id="lsttreegrupo">
+                                            <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
+                                                <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
+                                                    <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
+                                                        <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
+                                                        {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
+                                    <hr/>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-4">
                                             <button type="button" v-if="accion==2" class="btn btn-success btn-corner btn-sm" @click="seleccionaPermisos()">
@@ -540,7 +543,7 @@
                 var url = this.ruta + '/puga/SetPermisosByUsuario';
                 axios.post(url, {
                     'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
+                    'nIdSucursal': this.fillPuga.nidsucursal,
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario,
                     'arrayData':   this.arrayTemproralPermisos
