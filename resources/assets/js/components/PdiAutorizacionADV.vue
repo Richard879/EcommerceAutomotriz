@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom"> AUTORIZACIÓN - JEFE DE VENTAS </h2>
+            <h2 class="no-margin-bottom"> AUTORIZACIÓN - ADMINISTRADOR DE VENTAS </h2>
           </div>
         </header>
 
@@ -1818,9 +1818,9 @@
                     'cLugarPartida'         :   this.fillNuevaSolicitud.clugarpartida,
                     'cLugarLlegada'         :   this.fillNuevaSolicitud.clugarllegada,
                     'nIdMoverVehiculo'      :   this.fillNuevaSolicitud.nidmovervehiculo,
-                    'nIdEstadoSolAutori'    :   1300238,
-                    'cFlagEstadoSolAutori'  :   'C',
-                    'cFlagJeveVentas'       :   'JV'
+                    'nIdEstadoSolAutori'    :   1300240,
+                    'cFlagEstadoSolAutori'  :   'A',
+                    'cFlagJeveVentas'       :   'ADV'
                 }).then(response => {
                     swal('Solicitud de Autorización registrada exitosamente');
                     this.getDetalleSolicitudConforme(response.data);//Capturar datos para la generación del PDF
