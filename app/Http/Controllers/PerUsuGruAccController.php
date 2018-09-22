@@ -12,7 +12,7 @@ class PerUsuGruAccController extends Controller
     public function GetListPermisosByUser(Request $request)
     { 
         $nIdEmpresa = $request->nidempresa;
-        $nIdSucursal = $request->idsucursal;
+        $nIdSucursal = $request->nidsucursal;
         $nIdUsuario = $request->nidusuario;
         $nLenJerarquia = $request->nlenjerarquia;
 

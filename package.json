@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "element-ui": "^2.4.6",
+        "vue-event-bus": "^1.0.2",
         "vue-simple-calendar": "^4.0.2"
     }
 }
