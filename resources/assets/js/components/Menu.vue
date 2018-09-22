@@ -45,7 +45,7 @@ export default {
                     this.listarSubPermisosByUsuario();
                 }).catch(error => {
                     console.log(error);
-                }); 
+                });
             },
             listarSubPermisosByUsuario(){
                 var url = this.ruta + '/puga/GetListPermisosByUser';
@@ -60,12 +60,12 @@ export default {
                     this.arraySubMenu = response.data.arrayMenu.data;
                 }).catch(error => {
                     console.log(error);
-                }); 
+                });
             },
             activaMenu(nIdMenu, cParJerarquia){
                 let me = this;
                 me.$emit('menu', cParJerarquia);
-                
+
                 $('ul li.active').removeClass('active');
                 var mimenu = document.getElementById(cParJerarquia);
                 $(mimenu).addClass('active');

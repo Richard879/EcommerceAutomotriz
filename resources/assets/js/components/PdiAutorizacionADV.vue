@@ -2,7 +2,7 @@
     <main>
         <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom"> AUTORIZACIÓN</h2>
+            <h2 class="no-margin-bottom"> AUTORIZACIÓN - JEFE DE VENTAS </h2>
           </div>
         </header>
 
@@ -18,7 +18,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabNuevaSolicitud" @click.prevent="tabNuevaSolicitud" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="tab02" href="#TabSolicitudesJefeVentas" role="tab" @click.prevent="tabSolicitudesJefeVentas" data-toggle="tab">
+                                        <i class="fa fa-search"></i> SOLICITUDES JEFE VENTAS
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab03" href="#TabNuevaSolicitud" @click.prevent="tabNuevaSolicitud" role="tab" data-toggle="tab">
                                         <i class="fa fa-list-alt"></i> NUEVA SOLICITUD
                                     </a>
                                 </li>
@@ -140,47 +145,29 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="carta in arrayMisSolicitudes" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                <tr v-for="carta in arrayMisSolicitudes" :key="carta.nIdSolicitudAutorizacion">
                                                                                     <td v-text="carta.cFechaSolicitud"></td>
                                                                                     <td v-text="carta.cTipoSolicitud"></td>
                                                                                     <td v-text="carta.cNroSolicitud"></td>
                                                                                     <td v-text="carta.cContacto"></td>
                                                                                     <td v-text="carta.cNroVehiculo"></td>
                                                                                     <td v-text="carta.cEstado"></td>
-                                                                                    <td v-text="carta.AprobadoPor"></td>
+                                                                                    <template v-if="carta.cEstadoEvolucion == ''">
+                                                                                        <td>------</td>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <td v-text="carta.cEstadoEvolucion"></td>
+                                                                                    </template>
                                                                                     <td>
-                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cEstado == '1300238' || carta.cEstado == '1300240'" target="_blank">
+                                                                                        <a :href="carta.cRutaDocumento"
+                                                                                                  v-if="carta.cFlagEstadoAutorizacionControl != 'P '"
+                                                                                                        target="_blank">
                                                                                             <i class='fa-md fa fa-file'></i>
                                                                                         </a>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
-                                                                        <div class="col-lg-12">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-7">
-                                                                                    <nav>
-                                                                                        <ul class="pagination">
-                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                            </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                            :class="[page==isActived?'active':'']">
-                                                                                                <a class="page-link"
-                                                                                                href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
-                                                                                                v-text="page"></a>
-                                                                                            </li>
-                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </nav>
-                                                                                </div>
-                                                                                <div class="col-lg-5">
-                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                 </template>
                                                                 <template v-else>
@@ -188,6 +175,215 @@
                                                                         <td>No existen registros</td>
                                                                     </tr>
                                                                 </template>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-7">
+                                                                        <nav>
+                                                                            <ul class="pagination">
+                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                </li>
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                :class="[page==isActived?'active':'']">
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
+                                                                                    v-text="page"></a>
+                                                                                </li>
+                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    <div class="col-lg-5">
+                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="TabSolicitudesJefeVentas">
+                                    <section class="forms">
+                                        <div class="container-fluid">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">BANDEJA SOLICITUDES DE JEFE DE VENTAS.</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-8 offset-md-1">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">
+                                                                            <el-radio-group v-model="fillBusquedaSolicitud.nidtipobusqueda" @change="cambiarVehiculoByCriterio">
+                                                                                <el-radio v-for="tipobsq in arrayTipoBusquedaVehiculo" :key="tipobsq.id" :label="tipobsq.value"> {{ tipobsq.text }} </el-radio>
+                                                                            </el-radio-group>
+                                                                        </label>
+                                                                        <div class="col-md-8 widthFull">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Busque en base a un criterio" v-model="fillBusquedaSolicitud.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 1)"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">Fecha</label>
+                                                                        <div class="col-sm-8">
+                                                                            <el-date-picker
+                                                                                v-model="fillBusquedaSolicitud.dfecha"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="input-group">
+                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillBusquedaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar', 1)"></el-button>
+                                                                                </el-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <label class="col-md-4 form-control-label">*Estado</label>
+                                                                        <div class="col-md-8 widthFull">
+                                                                            <el-select v-model="fillBusquedaSolicitud.nidestado"
+                                                                                    filterable
+                                                                                    clearable
+                                                                                    loading-text
+                                                                                    placeholder="Seleccione un Estado">
+                                                                                <el-option
+                                                                                    v-for="estado in arrayEstado"
+                                                                                    :key="estado.nIdPar"
+                                                                                    :label="estado.cParNombre"
+                                                                                    :value="estado.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-9 offset-md-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarSolicitudesJefeVentas(1)">
+                                                                        <i class="fa fa-search"></i> Buscar
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisSolicitudes()">
+                                                                        <i class="fa fa-recycle"></i> Limpiar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="h4">LISTADO</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arraySolicitudesJefeVentas.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Fecha</th>
+                                                                                    <th>Tipo</th>
+                                                                                    <th>N° Solicitud</th>
+                                                                                    <th>Contacto</th>
+                                                                                    <th>Jefe Ventas</th>
+                                                                                    <th>VIN/Placa</th>
+                                                                                    <th>Estado</th>
+                                                                                    <th>Responsable</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="carta in arraySolicitudesJefeVentas" :key="carta.nIdSolicitudAutorizacion">
+                                                                                    <td v-text="carta.cFechaSolicitud"></td>
+                                                                                    <td v-text="carta.cTipoSolicitud"></td>
+                                                                                    <td v-text="carta.cNroSolicitud"></td>
+                                                                                    <td v-text="carta.cContacto"></td>
+                                                                                    <td v-text="carta.Vendedor"></td>
+                                                                                    <td v-text="carta.cNroVehiculo"></td>
+                                                                                    <td v-text="carta.cEstado"></td>
+                                                                                    <template v-if="carta.cEstadoEvolucion == ''">
+                                                                                        <td>------</td>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <td v-text="carta.cEstadoEvolucion"></td>
+                                                                                    </template>
+                                                                                    <td>
+                                                                                        <a :href="carta.cRutaDocumento"
+                                                                                                  v-if="carta.cFlagEstadoAutorizacionControl != 'P '"
+                                                                                                        target="_blank">
+                                                                                            <i class='fa-md fa fa-file'></i>
+                                                                                        </a>
+                                                                                        <a href="#" v-if="carta.cFlagEstadoAutorizacionControl == 'C '"
+                                                                                                    @click="abrirModal('conforme', 'abrir', carta);">
+                                                                                            <i class='fa-md fa fa-check'></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <tr>
+                                                                        <td>No existen registros</td>
+                                                                    </tr>
+                                                                </template>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-7">
+                                                                        <nav>
+                                                                            <ul class="pagination">
+                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaSolicitudesVendedores(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                </li>
+                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                :class="[page==isActived?'active':'']">
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaSolicitudesVendedores(page)"
+                                                                                    v-text="page"></a>
+                                                                                </li>
+                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaSolicitudesVendedores(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    <div class="col-lg-5">
+                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -202,12 +398,12 @@
                                             <div class="col-lg-12">
                                                 <ul class="nav nav-tabs">
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="tab0201" href="#TabDatosSolictud" @click.prevent="tabDatosSolicitud" role="tab" data-toggle="tab">
+                                                        <a class="nav-link active" id="tab0301" href="#TabDatosSolictud" @click.prevent="tabDatosSolicitud" role="tab" data-toggle="tab">
                                                             <i class="fa fa-car"></i> DATOS SOLICITUD
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link disabled" id="tab0202" href="#TabDatosVehiculo" role="tab" data-toggle="tab">
+                                                        <a class="nav-link disabled" id="tab0302" href="#TabDatosVehiculo" role="tab" data-toggle="tab">
                                                             <i class="fa fa fa-user"></i> DATOS VEHÍCULO
                                                         </a>
                                                     </li>
@@ -222,18 +418,6 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* N° de Solicitud</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            placeholder="Número de Solicitud"
-                                                                                            v-model="fillNuevaSolicitud.cnrosolicitud"
-                                                                                            clearable>
-                                                                                        </el-input>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">*Fecha</label>
                                                                                     <div class="col-sm-8 widthFull">
                                                                                         <el-date-picker
@@ -246,8 +430,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Solicitud</label>
@@ -266,6 +448,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Enviar a</label>
@@ -299,20 +483,56 @@
                                                                                                     <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
                                                                                                 </el-input>
                                                                                             </div>
-                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo')" circle></el-button>
+                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110025)" circle></el-button>
                                                                                         </el-row>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group row">
+                                                                        <div class="form-group row" v-if="checked">
                                                                             <div class="col-md-9 offset-md-5">
-                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="activarTab0202">
+                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="activarTab0302('')">
                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
                                                                                 </button>
                                                                             </div>
                                                                         </div>
                                                                     </form>
+                                                                </div>
+                                                                <hr/>
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayReferenciavehiculo.length">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Acción</th>
+                                                                                        <th>Proovedor</th>
+                                                                                        <th>Linea</th>
+                                                                                        <th>Marca</th>
+                                                                                        <th>Modelo</th>
+                                                                                        <th>Año Fab</th>
+                                                                                        <th>Año Modelo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="r in arrayReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
+                                                                                        <td>
+                                                                                            <el-tooltip class="item" effect="dark" placement="left-start">
+                                                                                                <div slot="content">Ir a Datos Vehículo</div>
+                                                                                                <i @click="activarTab0302(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            </el-tooltip>
+                                                                                        </td>
+                                                                                        <td v-text="r.cProveedorNombre"></td>
+                                                                                        <td v-text="r.cLineaNombre"></td>
+                                                                                        <td v-text="r.cMarcaNombre"></td>
+                                                                                        <td v-text="r.cModeloNombre"></td>
+                                                                                        <td v-text="r.nAnioFabricacion"></td>
+                                                                                        <td v-text="r.nAnioModelo"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </template>
                                                                 </div>
                                                             </div>
                                                         </section>
@@ -612,7 +832,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -686,20 +906,25 @@
                                                                         <th>Telefono</th>
                                                                         <th>Dirección</th>
                                                                         <th>Email</th>
+                                                                        <th>Marca</th>
+                                                                        <th>Modelo</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                                         <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Seleccionar Contacto</div>
+                                                                                <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>
                                                                         </td>
                                                                         <td v-text="c.cContacto"></td>
                                                                         <td v-text="c.cNumeroDocumento"></td>
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cDireccion"></td>
                                                                         <td v-text="c.cEmail"></td>
+                                                                        <td v-text="c.cMarca"></td>
+                                                                        <td v-text="c.cModelo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -712,20 +937,25 @@
                                                                         <th>Telefono</th>
                                                                         <th>Email</th>
                                                                         <th>Persona Contacto</th>
+                                                                        <th>Marca</th>
+                                                                        <th>Modelo</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                                         <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                               <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Seleccionar Contacto</div>
+                                                                                <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>
                                                                         </td>
                                                                         <td v-text="c.cRazonSocial"></td>
                                                                         <td v-text="c.cNumeroDocumento"></td>
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cEmail"></td>
                                                                         <td v-text="c.cContacto"></td>
+                                                                        <td v-text="c.cMarca"></td>
+                                                                        <td v-text="c.cModelo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -774,139 +1004,124 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Modal Buscar Contactos -->
+        <!-- Modal Generar Solicitud Autorizacion-->
         <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
+                    <div class="modal-body menosPadding">
                         <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">BUSQUEDA CONTACTOS</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <form class="form-horizontal">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                <div class="col-sm-8">
-                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                        <input type="radio" class="radio-template" v-model="fillContacto.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersona()">
-                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    </label>
-                                                                </div>
-                                                            </div>
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">{{ fillModalSolicitudAutorizacion.cTipoSolicitud }}</h3>
+                                        <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <form class="form-horizontal">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Tipo Solicitud</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong> Solicitud {{ fillModalSolicitudAutorizacion.cTipoSolicitud }} </strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNombreMarca"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNombreModelo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Año/Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cAnioModelo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Color</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNombreColor"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Nª VIN</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNroVehiculo"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Contacto</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cContacto"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Nª Documento</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNumeroDocumento"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Nª Licencia</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNumeroLicenciaConducir"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Asesor Encargado</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cAsesorEncargado"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Jefe de Ventas</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cNombreSupervisorInmediato"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Lugar de Partida</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cLugarPartida"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Lugar de Llegada</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cLugarLlegada"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Fecha</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cFechaSolicitud"></strong>
+                                                            </label>
+                                                        </div>
+                                                        <label class="col-sm-4 form-control-label">Hora</label>
+                                                        <div class="col-sm-8">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillModalSolicitudAutorizacion.cHoraMovimientoVehiculo"></strong>
+                                                            </label>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                <div class="col-sm-8 widthFull">
-                                                                    <el-select v-model="fillContacto.ntpodocumento"
-                                                                                filterable
-                                                                                clearable
-                                                                                placeholder="Seleccione un Tipo de Documento">
-                                                                        <el-option
-                                                                            v-for="item in arrayTipoDocumento"
-                                                                            :key="item.nIdPar"
-                                                                            :label="item.cParNombre"
-                                                                            :value="item.nIdPar">
-                                                                        </el-option>
-                                                                    </el-select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                <div class="col-sm-8">
-                                                                    <el-input
-                                                                        placeholder="Nro del Documento"
-                                                                        v-model="fillContacto.cnrodocumento"
-                                                                        clearable>
-                                                                    </el-input>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <template v-if="vistaDatosPersonaNatural">
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            placeholder="Ingrese el Apellido Paterno"
-                                                                            v-model="fillContacto.capepaterno"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            placeholder="Ingrese el Apellido Materno"
-                                                                            v-model="fillContacto.capematerno"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label v-text="fillContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            :placeholder="'Ingrese' + fillContacto.lblcnombres"
-                                                                            v-model="fillContacto.cnombre"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="row">
-                                                                    <label v-text="fillContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                    <div class="col-sm-8">
-                                                                        <el-input
-                                                                            :placeholder="'Ingrese' + fillContacto.lblcnombres"
-                                                                            v-model="fillContacto.cnombre"
-                                                                            clearable>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-5">
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="registrarContacto(1);">
-                                                                <i class="fa fa-save"></i> Registrar
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -914,7 +1129,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionAprobadoNoAprobado(1, 1)">APROBADO</button>
+                        <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionAprobadoNoAprobado(2, 1)">NO APROBADO</button>
                     </div>
                 </div>
             </div>
@@ -936,6 +1152,7 @@
                     cnrovehiculo: '',
                     dfecha: '',
                     nidasigcontacto: '',
+                    nidcontacto: '',
                     cnombrecontacto: '',
                     nidestado: ''
                 },
@@ -945,6 +1162,29 @@
                 ],
                 arrayEstado: [],
                 arrayMisSolicitudes : [],
+                // =============================================================
+                // VARIABLES SOLICITUDES JEFE VENTAS
+                // =============================================================
+                arraySolicitudesJefeVentas: [],
+                fillModalSolicitudAutorizacion: {
+                    nIdSolicitudAutorizacion: 0,
+                    cNroSolicitud: '',
+                    cTipoSolicitud: '',
+                    cNombreMarca: '',
+                    cNombreModelo: '',
+                    cAnioModelo: '',
+                    cNombreColor: '',
+                    cNroVehiculo: '',
+                    cContacto: '',
+                    cNumeroDocumento: '',
+                    cNumeroLicenciaConducir: '',
+                    cAsesorEncargado: '',
+                    cNombreSupervisorInmediato: '',
+                    cLugarPartida: '',
+                    cLugarLlegada: '',
+                    cFechaSolicitud: '',
+                    cHoraMovimientoVehiculo: '',
+                },
                 // ===============================
                 // VARIABLES MODAL CONTACTO
                 // ===============================
@@ -973,10 +1213,10 @@
                 // ===============================
                 fillNuevaSolicitud: {
                     //datos solicitud
-                    cnrosolicitud: '',
                     dfechasolicitud: '',
                     nidtiposolicitud: '',
                     nidasigcontacto: '',
+                    nidcontacto: '',
                     cnombrecontacto: '',
                     nidjefeinmediato: 0,
                     cnombrejefeinmediato: '',
@@ -993,18 +1233,7 @@
                 },
                 checked: true,
                 arrayTipoSolicitudes: [],
-                fillContacto: {
-                    //Tab DATOS PERSONALES
-                    ntipopersona: '1',
-                    ntpodocumento : '',
-                    cnrodocumento : '',
-                    capepaterno : '',
-                    capematerno : '',
-                    cnombre : '',
-                    lblcnombres: '* Nombres',
-                },
-                arrayTipoDocumento: [],
-                vistaDatosPersonaNatural: 1,
+                arrayReferenciavehiculo: [],
                 // ===============================
                 // VARIABLES DATOS VEHICULO
                 // ===============================
@@ -1101,10 +1330,12 @@
                 axios.get(url, {
                     params: {
                         'nidpar' : this.usuario.id,
-                        'nidgrupopar': 110026
+                        'nidgrupopar': 110083
                     }
                 }).then(response => {
-                    this.informacionJefeInmediato(response.data[0]);
+                    this.fillNuevaSolicitud.nidjefeinmediato = response.data[0].nIdPar;
+                    this.fillNuevaSolicitud.cnombrejefeinmediato = response.data[0].cParNombre;
+                    // this.informacionJefeInmediato(response.data[0]);
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1114,7 +1345,7 @@
                 axios.get(url, {
                     params: {
                         'nidpar' : data.nIdParParent,
-                        'nidgrupopar': 110025
+                        'nidgrupopar': 110083
                     }
                 }).then(response => {
                     this.fillNuevaSolicitud.nidjefeinmediato = response.data[0].nIdPar;
@@ -1131,8 +1362,11 @@
                 $('#tab01').addClass('nav-link active');
                 $('#tab02').removeClass('nav-link active');
                 $('#tab02').addClass('nav-link');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link');
 
                 $('#TabMisSolicitudes').addClass('in active show');
+                $('#TabSolicitudesJefeVentas').removeClass('in active show');
                 $('#TabNuevaSolicitud').removeClass('in active show');
                 this.limpiarMisSolicitudes();
                 this.llenarEstados();
@@ -1160,8 +1394,10 @@
                         'dFecha' : this.fillBusquedaSolicitud.dfecha,
                         'nIdAsigContacto' : this.fillBusquedaSolicitud.nidasigcontacto,
                         'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
-                        'tipoRol': 1,
+                        'tipoRol': 3,
                         'nIdTipoBusquedaAutorizacion': 1,
+                        'cFlagEstadoAutorizacion' : '',
+                        'nIdSolicitudAutorizacion' : 0,
                         'page' : page
                     }
                 }).then(response => {
@@ -1189,6 +1425,127 @@
                 this.fillBusquedaSolicitud.nidasigcontacto = '';
                 this.fillBusquedaSolicitud.cnombrecontacto = '';
                 this.fillBusquedaSolicitud.nidestado = '';
+            },
+            // =================================================================
+            // METODOS TAB SOLICTIDUES JEFE VENTAS
+            // =================================================================
+            tabSolicitudesJefeVentas(){
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link ');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link active');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link');
+
+                $('#TabMisSolicitudes').removeClass('in active show');
+                $('#TabSolicitudesJefeVentas').addClass('in active show');
+                $('#TabNuevaSolicitud').removeClass('in active show');
+                this.limpiarMisSolicitudes();
+                this.llenarEstados();
+                this.buscarSolicitudesJefeVentas(1);
+            },
+            buscarSolicitudesJefeVentas(page){
+                var url = this.ruta + '/autorizacion/GetLstSolicitudes';
+                axios.get(url, {
+                    params: {
+                        'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'cNroVehiculo' : this.fillBusquedaSolicitud.cnrovehiculo,
+                        'dFecha' : this.fillBusquedaSolicitud.dfecha,
+                        'nIdAsigContacto' : this.fillBusquedaSolicitud.nidasigcontacto,
+                        'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
+                        'tipoRol': 3,
+                        'nIdTipoBusquedaAutorizacion': 2,
+                        'cFlagEstadoAutorizacion' : '',
+                        'nIdSolicitudAutorizacion' : 0,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayMisSolicitudes;
+                    this.arraySolicitudesJefeVentas     = info.data;
+                    this.pagination.current_page =  info.current_page;
+                    this.pagination.total        = info.total;
+                    this.pagination.per_page     = info.per_page;
+                    this.pagination.last_page    = info.last_page;
+                    this.pagination.from         = info.from;
+                    this.pagination.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaSolicitudesVendedores(page){
+                this.pagination.current_page=page;
+                this.buscarMisSolicitudes(page);
+            },
+            getDetalleSolicitud(data, modalidad){
+                let me = this;
+                let info = data;
+                let op = modalidad;
+                this.$nextTick().then(function () {
+                    me.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion    = (op == 1) ? info.nIdSolicitudAutorizacion : info[0].nIdSolicitudAutorizacion;
+                    me.fillModalSolicitudAutorizacion.cNroSolicitud               = (op == 1) ? info.cNroSolicitud : info[0].cNroSolicitud;
+                    me.fillModalSolicitudAutorizacion.cTipoSolicitud              = (op == 1) ? info.cTipoSolicitud : info[0].cTipoSolicitud;
+                    me.fillModalSolicitudAutorizacion.cNombreMarca                = (op == 1) ? info.cNombreMarca : info[0].cNombreMarca;
+                    me.fillModalSolicitudAutorizacion.cNombreModelo               = (op == 1) ? info.cNombreModelo : info[0].cNombreModelo;
+                    me.fillModalSolicitudAutorizacion.cAnioModelo                 = (op == 1) ? info.nAnioFabricacion + ' ' + info.nAnioVersion :
+                                                                                                        info[0].nAnioFabricacion + ' ' + info[0].nAnioVersion;
+                    me.fillModalSolicitudAutorizacion.cNombreColor                = (op == 1) ? info.cNombreColor : info[0].cNombreColor;
+                    me.fillModalSolicitudAutorizacion.cNroVehiculo                = (op == 1) ? info.cNroVehiculo : info[0].cNroVehiculo;
+                    me.fillModalSolicitudAutorizacion.cContacto                   = (op == 1) ? info.cContacto : info[0].cContacto;
+                    me.fillModalSolicitudAutorizacion.cNumeroDocumento            = (op == 1) ? info.cNumeroDocumento : info[0].cNumeroDocumento;
+                    me.fillModalSolicitudAutorizacion.cNumeroLicenciaConducir     = (op == 1) ? info.cNumeroLicenciaConducir : info[0].cNumeroLicenciaConducir;
+                    me.fillModalSolicitudAutorizacion.cAsesorEncargado            = (op == 1) ? info.Vendedor : info[0].Vendedor;
+                    me.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato  = (op == 1) ? info.cNombreSupervisorInmediato : info[0].Vendedor;
+                    me.fillModalSolicitudAutorizacion.cLugarPartida               = (op == 1) ? info.cLugarPartida : info[0].cLugarPartida;
+                    me.fillModalSolicitudAutorizacion.cLugarLlegada               = (op == 1) ? info.cLugarLlegada : info[0].cLugarLlegada;
+                    me.fillModalSolicitudAutorizacion.cFechaSolicitud             = (op == 1) ? info.cFechaSolicitud : info[0].cFechaSolicitud;
+                    me.fillModalSolicitudAutorizacion.cHoraMovimientoVehiculo     = (op == 1) ? info.cHoraMovimientoVehiculo : info[0].cHoraMovimientoVehiculo;
+                })
+                //Solo si es JV
+                if(op == 2){
+                    this.$nextTick().then(function () {
+                        me.accionAprobadoNoAprobado(1, 2);//Enviar Aprobado por defecto
+                    })
+                }
+            },
+            accionAprobadoNoAprobado(data, op){
+                var url = this.ruta + '/autorizacion/SetConformeNoConforme';
+                axios.put(url, {
+                    'nIdSolicitudAutorizacion' : this.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion,
+                    'nIdEstadoSolicitudAutorizacion': (data == 1) ? 1300240 : 1300241,
+                    'cFlagEstadoAutorizacionControl': (data == 1) ? 'A' : 'D',
+                    'cNombreSupervisorInmediato': this.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato,
+                    'cNombreSolicitudAutorizacion' : (!this.fillModalSolicitudAutorizacion.cContacto) ?
+                                                                this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cAsesorEncargado :
+                                                                this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cContacto,
+                    'objDetalleSolicitudAutorizacion' : this.fillModalSolicitudAutorizacion,
+                    'modalidadRecibirData' : op
+                }).then(response => {
+                    this.cerrarModalSolicitud();
+                    this.limpiarModalConformeNoConforme();
+                    this.buscarMisSolicitudes(1);
+                    this.buscarSolicitudesJefeVentas(1);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            limpiarModalConformeNoConforme(){
+                this.fillModalSolicitudAutorizacion.nIdSolicitudAutorizacion    = ''
+                this.fillModalSolicitudAutorizacion.cNroSolicitud               = ''
+                this.fillModalSolicitudAutorizacion.cTipoSolicitud              = ''
+                this.fillModalSolicitudAutorizacion.cNombreMarca                = ''
+                this.fillModalSolicitudAutorizacion.cNombreModelo               = ''
+                this.fillModalSolicitudAutorizacion.cAnioModelo                 = ''
+                this.fillModalSolicitudAutorizacion.cNombreColor                = ''
+                this.fillModalSolicitudAutorizacion.cNroVehiculo                = ''
+                this.fillModalSolicitudAutorizacion.cContacto                   = ''
+                this.fillModalSolicitudAutorizacion.cNumeroDocumento            = ''
+                this.fillModalSolicitudAutorizacion.cNumeroLicenciaConducir     = ''
+                this.fillModalSolicitudAutorizacion.cAsesorEncargado            = ''
+                this.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato  = ''
+                this.fillModalSolicitudAutorizacion.cLugarPartida               = ''
+                this.fillModalSolicitudAutorizacion.cLugarLlegada               = ''
+                this.fillModalSolicitudAutorizacion.cFechaSolicitud             = ''
+                this.fillModalSolicitudAutorizacion.cHoraMovimientoVehiculo     = ''
             },
             // ======================
             // MODAL BUSCAR VEHICULO
@@ -1248,7 +1605,7 @@
                     }
                 }
                 this.modalVehiculo.cnrovehiculo = '';
-                this.cerrarModal();
+                this.cerrarModalSolicitud();
             },
             // ======================
             // MODAL BUSCAR CONTACTOS
@@ -1271,7 +1628,7 @@
                         'ntipopersona' : this.modalMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.modalMisContactos.cnrodocumento.toString()),
                         'cfiltrodescripcion' : this.modalMisContactos.cfiltrodescripcion.toString(),
-                        'tipoRol': 1,
+                        'tipoRol': 3,
                         'page' : page
                     }
                 }).then(response => {
@@ -1287,28 +1644,34 @@
                     console.log(error);
                 });
             },
-            asignarContacto(contacto){
-                if(this.modalMisContactos.ntipopersona == 1){
-                    if (this.flagBuscarContacto == 1) {
-                        this.fillBusquedaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillBusquedaSolicitud.cnombrecontacto = contacto.cContacto;
-                    } else {
-                        this.fillNuevaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillNuevaSolicitud.cnombrecontacto = contacto.cContacto;
+            limpiarAlAsignarContacto(){
+                //Limpiar Asignación contacto cada vez que se asigne
+                this.fillNuevaSolicitud.nidasigcontacto = '';
+                this.fillNuevaSolicitud.nidcontacto = '';
+                this.fillNuevaSolicitud.cnombrecontacto = '';
+            },
+            llenarReferenciasVehiculo(){
+                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidsucursal' : 1300013,
+                        'nidcontacto' : this.fillNuevaSolicitud.nidcontacto
                     }
-                } else {
-                    if (this.flagBuscarContacto == 1) {
-                        this.fillBusquedaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillBusquedaSolicitud.cnombrecontacto = contacto.cRazonSocial;
-                    } else {
-                        this.fillNuevaSolicitud.nidasigcontacto = contacto.nIdAsignacionContactoVendedor;
-                        this.fillNuevaSolicitud.cnombrecontacto = contacto.cRazonSocial;
-                    }
-                }
-                this.modalMisContactos.ntipopersona = 1;
-                this.modalMisContactos.cnrodocumento = '';
-                this.modalMisContactos.cfiltrodescripcion = '';
-                this.cerrarModal();
+                }).then(response => {
+                    let info = response.data.arraySegReferenciavehiculo;
+                    //Data
+                    this.arrayReferenciavehiculo = info.data;
+                    //Pagination
+                    this.pagination.current_page   =   info.current_page;
+                    this.pagination.total          =   info.total;
+                    this.pagination.per_page       =   info.per_page;
+                    this.pagination.last_page      =   info.last_page;
+                    this.pagination.from           =   info.from;
+                    this.pagination.to             =   info.to;
+                }).catch(error => {
+                    this.errors = error.response.data
+                });
             },
             // =================================================================
             // METODOS TAB NUEVA SOLICITUD
@@ -1319,10 +1682,10 @@
             },
             limpiarNuevaSolicitud(){
                 //datos solicitud
-                this.fillNuevaSolicitud.cnrosolicitud = '';
                 this.fillNuevaSolicitud.dfechasolicitud = '';
                 this.fillNuevaSolicitud.nidtiposolicitud = '';
                 this.fillNuevaSolicitud.nidasigcontacto = '';
+                this.fillNuevaSolicitud.nidcontacto = '';
                 this.fillNuevaSolicitud.cnombrecontacto = '';
                 this.fillNuevaSolicitud.nidtipobusqueda = '1';
                 this.fillNuevaSolicitud.nidvehiculo = '';
@@ -1338,10 +1701,10 @@
             // SUBTAB DATOS SOLICTIUD
             // ============================
             tabDatosSolicitud(){
-                $('#tab0201').removeClass('nav-link active');
-                $('#tab0201').addClass('nav-link active');
-                $('#tab0202').removeClass('nav-link active');
-                $('#tab0202').addClass('nav-link disabled');
+                $('#tab0301').removeClass('nav-link active');
+                $('#tab0301').addClass('nav-link active');
+                $('#tab0302').removeClass('nav-link active');
+                $('#tab0302').addClass('nav-link disabled');
 
                 $('#TabDatosSolictud').addClass('in active show');
                 $('#TabDatosVehiculo').removeClass('in active show');
@@ -1361,79 +1724,34 @@
             },
             updateEstadoChecked(){
                 if(this.checked){
-                    this.fillNuevaSolicitud.nidasigcontacto = 0;
+                    this.fillNuevaSolicitud.nidasigcontacto = '';
+                    this.fillNuevaSolicitud.nidcontacto = '';
                     this.fillNuevaSolicitud.cnombrecontacto = '';
+                    this.arrayReferenciavehiculo = [];
                 }
             },
-            // ============================
-            // MODAL NUEVO CONTACTO
-            // ============================
-            cambiarTipoPersona(){
-                this.limpiarNuevoContacto();
-                this.llenarComboTpoDocumento();
-                if(this.fillContacto.ntipopersona == '1') {
-                    this.fillContacto.lblcnombres = '* Nombres',
-                    this.vistaDatosPersonaNatural = 1
-                } else {
-                    this.fillContacto.lblcnombres = '* Razón Social',
-                    this.vistaDatosPersonaNatural = 0
-                }
-            },
-            limpiarNuevoContacto(){
-                //Tab Nuevo Contacto
-                this.fillContacto.ntpodocumento = '';
-                this.fillContacto.cnrodocumento = '';
-                this.fillContacto.capepaterno = '';
-                this.fillContacto.capematerno = '';
-                this.fillContacto.cnombre = '';
-            },
-            llenarComboTpoDocumento(){
-                if(this.fillContacto.ntipopersona == 1) {
-                    var url = this.ruta + '/parametro/GetDocumentoNatural';
-                    axios.get(url,{
-                        params: {
-                            'ngrupoparid' : 110047,
-                        }
-                    }).then(response => {
-                        this.arrayTipoDocumento = response.data;
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                } else {
-                    var url = this.ruta + '/parametro/GetDocumentoJuridica';
-                    axios.get(url,{
-                        params: {
-                            'ngrupoparid' : 110047,
-                        }
-                    }).then(response => {
-                        this.arrayTipoDocumento = response.data;
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                }
-            },
-            activarTab0202(){
-                if(this.validarTab0201()){
+            activarTab0302(nIdAsignacionContactoVendedor = ''){
+                this.fillNuevaSolicitud.nidasigcontacto = (nIdAsignacionContactoVendedor == '') ? '' : nIdAsignacionContactoVendedor;
+
+                if(this.validarTab0301()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-                $('#tab0201').removeClass('nav-link active');
-                $('#tab0201').addClass('nav-link');
-                $('#tab0202').removeClass('nav-link disabled');
-                $('#tab0202').addClass('nav-link active');
+
+                $('#tab0301').removeClass('nav-link active');
+                $('#tab0301').addClass('nav-link');
+                $('#tab0302').removeClass('nav-link disabled');
+                $('#tab0302').addClass('nav-link active');
 
                 $('#TabDatosSolictud').removeClass('in active show');
                 $('#TabDatosVehiculo').addClass('in active show');
                 this.tabDatosVehiculo();
             },
-            validarTab0201(){
+            validarTab0301(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.fillNuevaSolicitud.cnrosolicitud){
-                    this.mensajeError.push('El número de solicitud es obligatorio');
-                }
                 if(!this.fillNuevaSolicitud.dfechasolicitud){
                     this.mensajeError.push('La fecha de solicitud es obligatoria');
                 }
@@ -1449,7 +1767,7 @@
                     this.mensajeError.push('Debe tener asignado un Jefe de Ventas');
                 }
                 if(!this.checked) {
-                    if(this.fillNuevaSolicitud.nidasigcontacto == 0 && !this.fillNuevaSolicitud.cnombrecontacto){
+                    if(!this.fillNuevaSolicitud.nidasigcontacto && !this.fillNuevaSolicitud.nidcontacto && !this.fillNuevaSolicitud.cnombrecontacto){
                         this.mensajeError.push('Debe asignar un Contacto');
                     }
                 }
@@ -1491,7 +1809,6 @@
                     'nIdEmpresa'            :   1300011,
                     'nIdSucursal'           :   1300013,
                     'nIdTipoSolicitud'      :   this.fillNuevaSolicitud.nidtiposolicitud,
-                    'cNumeroSolicitud'      :   this.fillNuevaSolicitud.cnrosolicitud,
                     'dFechaSolicitud'       :   this.fillNuevaSolicitud.dfechasolicitud,
                     'cFlagContacto'         :   (this.fillNuevaSolicitud.nidasigcontacto) ? 'S' : 'N',
                     'cFlagVinPlaca'         :   (this.fillNuevaSolicitud.nidtipobusqueda == 1) ? 'V' : 'P',
@@ -1501,21 +1818,23 @@
                     'cLugarPartida'         :   this.fillNuevaSolicitud.clugarpartida,
                     'cLugarLlegada'         :   this.fillNuevaSolicitud.clugarllegada,
                     'nIdMoverVehiculo'      :   this.fillNuevaSolicitud.nidmovervehiculo,
-                    'nIdEstadoSolAutori'    :   1300237,
+                    'nIdEstadoSolAutori'    :   1300238,
+                    'cFlagEstadoSolAutori'  :   'C',
+                    'cFlagJeveVentas'       :   'JV'
                 }).then(response => {
                     swal('Solicitud de Autorización registrada exitosamente');
+                    this.getDetalleSolicitudConforme(response.data);//Capturar datos para la generación del PDF
                     this.limpiarMisSolicitudes();
-                    this.limpiarNuevaSolicitud();
                     this.tabVolverMisSolicitudes();
                 }).catch(error => {
                     this.errors = error
                 });
             },
             tabVolverMisSolicitudes(){
-                $('#tab0201').removeClass('nav-link active');
-                $('#tab0201').addClass('nav-link');
-                $('#tab0202').removeClass('nav-link active');
-                $('#tab0202').addClass('nav-link disabled');
+                $('#tab0301').removeClass('nav-link active');
+                $('#tab0301').addClass('nav-link');
+                $('#tab0302').removeClass('nav-link active');
+                $('#tab0302').addClass('nav-link disabled');
 
                 $('#TabDatosSolictud').removeClass('in active show');
                 $('#TabDatosVehiculo').removeClass('in active show');
@@ -1554,6 +1873,30 @@
                 }
                 return this.error;
             },
+            //Metodo Solo cuando Registrar el JV
+            getDetalleSolicitudConforme(data){
+                var url = this.ruta + '/autorizacion/GetLstSolicitudes';
+                axios.get(url, {
+                    params: {
+                        'nIdTipoBusquedaVehiculo': (data['cFlagVinPlaca'] == 'V') ? '1' : '2',
+                        'cNroVehiculo' : '',
+                        'dFecha' : '',
+                        'nIdAsigContacto' : '',
+                        'nIdEstado' : '',
+                        'tipoRol': 2,
+                        'nIdTipoBusquedaAutorizacion': 1,
+                        'cFlagEstadoAutorizacion' : '',
+                        'nIdSolicitudAutorizacion' : data['nIdSolicitudAutorizacion'],
+                        'page' : 1
+                    }
+                }).then(response => {
+                    let me = this;
+                    let info = response.data.arrayMisSolicitudes.data;
+                    me.getDetalleSolicitud(info, 2);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
@@ -1586,12 +1929,70 @@
                                 break;
                             }
                             break;
+                            case 'asignar':
+                            {
+                                if(this.modalMisContactos.ntipopersona == 1){
+                                    if (this.flagBuscarContacto == 1) {
+                                        this.fillBusquedaSolicitud.nidasigcontacto = data['nIdAsignacionContactoVendedor'];
+                                        this.fillBusquedaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillBusquedaSolicitud.cnombrecontacto = data['cContacto'];
+                                    } else {
+                                        //Limpiar Asignación contacto cada vez que se asigne
+                                        this.limpiarAlAsignarContacto();
+                                        this.fillNuevaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillNuevaSolicitud.cnombrecontacto = data['cContacto'];
+                                        this.llenarReferenciasVehiculo();
+                                    }
+                                } else {
+                                    if (this.flagBuscarContacto == 1) {
+                                        this.fillBusquedaSolicitud.nidasigcontacto = data['nIdAsignacionContactoVendedor'];
+                                        this.fillBusquedaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillBusquedaSolicitud.cnombrecontacto = data['cRazonSocial'];
+                                    } else {
+                                        //Limpiar Asignación contacto cada vez que se asigne
+                                        this.limpiarAlAsignarContacto();
+                                        this.fillNuevaSolicitud.nidcontacto = data['nIdContacto'];
+                                        this.fillNuevaSolicitud.cnombrecontacto = data['cRazonSocial'];
+                                        this.llenarReferenciasVehiculo();
+                                    }
+                                }
+                                this.modalMisContactos.ntipopersona = 1;
+                                this.modalMisContactos.cnrodocumento = '';
+                                this.modalMisContactos.cfiltrodescripcion = '';
+                                this.cerrarModalSolicitud();
+                                break;
+                            }
+                            break;
                             case 'nuevo':
                             {
-                                this.fillContacto.ntipopersona = 1;
-                                this.llenarComboTpoDocumento();
+                                let me = this;
+
+                                switch (data) {
+                                    case 110026:
+                                        me.$emit('vista', 200307);//VENDEDORES
+                                        break;
+                                    case 110025:
+                                        me.$emit('vista', 200206);//JEFE DE VENTAS
+                                        break;
+                                    case 110083:
+                                        me.$emit('vista', 200222);//ADMINISTRADOR DE VENDEDORES
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                    case "conforme":
+                    {
+                        switch(accion){
+                            case 'abrir':
+                            {
+                                this.getDetalleSolicitud(data, 1);
                                 this.accionmodal=4;
                                 this.modal = 1;
+                                break;
                             }
                         }
                     }
@@ -1623,6 +2024,12 @@
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
             },
+            cerrarModalSolicitud(){
+                this.modal = 0;
+                this.accionmodal = 0;
+                this.error = 0;
+                this.mensajeError = '';
+            }
         }
     }
 </script>

@@ -214,7 +214,7 @@
                                             <div class="col-lg-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="h4">MIS SOLICITUDES.</h3>
+                                                        <h3 class="h4">BANDEJA SOLICITUDES DE VENDEDORES.</h3>
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="form-horizontal">
@@ -832,7 +832,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -1004,7 +1004,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -1513,7 +1513,7 @@
                     'cFlagEstadoAutorizacionControl': (data == 1) ? 'C' : 'NC',
                     'cNombreSupervisorInmediato': this.fillModalSolicitudAutorizacion.cNombreSupervisorInmediato,
                     'cNombreSolicitudAutorizacion' : (!this.fillModalSolicitudAutorizacion.cContacto) ?
-                                                                this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cTipoSolicitud :
+                                                                this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cAsesorEncargado :
                                                                 this.fillModalSolicitudAutorizacion.cNroSolicitud + '-' + this.fillModalSolicitudAutorizacion.cContacto,
                     'objDetalleSolicitudAutorizacion' : this.fillModalSolicitudAutorizacion,
                     'modalidadRecibirData' : op
@@ -1603,7 +1603,7 @@
                     }
                 }
                 this.modalVehiculo.cnrovehiculo = '';
-                this.cerrarModal();
+                this.cerrarModalSolicitud();
             },
             // ======================
             // MODAL BUSCAR CONTACTOS
@@ -1957,7 +1957,7 @@
                                 this.modalMisContactos.ntipopersona = 1;
                                 this.modalMisContactos.cnrodocumento = '';
                                 this.modalMisContactos.cfiltrodescripcion = '';
-                                this.cerrarModal();
+                                this.cerrarModalSolicitud();
                                 break;
                             }
                             break;

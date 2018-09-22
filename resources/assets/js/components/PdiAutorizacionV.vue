@@ -643,7 +643,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -815,7 +815,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -1141,7 +1141,7 @@
                     }
                 }
                 this.modalVehiculo.cnrovehiculo = '';
-                this.cerrarModal();
+                this.cerrarModalSolicitud();
             },
             // ======================
             // MODAL BUSCAR CONTACTOS
@@ -1471,7 +1471,7 @@
                                 this.modalMisContactos.ntipopersona = 1;
                                 this.modalMisContactos.cnrodocumento = '';
                                 this.modalMisContactos.cfiltrodescripcion = '';
-                                this.cerrarModal();
+                                this.cerrarModalSolicitud();
                                 break;
                             }
                             break;
@@ -1523,6 +1523,12 @@
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
             },
+            cerrarModalSolicitud(){
+                this.modal = 0;
+                this.accionmodal = 0;
+                this.error = 0;
+                this.mensajeError = '';
+            }
         }
     }
 </script>
