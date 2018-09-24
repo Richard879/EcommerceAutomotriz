@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PerUsuGruAccController extends Controller
 {
-    public function GetListPermisosByUser(Request $request)
+    public function GetListMenuByUsuario(Request $request)
     { 
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdUsuario = $request->nidusuario;
         $nLenJerarquia = $request->nlenjerarquia;
 
-        $arrayMenu = DB::select('exec [usp_Puga_GetListMenuByUser] ?, ?, ?, ?', 
+        $arrayMenu = DB::select('exec [usp_Puga_GetListMenuByUsuario] ?, ?, ?, ?', 
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $nIdUsuario,
@@ -46,11 +46,15 @@ class PerUsuGruAccController extends Controller
 
     public function GetListPermisosByUsuario(Request $request)
     { 
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
         $nIdUsuario = $request->nidusuario;
         $nLenJeraquia = $request->nlenjerarquia;
 
-        $data = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?', 
-                                                        [   $nIdUsuario,
+        $data = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?, ?, ?', 
+                                                        [   $nIdEmpresa,
+                                                            $nIdSucursal,
+                                                            $nIdUsuario,
                                                             $nLenJeraquia
                                                         ]);
         return response()->json($data);

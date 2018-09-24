@@ -39,15 +39,15 @@ export default {
                 });
             },
             changeSucursal(){
-                sessionStorage.setItem("nIdSucursal", this.formCabecera.nidsucursal);
-                /*$.each(this.arraySucursal, function (index, value) {
-                    if(value.nIdPar == this.formCabecera.nidsucursal){
+                let me = this;
+                sessionStorage.setItem("nIdSucursal", me.formCabecera.nidsucursal);
+                me.arraySucursal.map(function(value, key) {
+                    if(value.nIdPar == me.formCabecera.nidsucursal){
                         sessionStorage.setItem("cNombreSucursal", value.cParAbreviatura);
-                        alert(sessionStorage.getItem("cNombreSucursal"));
                     }
-                });*/
-                this.$emit('cabecera', this.formCabecera.nidsucursal);
-                this.$bus.$emit('event', this.formCabecera);
+                });
+                me.$emit('cabecera', me.formCabecera.nidsucursal);
+                me.$bus.$emit('event', me.formCabecera);
             }
         },
     }

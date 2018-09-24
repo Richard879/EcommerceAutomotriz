@@ -129,7 +129,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/puntoinspeccion/UpdPuntoInspeccionById', 'PdiPuntoInspeccionController@UpdPuntoInspeccionById');
     Route::put('/puntoinspeccion/activar', 'PdiPuntoInspeccionController@activar');
     Route::put('/puntoinspeccion/desactivar', 'PdiPuntoInspeccionController@desactivar');
-    Route::get('/puga/GetListPermisosByUser', 'PerUsuGruAccController@GetListPermisosByUser');
+    Route::get('/puga/GetListMenuByUsuario', 'PerUsuGruAccController@GetListMenuByUsuario');
     Route::get('/puga/GetLstUsuarios', 'PerUsuGruAccController@GetLstUsuarios');
     Route::get('/puga/GetListPermisosByUsuario', 'PerUsuGruAccController@GetListPermisosByUsuario');
     Route::post('/puga/SetPermisosByUsuario', 'PerUsuGruAccController@SetPermisosByUsuario');

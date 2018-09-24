@@ -2341,7 +2341,7 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                csucursal: 'CHICLAYO',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 canio: '2018',
                 cmes: 'MAYO',
                 nidempresa: 0,

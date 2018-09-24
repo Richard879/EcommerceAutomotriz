@@ -231,7 +231,7 @@
                     nidempresa: 1300011,
                     cempresa: 'SAISAC',
                     nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                    csucursal: 'CHICLAYO',
+                    csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidlinea: 0,
                     nidmarca: 0,
                     nidmodelo: 0,
