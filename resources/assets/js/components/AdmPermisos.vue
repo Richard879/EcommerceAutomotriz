@@ -455,7 +455,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': this.formPuga.nidsucursal,
+                        'nidsucursal': this.fillPuga.nidsucursal,
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
                     }
@@ -474,7 +474,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': this.formPuga.nidsucursal,
+                        'nidsucursal': this.fillPuga.nidsucursal,
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
                     }
@@ -490,10 +490,10 @@
             llenarCheckBox(){
                 let me = this;
                 me.arrayPermisos.map(function(value, key){
-                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica
+                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica;
                 });
                 me.arraySubPermisos.map(function(value, key){
-                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica
+                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica;
                 });
 
                 jQuery(function ($) {

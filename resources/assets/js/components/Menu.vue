@@ -36,7 +36,7 @@ export default {
         },
         methods:{
             listarPermisosByUsuario(){
-                var url = this.ruta + '/puga/GetListPermisosByUser';
+                var url = this.ruta + '/puga/GetListMenuByUsuario';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
