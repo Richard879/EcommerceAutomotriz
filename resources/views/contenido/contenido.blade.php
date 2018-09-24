@@ -101,4 +101,7 @@
     <template v-if="menu==200323">
         <gestioncontactoadv :ruta="ruta"></gestioncontactoadv>
     </template>
+    <template v-if="menu==200324">
+        <tramite :ruta="ruta"></tramite>
+    </template>
 @endsection
