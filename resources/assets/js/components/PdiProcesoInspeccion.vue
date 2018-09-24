@@ -196,7 +196,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Ingreso Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflagingreso" filterable placeholder="Select" >
+                                                    <el-select v-model="formPdi.nidflagingreso" filterable placeholder="Select" >
                                                         <el-option
                                                         v-for="item in arrayFlag"
                                                         :key="item.nIdPar"
@@ -211,7 +211,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Salida Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflagsalida" filterable placeholder="Select" >
+                                                    <el-select v-model="formPdi.nidflagsalida" filterable placeholder="Select" >
                                                         <el-option
                                                         v-for="item in arrayFlag"
                                                         :key="item.nIdPar"
@@ -228,7 +228,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPunto.nidflagmovimiento" filterable placeholder="Select" >
+                                                    <el-select v-model="formPdi.nidflagmovimiento" filterable placeholder="Select" >
                                                         <el-option
                                                         v-for="item in arrayTipoMovimiento"
                                                         :key="item.nIdPar"
@@ -243,7 +243,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Nombre</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="formPunto.cnombre" class="form-control form-control-sm">
+                                                    <input type="text" v-model="formPdi.cnombre" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -578,10 +578,10 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    cNombrePuntoInspeccion: this.formPunto.cnombre,
-                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
-                    nFlagIngresoSucursal: this.formPunto.nidflagingreso,
-                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
+                    cNombrePuntoInspeccion: this.formPdi.cnombre,
+                    nFlagTipoMovimiento: this.formPdi.nidflagmovimiento,
+                    nFlagIngresoSucursal: this.formPdi.nidflagingreso,
+                    nFlagSalidaSucursal: this.formPdi.nidflagsalida
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -600,13 +600,13 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.formPunto.cnombre){
+                if(!this.formPdi.cnombre){
                     this.mensajeError.push('Debes Seleccionar Sección');
                 };
-                if(this.formPunto.nFlagIngresoSucursal == 0){
+                if(this.formPdi.nFlagIngresoSucursal == 0){
                     this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
                 };
-                if(this.formPunto.nFlagSalidaSucursal == 0){
+                if(this.formPdi.nFlagSalidaSucursal == 0){
                     this.mensajeError.push('Debes Seleccionar Salida Sucursal');
                 };
                 if(this.mensajeError.length){
@@ -679,13 +679,13 @@
 
                 var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';            
                 axios.post(url, {
-                    nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
+                    nIdPuntoInspeccion: parseInt(this.formPdi.nidpuntoinspeccion),
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    cNombrePuntoInspeccion: this.formPunto.cnombre,
-                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
-                    nFlagIngresoSucursal: this.formPunto.nidflagingreso,
-                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
+                    cNombrePuntoInspeccion: this.formPdi.cnombre,
+                    nFlagTipoMovimiento: this.formPdi.nidflagmovimiento,
+                    nFlagIngresoSucursal: this.formPdi.nidflagingreso,
+                    nFlagSalidaSucursal: this.formPdi.nidflagsalida
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -719,11 +719,11 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
-                                this.formPunto.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
-                                this.formPunto.cnombre = data['cNombrePuntoInspeccion'];
-                                this.formPunto.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
-                                this.formPunto.nidflagingreso = data['nFlagIngresoSucursal'];
-                                this.formPunto.nidflagsalida = data['nFlagSalidaSucursal'];
+                                this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
+                                this.formPdi.cnombre = data['cNombrePuntoInspeccion'];
+                                this.formPdi.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
+                                this.formPdi.nidflagingreso = data['nFlagIngresoSucursal'];
+                                this.formPdi.nidflagsalida = data['nFlagSalidaSucursal'];
                                 break;
                             }
                         }
@@ -758,11 +758,11 @@
                 }
             },
             limpiarFormulario(){
-                this.formPunto.nidpuntoinspeccion= 0,
-                this.formPunto.cnombre= '',
-                this.formPunto.nidflagmovimiento= 0,
-                this.formPunto.nidflagingreso=  0,
-                this.formPunto.nidflagsalida= 0
+                this.formPdi.nidpuntoinspeccion= 0,
+                this.formPdi.cnombre= '',
+                this.formPdi.nidflagmovimiento= 0,
+                this.formPdi.nidflagingreso=  0,
+                this.formPdi.nidflagsalida= 0
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;
