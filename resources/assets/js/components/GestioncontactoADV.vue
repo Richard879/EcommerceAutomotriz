@@ -13,13 +13,13 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Tab4" href="#TabNuevoContacto" @click="tabNuevoContacto();" role="tab" data-toggle="tab">
+                                    <a class="nav-link active" id="Tab4" href="#TabNuevoContacto" @click="tabNuevoContacto();" role="tab" data-toggle="tab">
                                         <i class="fa fa-user"></i> NUEVO CONTACTO
                                     </a>
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade" id="TabNuevoContacto">
+                                <div role="tabpanel" class="tab-pane fade in active show" id="TabNuevoContacto">
                                     <section class="forms">
                                         <div class="container-fluid">
                                             <div class="col-lg-12">
