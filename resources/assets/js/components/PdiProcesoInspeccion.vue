@@ -398,7 +398,7 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                csucursal: 'CHICLAYO',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 formPdi:{
                     nidcabecerainspeccion: 0,
                     nidpuntoinspeccion: 0,

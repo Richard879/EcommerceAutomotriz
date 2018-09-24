@@ -264,4 +264,23 @@ class AutorizacionController extends Controller
         //ACTUALIZO EL ID EN LA TABLA SCC
         DB::select('exec usp_Autorizacion_SetIdDocumentoAdjunto ?, ?', [$nIdSolicitudAutorizacion, $nIdDocumentoAdjunto]);
     }
+
+    public function GetRefVehiculoByContacto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdContacto = $request->nidcontacto;
+
+        $arraySegReferenciavehiculo = DB::select('exec [usp_Cotizacion_GetRefVehiculoByContacto] ?, ?, ?, ?',
+                                                                            [   $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $nIdContacto,
+                                                                                0
+                                                                            ]);
+
+        $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
+        return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
+    }
 }

@@ -221,15 +221,13 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                csucursal: 'CHICLAYO',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 arrayTurno: [],
                 chorainicio:'00',
                 arrayHoraInicio:[],
                 chorafin:'00',
                 arrayTurnoVenta: [],
                 formTur:{
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
                     nidturnovendedor: 0,
                     nturno: 0,
                     nidempresa : '',

@@ -504,7 +504,7 @@
                 nidempresa: 1300011,
                 cempresa: 'SAISAC',
                 nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                csucursal: 'CHICLAYO',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // ===========================================================
                 // ===================== VARIABLES TAB COMPRA ================
                 fillObjComercialCompra:{

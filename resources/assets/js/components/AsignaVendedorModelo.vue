@@ -20,7 +20,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="formAsignaModelo.cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -28,7 +28,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="formAsignaModelo.csucursal" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -416,7 +416,7 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                csucursal: 'CHICLAYO',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 nidproveedor: '',
                 arrayProveedorLinea: [],
                 arrayJefeVentas: [],
@@ -436,8 +436,6 @@
                     nidmodelo: 0
                 },
                 formAsignaModelo:{
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
                     nJefeVentaId: 0,
                     cJefeVentaNombre: 'NO ES JEFE DE VENTAS'
                 },

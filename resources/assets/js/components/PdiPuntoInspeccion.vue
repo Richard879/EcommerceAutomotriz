@@ -379,7 +379,7 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                csucursal: 'CHICLAYO',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillPunto:{
                     cnombre: ''
                 },

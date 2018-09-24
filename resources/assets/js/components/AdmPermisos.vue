@@ -454,6 +454,8 @@
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': this.fillPuga.nidsucursal,
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
                     }
@@ -471,6 +473,8 @@
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': this.fillPuga.nidsucursal,
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
                     }
@@ -486,10 +490,10 @@
             llenarCheckBox(){
                 let me = this;
                 me.arrayPermisos.map(function(value, key){
-                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica
+                    me.arrayCheckPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica;
                 });
                 me.arraySubPermisos.map(function(value, key){
-                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica
+                    me.arrayCheckSubPermisos[key] = value.cFlagVerifica == 0 ? 0 : value.cFlagVerifica;
                 });
 
                 jQuery(function ($) {
@@ -524,7 +528,7 @@
                 var url = this.ruta + '/puga/DeletePermisosByUsuario';
                 axios.post(url, {
                     'nIdEmpresa': 1300011,
-                    'nIdSucursal': 1300013,
+                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario
                 }).then(response => {

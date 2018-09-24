@@ -1634,13 +1634,12 @@
                 this.fillNuevaSolicitud.cnombrecontacto = '';
             },
             llenarReferenciasVehiculo(){
-                var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
+                var url = this.ruta + '/autorizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
                         'nidsucursal' : 1300013,
-                        'nidcontacto' : this.fillNuevaSolicitud.nidcontacto,
-                        'nidusuario' : 'ADV'
+                        'nidcontacto' : this.fillNuevaSolicitud.nidcontacto
                     }
                 }).then(response => {
                     let info = response.data.arraySegReferenciavehiculo;

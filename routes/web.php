@@ -129,7 +129,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/puntoinspeccion/UpdPuntoInspeccionById', 'PdiPuntoInspeccionController@UpdPuntoInspeccionById');
     Route::put('/puntoinspeccion/activar', 'PdiPuntoInspeccionController@activar');
     Route::put('/puntoinspeccion/desactivar', 'PdiPuntoInspeccionController@desactivar');
-    Route::get('/puga/GetListPermisosByUser', 'PerUsuGruAccController@GetListPermisosByUser');
+    Route::get('/puga/GetListMenuByUsuario', 'PerUsuGruAccController@GetListMenuByUsuario');
     Route::get('/puga/GetLstUsuarios', 'PerUsuGruAccController@GetLstUsuarios');
     Route::get('/puga/GetListPermisosByUsuario', 'PerUsuGruAccController@GetListPermisosByUsuario');
     Route::post('/puga/SetPermisosByUsuario', 'PerUsuGruAccController@SetPermisosByUsuario');
@@ -177,6 +177,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/autorizacion/GetLstVehiculosByCriterio', 'AutorizacionController@GetLstVehiculosByCriterio');
     Route::get('/autorizacion/GetLstContactosByUsuario', 'AutorizacionController@GetLstContactosByUsuario');
     Route::get('/autorizacion/GetLstSolicitudes', 'AutorizacionController@GetLstSolicitudes');
+    Route::get('/autorizacion/GetRefVehiculoByContacto', 'AutorizacionController@GetRefVehiculoByContacto');
     Route::post('/autorizacion/SetRegistrarSolicitudAutorizacion', 'AutorizacionController@SetRegistrarSolicitudAutorizacion');
     Route::put('/autorizacion/SetConformeNoConforme', 'AutorizacionController@SetConformeNoConforme');
 

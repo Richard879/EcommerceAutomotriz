@@ -50,7 +50,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Empresa</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillConfigBasica.cempresa" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -58,7 +58,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillConfigBasica.csucursal" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -259,7 +259,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Empresa</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillConfigBasica.cempresa" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -267,7 +267,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillConfigBasica.csucursal" class="form-control form-control-sm" readonly>
+                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1653,12 +1653,12 @@
         props:['ruta'],
         data(){
             return {
+                cempresa: 'SAISAC',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // =============================================================
                 // VARIABLES TAB MIS COTIZACIONES
                 // =============================================================
                 fillMisCotizaciones: {
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
                     fechaInicio: '',
                     fechaFin: '',
                     nidmarca: 0,
@@ -1671,8 +1671,6 @@
                 // VARIABLES TAB COTIZACIÓN
                 // =============================================================
                 fillConfigBasica: {
-                    cempresa: 'SAISAC',
-                    csucursal: 'CHICLAYO',
                     tipoCambioVenta: 0.0,
                     tipoCambioCompra: 0.0,
                     fechaInicio: '',

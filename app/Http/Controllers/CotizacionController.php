@@ -228,13 +228,12 @@ class CotizacionController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdContacto = $request->nidcontacto;
-        $nIdUsuario = $request->nidusuario;
 
         $arraySegReferenciavehiculo = DB::select('exec [usp_Cotizacion_GetRefVehiculoByContacto] ?, ?, ?, ?',
                                                                             [   $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $nIdContacto,
-                                                                                ($nIdUsuario == 'ADV') ? 0 : Auth::user()->id
+                                                                                Auth::user()->id
                                                                             ]);
 
         $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
