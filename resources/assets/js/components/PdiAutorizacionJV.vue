@@ -906,8 +906,6 @@
                                                                         <th>Telefono</th>
                                                                         <th>Dirección</th>
                                                                         <th>Email</th>
-                                                                        <th>Marca</th>
-                                                                        <th>Modelo</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -923,8 +921,6 @@
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cDireccion"></td>
                                                                         <td v-text="c.cEmail"></td>
-                                                                        <td v-text="c.cMarca"></td>
-                                                                        <td v-text="c.cModelo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -937,8 +933,6 @@
                                                                         <th>Telefono</th>
                                                                         <th>Email</th>
                                                                         <th>Persona Contacto</th>
-                                                                        <th>Marca</th>
-                                                                        <th>Modelo</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -954,8 +948,6 @@
                                                                         <td v-text="c.nTelefonoMovil"></td>
                                                                         <td v-text="c.cEmail"></td>
                                                                         <td v-text="c.cContacto"></td>
-                                                                        <td v-text="c.cMarca"></td>
-                                                                        <td v-text="c.cModelo"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </template>
@@ -1644,6 +1636,7 @@
             },
             limpiarAlAsignarContacto(){
                 //Limpiar Asignación contacto cada vez que se asigne
+                this.arrayReferenciavehiculo = [];
                 this.fillNuevaSolicitud.nidasigcontacto = '';
                 this.fillNuevaSolicitud.nidcontacto = '';
                 this.fillNuevaSolicitud.cnombrecontacto = '';
