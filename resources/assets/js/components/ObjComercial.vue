@@ -774,7 +774,7 @@
             },
             llenarArrayDetalleVehiculoCompra(){
                 let me = this;
-                      
+
                 me.arrayDetalleVehiculoCompra = [];
 
                 me.arrayListaVehiculoCompra.map(function(value, key){
@@ -790,7 +790,7 @@
 
                     me.arrayIndexTipoBeneficioId[key] = value.nIdFlagTipoBeneficio == 0 ? 0 : value.nIdFlagTipoBeneficio,
                     me.arrayIndexFlagTipoValorId[key] = value.nIdFlagTipoValor == 0 ? 0 : value.nIdFlagTipoValor,
-                    me.arrayIndexValorBeneficio[key] = value.fValorBeneficio == 0 ? '' : value.fValorBeneficio                 
+                    me.arrayIndexValorBeneficio[key] = value.fValorBeneficio == 0 ? '' : value.fValorBeneficio
                 });
             },
             validaBuscaDetalleVehiculoCompra(){
@@ -812,7 +812,7 @@
                 let me = this;
 
                 me.arrayTempDetalleVehiculo = [];
-                
+
                 me.arrayDetalleVehiculoCompra.map(function(value, key){
                     if(value.nCantidadVehiculo > 0){
                         me.arrayTempDetalleVehiculo.push({
@@ -836,7 +836,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 //======= LLeno el array para enviar ==========
                 this.llenarArrayDetalleVehiculo();
 
@@ -939,7 +939,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialVenta';
                 axios.post(url, {
                     'nIdEmpresa'            :   1300011,
