@@ -45,7 +45,7 @@ export default {
                         'nlenjerarquia': 4
                     }
                 }).then(response => {
-                    this.arrayMenu = response.data.arrayMenu.data;
+                    this.arrayMenu = response.data;
                     this.listarSubPermisosByUsuario();
                 }).catch(error => {
                     console.log(error);
@@ -61,7 +61,7 @@ export default {
                         'nlenjerarquia': 6
                     }
                 }).then(response => {
-                    this.arraySubMenu = response.data.arrayMenu.data;
+                    this.arraySubMenu = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
