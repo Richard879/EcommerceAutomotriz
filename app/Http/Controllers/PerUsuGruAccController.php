@@ -16,15 +16,13 @@ class PerUsuGruAccController extends Controller
         $nIdUsuario = $request->nidusuario;
         $nLenJerarquia = $request->nlenjerarquia;
 
-        $arrayMenu = DB::select('exec [usp_Puga_GetListMenuByUsuario] ?, ?, ?, ?', 
+        $data = DB::select('exec [usp_Puga_GetListMenuByUsuario] ?, ?, ?, ?', 
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $nIdUsuario,
                                                             $nLenJerarquia
                                                         ]);
-
-        $arrayMenu = ParametroController::arrayPaginator($arrayMenu, $request);
-        return ['arrayMenu'=>$arrayMenu];
+        return response()->json($data);
     }
 
     public function GetLstUsuarios(Request $request)
@@ -58,8 +56,6 @@ class PerUsuGruAccController extends Controller
                                                             $nLenJeraquia
                                                         ]);
         return response()->json($data);
-        //$arrayPermisos = ParametroController::arrayPaginator($arrayPermisos, $request);
-        //return ['arrayPermisos'=>$arrayPermisos];
     }
 
     public function DeletePermisosByUsuario(Request $request)
