@@ -555,6 +555,8 @@
                     'arrayData':   this.arrayTemproralPermisos
                 }).then(response => {
                     swal('Permisos Registrados');
+                    this.$emit('cabecera', sessionStorage.getItem("nIdSucursal"));
+                    this.$bus.$emit('event', this.fillPuga);
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
