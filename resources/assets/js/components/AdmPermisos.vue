@@ -12,7 +12,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">BUSCAR ELEMENTO VENTA</h3>
+                                <h3 class="h4">BUSCAR USUARIOS</h3>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">

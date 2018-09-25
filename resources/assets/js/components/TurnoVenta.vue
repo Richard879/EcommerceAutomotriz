@@ -176,7 +176,7 @@
                                                 :picker-options="{
                                                 format: 'AM/PM'
                                                 }"
-                                                placeholder="Fecha de Inicio">
+                                                placeholder="Hora Inicio">
                                             </el-time-picker>
                                         </div>
                                     </div>
@@ -189,7 +189,7 @@
                                                 :picker-options="{
                                                 format: 'AM/PM'
                                                 }"
-                                                placeholder="Fecha de Fin">
+                                                placeholder="Hora Fin">
                                             </el-time-picker>
                                         </div>
                                     </div>
