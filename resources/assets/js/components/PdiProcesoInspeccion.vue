@@ -197,7 +197,7 @@
                                             <div class="row">
                                                 <label class="col-sm-3 form-control-label">
                                                     <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
-                                                        <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value">
+                                                        <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" v-on:change="changeFlagVinPlaca()">
                                                         <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </label>
                                                 </label>
@@ -235,14 +235,14 @@
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                        <div slot="content">Ver Planilla </div>
-                                                        <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                        <div slot="content">Ver Plantilla </div>
+                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','plantilla')">
                                                             <i class="fa fa-eye"></i>&nbsp;Planilla
                                                         </button>
                                                     </el-tooltip>
                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                         <div slot="content">Ver Accesorio </div>
-                                                        <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','accesorio')">
                                                             <i class="fa fa-eye"></i>&nbsp;Accesorio
                                                         </button>
                                                     </el-tooltip>
@@ -399,6 +399,7 @@
             </div>
         </div>
 
+        <!-- MODAL SOLICITUD AUTORIZACION -->
         <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -501,6 +502,7 @@
             </div>
         </div>
 
+        <!-- MODAL PUNTO INSPECCIÓN -->
         <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -607,6 +609,7 @@
             </div>
         </div>
 
+        <!-- MODAL VIN -->
         <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -728,7 +731,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
-                                                                    <i @click="asignarPuntoInspeccion(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click="asignarVin(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td v-text="compra.nIdCompra"></td>
@@ -750,16 +753,201 @@
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaCompra(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
                                                                     <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaCompra(page)"
+                                                                    href="#" @click.prevent="cambiarPaginaVin(page)"
                                                                     v-text="page"></a>
                                                                 </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaCompra(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL PLANILLA -->
+        <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO COMPRA</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--<div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                    <div class="col-sm-8">
+                                                        <el-date-picker
+                                                            v-model="fillCompra.dfechainicio"
+                                                            type="date"
+                                                            value-format="yyyy-MM-dd"
+                                                            format="dd/MM/yyyy"
+                                                            placeholder="dd/mm/aaaa">
+                                                        </el-date-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                    <div class="col-sm-8">
+                                                        <el-date-picker
+                                                            v-model="fillCompra.dfechafin"
+                                                            type="date"
+                                                            value-format="yyyy-MM-dd"
+                                                            format="dd/MM/yyyy"
+                                                            placeholder="dd/mm/aaaa">
+                                                        </el-date-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Marca</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                            <el-option
+                                                            v-for="item in arrayMarca"
+                                                            :key="item.nIdPar"
+                                                            :label="item.cParNombre"
+                                                            :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Modelo</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                            <el-option
+                                                            v-for="item in arrayModelo"
+                                                            :key="item.nIdPar"
+                                                            :label="item.cParNombre"
+                                                            :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPorVin(1)">
+                                                    <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                            </div>
+                                        </div>-->
+                                        <hr/>
+                                        <template v-if="arrayCompra.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Código</th>
+                                                            <th>Periodo</th>
+                                                            <th>OC</th>
+                                                            <th>Línea</th>
+                                                            <th>Almacén<nav></nav></th>
+                                                            <th>Nro Vin</th>
+                                                            <th>Nombre Comercial</th>
+                                                            <th>Año Fab</th>
+                                                            <th>Año Mod</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
+                                                                    <i @click="asignarVin(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="compra.nIdCompra"></td>
+                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
+                                                            <td v-text="compra.nOrdenCompra"></td>
+                                                            <td v-text="compra.cNombreLinea"></td>
+                                                            <td v-text="compra.cNombreAlmacen"></td>
+                                                            <td v-text="compra.cNumeroVin"></td>
+                                                            <td v-text="compra.cNombreComercial"></td>
+                                                            <td v-text="compra.nAnioFabricacion"></td>
+                                                            <td v-text="compra.nAnioVersion"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVin(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
@@ -988,8 +1176,8 @@
                 this.pagination.current_page=page;
                 this.listarTipoInspeccion(page);
             },
-            //============================================================
-            //================= NUEVA INSPECCION =======================
+            //=============================================================
+            //==================== NUEVA INSPECCION =======================
             listarSolicitud(page){
                 var url = this.ruta + '/pdi/GetListSolicitudByEstado';
 
@@ -1021,6 +1209,7 @@
                 this.formPdi.csolicitudnombre = cNumeroSolicitud + ' - ' + cTipoSolicitud;
                 this.cerrarModal();
             },
+            //=============== PUNTO INSPECCION ===================
             listarPuntoInspeccion(page){
                 var url = this.ruta + '/puntoinspeccion/GetListPuntoInspeccion';
 
@@ -1052,6 +1241,7 @@
                 this.formPdi.cnombrepuntoinspeccion = cNombrePuntoInspeccion;
                 this.cerrarModal();
             },
+            //=============== TIPO INSPECCION ===================
             llenarTipoInspeccion(page){
                 var url = this.ruta + '/tipoinspeccion/GetListTipoInspeccion';
 
@@ -1086,6 +1276,7 @@
                     console.log(error);
                 });
             },
+            //=============== LISTAR POR VIN ===================
             listarPorVin(page){
                 if(this.fillCompra.nordencompra == ''){
                     var nordencompra = 0;
@@ -1120,9 +1311,14 @@
                     console.log(error);
                 });
             },
-            cambiarPaginaCompra(page){
+            cambiarPaginaVin(page){
                 this.paginationModal.current_page=page;
                 this.listarPorVin(page);
+            },
+            asignarVin(nIdCompra, cNumeroVin){
+                this.formPdi.nidcompra = nIdCompra;
+                this.formPdi.cvinplacanombre = cNumeroVin;
+                this.cerrarModal();
             },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -1152,8 +1348,27 @@
                     console.log(error);
                 });
             },
+            changeFlagVinPlaca(){
+                this.formPdi.cvinplacanombre = '';
+                this.formPdi.nidcompra = 0;
+            },
+            //=============== LISTAR POR PLACA ===================
             listarPorPlaca(page){
 
+            },
+
+            listarPlantilla(){
+                var url = this.ruta + '/pdi/GetPlantillaByTipoInspeccion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion
+                    }
+                }).then(response => {
+                    this.arrayPlantilla = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             getFile(e){
                 //console.log(e);
@@ -1365,6 +1580,17 @@
                                     this.modal =1;
                                     this.listarPorPlaca(1);
                                 }
+                                break;
+                            }
+                            case 'plantilla':
+                            {
+
+                            }
+                            case 'accesorio':
+                            {
+                                this.accionmodal=7;
+                                this.modal = 1;
+                                this.listarPlantilla();
                                 break;
                             }
                         }

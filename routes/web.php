@@ -137,6 +137,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
     Route::get('/pdi/GetListSolicitudByEstado', 'PdiProcesoController@GetListSolicitudByEstado');
     Route::get('/pdi/GetListCompra', 'PdiProcesoController@GetListCompra');
+    Route::get('/pdi/GetPlantillaByTipoInspeccion', 'PdiProcesoController@GetPlantillaByTipoInspeccion');
 
 
 

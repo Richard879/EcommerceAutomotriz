@@ -128,8 +128,8 @@
                                                 <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
                                                     <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
                                                     <td v-text="plantilla.cNombreTipoInspeccion"></td>
-                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
                                                     <td v-text="plantilla.cSeccionNombre"></td>
+                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
                                                     <td v-text="plantilla.cItemNombre"></td>
                                                     <td>
                                                         <template v-if="plantilla.cSituacionRegistro=='A'">
@@ -489,12 +489,12 @@
                     }
                 }).then(response => {
                     this.arrayPlantilla = response.data.arrayPlantilla.data;
-                    this.paginationModal.current_page =  response.data.arrayPlantilla.current_page;
-                    this.paginationModal.total = response.data.arrayPlantilla.total;
-                    this.paginationModal.per_page    = response.data.arrayPlantilla.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPlantilla.last_page;
-                    this.paginationModal.from        = response.data.arrayPlantilla.from;
-                    this.paginationModal.to           = response.data.arrayPlantilla.to;
+                    this.pagination.current_page =  response.data.arrayPlantilla.current_page;
+                    this.pagination.total = response.data.arrayPlantilla.total;
+                    this.pagination.per_page    = response.data.arrayPlantilla.per_page;
+                    this.pagination.last_page   = response.data.arrayPlantilla.last_page;
+                    this.pagination.from        = response.data.arrayPlantilla.from;
+                    this.pagination.to           = response.data.arrayPlantilla.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {

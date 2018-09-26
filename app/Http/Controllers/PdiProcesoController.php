@@ -55,4 +55,18 @@ class PdiProcesoController extends Controller
         $arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);
         return ['arrayCompra'=>$arrayCompra];
     }
+
+    public function GetPlantillaByTipoInspeccion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa   = $request->nidempresa;
+        $nIdTipoInspeccion = $request->nidtipoinspeccion;
+                
+        $arrayPlantilla = DB::select('exec [usp_Pdi_GetPlantillaByTipoInspeccion] ?, ?', 
+                                                                    [   $nIdEmpresa, 
+                                                                        $nIdTipoInspeccion
+                                                                    ]);
+        return response()->json($arrayPlantilla);
+    }
 }
