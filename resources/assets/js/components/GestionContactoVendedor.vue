@@ -1250,9 +1250,12 @@
                                                                                             <input type="hidden" v-model="formNuevoContacto.nidproveedor">
                                                                                             <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                             <div class="input-group-prepend">
-                                                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                                                </button>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Proveedor </div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -1370,10 +1373,10 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
                                                                                                 <td>
-                                                                                                    <a href="#" @click="eliminarItemReferenciaVehiculo(index)" data-toggle="tooltip" data-placement="top"
-                                                                                                        :title="'Eliminar Referencia'">
-                                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                    </a>
+                                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Eliminar Referencia  {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
+                                                                                                        <i @click="eliminarItemReferenciaVehiculo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                    </el-tooltip>
                                                                                                 </td>
                                                                                                 <td v-text="referencia.cProveedorNombre"></td>
                                                                                                 <td v-text="referencia.cLineaNombre"></td>
