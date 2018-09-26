@@ -63,9 +63,12 @@
                                                                                     <input type="hidden" v-model="formEventoCamp.nidproveedor">
                                                                                     <input type="text" v-model="formEventoCamp.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                     <div class="input-group-prepend">
-                                                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                        </button>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Proveedor </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -352,9 +355,12 @@
                                                                                 <input type="hidden" v-model="formEventoCamp.nidproveedor">
                                                                                 <input type="text" v-model="formEventoCamp.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                 <div class="input-group-prepend">
-                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                    </button>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </el-tooltip>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -489,9 +495,12 @@
                                                                                                     </option>
                                                                                                 </select>
                                                                                                 <div class="input-group-prepend">
-                                                                                                    <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
-                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                    </button>
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -863,6 +872,7 @@
             </div>
         </div>
 
+        <!-- MODAL PROVEEDORES -->
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -880,9 +890,14 @@
                                                     <label class="col-sm-4 form-control-label">Nombre</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Proveedor </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1260,9 +1275,12 @@
                                                         </option>
                                                     </select>
                                                     <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Buscar Elemento Venta</div>
+                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </el-tooltip>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1273,9 +1291,12 @@
                                                 <div class="input-group">
                                                     <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
                                                     <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Buscar Elemento Venta</div>
+                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </el-tooltip>
                                                     </div>
                                                 </div>
                                             </div>

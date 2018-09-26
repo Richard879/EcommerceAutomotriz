@@ -119,10 +119,10 @@
                                                                                 <td v-text="c.cEmail"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignarCarteraMes(c.nIdContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Asignar a Cartera ' + c.cPerApellidos + ' ' + c.cNombre">
-                                                                                        <i class="fa-md fa fa-suitcase"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                        <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -150,10 +150,10 @@
                                                                                 <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="asignarCarteraMes(c.nIdContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Asignar a Cartera ' + c.cRazonSocial">
-                                                                                        <i class="fa-md fa fa-suitcase"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Asignar a Cartera  {{ c.cRazonSocial }}</div>
+                                                                                        <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -285,14 +285,14 @@
                                                                                 <td v-text="c.cEmail"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Seguimiento ' + c.cPerApellidos + ' ' + c.cNombre">
-                                                                                        <i class="fa-md fa fa-sign-out"></i>
-                                                                                    </a>
-                                                                                    <a href="#" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Anular de Cartera Mes ' + c.cPerApellidos + ' ' + c.cNombre">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seguimiento  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaNatural, 1)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                    </el-tooltip>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Anular de Cartera Mes  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </a>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -320,14 +320,14 @@
                                                                                 <td v-text="c.cContacto"></td>
                                                                                 <td v-text="c.cVendedor"></td>
                                                                                 <td>
-                                                                                    <a href="#" @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Seguimiento ' + c.cRazonSocial">
-                                                                                        <i class="fa-md fa fa-sign-out"></i>
-                                                                                    </a>
-                                                                                    <a href="#" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Anular de Cartera Mes ' + c.cPerApellidos + ' ' + c.cNombre">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Seguimiento  {{ c.cRazonSocial }}</div>
+                                                                                        <i @click="activarTab3(c.nIdContacto, c.nIdPersonaJuridica, 2)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                    </el-tooltip>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Anular de Cartera Mes  {{ c.cRazonSocial }}</div>
                                                                                         <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </a>
+                                                                                    </el-tooltip>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -484,9 +484,12 @@
                                                                                             <input type="hidden" v-model="formNuevoContacto.nidproveedor">
                                                                                             <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                             <div class="input-group-prepend">
-                                                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                                                </button>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Proveedor </div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -613,15 +616,15 @@
                                                                                                 <td v-text="r.nAnioFabricacion"></td>
                                                                                                 <td v-text="r.nAnioModelo"></td>
                                                                                                 <td>
-                                                                                                    <a href="#" @click="activarTab333(r.nIdAsignacionContactoVendedor)" data-toggle="tooltip" data-placement="top"
-                                                                                                        :title="'Nuevo Seguimiento ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
-                                                                                                        <i class="fa-md fa fa-sign-out"></i>
-                                                                                                    </a>
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Nuevo Seguimiento  {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                        <i @click="activarTab333(r.nIdAsignacionContactoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-sign-out"></i>
+                                                                                                    </el-tooltip>
                                                                                                     <template v-if="r.cReferenciaVehEstado=='A'">
-                                                                                                        <a href="#" @click="desactivar(r.nIdReferenciaVehiculoContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                                        :title="'Desactivar ' + r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre">
-                                                                                                            <i class="fa-md fa fa-check-square"></i>
-                                                                                                        </a>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Desactivar {{ r.cLineaNombre + ' ' + r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
+                                                                                                            <i @click="desactivar(r.nIdReferenciaVehiculoContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                                        </el-tooltip>
                                                                                                     </template>
                                                                                                 </td>
                                                                                             </tr>
@@ -1447,88 +1450,89 @@
                     <div class="modal-body">
                         <form v-on:submit.prevent class="form-horizontal">
                             <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </div>
-                                                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Proveedor </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayProveedor.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nombre Proveedor</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="proveedor.cParNombre"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
-                                            </div>
                                         </div>
+                                        <hr/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
