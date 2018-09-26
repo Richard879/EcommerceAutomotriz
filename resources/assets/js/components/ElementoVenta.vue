@@ -169,9 +169,12 @@
                                                     <div class="input-group">
                                                         <input type="text" v-model="formEle.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Proveedor </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -309,9 +312,12 @@
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Proveedor </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </div>
                                                         </div>
                                                     </div>

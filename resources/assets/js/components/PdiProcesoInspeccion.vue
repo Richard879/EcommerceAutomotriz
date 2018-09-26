@@ -207,7 +207,7 @@
                                                         <div class="input-group-prepend">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Buscar Por Vin o Placa </div>
-                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
                                                                     <i class="fa-lg fa fa-search"></i>
                                                                 </button>
                                                             </el-tooltip>
@@ -607,6 +607,112 @@
             </div>
         </div>
 
+        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA COMPRA</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--<div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="fillItem.citemnombre" @keyup.enter="listarItems(1)" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" title="Buscar Items" class="btn btn-info btn-corner btn-sm" @click="listarItems(1)">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>-->
+                                        <!--<template v-if="arrayPuntoInspeccion.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Código</th>
+                                                            <th>Nombre</th>
+                                                            <th>Tipo Movimiento</th>
+                                                            <th>Ingreso Sucursal</th>
+                                                            <th>Salida Sucursal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="punto in arrayPuntoInspeccion" :key="punto.nIdSolicitudAutorizacion">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ punto.cNombrePuntoInspeccion }}</div>
+                                                                    <i @click="asignarPuntoInspeccion(punto.nIdPuntoInspeccion, punto.cNombrePuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="punto.nIdPuntoInspeccion"></td>
+                                                            <td v-text="punto.cNombrePuntoInspeccion"></td>
+                                                            <td v-text="punto.cFlagTipoMovimiento"></td>
+                                                            <td v-text="punto.cFlagIngresoSucursal"></td>
+                                                            <td v-text="punto.cFlagSalidaSucursal"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaPuntoInspeccion(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaPuntoInspeccion(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaPuntoInspeccion(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </template>
 <script>
@@ -820,7 +926,7 @@
             },
             asignarSolicitud(nIdSolicitudAutorizacion, cNumeroSolicitud, cTipoSolicitud){
                 this.formPdi.nidsolicitud = nIdSolicitudAutorizacion;
-                this.formPdi.csolicitudnombre = cNumeroSolicitud + ' ' + cTipoSolicitud;
+                this.formPdi.csolicitudnombre = cNumeroSolicitud + ' - ' + cTipoSolicitud;
                 this.cerrarModal();
             },
             listarPuntoInspeccion(page){
@@ -887,6 +993,12 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            listarPorVin(page){
+
+            },
+            listarPorPlaca(page){
+
             },
             getFile(e){
                 //console.log(e);
@@ -1084,7 +1196,20 @@
                                 this.listarPuntoInspeccion(1);
                                 break;
                             }
-                            
+                            case 'vinplaca':
+                            {
+                                if(this.formPdi.nidflagvinplaca == 1){
+                                    this.accionmodal=5;
+                                    this.modal =1;
+                                    this.listarPorVin(1);
+                                }
+                                else{
+                                    this.accionmodal=6;
+                                    this.modal =1;
+                                    this.listarPorPlaca(1);
+                                }
+                                break;
+                            }
                         }
                     }
                 }

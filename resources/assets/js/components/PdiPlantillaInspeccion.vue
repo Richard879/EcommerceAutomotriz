@@ -29,7 +29,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Tipo Inspección</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable placeholder="Select" >
+                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable>
                                                         <el-option
                                                         v-for="item in arrayTipoInspeccion"
                                                         :key="item.nIdTipoInspeccion"
@@ -46,7 +46,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sección</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidseccion" filterable placeholder="Select" >
+                                                    <el-select v-model="formPlantilla.nidseccion" filterable>
                                                         <el-option
                                                         v-for="item in arraySeccion"
                                                         :key="item.nIdPar"
@@ -61,7 +61,6 @@
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
-                                            <!--<button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('plantila','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>-->
                                         </div>
                                     </div>
                                 </form>
@@ -98,9 +97,12 @@
                                                     <div class="input-group">
                                                         <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Item </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,9 +233,12 @@
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillItem.citemnombre" @keyup.enter="listarItems(1)" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Items" class="btn btn-info btn-corner btn-sm" @click="listarItems(1)">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Items </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarItems(1)">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </div>
                                                         </div>
                                                     </div>
