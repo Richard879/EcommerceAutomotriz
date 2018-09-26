@@ -1075,18 +1075,8 @@
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 canio: '2018',
                 cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
-                arrayCompra: [],
-                arrayExcel: [],
-                contadorArrayExcel: 0,
-                arrayTipoLista: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                arrayProveedor: [],
-                fillProveedor:{
-                    cnombreproveedor: ''
-                },
+                // ============================================
+                // ============ BUSCAR COMPRA =================
                 fillCompra:{
                     dfechainicio: '',
                     dfechafin: '',
@@ -1095,12 +1085,21 @@
                     nidmarca: 0,
                     nidmodelo: 0
                 },
+                arrayMarca: [],
+                arrayModelo: [],
+                // ===============================================
+                // ============ REGISTRAR COMPRA =================
                 formCompra:{
                     nformapago: 0,
                     nidtipolista: 0,
                     nidproveedor: 0,
                     cproveedornombre: ''
                 },
+                arrayCompra: [],
+                arrayExcel: [],
+                contadorArrayExcel: 0,
+                arrayTipoLista: [], 
+                // ==========================================================           
                 // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
                 formModalCompra:{
                     nidcompra: 0,
@@ -1124,6 +1123,12 @@
                 // =========== TAB FORUM ============
                 arrayForum: [],
                 contadorArrayForum: 0,
+                // ==========================================================
+                // =============  BUSCAR PROVEEDORES ========================
+                fillProveedor:{
+                    cnombreproveedor: ''
+                },
+                arrayProveedor: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,

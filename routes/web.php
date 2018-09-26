@@ -136,6 +136,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/puga/DeletePermisosByUsuario', 'PerUsuGruAccController@DeletePermisosByUsuario');
     Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
     Route::get('/pdi/GetListSolicitudByEstado', 'PdiProcesoController@GetListSolicitudByEstado');
+    Route::get('/pdi/GetListCompra', 'PdiProcesoController@GetListCompra');
 
 
 
