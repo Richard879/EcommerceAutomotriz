@@ -285,4 +285,32 @@ class ParametroController extends Controller
         }
         return response()->json($data);
     }
+
+    public function GetListParametroByNombre(Request $request)
+    {
+        $nIdGrupoPar = $request->ngrupoparid;
+        $cParNombre = $request->cparnombre;
+        $variable   = $request->opcion;
+        $cParNombre = ($cParNombre == NULL) ? ($cParNombre = '') : $cParNombre;
+
+        $arrayParametro = DB::select('exec [usp_Par_GetListParametroByNombre] ?, ?', 
+                                                        [   $nIdGrupoPar,
+                                                            $cParNombre
+                                                        ]);
+        $data = [];
+        if($variable == "0"){
+            $data[0] = [
+                'nIdPar'   => 0,
+                'cParNombre' =>'SELECCIONE',
+            ];
+        }
+        foreach ($arrayParametro as $key => $value) {
+           $data[$key+1] =[
+                'nIdPar'   => $value->nIdPar,
+                'cParNombre' => $value->cParNombre,
+            ];
+        }
+        $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
+        return ['arrayParametro'=>$arrayParametro];
+    }
 }

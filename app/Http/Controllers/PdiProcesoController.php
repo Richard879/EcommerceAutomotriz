@@ -62,10 +62,12 @@ class PdiProcesoController extends Controller
  
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
+        $nIdFlag = $request->nidflag;
                 
-        $arrayPlantilla = DB::select('exec [usp_Pdi_GetPlantillaByTipoInspeccion] ?, ?', 
+        $arrayPlantilla = DB::select('exec [usp_Pdi_GetPlantillaByTipoInspeccion] ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
-                                                                        $nIdTipoInspeccion
+                                                                        $nIdTipoInspeccion,
+                                                                        $nIdFlag
                                                                     ]);
         return response()->json($arrayPlantilla);
     }

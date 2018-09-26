@@ -803,65 +803,17 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">LISTADO COMPRA</h3>
+                                        <h3 class="h4">PLANTILLA</h3>
                                     </div>
                                     <div class="card-body">
-                                        <!--<div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Fecha Inicio</label>
-                                                    <div class="col-sm-8">
-                                                        <el-date-picker
-                                                            v-model="fillCompra.dfechainicio"
-                                                            type="date"
-                                                            value-format="yyyy-MM-dd"
-                                                            format="dd/MM/yyyy"
-                                                            placeholder="dd/mm/aaaa">
-                                                        </el-date-picker>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                                    <div class="col-sm-8">
-                                                        <el-date-picker
-                                                            v-model="fillCompra.dfechafin"
-                                                            type="date"
-                                                            value-format="yyyy-MM-dd"
-                                                            format="dd/MM/yyyy"
-                                                            placeholder="dd/mm/aaaa">
-                                                        </el-date-picker>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
+                                                    <label class="col-sm-4 form-control-label">Área</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Marca</label>
-                                                    <div class="col-sm-8">
-                                                        <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
                                                             <el-option
-                                                            v-for="item in arrayMarca"
+                                                            v-for="item in arrayFlag"
                                                             :key="item.nIdPar"
                                                             :label="item.cParNombre"
                                                             :value="item.nIdPar">
@@ -871,91 +823,46 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Modelo</label>
+                                                <!--<div class="row">
+                                                    <label class="col-sm-4 form-control-label">Agregar Item</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
-                                                            <el-option
-                                                            v-for="item in arrayModelo"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
-                                                            </el-option>
-                                                        </el-select>
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Item </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>-->
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-4">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPlantilla()">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPorVin(1)">
-                                                    <i class="fa fa-search"></i> Buscar
-                                                </button>
-                                            </div>
-                                        </div>-->
                                         <hr/>
-                                        <template v-if="arrayCompra.length">
+                                        <template v-if="arrayPlantilla.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
-                                                            <th>Código</th>
-                                                            <th>Periodo</th>
-                                                            <th>OC</th>
-                                                            <th>Línea</th>
-                                                            <th>Almacén<nav></nav></th>
-                                                            <th>Nro Vin</th>
-                                                            <th>Nombre Comercial</th>
-                                                            <th>Año Fab</th>
-                                                            <th>Año Mod</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
-                                                                    <i @click="asignarVin(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="compra.nIdCompra"></td>
-                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                            <td v-text="compra.nOrdenCompra"></td>
-                                                            <td v-text="compra.cNombreLinea"></td>
-                                                            <td v-text="compra.cNombreAlmacen"></td>
-                                                            <td v-text="compra.cNumeroVin"></td>
-                                                            <td v-text="compra.cNombreComercial"></td>
-                                                            <td v-text="compra.nAnioFabricacion"></td>
-                                                            <td v-text="compra.nAnioVersion"></td>
+                                                        <tr v-for="compra in arrayPlantilla" :key="compra.nIdCompra">
+                                                            <td v-text="compra.cNombreTipoInspeccion"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaVin(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </template>
                                         <template v-else>
@@ -1036,6 +943,15 @@
                 arrayCompra: [],
                 arrayMarca: [],
                 arrayModelo: [],
+                // ============================================
+                // ============ MODAL PLANILLA =================
+                formPlantilla:{
+                    nidflag: 0
+                },
+                arrayPlantilla: [],
+                arraySeccion: [],
+                arrayItems: [],
+                arrayFlag: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1276,7 +1192,7 @@
                     console.log(error);
                 });
             },
-            //=============== LISTAR POR VIN ===================
+            //=============== LISTAR MODAL POR VIN ===================
             listarPorVin(page){
                 if(this.fillCompra.nordencompra == ''){
                     var nordencompra = 0;
@@ -1352,20 +1268,35 @@
                 this.formPdi.cvinplacanombre = '';
                 this.formPdi.nidcompra = 0;
             },
-            //=============== LISTAR POR PLACA ===================
+            //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
 
             },
-
+            //=============== LISTAR MODAL PLANTILLA ===================
             listarPlantilla(){
                 var url = this.ruta + '/pdi/GetPlantillaByTipoInspeccion';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion
+                        'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion,
+                        'nidflag': this.formPlantilla.nidflag
                     }
                 }).then(response => {
-                    this.arrayPlantilla = response.data;
+                    this.arraySeccion = response.data;
+                    this.arrayItems = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarFlag(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110080,
+                        'opcion' : 0
+                    }
+                }).then(response => {
+                    this.arrayFlag = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1590,7 +1521,7 @@
                             {
                                 this.accionmodal=7;
                                 this.modal = 1;
-                                this.listarPlantilla();
+                                this.llenarFlag();
                                 break;
                             }
                         }

@@ -57,6 +57,21 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Área</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayFlag"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
@@ -75,21 +90,6 @@
                             <div class="card-body">
                                 <div class="col-lg-12">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Área</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayFlag"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Agregar Item</label>
@@ -515,7 +515,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarTipoInspeccion(page);
+                this.listarItemPlantilla(page);
             },
             //================= REGISTRO =======================
             asignarItem(nItemId, cItemNombre){
@@ -543,13 +543,14 @@
             },
             //================= LISTADO ITEMS =======================
             listarItems(page){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/parametro/GetListParametroByNombre';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110082,
-                        'opcion' : 1,
-                        'page' : page
+                        'ngrupoparid': 110082,
+                        'cparnombre': this.fillItem.citemnombre,
+                        'opcion': 1,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayItem = response.data.arrayParametro.data;
@@ -578,6 +579,9 @@
                 };
                 if(this.formPlantilla.nidseccion == 0){
                     this.mensajeError.push('Debes Seleccionar Sección');
+                };
+                if(this.formPlantilla.nidflag == 0){
+                    this.mensajeError.push('Debes Seleccionar Área');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;

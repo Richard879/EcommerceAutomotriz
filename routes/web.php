@@ -19,6 +19,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetDocumentoJuridica', 'ParametroController@GetDocumentoJuridica');
     Route::get('/parametro/GetParametroById', 'ParametroController@GetParametroById');
     Route::get('/parametro/GetListParametroByGrupo', 'ParametroController@GetListParametroByGrupo');
+    Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
+    Route::get('/parametro/GetListParametroByNombre', 'ParametroController@GetListParametroByNombre');
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
@@ -134,12 +136,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/puga/GetListPermisosByUsuario', 'PerUsuGruAccController@GetListPermisosByUsuario');
     Route::post('/puga/SetPermisosByUsuario', 'PerUsuGruAccController@SetPermisosByUsuario');
     Route::post('/puga/DeletePermisosByUsuario', 'PerUsuGruAccController@DeletePermisosByUsuario');
-    Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
     Route::get('/pdi/GetListSolicitudByEstado', 'PdiProcesoController@GetListSolicitudByEstado');
     Route::get('/pdi/GetListCompra', 'PdiProcesoController@GetListCompra');
     Route::get('/pdi/GetPlantillaByTipoInspeccion', 'PdiProcesoController@GetPlantillaByTipoInspeccion');
 
 
+    
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
     Route::get('/gescotizacion/GetTipoLista', 'CotizacionController@GetTipoLista');
