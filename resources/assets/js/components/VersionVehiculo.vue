@@ -174,19 +174,16 @@
                                                     <td v-text="vehiculo.cModeloNombre"></td>
                                                     <td v-text="vehiculo.cNombreComercial"></td>
                                                     <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ vehiculo.cNombreComercial }}</div>
+                                                        <el-tooltip class="item" :content="'Editar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                              <i @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
                                                         <template v-if="vehiculo.cVersionVehEstado=='A'">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ vehiculo.cNombreComercial }}</div>
+                                                            <el-tooltip class="item" :content="'Desactivar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                                 <i @click="desactivar(vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ vehiculo.cNombreComercial }}</div>
+                                                            <el-tooltip class="item" :content="'Activar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                                 <i @click="activar(vehiculo.nIdVersionVeh)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>

@@ -336,13 +336,13 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Conforme</label>
+                                                <label class="col-sm-4 form-control-label" v-text="formPdi.nflagconformidad ? 'Conforme' : 'NO Conforme'"></label>
                                                 <div class="col-sm-1">
                                                     <el-switch v-model="formPdi.nflagconformidad">
                                                     </el-switch>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <input type="text" v-model="formPdi.cflagconformidaddescripcion" class="form-control form-control-sm">
+                                                    <input type="text" v-if="!formPdi.nflagconformidad" v-model="formPdi.cflagconformidaddescripcion" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -868,12 +868,12 @@
                                                                 <td v-if="item.nIdSeccion==seccion.nIdSeccion" v-text="item.cItemNombre"></td>
                                                                 <td v-if="item.nIdSeccion==seccion.nIdSeccion">
                                                                     <span class="switch">
-                                                                        <el-switch v-model="arrayIndexFlagMarca[index]">
+                                                                        <el-switch v-model="arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem]">
                                                                         </el-switch>
                                                                     </span>
                                                                 </td>
                                                                 <td v-if="item.nIdSeccion==seccion.nIdSeccion">
-                                                                    <input type="text" v-if="arrayIndexFlagMarca[index]" v-model="arrayIndexDescripcion[index]" class="form-control form-control-sm">
+                                                                    <input type="text" v-if="arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem]" v-model="arrayPlantillaDescripcion[index]" class="form-control form-control-sm">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -935,23 +935,23 @@
                                         <hr/>
                                         <template v-if="arrayAccesorio.length">
                                             <div class="table-responsive">
-                                                <!--<table class="table table-striped table-sm">
+                                                <table class="table table-striped table-sm">
                                                     <tbody>
-                                                        <tr v-for="a in arrayAccesorio" :key="a.nIdPar">
+                                                        <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdPar">
                                                             <td v-text="a.cParNombre"></td>
-                                                            <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                            <td>
                                                                 <span class="switch">
-                                                                    <el-switch v-model="arrayIndexFlagMarca[index]">
+                                                                    <el-switch v-model="arrayAccesorioFlagMarca[index]">
                                                                     </el-switch>
                                                                 </span>
                                                             </td>
-                                                            <td v-if="item.nIdSeccion==seccion.nIdSeccion">
-                                                                <input type="text" v-if="arrayIndexFlagMarca[index]" v-model="arrayIndexDescripcion[index]" class="form-control form-control-sm">
+                                                            <td>
+                                                                <input type="text" v-if="arrayAccesorioFlagMarca[index]" v-model="arrayAccesorioDescripcion[index]" class="form-control form-control-sm">
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                </table>-->
-                                                <vs-table max-items="10" stripe pagination :data="arrayAccesorio">
+                                                </table>
+                                                <!--<vs-table max-items="10" stripe pagination :data="arrayAccesorio">
                                                     <template slot="thead">
                                                         <vs-th>
                                                             
@@ -969,7 +969,7 @@
                                                             </vs-td>
                                                         </vs-tr>
                                                     </template>
-                                                </vs-table>
+                                                </vs-table>-->
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
@@ -1067,13 +1067,15 @@
                 arraySeccion: [],
                 arrayItems: [],
                 arrayFlag: [],
-                arrayIndexFlagMarca: [],  
-                arrayIndexDescripcion: [],
+                arrayPlantillaFlagMarca: [],  
+                arrayPlantillaDescripcion: [],
                 // ============ MODAL ACCESORIO =================
                 fillAccesorio:{
                     cnombre: ''
                 },
                 arrayAccesorio: [],
+                arrayAccesorioFlagMarca:  [],
+                arrayAccesorioDescripcion: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1446,10 +1448,10 @@
                 me.arrayItems.map(function(value, key){
                     me.arrayPlantilla.push({
                         nIdPlantillaInspeccionSeccionItem: value.nIdPlantillaInspeccionSeccionItem,
-                        nFlagMarca: me.arrayIndexFlagMarca[key],
-                        cDescripcionNoConformidad: me.arrayIndexDescripcion[key]
+                        nFlagMarca: me.arrayPlantillaFlagMarca[key],
+                        cDescripcionNoConformidad: me.arrayPlantillaDescripcion[key]
                     });
-                    alert(me.arrayIndexFlagMarca[key]);
+                    alert(me.arrayPlantillaFlagMarca[key]);
                 });
             },
             //=============== LISTAR MODAL ACCESORIO ===================
