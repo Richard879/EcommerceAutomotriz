@@ -43,7 +43,7 @@ class VersionVehiculoController extends Controller
         $cNombreComercial = $request->cnombrecomercial;
         $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
 
-        $arrayVersionVeh = DB::select('exec [usp_VersionVeh_GetVersionVehiculo] ?, ?, ?, ? ,? ,?, ?, ?',
+        $data = DB::select('exec [usp_VersionVeh_GetVersionVehiculo] ?, ?, ?, ? ,? ,?, ?, ?',
                                                                             [   $nIdEmpresa,
                                                                                 $nIdProveedor,
                                                                                 $nIdClase,
@@ -53,9 +53,9 @@ class VersionVehiculoController extends Controller
                                                                                 $nIdModelo,
                                                                                 $cNombreComercial
                                                                             ]);
-
-        $arrayVersionVeh = ParametroController::arrayPaginator($arrayVersionVeh, $request);
-        return ['arrayVersionVehiculo'=>$arrayVersionVeh];
+        return response()->json($data);
+        //$arrayVersionVeh = ParametroController::arrayPaginator($arrayVersionVeh, $request);
+        //return ['arrayVersionVehiculo'=>$arrayVersionVeh];
     }
 
     public function UpdVersionVehiculoById(Request $request)

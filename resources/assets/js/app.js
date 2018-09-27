@@ -3,15 +3,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import ElementUI from 'element-ui';
-//import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/es';
 window.Vue.use(ElementUI, { locale })
 
-import Vue from 'vue'
 import Vuesax from 'vuesax'
-
-import 'vuesax/dist/vuesax.css'
-Vue.use(Vuesax)
+window.Vue.use(Vuesax)
 
 var VueEventBus = require('vue-event-bus')
 Vue.use(VueEventBus)

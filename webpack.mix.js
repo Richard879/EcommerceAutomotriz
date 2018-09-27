@@ -23,6 +23,7 @@ mix.styles([
     'resources/assets/template/css/treeview.css',
     'resources/assets/template/css/jstreeview.css',
     'resources/assets/template/css/styleprogress.css',
+    'resources/assets/template/css/vuesax.css',
     'resources/assets/template/css/material-icons.css'
 ], 'public/css/plantilla.css')
 .scripts([
