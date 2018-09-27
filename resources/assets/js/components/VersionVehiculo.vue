@@ -154,37 +154,7 @@
                             </div>
                             <div class="card-body">
                                 <template v-if="arrayVersionVehiculo.length">
-                                    <vs-table max-items="10" stripe pagination :data="arrayVersionVehiculo">
-                                        <template slot="thead">
-                                            <vs-th>Código</vs-th>
-                                            <vs-th>Línea</vs-th>
-                                            <!--<vs-th>Marca</vs-th>
-                                            <vs-th>Modelo</vs-th>
-                                            <vs-th>Nombre Comercial</vs-th>
-                                            <vs-th>Acciones</vs-th>-->
-                                        </template>
-
-                                        <template slot-scope="{data}">
-                                            <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
-                                                <vs-td :data="data[indextr].nIdVersionVeh">
-                                                {{data[indextr].nIdVersionVeh}}
-                                                </vs-td>
-                                                <vs-td :data="data[indextr].cLineaNombre">
-                                                {{data[indextr].cLineaNombre}}
-                                                </vs-td>
-                                                <vs-td :data="data[indextr].cMarcaNombre">
-                                                {{data[indextr].cMarcaNombre}}
-                                                </vs-td>
-                                                <vs-td :data="data[indextr].cModeloNombre">
-                                                {{data[indextr].cModeloNombre}}
-                                                </vs-td>
-                                                <vs-td :data="data[indextr].cNombreComercial">
-                                                {{data[indextr].cNombreComercial}}
-                                                </vs-td>
-                                            </vs-tr>
-                                        </template>
-                                    </vs-table>
-                                    <!--<div class="table-responsive">
+                                    <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
@@ -249,7 +219,7 @@
                                                 <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                             </div>
                                         </div>
-                                    </div>-->
+                                    </div>
                                 </template>
                                 <template v-else>
                                     <table>
@@ -808,13 +778,13 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data;
-                    /*this.pagination.current_page =  response.data.arrayVersionVehiculo.current_page;
+                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
+                    this.pagination.current_page =  response.data.arrayVersionVehiculo.current_page;
                     this.pagination.total = response.data.arrayVersionVehiculo.total;
                     this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
                     this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
                     this.pagination.from        = response.data.arrayVersionVehiculo.from;
-                    this.pagination.to           = response.data.arrayVersionVehiculo.to;*/
+                    this.pagination.to           = response.data.arrayVersionVehiculo.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
