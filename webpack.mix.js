@@ -22,7 +22,8 @@ mix.styles([
     'resources/assets/template/css/simple-line-icons.min.css',
     'resources/assets/template/css/treeview.css',
     'resources/assets/template/css/jstreeview.css',
-    'resources/assets/template/css/styleprogress.css'
+    'resources/assets/template/css/styleprogress.css',
+    'resources/assets/template/css/material-icons.css'
 ], 'public/css/plantilla.css')
 .scripts([
 	'resources/assets/template/vendor/jquery/jquery.min.js',

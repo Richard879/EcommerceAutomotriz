@@ -7,6 +7,12 @@ import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/es';
 window.Vue.use(ElementUI, { locale })
 
+import Vue from 'vue'
+import Vuesax from 'vuesax'
+
+import 'vuesax/dist/vuesax.css'
+Vue.use(Vuesax)
+
 var VueEventBus = require('vue-event-bus')
 Vue.use(VueEventBus)
 

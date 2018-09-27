@@ -935,19 +935,41 @@
                                         <hr/>
                                         <template v-if="arrayAccesorio.length">
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                                <!--<table class="table table-striped table-sm">
                                                     <tbody>
                                                         <tr v-for="a in arrayAccesorio" :key="a.nIdPar">
                                                             <td v-text="a.cParNombre"></td>
+                                                            <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                                <span class="switch">
+                                                                    <el-switch v-model="arrayIndexFlagMarca[index]">
+                                                                    </el-switch>
+                                                                </span>
+                                                            </td>
+                                                            <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                                <input type="text" v-if="arrayIndexFlagMarca[index]" v-model="arrayIndexDescripcion[index]" class="form-control form-control-sm">
+                                                            </td>
                                                         </tr>
                                                     </tbody>
-                                                </table>
+                                                </table>-->
+                                                <vs-table max-items="10" stripe pagination :data="arrayAccesorio">
+                                                    <template slot="thead">
+                                                        <vs-th>
+                                                            
+                                                        </vs-th>
+                                                    </template>
+
+                                                    <template slot-scope="{data}">
+                                                        <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                                                            <vs-td :data="data[indextr].nIdPar">
+                                                            {{data[indextr].nIdPar}}
+                                                            </vs-td>
+
+                                                            <vs-td :data="data[indextr].cParNombre">
+                                                            {{data[indextr].cParNombre}}
+                                                            </vs-td>
+                                                        </vs-tr>
+                                                    </template>
+                                                </vs-table>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-5">
