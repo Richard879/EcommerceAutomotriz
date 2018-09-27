@@ -56,7 +56,7 @@ class PdiProcesoController extends Controller
         return ['arrayCompra'=>$arrayCompra];
     }
 
-    public function GetPlantillaByTipoInspeccion(Request $request)
+    public function GetListSeccion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
  
@@ -64,11 +64,27 @@ class PdiProcesoController extends Controller
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdFlag = $request->nidflag;
                 
-        $arrayPlantilla = DB::select('exec [usp_Pdi_GetPlantillaByTipoInspeccion] ?, ?, ?', 
+        $arraySeccion = DB::select('exec [usp_Pdi_GetListSeccion] ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
                                                                         $nIdTipoInspeccion,
                                                                         $nIdFlag
                                                                     ]);
-        return response()->json($arrayPlantilla);
+        return response()->json($arraySeccion);
+    }
+
+    public function GetListItem(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa   = $request->nidempresa;
+        $nIdTipoInspeccion = $request->nidtipoinspeccion;
+        $nIdFlag = $request->nidflag;
+                
+        $arrayItems = DB::select('exec [usp_Pdi_GetListItem] ?, ?, ?', 
+                                                                    [   $nIdEmpresa, 
+                                                                        $nIdTipoInspeccion,
+                                                                        $nIdFlag
+                                                                    ]);
+        return response()->json($arrayItems);
     }
 }

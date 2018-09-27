@@ -237,7 +237,7 @@
                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                         <div slot="content">Ver Plantilla </div>
                                                         <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','plantilla')">
-                                                            <i class="fa fa-eye"></i>&nbsp;Planilla
+                                                            <i class="fa fa-eye"></i>&nbsp;Plantilla
                                                         </button>
                                                     </el-tooltip>
                                                     <el-tooltip class="item" effect="dark" placement="top-start">
@@ -356,7 +356,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-4">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Observación</label>
+                                                <div class="col-sm-8">
+                                                   <textarea v-model="formPdi.cobservacion" class="form-control form-control-sm" cols="30" rows="6"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-9 offset-sm-5">
                                             <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                 <i class="fa fa-save"></i> Registrar
                                             </button>
@@ -840,29 +850,114 @@
                                                     </div>
                                                 </div>-->
                                             </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarSeccion()">
+                                                    <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <template v-if="arraySeccion.length > 0">  
+                                            <li v-for="seccion in arraySeccion" :key="seccion.nIdSeccion">{{ seccion.cSeccionNombre }}
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <tbody>
+                                                            <tr v-for="(item, index) in arrayItems" :key="item.nIdPlantillaInspeccionSeccionItem">
+                                                                <td v-if="item.nIdSeccion==seccion.nIdSeccion" v-text="item.cItemNombre"></td>
+                                                                <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                                    <span class="switch">
+                                                                        <el-switch v-model="arrayIndexFlagMarca[index]">
+                                                                        </el-switch>
+                                                                    </span>
+                                                                </td>
+                                                                <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                                    <input type="text" v-if="arrayIndexFlagMarca[index]" v-model="arrayIndexDescripcion[index]" class="form-control form-control-sm">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </li>
                                             <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-4">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPlantilla()">
-                                                        <i class="fa fa-search"></i> Buscar
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="aceptarPlantilla()">
+                                                        <i class="fa fa-save"></i> Aceptar
                                                     </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cerrar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL ACCESORIO -->
+        <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-primary modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form v-on:submit.prevent class="form-horizontal">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">ACCESORIOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="fillAccesorio.cnombre" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Accesorio </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarAccesorio(1)">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr/>
-                                        <template v-if="arrayPlantilla.length">
+                                        <template v-if="arrayAccesorio.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
                                                         <tr>
                                                             <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="compra in arrayPlantilla" :key="compra.nIdCompra">
-                                                            <td v-text="compra.cNombreTipoInspeccion"></td>
+                                                        <tr v-for="a in arrayAccesorio" :key="a.nIdPar">
+                                                            <td v-text="a.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="aceptarPlantilla()">
+                                                        <i class="fa fa-save"></i> Aceptar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cerrar
+                                                    </button>
+                                                </div>
                                             </div>
                                         </template>
                                         <template v-else>
@@ -878,9 +973,6 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -946,12 +1038,20 @@
                 // ============================================
                 // ============ MODAL PLANILLA =================
                 formPlantilla:{
-                    nidflag: 0
+                    nidflag: 0,
+                    cdescripcion: ''
                 },
                 arrayPlantilla: [],
                 arraySeccion: [],
                 arrayItems: [],
                 arrayFlag: [],
+                arrayIndexFlagMarca: [],  
+                arrayIndexDescripcion: [],
+                // ============ MODAL ACCESORIO =================
+                fillAccesorio:{
+                    cnombre: ''
+                },
+                arrayAccesorio: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -977,7 +1077,8 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                vistaFormulario: 1
+                vistaFormulario: 1,
+                validaAccionModal: 0
             }
         },
          mounted(){
@@ -1273,8 +1374,8 @@
 
             },
             //=============== LISTAR MODAL PLANTILLA ===================
-            listarPlantilla(){
-                var url = this.ruta + '/pdi/GetPlantillaByTipoInspeccion';
+            listarSeccion(){
+                var url = this.ruta + '/pdi/GetListSeccion';
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
@@ -1283,6 +1384,20 @@
                     }
                 }).then(response => {
                     this.arraySeccion = response.data;
+                    this.listarItems();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            listarItems(){
+                var url = this.ruta + '/pdi/GetListItem';
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion,
+                        'nidflag': this.formPlantilla.nidflag
+                    }
+                }).then(response => {
                     this.arrayItems = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -1301,6 +1416,36 @@
                     console.log(error);
                 });
             },
+            aceptarPlantilla(){
+                let me = this;
+
+                me.arrayPlantilla = [];
+
+                me.arrayItems.map(function(value, key){
+                    me.arrayPlantilla.push({
+                        nIdPlantillaInspeccionSeccionItem: value.nIdPlantillaInspeccionSeccionItem,
+                        nFlagMarca: me.arrayIndexFlagMarca[key],
+                        cDescripcionNoConformidad: me.arrayIndexDescripcion[key]
+                    });
+                    alert(me.arrayIndexFlagMarca[key]);
+                });
+            },
+            //=============== LISTAR MODAL ACCESORIO ===================
+            listarAccesorio(){
+                var url = this.ruta + '/parametro/GetParametroByNombre';
+                
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110089,
+                        'cparnombre': this.fillAccesorio.cnombre
+                    }
+                }).then(response => {
+                    this.arrayAccesorio = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            //=============== ADJUNTAR DOCUMENTO ===================
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
@@ -1515,18 +1660,44 @@
                             }
                             case 'plantilla':
                             {
+                                this.validaAccionModal = 7;
 
-                            }
-                            case 'accesorio':
-                            {
+                                if(this.validarMostrarModal()){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
                                 this.accionmodal=7;
                                 this.modal = 1;
                                 this.llenarFlag();
                                 break;
                             }
+                            case 'accesorio':
+                            {
+                                this.accionmodal=8;
+                                this.modal = 1;
+                                this.listarAccesorio();
+                                break;
+                            }
                         }
                     }
                 }
+            },
+            validarMostrarModal(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                //================ MODAL PLANILLA ==================
+                if(this.validaAccionModal == 7){
+                    if(this.formPdi.nidtipoinspeccion == 0 || this.formPdi.nidtipoinspeccion == 0){
+                        this.mensajeError.push('Debes Seleccionar Tipo Inspección');
+                    }
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             limpiarFormulario(){
                 /*this.formPdi.nidpuntoinspeccion= 0,
@@ -1573,5 +1744,10 @@
             color: red;
             font-weight: bold;
             font-size: 0.75rem;
+        }
+        .disabled{
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events:none;
         }
 </style>
