@@ -151,8 +151,9 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $versionvehiculo = DB::select('exec [usp_VersionVeh_DesactivaById] ?',
-                                                        [   $request->nIdVersionVeh
+        $versionvehiculo = DB::select('exec [usp_VersionVeh_DesactivaById] ?, ?',
+                                                        [   $request->nIdVersionVeh,
+                                                            Auth::user()->id
                                                         ]);
         return response()->json($versionvehiculo);
     }
@@ -161,8 +162,9 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $versionvehiculo = DB::select('exec [usp_VersionVeh_ActivaById] ?',
-                                                        [   $request->nIdVersionVeh
+        $versionvehiculo = DB::select('exec [usp_VersionVeh_ActivaById] ?, ?',
+                                                        [   $request->nIdVersionVeh,
+                                                            Auth::user()->id
                                                         ]);
         return response()->json($versionvehiculo);
     }

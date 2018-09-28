@@ -160,8 +160,9 @@ class CompraController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCompra = DB::select('exec [usp_Compra_DesactivaById] ?',
-                                                [   $request->nIdCompra
+        $arrayCompra = DB::select('exec [usp_Compra_DesactivaById] ?, ?',
+                                                [   $request->nIdCompra,
+                                                    Auth::user()->id
                                                 ]);
         return response()->json($arrayCompra);
     }
