@@ -32,9 +32,12 @@
                                                     <div class="input-group">
                                                         <input type="text" v-model="formVersion.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Proveedor </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -171,19 +174,16 @@
                                                     <td v-text="vehiculo.cModeloNombre"></td>
                                                     <td v-text="vehiculo.cNombreComercial"></td>
                                                     <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ vehiculo.cNombreComercial }}</div>
+                                                        <el-tooltip class="item" :content="'Editar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                              <i @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                         </el-tooltip>&nbsp;
                                                         <template v-if="vehiculo.cVersionVehEstado=='A'">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ vehiculo.cNombreComercial }}</div>
+                                                            <el-tooltip class="item" :content="'Desactivar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                                 <i @click="desactivar(vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <template v-else>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ vehiculo.cNombreComercial }}</div>
+                                                            <el-tooltip class="item" :content="'Activar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
                                                                 <i @click="activar(vehiculo.nIdVersionVeh)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                             </el-tooltip>
                                                         </template>
@@ -260,9 +260,12 @@
                                                     <div class="input-group">
                                                         <input type="text" v-model="formVersion.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Proveedor </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -420,7 +423,12 @@
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Proveedor </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </div>
                                                         </div>
                                                     </div>

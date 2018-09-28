@@ -29,7 +29,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Tipo Inspección</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable placeholder="Select" >
+                                                    <el-select v-model="formPlantilla.nidtipoinspeccion" filterable>
                                                         <el-option
                                                         v-for="item in arrayTipoInspeccion"
                                                         :key="item.nIdTipoInspeccion"
@@ -46,9 +46,24 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sección</label>
                                                 <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidseccion" filterable placeholder="Select" >
+                                                    <el-select v-model="formPlantilla.nidseccion" filterable>
                                                         <el-option
                                                         v-for="item in arraySeccion"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Área</label>
+                                                <div class="col-sm-8">
+                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                        <el-option
+                                                        v-for="item in arrayFlag"
                                                         :key="item.nIdPar"
                                                         :label="item.cParNombre"
                                                         :value="item.nIdPar">
@@ -61,7 +76,6 @@
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPlantilla()"><i class="fa fa-search"></i> Buscar</button>
-                                            <!--<button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('plantila','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>-->
                                         </div>
                                     </div>
                                 </form>
@@ -78,29 +92,17 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Área</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arrayFlag"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
                                                 <label class="col-sm-4 form-control-label">Agregar Item</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
                                                         <input type="text" v-model="formPlantilla.citemnombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
-                                                            <button type="button" title="Buscar Item" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Item </div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('item','buscar')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,8 +128,8 @@
                                                 <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
                                                     <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
                                                     <td v-text="plantilla.cNombreTipoInspeccion"></td>
-                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
                                                     <td v-text="plantilla.cSeccionNombre"></td>
+                                                    <td v-text="plantilla.cFlagInteriorExterior"></td>
                                                     <td v-text="plantilla.cItemNombre"></td>
                                                     <td>
                                                         <template v-if="plantilla.cSituacionRegistro=='A'">
@@ -231,9 +233,12 @@
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillItem.citemnombre" @keyup.enter="listarItems(1)" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Items" class="btn btn-info btn-corner btn-sm" @click="listarItems(1)">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Items </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarItems(1)">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -484,12 +489,12 @@
                     }
                 }).then(response => {
                     this.arrayPlantilla = response.data.arrayPlantilla.data;
-                    this.paginationModal.current_page =  response.data.arrayPlantilla.current_page;
-                    this.paginationModal.total = response.data.arrayPlantilla.total;
-                    this.paginationModal.per_page    = response.data.arrayPlantilla.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPlantilla.last_page;
-                    this.paginationModal.from        = response.data.arrayPlantilla.from;
-                    this.paginationModal.to           = response.data.arrayPlantilla.to;
+                    this.pagination.current_page =  response.data.arrayPlantilla.current_page;
+                    this.pagination.total = response.data.arrayPlantilla.total;
+                    this.pagination.per_page    = response.data.arrayPlantilla.per_page;
+                    this.pagination.last_page   = response.data.arrayPlantilla.last_page;
+                    this.pagination.from        = response.data.arrayPlantilla.from;
+                    this.pagination.to           = response.data.arrayPlantilla.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -510,7 +515,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarTipoInspeccion(page);
+                this.listarItemPlantilla(page);
             },
             //================= REGISTRO =======================
             asignarItem(nItemId, cItemNombre){
@@ -538,13 +543,14 @@
             },
             //================= LISTADO ITEMS =======================
             listarItems(page){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/parametro/GetListParametroByNombre';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110082,
-                        'opcion' : 1,
-                        'page' : page
+                        'ngrupoparid': 110082,
+                        'cparnombre': this.fillItem.citemnombre,
+                        'opcion': 1,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayItem = response.data.arrayParametro.data;
@@ -573,6 +579,9 @@
                 };
                 if(this.formPlantilla.nidseccion == 0){
                     this.mensajeError.push('Debes Seleccionar Sección');
+                };
+                if(this.formPlantilla.nidflag == 0){
+                    this.mensajeError.push('Debes Seleccionar Área');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;

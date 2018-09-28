@@ -1447,7 +1447,7 @@
                         'opcion' : 1
                     }
                 }).then(response => {
-                    this.arrayTablaDocumento = response.data.arrayParametro.data;
+                    this.arrayTablaDocumento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
