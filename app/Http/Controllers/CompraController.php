@@ -56,7 +56,6 @@ class CompraController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                
                 //$detalle = new Compra();
                 //$detalle->nOrdenCompra = $det['nOrdenCompra'];
                 //$detalle->cNombreLinea = $det['cNombreLinea'];
@@ -94,10 +93,10 @@ class CompraController extends Controller
                                                             ]);
                 if($objCompra[0]->nFlagMsje == 0){
                     array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
-                }    
+                }
                 if($objCompra[0]->nFlagMsje == 2){
                     array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
-                }               
+                }
             }
             $data = [
                 'arrayVinExiste'=>$arrayVinExiste,
@@ -105,7 +104,7 @@ class CompraController extends Controller
             ];
 
             return response()->json($data);
-            
+
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
@@ -156,17 +155,15 @@ class CompraController extends Controller
         return ['arrayVersionVehiculo'=>$arrayVersionVehiculo];
     }
 
-    public function desactivar (Request $request)
+    public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCompra = DB::select('exec [usp_Compra_DesactivaById] ?',
-                                                [   $request->nIdCompra
-                                                ]);
+        $arrayCompra = DB::select('exec [usp_Compra_DesactivaById] ?', [ $request->nIdCompra ]);
         return response()->json($arrayCompra);
     }
 
-    public function SetForum (Request $request)
+    public function SetForum(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -257,7 +254,7 @@ class CompraController extends Controller
                                                                 $det['nIdCompra'],
                                                                 $det['cNumeroVin'],
                                                                 Auth::user()->id
-                                                            ]);             
+                                                            ]);
             }
             //return response()->json($data);
             DB::commit();

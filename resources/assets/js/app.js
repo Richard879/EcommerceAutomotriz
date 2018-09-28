@@ -2,11 +2,17 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+/**
+ * Biblioteca Element UI - Interfaces Web
+ */
 import ElementUI from 'element-ui';
 //import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/es';
 window.Vue.use(ElementUI, { locale })
 
+/**
+ * Biblioteca EventBus - Comunicacion entre Components
+ */
 var VueEventBus = require('vue-event-bus')
 Vue.use(VueEventBus)
 

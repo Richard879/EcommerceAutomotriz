@@ -40,4 +40,115 @@ class TramiteController extends Controller
         $arrayPedidosCancelados = $this->arrayPaginator($arrayPedidosCancelados, $request);
         return ['arrayPedidosCancelados'=>$arrayPedidosCancelados];
     }
+
+    public function SetCabeceraTramite(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $data = DB::select('exec usp_Tramite_SetRegistrarTramite ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->dFechaInicioTramite,
+                                                                    $request->dFechaFinTramite,
+                                                                    $request->nNroVehiculoTramite,
+                                                                    $request->fTotalConTramiteTarjeta,
+                                                                    $request->fTotalConTramitePlaca,
+                                                                    $request->fTotalGastoAdicional,
+                                                                    $request->fTotalTramite,
+                                                                    $request->nIdEstadoTramite,
+                                                                    $request->cFlagEstadoAprobacion,
+                                                                    Auth::user()->id
+                                                                ]);
+
+        //OBTENGO DATA DE LA SOLICITUD TRAMITE
+        $arrayCabeceraTramite =  $data[0];
+
+        return response()->json($arrayCabeceraTramite);
+    }
+
+    public function SetTramiteTarjeta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayDatosVehiculoPlacaByPedido = [];
+
+        try{
+            DB::beginTransaction();
+            $arrayPedidosChecked = $request->arrayPedidosChecked;
+            foreach($arrayPedidosChecked as $ep=>$det)
+            {
+                $data = DB::select('exec usp_Tramite_SetRegistrarTramiteTarjeta ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdCabeceraTramite,
+                                                                        $det['nIdCabeceraPedido'],
+                                                                        $request->dFechaInicioTramite,
+                                                                        $request->dFechaFinTramite,
+                                                                        $request->nIdEstadoTramite,
+                                                                        Auth::user()->id
+                                                                    ]);
+
+                $datosVehiculoPlacaByPedido = DB::select('exec usp_Tramite_GetVehiculoPlacaCompraByPedido ?, ?',
+                                                                    [
+                                                                        $det['nIdCompra'],
+                                                                        Auth::user()->id
+                                                                    ]);
+
+                array_push($arrayDatosVehiculoPlacaByPedido, $datosVehiculoPlacaByPedido[0]);
+            }
+            DB::commit();
+
+            $datosVehiculoPlaca = $this->SetVehiculoPlacaByCommpraPedido($arrayDatosVehiculoPlacaByPedido);
+            return response()->json($datosVehiculoPlaca);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function SetVehiculoPlacaByCommpraPedido($array)
+    {
+        try{
+            DB::beginTransaction();
+
+            foreach($array as $info)
+            {
+                $data = DB::select('exec usp_Tramite_SetVehiculoPlacaCompraByPedido ?, ?, ?, ?, ?, ?, ?',
+                                                                    [
+                                                                        $info->nIdCompra,
+                                                                        $info->nIdMarca,
+                                                                        $info->nIdModelo,
+                                                                        $info->nAnioFabricacion,
+                                                                        $info->cNumeroMotor,
+                                                                        $info->cNumeroVin,
+                                                                        Auth::user()->id
+                                                                    ]);
+            }
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+
+    public function GetSolicitudesTramites(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEstadoTramite   = $request->nIdEstadoTramite;
+        $fechaInicioTramite   = $request->fechaInicioTramite;
+        $fechaFinRealTramite   = $request->fechaFinRealTramite;
+        $nIdTramitador      = Auth::user()->id;
+
+        $nIdEstadoTramite = ($nIdEstadoTramite == NULL) ? ($nIdEstadoTramite = 0) : $nIdEstadoTramite;
+        $fechaInicioTramite = ($fechaInicioTramite == NULL) ? ($fechaInicioTramite = '') : $fechaInicioTramite;
+        $fechaFinRealTramite = ($fechaFinRealTramite == NULL) ? ($fechaFinRealTramite = '') : $fechaFinRealTramite;
+
+        $arraySolicitudesTramites = DB::select('exec usp_Tramite_GetSolicitudesTramites ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEstadoTramite,
+                                                                $nIdTramitador,
+                                                                $fechaInicioTramite,
+                                                                $fechaFinRealTramite
+                                                            ]);
+
+        $arraySolicitudesTramites = $this->arrayPaginator($arraySolicitudesTramites, $request);
+        return ['arraySolicitudesTramites'=>$arraySolicitudesTramites];
+    }
 }
