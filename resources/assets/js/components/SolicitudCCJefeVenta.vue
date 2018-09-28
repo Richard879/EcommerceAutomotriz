@@ -2641,6 +2641,10 @@
     .flexLeft>h4{
         font-weight: bolder;
     }
+    .input-with-select .el-input-group__prepend
+    {
+            width: 25%;
+    }
 </style>
 
 
