@@ -104,7 +104,10 @@ class PedidoController extends Controller
 
         $nidpedido  =  $request->nidpedido;
 
-        $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?', [$nidpedido]);
+        $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?, ?', 
+                                                    [   $nidpedido,
+                                                        Auth::user()->id
+                                                    ]);
         return response()->json($arrayPedido);
     }
 
