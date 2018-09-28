@@ -2555,7 +2555,7 @@
                     return;
                 }*/
 
-                var url = this.ruta + '/elemento/GetElementoByTipo';
+                var url = this.ruta + '/gescotizacion/GetElementoByTipo';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
