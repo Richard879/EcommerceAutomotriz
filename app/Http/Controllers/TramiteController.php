@@ -151,4 +151,135 @@ class TramiteController extends Controller
         $arraySolicitudesTramites = $this->arrayPaginator($arraySolicitudesTramites, $request);
         return ['arraySolicitudesTramites'=>$arraySolicitudesTramites];
     }
+
+    public function GetDetalleSolicitudTramite(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraTramite   = $request->nIdCabeceraTramite;
+        $nIdTramitador      = Auth::user()->id;
+
+        $nIdCabeceraTramite = ($nIdCabeceraTramite == NULL) ? ($nIdCabeceraTramite = 0) : $nIdCabeceraTramite;
+
+        $arrayDetalleSolicitudTramite = DB::select('exec usp_Tramite_GetDetalleSolicitudTramite ?, ?',
+                                                            [
+                                                                $nIdCabeceraTramite,
+                                                                $nIdTramitador
+                                                            ]);
+
+        $arrayDetalleSolicitudTramite = $this->arrayPaginator($arrayDetalleSolicitudTramite, $request);
+        return ['arrayDetalleSolicitudTramite'=>$arrayDetalleSolicitudTramite];
+    }
+
+    public function GetEstadosTarjetasPlaca(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $flagOpcion     =   $request->flagOpcion;
+        $nIdTramiteTarjeta = $request->nIdTramiteTarjeta;
+        $nIdTramitePlaca = $request->nIdTramitePlaca;
+        $nIdTramitador  =   Auth::user()->id;
+
+        $flagOpcion = ($flagOpcion == NULL) ? ($flagOpcion = 0) : $flagOpcion;
+
+        $arrayListadoEstadosTarjetaPlaca = DB::select('exec usp_Tramite_GetEstadosTarjetasPlaca ?, ?, ?, ?',
+                                                            [
+                                                                $flagOpcion,
+                                                                $nIdTramiteTarjeta,
+                                                                $nIdTramitePlaca,
+                                                                $nIdTramitador
+                                                            ]);
+
+        $arrayListadoEstadosTarjetaPlaca = $this->arrayPaginator($arrayListadoEstadosTarjetaPlaca, $request);
+        return ['arrayListadoEstadosTarjetaPlaca'=>$arrayListadoEstadosTarjetaPlaca];
+    }
+
+    public function SetEstadoTramiteTarjeta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdTramiteTarjeta = $request->nIdTramiteTarjeta;
+        $dFechaFinRealTramite = $request->dFechaFinRealTramite;
+        $nIdEstado = $request->nIdEstado;
+        $cNroTarjeta = $request->cNroTarjeta;
+        $cNroPlaca = $request->cNroPlaca;
+        $cObservacion = $request->cObservacion;
+
+        $flagRegTramiteByEstado = $request->flagRegTramiteByEstado;
+
+        $nIdTramiteTarjeta = ($nIdTramiteTarjeta == NULL) ?
+                                    ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
+        $dFechaFinRealTramite = ($dFechaFinRealTramite == NULL) ?
+                                     ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
+        $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
+        $cNroTarjeta = ($cNroTarjeta == NULL) ? ($cNroTarjeta = '') : $cNroTarjeta;
+        $cNroPlaca = ($cNroPlaca == NULL) ? ($cNroPlaca = '') : $cNroPlaca;
+        $cObservacion = ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
+
+        $data = DB::select('exec usp_Tramite_SetTramiteObservacionTarjeta ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdTramiteTarjeta,
+                                                                $dFechaFinRealTramite,
+                                                                $nIdEstado,
+                                                                $cNroTarjeta,
+                                                                $cNroPlaca,
+                                                                $cObservacion,
+                                                                $flagRegTramiteByEstado,
+                                                                Auth::user()->id
+                                                            ]);
+
+        //OBTENGO DATA DE LA SOLICITUD TRAMITE
+        $arrayDatosTramiteTarjeta =  $data[0];
+
+        return response()->json($arrayDatosTramiteTarjeta);
+    }
+
+    public function SetEstadoTramitePlaca(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdTramitePlaca = $request->nIdTramitePlaca;
+        $nIdCabeceraTramite = $request->nIdCabeceraTramite;
+        $nIdTramiteTarjeta = $request->nIdTramiteTarjeta;
+        $dFechaInicioTramite = $request->dFechaInicioTramite;
+        $dFechaFinTramite = $request->dFechaFinTramite;
+        $nIdEstado = $request->nIdEstado;
+        $dFechaFinRealTramite = $request->dFechaFinRealTramite;
+        $cObservacion = $request->cObservacion;
+        $flagRegTramiteByEstado = $request->flagRegTramiteByEstado;
+
+        $nIdTramitePlaca = ($nIdTramitePlaca == NULL) ?
+                                    ($nIdTramitePlaca = '') : $nIdTramitePlaca;
+        $nIdCabeceraTramite = ($nIdCabeceraTramite == NULL) ?
+                                    ($nIdCabeceraTramite = '') : $nIdCabeceraTramite;
+        $nIdTramiteTarjeta = ($nIdTramiteTarjeta == NULL) ?
+                                    ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
+        $dFechaInicioTramite = ($dFechaInicioTramite == NULL) ?
+                                    ($dFechaInicioTramite = '') : $dFechaInicioTramite;
+        $dFechaFinTramite = ($dFechaFinTramite == NULL) ?
+                                    ($dFechaFinTramite = '') : $dFechaFinTramite;
+        $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
+        $dFechaFinRealTramite = ($dFechaFinRealTramite == NULL) ?
+                                     ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
+
+        $cObservacion = ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
+
+        $data = DB::select('exec usp_Tramite_SetTramiteObservacionPlaca ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [
+                                                                $nIdTramitePlaca,
+                                                                $nIdCabeceraTramite,
+                                                                $nIdTramiteTarjeta,
+                                                                $dFechaInicioTramite,
+                                                                $dFechaFinTramite,
+                                                                $nIdEstado,
+                                                                $dFechaFinRealTramite,
+                                                                $cObservacion,
+                                                                $flagRegTramiteByEstado,
+                                                                Auth::user()->id
+                                                            ]);
+
+        //OBTENGO DATA DE LA SOLICITUD TRAMITE
+        $arrayDatosTramitePlaca =  $data[0];
+
+        return response()->json($arrayDatosTramitePlaca);
+    }
 }

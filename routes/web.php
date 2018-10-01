@@ -191,6 +191,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/tramite/SetCabeceraTramite', 'TramiteController@SetCabeceraTramite');
     Route::post('/tramite/SetTramiteTarjeta', 'TramiteController@SetTramiteTarjeta');
     Route::get('/tramite/GetSolicitudesTramites', 'TramiteController@GetSolicitudesTramites');
+    Route::get('/tramite/GetDetalleSolicitudTramite', 'TramiteController@GetDetalleSolicitudTramite');
+    Route::get('/tramite/GetEstadosTarjetasPlaca', 'TramiteController@GetEstadosTarjetasPlaca');
+    Route::post('/tramite/SetEstadoTramiteTarjeta', 'TramiteController@SetEstadoTramiteTarjeta');
+    Route::post('/tramite/SetEstadoTramitePlaca', 'TramiteController@SetEstadoTramitePlaca');
 
     Route::get('/turnoventa/GetLstTurnoVenta', 'TurnoVentaController@GetLstTurnoVenta');
     Route::post('/turnoventa/SetTurnoVenta', 'TurnoVentaController@store');
