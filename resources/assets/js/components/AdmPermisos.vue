@@ -1,306 +1,307 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">Administración de Permisos</h2>
-          </div>
-        </header>
-
-        <template v-if="vistaFormulario">
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">BUSCAR USUARIOS</h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Sucursal</label>
-                                                <div class="col-sm-8">
-                                                    <el-select v-model="fillPuga.nidsucursal" filterable placeholder="Select" >
-                                                        <el-option
-                                                        v-for="item in arraySucursal"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">* Apellidos</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="fillPuga.cdescripcion" @keyup.enter="listarUsuarios(1)" class="form-control form-control-sm" placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarUsuarios(1)">
-                                                <i class="fa fa-search"></i> Buscar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">LISTADO USUARIOS</h3>
-                            </div>
-                            <div class="card-body">
-                                <template v-if="arrayUsuarios.length">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Código</th>
-                                                    <th>Apellidos y Nombres</th>
-                                                    <th>Perfil</th>
-                                                    <th>Usuario</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="usuario in arrayUsuarios" :key="usuario.nIdUsuario">
-                                                    <td v-text="usuario.nIdUsuario"></td>
-                                                    <td v-text="usuario.cNombreUsuario"></td>
-                                                    <td v-text="usuario.cGrupoParNombre"></td>
-                                                    <td v-text="usuario.cUsuario"></td>
-                                                    <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Ver Permisos {{ usuario.cNombreUsuario }}</div>
-                                                             <i @click="abrirFormulario('usuario','permisos', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                        </el-tooltip>&nbsp;
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-7">
-                                                <nav>
-                                                    <ul class="pagination">
-                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                        </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                        :class="[page==isActived?'active':'']">
-                                                            <a class="page-link"
-                                                            href="#" @click.prevent="cambiarPagina(page)"
-                                                            v-text="page"></a>
-                                                        </li>
-                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="10">No existen registros!</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </template>
-
-        <template v-else>
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4" v-text="tituloFormulario"></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="col-lg-6"  style="max-height: 515px; overflow-x: auto;">
-                                        <div id="lsttreegrupo">
-                                            <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
-                                                <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
-                                                    <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
-                                                        <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
-                                                        {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-4">
-                                            <button type="button" v-if="accion==2" class="btn btn-success btn-corner btn-sm" @click="seleccionaPermisos()">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
-                                                <i class="fa fa-close"></i> Cancelar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </template>
-
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
+            <div class="container-fluid">
+                <h2 class="no-margin-bottom">Administración de Permisos</h2>
             </div>
-        </div>
+            </header>
 
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                    </div>
-                                    <div class="card-body">
+            <template v-if="vistaFormulario">
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">BUSCAR USUARIOS</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
+                                                    <label class="col-sm-4 form-control-label">* Empresa</label>
                                                     <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
+                                                        <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillPuga.nidsucursal" filterable placeholder="Select" >
+                                                            <el-option
+                                                            v-for="item in arraySucursal"
+                                                            :key="item.nIdPar"
+                                                            :label="item.cParNombre"
+                                                            :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Apellidos</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="fillPuga.cdescripcion" @keyup.enter="listarUsuarios(1)" class="form-control form-control-sm" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarUsuarios(1)">
+                                                    <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">LISTADO USUARIOS</h3>
+                                </div>
+                                <div class="card-body">
+                                    <template v-if="arrayUsuarios.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Apellidos y Nombres</th>
+                                                        <th>Perfil</th>
+                                                        <th>Usuario</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="usuario in arrayUsuarios" :key="usuario.nIdUsuario">
+                                                        <td v-text="usuario.nIdUsuario"></td>
+                                                        <td v-text="usuario.cNombreUsuario"></td>
+                                                        <td v-text="usuario.cGrupoParNombre"></td>
+                                                        <td v-text="usuario.cUsuario"></td>
+                                                        <td>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Ver Permisos {{ usuario.cNombreUsuario }}</div>
+                                                                <i @click="abrirFormulario('usuario','permisos', usuario)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                            </el-tooltip>&nbsp;
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                            :class="[page==isActived?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPagina(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+
+            <template v-else>
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4" v-text="tituloFormulario"></h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="col-lg-6"  style="max-height: 515px; overflow-x: auto;">
+                                            <div id="lsttreegrupo">
+                                                <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
+                                                    <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
+                                                        <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
+                                                            <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
+                                                            {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-4">
+                                                <button type="button" v-if="accion==2" class="btn btn-success btn-corner btn-sm" @click="seleccionaPermisos()">
+                                                    <i class="fa fa-save"></i> Registrar
+                                                </button>
+                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
+                                                    <i class="fa fa-close"></i> Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    </main>
+        </main>
+    </transition>
 </template>
 <script>
     export default {
@@ -423,6 +424,11 @@
                     this.arraySucursal = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarUsuarios(page){
@@ -445,6 +451,11 @@
                     this.pagination.to           = response.data.arrayUsuarios.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -468,6 +479,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarSubPermisos(nlenjerarquia){
@@ -487,6 +503,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarCheckBox(){
@@ -537,6 +558,11 @@
                     this.registrarPermisos();
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarPermisos(){
@@ -561,6 +587,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){
@@ -671,25 +702,40 @@
         }
     }
 </script>
+
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
+    /* TRANSITION */
+    /* Enter and leave animations can use different */
+    /* durations and timing functions.              */
+    .slide-fade-enter-active {
+        transition: all .8s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .12s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
 </style>
