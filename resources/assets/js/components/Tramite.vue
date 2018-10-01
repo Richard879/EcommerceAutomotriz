@@ -1,106 +1,253 @@
 <template >
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom"> TRAMITE - TARJETA Y PLACA </h2>
-          </div>
-        </header>
-
-        <section class="forms">
+    <transition name="slide-fade"  appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="tab01" href="#TabBuscarPedido" role="tab" @click.prevent="tabBuscarPedido" data-toggle="tab">
-                                        <i class="fa fa-search"></i> PEDIDOS
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" id="tab02" href="#TabGenerarTramite" role="tab" data-toggle="tab">
-                                        <i class="fa fa-address-card"></i> GENERAR TRAMITE
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="tab03" href="#TabBandejaSolicitudes" role="tab" @click.prevent="tabBandejaSolicitudes" data-toggle="tab">
-                                        <i class="fa fa-address-book"></i> SOLICITUDES TRAMITE
-                                    </a>
-                                </li>
-                            </ul>
+                <h2 class="no-margin-bottom"> TRAMITE - TARJETA Y PLACA </h2>
+            </div>
+            </header>
 
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active show" id="TabBuscarPedido">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BUSCAR PEDIDOS CANCELADOS.</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-md-4 form-control-label">*Estado</label>
-                                                                        <div class="col-md-8 widthFull">
-                                                                            <el-select v-model="fillBusquedaPedidos.nidestadotramite"
-                                                                                    filterable
-                                                                                    clearable
-                                                                                    loading-text
-                                                                                    placeholder="Seleccione un Estado Tramite">
-                                                                                <el-option
-                                                                                    v-for="estado in arrayEstadoTramite"
-                                                                                    :key="estado.nIdPar"
-                                                                                    :label="estado.cParNombre"
-                                                                                    :value="estado.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
+            <section class="forms">
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab01" href="#TabBuscarPedido" role="tab" @click.prevent="tabBuscarPedido" data-toggle="tab">
+                                            <i class="fa fa-search"></i> PEDIDOS
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" id="tab02" href="#TabGenerarTramite" role="tab" data-toggle="tab">
+                                            <i class="fa fa-address-card"></i> GENERAR TRAMITE
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab03" href="#TabBandejaSolicitudes" role="tab" @click.prevent="tabBandejaSolicitudes" data-toggle="tab">
+                                            <i class="fa fa-address-book"></i> SOLICITUDES TRAMITE
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabBuscarPedido">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR PEDIDOS CANCELADOS.</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">*Estado</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillBusquedaPedidos.nidestadotramite"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Estado Tramite">
+                                                                                    <el-option
+                                                                                        v-for="estado in arrayEstadoTramite"
+                                                                                        :key="estado.nIdPar"
+                                                                                        :label="estado.cParNombre"
+                                                                                        :value="estado.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisPedidos(1)">
-                                                                        <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBuscarPedidos()">
-                                                                        <i class="fa fa-recycle"></i> Limpiar
-                                                                    </button>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisPedidos(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBuscarPedidos()">
+                                                                            <i class="fa fa-recycle"></i> Limpiar
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </form>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BANDEJA PEDIDOS CANCELADOS</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayPedidosCancelados.length">
+                                                                        <div>
+                                                                            <el-table
+                                                                                v-loading="loading"
+                                                                                ref="multipleTable"
+                                                                                :data="arrayPedidosCancelados"
+                                                                                style="width: 100%"
+                                                                                @selection-change="handleSelectionChange">
+                                                                                    <el-table-column
+                                                                                        :fixed="flagFixed"
+                                                                                        :type="flagType"
+                                                                                        :width="flagWidth"
+                                                                                        >
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        label="Fecha Pedido"
+                                                                                        property="dFechaPedido"
+                                                                                        width="120">
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        property="cNumeroPedido"
+                                                                                        label="Nro Pedido"
+                                                                                        width="120">
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        property="cNumeroVin"
+                                                                                        label="Nro VIN"
+                                                                                        width="160">
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        property="cNombreComercial"
+                                                                                        label="Nombre Comercial"
+                                                                                        width="180">
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        property="nAnioFabricacion"
+                                                                                        label="Año Fabricación"
+                                                                                        width="120">
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        property="cEstadoTramite"
+                                                                                        label="Estado"
+                                                                                        show-overflow-tooltip>
+                                                                                    </el-table-column>
+                                                                                    <el-table-column
+                                                                                        fixed="right"
+                                                                                        label="Acciones"
+                                                                                        width="80">
+                                                                                        <template slot-scope="scope">
+
+                                                                                        </template>
+                                                                                    </el-table-column>
+                                                                            </el-table>
+                                                                        </div>
+                                                                    </template>
+                                                                    <br>
+                                                                    <div v-if="arrayPedidosChecked.length" class="form-group row">
+                                                                        <div class="col-md-9 offset-md-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabGenerarTramite">
+                                                                                <i class="fa fa-save"></i> Generar Tramite
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-lg-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BANDEJA PEDIDOS CANCELADOS</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayPedidosCancelados.length">
-                                                                    <div>
-                                                                        <el-table
-                                                                            v-loading="loading"
-                                                                            ref="multipleTable"
-                                                                            :data="arrayPedidosCancelados"
-                                                                            style="width: 100%"
-                                                                            @selection-change="handleSelectionChange">
-                                                                                <el-table-column
-                                                                                    :fixed="flagFixed"
-                                                                                    :type="flagType"
-                                                                                    :width="flagWidth"
-                                                                                    >
-                                                                                </el-table-column>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabGenerarTramite">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">Fecha Inicio Tramite</label>
+                                                                    <div class="col-sm-8">
+                                                                        <el-input
+                                                                            suffix-icon="el-icon-date"
+                                                                            :readonly="true"
+                                                                            :disabled="true"
+                                                                            v-model="fillBusquedaPedidosSeleccionados.fechaInicioTramite">
+                                                                        </el-input>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">Fecha Fin Real Tramite</label>
+                                                                    <div class="col-sm-8">
+                                                                        <el-input
+                                                                            suffix-icon="el-icon-date"
+                                                                            :readonly="true"
+                                                                            :disabled="true"
+                                                                            v-model="fillBusquedaPedidosSeleccionados.fechaFinRealTramite">
+                                                                        </el-input>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">Nro Vehículos</label>
+                                                                    <div class="col-sm-8">
+                                                                        <el-input-number
+                                                                            v-model="fillBusquedaPedidosSeleccionados.nroVehiculos"
+                                                                            controls-position="right"
+                                                                            :disabled="true"
+                                                                            :min="(fillBusquedaPedidosSeleccionados.nroVehiculos > 0) ? fillBusquedaPedidosSeleccionados.nroVehiculos : 1"
+                                                                            :max="(fillBusquedaPedidosSeleccionados.nroVehiculos > 0) ? fillBusquedaPedidosSeleccionados.nroVehiculos : 1">
+                                                                        </el-input-number>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayPedidosChecked.length">
+                                                                        <div>
+                                                                            <el-table
+                                                                                :data="arrayPedidosChecked"
+                                                                                style="width: 100%">
                                                                                 <el-table-column
                                                                                     label="Fecha Pedido"
                                                                                     property="dFechaPedido"
-                                                                                    width="120">
+                                                                                    width="100">
                                                                                 </el-table-column>
                                                                                 <el-table-column
                                                                                     property="cNumeroPedido"
@@ -120,912 +267,767 @@
                                                                                 <el-table-column
                                                                                     property="nAnioFabricacion"
                                                                                     label="Año Fabricación"
-                                                                                    width="120">
+                                                                                    width="100">
                                                                                 </el-table-column>
                                                                                 <el-table-column
-                                                                                    property="cEstadoTramite"
+                                                                                    property="cEstado"
                                                                                     label="Estado"
                                                                                     show-overflow-tooltip>
                                                                                 </el-table-column>
                                                                                 <el-table-column
-                                                                                    fixed="right"
-                                                                                    label="Acciones"
+                                                                                    label="Total. T. Tarjeta"
                                                                                     width="80">
                                                                                     <template slot-scope="scope">
-
+                                                                                        S/.
+                                                                                        <span style="margin-left: 10px">{{ scope.row.fTotalTramiteTarjeta }}</span>
                                                                                     </template>
                                                                                 </el-table-column>
-                                                                        </el-table>
-                                                                    </div>
-                                                                </template>
-                                                                <br>
-                                                                <div v-if="arrayPedidosChecked.length" class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabGenerarTramite">
-                                                                            <i class="fa fa-save"></i> Generar Tramite
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="row">
-                                                                    <div class="col-lg-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link"
-                                                                                    href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
-                                                                                    v-text="page"></a>
-                                                                                </li>
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-lg-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade in active show" id="TabGenerarTramite">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <form class="form-horizontal">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Fecha Inicio Tramite</label>
-                                                                <div class="col-sm-8">
-                                                                    <el-input
-                                                                        suffix-icon="el-icon-date"
-                                                                        :readonly="true"
-                                                                        :disabled="true"
-                                                                        v-model="fillBusquedaPedidosSeleccionados.fechaInicioTramite">
-                                                                    </el-input>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Fecha Fin Real Tramite</label>
-                                                                <div class="col-sm-8">
-                                                                    <el-input
-                                                                        suffix-icon="el-icon-date"
-                                                                        :readonly="true"
-                                                                        :disabled="true"
-                                                                        v-model="fillBusquedaPedidosSeleccionados.fechaFinRealTramite">
-                                                                    </el-input>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nro Vehículos</label>
-                                                                <div class="col-sm-8">
-                                                                    <el-input-number
-                                                                        v-model="fillBusquedaPedidosSeleccionados.nroVehiculos"
-                                                                        controls-position="right"
-                                                                        :disabled="true"
-                                                                        :min="(fillBusquedaPedidosSeleccionados.nroVehiculos > 0) ? fillBusquedaPedidosSeleccionados.nroVehiculos : 1"
-                                                                        :max="(fillBusquedaPedidosSeleccionados.nroVehiculos > 0) ? fillBusquedaPedidosSeleccionados.nroVehiculos : 1">
-                                                                    </el-input-number>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayPedidosChecked.length">
-                                                                    <div>
-                                                                        <el-table
-                                                                            :data="arrayPedidosChecked"
-                                                                            style="width: 100%">
-                                                                            <el-table-column
-                                                                                label="Fecha Pedido"
-                                                                                property="dFechaPedido"
-                                                                                width="100">
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                property="cNumeroPedido"
-                                                                                label="Nro Pedido"
-                                                                                width="120">
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                property="cNumeroVin"
-                                                                                label="Nro VIN"
-                                                                                width="160">
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                property="cNombreComercial"
-                                                                                label="Nombre Comercial"
-                                                                                width="180">
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                property="nAnioFabricacion"
-                                                                                label="Año Fabricación"
-                                                                                width="100">
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                property="cEstado"
-                                                                                label="Estado"
-                                                                                show-overflow-tooltip>
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                label="Total. T. Tarjeta"
-                                                                                width="80">
-                                                                                <template slot-scope="scope">
-                                                                                    S/.
-                                                                                    <span style="margin-left: 10px">{{ scope.row.fTotalTramiteTarjeta }}</span>
-                                                                                </template>
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                label="Total. T. Placa"
-                                                                                width="80">
-                                                                                <template slot-scope="scope">
-                                                                                    S/.
-                                                                                    <span style="margin-left: 10px">{{ scope.row.fTotalTramitePlaca }}</span>
-                                                                                </template>
-                                                                            </el-table-column>
-                                                                            <el-table-column
-                                                                                label="Total. G. Adicional"
-                                                                                width="80">
-                                                                                <template slot-scope="scope">
-                                                                                    S/.
-                                                                                    <span style="margin-left: 10px">{{ scope.row.fTotalGAdicional }}</span>
-                                                                                </template>
-                                                                            </el-table-column>
-                                                                        </el-table>
-                                                                    </div>
-                                                                </template>
-                                                                <br>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <el-row :gutter="10">
-                                                                    <el-col :span="16"><div class="grid-content bg-purple">Total</div></el-col>
-                                                                    <el-col :span="8">
-                                                                        <div class="grid-content bg-purple">
-                                                                            <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramiteTarjeta = totalTramiteTarjeta }}</div></el-col>
-                                                                            <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramitePlaca = totalTramitePlaca }}</div></el-col>
-                                                                            <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramiteAdicional = totalTramiteAdicional }}</div></el-col>
+                                                                                <el-table-column
+                                                                                    label="Total. T. Placa"
+                                                                                    width="80">
+                                                                                    <template slot-scope="scope">
+                                                                                        S/.
+                                                                                        <span style="margin-left: 10px">{{ scope.row.fTotalTramitePlaca }}</span>
+                                                                                    </template>
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    label="Total. G. Adicional"
+                                                                                    width="80">
+                                                                                    <template slot-scope="scope">
+                                                                                        S/.
+                                                                                        <span style="margin-left: 10px">{{ scope.row.fTotalGAdicional }}</span>
+                                                                                    </template>
+                                                                                </el-table-column>
+                                                                            </el-table>
                                                                         </div>
-                                                                    </el-col>
-                                                                </el-row>
-                                                                <el-row :gutter="10">
-                                                                    <el-col :span="16"><div class="grid-content bg-purple">Total General</div></el-col>
-                                                                    <el-col :span="8">
-                                                                        <div class="grid-content bg-purple">
-                                                                            S/. {{ montoTotalGeneralTramite = totalGeneral }}
-                                                                        </div>
-                                                                    </el-col>
-                                                                </el-row>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <form class="form-horizontal">
-                                                                    <div v-if="arrayPedidosChecked.length" class="form-group row">
-                                                                        <div class="col-md-9 offset-md-5">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabRegistrarTramite">
-                                                                                <i class="fa fa-save"></i> Generar Tramite
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabBandejaSolicitudes">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="tab0301" href="#SubTabBandejaSolicitudes" @click="subtabGenerarTramite" role="tab" data-toggle="tab">
-                                                            <i class="fa fa-id-badge"></i> BANDEJA SOLICITUDES
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="tab0302" href="#SubTabDetalleSolcitud" role="tab" data-toggle="tab">
-                                                            <i class="fa fa-align-left"></i>  DETALLE SOLICITUD
-                                                        </a>
-                                                    </li>
-                                                </ul>
-
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade in active show" id="SubTabBandejaSolicitudes">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
+                                                                    </template>
+                                                                    <br>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <el-row :gutter="10">
+                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total</div></el-col>
+                                                                        <el-col :span="8">
+                                                                            <div class="grid-content bg-purple">
+                                                                                <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramiteTarjeta = totalTramiteTarjeta }}</div></el-col>
+                                                                                <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramitePlaca = totalTramitePlaca }}</div></el-col>
+                                                                                <el-col :span="8"><div class="grid-content bg-purple">S/. {{ montoSubTotalTramiteAdicional = totalTramiteAdicional }}</div></el-col>
+                                                                            </div>
+                                                                        </el-col>
+                                                                    </el-row>
+                                                                    <el-row :gutter="10">
+                                                                        <el-col :span="16"><div class="grid-content bg-purple">Total General</div></el-col>
+                                                                        <el-col :span="8">
+                                                                            <div class="grid-content bg-purple">
+                                                                                S/. {{ montoTotalGeneralTramite = totalGeneral }}
+                                                                            </div>
+                                                                        </el-col>
+                                                                    </el-row>
+                                                                </div>
                                                                 <div class="col-lg-12">
                                                                     <form class="form-horizontal">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Fecha Inicio Tramite</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-date-picker
-                                                                                            v-model="fillBusquedaSolTramite.fechaInicioTramite"
-                                                                                            type="date"
-                                                                                            value-format="yyyy-MM-dd"
-                                                                                            format="dd/MM/yyyy"
-                                                                                            placeholder="dd/mm/aaaa">
-                                                                                        </el-date-picker>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Fecha Fin Real Tramite</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-date-picker
-                                                                                            v-model="fillBusquedaSolTramite.fechaFinRealTramite"
-                                                                                            type="date"
-                                                                                            value-format="yyyy-MM-dd"
-                                                                                            format="dd/MM/yyyy"
-                                                                                            placeholder="dd/mm/aaaa">
-                                                                                        </el-date-picker>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-md-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-md-4 form-control-label">*Estado Tramite</label>
-                                                                                    <div class="col-md-8 widthFull">
-                                                                                        <el-select v-model="fillBusquedaSolTramite.nidestadotramite"
-                                                                                                filterable
-                                                                                                clearable
-                                                                                                loading-text
-                                                                                                placeholder="Seleccione un Estado Tramite">
-                                                                                            <el-option
-                                                                                                v-for="estado in arrayEstadoTramite"
-                                                                                                :key="estado.nIdPar"
-                                                                                                :label="estado.cParNombre"
-                                                                                                :value="estado.nIdPar">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
+                                                                        <div v-if="arrayPedidosChecked.length" class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
-                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisTramites(1)">
-                                                                                    <i class="fa fa-search"></i> Buscar
-                                                                                </button>
-                                                                                <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBandejaSolicitudes()">
-                                                                                    <i class="fa fa-recycle"></i> Limpiar
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabRegistrarTramite">
+                                                                                    <i class="fa fa-save"></i> Generar Tramite
                                                                                 </button>
                                                                             </div>
                                                                         </div>
                                                                     </form>
                                                                 </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">BANDEJA DE SOLICITUDES</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <form class="form-horizontal">
-                                                                                <div class="col-lg-12">
-                                                                                    <template v-if="arraySolicitudesTramites.length">
-                                                                                        <div>
-                                                                                            <el-table
-                                                                                                v-loading="loading"
-                                                                                                :data="arraySolicitudesTramites"
-                                                                                                style="width: 100%">
-                                                                                                    <el-table-column
-                                                                                                        property="cNumeroSolicitudTramite"
-                                                                                                        label="N° Solicitud T"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        property="cEstadoTramite"
-                                                                                                        label="Estado Tramite"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        property="nNumeroVehiculos"
-                                                                                                        label="Total Vehiculo"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        property="fTotalTramite"
-                                                                                                        label="Total General"
-                                                                                                         width="120">
-                                                                                                    </el-table-column>
-                                                                                                     <el-table-column
-                                                                                                        property="nTotalTarjeta"
-                                                                                                        label="Tarjeta"
-                                                                                                         width="120">
-                                                                                                    </el-table-column>
-                                                                                                     <el-table-column
-                                                                                                        property="nTotalPlaca"
-                                                                                                        label="Placa"
-                                                                                                        show-overflow-tooltip>
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        fixed="right"
-                                                                                                        label="Acciones"
-                                                                                                        width="80">
-                                                                                                        <template slot-scope="scope">
-                                                                                                            <el-tooltip class="item"
-                                                                                                                        effect="dark"
-                                                                                                                        content="Ver Detalle Solicitud"
-                                                                                                                        placement="top-start">
-                                                                                                                <el-button @click="abrirModal('solicitud-tramite', 'detalle', scope.row)"><i class="fa fa-eye"></i></el-button>
-                                                                                                            </el-tooltip>
-                                                                                                        </template>
-                                                                                                    </el-table-column>
-                                                                                            </el-table>
-                                                                                        </div>
-                                                                                    </template>
-                                                                                </div>
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-7">
-                                                                                            <nav>
-                                                                                                <ul class="pagination">
-                                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                        <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                    </li>
-                                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                    :class="[page==isActived?'active':'']">
-                                                                                                        <a class="page-link"
-                                                                                                        href="#" @click.prevent="cambiarPaginaMisTramites(page)"
-                                                                                                        v-text="page"></a>
-                                                                                                    </li>
-                                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                        <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </nav>
-                                                                                        </div>
-                                                                                        <div class="col-lg-5">
-                                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="SubTabDetalleSolcitud">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <form class="form-horizontal">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Nro Solicitud</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            :readonly="true"
-                                                                                            :disabled="true"
-                                                                                            v-model="fillDetalleSolTramite.nroSolicitud">
-                                                                                        </el-input>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Total Vehículos</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            :readonly="true"
-                                                                                            :disabled="true"
-                                                                                            v-model="fillDetalleSolTramite.nroVehiculos">
-                                                                                        </el-input>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Fecha Inicio Tramite</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            suffix-icon="el-icon-date"
-                                                                                            :readonly="true"
-                                                                                            :disabled="true"
-                                                                                            v-model="fillDetalleSolTramite.fechaInicioTramite">
-                                                                                        </el-input>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Fecha Fin Real Tramite</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-input
-                                                                                            suffix-icon="el-icon-date"
-                                                                                            :readonly="true"
-                                                                                            :disabled="true"
-                                                                                            v-model="fillDetalleSolTramite.fechaFinRealTramite">
-                                                                                        </el-input>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">BANDEJA DE DETALLE SOLICITUD DE TRAMITE</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <form class="form-horizontal">
-                                                                                <div class="col-lg-12">
-                                                                                    <template v-if="arrayDetalleSolicitudTramite.length">
-                                                                                        <div>
-                                                                                            <el-table
-                                                                                                v-loading="loading"
-                                                                                                :data="arrayDetalleSolicitudTramite"
-                                                                                                style="width: 100%">
-                                                                                                    <el-table-column
-                                                                                                        property="dFechaInicioTramite"
-                                                                                                        label="Fecha Inicio T"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        property="dFechaFinTramite"
-                                                                                                        label="Fecha Fin T"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        property="dFechaFinRealTramite"
-                                                                                                        label="Fecha Fin Real T"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        property="cNumeroVin"
-                                                                                                        label="N° VIN"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                     <el-table-column
-                                                                                                        property="cEstadoTarjeta"
-                                                                                                        label="Estado Tarjeta"
-                                                                                                        width="120">
-                                                                                                    </el-table-column>
-                                                                                                     <el-table-column
-                                                                                                        property="cEstadoPlaca"
-                                                                                                        label="Estado Placa"
-                                                                                                        show-overflow-tooltip>
-                                                                                                    </el-table-column>
-                                                                                                    <el-table-column
-                                                                                                        fixed="right"
-                                                                                                        label="Acciones"
-                                                                                                        width="180">
-                                                                                                        <template slot-scope="scope">
-                                                                                                            <template v-if="scope.row.cEstadoTarjeta != 'RECIBIDA'">
-                                                                                                                <el-tooltip class="item"
-                                                                                                                            effect="dark"
-                                                                                                                            content="Tarjeta"
-                                                                                                                            placement="top-start">
-                                                                                                                    <el-button @click="abrirModal('tarjeta', 'abrir', scope.row);"><i class="fa fa-address-card"></i></el-button>
-                                                                                                                </el-tooltip>
-                                                                                                            </template>
-
-                                                                                                            <template v-if="scope.row.cEstadoTarjeta == 'RECIBIDA' && scope.row.cEstadoPlaca != 'RECIBIDA'">
-                                                                                                                <el-tooltip class="item"
-                                                                                                                            effect="dark"
-                                                                                                                            content="Placa"
-                                                                                                                            placement="top-start">
-                                                                                                                    <el-button @click="abrirModal('placa', 'abrir', scope.row);"><i class="fa fa-car"></i></el-button>
-                                                                                                                </el-tooltip>
-                                                                                                            </template>
-                                                                                                        </template>
-                                                                                                    </el-table-column>
-                                                                                            </el-table>
-                                                                                        </div>
-                                                                                    </template>
-                                                                                </div>
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-7">
-                                                                                            <nav>
-                                                                                                <ul class="pagination">
-                                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                        <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                    </li>
-                                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                    :class="[page==isActived?'active':'']">
-                                                                                                        <a class="page-link"
-                                                                                                        href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
-                                                                                                        v-text="page"></a>
-                                                                                                    </li>
-                                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                        <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </nav>
-                                                                                        </div>
-                                                                                        <div class="col-lg-5">
-                                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </section>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabBandejaSolicitudes">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="tab0301" href="#SubTabBandejaSolicitudes" @click="subtabGenerarTramite" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-id-badge"></i> BANDEJA SOLICITUDES
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="tab0302" href="#SubTabDetalleSolcitud" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-align-left"></i>  DETALLE SOLICITUD
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane fade in active show" id="SubTabBandejaSolicitudes">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Fecha Inicio Tramite</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-date-picker
+                                                                                                v-model="fillBusquedaSolTramite.fechaInicioTramite"
+                                                                                                type="date"
+                                                                                                value-format="yyyy-MM-dd"
+                                                                                                format="dd/MM/yyyy"
+                                                                                                placeholder="dd/mm/aaaa">
+                                                                                            </el-date-picker>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Fecha Fin Real Tramite</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-date-picker
+                                                                                                v-model="fillBusquedaSolTramite.fechaFinRealTramite"
+                                                                                                type="date"
+                                                                                                value-format="yyyy-MM-dd"
+                                                                                                format="dd/MM/yyyy"
+                                                                                                placeholder="dd/mm/aaaa">
+                                                                                            </el-date-picker>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-md-4 form-control-label">*Estado Tramite</label>
+                                                                                        <div class="col-md-8 widthFull">
+                                                                                            <el-select v-model="fillBusquedaSolTramite.nidestadotramite"
+                                                                                                    filterable
+                                                                                                    clearable
+                                                                                                    loading-text
+                                                                                                    placeholder="Seleccione un Estado Tramite">
+                                                                                                <el-option
+                                                                                                    v-for="estado in arrayEstadoTramite"
+                                                                                                    :key="estado.nIdPar"
+                                                                                                    :label="estado.cParNombre"
+                                                                                                    :value="estado.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-md-9 offset-md-5">
+                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisTramites(1)">
+                                                                                        <i class="fa fa-search"></i> Buscar
+                                                                                    </button>
+                                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBandejaSolicitudes()">
+                                                                                        <i class="fa fa-recycle"></i> Limpiar
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">BANDEJA DE SOLICITUDES</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="col-lg-12">
+                                                                                        <template v-if="arraySolicitudesTramites.length">
+                                                                                            <div>
+                                                                                                <el-table
+                                                                                                    v-loading="loading"
+                                                                                                    :data="arraySolicitudesTramites"
+                                                                                                    style="width: 100%">
+                                                                                                        <el-table-column
+                                                                                                            property="cNumeroSolicitudTramite"
+                                                                                                            label="N° Solicitud T"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="cEstadoTramite"
+                                                                                                            label="Estado Tramite"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="nNumeroVehiculos"
+                                                                                                            label="Total Vehiculo"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="fTotalTramite"
+                                                                                                            label="Total General"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="nTotalTarjeta"
+                                                                                                            label="Tarjeta"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="nTotalPlaca"
+                                                                                                            label="Placa"
+                                                                                                            show-overflow-tooltip>
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            fixed="right"
+                                                                                                            label="Acciones"
+                                                                                                            width="80">
+                                                                                                            <template slot-scope="scope">
+                                                                                                                <el-tooltip class="item"
+                                                                                                                            effect="dark"
+                                                                                                                            content="Ver Detalle Solicitud"
+                                                                                                                            placement="top-start">
+                                                                                                                    <el-button @click="abrirModal('solicitud-tramite', 'detalle', scope.row)"><i class="fa fa-eye"></i></el-button>
+                                                                                                                </el-tooltip>
+                                                                                                            </template>
+                                                                                                        </el-table-column>
+                                                                                                </el-table>
+                                                                                            </div>
+                                                                                        </template>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12">
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-7">
+                                                                                                <nav>
+                                                                                                    <ul class="pagination">
+                                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                            <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                        </li>
+                                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                                        :class="[page==isActived?'active':'']">
+                                                                                                            <a class="page-link"
+                                                                                                            href="#" @click.prevent="cambiarPaginaMisTramites(page)"
+                                                                                                            v-text="page"></a>
+                                                                                                        </li>
+                                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                            <a @click.prevent="cambiarPaginaMisTramites(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </nav>
+                                                                                            </div>
+                                                                                            <div class="col-lg-5">
+                                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="SubTabDetalleSolcitud">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Nro Solicitud</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-input
+                                                                                                :readonly="true"
+                                                                                                :disabled="true"
+                                                                                                v-model="fillDetalleSolTramite.nroSolicitud">
+                                                                                            </el-input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Total Vehículos</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-input
+                                                                                                :readonly="true"
+                                                                                                :disabled="true"
+                                                                                                v-model="fillDetalleSolTramite.nroVehiculos">
+                                                                                            </el-input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Fecha Inicio Tramite</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-input
+                                                                                                suffix-icon="el-icon-date"
+                                                                                                :readonly="true"
+                                                                                                :disabled="true"
+                                                                                                v-model="fillDetalleSolTramite.fechaInicioTramite">
+                                                                                            </el-input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Fecha Fin Real Tramite</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-input
+                                                                                                suffix-icon="el-icon-date"
+                                                                                                :readonly="true"
+                                                                                                :disabled="true"
+                                                                                                v-model="fillDetalleSolTramite.fechaFinRealTramite">
+                                                                                            </el-input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">BANDEJA DE DETALLE SOLICITUD DE TRAMITE</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="col-lg-12">
+                                                                                        <template v-if="arrayDetalleSolicitudTramite.length">
+                                                                                            <div>
+                                                                                                <el-table
+                                                                                                    v-loading="loading"
+                                                                                                    :data="arrayDetalleSolicitudTramite"
+                                                                                                    style="width: 100%">
+                                                                                                        <el-table-column
+                                                                                                            property="dFechaInicioTramite"
+                                                                                                            label="Fecha Inicio T"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="dFechaFinTramite"
+                                                                                                            label="Fecha Fin T"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="dFechaFinRealTramite"
+                                                                                                            label="Fecha Fin Real T"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="cNumeroVin"
+                                                                                                            label="N° VIN"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="cEstadoTarjeta"
+                                                                                                            label="Estado Tarjeta"
+                                                                                                            width="120">
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            property="cEstadoPlaca"
+                                                                                                            label="Estado Placa"
+                                                                                                            show-overflow-tooltip>
+                                                                                                        </el-table-column>
+                                                                                                        <el-table-column
+                                                                                                            fixed="right"
+                                                                                                            label="Acciones"
+                                                                                                            width="180">
+                                                                                                            <template slot-scope="scope">
+                                                                                                                <template v-if="scope.row.cEstadoTarjeta != 'RECIBIDA'">
+                                                                                                                    <el-tooltip class="item"
+                                                                                                                                effect="dark"
+                                                                                                                                content="Tarjeta"
+                                                                                                                                placement="top-start">
+                                                                                                                        <el-button @click="abrirModal('tarjeta', 'abrir', scope.row);"><i class="fa fa-address-card"></i></el-button>
+                                                                                                                    </el-tooltip>
+                                                                                                                </template>
+
+                                                                                                                <template v-if="scope.row.cEstadoTarjeta == 'RECIBIDA' && scope.row.cEstadoPlaca != 'RECIBIDA'">
+                                                                                                                    <el-tooltip class="item"
+                                                                                                                                effect="dark"
+                                                                                                                                content="Placa"
+                                                                                                                                placement="top-start">
+                                                                                                                        <el-button @click="abrirModal('placa', 'abrir', scope.row);"><i class="fa fa-car"></i></el-button>
+                                                                                                                    </el-tooltip>
+                                                                                                                </template>
+                                                                                                            </template>
+                                                                                                        </el-table-column>
+                                                                                                </el-table>
+                                                                                            </div>
+                                                                                        </template>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12">
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-7">
+                                                                                                <nav>
+                                                                                                    <ul class="pagination">
+                                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                            <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                        </li>
+                                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                                        :class="[page==isActived?'active':'']">
+                                                                                                            <a class="page-link"
+                                                                                                            href="#" @click.prevent="cambiarPaginaMisPedidos(page)"
+                                                                                                            v-text="page"></a>
+                                                                                                        </li>
+                                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                            <a @click.prevent="cambiarPaginaMisPedidos(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </nav>
+                                                                                            </div>
+                                                                                            <div class="col-lg-5">
+                                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Modal Show Errors -->
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Tarjeta -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">Tarjeta</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-lg-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-4 form-control-label">*Estado</label>
-                                                        <div class="col-md-8 widthFull">
-                                                            <el-select v-model="fillModalTarjetaPlaca.nIdEstado"
-                                                                    filterable
-                                                                    clearable
-                                                                    @change="cambiarEstadoModal"
-                                                                    loading-text
-                                                                    placeholder="Seleccione un Estado Tramite">
-                                                                <el-option
-                                                                    v-for="estado in arrayEstadoTramiteTarjetaPlaca"
-                                                                    :key="estado.nIdPar"
-                                                                    :label="estado.cParNombre"
-                                                                    :value="estado.nIdPar">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <template v-if="vistaEstado == 1">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">N° Tarjeta</label>
-                                                            <div class="col-sm-8">
-                                                                <el-input
-                                                                    clearable
-                                                                    v-model="fillModalTarjetaPlaca.cNroTarjeta">
-                                                                </el-input>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">N° Placa</label>
-                                                            <div class="col-sm-8">
-                                                                <el-input
-                                                                    clearable
-                                                                    v-model="fillModalTarjetaPlaca.cNroPlaca">
-                                                                </el-input>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else-if="vistaEstado == 0">
+            <!-- Modal Tarjeta -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">Tarjeta</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <div class="row">
-                                                            <label class="col-md-2 form-control-label">*Observación</label>
-                                                            <div class="col-md-10 widthFull">
-                                                                <el-input
-                                                                    type="textarea"
-                                                                    autosize
-                                                                    clearable
-                                                                    v-model="fillModalTarjetaPlaca.cObservacion">
-                                                                </el-input>
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </template>
-                                            <div class="col-lg-12">
-                                                <form class="form-horizontal">
-                                                    <div v-if="vistaEstado != 2" class="form-group row">
-                                                        <div class="col-md-9 offset-md-5">
-                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarTramiteTarjeta">
-                                                                <i class="fa fa-save"></i> Registrar
-                                                            </button>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">*Estado</label>
+                                                            <div class="col-md-8 widthFull">
+                                                                <el-select v-model="fillModalTarjetaPlaca.nIdEstado"
+                                                                        filterable
+                                                                        clearable
+                                                                        @change="cambiarEstadoModal"
+                                                                        loading-text
+                                                                        placeholder="Seleccione un Estado Tramite">
+                                                                    <el-option
+                                                                        v-for="estado in arrayEstadoTramiteTarjetaPlaca"
+                                                                        :key="estado.nIdPar"
+                                                                        :label="estado.cParNombre"
+                                                                        :value="estado.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </div>
+                                                <template v-if="vistaEstado == 1">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">N° Tarjeta</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-input
+                                                                        clearable
+                                                                        v-model="fillModalTarjetaPlaca.cNroTarjeta">
+                                                                    </el-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">N° Placa</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-input
+                                                                        clearable
+                                                                        v-model="fillModalTarjetaPlaca.cNroPlaca">
+                                                                    </el-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else-if="vistaEstado == 0">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <label class="col-md-2 form-control-label">*Observación</label>
+                                                                <div class="col-md-10 widthFull">
+                                                                    <el-input
+                                                                        type="textarea"
+                                                                        autosize
+                                                                        clearable
+                                                                        v-model="fillModalTarjetaPlaca.cObservacion">
+                                                                    </el-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <div class="col-lg-12">
+                                                    <form class="form-horizontal">
+                                                        <div v-if="vistaEstado != 2" class="form-group row">
+                                                            <div class="col-md-9 offset-md-5">
+                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarTramiteTarjeta">
+                                                                    <i class="fa fa-save"></i> Registrar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <hr/>
+                                            <hr/>
 
-                                        <template v-if="arrayListadoEstadosTarjetaPlaca.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Fecha Fin Real</th>
-                                                            <th>Estado</th>
-                                                            <th>Observacion</th>
-                                                        </tr>
-                                                    </thead>
+                                            <template v-if="arrayListadoEstadosTarjetaPlaca.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Fecha Fin Real</th>
+                                                                <th>Estado</th>
+                                                                <th>Observacion</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="estadosObs in arrayListadoEstadosTarjetaPlaca" :key="estadosObs.nIdTramiteObs">
+                                                                <td v-text="estadosObs.dFechaFinRealTramite"></td>
+                                                                <td v-text="estadosObs.cEstado"></td>
+                                                                <td v-text="estadosObs.cObservacion"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaMisObservaciones(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="estadosObs in arrayListadoEstadosTarjetaPlaca" :key="estadosObs.nIdTramiteObs">
-                                                            <td v-text="estadosObs.dFechaFinRealTramite"></td>
-                                                            <td v-text="estadosObs.cEstado"></td>
-                                                            <td v-text="estadosObs.cObservacion"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaMisObservaciones(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalTramiteTarjetaPlaca">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalTramiteTarjetaPlaca">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Placa -->
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">Placa</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-lg-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-4 form-control-label">*Estado</label>
-                                                        <div class="col-md-8 widthFull">
-                                                            <el-select v-model="fillModalTarjetaPlaca.nIdEstado"
-                                                                    filterable
-                                                                    clearable
-                                                                    @change="cambiarEstadoModal"
-                                                                    loading-text
-                                                                    placeholder="Seleccione un Estado Tramite">
-                                                                <el-option
-                                                                    v-for="estado in arrayEstadoTramiteTarjetaPlaca"
-                                                                    :key="estado.nIdPar"
-                                                                    :label="estado.cParNombre"
-                                                                    :value="estado.nIdPar">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <template v-if="vistaEstado == 0">
+            <!-- Modal Placa -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">Placa</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <div class="row">
-                                                            <label class="col-md-2 form-control-label">*Observación</label>
-                                                            <div class="col-md-10 widthFull">
-                                                                <el-input
-                                                                    type="textarea"
-                                                                    autosize
-                                                                    clearable
-                                                                    v-model="fillModalTarjetaPlaca.cObservacion">
-                                                                </el-input>
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </template>
-                                            <div class="col-lg-12">
-                                                <form class="form-horizontal">
-                                                    <div v-if="vistaEstado != 2" class="form-group row">
-                                                        <div class="col-md-9 offset-md-5">
-                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarTramitePlaca">
-                                                                <i class="fa fa-save"></i> Registrar
-                                                            </button>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">*Estado</label>
+                                                            <div class="col-md-8 widthFull">
+                                                                <el-select v-model="fillModalTarjetaPlaca.nIdEstado"
+                                                                        filterable
+                                                                        clearable
+                                                                        @change="cambiarEstadoModal"
+                                                                        loading-text
+                                                                        placeholder="Seleccione un Estado Tramite">
+                                                                    <el-option
+                                                                        v-for="estado in arrayEstadoTramiteTarjetaPlaca"
+                                                                        :key="estado.nIdPar"
+                                                                        :label="estado.cParNombre"
+                                                                        :value="estado.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </div>
+                                                <template v-if="vistaEstado == 0">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <label class="col-md-2 form-control-label">*Observación</label>
+                                                                <div class="col-md-10 widthFull">
+                                                                    <el-input
+                                                                        type="textarea"
+                                                                        autosize
+                                                                        clearable
+                                                                        v-model="fillModalTarjetaPlaca.cObservacion">
+                                                                    </el-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <div class="col-lg-12">
+                                                    <form class="form-horizontal">
+                                                        <div v-if="vistaEstado != 2" class="form-group row">
+                                                            <div class="col-md-9 offset-md-5">
+                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarTramitePlaca">
+                                                                    <i class="fa fa-save"></i> Registrar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <hr/>
+                                            <hr/>
 
-                                        <template v-if="arrayListadoEstadosTarjetaPlaca.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Fecha Fin Real</th>
-                                                            <th>Estado</th>
-                                                            <th>Observacion</th>
-                                                        </tr>
-                                                    </thead>
+                                            <template v-if="arrayListadoEstadosTarjetaPlaca.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Fecha Fin Real</th>
+                                                                <th>Estado</th>
+                                                                <th>Observacion</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="estadosObs in arrayListadoEstadosTarjetaPlaca" :key="estadosObs.nIdTramiteObs">
+                                                                <td v-text="estadosObs.dFechaFinRealTramite"></td>
+                                                                <td v-text="estadosObs.cEstado"></td>
+                                                                <td v-text="estadosObs.cObservacion"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaMisObservaciones(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="estadosObs in arrayListadoEstadosTarjetaPlaca" :key="estadosObs.nIdTramiteObs">
-                                                            <td v-text="estadosObs.dFechaFinRealTramite"></td>
-                                                            <td v-text="estadosObs.cEstado"></td>
-                                                            <td v-text="estadosObs.cObservacion"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaMisObservaciones(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaMisObservaciones(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalTramiteTarjetaPlaca">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalTramiteTarjetaPlaca">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </transition>
 </template>
 
 <script>
@@ -1861,6 +1863,20 @@
     .grid-content {
         border-radius: 4px;
         min-height: 36px;
+    }
+    /* TRANSITION */
+    /* Enter and leave animations can use different */
+    /* durations and timing functions.              */
+    .slide-fade-enter-active {
+        transition: all .8s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .12s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
     }
     .mostrar{
         display: list-item !important;
