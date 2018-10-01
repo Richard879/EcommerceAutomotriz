@@ -1,15 +1,18 @@
 <template>
-    <li class="nav-item d-flex align-items-center">
-        <el-select v-model="formCabecera.nidsucursal" filterable placeholder="Select" v-on:change="changeSucursal()">
-            <el-option
-            v-for="item in arraySucursal"
-            :key="item.nIdPar"
-            :label="item.cParAbreviatura"
-            :value="item.nIdPar">
-            </el-option>
-        </el-select>
-    </li>
+    <transition name="slide-fade" appear>
+        <li class="nav-item d-flex align-items-center">
+            <el-select v-model="formCabecera.nidsucursal" filterable placeholder="Select" v-on:change="changeSucursal()">
+                <el-option
+                v-for="item in arraySucursal"
+                :key="item.nIdPar"
+                :label="item.cParAbreviatura"
+                :value="item.nIdPar">
+                </el-option>
+            </el-select>
+        </li>
+    </transition>
 </template>
+
 <script>
 export default {
         props:['ruta', 'usuario'],
@@ -36,6 +39,11 @@ export default {
                     this.arraySucursal = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             changeSucursal(){
@@ -52,3 +60,20 @@ export default {
         },
     }
 </script>
+
+<style>
+    /* TRANSITION */
+    /* Enter and leave animations can use different */
+    /* durations and timing functions.              */
+    .slide-fade-enter-active {
+        transition: all .8s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+</style>

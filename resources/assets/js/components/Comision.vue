@@ -1,633 +1,635 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom"> CONFIGURACIÓN DE COMISIONES</h2>
-          </div>
-        </header>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom"> CONFIGURACIÓN DE COMISIONES</h2>
+                </div>
+            </header>
 
-        <section class="forms">
-            <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="h4">CONFIGURACIÓN DE COMISIONES</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="form-horizontal">
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Empresa</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+            <section class="forms">
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="h4">CONFIGURACIÓN DE COMISIONES</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Empresa</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Sucursal</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                            <div class="col-sm-8">
-                                                <div class="input-group">
-                                                    <input type="hidden" v-model="fillProveedor.nidproveedor">
-                                                    <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="hidden" v-model="fillProveedor.nidproveedor">
+                                                        <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <label class="col-md-4 form-control-label">* Concepto de Comisión</label>
-                                            <div class="col-md-8">
-                                                <select name="account" v-model="fillConfigurarComision.nidconcepto" class="form-control form-control-sm">
-                                                    <option v-for="concepto in arrayConceptoComision" :key="concepto.nIdPar" :value="concepto.nIdPar" v-text="concepto.cParNombre">
-                                                    </option>
-                                                </select>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">* Concepto de Comisión</label>
+                                                <div class="col-md-8">
+                                                    <select name="account" v-model="fillConfigurarComision.nidconcepto" class="form-control form-control-sm">
+                                                        <option v-for="concepto in arrayConceptoComision" :key="concepto.nIdPar" :value="concepto.nIdPar" v-text="concepto.cParNombre">
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-md-4 form-control-label">* Por Turno de Vendedor</label>
-                                            <div class="col-md-5">
-                                                <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                    <input type="text" v-model="fillConfigurarComision.cnombreturno" disabled="disabled" class="form-control form-control-sm">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar Turno Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('turno','buscar')">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">* Por Turno de Vendedor</label>
+                                                <div class="col-md-5">
+                                                    <div class="input-group" :class="[checked ? 'disabled' : '']">
+                                                        <input type="text" v-model="fillConfigurarComision.cnombreturno" disabled="disabled" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar Turno Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('turno','buscar')">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="i-checks">
+                                                        <input id="checkbox" type="checkbox" class="checkbox-template" v-model="checked" @change="updateEstadoChecked">
+                                                        <label class="form-control-label" v-text="checked ? 'InHabilitado' : 'Habilitado'"></label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="i-checks">
-                                                    <input id="checkbox" type="checkbox" class="checkbox-template" v-model="checked" @change="updateEstadoChecked">
-                                                    <label class="form-control-label" v-text="checked ? 'InHabilitado' : 'Habilitado'"></label>
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">* Flag Comisión</label>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline" v-for="tipo in arrayFlagComision" :key="tipo.id">
-                                                    <input :id="tipo.value" type="radio" class="radio-template" v-model="fillConfigurarComision.nidflagcomision" :value="tipo.value">
-                                                    <label :for="tipo.value" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button type="button" title="Buscar Flag Comisión" class="btn btn-info btn-corner btn-sm" @click="abrirModal('flagComision','buscar', fillConfigurarComision.nidflagcomision)">
-                                                    <i class="fa-lg fa fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">* Tipo Comisión</label>
-                                            <div class="col-sm-8">
-                                                <select name="account" v-model="fillConfigurarComision.nidtipocomision" class="form-control form-control-sm">
-                                                    <option v-for="concepto in arrayTipoComision" :key="concepto.nIdPar" :value="concepto.nIdPar" v-text="concepto.cParNombre">
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                            <div class="col-sm-8">
-                                                <select name="account" v-model="fillConfigurarComision.nidtipomoneda" class="form-control form-control-sm">
-                                                    <option v-for="moneda in arrayTipoMoneda" :key="moneda.nIdPar" :value="moneda.nIdPar" v-text="moneda.cParNombre">
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">* Valor</label>
-                                            <div class="col-sm-8">
-                                                <input type="number" min="1" v-model="fillConfigurarComision.nvalor" class="form-control form-control-sm">
-                                                <input type="hidden" :value="fillDetalleFlagComision.flagTipo = verificarFlagTipo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="h4">LISTADO</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="form-horizontal">
-                                <template v-if="fillDetalleFlagComision.flagTipo == 'E'">
-                                    <template v-if="fillDetalleFlagComision.arrayElementoVenta.length">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Acción</th>
-                                                        <th>Codigo</th>
-                                                        <th>Elemento Venta</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(elementoventa, index) in fillDetalleFlagComision.arrayElementoVenta" :key="elementoventa.nIdElemento">
-                                                        <td>
-                                                            <a href="#" @click="removerElementoVentaLista(index);">
-                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td v-text="elementoventa.nIdElemento"></td>
-                                                        <td v-text="elementoventa.cElemenNombre"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="10">No existen registros!</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </template>
-                                </template>
-                                <template v-else-if="fillDetalleFlagComision.flagTipo == 'L'">
-                                    <template v-if="fillDetalleFlagComision.arrayLineas.length">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Acción</th>
-                                                        <th>Codigo</th>
-                                                        <th>Linea</th>
-                                                        <th>Abreviatura</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(lineas, index) in fillDetalleFlagComision.arrayLineas" :key="lineas.nIdLinea">
-                                                        <td>
-                                                            <a href="#" @click="removerLineasByProveedorLista(index);">
-                                                                <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td v-text="lineas.nIdLinea"></td>
-                                                        <td v-text="lineas.cLineaNombre"></td>
-                                                        <td v-text="lineas.cLineaAbreviatura"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="10">No existen registros!</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </template>
-                                </template>
-                                <div class="form-group row">
-                                    <div class="col-md-9 offset-md-5">
-                                        <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(1)">
-                                            <i class="fa fa-save"></i> Registrar
-                                        </button>
-                                        <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(2)">
-                                            <i class="fa fa-save"></i> Registrar
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Modal Show Errors -->
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Buscar Proveedores -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-lg-12">
-                                            <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Flag Comisión</label>
                                                 <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cproveedornombre" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
+                                                    <label class="checkbox-inline" v-for="tipo in arrayFlagComision" :key="tipo.id">
+                                                        <input :id="tipo.value" type="radio" class="radio-template" v-model="fillConfigurarComision.nidflagcomision" :value="tipo.value">
+                                                        <label :for="tipo.value" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button type="button" title="Buscar Flag Comisión" class="btn btn-info btn-corner btn-sm" @click="abrirModal('flagComision','buscar', fillConfigurarComision.nidflagcomision)">
+                                                        <i class="fa-lg fa fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Tipo Comisión</label>
+                                                <div class="col-sm-8">
+                                                    <select name="account" v-model="fillConfigurarComision.nidtipocomision" class="form-control form-control-sm">
+                                                        <option v-for="concepto in arrayTipoComision" :key="concepto.nIdPar" :value="concepto.nIdPar" v-text="concepto.cParNombre">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
+                                                <div class="col-sm-8">
+                                                    <select name="account" v-model="fillConfigurarComision.nidtipomoneda" class="form-control form-control-sm">
+                                                        <option v-for="moneda in arrayTipoMoneda" :key="moneda.nIdPar" :value="moneda.nIdPar" v-text="moneda.cParNombre">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">* Valor</label>
+                                                <div class="col-sm-8">
+                                                    <input type="number" min="1" v-model="fillConfigurarComision.nvalor" class="form-control form-control-sm">
+                                                    <input type="hidden" :value="fillDetalleFlagComision.flagTipo = verificarFlagTipo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="h4">LISTADO</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <template v-if="fillDetalleFlagComision.flagTipo == 'E'">
+                                        <template v-if="fillDetalleFlagComision.arrayElementoVenta.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acción</th>
+                                                            <th>Codigo</th>
+                                                            <th>Elemento Venta</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(elementoventa, index) in fillDetalleFlagComision.arrayElementoVenta" :key="elementoventa.nIdElemento">
+                                                            <td>
+                                                                <a href="#" @click="removerElementoVentaLista(index);">
+                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td v-text="elementoventa.nIdElemento"></td>
+                                                            <td v-text="elementoventa.cElemenNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </template>
+                                    <template v-else-if="fillDetalleFlagComision.flagTipo == 'L'">
+                                        <template v-if="fillDetalleFlagComision.arrayLineas.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acción</th>
+                                                            <th>Codigo</th>
+                                                            <th>Linea</th>
+                                                            <th>Abreviatura</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(lineas, index) in fillDetalleFlagComision.arrayLineas" :key="lineas.nIdLinea">
+                                                            <td>
+                                                                <a href="#" @click="removerLineasByProveedorLista(index);">
+                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td v-text="lineas.nIdLinea"></td>
+                                                            <td v-text="lineas.cLineaNombre"></td>
+                                                            <td v-text="lineas.cLineaAbreviatura"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </template>
+                                    <div class="form-group row">
+                                        <div class="col-md-9 offset-md-5">
+                                            <button v-if="fillDetalleFlagComision.flagTipo == 'E'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(1)">
+                                                <i class="fa fa-save"></i> Registrar
+                                            </button>
+                                            <button v-if="fillDetalleFlagComision.flagTipo == 'L'" type="button" class="btn btn-success btn-corner btn-sm" @click="registrarComision(2)">
+                                                <i class="fa fa-save"></i> Registrar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Buscar Proveedores -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Nombre</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" v-model="fillProveedor.cproveedornombre" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Buscar Lineas Por Proveedor -->
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">BUSQUEDA LINEAS POR PROVEEDOR</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-lg-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                        <div class="col-sm-8">
-                                                            <h3 class="h4" v-text="fillProveedor.cproveedornombre"></h3>
+            <!-- Modal Buscar Lineas Por Proveedor -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">BUSQUEDA LINEAS POR PROVEEDOR</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                            <div class="col-sm-8">
+                                                                <h3 class="h4" v-text="fillProveedor.cproveedornombre"></h3>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <template v-if="arrayLineaModal.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Linea</th>
-                                                        </tr>
-                                                    </thead>
+                                            <template v-if="arrayLineaModal.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Linea</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="linea in arrayLineaModal" :key="linea.nIdLinea">
+                                                                <td>
+                                                                    <a href="#" @click="agregarLineasByProveedorLista(linea);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="linea.cLineaNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaLineaByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaLineaByProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaLineaByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="linea in arrayLineaModal" :key="linea.nIdLinea">
-                                                            <td>
-                                                                <a href="#" @click="agregarLineasByProveedorLista(linea);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="linea.cLineaNombre"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaLineaByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaLineaByProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaLineaByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Buscar Elemento de Venta -->
-        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">BUSQUEDA ELEMENTO VENTA</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="text-center">
-                                                        <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+            <!-- Modal Buscar Elemento de Venta -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">BUSQUEDA ELEMENTO VENTA</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2 form-control-label">Tipo Elemento</label>
-                                            <div class="col-md-4">
-                                                <div class="input-group">
-                                                    <select name="account" v-model="fillBusqTipoElemento.ntpoelemen" class="form-control form-control-sm">
-                                                        <option v-for="elemento in arrayTipoElemento" :key="elemento.nIdPar" :value="elemento.nIdPar" v-text="elemento.cParNombre">
-                                                        </option>
-                                                    </select>
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-control-label">Tipo Elemento</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <select name="account" v-model="fillBusqTipoElemento.ntpoelemen" class="form-control form-control-sm">
+                                                            <option v-for="elemento in arrayTipoElemento" :key="elemento.nIdPar" :value="elemento.nIdPar" v-text="elemento.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 form-control-label">Nombre Elemento</label>
-                                            <div class="col-sm-4">
-                                                <div class="input-group">
-                                                    <input type="text" v-model="fillBusqTipoElemento.celementonombre" @keyup.enter="buscarElementoVenta(1)" class="form-control form-control-sm">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
-                                                            <i class="fa-lg fa fa-search"></i>
-                                                        </button>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Nombre Elemento</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <input type="text" v-model="fillBusqTipoElemento.celementonombre" @keyup.enter="buscarElementoVenta(1)" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                                <i class="fa-lg fa fa-search"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayElementoVentaModal.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Acciones</th>
-                                                            <th>Código</th>
-                                                            <th>Accesorio</th>
-                                                            <th>Precio</th>
-                                                        </tr>
-                                                    </thead>
+                                            <hr/>
+                                            <template v-if="arrayElementoVentaModal.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Acciones</th>
+                                                                <th>Código</th>
+                                                                <th>Accesorio</th>
+                                                                <th>Precio</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="elemento in arrayElementoVentaModal" :key="elemento.nIdContacto">
+                                                                <td>
+                                                                    <a href="#" @click.prevent="agregarElementoVentaLista(elemento);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="elemento.nIdElemento"></td>
+                                                                <td v-text="elemento.cElemenNombre"></td>
+                                                                <td v-text="elemento.fElemenValorVenta"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaTipoElementoVenta(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaTipoElementoVenta(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaTipoElementoVenta(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="elemento in arrayElementoVentaModal" :key="elemento.nIdContacto">
-                                                            <td>
-                                                                <a href="#" @click.prevent="agregarElementoVentaLista(elemento);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="elemento.nIdElemento"></td>
-                                                            <td v-text="elemento.cElemenNombre"></td>
-                                                            <td v-text="elemento.fElemenValorVenta"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaTipoElementoVenta(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaTipoElementoVenta(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaTipoElementoVenta(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Buscar Turnos -->
-        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTADO TURNOS DE VENDEDORES</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <template v-if="arrayTurnoVendedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Turno</th>
-                                                        </tr>
-                                                    </thead>
+            <!-- Modal Buscar Turnos -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO TURNOS DE VENDEDORES</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <template v-if="arrayTurnoVendedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Turno</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="turno in arrayTurnoVendedor" :key="turno.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarTurno(turno);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="turno.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="turno in arrayTurnoVendedor" :key="turno.nIdPar">
-                                                            <td>
-                                                                <a href="#" @click="asignarTurno(turno);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="turno.cParNombre"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </transition>
 </template>
 
 <script>
@@ -793,6 +795,11 @@
                     this.arrayConceptoComision = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarTipoComision(){
@@ -806,6 +813,11 @@
                     this.arrayTipoComision = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarTipoMoneda(){
@@ -819,6 +831,11 @@
                     this.arrayTipoMoneda = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =======================
@@ -848,6 +865,11 @@
                     this.paginationModal.to             = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaProveedor(page){
@@ -876,6 +898,11 @@
                     this.arrayTurnoVendedor = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             asignarTurno(turno){
@@ -905,6 +932,11 @@
                     this.arrayTipoElemento = response.data;
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             buscarElementoVenta(page){
@@ -930,6 +962,11 @@
                     this.paginationModal.to            =   response.data.arrayElementoVenta.to;
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarBuscarElementoVenta(){
@@ -1028,6 +1065,11 @@
                     this.paginationModal.to            =   response.data.arrayLinea.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaLineaByProveedor(page){
@@ -1100,6 +1142,11 @@
                     this.limpiarProceso();
                 }).catch(error => {
                     this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistrarComision(data){
@@ -1247,6 +1294,20 @@
 </script>
 
 <style>
+    /* TRANSITION */
+    /* Enter and leave animations can use different */
+    /* durations and timing functions.              */
+    .slide-fade-enter-active {
+        transition: all .8s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
     .mostrar{
         display: list-item !important;
         opacity: 1 !important;

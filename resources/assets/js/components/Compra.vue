@@ -1,770 +1,223 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">COMPRA</h2>
-          </div>
-        </header>
-
-        <section>
+     <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaCompra" @click="tabBuscarCompra()" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> BUSCAR COMPRA
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra()" role="tab" data-toggle="tab">
-                                        <i class="fa fa-bus"></i> GENERAR COMPRA
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario()" role="tab" data-toggle="tab">
-                                        <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabLineaCredito" @click="tabLineaCredito()" role="tab" data-toggle="tab">
-                                        <i class="fa fa-file-text-o"></i> LÍNEA DE CRÉDITO
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
-                                        <i class="fa fa fa-signal"></i> LÍNEA FORUM
-                                    </a>
-                                </li>
-                            </ul>
+                <h2 class="no-margin-bottom">COMPRA</h2>
+            </div>
+            </header>
 
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active show" id="TabBuscaCompra">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BUSCAR COMPRA</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+            <section>
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#TabBuscaCompra" @click="tabBuscarCompra()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> BUSCAR COMPRA
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabGeneraCompra" @click="tabGenerarCompra()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bus"></i> GENERAR COMPRA
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabAsignaCaracter" @click="limpiarFormulario()" role="tab" data-toggle="tab">
+                                            <i class="fa fa fa-clipboard"></i> ASIGNAR CARACTERÍSTICAS
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabLineaCredito" @click="tabLineaCredito()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-file-text-o"></i> LÍNEA DE CRÉDITO
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
+                                            <i class="fa fa fa-signal"></i> LÍNEA FORUM
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active show" id="TabBuscaCompra">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR COMPRA</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCompra.dfechainicio"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCompra.dfechafin"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Marca</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                                                <el-option
-                                                                                v-for="item in arrayMarca"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
-                                                                                <el-option
-                                                                                v-for="item in arrayModelo"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();">
-                                                                        <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <template v-if="arrayCompra.length">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-striped table-sm">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Acciones</th>
-                                                                            <th>Código</th>
-                                                                            <th>Periodo</th>
-                                                                            <th>OC</th>
-                                                                            <th>Línea</th>
-                                                                            <th>Almacén<nav></nav></th>
-                                                                            <th>Nro Reserva</th>
-                                                                            <th>Nro Vin</th>
-                                                                            <th>Forma Pago</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año Fab</th>
-                                                                            <th>Año Mod</th>
-                                                                            <th>Moneda</th>
-                                                                            <th>Total</th>
-                                                                            <th>Nro Factura</th>
-                                                                            <th>Fecha Facturado</th>
-                                                                            <th>Fecha Compra</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
-                                                                            <td>
-                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
-                                                                                    <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                </el-tooltip>&nbsp;
-                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
-                                                                                    <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                </el-tooltip>
-                                                                            </td>
-                                                                            <td v-text="compra.nIdCompra"></td>
-                                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                            <td v-text="compra.nOrdenCompra"></td>
-                                                                            <td v-text="compra.cNombreLinea"></td>
-                                                                            <td v-text="compra.cNombreAlmacen"></td>
-                                                                            <td v-text="compra.nNumeroReserva"></td>
-                                                                            <td v-text="compra.cNumeroVin"></td>
-                                                                            <td v-text="compra.cFormaPago"></td>
-                                                                            <td v-text="compra.cNombreComercial"></td>
-                                                                            <td v-text="compra.nAnioFabricacion"></td>
-                                                                            <td v-text="compra.nAnioVersion"></td>
-                                                                            <td v-text="compra.cSimboloMoneda"></td>
-                                                                            <td v-text="compra.fTotalCompra"></td>
-                                                                            <td v-text="compra.cNumeroFactura"></td>
-                                                                            <td v-text="compra.dFechaFacturado"></td>
-                                                                            <td v-text="compra.dFechaCompra"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-sm-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link"
-                                                                                    href="#" @click.prevent="cambiarPagina(page)"
-                                                                                    v-text="page"></a>
-                                                                                </li>
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-sm-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-else>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td colspan="10">No existen registros!</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </template>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabGeneraCompra">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">GENERAR COMPRA</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Año</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Mes</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <input type="hidden" v-model="formCompra.nidproveedor">
-                                                                                <input type="text" v-model="formCompra.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Buscar Proveedor </div>
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                        </button>
-                                                                                    </el-tooltip>
-                                                                                </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Lista</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="formCompra.nidtipolista" filterable placeholder="Select" >
-                                                                                <el-option
-                                                                                v-for="item in arrayTipoLista"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCompra.dfechainicio"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCompra.dfechafin"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </form>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Marca</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMarca"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayModelo"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-8">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
-                                                                        <div class="col-sm-8">
-                                                                            <a href="#" @click="descargaFormatoCompra">
-                                                                                <i class="fa-md fa fa-file-excel-o"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-8">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Ordenes de Compra</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                            <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
-                                                                                <i class="fa fa-file-excel-o"></i> Seleccionar Archivo
-                                                                            </label>-->
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="row">
-                                                                        <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
-                                                                        <div class="col-sm-6">-->
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileCompra()">
-                                                                                <i class="fa fa-retweet"></i> Procesar
-                                                                            </button>
-                                                                        <!--</div>-->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
                                                         </div>
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayExcel.length">
-                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                        <div class="card-body">
+                                                            <template v-if="arrayCompra.length">
+                                                                <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
+                                                                                <th>Código</th>
+                                                                                <th>Periodo</th>
                                                                                 <th>OC</th>
                                                                                 <th>Línea</th>
                                                                                 <th>Almacén<nav></nav></th>
                                                                                 <th>Nro Reserva</th>
                                                                                 <th>Nro Vin</th>
                                                                                 <th>Forma Pago</th>
-                                                                                <th>Marca</th>
-                                                                                <th>Modelo</th>
                                                                                 <th>Nombre Comercial</th>
-                                                                                <th>Color</th>
                                                                                 <th>Año Fab</th>
                                                                                 <th>Año Mod</th>
-                                                                                <th>Mon</th>
+                                                                                <th>Moneda</th>
                                                                                 <th>Total</th>
                                                                                 <th>Nro Factura</th>
                                                                                 <th>Fecha Facturado</th>
+                                                                                <th>Fecha Compra</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenCompra">
+                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Eliminar O/C  {{ compra.nOrdenCompra }}</div>
-                                                                                        <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                        <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                        <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                     </el-tooltip>
                                                                                 </td>
+                                                                                <td v-text="compra.nIdCompra"></td>
+                                                                                <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
                                                                                 <td v-text="compra.nOrdenCompra"></td>
                                                                                 <td v-text="compra.cNombreLinea"></td>
                                                                                 <td v-text="compra.cNombreAlmacen"></td>
                                                                                 <td v-text="compra.nNumeroReserva"></td>
                                                                                 <td v-text="compra.cNumeroVin"></td>
                                                                                 <td v-text="compra.cFormaPago"></td>
-                                                                                <td v-text="compra.cNombreMarca"></td>
-                                                                                <td v-text="compra.cNombreModelo"></td>
                                                                                 <td v-text="compra.cNombreComercial"></td>
-                                                                                <td v-text="compra.cNombreColor"></td>
                                                                                 <td v-text="compra.nAnioFabricacion"></td>
                                                                                 <td v-text="compra.nAnioVersion"></td>
                                                                                 <td v-text="compra.cSimboloMoneda"></td>
                                                                                 <td v-text="compra.fTotalCompra"></td>
                                                                                 <td v-text="compra.cNumeroFactura"></td>
                                                                                 <td v-text="compra.dFechaFacturado"></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-7">
-                                                                        </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Total: {{ contadorArrayExcel }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                                            <i class="fa fa-save"></i> Registrar
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">EN MANTENIMIENTO</div>
-
-
-                                <div role="tabpanel" class="tab-pane fade" id="TabLineaCredito">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BUSCAR COMPRA SIN LINEA CREDITO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCompra.dfechainicio"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCompra.dfechafin"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Marca</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                                                <el-option
-                                                                                v-for="item in arrayMarca"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
-                                                                                <el-option
-                                                                                v-for="item in arrayModelo"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompraNoLineaCredito(1);"><i class="fa fa-search"></i> Buscar</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <template v-if="arrayLineaCredito.length">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-striped table-sm">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>Código</th>
-                                                                            <th>Periodo</th>
-                                                                            <th>OC</th>
-                                                                            <th>Línea</th>
-                                                                            <th>Almacén<nav></nav></th>
-                                                                            <th>Nro Reserva</th>
-                                                                            <th>Nro Vin</th>
-                                                                            <th>Forma Pago</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año Fab</th>
-                                                                            <th>Año Mod</th>
-                                                                            <th>Moneda</th>
-                                                                            <th>Total</th>
-                                                                            <th>Nro Factura</th>
-                                                                            <th>Fecha Facturado</th>
-                                                                            <th>Fecha Compra</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="(compra, index) in arrayLineaCredito" :key="compra.nIdCompra">
-                                                                            <td>
-                                                                                <input type="checkbox" v-model="checkBoxLinea[index]" class="checkbox-template">
-                                                                            </td>
-                                                                            <td v-text="compra.nIdCompra"></td>
-                                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                            <td v-text="compra.nOrdenCompra"></td>
-                                                                            <td v-text="compra.cNombreLinea"></td>
-                                                                            <td v-text="compra.cNombreAlmacen"></td>
-                                                                            <td v-text="compra.nNumeroReserva"></td>
-                                                                            <td v-text="compra.cNumeroVin"></td>
-                                                                            <td v-text="compra.cFormaPago"></td>
-                                                                            <td v-text="compra.cNombreComercial"></td>
-                                                                            <td v-text="compra.nAnioFabricacion"></td>
-                                                                            <td v-text="compra.nAnioVersion"></td>
-                                                                            <td v-text="compra.cSimboloMoneda"></td>
-                                                                            <td v-text="compra.fTotalCompra"></td>
-                                                                            <td v-text="compra.cNumeroFactura"></td>
-                                                                            <td v-text="compra.dFechaFacturado"></td>
-                                                                            <td v-text="compra.dFechaCompra"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-sm-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaLineaCredito(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link"
-                                                                                    href="#" @click.prevent="cambiarPaginaLineaCredito(page)"
-                                                                                    v-text="page"></a>
-                                                                                </li>
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaLineaCredito(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-sm-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="seleccionaCheckBox()">
-                                                                        <i class="fa fa-save"></i> Linea Crédito
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-else>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td colspan="10">No existen registros!</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </template>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-
-                                <div role="tabpanel" class="tab-pane fade" id="TabForum">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-8">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Importar Forum</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="file" id="file-upload" @change="getFileForum" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="row">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileForum()">
-                                                                            <i class="fa fa-retweet"></i> Procesar
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayForum.length">
-                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Acciones</th>
-                                                                                <th>Modelo</th>
-                                                                                <th>VIN</th>
-                                                                                <th>Nro. Motor</th>
-                                                                                <th>Color</th>
-                                                                                <th>Fec. Factura</th>
-                                                                                <th>Nro Factura</th>
-                                                                                <th>Nro. Nota Pedido</th>
-                                                                                <th>Declarado Floor Plan</th>
-                                                                                <th>Fecha Declarado Floor Plan</th>
-                                                                                <th>Monto</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="(forum, index) in arrayForum" :key="forum.cNumeroVin">
-                                                                                <td>
-                                                                                    <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +forum.cNumeroVin">
-                                                                                    <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
-                                                                                </td>
-                                                                                <td v-text="forum.cNombreModelo"></td>
-                                                                                <td v-text="forum.cNumeroVin"></td>
-                                                                                <td v-text="forum.cNumeroMotor"></td>
-                                                                                <td v-text="forum.cNombreColor"></td>
-                                                                                <td v-text="forum.dFechaFactura"></td>
-                                                                                <td v-text="forum.cNumeroFactura"></td>
-                                                                                <td v-text="forum.nNumeroPedido"></td>
-                                                                                <td v-text="forum.cFlagFloorPlan"></td>
-                                                                                <td v-text="forum.dFechaInicioFloorPlan"></td>
-                                                                                <td></td>
-                                                                                <td v-text="forum.fMonto"></td>
+                                                                                <td v-text="compra.dFechaCompra"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -772,16 +225,463 @@
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
                                                                         <div class="col-sm-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPagina(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
                                                                         </div>
                                                                         <div class="col-sm-5">
-                                                                            <div class="datatable-info">Total: {{ contadorArrayForum }} registros</div>
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabGeneraCompra">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">GENERAR COMPRA</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Año</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Mes</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="hidden" v-model="formCompra.nidproveedor">
+                                                                                    <input type="text" v-model="formCompra.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Proveedor </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Lista</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formCompra.nidtipolista" filterable placeholder="Select" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayTipoLista"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                            <div class="col-sm-8">
+                                                                                <a href="#" @click="descargaFormatoCompra">
+                                                                                    <i class="fa-md fa fa-file-excel-o"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Ordenes de Compra</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                                <!--<label for="file-upload" class="btn btn-warning btn-corner btn-sm">
+                                                                                    <i class="fa fa-file-excel-o"></i> Seleccionar Archivo
+                                                                                </label>-->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="row">
+                                                                            <!--<input type="text" v-model="textFile" class="col-sm-6 form-control form-control-sm" readonly>
+                                                                            <div class="col-sm-6">-->
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileCompra()">
+                                                                                    <i class="fa fa-retweet"></i> Procesar
+                                                                                </button>
+                                                                            <!--</div>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayExcel.length">
+                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Acciones</th>
+                                                                                    <th>OC</th>
+                                                                                    <th>Línea</th>
+                                                                                    <th>Almacén<nav></nav></th>
+                                                                                    <th>Nro Reserva</th>
+                                                                                    <th>Nro Vin</th>
+                                                                                    <th>Forma Pago</th>
+                                                                                    <th>Marca</th>
+                                                                                    <th>Modelo</th>
+                                                                                    <th>Nombre Comercial</th>
+                                                                                    <th>Color</th>
+                                                                                    <th>Año Fab</th>
+                                                                                    <th>Año Mod</th>
+                                                                                    <th>Mon</th>
+                                                                                    <th>Total</th>
+                                                                                    <th>Nro Factura</th>
+                                                                                    <th>Fecha Facturado</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="(compra, index) in arrayExcel" :key="compra.nOrdenCompra">
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Eliminar O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                            <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        </el-tooltip>
+                                                                                    </td>
+                                                                                    <td v-text="compra.nOrdenCompra"></td>
+                                                                                    <td v-text="compra.cNombreLinea"></td>
+                                                                                    <td v-text="compra.cNombreAlmacen"></td>
+                                                                                    <td v-text="compra.nNumeroReserva"></td>
+                                                                                    <td v-text="compra.cNumeroVin"></td>
+                                                                                    <td v-text="compra.cFormaPago"></td>
+                                                                                    <td v-text="compra.cNombreMarca"></td>
+                                                                                    <td v-text="compra.cNombreModelo"></td>
+                                                                                    <td v-text="compra.cNombreComercial"></td>
+                                                                                    <td v-text="compra.cNombreColor"></td>
+                                                                                    <td v-text="compra.nAnioFabricacion"></td>
+                                                                                    <td v-text="compra.nAnioVersion"></td>
+                                                                                    <td v-text="compra.cSimboloMoneda"></td>
+                                                                                    <td v-text="compra.fTotalCompra"></td>
+                                                                                    <td v-text="compra.cNumeroFactura"></td>
+                                                                                    <td v-text="compra.dFechaFacturado"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-7">
+                                                                            </div>
+                                                                            <div class="col-lg-5">
+                                                                                <div class="datatable-info">Total: {{ contadorArrayExcel }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                                                <i class="fa fa-save"></i> Registrar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabAsignaCaracter">EN MANTENIMIENTO</div>
+
+
+                                    <div role="tabpanel" class="tab-pane fade" id="TabLineaCredito">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR COMPRA SIN LINEA CREDITO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCompra.dfechainicio"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCompra.dfechafin"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Marca</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMarca"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayModelo"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarForum()">
-                                                                            <i class="fa fa-save"></i> Registrar
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCompraNoLineaCredito(1);"><i class="fa fa-search"></i> Buscar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <template v-if="arrayLineaCredito.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Seleccione</th>
+                                                                                <th>Código</th>
+                                                                                <th>Periodo</th>
+                                                                                <th>OC</th>
+                                                                                <th>Línea</th>
+                                                                                <th>Almacén<nav></nav></th>
+                                                                                <th>Nro Reserva</th>
+                                                                                <th>Nro Vin</th>
+                                                                                <th>Forma Pago</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Año Fab</th>
+                                                                                <th>Año Mod</th>
+                                                                                <th>Moneda</th>
+                                                                                <th>Total</th>
+                                                                                <th>Nro Factura</th>
+                                                                                <th>Fecha Facturado</th>
+                                                                                <th>Fecha Compra</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(compra, index) in arrayLineaCredito" :key="compra.nIdCompra">
+                                                                                <td>
+                                                                                    <input type="checkbox" v-model="checkBoxLinea[index]" class="checkbox-template">
+                                                                                </td>
+                                                                                <td v-text="compra.nIdCompra"></td>
+                                                                                <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
+                                                                                <td v-text="compra.nOrdenCompra"></td>
+                                                                                <td v-text="compra.cNombreLinea"></td>
+                                                                                <td v-text="compra.cNombreAlmacen"></td>
+                                                                                <td v-text="compra.nNumeroReserva"></td>
+                                                                                <td v-text="compra.cNumeroVin"></td>
+                                                                                <td v-text="compra.cFormaPago"></td>
+                                                                                <td v-text="compra.cNombreComercial"></td>
+                                                                                <td v-text="compra.nAnioFabricacion"></td>
+                                                                                <td v-text="compra.nAnioVersion"></td>
+                                                                                <td v-text="compra.cSimboloMoneda"></td>
+                                                                                <td v-text="compra.fTotalCompra"></td>
+                                                                                <td v-text="compra.cNumeroFactura"></td>
+                                                                                <td v-text="compra.dFechaFacturado"></td>
+                                                                                <td v-text="compra.dFechaCompra"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaLineaCredito(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaLineaCredito(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaLineaCredito(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="seleccionaCheckBox()">
+                                                                            <i class="fa fa-save"></i> Linea Crédito
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -799,280 +699,381 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL PROVEEDORES -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                        </section>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Buscar Proveedor </div>
-                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </el-tooltip>
+
+                                    <div role="tabpanel" class="tab-pane fade" id="TabForum">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Importar Forum</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="file" id="file-upload" @change="getFileForum" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="row">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileForum()">
+                                                                                <i class="fa fa-retweet"></i> Procesar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayForum.length">
+                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Acciones</th>
+                                                                                    <th>Modelo</th>
+                                                                                    <th>VIN</th>
+                                                                                    <th>Nro. Motor</th>
+                                                                                    <th>Color</th>
+                                                                                    <th>Fec. Factura</th>
+                                                                                    <th>Nro Factura</th>
+                                                                                    <th>Nro. Nota Pedido</th>
+                                                                                    <th>Declarado Floor Plan</th>
+                                                                                    <th>Fecha Declarado Floor Plan</th>
+                                                                                    <th>Monto</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="(forum, index) in arrayForum" :key="forum.cNumeroVin">
+                                                                                    <td>
+                                                                                        <a href="#" @click="eliminarItemForum(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +forum.cNumeroVin">
+                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                    </td>
+                                                                                    <td v-text="forum.cNombreModelo"></td>
+                                                                                    <td v-text="forum.cNumeroVin"></td>
+                                                                                    <td v-text="forum.cNumeroMotor"></td>
+                                                                                    <td v-text="forum.cNombreColor"></td>
+                                                                                    <td v-text="forum.dFechaFactura"></td>
+                                                                                    <td v-text="forum.cNumeroFactura"></td>
+                                                                                    <td v-text="forum.nNumeroPedido"></td>
+                                                                                    <td v-text="forum.cFlagFloorPlan"></td>
+                                                                                    <td v-text="forum.dFechaInicioFloorPlan"></td>
+                                                                                    <td></td>
+                                                                                    <td v-text="forum.fMonto"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-7">
+                                                                            </div>
+                                                                            <div class="col-sm-5">
+                                                                                <div class="datatable-info">Total: {{ contadorArrayForum }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarForum()">
+                                                                                <i class="fa fa-save"></i> Registrar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL PROVEEDORES -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
                                         </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td>{{proveedor.cParNombre}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td>{{proveedor.cParNombre}}</td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL RESPUESTAS DE GENERAR COMPRA-->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
+                                                    <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL RESPUESTAS DE GENERAR COMPRA-->
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-striped table-sm">
-                                            <tbody>
-                                                <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
-                                                    <td v-text="compra.cNumeroVin"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-striped table-sm">
-                                            <tbody>
-                                                <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
-                                                    <td v-text="compra.cNumeroVin"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--  MODAL EDITAR COMPRA -->
-        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="h4">EDITAR DATOS DE COMPRA</h3>
-                                </div>
-                                <div class="card-body">
-                                    <form class="form-horizontal">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* O/C</label>
-                                                    <div class="col-sm-8">
-                                                        <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
+            <!--  MODAL EDITAR COMPRA -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">EDITAR DATOS DE COMPRA</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* O/C</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
-                                                    <div class="col-sm-8">
-                                                        <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Número VIN</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Número Motor</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalCompra.cnumeromotor" class="form-control form-control-sm">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Número VIN</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Número DUA</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalCompra.cnumerodua" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre Color</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Número Motor</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formModalCompra.cnumeromotor" class="form-control form-control-sm">
-                                                    </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizar();">
+                                                        <i class="fa fa-save"></i> Actualizar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cancelar
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Número DUA</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formModalCompra.cnumerodua" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre Color</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizar();">
-                                                    <i class="fa fa-save"></i> Actualizar
-                                                </button>
-                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
-                                                    <i class="fa fa-close"></i> Cancelar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    </main>
+        </main>
+    </transition>
 </template>
 <script>
     export default {
@@ -1106,8 +1107,8 @@
                 arrayCompra: [],
                 arrayExcel: [],
                 contadorArrayExcel: 0,
-                arrayTipoLista: [], 
-                // ==========================================================           
+                arrayTipoLista: [],
+                // ==========================================================
                 // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
                 formModalCompra:{
                     nidcompra: 0,
@@ -1233,7 +1234,7 @@
             },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110032,
@@ -1243,6 +1244,11 @@
                     this.arrayMarca = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelo(){
@@ -1257,6 +1263,11 @@
                     this.fillCompra.nidmodelo = 0;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarCompras(page){
@@ -1293,6 +1304,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -1327,6 +1343,11 @@
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaProveedor(page){
@@ -1350,6 +1371,11 @@
                     this.arrayTipoLista = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // ====================================================
@@ -1376,6 +1402,11 @@
                     this.readFileCompra(response.data);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             readFileCompra(nameFile){
@@ -1400,6 +1431,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validaCamposExcel(){
@@ -1502,6 +1538,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistro(){
@@ -1537,7 +1578,6 @@
                 return this.error;
             },
             desactivar(nIdCompra){
-
                 swal({
                     title: 'Estas seguro de eliminar esta Compra?',
                     type: 'warning',
@@ -1552,13 +1592,18 @@
                         nIdCompra: nIdCompra
                     }).then(response => {
                         swal(
-                        'Desactivado!',
-                        'El registro fue eliminado.'
+                            'Desactivado!',
+                            'El registro fue eliminado.'
                         );
                         this.listarCompras(1);
                     })
                     .catch(function (error) {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 })
             },
@@ -1583,17 +1628,20 @@
                     cNumeroDua: this.formModalCompra.cnumerodua,
                     cNombreColor: this.formModalCompra.cnombrecolor
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
+                    if(response.data[0].nFlagMsje == 1) {
                         swal('Compra actualizada correctamente');
                         this.cerrarModal();
                         this.listarCompras(1);
-                    }
-                    else{
+                    } else {
                         swal('Ya existe VIN');
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarActualizar(){
@@ -1650,6 +1698,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaLineaCredito(page){
@@ -1687,6 +1740,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             unCheckBox(){
@@ -1716,6 +1774,11 @@
                     this.readFileForum(response.data);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             readFileForum(nameFile){
@@ -1731,7 +1794,7 @@
                         this.modal = 1;
                         return;
                     }*/
-                    
+
                     this.$delete(response.data, 0);
                     this.arrayForum = response.data;
                     this.contadorArrayForum = this.arrayForum.length;
@@ -1740,6 +1803,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarReadFileForum(){
@@ -1807,9 +1875,12 @@
                     $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
-
-
             },
             validarRegistroForum(){
                 this.error = 0;
@@ -1892,27 +1963,41 @@
     }
 </script>
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
-        /*input[type="file"] {
-            display: none;
-        }*/
+    /* TRANSITION */
+    /* Enter and leave animations can use different */
+    /* durations and timing functions.              */
+    .slide-fade-enter-active {
+        transition: all .8s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+    /*input[type="file"] {
+        display: none;
+    }*/
 </style>
