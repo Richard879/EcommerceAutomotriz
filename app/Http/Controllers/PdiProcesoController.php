@@ -87,4 +87,9 @@ class PdiProcesoController extends Controller
                                                                     ]);
         return response()->json($arrayItems);
     }
+
+    public function SetCabeceraInspeccion(Request $request)
+    {
+        
+    }
 }

@@ -202,8 +202,9 @@ class EventoCampaniaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEventoCampania = DB::select('exec [usp_EC_DesactivaById] ?', 
-                                            [   $request->nIdEventoCampania
+        $nIdEventoCampania = DB::select('exec [usp_EC_DesactivaById] ?, ?', 
+                                            [   $request->nIdEventoCampania,
+                                                Auth::user()->id
                                             ]);
         return response()->json($nIdEventoCampania);   
     }
@@ -212,8 +213,9 @@ class EventoCampaniaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEventoCampania = DB::select('exec [usp_EC_ActivaById] ?', 
-                                            [   $request->nIdEventoCampania
+        $nIdEventoCampania = DB::select('exec [usp_EC_ActivaById] ?, ?', 
+                                            [   $request->nIdEventoCampania,
+                                                Auth::user()->id
                                             ]);
         return response()->json($nIdEventoCampania);   
     }

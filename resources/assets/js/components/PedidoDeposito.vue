@@ -1242,7 +1242,7 @@
                 if(this.formNuevoDeposito.ftipocambiovoucher == ''){
                     this.mensajeError.push('Debes ingresar Tipo Cambio Voucher');
                 };
-                if(this.formNuevoDeposito.ftipocambiocomercial == ''){
+                if(this.formNuevoDeposito.ftipocambiocomercial == 0){
                     this.mensajeError.push('No existe Tipo Cambio Comercial, Comuníquese con SAISACTI');
                 };
                 if(this.formNuevoDeposito.fmonto == ''){

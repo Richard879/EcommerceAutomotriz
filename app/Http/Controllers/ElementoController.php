@@ -64,8 +64,9 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec [usp_Element_DesactivaById] ?', 
-                                                    [   $request->nIdElementoVenta
+        $elementoVenta = DB::select('exec [usp_Element_DesactivaById] ?, ?', 
+                                                    [   $request->nIdElementoVenta,
+                                                    Auth::user()->id
                                                     ]);
         return response()->json($elementoVenta);   
     }
@@ -74,8 +75,9 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $elementoVenta = DB::select('exec [usp_Element_ActivaById] ?', 
-                                                        [   $request->nIdElementoVenta
+        $elementoVenta = DB::select('exec [usp_Element_ActivaById] ?, ?', 
+                                                        [   $request->nIdElementoVenta,
+                                                            Auth::user()->id
                                                         ]);
         return response()->json($elementoVenta);   
     }

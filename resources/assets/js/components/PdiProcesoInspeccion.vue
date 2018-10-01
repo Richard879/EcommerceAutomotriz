@@ -157,24 +157,6 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Solicitud Autorización</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="formPdi.csolicitudnombre" disabled="disabled" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Buscar Solicitud Autorización</div>
-                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','solicitud')">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </el-tooltip>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Punto Inspección</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
@@ -191,11 +173,29 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Solicitud Autorización</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="text" v-model="formPdi.csolicitudnombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Solicitud Autorización</div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','solicitud')">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             <div class="row">
-                                                <label class="col-sm-3 form-control-label">
+                                                <label class="col-sm-3 form-control-label">*&nbsp;
                                                     <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
                                                         <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" v-on:change="changeFlagVinPlaca()">
                                                         <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1484,7 +1484,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';    
+                var url = this.ruta + '/pdi/SetCabeceraInspeccion';    
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),

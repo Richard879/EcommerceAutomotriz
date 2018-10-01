@@ -239,4 +239,24 @@ class CotizacionController extends Controller
         $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
         return ['arraySegReferenciavehiculo'=>$arraySegReferenciavehiculo];
     }
+
+    public function GetElementoByTipo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa   = $request->nidempresa;
+        $nIdTipoElemento = $request->nidtipoelemen;
+        $cElemenNombre = $request->celementonombre;
+
+        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = ' ') : $cElemenNombre;
+                
+        $arrayElementoVenta = DB::select('exec [usp_Cotizacion_GetElementoByTipo] ?, ?, ?', 
+                                                                [   $nIdEmpresa, 
+                                                                    $nIdTipoElemento, 
+                                                                    $cElemenNombre
+                                                                ]);
+
+        $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
+        return ['arrayElementoVenta'=>$arrayElementoVenta];
+    }
 }
