@@ -50,7 +50,6 @@
                                                     <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
-                                                            <input type="hidden" v-model="formAsignaModelo.nidproveedor">
                                                             <input type="text" v-model="formAsignaModelo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
                                                                 <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
@@ -421,7 +420,6 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                nidproveedor: '',
                 arrayProveedorLinea: [],
                 arrayJefeVentas: [],
                 arrayProveedor: [],
@@ -440,6 +438,7 @@
                     nidmodelo: 0
                 },
                 formAsignaModelo:{
+                    nidproveedor: 0,
                     nJefeVentaId: 0,
                     cJefeVentaNombre: 'NO ES JEFE DE VENTAS'
                 },
