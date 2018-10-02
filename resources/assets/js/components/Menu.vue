@@ -1,23 +1,24 @@
 <template>
-    <transition name="slide-fade" appear>
+
         <nav class="side-navbar">
             <span class="heading">MENÚ PRINCIPAL</span>
             <ul class="list-unstyled">
-                <li v-for="menu in arrayMenu" :key="menu.nIdPar">
-                    <a v-bind:href="menu.cReferencia" aria-expanded="false" data-toggle="collapse">
-                        <i v-bind:class="menu.cParIcon"></i>{{ menu.cParNombre }}
-                    </a>
-                    <ul v-bind:id="menu.cParJerarquia" class="collapse list-unstyled ">
-                        <div v-for="submenu in arraySubMenu" :key="submenu.nIdPar">
-                            <li v-if="submenu.nCanJerarquia==menu.cParJerarquia" v-bind:id="submenu.cParJerarquia" @click="activaMenu(submenu.nIdPar,submenu.cParJerarquia)">
-                                <a href="#">{{ submenu.cParNombre }}</a>
-                            </li>
-                        </div>
-                    </ul>
-                </li>
+                <transition-group tag="ul" name="bounce" mode="out-in" appear>
+                    <li v-for="menu in arrayMenu" :key="menu.nIdPar">
+                        <a v-bind:href="menu.cReferencia" aria-expanded="false" data-toggle="collapse">
+                            <i v-bind:class="menu.cParIcon"></i>{{ menu.cParNombre }}
+                        </a>
+                        <ul v-bind:id="menu.cParJerarquia" class="collapse list-unstyled ">
+                            <div v-for="submenu in arraySubMenu" :key="submenu.nIdPar">
+                                <li v-if="submenu.nCanJerarquia==menu.cParJerarquia" v-bind:id="submenu.cParJerarquia" @click="activaMenu(submenu.nIdPar,submenu.cParJerarquia)">
+                                    <a href="#">{{ submenu.cParNombre }}</a>
+                                </li>
+                            </div>
+                        </ul>
+                    </li>
+                </transition-group >
             </ul>
         </nav>
-    </transition>
 </template>
 
 <script>
@@ -92,18 +93,32 @@
 </script>
 
 <style>
-    /* TRANSITION */
-    /* Enter and leave animations can use different */
-    /* durations and timing functions.              */
-    .slide-fade-enter-active {
-        transition: all .8s ease;
+    .bounce-enter-active {
+        animation: bounce-in .5s;
     }
-    .slide-fade-leave-active {
-        transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    .bounce-leave-active {
+        animation: bounce-out .5s;
     }
-    .slide-fade-enter, .slide-fade-leave-to
-        /* .slide-fade-leave-active below version 2.1.8 */ {
-        transform: translateX(10px);
-        opacity: 0;
+    @keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+    }
+    @keyframes bounce-out {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(0);
+    }
     }
 </style>

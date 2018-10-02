@@ -14,7 +14,7 @@
 </template>
 
 <script>
-export default {
+    export default {
         props:['ruta', 'usuario'],
         data(){
             return {

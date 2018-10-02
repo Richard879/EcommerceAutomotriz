@@ -34,6 +34,9 @@
     <template v-if="menu==200205">
         <pdipuntoinspeccion :ruta="ruta"></pdipuntoinspeccion>
     </template>
+    <template v-if="menu==200206">
+        <asigvendedorcuota :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorcuota>
+    </template>
 
     <template v-if="menu==200301">
         <listapreciovh :ruta="ruta"></listapreciovh>
