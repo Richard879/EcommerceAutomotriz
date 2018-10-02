@@ -82,7 +82,7 @@
             },
             activaMenu(nIdMenu, cParJerarquia){
                 let me = this;
-                me.$emit('menu', cParJerarquia);
+                me.$emit('menu', nIdMenu);
 
                 $('ul li.active').removeClass('active');
                 var mimenu = document.getElementById(cParJerarquia);
