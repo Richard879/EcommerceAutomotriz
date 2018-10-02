@@ -53,8 +53,10 @@ class AsignaVendedorModeloController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $vendedorlinea = DB::select('exec [usp_AsignaVendedorModelo_SetDesasignaModelo] ?',
-                                                            array($request->nIdAsignacion));
+        $vendedorlinea = DB::select('exec [usp_AsignaVendedorModelo_SetDesasignaModelo] ?, ?',
+                                                            [   $request->nIdAsignacion,
+                                                                Auth::user()->id
+                                                            ]);
         return response()->json($vendedorlinea);
     }
 }

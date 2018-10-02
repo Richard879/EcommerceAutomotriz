@@ -104,8 +104,9 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaById] ?', 
-                                                [  $request->nIdListaPrecioVersionVeh
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaById] ?, ?', 
+                                                [  $request->nIdListaPrecioVersionVeh,
+                                                    Auth::user()->id
                                                 ]);
         return response()->json($listapreciovh);   
     }
@@ -114,10 +115,11 @@ class ListaPrecioVersionVehController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_ActivaById] ?, ?, ?', 
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_ActivaById] ?, ?, ?, ?', 
                                                     [   $request->nIdListaPrecioVersionVeh,
                                                         $request->nIdProveedor,
-                                                        $request->nIdTipoLista
+                                                        $request->nIdTipoLista,
+                                                        Auth::user()->id
                                                     ]);
         return response()->json($listapreciovh);   
     }
