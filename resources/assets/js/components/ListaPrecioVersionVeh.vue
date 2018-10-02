@@ -1,210 +1,331 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">LISTA DE PRECIOS</h2>
-          </div>
-        </header>
-        
-        <section>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="Tab1" href="#TabBuscaListaPrecioVh" @click="tabBuscaListaPrecioVh()" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> BUSCAR LISTA PRECIO
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" id="Tab2" href="#TabAsignaDetalle" role="tab" data-toggle="tab">
-                                        <i class="fa fa-usd"></i> AGREGAR DETALLE DE PRECIOS
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" id="Tab3" href="#TabVerDetalle" role="tab" data-toggle="tab">
-                                        <i class="fa fa-file-text-o"></i> DETALLE LISTA PRECIOS
-                                    </a>
-                                </li>
-                            </ul>
+                <h2 class="no-margin-bottom">LISTA DE PRECIOS</h2>
+            </div>
+            </header>
+            
+            <section>
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="Tab1" href="#TabBuscaListaPrecioVh" @click="tabBuscaListaPrecioVh()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> BUSCAR LISTA PRECIO
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" id="Tab2" href="#TabAsignaDetalle" role="tab" data-toggle="tab">
+                                            <i class="fa fa-usd"></i> AGREGAR DETALLE DE PRECIOS
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" id="Tab3" href="#TabVerDetalle" role="tab" data-toggle="tab">
+                                            <i class="fa fa-file-text-o"></i> DETALLE LISTA PRECIOS
+                                        </a>
+                                    </li>
+                                </ul>
 
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active show" id="TabBuscaListaPrecioVh">
-                                    <template v-if="vistaFormTab1">
-                                        <section class="forms">
-                                            <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">BUSCAR LISTA</h3>
-                                                        </div>
-                                                        <div class="card-body"> 
-                                                            <form class="form-horizontal">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active show" id="TabBuscaListaPrecioVh">
+                                        <template v-if="vistaFormTab1">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BUSCAR LISTA</h3>
+                                                            </div>
+                                                            <div class="card-body"> 
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Proveedor</label>
-                                                                            <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Buscar Proveedor </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </el-tooltip>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Proveedor</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="input-group">
+                                                                                        <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Buscar Proveedor </div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">        
-                                                                    <div class="col-sm-9 offset-sm-4">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarListaPrecioVh();">
-                                                                            <i class="fa fa-search"></i> Buscar
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('listapreciovh','registrarDetalle');">
-                                                                            <i class="fa fa-file-o"></i> Nuevo
-                                                                        </button>
+                                                                    <div class="form-group row">        
+                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarListaPrecioVh();">
+                                                                                <i class="fa fa-search"></i> Buscar
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('listapreciovh','registrarDetalle');">
+                                                                                <i class="fa fa-file-o"></i> Nuevo
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </form>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">LISTADO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <template v-if="arrayListaPrecioVh.length">
-                                                                <div class="table-responsive">                              
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>       
-                                                                                <th>Proveedor</th>
-                                                                                <th>Periodo</th>
-                                                                                <th>Nro Lista</th>
-                                                                                <th>Tipo Lista</th>
-                                                                                <th>Fecha Inicio<nav></nav></th>
-                                                                                <th>Fecha Fin</th>
-                                                                                <th>Acciones</th>
-                                                                            </tr>
-                                                                        </thead>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">LISTADO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <template v-if="arrayListaPrecioVh.length">
+                                                                    <div class="table-responsive">                              
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>       
+                                                                                    <th>Proveedor</th>
+                                                                                    <th>Periodo</th>
+                                                                                    <th>Nro Lista</th>
+                                                                                    <th>Tipo Lista</th>
+                                                                                    <th>Fecha Inicio<nav></nav></th>
+                                                                                    <th>Fecha Fin</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="lista in arrayListaPrecioVh" :key="lista.nIdListaPrecioVh" >
+                                                                                    <td v-text="lista.nIdListaPrecioVh"></td>
+                                                                                    <td v-text="lista.cProveedorNombre"></td>
+                                                                                    <td v-text="lista.cNumeroMes + '-' + lista.cAnio"></td>
+                                                                                    <td v-text="lista.nNroListaPrecio"></td>
+                                                                                    <td v-text="lista.cTipoLista"></td>
+                                                                                    <td v-text="lista.dFechaInicio"></td>
+                                                                                    <td v-text="lista.dFechaFin"></td>
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Agregar Detalle</div>
+                                                                                            <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                                lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
+                                                                                        </el-tooltip>&nbsp;                                                       
+                                                                                        <template v-if="lista.cListaEstado=='A'">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Desactivar Lista {{ lista.nIdListaPrecioVh }}</div>
+                                                                                                <i @click="desactivar(lista.nIdListaPrecioVh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Activar Lista {{ lista.nIdListaPrecioVh }}</div>
+                                                                                                <i @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>&nbsp; 
+                                                                                        <template v-if="lista.nListadoDetalleContador > 0">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Ver Detalle</div>
+                                                                                                <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                                    lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            SD
+                                                                                        </template>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-7">
+                                                                                <nav>
+                                                                                    <ul class="pagination">
+                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        </li>
+                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                        :class="[page==isActived?'active':'']">
+                                                                                            <a class="page-link" 
+                                                                                            href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                            v-text="page"></a>
+                                                                                        </li>                            
+                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="col-sm-5">
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
                                                                         <tbody>
-                                                                            <tr v-for="lista in arrayListaPrecioVh" :key="lista.nIdListaPrecioVh" >
-                                                                                <td v-text="lista.nIdListaPrecioVh"></td>
-                                                                                <td v-text="lista.cProveedorNombre"></td>
-                                                                                <td v-text="lista.cNumeroMes + '-' + lista.cAnio"></td>
-                                                                                <td v-text="lista.nNroListaPrecio"></td>
-                                                                                <td v-text="lista.cTipoLista"></td>
-                                                                                <td v-text="lista.dFechaInicio"></td>
-                                                                                <td v-text="lista.dFechaFin"></td>
-                                                                                <td>
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Agregar Detalle</div>
-                                                                                        <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
-                                                                                                            lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
-                                                                                    </el-tooltip>&nbsp;                                                       
-                                                                                    <template v-if="lista.cListaEstado=='A'">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Desactivar Lista {{ lista.nIdListaPrecioVh }}</div>
-                                                                                            <i @click="desactivar(lista.nIdListaPrecioVh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                                        </el-tooltip>
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Activar Lista {{ lista.nIdListaPrecioVh }}</div>
-                                                                                            <i @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                        </el-tooltip>
-                                                                                    </template>&nbsp; 
-                                                                                    <template v-if="lista.nListadoDetalleContador > 0">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Ver Detalle</div>
-                                                                                            <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
-                                                                                                                lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                        </el-tooltip>
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        SD
-                                                                                    </template>
-                                                                                </td>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link" 
-                                                                                        href="#" @click.prevent="cambiarPagina(page)" 
-                                                                                        v-text="page"></a>
-                                                                                    </li>                            
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
+                                                                </template>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-                                    </template>
-                                    
-                                    <template v-else>
+                                            </section>
+                                        </template>
+                                        
+                                        <template v-else>
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4" v-text="tituloFormulario"></h3>
+                                                            </div>
+                                                            <div class="card-body"> 
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Año</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Mes</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="input-group">
+                                                                                        <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Buscar Proveedor </div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
+                                                                                    <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formListaPrecioVh.dfechainicio"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Tipo Lista</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <select name="account" v-model="formListaPrecioVh.nidtipolista" class="form-control form-control-sm">
+                                                                                        <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">        
+                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar();">
+                                                                                <i class="fa fa-save"></i> Registrar
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario();">
+                                                                                <i class="fa fa-close"></i> Cerrar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </template>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabAsignaDetalle">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4" v-text="tituloFormulario"></h3>
+                                                            <h3 class="h4">AGREGAR DETALLE</h3>
                                                         </div>
                                                         <div class="card-body"> 
                                                             <form class="form-horizontal">
@@ -249,17 +370,8 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Buscar Proveedor </div>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
-                                                                                        </el-tooltip>
-                                                                                    </div>
-                                                                                </div>
+                                                                                <input type="hidden" v-model="formListaPrecioVh.nidproveedor">
+                                                                                <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -268,7 +380,168 @@
                                                                             <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
-                                                                                <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                            <div class="col-sm-8">
+                                                                                <a href="#" @click="descargaFormatoListaPrecio">
+                                                                                    <i class="fa-md fa fa-file-excel-o"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Adjunte Lista de Precios</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="row">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
+                                                                                <i class="fa fa-retweet"></i> Procesar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <template v-if="arrayExcel.length">
+                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Acciones</th>
+                                                                                    <th>Item</th>
+                                                                                    <th>Descripcion</th>
+                                                                                    <th>Año Fabricacion</th>
+                                                                                    <th>Año Modelo</th>
+                                                                                    <th>UM</th>
+                                                                                    <th>Mon.<nav></nav></th>
+                                                                                    <th>Prec. Base</th>
+                                                                                    <th>Dscto</th>
+                                                                                    <th>Prec.Cierre</th>
+                                                                                    <th>Placa</th>
+                                                                                    <th>Margen</th>
+                                                                                    <th>Costo Dealer</th>
+                                                                                    <th>Bono</th>
+                                                                                    <th>Prec. Cierre 2</th>
+                                                                                    <th>Flete</th>
+                                                                                    <th>TYP</th>
+                                                                                    <th>Precio.Vta P</th>
+                                                                                    <th>Dealer/Prec. Bono</th>
+                                                                                    <th>Bono.Especial</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="(lista, index) in arrayExcel" :key="lista.cNombreComercial">
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Eliminar {{ lista.cNombreComercial }}</div>
+                                                                                            <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        </el-tooltip>
+                                                                                    </td>
+                                                                                    <td v-text="lista.nIdVersionVeh"></td>
+                                                                                    <td v-text="lista.cNombreComercial"></td>
+                                                                                    <td v-text="lista.nAnioFabricacion"></td>
+                                                                                    <td v-text="lista.nAnioModelo"></td>
+                                                                                    <td v-text="lista.cUnidadMedida"></td>
+                                                                                    <td v-text="lista.cMoneda"></td>
+                                                                                    <td v-text="lista.fPrecioBase"></td>
+                                                                                    <td v-text="lista.fDescuento"></td>
+                                                                                    <td v-text="lista.fPrecioCierre"></td>
+                                                                                    <td v-text="lista.fPlaca"></td>
+                                                                                    <td v-text="lista.fMargen"></td>
+                                                                                    <td v-text="lista.fCostoDealer"></td>
+                                                                                    <td v-text="lista.fBono"></td>
+                                                                                    <td v-text="lista.fPrecioCierre2"></td>
+                                                                                    <td v-text="lista.fFlete"></td>
+                                                                                    <td v-text="lista.fTYP"></td>
+                                                                                    <td v-text="lista.fPrecioVentaP"></td>
+                                                                                    <td v-text="lista.fPrecioBonoDealer"></td>
+                                                                                    <td v-text="lista.fBonoEspecial"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-7">
+                                                                            </div>
+                                                                            <div class="col-lg-5">
+                                                                                <div class="datatable-info">Total: {{ contadorArrayExcel }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">        
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarDetalle()">
+                                                                                <i class="fa fa-save"></i> Registrar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabVerDetalle">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">INFORMACIÓN DETALLE</h3>
+                                                        </div>
+                                                        <div class="card-body"> 
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -276,228 +549,101 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Año</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="formListaPrecioVh.dfechainicio"
-                                                                                    type="date"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
+                                                                                <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Lista</label>
+                                                                            <label class="col-sm-4 form-control-label">* Mes</label>
                                                                             <div class="col-sm-8">
-                                                                                <select name="account" v-model="formListaPrecioVh.nidtipolista" class="form-control form-control-sm">
-                                                                                    <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">        
-                                                                    <div class="col-sm-9 offset-sm-4">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar();">
-                                                                            <i class="fa fa-save"></i> Registrar
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario();">
-                                                                            <i class="fa fa-close"></i> Cerrar
-                                                                        </button>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="hidden" v-model="formListaPrecioVh.nidproveedor">
+                                                                                <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
+                                                                                <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-                                    </template>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAsignaDetalle">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">AGREGAR DETALLE</h3>
-                                                    </div>
-                                                    <div class="card-body"> 
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Año</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Mes</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="hidden" v-model="formListaPrecioVh.nidproveedor">
-                                                                            <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
-                                                                            <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-8">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Descargar Formato</label>
-                                                                        <div class="col-sm-8">
-                                                                            <a href="#" @click="descargaFormatoListaPrecio">
-                                                                                <i class="fa-md fa fa-file-excel-o"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-8">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Adjunte Lista de Precios</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="row">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="importFileListaPrecioVh()">
-                                                                            <i class="fa fa-retweet"></i> Procesar
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
                                                         </div>
-                                                        <div class="col-lg-12">
-                                                            <template v-if="arrayExcel.length">
-                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                        <div class="card-body">
+                                                            <template v-if="arrayListaPrecioVhDet.length">
+                                                                <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Acciones</th>
-                                                                                <th>Item</th>
-                                                                                <th>Descripcion</th>
-                                                                                <th>Año Fabricacion</th>
+                                                                                <th>Código Det.</th>
+                                                                                <th>Código Veh.</th>
+                                                                                <th>Nombre Comercial</th>
+                                                                                <th>Año Fabricación</th>
                                                                                 <th>Año Modelo</th>
-                                                                                <th>UM</th>
-                                                                                <th>Mon.<nav></nav></th>
-                                                                                <th>Prec. Base</th>
-                                                                                <th>Dscto</th>
-                                                                                <th>Prec.Cierre</th>
-                                                                                <th>Placa</th>
-                                                                                <th>Margen</th>
+                                                                                <th>Moneda</th>
                                                                                 <th>Costo Dealer</th>
-                                                                                <th>Bono</th>
-                                                                                <th>Prec. Cierre 2</th>
-                                                                                <th>Flete</th>
-                                                                                <th>TYP</th>
-                                                                                <th>Precio.Vta P</th>
-                                                                                <th>Dealer/Prec. Bono</th>
-                                                                                <th>Bono.Especial</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="(lista, index) in arrayExcel" :key="lista.cNombreComercial">
-                                                                                <td>
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Eliminar {{ lista.cNombreComercial }}</div>
-                                                                                        <i @click="eliminarItemExcel(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </el-tooltip>
-                                                                                </td>
-                                                                                <td v-text="lista.nIdVersionVeh"></td>
-                                                                                <td v-text="lista.cNombreComercial"></td>
-                                                                                <td v-text="lista.nAnioFabricacion"></td>
-                                                                                <td v-text="lista.nAnioModelo"></td>
-                                                                                <td v-text="lista.cUnidadMedida"></td>
-                                                                                <td v-text="lista.cMoneda"></td>
-                                                                                <td v-text="lista.fPrecioBase"></td>
-                                                                                <td v-text="lista.fDescuento"></td>
-                                                                                <td v-text="lista.fPrecioCierre"></td>
-                                                                                <td v-text="lista.fPlaca"></td>
-                                                                                <td v-text="lista.fMargen"></td>
-                                                                                <td v-text="lista.fCostoDealer"></td>
-                                                                                <td v-text="lista.fBono"></td>
-                                                                                <td v-text="lista.fPrecioCierre2"></td>
-                                                                                <td v-text="lista.fFlete"></td>
-                                                                                <td v-text="lista.fTYP"></td>
-                                                                                <td v-text="lista.fPrecioVentaP"></td>
-                                                                                <td v-text="lista.fPrecioBonoDealer"></td>
-                                                                                <td v-text="lista.fBonoEspecial"></td>
+                                                                            <tr v-for="lpd in arrayListaPrecioVhDet" :key="lpd.nIdListaPrecioVersionVehDetalle">
+                                                                                <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
+                                                                                <td v-text="lpd.nIdVersionVeh"></td>
+                                                                                <td v-text="lpd.cNombreComercial"></td>
+                                                                                <td v-text="lpd.nAnioFabricacion"></td>
+                                                                                <td v-text="lpd.nAnioModelo"></td>
+                                                                                <td v-text="lpd.cSimboloMoneda"></td>
+                                                                                <td v-text="lpd.fCostoDealer"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link" 
+                                                                                        href="#" @click.prevent="cambiarPaginaDetalle(page)" 
+                                                                                        v-text="page"></a>
+                                                                                    </li>                            
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Total: {{ contadorArrayExcel }} registros</div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">        
-                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarDetalle()">
-                                                                            <i class="fa fa-save"></i> Registrar
-                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </template>
@@ -509,290 +655,146 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                            </template>        
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabVerDetalle">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">INFORMACIÓN DETALLE</h3>
-                                                    </div>
-                                                    <div class="card-body"> 
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Año</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="canio" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Mes</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cmes" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="hidden" v-model="formListaPrecioVh.nidproveedor">
-                                                                            <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
-                                                                            <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <template v-if="arrayListaPrecioVhDet.length">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-striped table-sm">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Código Det.</th>
-                                                                            <th>Código Veh.</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año Fabricación</th>
-                                                                            <th>Año Modelo</th>
-                                                                            <th>Moneda</th>
-                                                                            <th>Costo Dealer</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="lpd in arrayListaPrecioVhDet" :key="lpd.nIdListaPrecioVersionVehDetalle">
-                                                                            <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
-                                                                            <td v-text="lpd.nIdVersionVeh"></td>
-                                                                            <td v-text="lpd.cNombreComercial"></td>
-                                                                            <td v-text="lpd.nAnioFabricacion"></td>
-                                                                            <td v-text="lpd.nAnioModelo"></td>
-                                                                            <td v-text="lpd.cSimboloMoneda"></td>
-                                                                            <td v-text="lpd.fCostoDealer"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-sm-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page" 
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link" 
-                                                                                    href="#" @click.prevent="cambiarPaginaDetalle(page)" 
-                                                                                    v-text="page"></a>
-                                                                                </li>                            
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-sm-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-else>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td colspan="10">No existen registros!</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </template>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-       
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                        </section>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Buscar Proveedor </div>
-                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </el-tooltip>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+                                        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProvedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td>{{proveedor.cParNombre}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link" 
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                        v-text="page"></a>
+                                                                    </li>                            
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td>{{proveedor.cParNombre}}</td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link" 
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)" 
-                                                                    v-text="page"></a>
-                                                                </li>                            
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+        </main>
+    </transition>
 </template>
 <script>
     export default {

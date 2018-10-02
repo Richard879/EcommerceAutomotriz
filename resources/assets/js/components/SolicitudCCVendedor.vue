@@ -1,1063 +1,1065 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA</h2>
-          </div>
-        </header>
-
-        <section class="forms">
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="tab01" href="#TabMisCartas" @click="tabMisCartas" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> MIS CARTAS
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabAnularSCC" @click="tabAnularSCC" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> ANULAR SCC
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="tab03" href="#TabRegistrarSCC" @click="tabNuevaSCC" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list-alt"></i> GENERAR SCC
-                                    </a>
-                                </li>
-                            </ul>
+                <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA</h2>
+            </div>
+            </header>
 
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active show" id="TabMisCartas">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">BUSCAR MIS CARTAS.</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                </el-input>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                </el-input>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de inicio">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechafin"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de fin">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-md-4 form-control-label">*Estado</label>
-                                                                        <div class="col-md-8 widthFull">
-                                                                            <el-select v-model="fillCartaCaracteristica.nidestado"
-                                                                                    filterable
-                                                                                    clearable
-                                                                                    loading-text
-                                                                                    placeholder="Seleccione un Estado">
-                                                                                <el-option
-                                                                                    v-for="estado in arrayEstado"
-                                                                                    :key="estado.nIdPar"
-                                                                                    :label="estado.cParNombre"
-                                                                                    :value="estado.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartas(1)">
-                                                                        <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisCartas()">
-                                                                        <i class="fa fa-recycle"></i> Limpiar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayCartaCaracteristicas.length">
-                                                                    <div class="table-responsive barraLateral">
-                                                                        <table class="table table-striped table-sm">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Fecha Inicio</th>
-                                                                                    <th>Fecha Fin</th>
-                                                                                    <th>N° Carta</th>
-                                                                                    <th>Contacto</th>
-                                                                                    <th>VIN</th>
-                                                                                    <th>Estado</th>
-                                                                                    <th>Evaluacion</th>
-                                                                                    <th>Acciones</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="carta in arrayCartaCaracteristicas" :key="carta.nIdSolicitudCartaCaracteristica">
-                                                                                    <td v-text="carta.dFechaInicioCarta"></td>
-                                                                                    <td v-text="carta.dFechaVencimientoCarta"></td>
-                                                                                    <td v-text="carta.cNumeroCartaCaracteristica"></td>
-                                                                                    <td v-text="carta.cContacto"></td>
-                                                                                    <td v-text="carta.cNumeroVin"></td>
-                                                                                    <td v-text="carta.cEstado"></td>
-                                                                                    <td v-text="carta.cEvaluacion"></td>
-                                                                                    <td>
-                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='CO' || carta.cFlagEstadoAprobacion =='AP'" target="_blank">
-                                                                                            <i class='fa-md fa fa-file'></i>
-                                                                                        </a>
-                                                                                        <a href="#" v-if="carta.cFlagEstadoAprobacion !='PE' && carta.cFlagEstadoAprobacion !='NC' && carta.cFlagEstadoAprobacion !='AP' && carta.cFlagEstadoAprobacion !='DE'"  @click="abrirModal('aprobar', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
-                                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <div class="col-lg-12">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-7">
-                                                                                    <nav>
-                                                                                        <ul class="pagination">
-                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMisCC(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                            </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                            :class="[page==isActived?'active':'']">
-                                                                                                <a class="page-link"
-                                                                                                href="#" @click.prevent="cambiarPaginaMisCC(page)"
-                                                                                                v-text="page"></a>
-                                                                                            </li>
-                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMisCC(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </nav>
-                                                                                </div>
-                                                                                <div class="col-lg-5">
-                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+            <section class="forms">
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab01" href="#TabMisCartas" @click="tabMisCartas" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> MIS CARTAS
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab02" href="#TabAnularSCC" @click="tabAnularSCC" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> ANULAR SCC
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab03" href="#TabRegistrarSCC" @click="tabNuevaSCC" role="tab" data-toggle="tab">
+                                            <i class="fa fa-list-alt"></i> GENERAR SCC
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabMisCartas">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">BUSCAR MIS CARTAS.</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                    </el-input>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </template>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabAnularSCC">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">ANULAR MIS CARTAS.</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                </el-input>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                </el-input>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de inicio">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechafin"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de fin">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartasAnuladas(1)">
-                                                                        <i class="fa fa-search"></i> Buscar
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisCartas()">
-                                                                        <i class="fa fa-recycle"></i> Limpiar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">LISTADO</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="col-lg-12">
-                                                                <template v-if="arrayCartasAnuladas.length">
-                                                                    <div class="table-responsive barraLateral">
-                                                                        <table class="table table-striped table-sm">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Fecha Inicio</th>
-                                                                                    <th>Fecha Fin</th>
-                                                                                    <th>N° Carta</th>
-                                                                                    <th>Contacto</th>
-                                                                                    <th>VIN</th>
-                                                                                    <th>Estado</th>
-                                                                                    <th>Evaluacion</th>
-                                                                                    <th>Acciones</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="carta in arrayCartasAnuladas" :key="carta.nIdSolicitudCartaCaracteristica">
-                                                                                    <td v-text="carta.dFechaInicioCarta"></td>
-                                                                                    <td v-text="carta.dFechaVencimientoCarta"></td>
-                                                                                    <td v-text="carta.cNumeroCartaCaracteristica"></td>
-                                                                                    <td v-text="carta.cContacto"></td>
-                                                                                    <td v-text="carta.cNumeroVin"></td>
-                                                                                    <td v-text="carta.cEstado"></td>
-                                                                                    <td v-text="carta.cEvaluacion"></td>
-                                                                                    <td>
-                                                                                        <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='DE' && carta.cEstado == 'ANULADO'" target="_blank">
-                                                                                            <i class='fa-md fa fa-file'></i>
-                                                                                        </a>
-                                                                                        <a href="#" v-if="carta.cFlagEstadoAprobacion =='DE' && carta.cEstado != 'ANULADO'"  @click="abrirModal('desaprobar', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
-                                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <div class="col-lg-12">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-7">
-                                                                                    <nav>
-                                                                                        <ul class="pagination">
-                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                            </li>
-                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                            :class="[page==isActived?'active':'']">
-                                                                                                <a class="page-link"
-                                                                                                href="#" @click.prevent="cambiarPaginaMisCCAnuladas(page)"
-                                                                                                v-text="page"></a>
-                                                                                            </li>
-                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </nav>
-                                                                                </div>
-                                                                                <div class="col-lg-5">
-                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                    </el-input>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <h1>No existen registros</h1>
-                                                                </template>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabRegistrarSCC">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">NUEVA CARTA DE CARACTERISTICAS.</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* N° Carta</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.cnumcarta" class="form-control form-control-sm">
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="yyyy/MM/dd"
+                                                                                    type="date"
+                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                </el-date-picker>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <el-input placeholder="Atendió" v-model="fillCartaCaracteristica.catencion" class="input-with-select col-sm-12">
-                                                                            <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref.">
-                                                                                <el-option v-for="referencia in arrayReferencia" :key="referencia.nIdPar" :label="referencia.cParAbreviatura" :value="referencia.nIdPar"></el-option>
-                                                                            </el-select>
-                                                                        </el-input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de inicio">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="fillCartaCaracteristica.dfechafin"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="yyyy/MM/dd"
-                                                                                type="date"
-                                                                                placeholder="Seleccionar fecha de fin">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* VIN</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                </el-input>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="yyyy/MM/dd"
+                                                                                    type="date"
+                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Cotización</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                </el-input>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">*Estado</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillCartaCaracteristica.nidestado"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un Estado">
+                                                                                    <el-option
+                                                                                        v-for="estado in arrayEstado"
+                                                                                        :key="estado.nIdPar"
+                                                                                        :label="estado.cParNombre"
+                                                                                        :value="estado.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fcuotainicial" class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="number" min="1" v-model="fillCartaCaracteristica.fmontodesembolar" class="form-control form-control-sm">
-                                                                        </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartas(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisCartas()">
+                                                                            <i class="fa fa-recycle"></i> Limpiar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="row">
-                                                                        <label class="col-md-4 form-control-label">*Banco</label>
-                                                                        <div class="col-md-8 widthFull">
-                                                                            <el-select v-model="fillCartaCaracteristica.nidbanco"
-                                                                                    filterable
-                                                                                    clearable
-                                                                                    loading-text
-                                                                                    placeholder="Seleccione un banco">
-                                                                                <el-option
-                                                                                    v-for="banco in arrayBanco"
-                                                                                    :key="banco.nIdPar"
-                                                                                    :label="banco.cParNombre"
-                                                                                    :value="banco.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayCartaCaracteristicas.length">
+                                                                        <div class="table-responsive barraLateral">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Fecha Inicio</th>
+                                                                                        <th>Fecha Fin</th>
+                                                                                        <th>N° Carta</th>
+                                                                                        <th>Contacto</th>
+                                                                                        <th>VIN</th>
+                                                                                        <th>Estado</th>
+                                                                                        <th>Evaluacion</th>
+                                                                                        <th>Acciones</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="carta in arrayCartaCaracteristicas" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                        <td v-text="carta.dFechaInicioCarta"></td>
+                                                                                        <td v-text="carta.dFechaVencimientoCarta"></td>
+                                                                                        <td v-text="carta.cNumeroCartaCaracteristica"></td>
+                                                                                        <td v-text="carta.cContacto"></td>
+                                                                                        <td v-text="carta.cNumeroVin"></td>
+                                                                                        <td v-text="carta.cEstado"></td>
+                                                                                        <td v-text="carta.cEvaluacion"></td>
+                                                                                        <td>
+                                                                                            <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='CO' || carta.cFlagEstadoAprobacion =='AP'" target="_blank">
+                                                                                                <i class='fa-md fa fa-file'></i>
+                                                                                            </a>
+                                                                                            <a href="#" v-if="carta.cFlagEstadoAprobacion !='PE' && carta.cFlagEstadoAprobacion !='NC' && carta.cFlagEstadoAprobacion !='AP' && carta.cFlagEstadoAprobacion !='DE'"  @click="abrirModal('aprobar', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
+                                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-7">
+                                                                                        <nav>
+                                                                                            <ul class="pagination">
+                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                    <a @click.prevent="cambiarPaginaMisCC(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                </li>
+                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                                :class="[page==isActived?'active':'']">
+                                                                                                    <a class="page-link"
+                                                                                                    href="#" @click.prevent="cambiarPaginaMisCC(page)"
+                                                                                                    v-text="page"></a>
+                                                                                                </li>
+                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                    <a @click.prevent="cambiarPaginaMisCC(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </nav>
+                                                                                    </div>
+                                                                                    <div class="col-lg-5">
+                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </template>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 offset-md-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarSCC">
-                                                                        <i class="fa fa-save"></i> Registrar
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabAnularSCC">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">ANULAR MIS CARTAS.</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                    </el-input>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                    </el-input>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="yyyy/MM/dd"
+                                                                                    type="date"
+                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="yyyy/MM/dd"
+                                                                                    type="date"
+                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartasAnuladas(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisCartas()">
+                                                                            <i class="fa fa-recycle"></i> Limpiar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayCartasAnuladas.length">
+                                                                        <div class="table-responsive barraLateral">
+                                                                            <table class="table table-striped table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Fecha Inicio</th>
+                                                                                        <th>Fecha Fin</th>
+                                                                                        <th>N° Carta</th>
+                                                                                        <th>Contacto</th>
+                                                                                        <th>VIN</th>
+                                                                                        <th>Estado</th>
+                                                                                        <th>Evaluacion</th>
+                                                                                        <th>Acciones</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="carta in arrayCartasAnuladas" :key="carta.nIdSolicitudCartaCaracteristica">
+                                                                                        <td v-text="carta.dFechaInicioCarta"></td>
+                                                                                        <td v-text="carta.dFechaVencimientoCarta"></td>
+                                                                                        <td v-text="carta.cNumeroCartaCaracteristica"></td>
+                                                                                        <td v-text="carta.cContacto"></td>
+                                                                                        <td v-text="carta.cNumeroVin"></td>
+                                                                                        <td v-text="carta.cEstado"></td>
+                                                                                        <td v-text="carta.cEvaluacion"></td>
+                                                                                        <td>
+                                                                                            <a :href="carta.cRutaDocumento" v-if="carta.cFlagEstadoAprobacion =='DE' && carta.cEstado == 'ANULADO'" target="_blank">
+                                                                                                <i class='fa-md fa fa-file'></i>
+                                                                                            </a>
+                                                                                            <a href="#" v-if="carta.cFlagEstadoAprobacion =='DE' && carta.cEstado != 'ANULADO'"  @click="abrirModal('desaprobar', 'abrir', carta.nIdSolicitudCartaCaracteristica);">
+                                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-7">
+                                                                                        <nav>
+                                                                                            <ul class="pagination">
+                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                    <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                </li>
+                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                                :class="[page==isActived?'active':'']">
+                                                                                                    <a class="page-link"
+                                                                                                    href="#" @click.prevent="cambiarPaginaMisCCAnuladas(page)"
+                                                                                                    v-text="page"></a>
+                                                                                                </li>
+                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                    <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </nav>
+                                                                                    </div>
+                                                                                    <div class="col-lg-5">
+                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <h1>No existen registros</h1>
+                                                                    </template>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabRegistrarSCC">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">NUEVA CARTA DE CARACTERISTICAS.</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* N° Carta</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.cnumcarta" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <el-input placeholder="Atendió" v-model="fillCartaCaracteristica.catencion" class="input-with-select col-sm-12">
+                                                                                <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref.">
+                                                                                    <el-option v-for="referencia in arrayReferencia" :key="referencia.nIdPar" :label="referencia.cParAbreviatura" :value="referencia.nIdPar"></el-option>
+                                                                                </el-select>
+                                                                            </el-input>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="yyyy/MM/dd"
+                                                                                    type="date"
+                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="yyyy/MM/dd"
+                                                                                    type="date"
+                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
+                                                                                    </el-input>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
+                                                                                    </el-input>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
+                                                                            </div>
+                                                                            <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fcuotainicial" class="form-control form-control-sm">
+                                                                            </div>
+                                                                            <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fmontodesembolar" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <label class="col-md-4 form-control-label">*Banco</label>
+                                                                            <div class="col-md-8 widthFull">
+                                                                                <el-select v-model="fillCartaCaracteristica.nidbanco"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="Seleccione un banco">
+                                                                                    <el-option
+                                                                                        v-for="banco in arrayBanco"
+                                                                                        :key="banco.nIdPar"
+                                                                                        :label="banco.cParNombre"
+                                                                                        :value="banco.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 offset-md-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarSCC">
+                                                                            <i class="fa fa-save"></i> Registrar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Modal Show Errors -->
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Buscar Compras -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO COMPRAS</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillVIN.cvin" @keyup.enter="buscaCompra()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Compra" class="btn btn-info btn-corner btn-sm" @click="buscaCompra();">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
+            <!-- Modal Buscar Compras -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">LISTADO COMPRAS</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Nombre</label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group">
+                                                                        <input type="text" v-model="fillVIN.cvin" @keyup.enter="buscaCompra()" class="form-control form-control-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <button type="button" title="Buscar Compra" class="btn btn-info btn-corner btn-sm" @click="buscaCompra();">
+                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayCompra.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>VIN</th>
-                                                                    <th>Nombre Comercial</th>
-                                                                    <th>Año / Mes</th>
-                                                                    <th>Linea</th>
-                                                                    <th>Forma de Pago</th>
-                                                                </tr>
-                                                            </thead>
+                                                <div class="col-lg-12">
+                                                    <template v-if="arrayCompra.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Seleccione</th>
+                                                                        <th>VIN</th>
+                                                                        <th>Nombre Comercial</th>
+                                                                        <th>Año / Mes</th>
+                                                                        <th>Linea</th>
+                                                                        <th>Forma de Pago</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="vin in arrayCompra" :key="vin.nIdCompra">
+                                                                        <td>
+                                                                            <a href="#" @click="asignarCompra(vin);">
+                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td v-text="vin.cNumeroVin"></td>
+                                                                        <td v-text="vin.cNombreComercial"></td>
+                                                                        <td> {{ vin.cAnio }} / {{ vin.cMes }} </td>
+                                                                        <td v-text="vin.cNombreLinea"></td>
+                                                                        <td v-text="vin.cFormaPago"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaCompra(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaCompra(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaCompra(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
                                                             <tbody>
-                                                                <tr v-for="vin in arrayCompra" :key="vin.nIdCompra">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarCompra(vin);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="vin.cNumeroVin"></td>
-                                                                    <td v-text="vin.cNombreComercial"></td>
-                                                                    <td> {{ vin.cAnio }} / {{ vin.cMes }} </td>
-                                                                    <td v-text="vin.cNombreLinea"></td>
-                                                                    <td v-text="vin.cFormaPago"></td>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaCompra(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaCompra(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaCompra(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
+                                                    </template>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Buscar Contactos -->
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
+            <!-- Modal Buscar Contactos -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">BUSQUEDA CONTACTOS</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="col-lg-12">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                                    <div class="col-sm-8">
+                                                                        <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                            <input type="radio" class="radio-template" v-model="fillMisContactos.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
+                                                                            <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-9 offset-sm-5">
+                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactos(1);">
+                                                                    <i class="fa fa-search"></i> Buscar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <template v-if="arrayContacto.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <template v-if="fillMisContactos.ntipopersona == 1">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Acciones</th>
+                                                                            <th>#Cotización</th>
+                                                                            <th>Contacto</th>
+                                                                            <th>Nro Documento</th>
+                                                                            <th>Telefono</th>
+                                                                            <th>Dirección</th>
+                                                                            <th>Email</th>
+                                                                            <th>Vendedor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="c in arrayContacto" :key="c.cNumeroCotizacion">
+                                                                            <td>
+                                                                                <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
+                                                                                    <i class='fa-md fa fa-check-circle'></i>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td v-text="c.cNumeroCotizacion"></td>
+                                                                            <td v-text="c.cContacto"></td>
+                                                                            <td v-text="c.cNumeroDocumento"></td>
+                                                                            <td v-text="c.nTelefonoMovil"></td>
+                                                                            <td v-text="c.cDireccion"></td>
+                                                                            <td v-text="c.cEmail"></td>
+                                                                            <td v-text="c.cVendedor"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Acciones</th>
+                                                                            <th>#Cotización</th>
+                                                                            <th>Razon Social</th>
+                                                                            <th>Nro Documento</th>
+                                                                            <th>Telefono</th>
+                                                                            <th>Email</th>
+                                                                            <th>Persona Contacto</th>
+                                                                            <th>Vendedor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="c in arrayContacto" :key="c.cNumeroCotizacion">
+                                                                            <td>
+                                                                                <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
+                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td v-text="c.cNumeroCotizacion"></td>
+                                                                            <td v-text="c.cRazonSocial"></td>
+                                                                            <td v-text="c.cNumeroDocumento"></td>
+                                                                            <td v-text="c.nTelefonoMovil"></td>
+                                                                            <td v-text="c.cEmail"></td>
+                                                                            <td v-text="c.cContacto"></td>
+                                                                            <td v-text="c.cVendedor"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </template>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaMisContactos(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Generar Carta -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body menosPadding">
+                            <form v-on:submit.prevent class="form-horizontal">
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">BUSQUEDA CONTACTOS</h3>
+                                            <h3 class="h4">DETALLE</h3>
+                                            <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="card-header d-flex align-items-center subCabecera">
+                                            <h3 class="h4">Carta de Características</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="col-lg-12">
                                                 <form class="form-horizontal">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                <div class="col-sm-8">
-                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                        <input type="radio" class="radio-template" v-model="fillMisContactos.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
-                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    </label>
-                                                                </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" v-model="fillMisContactos.cnrodocumento" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-md-5 offset-md-7">
+                                                            <label class="form-control-label"> {{ fillCartaDetalleSolicitud.fecha }} </label>
                                                         </div>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" v-model="fillMisContactos.cfiltrodescripcion" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
-                                                                </div>
+                                                            <label>Señores</label>
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-6">
+                                                            <label>Presente.-</label>
+                                                            <label class="form-control-label-readonly">
+                                                                Atención : <strong>{{ fillCartaDetalleSolicitud.cAtencion}}</strong>
+                                                            </label>
+                                                            <label class="form-control-label-readonly">
+                                                                Referencia - Cliente : <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label>Estimados Señores</label>
+                                                            <label class="form-control-label-readonly">
+                                                                Mediante la presente, les informamos que nuestro mutuo cliente <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong> con RUC <strong>{{ fillCartaDetalleSolicitud.cNumDocumento}}</strong> realizó la separación por el siguiente Vehículo Asignado:
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Marca</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNombreMarca"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Modelo</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNombreModelo"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.nAnioFabricacion"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Año del Modelo</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.nAnioModelo"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Número de Chasis/Serie</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNumeroChasis"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Número de Motor</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNumeroMotor"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Color</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNombreColor"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Clase</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNombreClase"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Carrocería</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong v-text="fillCartaDetalleSolicitud.cNombreSubClase"></strong>
+                                                                </label>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="flexLeft">
+                                                                <h4 class="col-sm-4 form-control-label">VALORES</h4>
+                                                            </div>
+                                                            <hr>
+                                                            <label class="col-sm-4 form-control-label">Precio del Vehículo</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong> {{ fillCartaDetalleSolicitud.cMoneda }}  {{fillCartaDetalleSolicitud.fPrecioBase}} </strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Cuota Inicial</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{ fillCartaDetalleSolicitud.fCuotaInicial}} </strong>
+                                                                </label>
+                                                            </div>
+                                                            <label class="col-sm-4 form-control-label">Monto a Desembolsar</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label-readonly">
+                                                                    <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{fillCartaDetalleSolicitud.fMontoDesembolsado}} </strong>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-5">
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactos(1);">
-                                                                <i class="fa fa-search"></i> Buscar
-                                                            </button>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label class="form-control-label-readonly">
+                                                                Nos compremetemos a gestionar la Tarjeta de Propiedad del Vehículo a nombre de:
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label class="form-control-label-readonly">
+                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label class="form-control-label-readonly" >A la espera del desembolso correspondiente, quedamos de ustedes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label class="form-control-label-readonly" >Atentamente,</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <label class="form-control-label-readonly" >Subir Archivo del Banco (Correo Electronico de aprobación)</label>
+                                                            <input type="file" id="file-upload" @change="getFile" accept="image/*" class="form-control form-control-sm"/>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayContacto.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <template v-if="fillMisContactos.ntipopersona == 1">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Acciones</th>
-                                                                        <th>#Cotización</th>
-                                                                        <th>Contacto</th>
-                                                                        <th>Nro Documento</th>
-                                                                        <th>Telefono</th>
-                                                                        <th>Dirección</th>
-                                                                        <th>Email</th>
-                                                                        <th>Vendedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="c in arrayContacto" :key="c.cNumeroCotizacion">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td v-text="c.cNumeroCotizacion"></td>
-                                                                        <td v-text="c.cContacto"></td>
-                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                        <td v-text="c.cDireccion"></td>
-                                                                        <td v-text="c.cEmail"></td>
-                                                                        <td v-text="c.cVendedor"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </template>
-                                                            <template v-else>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Acciones</th>
-                                                                        <th>#Cotización</th>
-                                                                        <th>Razon Social</th>
-                                                                        <th>Nro Documento</th>
-                                                                        <th>Telefono</th>
-                                                                        <th>Email</th>
-                                                                        <th>Persona Contacto</th>
-                                                                        <th>Vendedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="c in arrayContacto" :key="c.cNumeroCotizacion">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarContacto(c)" data-toggle="tooltip">
-                                                                               <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td v-text="c.cNumeroCotizacion"></td>
-                                                                        <td v-text="c.cRazonSocial"></td>
-                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                        <td v-text="c.cEmail"></td>
-                                                                        <td v-text="c.cContacto"></td>
-                                                                        <td v-text="c.cVendedor"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </template>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaMisContactos(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionAprobacionNoAprobacion(1)">APROBAR</button>
+                            <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionAprobacionNoAprobacion(2)">NO APROBAR</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Generar Carta -->
-        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body menosPadding">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">DETALLE</h3>
-                                        <button type="button" data-dismiss="modal" aria-label="Close" class="close" @click.prevent="cerrarModalSolicitud">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="card-header d-flex align-items-center subCabecera">
-                                        <h3 class="h4">Carta de Características</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="col-lg-12">
-                                            <form class="form-horizontal">
-                                                <div class="form-group">
+            <!-- Modal Anulación -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">Detalle de Anulación Carta de Caracteristicas</h3>
+                                                <button type="button" class="close" @click="cerrarModalSolicitud()" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group row">
                                                     <div class="col-sm-12">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        <div class="row">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <div class="col-md-5 offset-md-7">
-                                                        <label class="form-control-label"> {{ fillCartaDetalleSolicitud.fecha }} </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <label>Señores</label>
-                                                        <label class="form-control-label-readonly">
-                                                            <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-6">
-                                                        <label>Presente.-</label>
-                                                        <label class="form-control-label-readonly">
-                                                             Atención : <strong>{{ fillCartaDetalleSolicitud.cAtencion}}</strong>
-                                                        </label>
-                                                        <label class="form-control-label-readonly">
-                                                             Referencia - Cliente : <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <label>Estimados Señores</label>
-                                                        <label class="form-control-label-readonly">
-                                                            Mediante la presente, les informamos que nuestro mutuo cliente <strong>{{ fillCartaDetalleSolicitud.cContacto}}</strong> con RUC <strong>{{ fillCartaDetalleSolicitud.cNumDocumento}}</strong> realizó la separación por el siguiente Vehículo Asignado:
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Marca</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreMarca"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Modelo</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreModelo"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.nAnioFabricacion"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Año del Modelo</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.nAnioModelo"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Número de Chasis/Serie</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNumeroChasis"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Número de Motor</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNumeroMotor"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Color</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreColor"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Clase</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreClase"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Carrocería</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong v-text="fillCartaDetalleSolicitud.cNombreSubClase"></strong>
-                                                            </label>
-                                                        </div>
-                                                        <hr>
-                                                        <div class="flexLeft">
-                                                            <h4 class="col-sm-4 form-control-label">VALORES</h4>
-                                                        </div>
-                                                        <hr>
-                                                        <label class="col-sm-4 form-control-label">Precio del Vehículo</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong> {{ fillCartaDetalleSolicitud.cMoneda }}  {{fillCartaDetalleSolicitud.fPrecioBase}} </strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Cuota Inicial</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{ fillCartaDetalleSolicitud.fCuotaInicial}} </strong>
-                                                            </label>
-                                                        </div>
-                                                        <label class="col-sm-4 form-control-label">Monto a Desembolsar</label>
-                                                        <div class="col-sm-8">
-                                                            <label class="form-control-label-readonly">
-                                                                <strong>{{ fillCartaDetalleSolicitud.cMoneda }} {{fillCartaDetalleSolicitud.fMontoDesembolsado}} </strong>
-                                                            </label>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">*Motivo</label>
+                                                            <div class="col-md-8 widthFull">
+                                                                <el-select v-model="fillCartaCaracteristica.nidmotivo"
+                                                                        filterable
+                                                                        clearable
+                                                                        loading-text
+                                                                        placeholder="Seleccione un Motivo">
+                                                                    <el-option
+                                                                        v-for="motivo in arrayMotivo"
+                                                                        :key="motivo.nIdPar"
+                                                                        :label="motivo.cParNombre"
+                                                                        :value="motivo.nIdPar">
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <label class="form-control-label-readonly">
-                                                            Nos compremetemos a gestionar la Tarjeta de Propiedad del Vehículo a nombre de:
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <label class="form-control-label-readonly">
-                                                            <strong v-text="fillCartaDetalleSolicitud.cNombreBanco"></strong>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <label class="form-control-label-readonly" >A la espera del desembolso correspondiente, quedamos de ustedes</label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <label class="form-control-label-readonly" >Atentamente,</label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        <label class="form-control-label-readonly" >Subir Archivo del Banco (Correo Electronico de aprobación)</label>
-                                                        <input type="file" id="file-upload" @change="getFile" accept="image/*" class="form-control form-control-sm"/>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="accionAprobacionNoAprobacion(1)">APROBAR</button>
-                        <button type="button" class="btn btn-default btn-corner btn-sm" @click="accionAprobacionNoAprobacion(2)">NO APROBAR</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Anulación -->
-        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">Detalle de Anulación Carta de Caracteristicas</h3>
-                                            <button type="button" class="close" @click="cerrarModalSolicitud()" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <label class="col-md-4 form-control-label">*Motivo</label>
-                                                        <div class="col-md-8 widthFull">
-                                                            <el-select v-model="fillCartaCaracteristica.nidmotivo"
-                                                                    filterable
-                                                                    clearable
-                                                                    loading-text
-                                                                    placeholder="Seleccione un Motivo">
-                                                                <el-option
-                                                                    v-for="motivo in arrayMotivo"
-                                                                    :key="motivo.nIdPar"
-                                                                    :label="motivo.cParNombre"
-                                                                    :value="motivo.nIdPar">
-                                                                </el-option>
-                                                            </el-select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <label class="col-md-4 form-control-label">*Descripción</label>
-                                                        <div class="col-md-8 widthFull">
-                                                            <el-input
-                                                                type="textarea"
-                                                                autosize
-                                                                placeholder="Ingrese descripción de la anulación"
-                                                                v-model="fillCartaCaracteristica.cdescripcion">
-                                                            </el-input>
+                                                <div class="form-group row">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <label class="col-md-4 form-control-label">*Descripción</label>
+                                                            <div class="col-md-8 widthFull">
+                                                                <el-input
+                                                                    type="textarea"
+                                                                    autosize
+                                                                    placeholder="Ingrese descripción de la anulación"
+                                                                    v-model="fillCartaCaracteristica.cdescripcion">
+                                                                </el-input>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1065,17 +1067,17 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="registrarAnulación()">Aceptar</button>
-                        <button type="button" class="btn btn-default btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="registrarAnulación()">Aceptar</button>
+                            <button type="button" class="btn btn-default btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </transition>
 </template>
 
 <script>

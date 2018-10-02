@@ -1,219 +1,221 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">TURNO DE VENTA</h2>
-          </div>
-        </header>
-        <template v-if="vistaFormulario">
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">BUSCAR TURNO DE VENTA</h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
+            <div class="container-fluid">
+                <h2 class="no-margin-bottom">TURNO DE VENTA</h2>
+            </div>
+            </header>
+            <template v-if="vistaFormulario">
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">BUSCAR TURNO DE VENTA</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Empresa</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Sucursal</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Sucursal</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Turno</label>
-                                        <div class="col-sm-4">
-                                            <select v-model="formTur.nturno" class="form-control form-control-sm">
-                                                <option v-for="item in arrayTurno" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Turno</label>
+                                            <div class="col-sm-4">
+                                                <select v-model="formTur.nturno" class="form-control form-control-sm">
+                                                    <option v-for="item in arrayTurno" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-3">
-                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTurnoVenta();"><i class="fa fa-search"></i> Buscar</button>
-                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('turnoventa','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-3">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTurnoVenta();"><i class="fa fa-search"></i> Buscar</button>
+                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('turnoventa','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
-                            </div>
-                            <div class="card-body">
-                                <template v-if="arrayTurnoVenta.length">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Código</th>
-                                                    <th>Sucursal</th>
-                                                    <th>Turno</th>
-                                                    <th>Hora inicio</th>
-                                                    <th>Hora fin</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">LISTADO</h3>
+                                </div>
+                                <div class="card-body">
+                                    <template v-if="arrayTurnoVenta.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Sucursal</th>
+                                                        <th>Turno</th>
+                                                        <th>Hora inicio</th>
+                                                        <th>Hora fin</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="turnoventa in arrayTurnoVenta" :key="turnoventa.nIdTurnoVendedor">
+                                                        <td v-text="turnoventa.nIdTurnoVendedor"></td>
+                                                        <td v-text="turnoventa.cSucursalNombre"></td>
+                                                        <td v-text="turnoventa.cTurnoNombre"></td>
+                                                        <td v-text="turnoventa.cHoraInicio"></td>
+                                                        <td v-text="turnoventa.cHoraFin"></td>
+                                                        <td>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Editar</div>
+                                                                <i @click="abrirFormulario('turnoventa','actualizar', turnoventa)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                            </el-tooltip>&nbsp;
+                                                            <template v-if="turnoventa.cTurnoVenEstado=='A'">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Desactivar</div>
+                                                                    <i @click="desactivar(turnoventa.nIdTurnoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                </el-tooltip>
+                                                            </template>
+                                                            <template v-else>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Activar</div>
+                                                                    <i @click="activar(turnoventa.nIdTurnoVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                </el-tooltip>
+                                                            </template>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                            :class="[page==isActived?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPagina(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
                                             <tbody>
-                                                <tr v-for="turnoventa in arrayTurnoVenta" :key="turnoventa.nIdTurnoVendedor">
-                                                    <td v-text="turnoventa.nIdTurnoVendedor"></td>
-                                                    <td v-text="turnoventa.cSucursalNombre"></td>
-                                                    <td v-text="turnoventa.cTurnoNombre"></td>
-                                                    <td v-text="turnoventa.cHoraInicio"></td>
-                                                    <td v-text="turnoventa.cHoraFin"></td>
-                                                    <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar</div>
-                                                             <i @click="abrirFormulario('turnoventa','actualizar', turnoventa)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                        </el-tooltip>&nbsp;
-                                                        <template v-if="turnoventa.cTurnoVenEstado=='A'">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar</div>
-                                                                <i @click="desactivar(turnoventa.nIdTurnoVendedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                        <template v-else>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar</div>
-                                                                <i @click="activar(turnoventa.nIdTurnoVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                    </td>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-7">
-                                                <nav>
-                                                    <ul class="pagination">
-                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                        </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                        :class="[page==isActived?'active':'']">
-                                                            <a class="page-link"
-                                                            href="#" @click.prevent="cambiarPagina(page)"
-                                                            v-text="page"></a>
-                                                        </li>
-                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="10">No existen registros!</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </template>
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </template>
-        <template v-else>
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4" v-text="tituloFormulario"></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="hidden" v-model="formTur.nidturnovendedor">
-                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                </section>
+            </template>
+            <template v-else>
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4" v-text="tituloFormulario"></h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Empresa</label>
+                                            <div class="col-sm-4">
+                                                <input type="hidden" v-model="formTur.nidturnovendedor">
+                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Sucursal</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Sucursal</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Turno</label>
-                                        <div class="col-sm-4">
-                                            <select v-model="formTur.nturno" class="form-control form-control-sm">
-                                                <option v-for="item in arrayTurno" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                </option>
-                                            </select>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Turno</label>
+                                            <div class="col-sm-4">
+                                                <select v-model="formTur.nturno" class="form-control form-control-sm">
+                                                    <option v-for="item in arrayTurno" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Hora Inicio</label>
-                                        <div class="col-sm-4">
-                                            <el-time-picker
-                                                v-model="formTur.chorainicio"
-                                                value-format="HH:mm"
-                                                :picker-options="{
-                                                format: 'AM/PM'
-                                                }"
-                                                placeholder="Hora Inicio">
-                                            </el-time-picker>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Hora Inicio</label>
+                                            <div class="col-sm-4">
+                                                <el-time-picker
+                                                    v-model="formTur.chorainicio"
+                                                    value-format="HH:mm"
+                                                    :picker-options="{
+                                                    format: 'AM/PM'
+                                                    }"
+                                                    placeholder="Hora Inicio">
+                                                </el-time-picker>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Hora Fin</label>
-                                        <div class="col-sm-4">
-                                            <el-time-picker
-                                                v-model="formTur.chorafin"
-                                                value-format="HH:mm"
-                                                :picker-options="{
-                                                format: 'AM/PM'
-                                                }"
-                                                placeholder="Hora Fin">
-                                            </el-time-picker>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Hora Fin</label>
+                                            <div class="col-sm-4">
+                                                <el-time-picker
+                                                    v-model="formTur.chorafin"
+                                                    value-format="HH:mm"
+                                                    :picker-options="{
+                                                    format: 'AM/PM'
+                                                    }"
+                                                    placeholder="Hora Fin">
+                                                </el-time-picker>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-3">
-                                            <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
-                                                <i class="fa fa-save"></i> Actualizar
-                                            </button>
-                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
-                                                <i class="fa fa-close"></i> Cancelar
-                                            </button>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-3">
+                                                <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                    <i class="fa fa-save"></i> Registrar
+                                                </button>
+                                                <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
+                                                    <i class="fa fa-save"></i> Actualizar
+                                                </button>
+                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
+                                                    <i class="fa fa-close"></i> Cancelar
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </template>
-    </main>
+                </section>
+            </template>
+        </main>
+    </transition>
 </template>
 <script>
     export default {

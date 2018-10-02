@@ -1,272 +1,431 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS - ADV</h2>
-          </div>
-        </header>
-
-        <section>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="Tab4" href="#TabNuevoContacto" @click="tabNuevoContacto();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-user"></i> NUEVO CONTACTO
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active show" id="TabNuevoContacto">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="Tab11" href="#TabDatosPersonales" @click="tabDatosPersonales();" role="tab" data-toggle="tab">
-                                                            <i class="fa fa-id-badge"></i> DATOS PERSONALES
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link disabled" id="Tab22" href="#TabDatosContacto" role="tab" data-toggle="tab">
-                                                            <i class="fa fa fa-map-marker"></i> DATOS DE CONTACTO
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link disabled" id="Tab33" href="#TabReferenciaVehiculo" role="tab" data-toggle="tab">
-                                                            <i class="fa fa-car"></i> REFERENCIA VEHICULO
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS - ADV</h2>
+            </div>
+            </header>
 
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade in active show" id="TabDatosPersonales">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <form class="form-horizontal">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                                            <input type="radio" class="radio-template" v-model="formNuevoContacto.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersona()">
-                                                                                            <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <select v-model="formNuevoContacto.ntpodocumento" class="form-control form-control-sm">
-                                                                                            <option v-for="item in arrayTipoDocumento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                            </option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="number" v-model="formNuevoContacto.cnrodocumento" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <template v-if="vistaDatosPersonaNatural">
+            <section>
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="Tab4" href="#TabNuevoContacto" @click="tabNuevoContacto();" role="tab" data-toggle="tab">
+                                            <i class="fa fa-user"></i> NUEVO CONTACTO
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabNuevoContacto">
+                                        <section class="forms">
+                                            <div class="container-fluid">
+                                                <div class="col-lg-12">
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="Tab11" href="#TabDatosPersonales" @click="tabDatosPersonales();" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-id-badge"></i> DATOS PERSONALES
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link disabled" id="Tab22" href="#TabDatosContacto" role="tab" data-toggle="tab">
+                                                                <i class="fa fa fa-map-marker"></i> DATOS DE CONTACTO
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link disabled" id="Tab33" href="#TabReferenciaVehiculo" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-car"></i> REFERENCIA VEHICULO
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane fade in active show" id="TabDatosPersonales">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <form class="form-horizontal">
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.capepaterno" class="form-control form-control-sm">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                                        <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.capematerno" class="form-control form-control-sm">
+                                                                                            <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                                                                <input type="radio" class="radio-template" v-model="formNuevoContacto.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersona()">
+                                                                                                <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                            </label>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </template>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-date-picker
-                                                                                            v-model="formNuevoContacto.dfecnacimiento"
-                                                                                            type="date"
-                                                                                            value-format="yyyy-MM-dd"
-                                                                                            format="dd/MM/yyyy"
-                                                                                            placeholder="dd/mm/aaaa">
-                                                                                        </el-date-picker>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-9 offset-sm-4">
-                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
-                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <form class="form-horizontal">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Departamento</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.niddepartamento" filterable placeholder="Select" v-on:change="llenarComboProv()">
-                                                                                            <el-option
-                                                                                            v-for="item in arrayDptos"
-                                                                                            :key="item.id"
-                                                                                            :label="item.text"
-                                                                                            :value="item.id">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Provincia</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.nidprovincia" filterable placeholder="Select" v-on:change="llenarComboDist()">
-                                                                                            <el-option
-                                                                                            v-for="item in arrayProv"
-                                                                                            :key="item.id"
-                                                                                            :label="item.text"
-                                                                                            :value="item.id">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Distrito</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.niddistrito" filterable placeholder="Select" >
-                                                                                            <el-option
-                                                                                            v-for="item in arrayDist"
-                                                                                            :key="item.id"
-                                                                                            :label="item.text"
-                                                                                            :value="item.id">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Dirección</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.cdireccion" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Email</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.cmailprincipal" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Email Alternativo</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.cmailalternativo" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Telefono Fijo</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.ctelefonofijo" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Celular</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.ncelular" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Celular Alternativo</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" v-model="formNuevoContacto.ncelularalternativo" class="form-control form-control-sm">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <template v-if="vistaDatosPersonaNatural">
+                                                                            <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Estado Civil</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoContacto.nestadocivil" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayEstadoCivil" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                            <select v-model="formNuevoContacto.ntpodocumento" class="form-control form-control-sm">
+                                                                                                <option v-for="item in arrayTipoDocumento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
                                                                                                 </option>
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="number" v-model="formNuevoContacto.cnrodocumento" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <template v-if="vistaDatosPersonaNatural">
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.capepaterno" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.capematerno" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </template>
-                                                                        </div>
-                                                                        <template v-if="vistaDatosPersonaNatural">
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Profesión</label>
+                                                                                        <label v-text="formNuevoContacto.lblcnombres" class="col-sm-4 form-control-label"></label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nprofesion" filterable placeholder="Select" >
+                                                                                            <input type="text" v-model="formNuevoContacto.cnombre" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Fecha Nacimiento</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-date-picker
+                                                                                                v-model="formNuevoContacto.dfecnacimiento"
+                                                                                                type="date"
+                                                                                                value-format="yyyy-MM-dd"
+                                                                                                format="dd/MM/yyyy"
+                                                                                                placeholder="dd/mm/aaaa">
+                                                                                            </el-date-picker>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-9 offset-sm-4">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
+                                                                                        <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabDatosContacto">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Departamento</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable placeholder="Select" v-on:change="llenarComboProv()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayProfesion"
+                                                                                                v-for="item in arrayDptos"
+                                                                                                :key="item.id"
+                                                                                                :label="item.text"
+                                                                                                :value="item.id">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Provincia</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable placeholder="Select" v-on:change="llenarComboDist()">
+                                                                                                <el-option
+                                                                                                v-for="item in arrayProv"
+                                                                                                :key="item.id"
+                                                                                                :label="item.text"
+                                                                                                :value="item.id">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Distrito</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable placeholder="Select" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayDist"
+                                                                                                :key="item.id"
+                                                                                                :label="item.text"
+                                                                                                :value="item.id">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Dirección</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="formNuevoContacto.cdireccion" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="formNuevoContacto.cmailprincipal" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Email Alternativo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="formNuevoContacto.cmailalternativo" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Telefono Fijo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="formNuevoContacto.ctelefonofijo" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Celular</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="formNuevoContacto.ncelular" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Celular Alternativo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" v-model="formNuevoContacto.ncelularalternativo" class="form-control form-control-sm">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <template v-if="vistaDatosPersonaNatural">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">Estado Civil</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <select v-model="formNuevoContacto.nestadocivil" class="form-control form-control-sm">
+                                                                                                    <option v-for="item in arrayEstadoCivil" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                                    </option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </template>
+                                                                            </div>
+                                                                            <template v-if="vistaDatosPersonaNatural">
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">Profesión</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <el-select v-model="formNuevoContacto.nprofesion" filterable placeholder="Select" >
+                                                                                                    <el-option
+                                                                                                    v-for="item in arrayProfesion"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                    </el-option>
+                                                                                                </el-select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-4 form-control-label">Centro Laboral</label>
+                                                                                            <div class="col-sm-8">
+                                                                                                <input type="text" v-model="formNuevoContacto.ccentrolaboral" class="form-control form-control-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </template>
+                                                                        </form>
+                                                                    </div>
+                                                                    <template v-if="!vistaDatosPersonaNatural" style="margin-top: 2rem;">
+                                                                        <div class="container-fluid">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="card">
+                                                                                    <div class="card-header">
+                                                                                        <h3 class="h4">DATOS DE CONTACTO DE LA PERSONA JURIDICA</h3>
+                                                                                    </div>
+                                                                                    <div class="card-body">
+                                                                                        <form class="form-horizontal">
+                                                                                            <div class="form-group row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Tipo Documento</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <select v-model="formNuevoContactoJurifico.ntpodocumento" class="form-control form-control-sm">
+                                                                                                                <option v-for="item in arrayTipoDocumentoNaturales" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                                                </option>
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <input type="number" v-model="formNuevoContactoJurifico.cnrodocumento" class="form-control form-control-sm">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.capepaterno" class="form-control form-control-sm">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Apellido Materno</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.capematerno" class="form-control form-control-sm">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Email</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    <div class="row">
+                                                                                                        <label class="col-sm-4 form-control-label">* Teléfono</label>
+                                                                                                        <div class="col-sm-8">
+                                                                                                            <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
+                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabReferenciaVehiculo">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="hidden" v-model="formNuevoContacto.nidproveedor">
+                                                                                                <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                                <el-option
+                                                                                                v-for="item in arrayLinea"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                                <el-option
+                                                                                                v-for="item in arrayMarca"
                                                                                                 :key="item.nIdPar"
                                                                                                 :label="item.cParNombre"
                                                                                                 :value="item.nIdPar">
@@ -277,416 +436,259 @@
                                                                                 </div>
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">Centro Laboral</label>
+                                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.ccentrolaboral" class="form-control form-control-sm">
+                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayModelo"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </template>
-                                                                    </form>
-                                                                </div>
-                                                                <template v-if="!vistaDatosPersonaNatural" style="margin-top: 2rem;">
-                                                                    <div class="container-fluid">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-header">
-                                                                                    <h3 class="h4">DATOS DE CONTACTO DE LA PERSONA JURIDICA</h3>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayAnioFabricacion"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="card-body">
-                                                                                    <form class="form-horizontal">
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Tipo Documento</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <select v-model="formNuevoContactoJurifico.ntpodocumento" class="form-control form-control-sm">
-                                                                                                            <option v-for="item in arrayTipoDocumentoNaturales" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                            </option>
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <input type="number" v-model="formNuevoContactoJurifico.cnrodocumento" class="form-control form-control-sm">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Año Modelo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayAnioModelo"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Apellido Paterno</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.capepaterno" class="form-control form-control-sm">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Apellido Materno</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.capematerno" class="form-control form-control-sm">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.cnombre" class="form-control form-control-sm">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Email</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.cmailprincipal" class="form-control form-control-sm">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Teléfono</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <input type="text" v-model="formNuevoContactoJurifico.ncelular" class="form-control form-control-sm">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </form>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-9 offset-sm-5">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarReferenciaVehiculo()">
+                                                                                        <i class="fa fa-arrow-down"></i> Asignar
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
-                                                                </template>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-4">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
-                                                                            <i class="fa fa-arrow-right"></i> Siguiente
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div role="tabpanel" class="tab-pane fade" id="TabReferenciaVehiculo">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <form class="form-horizontal">
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <div class="input-group">
-                                                                                            <input type="hidden" v-model="formNuevoContacto.nidproveedor">
-                                                                                            <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                            <div class="input-group-prepend">
-                                                                                                <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                                                </button>
-                                                                                            </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">LISTADO</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <template v-if="arrayReferenciaVehiculo.length">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-sm">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Acciones</th>
+                                                                                                    <th>Proveedor</th>
+                                                                                                    <th>Línea</th>
+                                                                                                    <th>Marca</th>
+                                                                                                    <th>Modelo</th>
+                                                                                                    <th>Año Fab</th>
+                                                                                                    <th>Año Modelo</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
+                                                                                                    <td>
+                                                                                                        <a href="#" @click="eliminarItemReferenciaVehiculo(index)" data-toggle="tooltip" data-placement="top"
+                                                                                                            :title="'Eliminar Referencia'">
+                                                                                                            <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                        </a>
+                                                                                                    </td>
+                                                                                                    <td v-text="referencia.cProveedorNombre"></td>
+                                                                                                    <td v-text="referencia.cLineaNombre"></td>
+                                                                                                    <td v-text="referencia.cMarcaNombre"></td>
+                                                                                                    <td v-text="referencia.cModeloNombre"></td>
+                                                                                                    <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                                    <td v-text="referencia.nAnioModelo"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarNuevoContacto()">
+                                                                                                <i class="fa fa-save"></i> Registrar
+                                                                                            </button>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
-                                                                                            <el-option
-                                                                                            v-for="item in arrayLinea"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Marca</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                                                            <el-option
-                                                                                            v-for="item in arrayMarca"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
-                                                                                            <el-option
-                                                                                            v-for="item in arrayModelo"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
-                                                                                            <el-option
-                                                                                            v-for="item in arrayAnioFabricacion"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">Año Modelo</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
-                                                                                            <el-option
-                                                                                            v-for="item in arrayAnioModelo"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
-                                                                                            </el-option>
-                                                                                        </el-select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <div class="col-sm-9 offset-sm-5">
-                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarReferenciaVehiculo()">
-                                                                                    <i class="fa fa-arrow-down"></i> Asignar
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">LISTADO</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <template v-if="arrayReferenciaVehiculo.length">
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Acciones</th>
-                                                                                                <th>Proveedor</th>
-                                                                                                <th>Línea</th>
-                                                                                                <th>Marca</th>
-                                                                                                <th>Modelo</th>
-                                                                                                <th>Año Fab</th>
-                                                                                                <th>Año Modelo</th>
-                                                                                            </tr>
-                                                                                        </thead>
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    <table>
                                                                                         <tbody>
-                                                                                            <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
-                                                                                                <td>
-                                                                                                    <a href="#" @click="eliminarItemReferenciaVehiculo(index)" data-toggle="tooltip" data-placement="top"
-                                                                                                        :title="'Eliminar Referencia'">
-                                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                    </a>
-                                                                                                </td>
-                                                                                                <td v-text="referencia.cProveedorNombre"></td>
-                                                                                                <td v-text="referencia.cLineaNombre"></td>
-                                                                                                <td v-text="referencia.cMarcaNombre"></td>
-                                                                                                <td v-text="referencia.cModeloNombre"></td>
-                                                                                                <td v-text="referencia.nAnioFabricacion"></td>
-                                                                                                <td v-text="referencia.nAnioModelo"></td>
+                                                                                            <tr>
+                                                                                                <td colspan="10">No existen registros!</td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
-                                                                                </div>
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarNuevoContacto()">
-                                                                                            <i class="fa fa-save"></i> Registrar
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <table>
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td colspan="10">No existen registros!</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </template>
+                                                                                </template>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </section>
+                                                            </section>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </section>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Modal Show Errors -->
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Show Proveedores -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+            <!-- Modal Show Proveedores -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">LISTADO</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Nombre</label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group">
+                                                                        <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayProveedor.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Nombre Proveedor</th>
-                                                                </tr>
-                                                            </thead>
+                                                <div class="col-lg-12">
+                                                    <template v-if="arrayProveedor.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Seleccione</th>
+                                                                        <th>Nombre Proveedor</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                        <td>
+                                                                            <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
+                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td v-text="proveedor.cParNombre"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
                                                             <tbody>
-                                                                <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="proveedor.cParNombre"></td>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </template>
+                                                    </template>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </transition>
 </template>
 
 <script>
