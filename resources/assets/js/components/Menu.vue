@@ -32,7 +32,7 @@
         created(){
             let me = this;
             this.$bus.$on('event', function (data) {
-               //console.log(data);
+               //console.log(data); 
                me.listarPermisosByUsuario();
             })
            //this.$bus.$on('logged-in', this.mostrar);
