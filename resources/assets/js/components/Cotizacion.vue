@@ -2049,8 +2049,7 @@
                     this.pagination.last_page   = response.data.arrayCotizaciones.last_page;
                     this.pagination.from        = response.data.arrayCotizaciones.from;
                     this.pagination.to           = response.data.arrayCotizaciones.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
+                    $("#myBar").hide();  
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
