@@ -1,24 +1,23 @@
 <template>
-
-        <nav class="side-navbar">
-            <span class="heading">MENÚ PRINCIPAL</span>
-            <ul class="list-unstyled">
-                <transition-group tag="ul" name="bounce" mode="out-in" appear>
-                    <li v-for="menu in arrayMenu" :key="menu.nIdPar">
-                        <a v-bind:href="menu.cReferencia" aria-expanded="false" data-toggle="collapse">
-                            <i v-bind:class="menu.cParIcon"></i>{{ menu.cParNombre }}
-                        </a>
-                        <ul v-bind:id="menu.cParJerarquia" class="collapse list-unstyled ">
-                            <div v-for="submenu in arraySubMenu" :key="submenu.nIdPar">
-                                <li v-if="submenu.nCanJerarquia==menu.cParJerarquia" v-bind:id="submenu.cParJerarquia" @click="activaMenu(submenu.nIdPar,submenu.cParJerarquia)">
-                                    <a href="#">{{ submenu.cParNombre }}</a>
-                                </li>
-                            </div>
-                        </ul>
-                    </li>
-                </transition-group >
-            </ul>
-        </nav>
+    <nav class="side-navbar">
+        <span class="heading">MENÚ PRINCIPAL</span>
+        <ul class="list-unstyled">
+            <transition-group tag="ul" name="bounce" mode="out-in" appear>
+                <li v-for="menu in arrayMenu" :key="menu.nIdPar">
+                    <a v-bind:href="menu.cReferencia" aria-expanded="false" data-toggle="collapse">
+                        <i v-bind:class="menu.cParIcon"></i>{{ menu.cParNombre }}
+                    </a>
+                    <ul v-bind:id="menu.cParJerarquia" class="collapse list-unstyled ">
+                        <div v-for="submenu in arraySubMenu" :key="submenu.nIdPar">
+                            <li v-if="submenu.nCanJerarquia==menu.cParJerarquia" v-bind:id="submenu.cParJerarquia" @click="activaMenu(submenu.nIdPar,submenu.cParJerarquia)">
+                                <a href="#">{{ submenu.cParNombre }}</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+            </transition-group >
+        </ul>
+    </nav>
 </template>
 
 <script>
