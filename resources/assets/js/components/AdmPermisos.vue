@@ -475,8 +475,6 @@
                 }).then(response => {
                     this.arrayPermisos = response.data;
                     this.listarSubPermisos(6);
-                }).then(function (response) {
-                    $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
@@ -487,7 +485,6 @@
                 });
             },
             listarSubPermisos(nlenjerarquia){
-                this.mostrarProgressBar();
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
@@ -499,8 +496,6 @@
                 }).then(response => {
                     this.arraySubPermisos = response.data;
                     this.llenarCheckBox();
-                }).then(function (response) {
-                    $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
                     if (error.response) {
@@ -522,6 +517,7 @@
                 jQuery(function ($) {
                     $("#lsttreegrupo").treeview();
                 });
+                $("#myBar").hide();
             },
             seleccionaPermisos(){
                 let me = this;
@@ -583,7 +579,6 @@
                     swal('Permisos Registrados');
                     this.$emit('cabecera', sessionStorage.getItem("nIdSucursal"));
                     this.$bus.$emit('event', this.fillPuga);
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     this.errors = error
@@ -597,35 +592,16 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(this.formEle.nidproveedor == 0){
+                /*if(this.formEle.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
-                };
-                if(this.formEle.ntpoelemen == '0'){
-                    this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
-                };
-                if(this.formEle.nidmoneda == '0'){
-                    this.mensajeError.push('Debes Ingresar un Tipo de Moneda');
-                };
-                if(!this.formEle.celenombre){
-                    this.mensajeError.push('Debes Ingresar un nombre');
-                };
-                if(!this.formEle.felevalorventa){
-                    this.mensajeError.push('Debes Ingresar un valor de Venta');
-                };
-                if(this.formEle.felevarlorminventa > this.formEle.felevalorventa){
-                    this.mensajeError.push('El Valor Venta debe ser mayor al Valor Mínimo Venta');
-                };
+                };*/
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },

@@ -1300,7 +1300,6 @@
                     this.pagination.last_page   = response.data.arrayCompra.last_page;
                     this.pagination.from        = response.data.arrayCompra.from;
                     this.pagination.to           = response.data.arrayCompra.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1427,7 +1426,6 @@
 
                     this.$delete(this.arrayExcel, 0)
                     this.contadorArrayExcel = this.arrayExcel.length;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1694,7 +1692,6 @@
                     this.pagination.last_page   = response.data.arrayLineaCredito.last_page;
                     this.pagination.from        = response.data.arrayLineaCredito.from;
                     this.pagination.to           = response.data.arrayLineaCredito.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1735,9 +1732,8 @@
                 }).then(response => {
                     this.listarCompraNoLineaCredito(1);
                     this.unCheckBox();
-                    swal('Compras actualizadas a Linea Credito');
-                }).then(function (response) {
                     $("#myBar").hide();
+                    swal('Compras actualizadas a Linea Credito');  
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1788,19 +1784,16 @@
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
-
                     /*if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
                     }*/
-
+                    
                     this.$delete(response.data, 0);
                     this.arrayForum = response.data;
                     this.contadorArrayForum = this.arrayForum.length;
-
-                }).then(function (response) {
-                    $("#myBar").hide();
+                    $("#myBar").hide();  
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
