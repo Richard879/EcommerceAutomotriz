@@ -1474,13 +1474,13 @@
 
                                 switch (data) {
                                     case 110026:
-                                        me.$emit('vista', 200307);//VENDEDORES
+                                        me.$emit('vista', 1300281);//VENDEDORES
                                         break;
                                     case 110025:
-                                        me.$emit('vista', 200306);//JEFE DE VENTAS
+                                        me.$emit('vista', 1300280);//JEFE DE VENTAS
                                         break;
                                     case 110083:
-                                        me.$emit('vista', 200323);//ADMINISTRADOR DE VENDEDORES
+                                        me.$emit('vista', 1300300);//ADMINISTRADOR DE VENDEDORES
                                         break;
                                     default:
                                         break;
