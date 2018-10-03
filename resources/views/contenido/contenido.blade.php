@@ -107,4 +107,7 @@
     <template v-if="menu==1300302">
         <tramite :ruta="ruta"></tramite>
     </template>
+    <template v-if="menu==1300303">
+        <entregavehiculo :ruta="ruta"></entregavehiculo>
+    </template>
 @endsection

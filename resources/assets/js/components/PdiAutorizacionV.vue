@@ -1098,7 +1098,7 @@
                         'nidempresa': 1300011,
                         'nidsucursal' : 1300013,
                         'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
-                        'criterio': this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'criterio': (this.flagBuscarVehiculoByCriterio == 1) ? this.fillBusquedaSolicitud.nidtipobusqueda : this.fillNuevaSolicitud.nidtipobusqueda,
                         'page' : page,
                     }
                 }).then(response => {
