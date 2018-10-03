@@ -422,13 +422,13 @@
                 return this.error;
             },
             actualizar(){
-                var url = this.ruta + '/tipoinspeccion/UpdTipoInspeccionById';
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-
+                
+                var url = this.ruta + '/tipoinspeccion/UpdTipoInspeccionById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdTipoInspeccion: parseInt(this.formTipoInsp.nidtipoinspeccion),
@@ -531,7 +531,7 @@
                                 this.formTipoInsp.nflagalmacen = (data['nFlagAlmacen'] == 1 ? true : false);
                                 this.formTipoInsp.nflagaccesorio = (data['nFlagAccesorio'] == 1 ? true : false);
                                 this.formTipoInsp.nflagtestdrive = (data['nFlagTestDrive'] == 1 ? true : false);
-                                this.formTipoInsp.nFlagSeccion = (data['nFlagSeccionInspeccion'] == 1 ? true : false);
+                                this.formTipoInsp.nflagseccion = (data['nFlagSeccionInspeccion'] == 1 ? true : false);
                                 this.formTipoInsp.nflagfichatecnica = (data['nFlagValidarFichaTecnica'] == 1 ? true : false);
                                 break;
                             }

@@ -156,10 +156,10 @@
                                 <div class="card-body">
                                     <form class="form-horizontal">
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-12">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Punto Inspección</label>
-                                                    <div class="col-sm-8">
+                                                    <label class="col-sm-3 form-control-label">* Punto Inspección</label>
+                                                    <div class="col-sm-5">
                                                         <div class="input-group">
                                                             <input type="text" v-model="formPdi.cnombrepuntoinspeccion" disabled="disabled" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
@@ -174,10 +174,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Solicitud Autorización</label>
-                                                    <div class="col-sm-8">
+                                                    <label class="col-sm-3 form-control-label">Solicitud Autorización</label>
+                                                    <div class="col-sm-5">
                                                         <div class="input-group">
                                                             <input type="text" v-model="formPdi.csolicitudnombre" disabled="disabled" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
