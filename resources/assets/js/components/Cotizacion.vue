@@ -24,12 +24,12 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="tab03" href="#TabAsignarContacto" @click="tabAsignarContacto" role="tab" data-toggle="tab">
+                                        <a class="nav-link" id="tab03" href="#TabAsignarContacto" @click="tabAsignarContacto" v-if="fValorTipocambioComercial > 0" role="tab" data-toggle="tab">
                                             <i class="fa fa-user"></i> ASIGNAR CONTACTO
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link disabled" id="tab04" href="#TabDetalleCotizacion" @click="tabDetalleCotización" role="tab" data-toggle="tab">
+                                        <a class="nav-link disabled" id="tab04" href="#TabDetalleCotizacion" @click="tabDetalleCotización" v-if="fValorTipocambioComercial > 0" role="tab" data-toggle="tab">
                                             <i class="fa fa-list-ol"></i> DETALLE COTIZACIÓN
                                         </a>
                                     </li>
@@ -319,7 +319,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>-->
-                                                                <div class="form-group row">
+                                                                <div class="form-group row" v-if="fValorTipocambioComercial > 0">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
                                                                             <i class="fa fa-search"></i> Buscar
@@ -336,7 +336,7 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabAsignarContacto">
+                                    <div role="tabpanel" class="tab-pane fade" id="TabAsignarContacto"  v-if="fValorTipocambioComercial > 0">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -470,7 +470,7 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabDetalleCotizacion">
+                                    <div role="tabpanel" class="tab-pane fade" id="TabDetalleCotizacion"  v-if="fValorTipocambioComercial > 0">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -2049,7 +2049,7 @@
                     this.pagination.last_page   = response.data.arrayCotizaciones.last_page;
                     this.pagination.from        = response.data.arrayCotizaciones.from;
                     this.pagination.to           = response.data.arrayCotizaciones.to;
-                    $("#myBar").hide();  
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
