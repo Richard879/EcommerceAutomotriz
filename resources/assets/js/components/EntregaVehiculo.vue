@@ -311,7 +311,6 @@
                 ],
                 arrayEstado: [],
                 arrayMisVehiculos : [],
-                flagBuscarVehiculoByCriterio: 0,
                 // ===============================
                 // VARIABLES MODAL VEHICULO
                 // ===============================
@@ -323,7 +322,6 @@
                 // VARIABLES GENÉRICAS
                 // =============================================================
                 flagBuscarContacto: 0,
-                flagBuscarVehiculoByCriterio: 0,
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -424,12 +422,6 @@
             // ======================
             // MODAL BUSCAR VEHICULO
             // ======================
-            cambiarVehiculoByCriterio(){
-                if (this.flagBuscarVehiculoByCriterio == 1) {
-                    this.fillBusquedaVehiculo.nidvehiculo = '';
-                    this.fillBusquedaVehiculo.cnrovehiculo = '';
-                }
-            },
             cambiarPaginaVehiculosByCriterio(page){
                 this.paginationModal.current_page=page;
                 this.listarVehiculo(page);
@@ -484,7 +476,6 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                this.flagBuscarVehiculoByCriterio = data;
                                 this.listarVehiculo(1);
                                 this.accionmodal=2;
                                 this.modal = 1;
