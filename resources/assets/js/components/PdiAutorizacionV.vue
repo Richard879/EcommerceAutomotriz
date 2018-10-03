@@ -37,18 +37,24 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-8 offset-md-1">
+                                                                    <div class="col-md-8">
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">
                                                                                 <el-radio-group v-model="fillBusquedaSolicitud.nidtipobusqueda" @change="cambiarVehiculoByCriterio">
                                                                                     <el-radio v-for="tipobsq in arrayTipoBusquedaVehiculo" :key="tipobsq.id" :label="tipobsq.value"> {{ tipobsq.text }} </el-radio>
                                                                                 </el-radio-group>
                                                                             </label>
-                                                                            <div class="col-md-8 widthFull">
+                                                                            <div class="col-md-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Busque en base a un criterio" v-model="fillBusquedaSolicitud.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 1)"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillBusquedaSolicitud.cnrovehiculo" disabled="disabled" placeholder="Busque en base a un criterio" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Por Vin o Placa </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculo','buscar', 1)">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -74,9 +80,15 @@
                                                                             <label class="col-sm-4 form-control-label">* Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillBusquedaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar', 1)"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillBusquedaSolicitud.cnombrecontacto" disabled="disabled" placeholder="Seleccione un Contacto" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Contacto </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar', 1)">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -155,47 +167,53 @@
                                                                                             <td v-text="carta.cEstadoEvolucion"></td>
                                                                                         </template>
                                                                                         <td>
-                                                                                            <a :href="carta.cRutaDocumento"
+                                                                                            <el-tooltip class="item" content="Ver Archivo pdf" effect="dark" placement="top-start">
+                                                                                                <a :href="carta.cRutaDocumento"
                                                                                                     v-if="carta.cFlagEstadoAutorizacionControl != 'P '"
                                                                                                             target="_blank">
-                                                                                                <i class='fa-md fa fa-file'></i>
-                                                                                            </a>
+                                                                                                    <i class='fa-md fa fa-file'></i>
+                                                                                                </a>
+                                                                                            </el-tooltip>&nbsp;
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </template>
                                                                     <template v-else>
-                                                                        <tr>
-                                                                            <td>No existen registros</td>
-                                                                        </tr>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </template>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
-                                                                        </div>
-                                                                        <div class="col-lg-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -235,9 +253,9 @@
                                                                                             <el-date-picker
                                                                                                 v-model="fillNuevaSolicitud.dfechasolicitud"
                                                                                                 value-format="yyyy-MM-dd"
-                                                                                                format="yyyy/MM/dd"
+                                                                                                format="dd/MM/yyyy"
                                                                                                 type="date"
-                                                                                                placeholder="Seleccionar fecha de solicitud">
+                                                                                                placeholder="dd/mm/aaaa">
                                                                                             </el-date-picker>
                                                                                         </div>
                                                                                     </div>
@@ -266,12 +284,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Enviar a</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-input
-                                                                                                placeholder="Enviar a "
-                                                                                                v-model="fillNuevaSolicitud.cnombrejefeinmediato"
-                                                                                                :disabled="true"
-                                                                                                clearable>
-                                                                                            </el-input>
+                                                                                            <input type="text" v-model="fillNuevaSolicitud.cnombrejefeinmediato" disabled="disabled" placeholder="Busque en base a un criterio" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -291,11 +304,20 @@
                                                                                         <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
                                                                                             <el-row>
                                                                                                 <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                        <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
-                                                                                                    </el-input>
+                                                                                                    <input type="text" v-model="fillNuevaSolicitud.cnombrecontacto" disabled="disabled" placeholder="Seleccione un Contacto" class="form-control form-control-sm">
+                                                                                                    <div class="input-group-prepend">
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Buscar Contacto </div>
+                                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar', 2)">
+                                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                                            </button>
+                                                                                                        </el-tooltip>
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                                <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Registrar Nuevo Contacto </div>
+                                                                                                        <el-button type="primary" icon="fa-lg fa fa-search-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
+                                                                                                </el-tooltip>
                                                                                             </el-row>
                                                                                         </div>
                                                                                     </div>
@@ -364,9 +386,15 @@
                                                                                         </label>
                                                                                         <div class="col-md-8 widthFull">
                                                                                             <div class="input-group">
-                                                                                                <el-input placeholder="Busque en base a un criterio" v-model="fillNuevaSolicitud.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 2)"></el-button>
-                                                                                                </el-input>
+                                                                                                <input type="text" v-model="fillNuevaSolicitud.cnrovehiculo" disabled="disabled" placeholder="Busque en base a un criterio" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar Por Vin o Placa </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculo','buscar', 2)">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -406,9 +434,9 @@
                                                                                             <el-date-picker
                                                                                                 v-model="fillNuevaSolicitud.dfechamovimiento"
                                                                                                 value-format="yyyy-MM-dd"
-                                                                                                format="yyyy/MM/dd"
+                                                                                                format="dd/MM/yyyy"
                                                                                                 type="date"
-                                                                                                placeholder="Seleccionar fecha de Movimiento">
+                                                                                                placeholder="dd/mm/aaaa">
                                                                                             </el-date-picker>
                                                                                         </div>
                                                                                     </div>
@@ -925,7 +953,7 @@
             }
         },
         mounted() {
-            this.tabMisSolicitudes();
+            //this.tabMisSolicitudes();
             this.informacionUsuario();
         },
         computed:{
@@ -1021,7 +1049,7 @@
                 $('#TabNuevaSolicitud').removeClass('in active show');
                 this.limpiarMisSolicitudes();
                 this.llenarEstados();
-                this.buscarMisSolicitudes(1);
+                //this.buscarMisSolicitudes(1);
             },
             llenarEstados(){
                 var url = this.ruta + '/getComision/GetParametroByGrupo';
@@ -1551,7 +1579,7 @@
         text-align: center;
         margin: auto;
     }
-    .el-select {
+    /*.el-select {
         width: 100%;
     }
     .input-with-select .el-input-group__prepend {
@@ -1565,7 +1593,7 @@
     }
     .el-input-number{
         width: 100% !important;
-    }
+    }*/
     /* Estilos Modal */
     .menosPadding{
         padding: .31rem;

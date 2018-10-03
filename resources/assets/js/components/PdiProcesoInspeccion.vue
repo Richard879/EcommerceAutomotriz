@@ -337,7 +337,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <!--<div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label" v-text="formPdi.nflagconformidad ? 'Conforme' : 'NO Conforme'"></label>
                                                     <div class="col-sm-1">
@@ -348,7 +348,7 @@
                                                         <input type="text" v-if="!formPdi.nflagconformidad" v-model="formPdi.cflagconformidaddescripcion" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Adjuntar</label>
@@ -359,11 +359,16 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-12">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Observación</label>
-                                                    <div class="col-sm-8">
-                                                    <textarea v-model="formPdi.cobservacion" class="form-control form-control-sm" cols="30" rows="6"></textarea>
+                                                    <label class="col-sm-2 form-control-label">Observación</label>
+                                                    <div class="col-sm-10">
+                                                        <el-input
+                                                            type="textarea"
+                                                            autosize
+                                                            placeholder=""
+                                                            v-model="formPdi.cobservacion">
+                                                        </el-input>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1282,19 +1287,6 @@
             }
         },
         methods:{
-            llenarComboTipoInspeccion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110084,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayTipoMovimiento = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             llenarFlag(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
