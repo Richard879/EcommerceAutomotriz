@@ -47,8 +47,10 @@ class TurnoVentaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $turnoventa = DB::select('exec usp_TurnoVenta_DesactivaById ?',
-                                array(  $request->nIdTurnoVenta ));
+        $turnoventa = DB::select('exec usp_TurnoVenta_DesactivaById ?, ?',
+                                [   $request->nIdTurnoVenta,
+                                    Auth::user()->id
+                                ]);
         return response()->json($turnoventa);
     }
 
@@ -56,8 +58,10 @@ class TurnoVentaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $turnoventa = DB::select('exec usp_TurnoVenta_ActivaById ?',
-                                array(  $request->nIdTurnoVenta ));
+        $turnoventa = DB::select('exec usp_TurnoVenta_ActivaById ?, ?',
+                                [   $request->nIdTurnoVenta,
+                                    Auth::user()->id
+                                ]);
         return response()->json($turnoventa);
     }
     

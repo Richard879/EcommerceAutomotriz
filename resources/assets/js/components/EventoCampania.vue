@@ -1,38 +1,301 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">EVENTO CAMPAÑA</h2>
-          </div>
-        </header>
-
-        <section>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#TabBuscaEventoCampania" @click="tabBuscarEventoCampania();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-search"></i> BUSCAR EVENTO/CAMPAÑA
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoEventoCampania();" role="tab" data-toggle="tab">
-                                        <i class="fa fa-bullhorn"></i> NUEVO EVENTO/CAMAPAÑA
-                                    </a>
-                                </li>
-                            </ul>
+                <h2 class="no-margin-bottom">EVENTO CAMPAÑA</h2>
+            </div>
+            </header>
 
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active show" id="TabBuscaEventoCampania">
-                                    <template v-if="vistaFormularioTabBuscar">
+            <section>
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#TabBuscaEventoCampania" @click="tabBuscarEventoCampania();" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> BUSCAR EVENTO/CAMPAÑA
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoEventoCampania();" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bullhorn"></i> NUEVO EVENTO/CAMAPAÑA
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active show" id="TabBuscaEventoCampania">
+                                        <template v-if="vistaFormularioTabBuscar">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BUSCAR EVENTO/CAMPAÑA</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="input-group">
+                                                                                        <input type="hidden" v-model="formEventoCamp.nidproveedor">
+                                                                                        <input type="text" v-model="formEventoCamp.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Buscar Proveedor </div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Tipo Evento</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoEC"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarEventoCampania();"><i class="fa fa-search"></i> Buscar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">LISTADO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <template v-if="arrayEventoCampania.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>Proveedor</th>
+                                                                                    <th>Tipo Evento</th>
+                                                                                    <th>Nombre Campaña</th>
+                                                                                    <th>Fecha Inicio.</th>
+                                                                                    <th>Fecha Fin</th>
+                                                                                    <th>Presupuesto</th>
+                                                                                    <th>Nivel Detalle</th>
+                                                                                    <th>Acciones</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="ec in arrayEventoCampania" :key="ec.nIdEventoCampania">
+                                                                                    <td v-text="ec.nIdEventoCampania"></td>
+                                                                                    <td v-text="ec.cNombreProveedor"></td>
+                                                                                    <td v-text="ec.cTipoEvento"></td>
+                                                                                    <td v-text="ec.cNombreEventoCampania"></td>
+                                                                                    <td v-text="ec.dFechaInicio"></td>
+                                                                                    <td v-text="ec.dFechaFin"></td>
+                                                                                    <td v-text="ec.fValorPresupuesto"></td>
+                                                                                    <td v-text="ec.cFlagDetalleEvento"></td>
+                                                                                    <td>
+                                                                                        <template v-if="ec.cEventoCampaniaEstado=='A'">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Desactivar {{ ec.cNombreEventoCampania }}</div>
+                                                                                                <i @click="desactivar(ec.nIdEventoCampania)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Activar {{ ec.cNombreEventoCampania }}</div>
+                                                                                                <i @click="activar(ec.nIdEventoCampania)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                            </el-tooltip>
+                                                                                        </template>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-7">
+                                                                                <nav>
+                                                                                    <ul class="pagination">
+                                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        </li>
+                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                        :class="[page==isActived?'active':'']">
+                                                                                            <a class="page-link"
+                                                                                            href="#" @click.prevent="cambiarPagina(page)"
+                                                                                            v-text="page"></a>
+                                                                                        </li>
+                                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="col-sm-5">
+                                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </template>
+
+                                        <!--<template v-else>
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Estado</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="input-group">
+                                                                                        <input type="hidden" v-model="fillWFinancieroDetalle.nidwarrantfinanciero">
+                                                                                        <select v-model="fillWFinancieroDetalle.nidestadowarrant" class="form-control form-control-sm">
+                                                                                            <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                                                            </option>
+                                                                                        </select>
+                                                                                        <span class="input-group-prepend">
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">LISTADO</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <template v-if="arrayWFinancieroDetalle.length">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Código</th>
+                                                                                    <th>O/C</th>
+                                                                                    <th>Nombre Comercial</th>
+                                                                                    <th>Nro VIN</th>
+                                                                                    <th>Valor Warrant</th>
+                                                                                    <th>Estado</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
+                                                                                    <td>{{ odetalle.nIdDetalleWarrant }}</td>
+                                                                                    <td>{{ odetalle.nOrdenCompra }}</td>
+                                                                                    <td>{{ odetalle.cNombreComercial }}</td>
+                                                                                    <td>{{ odetalle.cNumeroVin }}</td>
+                                                                                    <td>{{ odetalle.fValorWarrant }}</td>
+                                                                                    <td>{{ odetalle.cParNombre }}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                            :class="[page==isActived?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaDetalle(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </template>-->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="TabNuevoEventoCamp">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR EVENTO/CAMPAÑA</h3>
+                                                            <h3 class="h4">NUEVO EVENTO/CAMPAÑA</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -50,6 +313,36 @@
                                                                             <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="formEventoCamp.dfechainicio"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="formEventoCamp.dfechafin"
+                                                                                    type="date"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -91,1001 +384,620 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarEventoCampania();"><i class="fa fa-search"></i> Buscar</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">LISTADO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <template v-if="arrayEventoCampania.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>Proveedor</th>
-                                                                                <th>Tipo Evento</th>
-                                                                                <th>Nombre Campaña</th>
-                                                                                <th>Fecha Inicio.</th>
-                                                                                <th>Fecha Fin</th>
-                                                                                <th>Presupuesto</th>
-                                                                                <th>Nivel Detalle</th>
-                                                                                <th>Acciones</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="ec in arrayEventoCampania" :key="ec.nIdEventoCampania">
-                                                                                <td v-text="ec.nIdEventoCampania"></td>
-                                                                                <td v-text="ec.cNombreProveedor"></td>
-                                                                                <td v-text="ec.cTipoEvento"></td>
-                                                                                <td v-text="ec.cNombreEventoCampania"></td>
-                                                                                <td v-text="ec.dFechaInicio"></td>
-                                                                                <td v-text="ec.dFechaFin"></td>
-                                                                                <td v-text="ec.fValorPresupuesto"></td>
-                                                                                <td v-text="ec.cFlagDetalleEvento"></td>
-                                                                                <td>
-                                                                                    <template v-if="ec.cEventoCampaniaEstado=='A'">
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Desactivar {{ ec.cNombreEventoCampania }}</div>
-                                                                                            <i @click="desactivar(ec.nIdEventoCampania)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                                        </el-tooltip>
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Activar {{ ec.cNombreEventoCampania }}</div>
-                                                                                            <i @click="activar(ec.nIdEventoCampania)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                        </el-tooltip>
-                                                                                    </template>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-12">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-7">
-                                                                            <nav>
-                                                                                <ul class="pagination">
-                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                    </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                    :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPagina(page)"
-                                                                                        v-text="page"></a>
-                                                                                    </li>
-                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </nav>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Valor Presupuesto</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formEventoCamp.fvalorpresupuesto" class="form-control form-control-sm">
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm-5">
-                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable placeholder="Select">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayTipoMoneda"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </template>
-
-                                    <!--<template v-else>
-                                        <section class="forms">
-                                            <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">BUSCAR WARRANT FINANCIERO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Estado</label>
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="hidden" v-model="fillWFinancieroDetalle.nidwarrantfinanciero">
-                                                                                    <select v-model="fillWFinancieroDetalle.nidestadowarrant" class="form-control form-control-sm">
-                                                                                        <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <span class="input-group-prepend">
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWFinancieroDetalle();"><i class="fa-lg fa fa-search"></i></button>
-                                                                                    </span>
-                                                                                </div>
+                                                                                <el-select v-model="formEventoCamp.nidtipocambio" filterable placeholder="Select" v-on:change="onchangeTipoCambio()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayTipoCambio"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Valor Tipo Cambio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <label v-text="formEventoCamp.fvalortipocambio" class="form-control-label-readonly"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Descripción</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formEventoCamp.descripcion" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--<div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Documento</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formEventoCamp.filedocumento" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>-->
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">LISTADO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <template v-if="arrayWFinancieroDetalle.length">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-striped table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Código</th>
-                                                                                <th>O/C</th>
-                                                                                <th>Nombre Comercial</th>
-                                                                                <th>Nro VIN</th>
-                                                                                <th>Valor Warrant</th>
-                                                                                <th>Estado</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="odetalle in arrayWFinancieroDetalle" :key="odetalle.nIdDetalleWarrant">
-                                                                                <td>{{ odetalle.nIdDetalleWarrant }}</td>
-                                                                                <td>{{ odetalle.nOrdenCompra }}</td>
-                                                                                <td>{{ odetalle.cNombreComercial }}</td>
-                                                                                <td>{{ odetalle.cNumeroVin }}</td>
-                                                                                <td>{{ odetalle.fValorWarrant }}</td>
-                                                                                <td>{{ odetalle.cParNombre }}</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                        :class="[page==isActived?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaDetalle(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </template>
-                                                            <template v-else>
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td colspan="10">No existen registros!</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </template>-->
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="TabNuevoEventoCamp">
-                                    <section class="forms">
-                                        <div class="container-fluid">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="h4">NUEVO EVENTO/CAMPAÑA</h3>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="formEventoCamp.dfechainicio"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Fecha Fin</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-date-picker
-                                                                                v-model="formEventoCamp.dfechafin"
-                                                                                type="date"
-                                                                                value-format="yyyy-MM-dd"
-                                                                                format="dd/MM/yyyy"
-                                                                                placeholder="dd/mm/aaaa">
-                                                                            </el-date-picker>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="input-group">
-                                                                                <input type="hidden" v-model="formEventoCamp.nidproveedor">
-                                                                                <input type="text" v-model="formEventoCamp.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                <div class="input-group-prepend">
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Buscar Proveedor </div>
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                        </button>
-                                                                                    </el-tooltip>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Evento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
-                                                                                <el-option
-                                                                                v-for="item in arrayTipoEC"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Valor Presupuesto</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="formEventoCamp.fvalorpresupuesto" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="formEventoCamp.nidmoneda" filterable placeholder="Select">
-                                                                                <el-option
-                                                                                v-for="item in arrayTipoMoneda"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <el-select v-model="formEventoCamp.nidtipocambio" filterable placeholder="Select" v-on:change="onchangeTipoCambio()">
-                                                                                <el-option
-                                                                                v-for="item in arrayTipoCambio"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Valor Tipo Cambio</label>
-                                                                        <div class="col-sm-8">
-                                                                            <label v-text="formEventoCamp.fvalortipocambio" class="form-control-label-readonly"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Descripción</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="formEventoCamp.descripcion" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!--<div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">Documento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" v-model="formEventoCamp.filedocumento" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="Tab1" href="#TabECAsignaDetalle" @click="desactivarTabs();" role="tab" data-toggle="tab">
-                                                            <i class="fa fa-list"></i> ASIGNA DETALLE
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link disabled" id="Tab2" href="#TabECAsignaElemento" role="tab" data-toggle="tab">
-                                                            <i class="fa fa fa-sign-out"></i> ASIGNA ELEMENTO VENTA
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
-                                                            <i class="fa fa-usd"></i> DISTRIBUCIÓN
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="Tab1" href="#TabECAsignaDetalle" @click="desactivarTabs();" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-list"></i> ASIGNA DETALLE
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link disabled" id="Tab2" href="#TabECAsignaElemento" role="tab" data-toggle="tab">
+                                                                <i class="fa fa fa-sign-out"></i> ASIGNA ELEMENTO VENTA
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-usd"></i> DISTRIBUCIÓN
+                                                            </a>
+                                                        </li>
+                                                    </ul>
 
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade in active show" id="TabECAsignaDetalle">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">ASIGNAR DETALLE</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <form class="form-horizontal">
-                                                                                <div class="col-sm-12">
-                                                                                    <div class="row">
-                                                                                        <label class="col-sm-3 form-control-label">* Detalle Evento Campaña</label>
-                                                                                        <div class="col-sm-4">
-                                                                                            <div class="input-group">
-                                                                                                <input type="hidden" v-model="formEventoCamp.cflagdetalleevento">
-                                                                                                <select v-model="formEventoCamp.ndetalle" class="form-control form-control-sm">
-                                                                                                    <option v-for="item in arrayDetalleEC" :key="item.nIdGrupoPar" :value="item.nIdGrupoPar" v-text="item.cGrupoParNombre">
-                                                                                                    </option>
-                                                                                                </select>
-                                                                                                <div class="input-group-prepend">
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Buscar </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
-                                                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                                                        </button>
-                                                                                                    </el-tooltip>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                            <br>
-                                                                            <template v-if="arrayTemporalLinea.length">
-                                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Acciones</th>
-                                                                                                <th>Código Proveedor</th>
-                                                                                                <th>Nombre Proveedor</th>
-                                                                                                <th>Código Línea</th>
-                                                                                                <th>Nombre Línea</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="(templinea, index)  in arrayTemporalLinea" :key="templinea.nIdLinea">
-                                                                                                <td>
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Eliminar {{ templinea.cLineaNombre }}</div>
-                                                                                                        <i @click="eliminarItemLinea(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                    </el-tooltip>
-                                                                                                </td>
-                                                                                                <td v-text="templinea.nIdProveedor"></td>
-                                                                                                <td v-text="templinea.cProveedorNombre"></td>
-                                                                                                <td v-text="templinea.nIdLinea"></td>
-                                                                                                <td v-text="templinea.cLineaNombre"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <br>
-                                                                            </template>
-                                                                            <template v-if="arrayTemporalMarca.length">
-                                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Acciones</th>
-                                                                                                <th>Código Proveedor</th>
-                                                                                                <th>Nombre Proveedor</th>
-                                                                                                <th>Código Marca</th>
-                                                                                                <th>Nombre Marca</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="(tempmarca, index)  in arrayTemporalMarca" :key="tempmarca.nIdLinea">
-                                                                                                <td>
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Eliminar {{ tempmarca.cMarcaNombre }}</div>
-                                                                                                        <i @click="eliminarItemMarca(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                    </el-tooltip>
-                                                                                                </td>
-                                                                                                <td v-text="tempmarca.nIdProveedor"></td>
-                                                                                                <td v-text="tempmarca.cProveedorNombre"></td>
-                                                                                                <td v-text="tempmarca.nIdMarca"></td>
-                                                                                                <td v-text="tempmarca.cMarcaNombre"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <br>
-                                                                            </template>
-                                                                            <template v-if="arrayTemporalModelo.length">
-                                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Acciones</th>
-                                                                                                <th>Código Proveedor</th>
-                                                                                                <th>Nombre Proveedor</th>
-                                                                                                <th>Código Modelo</th>
-                                                                                                <th>Nombre Modelo</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="(tempmodelo, index)  in arrayTemporalModelo" :key="tempmodelo.nIdModelo">
-                                                                                                <td>
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Eliminar {{ tempmodelo.cModeloNombre }}</div>
-                                                                                                        <i @click="eliminarItemModelo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                    </el-tooltip>
-                                                                                                </td>
-                                                                                                <td v-text="tempmodelo.nIdProveedor"></td>
-                                                                                                <td v-text="tempmodelo.cProveedorNombre"></td>
-                                                                                                <td v-text="tempmodelo.nIdModelo"></td>
-                                                                                                <td v-text="tempmodelo.cModeloNombre"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <br>
-                                                                            </template>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-9 offset-sm-5">
-                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
-                                                                                        <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                    </button>
-                                                                                </div>
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane fade in active show" id="TabECAsignaDetalle">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">ASIGNAR DETALLE</h3>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div role="tabpanel" class="tab-pane fade" id="TabECAsignaElemento">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">ASIGNAR ELEMENTO VENTA</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <form class="form-horizontal">
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="row">
-                                                                                            <label class="col-sm-4 form-control-label">* ELEMENTO VENTA</label>
-                                                                                            <div class="col-sm-8">
-                                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="abrirModalAsignaElemento('elemento','buscar')">
-                                                                                                    <i class="fa fa-search"></i> Buscar
-                                                                                                </button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                            <br>
-                                                                            <template v-if="arrayTemporalElemento.length">
-                                                                                <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Acciones</th>
-                                                                                                <th>Nombre Proveedor</th>
-                                                                                                <th>Nombre Elemento</th>
-                                                                                                <th>Valor Venta</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="(tempelemento, index)  in arrayTemporalElemento" :key="tempelemento.nIdElemento">
-                                                                                                <td>
-                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                        <div slot="content">Eliminar {{ tempelemento.cElemenNombre }}</div>
-                                                                                                        <i @click="eliminarItemElemento(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                    </el-tooltip>
-                                                                                                </td>
-                                                                                                <td v-text="tempelemento.cProveedorNombre"></td>
-                                                                                                <td v-text="tempelemento.cElemenNombre"></td>
-                                                                                                <td v-text="tempelemento.fElemenValorVenta"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <br>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <table>
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td colspan="4">No existen registros!</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </template>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-9 offset-sm-5">
-                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                                                        <i class="fa fa-save"></i> REGISTRAR
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div role="tabpanel" class="tab-pane fade" id="TabECAsignaDistribucion">
-                                                        <section class="forms">
-                                                            <div class="container-fluid">
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">ASIGNAR PRESUPUESTO COMPARTIDO</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <form class="form-horizontal">
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-12">
-                                                                                        <input type="hidden" v-model="formDistribucion.nideventocampania">
-                                                                                        <label class="checkbox-inline" v-for="dist in lstTipoDistribucion" :key="dist.id">
-                                                                                            <input type="radio" class="radio-template" v-model="formDistribucion.ntipodistribucion" :value="dist.value" v-on:change="cambiarVistaDistribucion()">
-                                                                                            <label for="" class="form-control-label" v-text="dist.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="h4">DETALLE DISTRIBUCIÓN</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <template v-if="vistaFormularioDistribucion">
+                                                                            <div class="card-body">
                                                                                 <form class="form-horizontal">
-                                                                                    <div class="form-group row">
-                                                                                        <div class="col-sm-6">
-                                                                                            <div class="row">
-                                                                                                <label class="col-sm-4 form-control-label">* Asignar Presupuesto</label>
-                                                                                                <div class="col-sm-8">
-                                                                                                    <div class="input-group">
-                                                                                                        <select name="account" v-model="formDistribucion.ntipoproveedor" class="form-control form-control-sm" v-on:change="asignaEmpresaEC()">
-                                                                                                            <option v-for="provdist in lstProveedorDitribucion" :value="provdist.value" :key="provdist.value">
-                                                                                                                {{ provdist.text }}
-                                                                                                            </option>
-                                                                                                        </select>
-                                                                                                        <div class="input-group-prepend">
-                                                                                                            <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorEC()">
-                                                                                                                <i class="fa-sm fa fa-search"></i>
+                                                                                    <div class="col-sm-12">
+                                                                                        <div class="row">
+                                                                                            <label class="col-sm-3 form-control-label">* Detalle Evento Campaña</label>
+                                                                                            <div class="col-sm-4">
+                                                                                                <div class="input-group">
+                                                                                                    <input type="hidden" v-model="formEventoCamp.cflagdetalleevento">
+                                                                                                    <select v-model="formEventoCamp.ndetalle" class="form-control form-control-sm">
+                                                                                                        <option v-for="item in arrayDetalleEC" :key="item.nIdGrupoPar" :value="item.nIdGrupoPar" v-text="item.cGrupoParNombre">
+                                                                                                        </option>
+                                                                                                    </select>
+                                                                                                    <div class="input-group-prepend">
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Buscar </div>
+                                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
+                                                                                                                <i class="fa-lg fa fa-search"></i>
                                                                                                             </button>
-                                                                                                        </div>
+                                                                                                        </el-tooltip>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </form>
-                                                                                <template v-if="arrayProveedorPorEC.length">
-                                                                                    <div class="table-responsive">
+                                                                                <br>
+                                                                                <template v-if="arrayTemporalLinea.length">
+                                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
                                                                                         <table class="table table-striped table-sm">
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th>Acciones</th>
-                                                                                                    <th>Código Prov.</th>
-                                                                                                    <th>Proveedor</th>
-                                                                                                    <th>% Distribución</th>
+                                                                                                    <th>Código Proveedor</th>
+                                                                                                    <th>Nombre Proveedor</th>
+                                                                                                    <th>Código Línea</th>
+                                                                                                    <th>Nombre Línea</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                <tr v-for="(proveedor, index) in arrayProveedorPorEC" :key="proveedor.nIdEntidad">
+                                                                                                <tr v-for="(templinea, index)  in arrayTemporalLinea" :key="templinea.nIdLinea">
                                                                                                     <td>
-                                                                                                        <a href="#" @click="eliminarItemProveedorEC(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +proveedor.cProveedorNombre">
-                                                                                                        <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Eliminar {{ templinea.cLineaNombre }}</div>
+                                                                                                            <i @click="eliminarItemLinea(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                        </el-tooltip>
                                                                                                     </td>
-                                                                                                    <td v-text="proveedor.nIdEntidad"></td>
-                                                                                                    <td v-text="proveedor.cProveedorNombre"></td>
-                                                                                                    <td>
-                                                                                                        <input type="number" v-model="arrayIndexEntidadValor[index]" class="form-control form-control-sm">
-                                                                                                    </td>
+                                                                                                    <td v-text="templinea.nIdProveedor"></td>
+                                                                                                    <td v-text="templinea.cProveedorNombre"></td>
+                                                                                                    <td v-text="templinea.nIdLinea"></td>
+                                                                                                    <td v-text="templinea.cLineaNombre"></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
+                                                                                    <br>
                                                                                 </template>
-                                                                            </template>
-                                                                            <template v-else>
+                                                                                <template v-if="arrayTemporalMarca.length">
+                                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                                        <table class="table table-striped table-sm">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Acciones</th>
+                                                                                                    <th>Código Proveedor</th>
+                                                                                                    <th>Nombre Proveedor</th>
+                                                                                                    <th>Código Marca</th>
+                                                                                                    <th>Nombre Marca</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr v-for="(tempmarca, index)  in arrayTemporalMarca" :key="tempmarca.nIdLinea">
+                                                                                                    <td>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Eliminar {{ tempmarca.cMarcaNombre }}</div>
+                                                                                                            <i @click="eliminarItemMarca(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                        </el-tooltip>
+                                                                                                    </td>
+                                                                                                    <td v-text="tempmarca.nIdProveedor"></td>
+                                                                                                    <td v-text="tempmarca.cProveedorNombre"></td>
+                                                                                                    <td v-text="tempmarca.nIdMarca"></td>
+                                                                                                    <td v-text="tempmarca.cMarcaNombre"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                </template>
+                                                                                <template v-if="arrayTemporalModelo.length">
+                                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                                        <table class="table table-striped table-sm">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Acciones</th>
+                                                                                                    <th>Código Proveedor</th>
+                                                                                                    <th>Nombre Proveedor</th>
+                                                                                                    <th>Código Modelo</th>
+                                                                                                    <th>Nombre Modelo</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr v-for="(tempmodelo, index)  in arrayTemporalModelo" :key="tempmodelo.nIdModelo">
+                                                                                                    <td>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Eliminar {{ tempmodelo.cModeloNombre }}</div>
+                                                                                                            <i @click="eliminarItemModelo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                        </el-tooltip>
+                                                                                                    </td>
+                                                                                                    <td v-text="tempmodelo.nIdProveedor"></td>
+                                                                                                    <td v-text="tempmodelo.cProveedorNombre"></td>
+                                                                                                    <td v-text="tempmodelo.nIdModelo"></td>
+                                                                                                    <td v-text="tempmodelo.cModeloNombre"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                </template>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabECAsignaElemento">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">ASIGNAR ELEMENTO VENTA</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
                                                                                 <form class="form-horizontal">
                                                                                     <div class="form-group row">
-                                                                                        <div class="col-sm-12">
-                                                                                            <template v-if="arrayElementoDistribucion.length">
-                                                                                                <div class="table-responsive">
-                                                                                                    <table class="table table-striped table-sm">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Código</th>
-                                                                                                                <th>Proveedor</th>
-                                                                                                                <th>Tipo Elemento</th>
-                                                                                                                <th>Nombre Elemento</th>
-                                                                                                                <th>Precio de Venta</th>
-                                                                                                                <th>Proveedor</th>
-                                                                                                                <th>% Distribución</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tbody>
-                                                                                                            <tr v-for="(eledist, index) in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
-                                                                                                                <td v-text="eledist.nIdEventoElementoVenta"></td>
-                                                                                                                <td v-text="eledist.cProveedorNombre"></td>
-                                                                                                                <td v-text="eledist.cTipoElemenNombre"></td>
-                                                                                                                <td v-text="eledist.cElemenNombre"></td>
-                                                                                                                <td v-text="eledist.fElemenValorVenta"></td>
-                                                                                                                <td>
-                                                                                                                    <div class="input-group">
-                                                                                                                        <input type="hidden" v-model="arrayIndexProvId[index]">
-                                                                                                                        <input type="text" v-model="arrayIndexProvNombre[index]" class="form-control form-control-sm" readonly>
-                                                                                                                        <div class="input-group-prepend">
-                                                                                                                            <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorElementoVenta(index)">
-                                                                                                                                <i class="fa-sm fa fa-search"></i>
-                                                                                                                            </button>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </td>
-                                                                                                                <td>
-                                                                                                                    <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                        </tbody>
-                                                                                                    </table>
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* ELEMENTO VENTA</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="abrirModalAsignaElemento('elemento','buscar')">
+                                                                                                        <i class="fa fa-search"></i> Buscar
+                                                                                                    </button>
                                                                                                 </div>
-                                                                                            </template>
-                                                                                            <template v-else>
-                                                                                                <table>
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <td colspan="10">No existen registros!</td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </template>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </form>
-                                                                            </template>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarAsignaDistribucion()">
-                                                                                <i class="fa fa-save"></i> REGISTRAR
-                                                                            </button>
-                                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cancelar()">
-                                                                                <i class="fa fa-close"></i> CANCELAR
-                                                                            </button>
+                                                                                <br>
+                                                                                <template v-if="arrayTemporalElemento.length">
+                                                                                    <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+                                                                                        <table class="table table-striped table-sm">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Acciones</th>
+                                                                                                    <th>Nombre Proveedor</th>
+                                                                                                    <th>Nombre Elemento</th>
+                                                                                                    <th>Valor Venta</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr v-for="(tempelemento, index)  in arrayTemporalElemento" :key="tempelemento.nIdElemento">
+                                                                                                    <td>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Eliminar {{ tempelemento.cElemenNombre }}</div>
+                                                                                                            <i @click="eliminarItemElemento(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                        </el-tooltip>
+                                                                                                    </td>
+                                                                                                    <td v-text="tempelemento.cProveedorNombre"></td>
+                                                                                                    <td v-text="tempelemento.cElemenNombre"></td>
+                                                                                                    <td v-text="tempelemento.fElemenValorVenta"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    <table>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td colspan="4">No existen registros!</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </template>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                                                            <i class="fa fa-save"></i> REGISTRAR
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL PROVEEDORES -->
-        <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Buscar Proveedor </div>
-                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </el-tooltip>
-                                                            </div>
+                                                            </section>
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabECAsignaDistribucion">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">ASIGNAR PRESUPUESTO COMPARTIDO</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-12">
+                                                                                            <input type="hidden" v-model="formDistribucion.nideventocampania">
+                                                                                            <label class="checkbox-inline" v-for="dist in lstTipoDistribucion" :key="dist.id">
+                                                                                                <input type="radio" class="radio-template" v-model="formDistribucion.ntipodistribucion" :value="dist.value" v-on:change="cambiarVistaDistribucion()">
+                                                                                                <label for="" class="form-control-label" v-text="dist.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">DETALLE DISTRIBUCIÓN</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <template v-if="vistaFormularioDistribucion">
+                                                                                    <form class="form-horizontal">
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <div class="row">
+                                                                                                    <label class="col-sm-4 form-control-label">* Asignar Presupuesto</label>
+                                                                                                    <div class="col-sm-8">
+                                                                                                        <div class="input-group">
+                                                                                                            <select name="account" v-model="formDistribucion.ntipoproveedor" class="form-control form-control-sm" v-on:change="asignaEmpresaEC()">
+                                                                                                                <option v-for="provdist in lstProveedorDitribucion" :value="provdist.value" :key="provdist.value">
+                                                                                                                    {{ provdist.text }}
+                                                                                                                </option>
+                                                                                                            </select>
+                                                                                                            <div class="input-group-prepend">
+                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorEC()">
+                                                                                                                    <i class="fa-sm fa fa-search"></i>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                    <template v-if="arrayProveedorPorEC.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Acciones</th>
+                                                                                                        <th>Código Prov.</th>
+                                                                                                        <th>Proveedor</th>
+                                                                                                        <th>% Distribución</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(proveedor, index) in arrayProveedorPorEC" :key="proveedor.nIdEntidad">
+                                                                                                        <td>
+                                                                                                            <a href="#" @click="eliminarItemProveedorEC(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +proveedor.cProveedorNombre">
+                                                                                                            <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
+                                                                                                        </td>
+                                                                                                        <td v-text="proveedor.nIdEntidad"></td>
+                                                                                                        <td v-text="proveedor.cProveedorNombre"></td>
+                                                                                                        <td>
+                                                                                                            <input type="number" v-model="arrayIndexEntidadValor[index]" class="form-control form-control-sm">
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    <form class="form-horizontal">
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-12">
+                                                                                                <template v-if="arrayElementoDistribucion.length">
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table table-striped table-sm">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th>Código</th>
+                                                                                                                    <th>Proveedor</th>
+                                                                                                                    <th>Tipo Elemento</th>
+                                                                                                                    <th>Nombre Elemento</th>
+                                                                                                                    <th>Precio de Venta</th>
+                                                                                                                    <th>Proveedor</th>
+                                                                                                                    <th>% Distribución</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                <tr v-for="(eledist, index) in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
+                                                                                                                    <td v-text="eledist.nIdEventoElementoVenta"></td>
+                                                                                                                    <td v-text="eledist.cProveedorNombre"></td>
+                                                                                                                    <td v-text="eledist.cTipoElemenNombre"></td>
+                                                                                                                    <td v-text="eledist.cElemenNombre"></td>
+                                                                                                                    <td v-text="eledist.fElemenValorVenta"></td>
+                                                                                                                    <td>
+                                                                                                                        <div class="input-group">
+                                                                                                                            <input type="hidden" v-model="arrayIndexProvId[index]">
+                                                                                                                            <input type="text" v-model="arrayIndexProvNombre[index]" class="form-control form-control-sm" readonly>
+                                                                                                                            <div class="input-group-prepend">
+                                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorElementoVenta(index)">
+                                                                                                                                    <i class="fa-sm fa fa-search"></i>
+                                                                                                                                </button>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                        <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </template>
+                                                                                                <template v-else>
+                                                                                                    <table>
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td colspan="10">No existen registros!</td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </template>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </template>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-9 offset-sm-5">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarAsignaDistribucion()">
+                                                                                    <i class="fa fa-save"></i> REGISTRAR
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cancelar()">
+                                                                                    <i class="fa fa-close"></i> CANCELAR
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                        </section>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                </div>
+            </section>
+
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- MODAL ASIGNA DETALLE LINEA, MARCAS, MODELOS -->
-        <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <template v-if="vistaModal==0">
+            <!-- MODAL PROVEEDORES -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">LISTADO LINEAS</h3>
+                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
                                         </div>
                                         <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre Linea</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillModal.clineanombre" @keyup.enter="buscarLineasByProveedor()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Líneas" class="btn btn-info btn-corner btn-sm" @click="buscarLineasByProveedor();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayLinea.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Seleccione</th>
-                                                                    <th>Proveedor</th>
-                                                                    <th>Linea</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="linea in arrayLinea" :key="linea.nIdLinea">
-                                                                    <td>
-                                                                        <a href="#" @click="asignarLineas(linea)">
-                                                                            <i class='fa-md fa fa-check-circle'></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td v-text="linea.cProveedorNombre"></td>
-                                                                    <td v-text="linea.cLineaNombre"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                            <div class="col-sm-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaLineasByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaLineasByProveedor(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaLineasByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-sm-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
                                                             <tr>
-                                                                <td colspan="10">No existen registros!</td>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </template>
-                                            </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>
                                         </div>
                                     </div>
-                                </template>
-                                <template v-if="vistaModal==1">
-                                    <div class="col-lg-12">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL ASIGNA DETALLE LINEA, MARCAS, MODELOS -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <template v-if="vistaModal==0">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="h4">LISTADO MARCAS</h3>
+                                                <h3 class="h4">LISTADO LINEAS</h3>
                                             </div>
                                             <div class="card-body">
                                                 <div class="col-lg-12">
                                                     <div class="form-group row">
                                                         <div class="col-sm-6">
                                                             <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombre Marca</label>
+                                                                <label class="col-sm-4 form-control-label">Nombre Linea</label>
                                                                 <div class="col-sm-8">
                                                                     <div class="input-group">
-                                                                        <input type="text" v-model="fillModal.cmarcanombre" @keyup.enter="buscarMarcasByProveedor()" class="form-control form-control-sm">
+                                                                        <input type="text" v-model="fillModal.clineanombre" @keyup.enter="buscarLineasByProveedor()" class="form-control form-control-sm">
                                                                         <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Marcas" class="btn btn-info btn-corner btn-sm" @click="buscarMarcasByProveedor();"><i class="fa-lg fa fa-search"></i></button>
+                                                                            <button type="button" title="Buscar Líneas" class="btn btn-info btn-corner btn-sm" @click="buscarLineasByProveedor();"><i class="fa-lg fa fa-search"></i></button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1096,25 +1008,25 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="col-lg-12">
-                                                    <template v-if="arrayMarca.length">
+                                                    <template v-if="arrayLinea.length">
                                                         <div class="table-responsive">
                                                             <table class="table table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Seleccione</th>
                                                                         <th>Proveedor</th>
-                                                                        <th>Marca</th>
+                                                                        <th>Linea</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="marca in arrayMarca" :key="marca.nIdMarca">
+                                                                    <tr v-for="linea in arrayLinea" :key="linea.nIdLinea">
                                                                         <td>
-                                                                            <a href="#" @click="asignarMarcas(marca)">
+                                                                            <a href="#" @click="asignarLineas(linea)">
                                                                                 <i class='fa-md fa fa-check-circle'></i>
                                                                             </a>
                                                                         </td>
-                                                                        <td v-text="marca.cProveedorNombre"></td>
-                                                                        <td v-text="marca.cMarcaNombre"></td>
+                                                                        <td v-text="linea.cProveedorNombre"></td>
+                                                                        <td v-text="linea.cLineaNombre"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -1125,16 +1037,16 @@
                                                                     <nav>
                                                                         <ul class="pagination">
                                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaMarcasByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                <a @click.prevent="cambiarPaginaLineasByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                             </li>
                                                                             <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                             :class="[page==isActivedModal?'active':'']">
                                                                                 <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaMarcasByProveedor(page)"
+                                                                                href="#" @click.prevent="cambiarPaginaLineasByProveedor(page)"
                                                                                 v-text="page"></a>
                                                                             </li>
                                                                             <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaMarcasByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                <a @click.prevent="cambiarPaginaLineasByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                             </li>
                                                                         </ul>
                                                                     </nav>
@@ -1157,76 +1069,293 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </template>
-                                <template v-if="vistaModal==2">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO MODELOS</h3>
+                                    </template>
+                                    <template v-if="vistaModal==1">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">LISTADO MARCAS</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row">
+                                                                    <label class="col-sm-4 form-control-label">Nombre Marca</label>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="input-group">
+                                                                            <input type="text" v-model="fillModal.cmarcanombre" @keyup.enter="buscarMarcasByProveedor()" class="form-control form-control-sm">
+                                                                            <div class="input-group-prepend">
+                                                                                <button type="button" title="Buscar Marcas" class="btn btn-info btn-corner btn-sm" @click="buscarMarcasByProveedor();"><i class="fa-lg fa fa-search"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-lg-12">
+                                                        <template v-if="arrayMarca.length">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Seleccione</th>
+                                                                            <th>Proveedor</th>
+                                                                            <th>Marca</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="marca in arrayMarca" :key="marca.nIdMarca">
+                                                                            <td>
+                                                                                <a href="#" @click="asignarMarcas(marca)">
+                                                                                    <i class='fa-md fa fa-check-circle'></i>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td v-text="marca.cProveedorNombre"></td>
+                                                                            <td v-text="marca.cMarcaNombre"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-sm-7">
+                                                                        <nav>
+                                                                            <ul class="pagination">
+                                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaMarcasByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                </li>
+                                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                                :class="[page==isActivedModal?'active':'']">
+                                                                                    <a class="page-link"
+                                                                                    href="#" @click.prevent="cambiarPaginaMarcasByProveedor(page)"
+                                                                                    v-text="page"></a>
+                                                                                </li>
+                                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                                    <a @click.prevent="cambiarPaginaMarcasByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                        <template v-else>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td colspan="10">No existen registros!</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre Modelo</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillModal.cmodelonombre" @keyup.enter="buscarModelosByProveedor()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Marcas" class="btn btn-info btn-corner btn-sm" @click="buscarModelosByProveedor();"><i class="fa-lg fa fa-search"></i></button>
+                                    </template>
+                                    <template v-if="vistaModal==2">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">LISTADO MODELOS</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-4 form-control-label">Nombre Modelo</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" v-model="fillModal.cmodelonombre" @keyup.enter="buscarModelosByProveedor()" class="form-control form-control-sm">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" title="Buscar Marcas" class="btn btn-info btn-corner btn-sm" @click="buscarModelosByProveedor();"><i class="fa-lg fa fa-search"></i></button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="card-body">
+                                                <template v-if="arrayModelo.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Seleccione</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Modelo</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="modelo in arrayModelo" :key="modelo.nIdModelo">
+                                                                    <td>
+                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                            <div slot="content">Agregar {{ modelo.cModeloNombre }}</div>
+                                                                            <i @click="asignarModelos(modelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                        </el-tooltip>
+                                                                    </td>
+                                                                    <td v-text="modelo.cProveedorNombre"></td>
+                                                                    <td v-text="modelo.cModeloNombre"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-7">
+                                                                <nav>
+                                                                    <ul class="pagination">
+                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaModelosByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        </li>
+                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                        :class="[page==isActivedModal?'active':'']">
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaModelosByProveedor(page)"
+                                                                            v-text="page"></a>
+                                                                        </li>
+                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaModelosByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL ELEMENTOS DE VENTAS -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO ELEMENTO VENTA</h3>
                                         </div>
                                         <div class="card-body">
-                                            <template v-if="arrayModelo.length">
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Tipo Elemento</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
+                                                            <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
+                                                            </option>
+                                                        </select>
+                                                        <div class="input-group-prepend">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Elemento Venta</div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Nombre Elemento</label>
+                                                <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                                        <div class="input-group-prepend">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Buscar Elemento Venta</div>
+                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
+                                                            </el-tooltip>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <template v-if="arrayElementoVenta.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Seleccione</th>
+                                                                <th>Acciones</th>
+                                                                <th>Código</th>
                                                                 <th>Proveedor</th>
-                                                                <th>Modelo</th>
+                                                                <th>Tipo Elemento</th>
+                                                                <th>Nombre Elemento</th>
+                                                                <th>Precio de Venta</th>
+                                                                <th>Precio de Venta Mínimo</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="modelo in arrayModelo" :key="modelo.nIdModelo">
+                                                            <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
                                                                 <td>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Agregar {{ modelo.cModeloNombre }}</div>
-                                                                        <i @click="asignarModelos(modelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                        <div slot="content">Agregar {{ elemento.cElemenNombre }}</div>
+                                                                        <i @click="asignarElemento(elemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                     </el-tooltip>
                                                                 </td>
-                                                                <td v-text="modelo.cProveedorNombre"></td>
-                                                                <td v-text="modelo.cModeloNombre"></td>
+                                                                <td v-text="elemento.nIdElemento"></td>
+                                                                <td v-text="elemento.cProveedorNombre"></td>
+                                                                <td v-text="elemento.cTipoElemenNombre"></td>
+                                                                <td v-text="elemento.cElemenNombre"></td>
+                                                                <td v-text="elemento.fElemenValorVenta"></td>
+                                                                <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-sm-12">
+                                                <div class="col-lg-12">
                                                     <div class="row">
-                                                        <div class="col-sm-7">
+                                                        <div class="col-lg-7">
                                                             <nav>
                                                                 <ul class="pagination">
                                                                     <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaModelosByProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                     </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                    :class="[page==isActived?'active':'']">
                                                                         <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaModelosByProveedor(page)"
+                                                                        href="#" @click.prevent="cambiarPaginaElemento(page)"
                                                                         v-text="page"></a>
                                                                     </li>
                                                                     <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaModelosByProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                     </li>
                                                                 </ul>
                                                             </nav>
                                                         </div>
-                                                        <div class="col-sm-5">
+                                                        <div class="col-lg-5">
                                                             <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                         </div>
                                                     </div>
@@ -1243,342 +1372,215 @@
                                             </template>
                                         </div>
                                     </div>
-                                </template>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL ELEMENTOS DE VENTAS -->
-        <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTADO ELEMENTO VENTA</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 form-control-label">Tipo Elemento</label>
-                                            <div class="col-sm-4">
-                                                <div class="input-group">
-                                                    <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
-                                                        <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                        </option>
-                                                    </select>
-                                                    <div class="input-group-prepend">
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Buscar Elemento Venta</div>
-                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </el-tooltip>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 form-control-label">Nombre Elemento</label>
-                                            <div class="col-sm-4">
-                                                <div class="input-group">
-                                                    <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
-                                                    <div class="input-group-prepend">
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Buscar Elemento Venta</div>
-                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                                <i class="fa-lg fa fa-search"></i>
-                                                            </button>
-                                                        </el-tooltip>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayElementoVenta.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Acciones</th>
-                                                            <th>Código</th>
-                                                            <th>Proveedor</th>
-                                                            <th>Tipo Elemento</th>
-                                                            <th>Nombre Elemento</th>
-                                                            <th>Precio de Venta</th>
-                                                            <th>Precio de Venta Mínimo</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="elemento in arrayElementoVenta" :key="elemento.nIdElemento">
-                                                            <td>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Agregar {{ elemento.cElemenNombre }}</div>
-                                                                    <i @click="asignarElemento(elemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                </el-tooltip>
-                                                            </td>
-                                                            <td v-text="elemento.nIdElemento"></td>
-                                                            <td v-text="elemento.cProveedorNombre"></td>
-                                                            <td v-text="elemento.cTipoElemenNombre"></td>
-                                                            <td v-text="elemento.cElemenNombre"></td>
-                                                            <td v-text="elemento.fElemenValorVenta"></td>
-                                                            <td v-text="elemento.fElemenValorMinimoVenta"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                :class="[page==isActived?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaElemento(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
-                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- MODAL PROVEEDORES DISTRIBUCION POR ELEMENTO VENTA -->
-        <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTADO</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="hidden" v-model="formDistribucion.nindex">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
+            <!-- MODAL PROVEEDORES DISTRIBUCION POR ELEMENTO VENTA -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="hidden" v-model="formDistribucion.nindex">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarProveedorPorElementoVenta(proveedor.nIdPar, proveedor.cParNombre);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <a href="#" @click="asignarProveedorPorElementoVenta(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑA -->
-        <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTADO</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <div class="input-group">
-                                                            <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                            <div class="input-group-prepend">
-                                                                <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
+            <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑA -->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr/>
-                                        <template v-if="arrayProveedor.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nombre Proveedor</th>
-                                                        </tr>
-                                                    </thead>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarProveedorPorEC(proveedor);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
                                                     <tbody>
-                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                            <td>
-                                                                <a href="#" @click="asignarProveedorPorEC(proveedor);">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-lg-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+        </main>
+    </transition>
 </template>
 <script>
     export default {

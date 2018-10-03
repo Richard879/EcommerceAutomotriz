@@ -1,249 +1,251 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">TIPO DE INSPECCIÓN</h2>
-          </div>
-        </header>
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
+            <div class="container-fluid">
+                <h2 class="no-margin-bottom">TIPO DE INSPECCIÓN</h2>
+            </div>
+            </header>
 
-        <template v-if="vistaFormulario">
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">BUSCAR</h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+            <template v-if="vistaFormulario">
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">BUSCAR</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Empresa</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Nombre Tipo Inspección</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="fillTipoInsp.cnombre" class="form-control form-control-sm">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 form-control-label">Nombre Tipo Inspección</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="fillTipoInsp.cnombre" class="form-control form-control-sm">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-3">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTipoInspeccion()"><i class="fa fa-search"></i> Buscar</button>
-                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('inspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-3">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarTipoInspeccion()"><i class="fa fa-search"></i> Buscar</button>
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('inspeccion','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
-                            </div>
-                            <div class="card-body">
-                                <template v-if="arrayTipoInspeccion.length">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Código</th>
-                                                    <th>Nombre</th>
-                                                    <th>Almacén</th>
-                                                    <th>Accesorio</th>
-                                                    <th>Test Drive</th>
-                                                    <th>Sección Inspección</th>
-                                                    <th>Ficha Técnica</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">LISTADO</h3>
+                                </div>
+                                <div class="card-body">
+                                    <template v-if="arrayTipoInspeccion.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Nombre</th>
+                                                        <th>Almacén</th>
+                                                        <th>Accesorio</th>
+                                                        <th>Test Drive</th>
+                                                        <th>Sección Inspección</th>
+                                                        <th>Ficha Técnica</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="inspeccion in arrayTipoInspeccion" :key="inspeccion.nIdTipoInspeccion">
+                                                        <td v-text="inspeccion.nIdTipoInspeccion"></td>
+                                                        <td v-text="inspeccion.cNombreTipoInspeccion"></td>
+                                                        <td v-text="inspeccion.cFlagAlmacen"></td>
+                                                        <td v-text="inspeccion.cFlagAccesorio"></td>
+                                                        <td v-text="inspeccion.cFlagTestDrive"></td>
+                                                        <td v-text="inspeccion.cFlagSeccionInspeccion"></td>
+                                                        <td v-text="inspeccion.cFlagValidarFichaTecnica"></td>
+                                                        <td>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Editar {{ inspeccion.cNombreTipoInspeccion }}</div>
+                                                                <i @click="abrirFormulario('inspeccion','actualizar', inspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                            </el-tooltip>&nbsp;
+                                                            <template v-if="inspeccion.cSituacionRegistro=='A'">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Desactivar {{ inspeccion.cNombreTipoInspeccion }}</div>
+                                                                    <i @click="desactivar(inspeccion.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                </el-tooltip>
+                                                            </template>
+                                                            <template v-else>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Activar {{ inspeccion.cNombreTipoInspeccion }}</div>
+                                                                    <i @click="activar(inspeccion.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                </el-tooltip>
+                                                            </template>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                            :class="[page==isActived?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPagina(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
                                             <tbody>
-                                                <tr v-for="inspeccion in arrayTipoInspeccion" :key="inspeccion.nIdTipoInspeccion">
-                                                    <td v-text="inspeccion.nIdTipoInspeccion"></td>
-                                                    <td v-text="inspeccion.cNombreTipoInspeccion"></td>
-                                                    <td v-text="inspeccion.cFlagAlmacen"></td>
-                                                    <td v-text="inspeccion.cFlagAccesorio"></td>
-                                                    <td v-text="inspeccion.cFlagTestDrive"></td>
-                                                    <td v-text="inspeccion.cFlagSeccionInspeccion"></td>
-                                                    <td v-text="inspeccion.cFlagValidarFichaTecnica"></td>
-                                                    <td>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                             <div slot="content">Editar {{ inspeccion.cNombreTipoInspeccion }}</div>
-                                                             <i @click="abrirFormulario('inspeccion','actualizar', inspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                        </el-tooltip>&nbsp;
-                                                        <template v-if="inspeccion.cSituacionRegistro=='A'">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Desactivar {{ inspeccion.cNombreTipoInspeccion }}</div>
-                                                                <i @click="desactivar(inspeccion.nIdTipoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                        <template v-else>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Activar {{ inspeccion.cNombreTipoInspeccion }}</div>
-                                                                <i @click="activar(inspeccion.nIdTipoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                    </td>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-7">
-                                                <nav>
-                                                    <ul class="pagination">
-                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                            <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                        </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                        :class="[page==isActived?'active':'']">
-                                                            <a class="page-link"
-                                                            href="#" @click.prevent="cambiarPagina(page)"
-                                                            v-text="page"></a>
-                                                        </li>
-                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                            <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+
+            <template v-else>
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4" v-text="tituloFormulario"></h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">* Empresa</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">* Nombre Tipo Inspección</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" v-model="formTipoInsp.cnombre" class="form-control form-control-sm">
                                             </div>
                                         </div>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="10">No existen registros!</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </template>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">Almacén</label>
+                                            <div class="col-sm-4">
+                                                <span class="switch">
+                                                    <el-switch v-model="formTipoInsp.nflagalmacen">
+                                                    </el-switch>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">Accesorio</label>
+                                            <div class="col-sm-4">
+                                                <span class="switch">
+                                                    <el-switch v-model="formTipoInsp.nflagaccesorio">
+                                                    </el-switch>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">Test Drive</label>
+                                            <div class="col-sm-4">
+                                                <span class="switch">
+                                                    <el-switch v-model="formTipoInsp.nflagtestdrive">
+                                                    </el-switch>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">Sección Inspección</label>
+                                            <div class="col-sm-4">
+                                                <span class="switch">
+                                                    <el-switch v-model="formTipoInsp.nflagseccion">
+                                                    </el-switch>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 form-control-label">Ficha Técnica</label>
+                                            <div class="col-sm-4">
+                                                <span class="switch">
+                                                    <el-switch v-model="formTipoInsp.nflagfichatecnica">
+                                                    </el-switch>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-4">
+                                                <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
+                                                    <i class="fa fa-save"></i> Registrar
+                                                </button>
+                                                <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
+                                                    <i class="fa fa-save"></i> Actualizar
+                                                </button>
+                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
+                                                    <i class="fa fa-close"></i> Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </template>
+                </section>
+            </template>
 
-        <template v-else>
-            <section class="forms">
-                <div class="container-fluid">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4" v-text="tituloFormulario"></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">* Empresa</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">* Nombre Tipo Inspección</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" v-model="formTipoInsp.cnombre" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">Almacén</label>
-                                        <div class="col-sm-4">
-                                            <span class="switch">
-                                                <el-switch v-model="formTipoInsp.nflagalmacen">
-                                                </el-switch>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">Accesorio</label>
-                                        <div class="col-sm-4">
-                                            <span class="switch">
-                                                <el-switch v-model="formTipoInsp.nflagaccesorio">
-                                                </el-switch>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">Test Drive</label>
-                                        <div class="col-sm-4">
-                                            <span class="switch">
-                                                <el-switch v-model="formTipoInsp.nflagtestdrive">
-                                                </el-switch>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">Sección Inspección</label>
-                                        <div class="col-sm-4">
-                                            <span class="switch">
-                                                <el-switch v-model="formTipoInsp.nflagseccion">
-                                                </el-switch>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 form-control-label">Ficha Técnica</label>
-                                        <div class="col-sm-4">
-                                            <span class="switch">
-                                                <el-switch v-model="formTipoInsp.nflagfichatecnica">
-                                                </el-switch>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-4">
-                                            <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                <i class="fa fa-save"></i> Registrar
-                                            </button>
-                                            <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
-                                                <i class="fa fa-save"></i> Actualizar
-                                            </button>
-                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
-                                                <i class="fa fa-close"></i> Cancelar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </template>
-
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e">
-
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+        </main>
+    </transition>
 </template>
 <script>
     export default {

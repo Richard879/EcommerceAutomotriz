@@ -1,217 +1,219 @@
 <template>
-    <main>
-        <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom"> APROBACIÓN DEL PEDIDO</h2>
-          </div>
-        </header>
-
-        <section class="forms">
+    <transition name="slide-fade" appear>
+        <main>
+            <header class="page-header">
             <div class="container-fluid">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="h4">BUSCAR PEDIDO</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="form-horizontal">
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Empresa</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" v-model="fillBusquedaPedido.cempresa" class="form-control form-control-sm" readonly>
+                <h2 class="no-margin-bottom"> APROBACIÓN DEL PEDIDO</h2>
+            </div>
+            </header>
+
+            <section class="forms">
+                <div class="container-fluid">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="h4">BUSCAR PEDIDO</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Empresa</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="fillBusquedaPedido.cempresa" class="form-control form-control-sm" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="fillBusquedaPedido.csucursal" class="form-control form-control-sm" readonly>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Sucursal</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" v-model="fillBusquedaPedido.csucursal" class="form-control form-control-sm" readonly>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                <div class="col-sm-8">
+                                                    <el-date-picker
+                                                        v-model="fillBusquedaPedido.dfechainicio"
+                                                        type="date"
+                                                        value-format="yyyy-MM-dd"
+                                                        format="dd/MM/yyyy"
+                                                        placeholder="dd/mm/aaaa">
+                                                    </el-date-picker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                <div class="col-sm-8">
+                                                    <el-date-picker
+                                                        v-model="fillBusquedaPedido.dfechafin"
+                                                        type="date"
+                                                        value-format="yyyy-MM-dd"
+                                                        format="dd/MM/yyyy"
+                                                        placeholder="dd/mm/aaaa">
+                                                    </el-date-picker>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
-                                            <div class="col-sm-8">
-                                                <el-date-picker
-                                                    v-model="fillBusquedaPedido.dfechainicio"
-                                                    type="date"
-                                                    value-format="yyyy-MM-dd"
-                                                    format="dd/MM/yyyy"
-                                                    placeholder="dd/mm/aaaa">
-                                                </el-date-picker>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">Marca</label>
+                                                <div class="col-md-8">
+                                                    <el-select v-model="fillBusquedaPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-option
+                                                        v-for="item in arrayMarca"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">Modelo</label>
+                                                <div class="col-md-8">
+                                                    <el-select v-model="fillBusquedaPedido.nidmodelo" filterable placeholder="Select">
+                                                        <el-option
+                                                        v-for="item in arrayModelo"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                            <div class="col-sm-8">
-                                                <el-date-picker
-                                                    v-model="fillBusquedaPedido.dfechafin"
-                                                    type="date"
-                                                    value-format="yyyy-MM-dd"
-                                                    format="dd/MM/yyyy"
-                                                    placeholder="dd/mm/aaaa">
-                                                </el-date-picker>
-                                            </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-9 offset-sm-5">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos(1)">
+                                                <i class="fa fa-search"></i> Buscar
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <label class="col-md-4 form-control-label">Marca</label>
-                                            <div class="col-md-8">
-                                                <el-select v-model="fillBusquedaPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
-                                                    <el-option
-                                                    v-for="item in arrayMarca"
-                                                    :key="item.nIdPar"
-                                                    :label="item.cParNombre"
-                                                    :value="item.nIdPar">
-                                                    </el-option>
-                                                </el-select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <label class="col-md-4 form-control-label">Modelo</label>
-                                            <div class="col-md-8">
-                                                <el-select v-model="fillBusquedaPedido.nidmodelo" filterable placeholder="Select">
-                                                    <el-option
-                                                    v-for="item in arrayModelo"
-                                                    :key="item.nIdPar"
-                                                    :label="item.cParNombre"
-                                                    :value="item.nIdPar">
-                                                    </el-option>
-                                                </el-select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-9 offset-sm-5">
-                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos(1)">
-                                            <i class="fa fa-search"></i> Buscar
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="h4">LISTADO</h3>
-                        </div>
-                        <div class="card-body">
-                            <template v-if="arrayPedidos.length">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm">
-                                        <thead>
-                                            <tr>
-                                                <th>Acciones</th>
-                                                <th>Nro Pedido</th>
-                                                <th>Contacto</th>
-                                                <th>Vehiculo</th>
-                                                <th>Número VIN</th>
-                                                <th>Número DUA</th>
-                                                <th>Fecha Pedido</th>
-                                                <th>Estado Aprobación</th>
-                                                <th>Vendedor</th>
-                                            </tr>
-                                        </thead>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="h4">LISTADO</h3>
+                            </div>
+                            <div class="card-body">
+                                <template v-if="arrayPedidos.length">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Acciones</th>
+                                                    <th>Nro Pedido</th>
+                                                    <th>Contacto</th>
+                                                    <th>Vehiculo</th>
+                                                    <th>Número VIN</th>
+                                                    <th>Número DUA</th>
+                                                    <th>Fecha Pedido</th>
+                                                    <th>Estado Aprobación</th>
+                                                    <th>Vendedor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
+                                                    <td>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                        </el-tooltip>
+                                                    </td>
+                                                    <td v-text="pedido.cNumeroPedido"></td>
+                                                    <td v-text="pedido.cContacto"></td>
+                                                    <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
+                                                    <td v-text="pedido.cNumeroVin"></td>
+                                                    <td v-text="pedido.cNumeroDUA"></td>
+                                                    <td v-text="pedido.dFechaPedido"></td>
+                                                    <td v-text="pedido.cEstadoAprobacion"></td>
+                                                    <td v-text="pedido.Vendedor"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <nav>
+                                                    <ul class="pagination">
+                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                            <a @click.prevent="cambiarPaginaPedido(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                        </li>
+                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                        :class="[page==isActived?'active':'']">
+                                                            <a class="page-link"
+                                                            href="#" @click.prevent="cambiarPaginaPedido(page)"
+                                                            v-text="page"></a>
+                                                        </li>
+                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                            <a @click.prevent="cambiarPaginaPedido(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <table>
                                         <tbody>
-                                            <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
-                                                <td>
-                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                        <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
-                                                        <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
-                                                    </el-tooltip>
-                                                </td>
-                                                <td v-text="pedido.cNumeroPedido"></td>
-                                                <td v-text="pedido.cContacto"></td>
-                                                <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
-                                                <td v-text="pedido.cNumeroVin"></td>
-                                                <td v-text="pedido.cNumeroDUA"></td>
-                                                <td v-text="pedido.dFechaPedido"></td>
-                                                <td v-text="pedido.cEstadoAprobacion"></td>
-                                                <td v-text="pedido.Vendedor"></td>
+                                            <tr>
+                                                <td colspan="10">No existen registros!</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-7">
-                                            <nav>
-                                                <ul class="pagination">
-                                                    <li v-if="pagination.current_page > 1" class="page-item">
-                                                        <a @click.prevent="cambiarPaginaPedido(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                    </li>
-                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                    :class="[page==isActived?'active':'']">
-                                                        <a class="page-link"
-                                                        href="#" @click.prevent="cambiarPaginaPedido(page)"
-                                                        v-text="page"></a>
-                                                    </li>
-                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                        <a @click.prevent="cambiarPaginaPedido(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                            <template v-else>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="10">No existen registros!</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </template>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Modal Show Errors -->
-        <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Automotores INKA</h4>
-                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
+        </main>
+    </transition>
 </template>
 
 <script>
