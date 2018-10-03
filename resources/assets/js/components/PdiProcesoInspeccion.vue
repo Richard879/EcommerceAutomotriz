@@ -1361,6 +1361,7 @@
             asignarVin(nIdCompra, cNumeroVin){
                 this.formPdi.nidcompra = nIdCompra;
                 this.formPdi.cvinplacanombre = cNumeroVin;
+                this.formPdi.nidvehiculoplaca = 0;
                 this.cerrarModal();
             },
             llenarComboMarca(){
@@ -1394,10 +1395,11 @@
             changeFlagVinPlaca(){
                 this.formPdi.cvinplacanombre = '';
                 this.formPdi.nidcompra = 0;
+                this.formPdi.nidvehiculoplaca = 0;
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
-
+                //this.
             },
             //=============== LISTAR MODAL PLANTILLA ===================
             listarSeccion(){
@@ -1490,20 +1492,31 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    cNombrePuntoInspeccion: this.formPdi.cnombre,
-                    nFlagTipoMovimiento: this.formPdi.nidflagmovimiento,
-                    nFlagIngresoSucursal: this.formPdi.nidflagingreso,
-                    nFlagSalidaSucursal: this.formPdi.nidflagsalida
+                    nIdPuntoInspeccion: this.formPdi.nidpuntoinspeccion,
+                    nIdSolicitudAutorizacion: this.formPdi.nIdSolicitudAutorizacion,
+                    nIdCompra: this.formPdi.nidcompra,
+                    nIdVehiculoPlaca: this.formPdi.nidvehiculoplaca,
+                    nIdTipoInspeccion: this.formPdi.nidtipoinspeccion,
+                    nIdAlmacen: this.formPdi.nidalmacen,
+                    cNumeroInspeccion: this.formPdi.cnumeroinspeccion,
+                    dFechaInspeccion: this.formPdi.dfechainspeccion,
+                    cHoraInspeccion: this.formPdi.chorainspeccion,
+                    cFlagTipoMovimiento: this.formPdi.nidflagmovimiento == 1 ? 'I' : 'S',
+                    cFlagVinPlaca: this.formPdi.nidcompra == 0 ? 'P' : 'V',
+                    cNumeroMovimientoAlmacen: '',
+                    dFechaMovimientoAlmacen: this.formPdi.dfechaalmacen,
+                    nIdMotivoNoConformidad: this.formPdi.nflagconformidad,
+                    cObservacion: this.formPdi.cobservacion
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
+                    /*if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Item Agregado registrada');
-                        this.vistaFormulario = 1;
+                        //this.vistaFormulario = 1;
                         //this.listarItemPlantilla();
                     }
                     else{
                         swal('Ya existe Item');
-                    }
+                    }*/
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1512,8 +1525,8 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.formPdi.cnombre){
-                    this.mensajeError.push('Debes Seleccionar Sección');
+                if(!this.formPdi.nidpuntoinspeccion){
+                    this.mensajeError.push('Debes Seleccionar Punto Inspección');
                 };
                 if(this.formPdi.nFlagIngresoSucursal == 0){
                     this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
