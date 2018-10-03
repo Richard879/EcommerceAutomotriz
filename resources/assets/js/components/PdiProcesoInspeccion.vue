@@ -805,6 +805,117 @@
                 </div>
             </div>
 
+            <!-- MODAL VEHICULO PLACA -->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">BUSQUEDA VEHICULO POR PLACA</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Nombre</label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group">
+                                                                        <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
+                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <template v-if="arrayVehiculoPlaca.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Seleccione</th>
+                                                                        <th>Placa</th>
+                                                                        <th>Nombre Comercial</th>
+                                                                        <th>Año / Mes</th>
+                                                                        <th>Linea</th>
+                                                                        <th>Forma de Pago</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                                        <td>
+                                                                            <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td v-text="vehiculo.cPlaca"></td>
+                                                                        <td v-text="vehiculo.cNombreComercial"></td>
+                                                                        <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
+                                                                        <td v-text="vehiculo.cNombreLinea"></td>
+                                                                        <td v-text="vehiculo.cFormaPago"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <nav>
+                                                                        <ul class="pagination">
+                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                            </li>
+                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                            :class="[page==isActivedModal?'active':'']">
+                                                                                <a class="page-link"
+                                                                                href="#" @click.prevent="cambiarPaginaVehiculosByCriterio(page)"
+                                                                                v-text="page"></a>
+                                                                            </li>
+                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                                <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- MODAL PLANILLA -->
             <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -1059,6 +1170,12 @@
                 arrayCompra: [],
                 arrayMarca: [],
                 arrayModelo: [],
+                // ===================================================
+                // ============ MODAL VEHICULO PLACA =================
+                fillVehiculoPlaca:{
+                    cdescripcion: ''
+                },
+                arrayVehiculoPlaca: [],
                 // ============================================
                 // ============ MODAL PLANILLA =================
                 formPlantilla:{
@@ -1399,7 +1516,27 @@
             },
             //=============== LISTAR MODAL POR PLACA ===================
             listarPorPlaca(page){
-                //this.
+                var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal' : 1300013,
+                        'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
+                        'criterio': this.fillBusquedaSolicitud.nidtipobusqueda,
+                        'page' : page,
+                    }
+                }).then(response => {
+                    let info = response.data.arrayVehiculosByCriterio;
+                    this.arrayVehiculosByCriterio     = info.data;
+                    this.paginationModal.current_page =  info.current_page;
+                    this.paginationModal.total        = info.total;
+                    this.paginationModal.per_page     = info.per_page;
+                    this.paginationModal.last_page    = info.last_page;
+                    this.paginationModal.from         = info.from;
+                    this.paginationModal.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             //=============== LISTAR MODAL PLANTILLA ===================
             listarSeccion(){

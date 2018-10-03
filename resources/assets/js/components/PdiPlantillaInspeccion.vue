@@ -45,11 +45,11 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Sección</label>
+                                                    <label class="col-sm-4 form-control-label">* Área</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPlantilla.nidseccion" filterable>
+                                                        <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
                                                             <el-option
-                                                            v-for="item in arraySeccion"
+                                                            v-for="item in arrayFlag"
                                                             :key="item.nIdPar"
                                                             :label="item.cParNombre"
                                                             :value="item.nIdPar">
@@ -60,11 +60,11 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Área</label>
+                                                    <label class="col-sm-4 form-control-label">* Sección</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                        <el-select v-model="formPlantilla.nidseccion" filterable>
                                                             <el-option
-                                                            v-for="item in arrayFlag"
+                                                            v-for="item in arraySeccion"
                                                             :key="item.nIdPar"
                                                             :label="item.cParNombre"
                                                             :value="item.nIdPar">
@@ -119,8 +119,8 @@
                                                     <tr>
                                                         <th>Código</th>
                                                         <th>Tipo Inspección</th>
-                                                        <th>Sección</th>
                                                         <th>Área</th>
+                                                        <th>Sección</th>
                                                         <th>Item Nombre</th>
                                                         <th>Acciones</th>
                                                     </tr>
@@ -129,8 +129,8 @@
                                                     <tr v-for="plantilla in arrayPlantilla" :key="plantilla.nIdPlantillaInspeccionSeccionItem">
                                                         <td v-text="plantilla.nIdPlantillaInspeccionSeccionItem"></td>
                                                         <td v-text="plantilla.cNombreTipoInspeccion"></td>
-                                                        <td v-text="plantilla.cSeccionNombre"></td>
                                                         <td v-text="plantilla.cFlagInteriorExterior"></td>
+                                                        <td v-text="plantilla.cSeccionNombre"></td>
                                                         <td v-text="plantilla.cItemNombre"></td>
                                                         <td>
                                                             <template v-if="plantilla.cSituacionRegistro=='A'">

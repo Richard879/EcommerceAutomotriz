@@ -92,4 +92,27 @@ class PdiProcesoController extends Controller
     {
         
     }
+
+    public function GetLstVehiculoPaca(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa  = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $cNumeroVehiculo  = $request->cnrovehiculo;
+        $nCriterio  = $request->criterio;
+
+        $cNumeroVehiculo  = ($cNumeroVehiculo == NULL) ? ($cNumeroVehiculo = ' ') : $cNumeroVehiculo;
+
+        $arrayVehiculoPlaca = DB::select('exec [usp_Pdi_GetLstVehiculoPaca] ?, ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $cNumeroVehiculo,
+                                                                $nCriterio
+                                                            ]);
+
+        $arrayVehiculoPlaca = Parametro::arrayPaginator($arrayVehiculoPlaca, $request);
+        return ['arrayVehiculoPlaca'=>$arrayVehiculoPlaca];
+    }
 }
