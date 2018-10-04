@@ -2,26 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class TramiteController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetPedidosCanceladosByEstadoTramite(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -37,7 +25,7 @@ class TramiteController extends Controller
                                                                 $nIdTramitador
                                                             ]);
 
-        $arrayPedidosCancelados = $this->arrayPaginator($arrayPedidosCancelados, $request);
+        $arrayPedidosCancelados = Parametro::arrayPaginator($arrayPedidosCancelados, $request);
         return ['arrayPedidosCancelados'=>$arrayPedidosCancelados];
     }
 
@@ -148,7 +136,7 @@ class TramiteController extends Controller
                                                                 $fechaFinRealTramite
                                                             ]);
 
-        $arraySolicitudesTramites = $this->arrayPaginator($arraySolicitudesTramites, $request);
+        $arraySolicitudesTramites = Parametro::arrayPaginator($arraySolicitudesTramites, $request);
         return ['arraySolicitudesTramites'=>$arraySolicitudesTramites];
     }
 
@@ -167,7 +155,7 @@ class TramiteController extends Controller
                                                                 $nIdTramitador
                                                             ]);
 
-        $arrayDetalleSolicitudTramite = $this->arrayPaginator($arrayDetalleSolicitudTramite, $request);
+        $arrayDetalleSolicitudTramite = Parametro::arrayPaginator($arrayDetalleSolicitudTramite, $request);
         return ['arrayDetalleSolicitudTramite'=>$arrayDetalleSolicitudTramite];
     }
 
@@ -190,7 +178,7 @@ class TramiteController extends Controller
                                                                 $nIdTramitador
                                                             ]);
 
-        $arrayListadoEstadosTarjetaPlaca = $this->arrayPaginator($arrayListadoEstadosTarjetaPlaca, $request);
+        $arrayListadoEstadosTarjetaPlaca = Parametro::arrayPaginator($arrayListadoEstadosTarjetaPlaca, $request);
         return ['arrayListadoEstadosTarjetaPlaca'=>$arrayListadoEstadosTarjetaPlaca];
     }
 
