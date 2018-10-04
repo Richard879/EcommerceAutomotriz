@@ -43,20 +43,18 @@
                                                                             <div class="col-md-8 widthFull">
                                                                                 <div class="input-group">
                                                                                     <el-input placeholder="Buscar Placa" v-model="fillBusquedaVehiculo.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 1)"></el-button>
+                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 2)"></el-button>
                                                                                     </el-input>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Inspección</label>
+                                                                            <label class="col-sm-4 form-control-label">Fecha Solicitud</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
-                                                                                    v-model="fillBusquedaVehiculo.dfechaInseccion"
+                                                                                    v-model="fillBusquedaVehiculo.dfechaSolicitud"
                                                                                     type="date"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
@@ -65,6 +63,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-md-6">
                                                                         <div class="row">
                                                                             <label class="col-md-4 form-control-label">*Estado</label>
@@ -158,7 +158,7 @@
                                     <div class="col-lg-12">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="h4">BUSQUEDA VEHICULO POR {{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }} </h3>
+                                                <h3 class="h4">BUSQUEDA VEHICULO POR PLACA </h3>
                                             </div>
                                             <div class="card-body">
                                                 <div class="col-lg-12">
@@ -184,58 +184,30 @@
                                                     <template v-if="arrayVehiculosByCriterio.length">
                                                         <div class="table-responsive">
                                                             <table class="table table-striped table-sm">
-                                                                <template v-if="fillBusquedaSolicitud.nidtipobusqueda == 1">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>VIN</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año / Mes</th>
-                                                                            <th>Linea</th>
-                                                                            <th>Forma de Pago</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cNumeroVin">
-                                                                            <td>
-                                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td v-text="vehiculo.cNumeroVin"></td>
-                                                                            <td v-text="vehiculo.cNombreComercial"></td>
-                                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                            <td v-text="vehiculo.cNombreLinea"></td>
-                                                                            <td v-text="vehiculo.cFormaPago"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>Placa</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año / Mes</th>
-                                                                            <th>Linea</th>
-                                                                            <th>Forma de Pago</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
-                                                                            <td>
-                                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td v-text="vehiculo.cPlaca"></td>
-                                                                            <td v-text="vehiculo.cNombreComercial"></td>
-                                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                            <td v-text="vehiculo.cNombreLinea"></td>
-                                                                            <td v-text="vehiculo.cFormaPago"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </template>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Seleccione</th>
+                                                                        <th>Placa</th>
+                                                                        <th>Nombre Comercial</th>
+                                                                        <th>Año / Mes</th>
+                                                                        <th>Linea</th>
+                                                                        <th>Forma de Pago</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                                        <td>
+                                                                            <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td v-text="vehiculo.cPlaca"></td>
+                                                                        <td v-text="vehiculo.cNombreComercial"></td>
+                                                                        <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
+                                                                        <td v-text="vehiculo.cNombreLinea"></td>
+                                                                        <td v-text="vehiculo.cFormaPago"></td>
+                                                                    </tr>
+                                                                </tbody>
                                                             </table>
                                                         </div>
                                                         <div class="col-lg-12">
@@ -299,16 +271,12 @@
                 // VARIABLES MIS VEHÍCULOS
                 // =============================================================
                 fillBusquedaVehiculo: {
-                    nidtipobusqueda: '1',
+                    nidtipobusqueda: '2',
                     nidvehiculo: '',
                     cnrovehiculo: '',
-                    dfechaInseccion: '',
+                    dfechaSolicitud: '',
                     nidestado: ''
                 },
-                arrayTipoBusquedaVehiculo: [
-                    { value: '1', text: 'VIN'},
-                    { value: '2', text: 'PLACA'}
-                ],
                 arrayEstado: [],
                 arrayMisVehiculos : [],
                 // ===============================
