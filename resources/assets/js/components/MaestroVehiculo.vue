@@ -1486,7 +1486,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    (data == 1) ? this.fillBusquedaVehiculo.nidmodelo='' : this.fillNuevoVehiculo.nidmodelo='';
+                    (data == 1) ? this.fillBusquedaVehiculo.nidmodelo=0 : this.fillNuevoVehiculo.nidmodelo=0;
                 }).catch(error => {
                     console.log(error);
                 });
