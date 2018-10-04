@@ -227,6 +227,7 @@
                                                     <div class="col-sm-5">
                                                         <el-select v-model="formPdi.nidtipoinspeccion" 
                                                                     filterable 
+                                                                    clearable
                                                                     placeholder="SELECCIONE">
                                                             <el-option
                                                             v-for="item in arrayTipoInspeccion"

@@ -50,7 +50,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Clase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayClase"
                                                             :key="item.nIdPar"
@@ -65,7 +65,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">SubClase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidsubclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arraySubClase"
                                                             :key="item.nIdPar"
@@ -82,7 +82,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                        <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                             <el-option
                                                             v-for="item in arrayLinea"
                                                             :key="item.nIdPar"
@@ -97,7 +97,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Marca</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                             v-for="item in arrayMarca"
                                                             :key="item.nIdPar"
@@ -114,7 +114,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Modelo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayModelo"
                                                             :key="item.nIdPar"
@@ -278,7 +278,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Clase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayClase"
                                                             :key="item.nIdPar"
@@ -293,7 +293,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Sub Clase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidsubclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arraySubClase"
                                                             :key="item.nIdPar"
@@ -310,7 +310,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Linea Vehículo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                        <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                             <el-option
                                                             v-for="item in arrayLinea"
                                                             :key="item.nIdPar"
@@ -325,7 +325,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Marca</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                             v-for="item in arrayMarca"
                                                             :key="item.nIdPar"
@@ -342,7 +342,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Modelo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                             v-for="item in arrayModelo"
                                                             :key="item.nIdPar"
@@ -531,13 +531,11 @@
                 formVersion:{
                     nidproveedor: 0,
                     cproveedornombre: '',
-                    nidclase: 0,
-                    nidsubclase: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
+                    nidclase: '',
+                    nidsubclase: '',
+                    nidlinea: '',
+                    nidmarca: '',
                     nidmodelo: 0,
-                    nidaniofabricacion: 0,
-                    nidanioversion: 0,
                     nidversionveh: 0,
                     cnombrecomercial:''
                 },
@@ -627,8 +625,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110029,
-                        'opcion' : 0
+                        'ngrupoparid' : 110029
                     }
                 }).then(response => {
                     this.arrayClase = response.data;
@@ -641,8 +638,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110030,
-                        'opcion' : 0
+                        'ngrupoparid' : 110030
                     }
                 }).then(response => {
                     this.arraySubClase = response.data;
@@ -661,7 +657,7 @@
                 }).then(response => {
                     this.arrayLinea = response.data;
                     if(this.vistaFormulario){
-                        this.formVersion.nidlinea = 0;
+                        this.formVersion.nidlinea = '';
                     }
                     this.llenarComboMarca();
                 }).catch(error => {
@@ -678,7 +674,7 @@
                 }).then(response => {
                     this.arrayMarca = response.data;
                     if(this.vistaFormulario){
-                        this.formVersion.nidmarca = 0;
+                        this.formVersion.nidmarca = '';
                     }
                     this.arrayModelo = [];
                     this.llenarComboModelo();
@@ -696,7 +692,7 @@
                 }).then(response => {
                     this.arrayModelo = response.data;
                     if(this.vistaFormulario){
-                        this.formVersion.nidmodelo = 0;
+                        this.formVersion.nidmodelo = '';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -837,19 +833,19 @@
                 if(!this.formVersion.nidproveedor || this.formVersion.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formVersion.nidclase == 0){
+                if(this.formVersion.nidclase == ''){
                     this.mensajeError.push('Debes Ingresar una Clase');
                 };
-                if(this.formVersion.nidsubclase == 0){
+                if(this.formVersion.nidsubclase == ''){
                     this.mensajeError.push('Debes Ingresar una Sub clase');
                 };
-                if(this.formVersion.nidlinea == 0){
+                if(this.formVersion.nidlinea == ''){
                     this.mensajeError.push('Debes Ingresar una Línea');
                 };
-                if(this.formVersion.nidmarca == 0){
+                if(this.formVersion.nidmarca == '0'){
                     this.mensajeError.push('Debes Ingresar una Marca');
                 };
-                if(this.formVersion.nidmodelo == 0){
+                if(this.formVersion.nidmodelo == ''){
                     this.mensajeError.push('Debes Ingresar un Modelo');
                 };
                 if(!this.formVersion.cnombrecomercial){
@@ -1033,14 +1029,12 @@
             limpiarFormulario(){
                 //this.formVersion.nidproveedor= 0,
                 //this.formVersion.cproveedornombre= '',
-                this.formVersion.nidclase=  0,
-                this.formVersion.nidsubclase= 0,
-                this.formVersion.nidlinea= 0,
-                this.formVersion.nidmarca= 0,
-                this.formVersion.nidmodelo= 0,
-                this.formVersion.cnombrecomercial= '',
-                this.formVersion.nidaniofabricacion= 0,
-                this.formVersion.nidanioversion= 0
+                this.formVersion.nidclase=  '',
+                this.formVersion.nidsubclase= '',
+                this.formVersion.nidlinea= '',
+                this.formVersion.nidmarca= '',
+                this.formVersion.nidmodelo= '',
+                this.formVersion.cnombrecomercial= ''
                 //this.arrayVersionVehiculo = []
             },
             mostrarProgressBar(){

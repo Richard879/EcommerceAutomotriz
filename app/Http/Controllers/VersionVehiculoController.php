@@ -41,7 +41,13 @@ class VersionVehiculoController extends Controller
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
         $cNombreComercial = $request->cnombrecomercial;
-        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = ' ') : $cNombreComercial;
+        
+        $nIdClase = ($nIdClase == NULL) ? ($nIdClase = 0) : $nIdClase;
+        $nIdSubClase = ($nIdSubClase == NULL) ? ($nIdSubClase = 0) : $nIdSubClase;
+        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
 
         $arrayVersionVeh = DB::select('exec [usp_VersionVeh_GetVersionVehiculo] ?, ?, ?, ? ,? ,?, ?, ?',
                                                                             [   $nIdEmpresa,
@@ -90,10 +96,10 @@ class VersionVehiculoController extends Controller
                                                             ]);
 
         $data = [];
-        $data[0] = [
+        /*$data[0] = [
             'nIdPar'   => 0,
             'cParNombre' =>'SELECCIONE',
-        ];
+        ];*/
         foreach ($arrayLinea as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdLinea,
@@ -112,10 +118,10 @@ class VersionVehiculoController extends Controller
                                                     ]);
 
         $data = [];
-        $data[0] = [
+        /*$data[0] = [
             'nIdPar'   => 0,
             'cParNombre' =>'SELECCIONE',
-        ];
+        ];*/
         foreach ($arrayMarca as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdMarca,
@@ -134,10 +140,10 @@ class VersionVehiculoController extends Controller
                                                     ]);
 
         $data = [];
-        $data[0] = [
+        /*$data[0] = [
             'nIdPar'   => 0,
             'cParNombre' =>'SELECCIONE',
-        ];
+        ];*/
         foreach ($arrayModelo as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdModelo,

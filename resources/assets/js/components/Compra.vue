@@ -122,7 +122,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -137,7 +137,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -333,7 +333,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formCompra.nidtipolista" filterable placeholder="Select" >
+                                                                                <el-select v-model="formCompra.nidtipolista" filterable clearable placeholder="SELECCIONE" >
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoLista"
                                                                                     :key="item.nIdPar"
@@ -562,7 +562,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -577,7 +577,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -1089,8 +1089,8 @@
                     dfechafin: '',
                     nordencompra: '',
                     cnumerovin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayMarca: [],
                 arrayModelo: [],
@@ -1221,8 +1221,8 @@
         },
         methods:{
             tabBuscarCompra(){
-                this.fillCompra.nidmarca = 0;
-                this.fillCompra.nidmodelo = 0;
+                this.fillCompra.nidmarca = '';
+                this.fillCompra.nidmodelo = '';
                 this.fillCompra.dfechainicio = '';
                 this.fillCompra.dfechafin = '';
                 this.limpiarFormulario();
@@ -1235,8 +1235,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -1258,7 +1257,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillCompra.nidmodelo = 0;
+                    this.fillCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1270,12 +1269,6 @@
             },
             listarCompras(page){
                 this.mostrarProgressBar();
-                if(this.fillCompra.nordencompra == ''){
-                    var nordencompra = 0;
-                }
-                else{
-                    var nordencompra = this.fillCompra.nordencompra;
-                }
 
                 var url = this.ruta + '/compra/GetCompra';
                 axios.get(url, {
@@ -1284,7 +1277,7 @@
                         'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio' : this.fillCompra.dfechainicio,
                         'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : nordencompra,
+                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
                         'cnumerovin' : this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
@@ -1657,8 +1650,8 @@
             // =============  TAB LINEA CREDITO ======================
             tabLineaCredito(){
                 this.arrayLineaCredito = [];
-                this.fillCompra.nidmarca = 0;
-                this.fillCompra.nidmodelo = 0;
+                this.fillCompra.nidmarca = '';
+                this.fillCompra.nidmodelo = '';
             },
             listarCompraNoLineaCredito(page){
                 this.mostrarProgressBar();

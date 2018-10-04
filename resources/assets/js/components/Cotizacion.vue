@@ -99,7 +99,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillMisCotizaciones.nidmarca" filterable placeholder="Select" v-on:change="llenarSoloComboModelo()">
+                                                                                <el-select v-model="fillMisCotizaciones.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarSoloComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -114,7 +114,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillMisCotizaciones.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="fillMisCotizaciones.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -131,7 +131,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado Cotizacion</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillMisCotizaciones.nidestadocotizacion" filterable placeholder="Select">
+                                                                                <el-select v-model="fillMisCotizaciones.nidestadocotizacion" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayEstadoCotizacion"
                                                                                     :key="item.nIdPar"
@@ -1304,7 +1304,7 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Linea</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                            <el-select v-model="fillBusqVehiculo.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                 <el-option
                                                                 v-for="item in arrayLinea"
                                                                 :key="item.nIdPar"
@@ -1319,7 +1319,7 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Marca</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                            <el-select v-model="fillBusqVehiculo.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                 <el-option
                                                                 v-for="item in arrayMarca"
                                                                 :key="item.nIdPar"
@@ -1336,7 +1336,7 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Modelo</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidmodelo" filterable placeholder="Select" >
+                                                            <el-select v-model="fillBusqVehiculo.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
                                                                 v-for="item in arrayModelo"
                                                                 :key="item.nIdPar"
@@ -1674,9 +1674,9 @@
                 fillMisCotizaciones: {
                     fechaInicio: '',
                     fechaFin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    nidestadocotizacion: 0
+                    nidmarca: '',
+                    nidmodelo: '',
+                    nidestadocotizacion: ''
                 },
                 arrayCotizaciones: [],
                 arrayEstadoCotizacion: [],
@@ -1709,9 +1709,9 @@
                     cdireccion: '',
                     cemail: '',
                     nidreferencia: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayTipoMedio: [],
                 arrayReferenciavehiculo: [],
@@ -1734,9 +1734,9 @@
                 fillBusqVehiculo:{
                     cinfotipolista: '',
                     nidtipolista: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0,
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: '',
                     cnombrecomercial: ''
                 },
                 arrayVehiculoModal : [],
@@ -1982,8 +1982,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -2005,7 +2004,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillMisCotizaciones.nidmodelo = 0;
+                    this.fillMisCotizaciones.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2020,8 +2019,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110058,
-                        'opcion' : 0
+                        'ngrupoparid' : 110058
                     }
                 }).then(response => {
                     this.arrayEstadoCotizacion = response.data;
@@ -2537,9 +2535,9 @@
                 this.buscarVehiculos(page);
             },
             limpiarfillBusqVehiculo(){
-                this.fillBusqVehiculo.nidlinea = 0;
-                this.fillBusqVehiculo.nidmarca = 0;
-                this.fillBusqVehiculo.nidmodelo = 0;
+                this.fillBusqVehiculo.nidlinea = '';
+                this.fillBusqVehiculo.nidmarca = '';
+                this.fillBusqVehiculo.nidmodelo = '';
                 this.fillBusqVehiculo.cnombrecomercial = '';
             },
             agregarVehículoLista(vehiculo){
@@ -3120,9 +3118,9 @@
                 this.fillProveedor.nidproveedor = '';
                 this.fillBusqVehiculo.cinfotipolista = '';
                 this.fillBusqVehiculo.cnombrecomercial = '';
-                this.fillBusqVehiculo.nidlinea = 0;
-                this.fillBusqVehiculo.nidmarca = 0;
-                this.fillBusqVehiculo.nidmodelo = 0;
+                this.fillBusqVehiculo.nidlinea = '';
+                this.fillBusqVehiculo.nidmarca = '';
+                this.fillBusqVehiculo.nidmodelo = '';
                 this.fillBusqVehiculo.nidtipolista = 0;
 
                 this.arrayVehiculo = [];

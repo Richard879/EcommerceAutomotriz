@@ -501,7 +501,7 @@
                                                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="hidden" v-model="formNuevoContacto.nidcontacto">
-                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayLinea"
                                                                                                 :key="item.nIdPar"
@@ -518,7 +518,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayMarca"
                                                                                                 :key="item.nIdPar"
@@ -533,7 +533,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayModelo"
                                                                                                 :key="item.nIdPar"
@@ -550,7 +550,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioFabricacion"
                                                                                                 :key="item.nIdPar"
@@ -565,7 +565,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioModelo"
                                                                                                 :key="item.nIdPar"
@@ -1005,7 +1005,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Departamento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable placeholder="Select" v-on:change="llenarComboProv()">
+                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboProv()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayDptos"
                                                                                                 :key="item.id"
@@ -1020,7 +1020,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Provincia</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable placeholder="Select" v-on:change="llenarComboDist()">
+                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboDist()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayProv"
                                                                                                 :key="item.id"
@@ -1037,7 +1037,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Distrito</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayDist"
                                                                                                 :key="item.id"
@@ -1122,7 +1122,7 @@
                                                                                         <div class="row">
                                                                                             <label class="col-sm-4 form-control-label">Profesión</label>
                                                                                             <div class="col-sm-8">
-                                                                                                <el-select v-model="formNuevoContacto.nprofesion" filterable placeholder="Select" >
+                                                                                                <el-select v-model="formNuevoContacto.nprofesion" filterable clearable placeholder="SELECCIONE" >
                                                                                                     <el-option
                                                                                                     v-for="item in arrayProfesion"
                                                                                                     :key="item.nIdPar"
@@ -1266,7 +1266,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayLinea"
                                                                                                 :key="item.nIdPar"
@@ -1283,7 +1283,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayMarca"
                                                                                                 :key="item.nIdPar"
@@ -1298,7 +1298,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayModelo"
                                                                                                 :key="item.nIdPar"
@@ -1315,7 +1315,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioFabricacion"
                                                                                                 :key="item.nIdPar"
@@ -1330,7 +1330,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioModelo"
                                                                                                 :key="item.nIdPar"
@@ -1561,8 +1561,6 @@
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 canio: '2018',
                 cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 arrayTipoDocumento: [],
                 arrayLinea: [],
                 arrayMarca: [],
@@ -1622,9 +1620,9 @@
                     nestadocivil: 0,
                     nprofesion: 0,
                     ccentrolaboral: '',
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0,
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: '',
                     naniofabricacion: 0,
                     naniomodelo: 0,
                     nidcontacto: 0
@@ -2043,19 +2041,19 @@
                 if(this.formNuevoContacto.nidproveedor == 0){
                     this.mensajeError.push('Debes Seleccionar Proveedor');
                 };
-                if(this.formNuevoContacto.nidlinea == 0){
+                if(this.formNuevoContacto.nidlinea == ''){
                     this.mensajeError.push('Debes Seleccionar Linea');
                 };
-                if(this.formNuevoContacto.nidmarca == 0){
+                if(this.formNuevoContacto.nidmarca == ''){
                     this.mensajeError.push('Debes Seleccionar Marca');
                 };
-                if(this.formNuevoContacto.nidmodelo == 0){
+                if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == 0){
+                if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
                 };
-                if(this.formNuevoContacto.naniomodelo == 0){
+                if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
                 if(this.mensajeError.length){
@@ -2464,24 +2462,31 @@
                 this.llenarComboLinea();
             },
             llenarComboLinea(){
-                this.nidempresa = 130011;
+                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
 
-                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor?nidempresa=' + this.nidempresa
-                                                                    + '&nidproveedor=' + this.formNuevoContacto.nidproveedor;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 130011,
+                        'nidproveedor': this.formNuevoContacto.nidproveedor
+                    }
+                }).then(response => {
                     this.arrayLinea = response.data;
-                    this.formNuevoContacto.nidlinea = 0;
+                    this.formNuevoContacto.nidlinea = '';
                     this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea?nidlinea=' + this.formNuevoContacto.nidlinea;
+                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
 
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidlinea': this.formNuevoContacto.nidlinea
+                    }
+                }).then(response => {
                     this.arrayMarca = response.data;
-                    this.formNuevoContacto.nidmarca = 0;
+                    this.formNuevoContacto.nidmarca  = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -2489,27 +2494,37 @@
                 });
             },
             llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca?nidmarca=' + this.formNuevoContacto.nidmarca;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+                axios.get(url, {
+                    params: {
+                        'nidmarca': this.formNuevoContacto.nidmarca
+                    }
+                }).then(response => {
                     this.arrayModelo = response.data;
-                    this.formNuevoContacto.nidmodelo = 0;
+                    this.formNuevoContacto.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboAnioFabricacion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110034
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110034
+                    }
+                }).then(response => {
                     this.arrayAnioFabricacion = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboAnioModelo(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110035
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110035
+                    }
+                }).then(response => {
                     this.arrayAnioModelo = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -2609,19 +2624,19 @@
                 if(this.formNuevoContacto.nidproveedor == 0){
                     this.mensajeError.push('Debes Seleccionar Proveedor');
                 };
-                if(this.formNuevoContacto.nidlinea == 0){
+                if(this.formNuevoContacto.nidlinea == ''){
                     this.mensajeError.push('Debes Seleccionar Linea');
                 };
-                if(this.formNuevoContacto.nidmarca == 0){
+                if(this.formNuevoContacto.nidmarca == ''){
                     this.mensajeError.push('Debes Seleccionar Marca');
                 };
-                if(this.formNuevoContacto.nidmodelo == 0){
+                if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == 0){
+                if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
                 };
-                if(this.formNuevoContacto.naniomodelo == 0){
+                if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
                 if(this.mensajeError.length){
@@ -2853,11 +2868,11 @@
                 this.arrayLinea = [];
                 this.arrayMarca = [];
                 this.arrayModelo = [];
-                this.formNuevoContacto.nidlinea = 0,
-                this.formNuevoContacto.nidmarca = 0,
-                this.formNuevoContacto.nidmodelo = 0,
-                this.formNuevoContacto.naniofabricacion = 0,
-                this.formNuevoContacto.naniomodelo = 0
+                this.formNuevoContacto.nidlinea = '',
+                this.formNuevoContacto.nidmarca  = '',
+                this.formNuevoContacto.nidmodelo = '',
+                this.formNuevoContacto.naniofabricacion = '',
+                this.formNuevoContacto.naniomodelo = ''
                 //Referencia
                 this.arrayReferenciaVehiculo = []
             },
