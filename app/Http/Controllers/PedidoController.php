@@ -20,6 +20,8 @@ class PedidoController extends Controller
         $dFechaFin = $request->dfechafin;
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
 
         $arrayPedido = DB::select('exec usp_Pedido_GetLstCotizacionIngresadas ?, ?, ?, ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
@@ -84,14 +86,20 @@ class PedidoController extends Controller
         $dfechainicio  =   $request->dfechainicio;
         $dfechafin     =   $request->dfechafin;
 
+        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
         $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
 
         $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosPendienteAprobacion ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $nidempresa, $nidsucursal,
-                                        $nidmarca, $nidmodelo,
-                                        $dfechainicio, $dfechafin, Auth::user()->id
+                                        $nidempresa, 
+                                        $nidsucursal,
+                                        $nidmarca, 
+                                        $nidmodelo,
+                                        $dfechainicio, 
+                                        $dfechafin, 
+                                        Auth::user()->id
                                     ]);
 
         $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
@@ -200,6 +208,9 @@ class PedidoController extends Controller
         $nIdModelo      =   $request->nidmodelo;
         $nIdEstadoPedido  = $request->nidestadopedido;
 
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEstadoPedido = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;

@@ -50,7 +50,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Clase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayClase"
                                                             :key="item.nIdPar"
@@ -65,7 +65,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">SubClase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidsubclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arraySubClase"
                                                             :key="item.nIdPar"
@@ -82,7 +82,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                        <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                             <el-option
                                                             v-for="item in arrayLinea"
                                                             :key="item.nIdPar"
@@ -97,7 +97,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Marca</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                             v-for="item in arrayMarca"
                                                             :key="item.nIdPar"
@@ -114,7 +114,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Modelo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayModelo"
                                                             :key="item.nIdPar"
@@ -278,7 +278,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Clase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayClase"
                                                             :key="item.nIdPar"
@@ -293,7 +293,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Sub Clase</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidsubclase" filterable placeholder="Select" >
+                                                        <el-select v-model="formVersion.nidsubclase" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arraySubClase"
                                                             :key="item.nIdPar"
@@ -310,7 +310,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Linea Vehículo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                        <el-select v-model="formVersion.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                             <el-option
                                                             v-for="item in arrayLinea"
                                                             :key="item.nIdPar"
@@ -325,7 +325,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Marca</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                             v-for="item in arrayMarca"
                                                             :key="item.nIdPar"
@@ -342,7 +342,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Modelo</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmodelo" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                             <el-option
                                                             v-for="item in arrayModelo"
                                                             :key="item.nIdPar"
@@ -409,13 +409,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -436,68 +436,68 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -531,13 +531,11 @@
                 formVersion:{
                     nidproveedor: 0,
                     cproveedornombre: '',
-                    nidclase: 0,
-                    nidsubclase: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
+                    nidclase: '',
+                    nidsubclase: '',
+                    nidlinea: '',
+                    nidmarca: '',
                     nidmodelo: 0,
-                    nidaniofabricacion: 0,
-                    nidanioversion: 0,
                     nidversionveh: 0,
                     cnombrecomercial:''
                 },
@@ -627,8 +625,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110029,
-                        'opcion' : 0
+                        'ngrupoparid' : 110029
                     }
                 }).then(response => {
                     this.arrayClase = response.data;
@@ -641,8 +638,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110030,
-                        'opcion' : 0
+                        'ngrupoparid' : 110030
                     }
                 }).then(response => {
                     this.arraySubClase = response.data;
@@ -661,7 +657,7 @@
                 }).then(response => {
                     this.arrayLinea = response.data;
                     if(this.vistaFormulario){
-                        this.formVersion.nidlinea = 0;
+                        this.formVersion.nidlinea = '';
                     }
                     this.llenarComboMarca();
                 }).catch(error => {
@@ -678,7 +674,7 @@
                 }).then(response => {
                     this.arrayMarca = response.data;
                     if(this.vistaFormulario){
-                        this.formVersion.nidmarca = 0;
+                        this.formVersion.nidmarca = '';
                     }
                     this.arrayModelo = [];
                     this.llenarComboModelo();
@@ -696,7 +692,7 @@
                 }).then(response => {
                     this.arrayModelo = response.data;
                     if(this.vistaFormulario){
-                        this.formVersion.nidmodelo = 0;
+                        this.formVersion.nidmodelo = '';
                     }
                 }).catch(error => {
                     console.log(error);
@@ -837,19 +833,19 @@
                 if(!this.formVersion.nidproveedor || this.formVersion.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formVersion.nidclase == 0){
+                if(this.formVersion.nidclase == ''){
                     this.mensajeError.push('Debes Ingresar una Clase');
                 };
-                if(this.formVersion.nidsubclase == 0){
+                if(this.formVersion.nidsubclase == ''){
                     this.mensajeError.push('Debes Ingresar una Sub clase');
                 };
-                if(this.formVersion.nidlinea == 0){
+                if(this.formVersion.nidlinea == ''){
                     this.mensajeError.push('Debes Ingresar una Línea');
                 };
-                if(this.formVersion.nidmarca == 0){
+                if(this.formVersion.nidmarca == '0'){
                     this.mensajeError.push('Debes Ingresar una Marca');
                 };
-                if(this.formVersion.nidmodelo == 0){
+                if(this.formVersion.nidmodelo == ''){
                     this.mensajeError.push('Debes Ingresar un Modelo');
                 };
                 if(!this.formVersion.cnombrecomercial){
@@ -1033,14 +1029,12 @@
             limpiarFormulario(){
                 //this.formVersion.nidproveedor= 0,
                 //this.formVersion.cproveedornombre= '',
-                this.formVersion.nidclase=  0,
-                this.formVersion.nidsubclase= 0,
-                this.formVersion.nidlinea= 0,
-                this.formVersion.nidmarca= 0,
-                this.formVersion.nidmodelo= 0,
-                this.formVersion.cnombrecomercial= '',
-                this.formVersion.nidaniofabricacion= 0,
-                this.formVersion.nidanioversion= 0
+                this.formVersion.nidclase=  '',
+                this.formVersion.nidsubclase= '',
+                this.formVersion.nidlinea= '',
+                this.formVersion.nidmarca= '',
+                this.formVersion.nidmodelo= '',
+                this.formVersion.cnombrecomercial= ''
                 //this.arrayVersionVehiculo = []
             },
             mostrarProgressBar(){

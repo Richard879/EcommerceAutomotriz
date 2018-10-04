@@ -107,7 +107,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                <el-select v-model="formPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -122,7 +122,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formPedido.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="formPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -139,7 +139,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidestadopedido" filterable placeholder="Select">
+                                                                                <el-select v-model="fillPedido.nidestadopedido" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayEstadoPedido"
                                                                                     :key="item.nIdPar"
@@ -309,7 +309,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Marca</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                    <el-select v-model="formPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos()">
                                                                                         <el-option
                                                                                         v-for="item in arrayMarca"
                                                                                         :key="item.nIdPar"
@@ -324,7 +324,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formPedido.nidmodelo" filterable placeholder="Select">
+                                                                                    <el-select v-model="formPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                         <el-option
                                                                                         v-for="item in arrayModelo"
                                                                                         :key="item.nIdPar"
@@ -993,7 +993,7 @@
                     dfechafin: '',
                     cnumeropedido: '',
                     cnumerovin: '',
-                    nidestadopedido: 0
+                    nidestadopedido: ''
                 },
                 arrayEstadoPedido: [],
                 // =============================================================
@@ -1001,8 +1001,8 @@
                 formPedido:{
                     dfechainicio: '',
                     dfechafin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0,
+                    nidmarca: '',
+                    nidmodelo: '',
                     cnumerodocumento: '',
                     cfiltrodescripcion: '',
                     cnombrecontacto: ''
@@ -1130,8 +1130,8 @@
         },
         methods:{
             tabBuscarPedido(){
-                this.formPedido.nidmarca = 0;
-                this.formPedido.nidmodelo = 0;
+                this.formPedido.nidmarca = '';
+                this.formPedido.nidmodelo = '';
                 this.arrayPedido = [];
             },
             llenarEstadoPedido(){
@@ -1139,8 +1139,7 @@
                 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110063,
-                        'opcion' : 0
+                        'ngrupoparid' : 110063
                     }
                 }).then(response => {
                     this.arrayEstadoPedido = response.data;
@@ -1199,8 +1198,7 @@
                 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -1217,7 +1215,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.formPedido.nidmodelo = 0;
+                    this.formPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });

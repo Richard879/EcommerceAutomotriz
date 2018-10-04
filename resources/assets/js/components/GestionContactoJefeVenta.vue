@@ -242,12 +242,15 @@
                                                                                 <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
-                                                                                        <input type="hidden" v-model="formVendedor.nidvendedor">
+                                                                                        <!--<input type="hidden" v-model="formVendedor.nidvendedor">-->
                                                                                         <input type="text" v-model="formVendedor.cvendedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                         <div class="input-group-prepend">
-                                                                                            <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Buscar Vendedor </div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -444,9 +447,12 @@
                                                                                         <input type="hidden" v-model="formReasignarContacto.nreasignaidvendedor">
                                                                                         <input type="text" v-model="formReasignarContacto.creasignavendedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                         <div class="input-group-prepend">
-                                                                                            <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('nuevovendedor','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Buscar Vendedor </div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('nuevovendedor','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -749,9 +755,12 @@
                                                                                         <input type="hidden" v-model="formVendedor.nidvendedor">
                                                                                         <input type="text" v-model="formVendedor.cvendedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                         <div class="input-group-prepend">
-                                                                                            <button type="button" title="Buscar Vendedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
-                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                            </button>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Buscar Vendedor </div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vendedor','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -953,9 +962,12 @@
                                                                                                 <input type="hidden" v-model="formNuevoContacto.nidproveedor">
                                                                                                 <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                                 <div class="input-group-prepend">
-                                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                    </button>
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -966,7 +978,7 @@
                                                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="hidden" v-model="formNuevoContacto.nidcontacto">
-                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayLinea"
                                                                                                 :key="item.nIdPar"
@@ -983,7 +995,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayMarca"
                                                                                                 :key="item.nIdPar"
@@ -998,7 +1010,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayModelo"
                                                                                                 :key="item.nIdPar"
@@ -1015,7 +1027,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioFabricacion"
                                                                                                 :key="item.nIdPar"
@@ -1030,7 +1042,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioModelo"
                                                                                                 :key="item.nIdPar"
@@ -1470,7 +1482,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Departamento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable placeholder="Select" v-on:change="llenarComboProv()">
+                                                                                            <el-select v-model="formNuevoContacto.niddepartamento" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboProv()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayDptos"
                                                                                                 :key="item.id"
@@ -1485,7 +1497,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Provincia</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable placeholder="Select" v-on:change="llenarComboDist()">
+                                                                                            <el-select v-model="formNuevoContacto.nidprovincia" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboDist()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayProv"
                                                                                                 :key="item.id"
@@ -1502,7 +1514,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Distrito</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.niddistrito" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayDist"
                                                                                                 :key="item.id"
@@ -1587,7 +1599,7 @@
                                                                                         <div class="row">
                                                                                             <label class="col-sm-4 form-control-label">Profesión</label>
                                                                                             <div class="col-sm-8">
-                                                                                                <el-select v-model="formNuevoContacto.nprofesion" filterable placeholder="Select" >
+                                                                                                <el-select v-model="formNuevoContacto.nprofesion" filterable clearable placeholder="SELECCIONE" >
                                                                                                     <el-option
                                                                                                     v-for="item in arrayProfesion"
                                                                                                     :key="item.nIdPar"
@@ -1716,9 +1728,12 @@
                                                                                                 <input type="hidden" v-model="formNuevoContacto.nidproveedor">
                                                                                                 <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                                 <div class="input-group-prepend">
-                                                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                    </button>
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1728,7 +1743,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayLinea"
                                                                                                 :key="item.nIdPar"
@@ -1745,7 +1760,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayMarca"
                                                                                                 :key="item.nIdPar"
@@ -1760,7 +1775,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayModelo"
                                                                                                 :key="item.nIdPar"
@@ -1777,7 +1792,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioFabricacion"
                                                                                                 :key="item.nIdPar"
@@ -1792,7 +1807,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable placeholder="Select" >
+                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayAnioModelo"
                                                                                                 :key="item.nIdPar"
@@ -2034,98 +2049,100 @@
                 </div>
             </div>
 
+            <!-- Modal Show Proveedores -->
             <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">LISTADO</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombre</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </div>
-                                                                    </div>
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <template v-if="arrayProveedor.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Seleccione</th>
-                                                                        <th>Nombre Proveedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td v-text="proveedor.cParNombre"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-7">
-                                                                    <nav>
-                                                                        <ul class="pagination">
-                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                            </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                            :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                                v-text="page"></a>
-                                                                            </li>
-                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                                <div class="col-lg-5">
-                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="10">No existen registros!</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </template>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -2138,94 +2155,95 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">LISTADO</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombres</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillVendedor.cnombrevendedor" @keyup.enter="listarVendedores(1)" class="form-control form-control-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="listarVendedores(1);"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </div>
-                                                                    </div>
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombres</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillVendedor.cnombrevendedor" @keyup.enter="listarVendedores(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Vendedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="listarVendedores(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <template v-if="arrayVendedor.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Seleccione</th>
-                                                                        <th>Nombre Vendedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="vendedor in arrayVendedor" :key="vendedor.nIdPar">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarVendedor(vendedor.nIdPar, vendedor.cParNombre);">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td v-text="vendedor.cParNombre"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-7">
-                                                                    <nav>
-                                                                        <ul class="pagination">
-                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                            </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                            :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaVendedor(page)"
-                                                                                v-text="page"></a>
-                                                                            </li>
-                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                                <div class="col-lg-5">
-                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="10">No existen registros!</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </template>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayVendedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Vendedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vendedor in arrayVendedor" :key="vendedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ vendedor.cParNombre }}</div>
+                                                                    <i @click="asignarVendedor(vendedor.nIdPar, vendedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="vendedor.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVendedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -2238,94 +2256,95 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">LISTADO</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombres</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillVendedor.cnombrevendedor" @keyup.enter="listarVendedores(1)" class="form-control form-control-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="listarVendedores(1);"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </div>
-                                                                    </div>
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombres</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillVendedor.cnombrevendedor" @keyup.enter="listarVendedores(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Vendedor </div>
+                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="listarVendedores(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <template v-if="arrayVendedor.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Seleccione</th>
-                                                                        <th>Nombre Vendedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="vendedor in arrayVendedor" :key="vendedor.nIdPar">
-                                                                        <td>
-                                                                            <a href="#" @click="reasignarVendedor(vendedor.nIdPar, vendedor.cParNombre);">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td v-text="vendedor.cParNombre"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-7">
-                                                                    <nav>
-                                                                        <ul class="pagination">
-                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                            </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                            :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaVendedor(page)"
-                                                                                v-text="page"></a>
-                                                                            </li>
-                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                                <div class="col-lg-5">
-                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="10">No existen registros!</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </template>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayVendedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Vendedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vendedor in arrayVendedor" :key="vendedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ vendedor.cParNombre }}</div>
+                                                                    <i @click="reasignarVendedor(vendedor.nIdPar, vendedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="vendedor.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVendedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -2448,11 +2467,11 @@
                     nestadocivil: 0,
                     nprofesion: 0,
                     ccentrolaboral: '',
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    naniofabricacion: 0,
-                    naniomodelo: 0,
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: '',
+                    naniofabricacion: '',
+                    naniomodelo: '',
                     nidcontacto: 0
                 },
                 formNuevoContactoJurifico:{
@@ -3129,19 +3148,19 @@
                 if(this.formNuevoContacto.nidproveedor == 0){
                     this.mensajeError.push('Debes Seleccionar Proveedor');
                 };
-                if(this.formNuevoContacto.nidlinea == 0){
+                if(this.formNuevoContacto.nidlinea == ''){
                     this.mensajeError.push('Debes Seleccionar Linea');
                 };
-                if(this.formNuevoContacto.nidmarca == 0){
+                if(this.formNuevoContacto.nidmarca == ''){
                     this.mensajeError.push('Debes Seleccionar Marca');
                 };
-                if(this.formNuevoContacto.nidmodelo == 0){
+                if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == 0){
+                if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
                 };
-                if(this.formNuevoContacto.naniomodelo == 0){
+                if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
                 if(this.mensajeError.length){
@@ -3551,14 +3570,15 @@
             },
             llenarComboLinea(){
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
+
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidproveedor' : this.formNuevoContacto.nidproveedor
+                        'nidempresa': 130011,
+                        'nidproveedor': this.formNuevoContacto.nidproveedor
                     }
                 }).then(response => {
                     this.arrayLinea = response.data;
-                    this.formNuevoContacto.nidlinea = 0;
+                    this.formNuevoContacto.nidlinea = '';
                     this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
@@ -3573,7 +3593,7 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.formNuevoContacto.nidmarca = 0;
+                    this.formNuevoContacto.nidmarca  = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -3588,24 +3608,30 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.formNuevoContacto.nidmodelo = 0;
+                    this.formNuevoContacto.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboAnioFabricacion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110034
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110034
+                    }
+                }).then(response => {
                     this.arrayAnioFabricacion = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboAnioModelo(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110035
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110035
+                    }
+                }).then(response => {
                     this.arrayAnioModelo = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -3705,19 +3731,19 @@
                 if(this.formNuevoContacto.nidproveedor == 0){
                     this.mensajeError.push('Debes Seleccionar Proveedor');
                 };
-                if(this.formNuevoContacto.nidlinea == 0){
+                if(this.formNuevoContacto.nidlinea == ''){
                     this.mensajeError.push('Debes Seleccionar Linea');
                 };
-                if(this.formNuevoContacto.nidmarca == 0){
+                if(this.formNuevoContacto.nidmarca == ''){
                     this.mensajeError.push('Debes Seleccionar Marca');
                 };
-                if(this.formNuevoContacto.nidmodelo == 0){
+                if(this.formNuevoContacto.nidmodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Modelo');
                 };
-                if(this.formNuevoContacto.naniofabricacion == 0){
+                if(this.formNuevoContacto.naniofabricacion == ''){
                     this.mensajeError.push('Debes Seleccionar Año Fabricación');
                 };
-                if(this.formNuevoContacto.naniomodelo == 0){
+                if(this.formNuevoContacto.naniomodelo == ''){
                     this.mensajeError.push('Debes Seleccionar Año Modelo');
                 };
                 if(this.mensajeError.length){
@@ -4224,11 +4250,11 @@
                 this.arrayLinea = [];
                 this.arrayMarca = [];
                 this.arrayModelo = [];
-                this.formNuevoContacto.nidlinea = 0,
-                this.formNuevoContacto.nidmarca = 0,
-                this.formNuevoContacto.nidmodelo = 0,
-                this.formNuevoContacto.naniofabricacion = 0,
-                this.formNuevoContacto.naniomodelo = 0
+                this.formNuevoContacto.nidlinea = '',
+                this.formNuevoContacto.nidmarca = '',
+                this.formNuevoContacto.nidmodelo = '',
+                this.formNuevoContacto.naniofabricacion = '',
+                this.formNuevoContacto.naniomodelo = ''
                 //Referencia
                 this.arrayReferenciaVehiculo = []
             },

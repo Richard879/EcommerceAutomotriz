@@ -122,7 +122,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -137,7 +137,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -333,7 +333,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formCompra.nidtipolista" filterable placeholder="Select" >
+                                                                                <el-select v-model="formCompra.nidtipolista" filterable clearable placeholder="SELECCIONE" >
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoLista"
                                                                                     :key="item.nIdPar"
@@ -562,7 +562,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -577,7 +577,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -838,13 +838,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -865,68 +865,68 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td>{{proveedor.cParNombre}}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td>{{proveedor.cParNombre}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -993,79 +993,77 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">EDITAR DATOS DE COMPRA</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <form class="form-horizontal">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* O/C</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
-                                                        </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">EDITAR DATOS DE COMPRA</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* O/C</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalCompra.nordencompra" class="form-control-label-readonly"></label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Número VIN</label>
-                                                        <div class="col-sm-8">
-                                                            <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Número Motor</label>
-                                                        <div class="col-sm-8">
-                                                            <input type="text" v-model="formModalCompra.cnumeromotor" class="form-control form-control-sm">
-                                                        </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nombe Comercial</label>
+                                                    <div class="col-sm-8">
+                                                        <label v-text="formModalCompra.cnombrecomercial" class="form-control-label-readonly"></label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Número DUA</label>
-                                                        <div class="col-sm-8">
-                                                            <input type="text" v-model="formModalCompra.cnumerodua" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre Color</label>
-                                                        <div class="col-sm-8">
-                                                            <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
-                                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Número VIN</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnumerovin" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-5">
-                                                    <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizar();">
-                                                        <i class="fa fa-save"></i> Actualizar
-                                                    </button>
-                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
-                                                        <i class="fa fa-close"></i> Cancelar
-                                                    </button>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Número Motor</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnumeromotor" class="form-control form-control-sm">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Número DUA</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnumerodua" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Nombre Color</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="formModalCompra.cnombrecolor" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="actualizar();">
+                                                    <i class="fa fa-save"></i> Actualizar
+                                                </button>
+                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                    <i class="fa fa-close"></i> Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -1091,8 +1089,8 @@
                     dfechafin: '',
                     nordencompra: '',
                     cnumerovin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayMarca: [],
                 arrayModelo: [],
@@ -1223,8 +1221,8 @@
         },
         methods:{
             tabBuscarCompra(){
-                this.fillCompra.nidmarca = 0;
-                this.fillCompra.nidmodelo = 0;
+                this.fillCompra.nidmarca = '';
+                this.fillCompra.nidmodelo = '';
                 this.fillCompra.dfechainicio = '';
                 this.fillCompra.dfechafin = '';
                 this.limpiarFormulario();
@@ -1237,8 +1235,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -1260,7 +1257,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillCompra.nidmodelo = 0;
+                    this.fillCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1272,12 +1269,6 @@
             },
             listarCompras(page){
                 this.mostrarProgressBar();
-                if(this.fillCompra.nordencompra == ''){
-                    var nordencompra = 0;
-                }
-                else{
-                    var nordencompra = this.fillCompra.nordencompra;
-                }
 
                 var url = this.ruta + '/compra/GetCompra';
                 axios.get(url, {
@@ -1286,7 +1277,7 @@
                         'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio' : this.fillCompra.dfechainicio,
                         'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : nordencompra,
+                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
                         'cnumerovin' : this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
@@ -1659,8 +1650,8 @@
             // =============  TAB LINEA CREDITO ======================
             tabLineaCredito(){
                 this.arrayLineaCredito = [];
-                this.fillCompra.nidmarca = 0;
-                this.fillCompra.nidmodelo = 0;
+                this.fillCompra.nidmarca = '';
+                this.fillCompra.nidmodelo = '';
             },
             listarCompraNoLineaCredito(page){
                 this.mostrarProgressBar();
