@@ -111,7 +111,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr/>                       
+                                    <br/>                       
                                     <template v-if="arrayPlantilla.length">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
@@ -246,7 +246,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
+                                            <br/>
                                             <template v-if="arrayItem.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
@@ -486,6 +486,7 @@
                     params: {
                         'nidempresa' : 1300011,
                         'nidtipoinspeccion' : this.formPlantilla.nidtipoinspeccion,
+                        'nidflag': this.formPlantilla.nidflag,
                         'nidseccion': this.formPlantilla.nidseccion,
                         'page' : page
                     }

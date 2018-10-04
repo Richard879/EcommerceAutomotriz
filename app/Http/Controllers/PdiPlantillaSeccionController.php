@@ -30,11 +30,13 @@ class PdiPlantillaSeccionController extends Controller
  
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
+        $nIdFlag = $request->nidflag;
         $nIdSeccion = $request->nidseccion;
                 
-        $arrayPlantilla = DB::select('exec [usp_PlantillaInspeccion_GetListItems] ?, ?, ?', 
+        $arrayPlantilla = DB::select('exec [usp_PlantillaInspeccion_GetListItems] ?, ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
                                                                         $nIdTipoInspeccion,
+                                                                        $nIdFlag,
                                                                         $nIdSeccion
                                                                     ]);
 
