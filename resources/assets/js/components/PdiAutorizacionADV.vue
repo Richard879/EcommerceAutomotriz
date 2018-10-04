@@ -423,7 +423,7 @@
                                                                                         <el-date-picker
                                                                                             v-model="fillNuevaSolicitud.dfechasolicitud"
                                                                                             value-format="yyyy-MM-dd"
-                                                                                            format="yyyy/MM/dd"
+                                                                                            format="dd/MM/yyyy"
                                                                                             type="date"
                                                                                             placeholder="Seleccionar fecha de solicitud">
                                                                                         </el-date-picker>
@@ -594,7 +594,7 @@
                                                                                         <el-date-picker
                                                                                             v-model="fillNuevaSolicitud.dfechamovimiento"
                                                                                             value-format="yyyy-MM-dd"
-                                                                                            format="yyyy/MM/dd"
+                                                                                            format="dd/MM/yyyy"
                                                                                             type="date"
                                                                                             placeholder="Seleccionar fecha de Movimiento">
                                                                                         </el-date-picker>
