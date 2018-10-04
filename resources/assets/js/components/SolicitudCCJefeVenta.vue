@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA JEFE DE VENTAS</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom"> CARTA DE CARTERÍSTICA JEFE DE VENTAS</h2>
+                </div>
             </header>
 
             <section class="forms">
