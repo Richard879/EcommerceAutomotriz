@@ -69,7 +69,7 @@
                                             <div class="row">
                                                 <label class="col-md-4 form-control-label">Marca</label>
                                                 <div class="col-md-8">
-                                                    <el-select v-model="fillBusquedaPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                    <el-select v-model="fillBusquedaPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                         <el-option
                                                         v-for="item in arrayMarca"
                                                         :key="item.nIdPar"
@@ -84,7 +84,7 @@
                                             <div class="row">
                                                 <label class="col-md-4 form-control-label">Modelo</label>
                                                 <div class="col-md-8">
-                                                    <el-select v-model="fillBusquedaPedido.nidmodelo" filterable placeholder="Select">
+                                                    <el-select v-model="fillBusquedaPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                         <el-option
                                                         v-for="item in arrayModelo"
                                                         :key="item.nIdPar"
@@ -234,8 +234,8 @@
                     cempresa: 'SAISAC',
                     nidsucursal: sessionStorage.getItem("nIdSucursal"),
                     csucursal: sessionStorage.getItem("cNombreSucursal"),
-                    nidlinea: 0,
-                    nidmarca: 0,
+                    nidlinea: '',
+                    nidmarca: '',
                     nidmodelo: 0,
                     dfechainicio: '',
                     dfechafin: ''
@@ -327,12 +327,11 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.fillBusquedaPedido.nidmarca = 0;
+                    this.fillBusquedaPedido.nidmarca = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -347,7 +346,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillBusquedaPedido.nidmodelo = 0;
+                    this.fillBusquedaPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });
