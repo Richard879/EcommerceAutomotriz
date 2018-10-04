@@ -234,7 +234,7 @@
                                                                                         <el-date-picker
                                                                                             v-model="fillNuevaSolicitud.dfechasolicitud"
                                                                                             value-format="yyyy-MM-dd"
-                                                                                            format="yyyy/MM/dd"
+                                                                                            format="dd/MM/yyyy"
                                                                                             type="date"
                                                                                             placeholder="Seleccionar fecha de solicitud">
                                                                                         </el-date-picker>
@@ -405,7 +405,7 @@
                                                                                         <el-date-picker
                                                                                             v-model="fillNuevaSolicitud.dfechamovimiento"
                                                                                             value-format="yyyy-MM-dd"
-                                                                                            format="yyyy/MM/dd"
+                                                                                            format="dd/MM/yyyy"
                                                                                             type="date"
                                                                                             placeholder="Seleccionar fecha de Movimiento">
                                                                                         </el-date-picker>
@@ -1115,23 +1115,27 @@
                 });
             },
             asignarVehiculo(vehiculo){
-                if(this.fillNuevaSolicitud.nidtipobusqueda == 1){
-                    if (this.flagBuscarVehiculoByCriterio == 1) {
+                //Si es 1 entonces es abierto desde el TAB MisSolcitidues
+                if (this.flagBuscarVehiculoByCriterio == 1) {
+                    //Si el tipo de busqueda es 1 entonces por VIN
+                    if(this.fillBusquedaSolicitud.nidtipobusqueda == 1){
                         this.fillBusquedaSolicitud.nidvehiculo = vehiculo.nIdCompra;
                         this.fillBusquedaSolicitud.cnrovehiculo = vehiculo.cNumeroVin;
-                    } else {
-                        this.fillNuevaSolicitud.nidvehiculo = vehiculo.nIdCompra;
-                        this.fillNuevaSolicitud.cnrovehiculo = vehiculo.cNumeroVin;
-                    }
-                } else {
-                    if (this.flagBuscarVehiculoByCriterio == 1) {
+                    } else {//Sino es por Placa
                         this.fillBusquedaSolicitud.nidvehiculo = vehiculo.nIdVehiculoPlaca;
                         this.fillBusquedaSolicitud.cnrovehiculo = vehiculo.cPlaca;
-                    } else {
+                    }
+                } else {//Si es 2 entonces es abierto desde el TAB Nueva Solicitud
+                    //Si el tipo de busqueda es 1 entonces por VIN
+                    if(this.fillNuevaSolicitud.nidtipobusqueda == 1){
+                        this.fillNuevaSolicitud.nidvehiculo = vehiculo.nIdCompra;
+                        this.fillNuevaSolicitud.cnrovehiculo = vehiculo.cNumeroVin;
+                    } else {//Sino es por Placa
                         this.fillNuevaSolicitud.nidvehiculo = vehiculo.nIdVehiculoPlaca;
                         this.fillNuevaSolicitud.cnrovehiculo = vehiculo.cPlaca;
                     }
                 }
+
                 this.modalVehiculo.cnrovehiculo = '';
                 this.cerrarModalSolicitud();
             },
