@@ -533,6 +533,12 @@
                                                                             </table>
                                                                         </div>
                                                                     </template>
+                                                                    <template v-else>
+                                                                        <el-alert
+                                                                            title="No se encuentran referencias"
+                                                                            type="warning">
+                                                                        </el-alert>
+                                                                    </template>
                                                                 </div>
                                                             </div>
                                                         </section>

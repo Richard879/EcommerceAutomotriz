@@ -18,7 +18,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="tab02" href="#TabNuevoVehiculo" @click="tabNuevoVehiculo" role="tab" data-toggle="tab">
+                                    <a class="nav-link" id="tab02" href="#TabNuevoVehiculo" @click="tabNuevoVehiculo('', 1)" role="tab" data-toggle="tab">
                                         <i class="fa fa-list-alt"></i> NUEVO VEHÍCULO
                                     </a>
                                 </li>
@@ -170,36 +170,28 @@
                                                             <div class="col-lg-12">
                                                                 <template v-if="arrayVehiculoBuscar.length">
                                                                     <div class="table-responsive barraLateral">
-                                                                        <table class="table table-striped table-sm">
-                                                                             <thead>
-                                                                                <tr>
-                                                                                    <th>Placa</th>
-                                                                                    <th>Año Fabricación</th>
-                                                                                    <th>Marca</th>
-                                                                                    <th>Modelo</th>
-                                                                                    <th>Serie</th>
-                                                                                    <th>Tarjeta</th>
-                                                                                    <th>Propietario</th>
-                                                                                    <th>D.Identificación</th>
-                                                                                    <th>Celular</th>
-                                                                                    <th>SOAT</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="vehiculo in arrayVehiculoBuscar" :key="vehiculo.nidvehiculo">
-                                                                                    <td v-text="vehiculo.cPlaca"></td>
-                                                                                    <td v-text="vehiculo.cAnioFab"></td>
-                                                                                    <td v-text="vehiculo.cMarca"></td>
-                                                                                    <td v-text="vehiculo.cModelo"></td>
-                                                                                    <td v-text="vehiculo.cNroSerie"></td>
-                                                                                    <td v-text="vehiculo.cNroTarjeta"></td>
-                                                                                    <td v-text="vehiculo.cPropietario"></td>
-                                                                                    <td v-text="vehiculo.cNroIdentificacion"></td>
-                                                                                    <td v-text="vehiculo.cNroCelular"></td>
-                                                                                    <td v-text="vehiculo.cEstado"></td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
+                                                                        <el-table v-loading="loading" :data="arrayVehiculoBuscar" style="width: 100%">
+                                                                            <el-table-column  property="cPlaca"   label="Placa"   width="100"></el-table-column>
+                                                                            <el-table-column  property="cAnioFab"   label="Año Fabricación"   width="100"></el-table-column>
+                                                                            <el-table-column  property="cMarca"   label="Marca"   width="120"></el-table-column>
+                                                                            <el-table-column  property="cModelo"   label="Modelo"   width="170"></el-table-column>
+                                                                            <el-table-column  property="cNroSerie"   label="Serie"   width="100"></el-table-column>
+                                                                            <el-table-column  property="cNroTarjeta"   label="Tarjeta"   width="90"></el-table-column>
+                                                                            <el-table-column  property="cPropietario"   label="Propietario"   width="130"></el-table-column>
+                                                                            <el-table-column  property="cNroIdentificacion"   label="D.Identificación"  width="80"></el-table-column>
+                                                                            <el-table-column  property="cNroCelular"   label="Celular"   width="80"></el-table-column>
+                                                                            <el-table-column  property="cEstado"   label="SOAT"   show-overflow-tooltip></el-table-column>
+                                                                            <el-table-column  fixed="right"   label="Acciones"   width="80">
+                                                                                <template slot-scope="scope">
+                                                                                    <el-tooltip class="item"
+                                                                                                effect="dark"
+                                                                                                content="Editar"
+                                                                                                placement="top-start">
+                                                                                        <el-button @click="tabNuevoVehiculo(scope.row, 2)"><i class="fa fa-edit"></i></el-button>
+                                                                                    </el-tooltip>
+                                                                                </template>
+                                                                            </el-table-column>
+                                                                        </el-table>
                                                                         <div class="col-lg-12">
                                                                             <div class="row">
                                                                                 <div class="col-lg-7">
@@ -449,7 +441,7 @@
                                                                                     <div class="col-sm-8">
                                                                                         <el-input
                                                                                             placeholder="Número de Serie"
-                                                                                            type="number"
+                                                                                            type="text"
                                                                                             v-model="fillNuevoVehiculo.cnroserie"
                                                                                             clearable>
                                                                                         </el-input>
@@ -462,7 +454,7 @@
                                                                                     <div class="col-sm-8">
                                                                                         <el-input
                                                                                             placeholder="Número de Rueda"
-                                                                                            type="number"
+                                                                                            type="text"
                                                                                             v-model="fillNuevoVehiculo.cnrorueda"
                                                                                             clearable>
                                                                                         </el-input>
@@ -1288,6 +1280,7 @@
                 // ======================================
                 // VARIABLES SUBTAB VEHÍCULO
                 // ======================================
+                cFlagEditar: '',
                 fillNuevoVehiculo: {
                     cnroplaca: '',
                     cnrotarjetapropiedad: '',
@@ -1398,7 +1391,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         mounted() {
@@ -1478,7 +1472,7 @@
                     console.log(error);
                 });
             },
-            llenarComboModelo(data){
+            llenarComboModelo(data, flag){
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url,{
                     params: {
@@ -1486,7 +1480,9 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    (data == 1) ? this.fillBusquedaVehiculo.nidmodelo=0 : this.fillNuevoVehiculo.nidmodelo=0;
+                    if(data == 1 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=0
+                    if(data == 2 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=0
+                    // (data == 1) ? this.fillBusquedaVehiculo.nidmodelo=0 : this.fillNuevoVehiculo.nidmodelo=0;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1548,20 +1544,37 @@
             // =================================================================
             // METODOS TAB NUEVO VEHICULO
             // =================================================================
-            tabNuevoVehiculo(){
+            /**
+             * Si "data" es vacio y "op" es 1 viene de la selección del TAB Nuevo Vehículo
+             * Si "data" no es vacio y "op" es 2 viene de presionar el botón "Editar"
+             */
+            tabNuevoVehiculo(data, op){
+                this.cFlagEditar = op;
                 this.tabVehiculo();
                 this.limpiarTabBusquedaVehiculo();
                 this.llenarComboClase();
                 this.llenarComboMarca(2);
-                this.llenarComboModelo(2);
+                //this.llenarComboModelo(2);
+                (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
                 this.llenarComboColor();
                 this.llenarComboAnioFabricacion();
                 this.llenarComboCombustible();
+                this.$nextTick(function () {
+                    (this.cFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
+                })
             },
             // ================================
             // METODOS SUBTAB VEHICULO
             // ================================
             tabVehiculo(){
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link active');
+
+                $('#TabBuscarVehiculo').removeClass('in active show');
+                $('#TabNuevoVehiculo').addClass('in active show');
+
                 $('#tab0201').removeClass('nav-link active');
                 $('#tab0201').addClass('nav-link active');
                 $('#tab0202').removeClass('nav-link active');
@@ -1648,7 +1661,7 @@
             // METODOS SUBTAB PROPIETARIO
             // ================================
             tabPropietario(){
-                this.limpiarPropietario();
+                (this.cFlagEditar == 1) ? this.limpiarPropietario(): '';
                 this.tabDatosPersonales();
             },
             limpiarPropietario(){
@@ -1832,6 +1845,7 @@
                 this.fillPropietario.nestadocivil = '';
                 this.fillPropietario.nprofesion = '';
                 this.fillPropietario.ccentrolaboral = '';
+                this.fillPropietario.cnrolicencia = '';
             },
             llenarComboDptos(){
                 var url = this.ruta + '/ubigeo/GetDptos';
@@ -2063,6 +2077,9 @@
             removerSOAT(index){
                 this.$delete(this.arraySOAT, index);
             },
+            /**
+             * REGISTRA EL MAESTRO VEHÍCULO
+             */
             registrarMaestroVehiculo(){
                 if(this.validarRegistroMaestroVehiculo()){
                     this.accionmodal=1;
@@ -2082,6 +2099,9 @@
                     console.log(error);
                 });
             },
+            /**
+             * REGISTRA EL NUEVO CONTACTO
+             */
             registrarNuevoContacto(data){
                 if (this.fillPropietario.ntipopersona == "1") {
                     this.registrarPersonaNatural(data);
@@ -2089,6 +2109,9 @@
                     this.registrarPersonaJuridica(data);
                 }
             },
+            /**
+             * REGISTRA CONTACTO NATURAL
+             */
             registrarPersonaNatural(data){
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarPerNatural';
                 axios.post(url, {
@@ -2104,6 +2127,9 @@
                     console.log(error);
                 });
             },
+            /**
+             * REGISTRA CONTACTO JURIDICO
+             */
             registrarPersonaJuridica(data){
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarPerJuridica';
                 axios.post(url, {
@@ -2119,10 +2145,13 @@
                     console.log(error);
                 });
             },
+            /**
+             * REGISTRA SOAT
+             */
             registrarSOAT(data){
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarSoat';
                 axios.post(url, {
-                    arraySOAT            :   this.arraySOAT,
+                    arraySOAT           :   this.arraySOAT,
                     fillProveedor       :   this.fillProveedor,
                     nIdVehiculoPlaca    :   data
                 }).then(response => {
@@ -2188,6 +2217,29 @@
                 }
                 return this.error;
             },
+            cargarDatosEditar(data){
+                this.fillNuevoVehiculo.cnroplaca = data['cPlaca'];
+                this.fillNuevoVehiculo.cnrotarjetapropiedad = data['cNroTarjeta'];
+                this.fillNuevoVehiculo.nidclase = (data['nIdClaseVehiculo'] == 0) ? '' : data['nIdClaseVehiculo'];
+                this.fillNuevoVehiculo.nidmarca = (data['nIdMarca'] == 0) ? '' : data['nIdMarca'];
+                this.fillNuevoVehiculo.nidmodelo = (data['nIdModelo'] == 0) ? '' : data['nIdModelo'];
+                this.fillNuevoVehiculo.nidcolor = (data['nIdColor'] == 0) ? '' : data['nIdColor'];
+                this.fillNuevoVehiculo.nidaniofabricacion = data['nAnioFabricacion'];
+                this.fillNuevoVehiculo.dfechaventa = data['dFechaVenta'];
+                this.fillNuevoVehiculo.nidcombustible = (data['nIdCombustible'] == 0) ? '' : data['nIdCombustible'];
+                this.fillNuevoVehiculo.cnromotor = (data['cNumeroMotor'] == 0) ? '' : data['cNumeroMotor'];
+                this.fillNuevoVehiculo.cnroserie = (data['cNroSerie'] == 0) ? '' : data['cNroSerie'] ;
+                this.fillNuevoVehiculo.cnrorueda = (data['nNumeroRueda'] == 0) ? '' : data['nNumeroRueda'];
+                this.fillNuevoVehiculo.cnrocilindros = (data['nNumeroCilindro'] == 0) ? '' : data['nNumeroCilindro'];
+                this.fillNuevoVehiculo.cnroasiento = (data['nNumeroAsiento'] == 0) ? '' : data['nNumeroAsiento'];
+                this.fillNuevoVehiculo.cnropasajeros = (data['nNumeroPasajero'] == 0) ? '' : data['nNumeroPasajero'] ;
+                this.fillNuevoVehiculo.fpesobruto = data['fPesoBruto'];
+                this.fillNuevoVehiculo.fpesoseco = data['fPesoSeco'];
+                this.fillNuevoVehiculo.faltura = data['fAltura'];
+                this.fillNuevoVehiculo.flongitud = data['fLongitud'];
+                this.fillNuevoVehiculo.fcargautil = data['fCargaUtil'];
+                this.fillNuevoVehiculo.fancho = data['fAncho'];
+            },
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
@@ -2205,6 +2257,7 @@
                             }
                         }
                     }
+                    break;
                 }
             },
             //Limpiar Paginación
