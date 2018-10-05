@@ -121,7 +121,7 @@
                                                         <th>Tipo Movimiento</th>
                                                         <th>Vin/Placa</th>
                                                         <th>Tipo Inspección</th>
-                                                        <th>Evaluación Pdi</th>
+                                                        <th>Aprobación Pdi</th>
                                                         <th>Estado Pdi</th>
                                                         <th>Acciones</th>
                                                     </tr>
@@ -138,11 +138,11 @@
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
-                                                            <!--<el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Editar {{ punto.cNombrePuntoInspeccion }}</div>
-                                                                <i @click="abrirFormulario('puntoinspeccion','actualizar', punto)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Seleccionar {{ pdi.cNombreSolicitud }}</div>
+                                                                <i @click="abrirFormulario('pdi','actualizar', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                             </el-tooltip>&nbsp;
-                                                            <template v-if="punto.cSituacionRegistro=='A'">
+                                                            <!--<template v-if="punto.cSituacionRegistro=='A'">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Desactivar {{ punto.cNombreTipoInspeccion }}</div>
                                                                     <i @click="desactivar(punto.nIdPuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
@@ -221,7 +221,7 @@
                                                             <div class="input-group-prepend">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Buscar Punto Inspección </div>
-                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','puntoinspeccion')">
+                                                                    <button v-if="this.accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','puntoinspeccion')">
                                                                         <i class="fa-lg fa fa-search"></i>
                                                                     </button>
                                                                 </el-tooltip>
@@ -241,7 +241,7 @@
                                                             <div class="input-group-prepend">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Buscar Solicitud Autorización</div>
-                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','solicitud')">
+                                                                    <button v-if="this.accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','solicitud')">
                                                                         <i class="fa-lg fa fa-search"></i>
                                                                     </button>
                                                                 </el-tooltip>
@@ -254,19 +254,20 @@
                                         <div class="form-group row">
                                             <div class="col-sm-12">
                                                 <div class="row">
-                                                    <label class="col-sm-3 form-control-label">*&nbsp;
+                                                    <label v-if="this.accion==1" class="col-sm-3 form-control-label">*&nbsp;
                                                         <label class="checkbox-inline" v-for="tipo in arrayFlagVinPlaca" :key="tipo.value">
                                                             <input type="radio" class="radio-template" v-model="formPdi.nidflagvinplaca" :value="tipo.value" v-on:change="changeFlagVinPlaca()">
-                                                            <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </label>
                                                     </label>
+                                                    <label v-if="this.accion==2" class="col-sm-3 form-control-label">VIN/PLACA</label>
                                                     <div class="col-sm-5">
                                                         <div class="input-group">
                                                             <input type="text" v-model="formPdi.cvinplacanombre" disabled="disabled" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Buscar Por Vin o Placa </div>
-                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
+                                                                    <button v-if="this.accion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','vinplaca')">
                                                                         <i class="fa-lg fa fa-search"></i>
                                                                     </button>
                                                                 </el-tooltip>
@@ -367,7 +368,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Almacén</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPdi.nidalmacen" filterable placeholder="SELECCIONE" >
+                                                        <el-select v-model="formPdi.nidalmacen" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayAlmacen"
                                                             :key="item.nIdPar"
@@ -1217,10 +1218,9 @@
                     nidtipoinspeccion: '',
                     nidflagmovimiento: 1,
                     cnumeroinspeccion: '',
-                    nidalmacen: 0,
+                    nidalmacen: '',
                     dfechainspeccion: '',
                     chorainspeccion: '',
-                    nidalmacen: 0,
                     dfechaalmacen: '',
                     nflagconformidad: 0,
                     cflagconformidaddescripcion: '',
@@ -1521,8 +1521,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110088,
-                        'opcion' : 0
+                        'ngrupoparid' : 110088
                     }
                 }).then(response => {
                     this.arrayAlmacen = response.data;
@@ -1869,11 +1868,17 @@
                                 this.vistaFormulario = 0;
                                 this.accion = 2;
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
+                                this.llenarAlmacen();
+                                this.formPdi.nidcabecerainspeccion = data['nIdCabeceraInspeccion'];
                                 this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
-                                this.formPdi.cnombre = data['cNombrePuntoInspeccion'];
-                                this.formPdi.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
-                                this.formPdi.nidflagingreso = data['nFlagIngresoSucursal'];
-                                this.formPdi.nidflagsalida = data['nFlagSalidaSucursal'];
+                                this.formPdi.cnombrepuntoinspeccion = data['cNombrePuntoInspeccion'];
+                                this.formPdi.nidsolicitud = data['nIdSolicitudAutorizacion'];
+                                this.formPdi.csolicitudnombre = data['cNumeroSolicitud'] + ' ' + data['cNombreSolicitud'];
+                                this.formPdi.cvinplacanombre = data['cVinPlaca'];
+                                this.formPdi.nidflagmovimiento = data['nFlagMovimiento'];
+                                //this.formPdi.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
+                                //this.formPdi.nidflagingreso = data['nFlagIngresoSucursal'];
+                                //this.formPdi.nidflagsalida = data['nFlagSalidaSucursal'];
                                 break;
                             }
                         }

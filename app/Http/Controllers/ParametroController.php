@@ -249,26 +249,10 @@ class ParametroController extends Controller
     public function GetListSucursalByEmpresa(Request $request)
     {
         $nIdEmpresa = $request->nidempresa;
-        $variable   = $request->opcion;
 
-        $parametro = DB::select('exec [usp_Par_GetListSucursalByEmpresa] ?',
+        $data = DB::select('exec [usp_Par_GetListSucursalByEmpresa] ?',
                                             [   $nIdEmpresa
                                             ]);
-        $data = [];
-        if($variable == "0"){
-            $data[0] = [
-                'nIdPar'   => 0,
-                'cParNombre' =>'SELECCIONE',
-                'cParAbreviatura' =>'SELECCIONE',
-            ];
-        }
-        foreach ($parametro as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdPar,
-                'cParNombre' => $value->cParNombre,
-                'cParAbreviatura' => $value->cParAbreviatura,
-            ];
-        }
         return response()->json($data);
     }
 

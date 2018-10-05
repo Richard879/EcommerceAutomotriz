@@ -30,7 +30,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Sucursal</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillPuga.nidsucursal" filterable placeholder="Select" >
+                                                        <el-select v-model="fillPuga.nidsucursal" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arraySucursal"
                                                             :key="item.nIdPar"
@@ -313,7 +313,7 @@
                 //===================== LISTAR USUARIOS ====================
                 fillPuga:{
                     nidempresa: 1300011,
-                    nidsucursal: 0,
+                    nidsucursal: '',
                     cdescripcion: ''
                 },
                 arrayUsuarios: [],
@@ -417,8 +417,7 @@
                 var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'opcion' : 0
+                        'nidempresa': 1300011
                     }
                 }).then(response => {
                     this.arraySucursal = response.data;

@@ -30,7 +30,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Tipo Inspección</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPlantilla.nidtipoinspeccion" filterable>
+                                                        <el-select v-model="formPlantilla.nidtipoinspeccion" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayTipoInspeccion"
                                                             :key="item.nIdTipoInspeccion"
@@ -47,7 +47,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Área</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                        <el-select v-model="formPlantilla.nidflag" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayFlag"
                                                             :key="item.nIdPar"
@@ -62,7 +62,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Sección</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPlantilla.nidseccion" filterable>
+                                                        <el-select v-model="formPlantilla.nidseccion" filterable clearable placeholder="SELECCIONE">
                                                             <el-option
                                                             v-for="item in arraySeccion"
                                                             :key="item.nIdPar"
@@ -329,9 +329,9 @@
                     cnombre: ''
                 },
                 formPlantilla:{
-                    nidtipoinspeccion: 0,
-                    nidflag: 0,
-                    nidseccion: 0,
+                    nidtipoinspeccion: '',
+                    nidflag: '',
+                    nidseccion: '',
                     niditem: 0,
                     citemnombre: ''
                 },
@@ -434,8 +434,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'cnombre': '',
-                        'opcion' : 0
+                        'cnombre': ''
                     }
                 }).then(response => {
                     this.arrayTipoInspeccion = response.data;
@@ -447,8 +446,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110080,
-                        'opcion' : 0
+                        'ngrupoparid' : 110080
                     }
                 }).then(response => {
                     this.arrayFlag = response.data;
@@ -460,8 +458,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110081,
-                        'opcion' : 0
+                        'ngrupoparid' : 110081
                     }
                 }).then(response => {
                     this.arraySeccion = response.data;

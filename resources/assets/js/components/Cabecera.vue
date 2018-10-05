@@ -1,7 +1,7 @@
 <template>
     <transition name="slide-fade" appear>
         <li class="nav-item d-flex align-items-center">
-            <el-select v-model="formCabecera.nidsucursal" filterable placeholder="Select" v-on:change="changeSucursal()">
+            <el-select v-model="formCabecera.nidsucursal" filterable clearable placeholder="SELEECCIONE" v-on:change="changeSucursal()">
                 <el-option
                 v-for="item in arraySucursal"
                 :key="item.nIdPar"
@@ -19,7 +19,7 @@
         data(){
             return {
                 formCabecera:{
-                    nidsucursal: 0
+                    nidsucursal: ''
                 },
                 arraySucursal:[]
             }
@@ -32,8 +32,7 @@
                 var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'opcion' : 0
+                        'nidempresa': 1300011
                     }
                 }).then(response => {
                     this.arraySucursal = response.data;
