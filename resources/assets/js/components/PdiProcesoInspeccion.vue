@@ -285,7 +285,7 @@
                                                         <el-select v-model="formPdi.nidtipoinspeccion" 
                                                                     filterable 
                                                                     clearable
-                                                                    placeholder="SELECCIONE">
+                                                                    placeholder="SELECCIONE" v-on:change="changeTipoInspeccion()" >
                                                             <el-option
                                                             v-for="item in arrayTipoInspeccion"
                                                             :key="item.nIdTipoInspeccion"
@@ -297,13 +297,13 @@
                                                     <div class="col-sm-3">
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Ver Plantilla </div>
-                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','plantilla')">
+                                                            <button v-if="this.nflagseccioninspeccion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','plantilla')">
                                                                 <i class="fa fa-eye"></i>&nbsp;Plantilla
                                                             </button>
                                                         </el-tooltip>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Ver Accesorio </div>
-                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','accesorio')">
+                                                            <button v-if="this.nflagaccesorio==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','accesorio')">
                                                                 <i class="fa fa-eye"></i>&nbsp;Accesorio
                                                             </button>
                                                         </el-tooltip>
@@ -975,7 +975,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -986,19 +986,19 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">PLANTILLA</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">PLANTILLA</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Área</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="formPlantilla.nidflag" filterable placeholder="SELECCIONE" >
+                                                            <el-select v-model="formPlantilla.nidflag" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
                                                                 v-for="item in arrayFlag"
                                                                 :key="item.nIdPar"
@@ -1035,43 +1035,47 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arraySeccion.length > 0">  
-                                                <li v-for="seccion in arraySeccion" :key="seccion.nIdSeccion">{{ seccion.cSeccionNombre }}
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <tbody>
-                                                                <tr v-for="(item, index) in arrayItems" :key="item.nIdPlantillaInspeccionSeccionItem">
-                                                                    <td v-if="item.nIdSeccion==seccion.nIdSeccion" v-text="item.cItemNombre"></td>
-                                                                    <td v-if="item.nIdSeccion==seccion.nIdSeccion">
-                                                                        <span class="switch">
-                                                                            <el-switch v-model="arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem]">
-                                                                            </el-switch>
-                                                                        </span>
-                                                                    </td>
-                                                                    <td v-if="item.nIdSeccion==seccion.nIdSeccion">
-                                                                        <input type="text" v-if="arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem]" v-model="arrayPlantillaDescripcion[index]" class="form-control form-control-sm">
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </li>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-9 offset-sm-5">
-                                                        <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="aceptarPlantilla()">
-                                                            <i class="fa fa-save"></i> Aceptar
-                                                        </button>
-                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
-                                                            <i class="fa fa-close"></i> Cerrar
-                                                        </button>
-                                                    </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arraySeccion.length">  
+                                            <li v-for="seccion in arraySeccion" :key="seccion.nIdSeccion">{{ seccion.cSeccionNombre }}
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <tbody>
+                                                            <tr v-for="(item, index) in arrayItems" :key="item.nIdPlantillaInspeccionSeccionItem">
+                                                                <td v-if="item.nIdSeccion==seccion.nIdSeccion" v-text="item.cItemNombre"></td>
+                                                                <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                                    <span v-text="arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem] ? 'CONFORME' : 'NO CONFORME'"></span>
+                                                                    <span class="switch">
+                                                                        <el-switch v-model="arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem]">
+                                                                        </el-switch>
+                                                                    </span>
+                                                                </td>
+                                                                <td v-if="item.nIdSeccion==seccion.nIdSeccion">
+                                                                    <input type="text" v-if="!arrayPlantillaFlagMarca[item.nIdPlantillaInspeccionSeccionItem]" v-model="arrayPlantillaDescripcion[index]" class="form-control form-control-sm">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </template>
-                                        </div>
+                                            </li>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="aceptarPlantilla()">
+                                                        <i class="fa fa-save"></i> Aceptar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cerrar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -1082,13 +1086,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">ACCESORIOS</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">ACCESORIOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -1109,69 +1113,74 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayAccesorio.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <tbody>
-                                                            <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdPar">
-                                                                <td v-text="a.cParNombre"></td>
-                                                                <td>
-                                                                    <span class="switch">
-                                                                        <el-switch v-model="arrayAccesorioFlagMarca[index]">
-                                                                        </el-switch>
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" v-if="arrayAccesorioFlagMarca[index]" v-model="arrayAccesorioDescripcion[index]" class="form-control form-control-sm">
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <!--<vs-table max-items="10" stripe pagination :data="arrayAccesorio">
-                                                        <template slot="thead">
-                                                            <vs-th>
-                                                                
-                                                            </vs-th>
-                                                        </template>
-
-                                                        <template slot-scope="{data}">
-                                                            <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
-                                                                <vs-td :data="data[indextr].nIdPar">
-                                                                {{data[indextr].nIdPar}}
-                                                                </vs-td>
-
-                                                                <vs-td :data="data[indextr].cParNombre">
-                                                                {{data[indextr].cParNombre}}
-                                                                </vs-td>
-                                                            </vs-tr>
-                                                        </template>
-                                                    </vs-table>-->
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-9 offset-sm-5">
-                                                        <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="aceptarPlantilla()">
-                                                            <i class="fa fa-save"></i> Aceptar
-                                                        </button>
-                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
-                                                            <i class="fa fa-close"></i> Cerrar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayAccesorio.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
                                                     <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                        <tr v-for="(a, index) in arrayAccesorio" :key="a.nIdPar">
+                                                            <td v-text="a.cParNombre"></td>
+                                                            <td><input type="text" v-model="arrayAccesorioCantidad[index]" @keyup.enter="listarAccesorio(1)" class="form-control form-control-sm"></td>
+                                                            <td>
+                                                                <span v-text="arrayAccesorioFlagMarca[index] ? 'CONFORME' : 'NO CONFORME'"></span>
+                                                                <span class="switch">
+                                                                    <el-switch v-model="arrayAccesorioFlagMarca[index]">
+                                                                    </el-switch>
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" v-if="!arrayAccesorioFlagMarca[index]" v-model="arrayAccesorioDescripcion[index]" class="form-control form-control-sm">
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                                <!--<vs-table max-items="10" stripe pagination :data="arrayAccesorio">
+                                                    <template slot="thead">
+                                                        <vs-th>
+                                                            
+                                                        </vs-th>
+                                                    </template>
+
+                                                    <template slot-scope="{data}">
+                                                        <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                                                            <vs-td :data="data[indextr].nIdPar">
+                                                            {{data[indextr].nIdPar}}
+                                                            </vs-td>
+
+                                                            <vs-td :data="data[indextr].cParNombre">
+                                                            {{data[indextr].cParNombre}}
+                                                            </vs-td>
+                                                        </vs-tr>
+                                                    </template>
+                                                </vs-table>-->
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="aceptarAccesorio()">
+                                                        <i class="fa fa-save"></i> Aceptar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cerrar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -1203,6 +1212,12 @@
                     { value: '2', text: 'PLACA'}
                 ],
                 arrayPdi: [],
+                // ============ Variables Flag Tipo Inspeccion =================
+                nflagalmacen: 0,
+                nflagaccesorio: 0,
+                nflagtestdrive: 0,
+                nflagseccioninspeccion: 0,
+                nflagvalidarfichatecnica: 0,
                 // ============================================
                 // ============ REGISTRO PDI =================
                 formPdi:{
@@ -1260,7 +1275,7 @@
                 // ============================================
                 // ============ MODAL PLANILLA =================
                 formPlantilla:{
-                    nidflag: 0,
+                    nidflag: '',
                     cdescripcion: ''
                 },
                 arrayPlantilla: [],
@@ -1276,6 +1291,7 @@
                 arrayAccesorio: [],
                 arrayAccesorioFlagMarca:  [],
                 arrayAccesorioDescripcion: [],
+                arrayAccesorioCantidad: [],
                 // ============================================
                 pagination: {
                     'total': 0,
@@ -1362,19 +1378,6 @@
             }
         },
         methods:{
-            llenarFlag(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110085,
-                        'opcion' : 0
-                    }
-                }).then(response => {
-                    this.arrayFlag = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             //===================================================================
             //================= BUSCAR PROCESO DE INSPECCION ====================
             llenarComboEstadoPdi(){
@@ -1657,8 +1660,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110080,
-                        'opcion' : 0
+                        'ngrupoparid' : 110080
                     }
                 }).then(response => {
                     this.arrayFlag = response.data;
@@ -1690,7 +1692,11 @@
                         'cparnombre': this.fillAccesorio.cnombre
                     }
                 }).then(response => {
-                    this.arrayAccesorio = response.data;
+                    let me = this;
+                    me.arrayAccesorio = response.data;
+                    me.arrayAccesorio.map(function(value, key){
+                       me.arrayAccesorioCantidad[key] = 0;
+                    });
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1703,6 +1709,27 @@
                 //this.textFile = e.target.files[0].name;
             },
             //================= REGISTRO =======================
+            changeTipoInspeccion(){
+                this.obtenerDetalleTipoInspeccionById();
+            },
+            obtenerDetalleTipoInspeccionById(){
+                var url = this.ruta + '/pdi/GetDetalleTipoInspeccionById';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidtipoinspeccion': this.formPdi.nidtipoinspeccion
+                    }
+                }).then(response => {
+                    this.nflagalmacen = response.data[0].nFlagAlmacen;
+                    this.nflagaccesorio = response.data[0].nFlagAccesorio;
+                    this.nflagtestdrive = response.data[0].nFlagTestDrive;
+                    this.nflagseccioninspeccion = response.data[0].nFlagSeccionInspeccion;
+                    this.nflagvalidarfichatecnica = response.data[0].nFlagValidarFichaTecnica;
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
             registrar(){
                 if(this.validar()){
                     this.accionmodal=1;
@@ -1967,14 +1994,16 @@
                 return this.error;
             },
             limpiarFormulario(){
-                /*this.formPdi.nidpuntoinspeccion= 0,
-                this.formPdi.cnombre= '',
-                this.formPdi.nidflagmovimiento= 0,
-                this.formPdi.nidflagingreso=  0,
-                this.formPdi.nidflagsalida= 0*/
+                this.formPdi.nidtipoinspeccion= '',
+                this.nflagalmacen= 0,
+                this.nflagaccesorio= 0,
+                this.nflagtestdrive= 0,
+                this.nflagseccioninspeccion= 0,
+                this.nflagvalidarfichatecnica= 0
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;
+                this.limpiarFormulario();
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

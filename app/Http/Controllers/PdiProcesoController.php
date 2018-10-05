@@ -66,7 +66,8 @@ class PdiProcesoController extends Controller
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdFlag = $request->nidflag;
-                
+        $nIdFlag = ($nIdFlag == NULL) ? ($nIdFlag = 0) : $nIdFlag;
+
         $arraySeccion = DB::select('exec [usp_Pdi_GetListSeccion] ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
                                                                         $nIdTipoInspeccion,
@@ -82,7 +83,8 @@ class PdiProcesoController extends Controller
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdFlag = $request->nidflag;
-                
+        $nIdFlag = ($nIdFlag == NULL) ? ($nIdFlag = 0) : $nIdFlag;
+
         $arrayItems = DB::select('exec [usp_Pdi_GetListItem] ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
                                                                         $nIdTipoInspeccion,
@@ -145,5 +147,20 @@ class PdiProcesoController extends Controller
 
         $arrayPdi = Parametro::arrayPaginator($arrayPdi, $request);
         return ['arrayPdi'=>$arrayPdi];
+    }
+
+    public function GetDetalleTipoInspeccionById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa   = $request->nidempresa;
+        $nIdTipoInspeccion = $request->nidtipoinspeccion;
+                
+        $arrayTipoInspeccion = DB::select('exec [usp_Pdi_GetDetalleTipoInspeccionById] ?, ?', 
+                                                                    [   $nIdEmpresa, 
+                                                                        $nIdTipoInspeccion
+                                                                    ]);
+
+        return response()->json($arrayTipoInspeccion);
     }
 }
