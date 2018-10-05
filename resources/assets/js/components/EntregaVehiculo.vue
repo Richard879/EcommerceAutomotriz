@@ -14,7 +14,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="tab01" href="#TabMisEntregaVehiculos" role="tab" @click.prevent="tabMisEntregaVehiculos" data-toggle="tab">
+                                        <a class="nav-link active" id="tab01" href="#TabMisInspecciones" role="tab" @click.prevent="TabMisInspecciones" data-toggle="tab">
                                             <i class="fa fa-search"></i> MIS VEHÍCULOS
                                         </a>
                                     </li>
@@ -26,7 +26,7 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabMisEntregaVehiculos">
+                                    <div role="tabpanel" class="tab-pane fade in active show" id="TabMisInspecciones">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -87,7 +87,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisSolicitudesEntregaVehiculo(1)">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisInspecciones(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                         <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisSolicitudesEntregaVehiculo()">
@@ -271,7 +271,10 @@
                 // VARIABLES MIS VEHÍCULOS
                 // =============================================================
                 fillBusquedaVehiculo: {
-                    nidtipobusqueda: '2',
+                    nidempresa: 1300011,
+                    cempresa: 'SAISAC',
+                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
+                    csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidvehiculo: '',
                     cnrovehiculo: '',
                     dfechaSolicitud: '',
@@ -286,6 +289,7 @@
                     cnrovehiculo: '',
                 },
                 arrayVehiculosByCriterio: [],
+                arrayInspeccionesAprobadas: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -316,7 +320,7 @@
             }
         },
         mounted() {
-            this.tabMisEntregaVehiculos();
+            this.TabMisInspecciones();
         },
         computed:{
             isActived: function(){
@@ -371,8 +375,9 @@
             },
         },
         methods: {
-            tabMisEntregaVehiculos(){
+            TabMisInspecciones(){
                 this.llenarEstados();
+                this.buscarMisInspecciones(1);
             },
             llenarEstados(){
                 var url = this.ruta + '/getComision/GetParametroByGrupo';
@@ -398,10 +403,10 @@
                 var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidempresa': this.fillBusquedaVehiculo.nidempresa,
+                        'nidsucursal' : this.fillBusquedaVehiculo.nidsucursal,
                         'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
-                        'criterio': this.fillBusquedaVehiculo.nidtipobusqueda,
+                        'criterio': 2,
                         'page' : page,
                     }
                 }).then(response => {
@@ -418,21 +423,46 @@
                 });
             },
             asignarVehiculo(vehiculo){
-                if(this.fillBusquedaVehiculo.nidtipobusqueda == 1){
-                    this.fillBusquedaVehiculo.nidvehiculo = vehiculo.nIdCompra;
-                    this.fillBusquedaVehiculo.cnrovehiculo = vehiculo.cNumeroVin;
-                } else {
-                    this.fillBusquedaVehiculo.nidvehiculo = vehiculo.nIdVehiculoPlaca;
-                    this.fillBusquedaVehiculo.cnrovehiculo = vehiculo.cPlaca;
-                }
+                this.fillBusquedaVehiculo.nidvehiculo = vehiculo.nIdVehiculoPlaca;
+                this.fillBusquedaVehiculo.cnrovehiculo = vehiculo.cPlaca;
+
                 this.modalVehiculo.cnrovehiculo = '';
                 this.cerrarModalSolicitud();
             },
-            buscarMisSolicitudesEntregaVehiculo(){
-
+            buscarMisInspecciones(page){
+                var url = this.ruta + '/entregavehiculo/GetLstInspecciones';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillBusquedaVehiculo.nidempresa,
+                        'nidsucursal' : this.fillBusquedaVehiculo.nidsucursal,
+                        'nidvehiculo' : this.fillBusquedaVehiculo.nidvehiculo,
+                        'dfechaSolicitud' : this.fillBusquedaVehiculo.dfechaSolicitud,
+                        'nidestado' : this.fillBusquedaVehiculo.nidestado,
+                        'page' : page,
+                    }
+                }).then(response => {
+                    let info = response.data.arrayInspeccionesAprobadas;
+                    this.arrayInspeccionesAprobadas     = info.data;
+                    this.pagination.current_page =  info.current_page;
+                    this.pagination.total        = info.total;
+                    this.pagination.per_page     = info.per_page;
+                    this.pagination.last_page    = info.last_page;
+                    this.pagination.from         = info.from;
+                    this.pagination.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
-            limpiarMisSolicitudesEntregaVehiculo(){
-
+            cambiarPaginaMisInspecciones(page){
+                this.paginationModal.current_page=page;
+                this.buscarMisSolicitudesEntregaVehiculo(page);
+            },
+            limpiarMisMisInspecciones(){
+                //Tab BUSCAS INSPECCIONES
+                this.fillBusquedaVehiculo.nidvehiculo = '';
+                this.fillBusquedaVehiculo.cnrovehiculo = '';
+                this.fillBusquedaVehiculo.dfechaSolicitud = '';
+                this.fillBusquedaVehiculo.nidestado = '';
             },
             // =================================================================
             // METODOS GENERICOS

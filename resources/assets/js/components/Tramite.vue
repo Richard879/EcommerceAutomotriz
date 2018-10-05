@@ -92,50 +92,50 @@
                                                                                 :data="arrayPedidosCancelados"
                                                                                 style="width: 100%"
                                                                                 @selection-change="handleSelectionChange">
-                                                                                    <el-table-column
-                                                                                        :fixed="flagFixed"
-                                                                                        :type="flagType"
-                                                                                        :width="flagWidth"
-                                                                                        >
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        label="Fecha Pedido"
-                                                                                        property="dFechaPedido"
-                                                                                        width="120">
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        property="cNumeroPedido"
-                                                                                        label="Nro Pedido"
-                                                                                        width="120">
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        property="cNumeroVin"
-                                                                                        label="Nro VIN"
-                                                                                        width="160">
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        property="cNombreComercial"
-                                                                                        label="Nombre Comercial"
-                                                                                        width="180">
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        property="nAnioFabricacion"
-                                                                                        label="Año Fabricación"
-                                                                                        width="120">
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        property="cEstadoTramite"
-                                                                                        label="Estado"
-                                                                                        show-overflow-tooltip>
-                                                                                    </el-table-column>
-                                                                                    <el-table-column
-                                                                                        fixed="right"
-                                                                                        label="Acciones"
-                                                                                        width="80">
-                                                                                        <template slot-scope="scope">
+                                                                                <el-table-column
+                                                                                    :fixed="flagFixed"
+                                                                                    :type="flagType"
+                                                                                    :width="flagWidth"
+                                                                                    >
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    label="Fecha Pedido"
+                                                                                    property="dFechaPedido"
+                                                                                    width="120">
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    property="cNumeroPedido"
+                                                                                    label="Nro Pedido"
+                                                                                    width="120">
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    property="cNumeroVin"
+                                                                                    label="Nro VIN"
+                                                                                    width="160">
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    property="cNombreComercial"
+                                                                                    label="Nombre Comercial"
+                                                                                    width="180">
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    property="nAnioFabricacion"
+                                                                                    label="Año Fabricación"
+                                                                                    width="120">
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    property="cEstadoTramite"
+                                                                                    label="Estado"
+                                                                                    show-overflow-tooltip>
+                                                                                </el-table-column>
+                                                                                <el-table-column
+                                                                                    fixed="right"
+                                                                                    label="Acciones"
+                                                                                    width="80">
+                                                                                    <template slot-scope="scope">
 
-                                                                                        </template>
-                                                                                    </el-table-column>
+                                                                                    </template>
+                                                                                </el-table-column>
                                                                             </el-table>
                                                                         </div>
                                                                     </template>
