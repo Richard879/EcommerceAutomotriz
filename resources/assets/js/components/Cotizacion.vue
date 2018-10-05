@@ -174,8 +174,8 @@
                                                                                 <th>Email</th>
                                                                                 <th>Fecha Inicio</th>
                                                                                 <th>Fecha Venc.</th>
+                                                                                <th>Aprobación</th>
                                                                                 <th>Estado Cotización</th>
-                                                                                <th>Estado Aprobación</th>
                                                                                 <th>Vendedor</th>
                                                                             </tr>
                                                                         </thead>
@@ -197,8 +197,8 @@
                                                                                 <td v-text="cotizacion.cEmail"></td>
                                                                                 <td v-text="cotizacion.dFechaCotizacion"></td>
                                                                                 <td v-text="cotizacion.dFechaVencimientoCotizacion"></td>
-                                                                                <td v-text="cotizacion.cEstadoCotizacion"></td>
                                                                                 <td v-text="cotizacion.cEstadoAprobacion"></td>
+                                                                                <td v-text="cotizacion.cEstadoCotizacion"></td>
                                                                                 <td v-text="cotizacion.cVendedorNombre"></td>
                                                                             </tr>
                                                                         </tbody>
