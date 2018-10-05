@@ -96,10 +96,6 @@ class VersionVehiculoController extends Controller
                                                             ]);
 
         $data = [];
-        /*$data[0] = [
-            'nIdPar'   => 0,
-            'cParNombre' =>'SELECCIONE',
-        ];*/
         foreach ($arrayLinea as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdLinea,
@@ -118,10 +114,6 @@ class VersionVehiculoController extends Controller
                                                     ]);
 
         $data = [];
-        /*$data[0] = [
-            'nIdPar'   => 0,
-            'cParNombre' =>'SELECCIONE',
-        ];*/
         foreach ($arrayMarca as $key => $value) {
            $data[$key+1] =[
                 'nIdPar'   => $value->nIdMarca,

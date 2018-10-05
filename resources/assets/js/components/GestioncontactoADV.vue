@@ -231,7 +231,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Celular</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="text" v-model="formNuevoContacto.ncelular" class="form-control form-control-sm">
+                                                                                            <input type="number" v-model="formNuevoContacto.ncelular" class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>

@@ -656,7 +656,7 @@
                 });
             }, 
             listarVendedorModelo(page){
-                if(!this.fillVendedor.nidmodelo){
+                if(!this.fillVendedor.nidmodelo || !this.fillVendedor.nidmarca){
                     this.arrayVendedorModelo = []
                 }else{
                     var url = this.ruta + '/asignavendedormodelo/GetLstVendedorModelo';
