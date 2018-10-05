@@ -39,7 +39,10 @@ class PdiProcesoController extends Controller
         $cNumeroVin = $request->cnumerovin;
         $nIdMarca   = $request->nidmarca;
         $nIdModelo  = $request->nidmodelo;
+        
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
 
         $arrayCompra = DB::select('exec [usp_Pdi_GetListCompra] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
@@ -114,5 +117,10 @@ class PdiProcesoController extends Controller
 
         $arrayVehiculoPlaca = Parametro::arrayPaginator($arrayVehiculoPlaca, $request);
         return ['arrayVehiculoPlaca'=>$arrayVehiculoPlaca];
+    }
+
+    public function GetListPdi(Request $request)
+    {
+
     }
 }

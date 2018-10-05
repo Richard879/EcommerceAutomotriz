@@ -780,7 +780,6 @@
                     this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
                     this.pagination.from        = response.data.arrayVersionVehiculo.from;
                     this.pagination.to           = response.data.arrayVersionVehiculo.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

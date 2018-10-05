@@ -17,20 +17,16 @@
                                 </div>
                                 <div class="card-body">
                                     <form class="form-horizontal">
-                                        <!--<div class="form-group row">
-                                            <div class="col-sm-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-8">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Empresa</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Sucursal</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                    <label class="col-md-4 form-control-label">
+                                                        <el-radio-group v-model="fillPdi.ncriterio" @change="cambiarBusquedaPorCriterio">
+                                                            <el-radio v-for="tipobsq in arrayTipoBusquedaVehiculo" :key="tipobsq.id" :label="tipobsq.value"> {{ tipobsq.text }} </el-radio>
+                                                        </el-radio-group>
+                                                    </label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" v-model="fillPdi.cdescripcioncriterio" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -38,16 +34,68 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Nombre</label>
+                                                    <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="fillPunto.cnombre" @keyup.enter="listarPuntoInspeccion(1)" class="form-control form-control-sm">
+                                                        <el-date-picker
+                                                            v-model="fillPdi.dfechainicio"
+                                                            type="date"
+                                                            value-format="yyyy-MM-dd"
+                                                            format="dd/MM/yyyy"
+                                                            placeholder="dd/mm/aaaa">
+                                                        </el-date-picker>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>-->
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                    <div class="col-sm-8">
+                                                        <el-date-picker
+                                                            v-model="fillPdi.dfechafin"
+                                                            type="date"
+                                                            value-format="yyyy-MM-dd"
+                                                            format="dd/MM/yyyy"
+                                                            placeholder="dd/mm/aaaa">
+                                                        </el-date-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <!--<div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Tipo Solicitud</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                            <el-option
+                                                            v-for="item in arrayMarca"
+                                                            :key="item.nIdPar"
+                                                            :label="item.cParNombre"
+                                                            :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Estado Pdi</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillPdi.nidestadopdi" filterable clearable placeholder="SELECCIONE">
+                                                            <el-option
+                                                            v-for="item in arrayEstatoPdi"
+                                                            :key="item.nIdPar"
+                                                            :label="item.cParNombre"
+                                                            :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPuntoInspeccion(1)"><i class="fa fa-search"></i> Buscar</button>
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPdi(1)"><i class="fa fa-search"></i> Buscar</button>
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('pdi','registrar')"><i class="fa fa-file-o"></i> Nuevo</button>
                                             </div>
                                         </div>
@@ -55,34 +103,38 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="col-lg-12">
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="h4">LISTADO ITEMS</h3>
+                                    <h3 class="h4">LISTADO PDI</h3>
                                 </div>
                                 <div class="card-body">                   
-                                    <template v-if="arrayPuntoInspeccion.length">
+                                    <template v-if="arrayPdi.length">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
                                                 <thead>
                                                     <tr>
                                                         <th>Código</th>
-                                                        <th>Nombre</th>
+                                                        <th>Fecha</th>
+                                                        <th>Hora</th>
+                                                        <th>Solicitud</th>
                                                         <th>Tipo Movimiento</th>
-                                                        <th>Ingreso Sucursal</th>
-                                                        <th>Salida Sucursal</th>
+                                                        <th>Vin/Placa</th>
+                                                        <th>Tipo Inspección</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="punto in arrayPuntoInspeccion" :key="punto.nIdPuntoInspeccion">
-                                                        <td v-text="punto.nIdPuntoInspeccion"></td>
-                                                        <td v-text="punto.cNombrePuntoInspeccion"></td>
-                                                        <td v-text="punto.cFlagTipoMovimiento"></td>
-                                                        <td v-text="punto.cFlagIngresoSucursal"></td>
-                                                        <td v-text="punto.cFlagSalidaSucursal"></td>
+                                                    <tr v-for="pdi in arrayPdi" :key="pdi.nIdCabeceraInspeccion">
+                                                        <td v-text="pdi.nIdCabeceraInspeccion"></td>
+                                                        <td v-text="pdi.dFechaInspeccion"></td>
+                                                        <td v-text="pdi.cHoraInspeccion"></td>
+                                                        <td v-text="pdi.cNombreSolicitud"></td>
+                                                        <td v-text="pdi.cFlagTipoMovimiento"></td>
+                                                        <td v-text="pdi.cVinPlaca"></td>
+                                                        <td v-text="pdi.cNombreTipoInspeccion"></td>
                                                         <td>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <!--<el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ punto.cNombrePuntoInspeccion }}</div>
                                                                 <i @click="abrirFormulario('puntoinspeccion','actualizar', punto)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                             </el-tooltip>&nbsp;
@@ -97,7 +149,7 @@
                                                                     <div slot="content">Activar {{ punto.cNombreTipoInspeccion }}</div>
                                                                     <i @click="activar(punto.nIdPuntoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                 </el-tooltip>
-                                                            </template>
+                                                            </template>-->
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -140,7 +192,7 @@
                                     </template>
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
                     </div>
                 </section>
             </template>
@@ -311,7 +363,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Almacén</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formPdi.nidalmacen" filterable placeholder="Select" >
+                                                        <el-select v-model="formPdi.nidalmacen" filterable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayAlmacen"
                                                             :key="item.nIdPar"
@@ -693,7 +745,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                            <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                 <el-option
                                                                 v-for="item in arrayMarca"
                                                                 :key="item.nIdPar"
@@ -708,7 +760,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Modelo</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillCompra.nidmodelo" filterable placeholder="Select">
+                                                            <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                 <el-option
                                                                 v-for="item in arrayModelo"
                                                                 :key="item.nIdPar"
@@ -941,7 +993,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Área</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="formPlantilla.nidflag" filterable placeholder="Select" >
+                                                            <el-select v-model="formPlantilla.nidflag" filterable placeholder="SELECCIONE" >
                                                                 <el-option
                                                                 v-for="item in arrayFlag"
                                                                 :key="item.nIdPar"
@@ -1131,6 +1183,23 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                // ============================================
+                // ============ BUSQUEDA PDI =================
+                fillPdi:{
+                    ncriterio: '0',
+                    cdescripcioncriterio: '',
+                    dfechainicio: '',
+                    dfechafin: '',
+                    nidestadopdi: ''
+                },
+                arrayEstatoPdi: [],
+                arrayTipoBusquedaVehiculo: [
+                    { value: '1', text: 'VIN'},
+                    { value: '2', text: 'PLACA'}
+                ],
+                arrayPdi: [],
+                // ============================================
+                // ============ REGISTRO PDI =================
                 formPdi:{
                     nidcabecerainspeccion: 0,
                     nidsolicitud: 0,
@@ -1172,8 +1241,8 @@
                     dfechafin: '',
                     nordencompra: '',
                     cnumerovin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayCompra: [],
                 arrayMarca: [],
@@ -1233,6 +1302,7 @@
             }
         },
          mounted(){
+            this.llenarComboEstadoPdi();
             this.llenarTipoInspeccion();
         },
         computed:{
@@ -1301,35 +1371,61 @@
                     console.log(error);
                 });
             },
-            //============================================================
-            //================= BUSQUEDA INSPECCION =======================
-            listarPuntoInspeccion(page){
-                this.mostrarProgressBar();
-                var url = this.ruta + '/puntoinspeccion/GetListPuntoInspeccion';
+            //===================================================================
+            //================= BUSCAR PROCESO DE INSPECCION ====================
+            llenarComboEstadoPdi(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
-                        'cnombre': this.fillPunto.cnombre,
-                        'page' : page
+                        'ngrupoparid' : 110092
                     }
                 }).then(response => {
-                    this.arrayPuntoInspeccion = response.data.arrayPuntoInspeccion.data;
-                    this.paginationModal.current_page =  response.data.arrayPuntoInspeccion.current_page;
-                    this.paginationModal.total = response.data.arrayPuntoInspeccion.total;
-                    this.paginationModal.per_page    = response.data.arrayPuntoInspeccion.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPuntoInspeccion.last_page;
-                    this.paginationModal.from        = response.data.arrayPuntoInspeccion.from;
-                    this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
+                    this.arrayEstatoPdi = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
+            cambiarBusquedaPorCriterio(){
+                if (this.flagBuscarVehiculoByCriterio == 1) {
+                    this.fillBusquedaSolicitud.nidvehiculo = '';
+                    this.fillBusquedaSolicitud.cnrovehiculo = '';
+                } else {
+                    this.fillNuevaSolicitud.nidvehiculo = '';
+                    this.fillNuevaSolicitud.cnrovehiculo = '';
+                }
+            },
+            listarPdi(page){
+                this.mostrarProgressBar();
+                /*var url = this.ruta + '/versionvehiculo/GetVersionVehiculo';
+                
+                axios.get(url, {
+                    params: {
+                        'nidempresa' : 1300011,
+                        'nidproveedor' : this.formVersion.nidproveedor,
+                        'nidclase' : this.formVersion.nidclase,
+                        'nidsubclase' : this.formVersion.nidsubclase,
+                        'nidlinea' : this.formVersion.nidlinea,
+                        'nidmarca' : this.formVersion.nidmarca,
+                        'nidmodelo' : this.formVersion.nidmodelo,
+                        'cnombrecomercial' : this.formVersion.cnombrecomercial.toString(),
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
+                    this.pagination.current_page =  response.data.arrayVersionVehiculo.current_page;
+                    this.pagination.total = response.data.arrayVersionVehiculo.total;
+                    this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
+                    this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
+                    this.pagination.from        = response.data.arrayVersionVehiculo.from;
+                    this.pagination.to           = response.data.arrayVersionVehiculo.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });*/
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarTipoInspeccion(page);
+                this.listarPdi(page);
             },
             //=============================================================
             //==================== NUEVA INSPECCION =======================
@@ -1433,13 +1529,6 @@
             },
             //=============== LISTAR MODAL POR VIN ===================
             listarPorVin(page){
-                if(this.fillCompra.nordencompra == ''){
-                    var nordencompra = 0;
-                }
-                else{
-                    var nordencompra = this.fillCompra.nordencompra;
-                }
-
                 var url = this.ruta + '/pdi/GetListCompra';
 
                 axios.get(url, {
@@ -1448,7 +1537,7 @@
                         'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio' : this.fillCompra.dfechainicio,
                         'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : nordencompra,
+                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
                         'cnumerovin' : this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
@@ -1481,8 +1570,7 @@
                 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -1499,7 +1587,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillCompra.nidmodelo = 0;
+                    this.fillCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });
