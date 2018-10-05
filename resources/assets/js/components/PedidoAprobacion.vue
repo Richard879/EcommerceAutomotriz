@@ -125,7 +125,8 @@
                                                     <th>Número VIN</th>
                                                     <th>Número DUA</th>
                                                     <th>Fecha Pedido</th>
-                                                    <th>Estado Aprobación</th>
+                                                    <th>Aprobación</th>
+                                                    <th>Estado Pedido</th>
                                                     <th>Vendedor</th>
                                                 </tr>
                                             </thead>
@@ -144,6 +145,7 @@
                                                     <td v-text="pedido.cNumeroDUA"></td>
                                                     <td v-text="pedido.dFechaPedido"></td>
                                                     <td v-text="pedido.cEstadoAprobacion"></td>
+                                                    <td v-text="pedido.cEstadoPedido"></td>
                                                     <td v-text="pedido.Vendedor"></td>
                                                 </tr>
                                             </tbody>

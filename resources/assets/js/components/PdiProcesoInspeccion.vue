@@ -121,6 +121,8 @@
                                                         <th>Tipo Movimiento</th>
                                                         <th>Vin/Placa</th>
                                                         <th>Tipo Inspección</th>
+                                                        <th>Evaluación Pdi</th>
+                                                        <th>Estado Pdi</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -133,6 +135,8 @@
                                                         <td v-text="pdi.cFlagTipoMovimiento"></td>
                                                         <td v-text="pdi.cVinPlaca"></td>
                                                         <td v-text="pdi.cNombreTipoInspeccion"></td>
+                                                        <td v-text="pdi.cEvaluacion"></td>
+                                                        <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
                                                             <!--<el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ punto.cNombrePuntoInspeccion }}</div>
@@ -1396,32 +1400,31 @@
             },
             listarPdi(page){
                 this.mostrarProgressBar();
-                /*var url = this.ruta + '/versionvehiculo/GetVersionVehiculo';
+                var url = this.ruta + '/pdi/GetListPdi';
                 
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidproveedor' : this.formVersion.nidproveedor,
-                        'nidclase' : this.formVersion.nidclase,
-                        'nidsubclase' : this.formVersion.nidsubclase,
-                        'nidlinea' : this.formVersion.nidlinea,
-                        'nidmarca' : this.formVersion.nidmarca,
-                        'nidmodelo' : this.formVersion.nidmodelo,
-                        'cnombrecomercial' : this.formVersion.cnombrecomercial.toString(),
-                        'page' : page
+                        'nidempresa': 1300011,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'ncriterio': this.fillPdi.ncriterio,
+                        'cdescripcioncriterio': this.fillPdi.cdescripcioncriterio,
+                        'dfechainicio': this.fillPdi.dfechainicio,
+                        'dfechafin': this.fillPdi.dfechafin,
+                        'nidestadopdi': this.fillPdi.nidestadopdi,
+                        'page': page
                     }
                 }).then(response => {
-                    this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
-                    this.pagination.current_page =  response.data.arrayVersionVehiculo.current_page;
-                    this.pagination.total = response.data.arrayVersionVehiculo.total;
-                    this.pagination.per_page    = response.data.arrayVersionVehiculo.per_page;
-                    this.pagination.last_page   = response.data.arrayVersionVehiculo.last_page;
-                    this.pagination.from        = response.data.arrayVersionVehiculo.from;
-                    this.pagination.to           = response.data.arrayVersionVehiculo.to;
+                    this.arrayPdi = response.data.arrayPdi.data;
+                    this.pagination.current_page =  response.data.arrayPdi.current_page;
+                    this.pagination.total = response.data.arrayPdi.total;
+                    this.pagination.per_page    = response.data.arrayPdi.per_page;
+                    this.pagination.last_page   = response.data.arrayPdi.last_page;
+                    this.pagination.from        = response.data.arrayPdi.from;
+                    this.pagination.to           = response.data.arrayPdi.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
-                });*/
+                });
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;

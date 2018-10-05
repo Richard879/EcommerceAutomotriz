@@ -39,7 +39,7 @@ class PdiProcesoController extends Controller
         $cNumeroVin = $request->cnumerovin;
         $nIdMarca   = $request->nidmarca;
         $nIdModelo  = $request->nidmodelo;
-        
+
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
@@ -121,6 +121,29 @@ class PdiProcesoController extends Controller
 
     public function GetListPdi(Request $request)
     {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nCriterio  = $request->ncriterio;
+        $cDescripcionCiterio = $request->cdescripcioncriterio;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
+        $nIdEstadoPdi = $request->nidestadopdi;
+        
+        $nIdEstadoPdi = ($nIdEstadoPdi == NULL) ? ($nIdEstadoPdi = 0) : $nIdEstadoPdi;
 
+        $arrayPdi = DB::select('exec [usp_Pdi_GetListPdi] ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nCriterio,
+                                                                $cDescripcionCiterio,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
+                                                                $nIdEstadoPdi
+                                                            ]);
+
+        $arrayPdi = Parametro::arrayPaginator($arrayPdi, $request);
+        return ['arrayPdi'=>$arrayPdi];
     }
 }

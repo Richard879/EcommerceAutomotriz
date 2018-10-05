@@ -178,8 +178,8 @@
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
+                                                                                <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
-                                                                                <th>Estado Aprobación</th>
                                                                                 <th>Vendedor</th>
                                                                             </tr>
                                                                         </thead>
@@ -197,8 +197,8 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
-                                                                                <td v-text="pedido.cEstadoPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
+                                                                                <td v-text="pedido.cEstadoPedido"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -348,7 +348,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">LISTADO</h3>
+                                                                <h3 class="h4">LISTADO COTIZACIONES</h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <template v-if="arrayPedido.length">
@@ -365,8 +365,8 @@
                                                                                     <th>Email</th>
                                                                                     <th>Fecha Inicio</th>
                                                                                     <th>Fecha Venc.</th>
+                                                                                    <th>Aprobación</th>
                                                                                     <th>Estado Cotización</th>
-                                                                                    <th>Estado Aprobación</th>
                                                                                     <th>Vendedor</th>
                                                                                 </tr>
                                                                             </thead>
@@ -386,8 +386,8 @@
                                                                                     <td v-text="pedido.cEmail"></td>
                                                                                     <td v-text="pedido.dFechaCotizacion"></td>
                                                                                     <td v-text="pedido.dFechaVencimientoCotizacion"></td>
-                                                                                    <td v-text="pedido.cEstadoCotizacion"></td>
                                                                                     <td v-text="pedido.cEstadoAprobacion"></td>
+                                                                                    <td v-text="pedido.cEstadoCotizacion"></td>
                                                                                     <td v-text="pedido.cVendedorNombre"></td>
                                                                                 </tr>
                                                                             </tbody>
