@@ -95,7 +95,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Linea</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillObjComercialCompra.nidlinea" filterable placeholder="Select" v-on:change="llenarComboMarca()">
+                                                                                <el-select v-model="fillObjComercialCompra.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                                     <el-option
                                                                                     v-for="item in arrayLinea"
                                                                                     :key="item.nIdPar"
@@ -112,7 +112,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillObjComercialCompra.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillObjComercialCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -127,7 +127,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillObjComercialCompra.nidmodelo" filterable placeholder="Select" >
+                                                                                <el-select v-model="fillObjComercialCompra.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -521,10 +521,9 @@
                 fillObjComercialCompra:{
                     nidcronograma: 0,
                     cflagtipobeneficio: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    nindex: 0,
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: '',
                     canio: '',
                     cmes: ''
                 },
@@ -548,10 +547,9 @@
                 fillObjComercialVenta:{
                     nidcronograma: 0,
                     cflagtipobeneficio: 0,
-                    nidlinea: 0,
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    nindex: 0,
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: '',
                     canio: '',
                     cmes: ''
                 },
@@ -690,7 +688,7 @@
                     }
                 }).then(response => {
                     this.arrayLinea = response.data;
-                    this.fillObjComercialCompra.nidlinea = 0;
+                    this.fillObjComercialCompra.nidlinea = '';
                     this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
@@ -705,7 +703,7 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.fillObjComercialCompra.nidmarca = 0;
+                    this.fillObjComercialCompra.nidmarca = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -720,7 +718,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillObjComercialCompra.nidmodelo = 0;
+                    this.fillObjComercialCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });
