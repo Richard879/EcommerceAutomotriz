@@ -13,13 +13,13 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec [usp_PuntoInspeccion_SetPuntoInspeccion] ?, ?, ?, ?, ?, ?, ?', 
+        $element = DB::select('exec [usp_PuntoInspeccion_SetPuntoInspeccion] ?, ?, ?, ?, ?', 
                                                                 [   $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->cNombrePuntoInspeccion,
                                                                     $request->nFlagTipoMovimiento, 
-                                                                    $request->nFlagIngresoSucursal,
-                                                                    $request->nFlagSalidaSucursal,
+                                                                    /*$request->nFlagIngresoSucursal,
+                                                                    $request->nFlagSalidaSucursal,*/
                                                                     Auth::user()->id
                                                                 ]);
         return response()->json($element);         
@@ -71,14 +71,14 @@ class PdiPuntoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec [usp_PuntoInspeccion_UpdPuntoInspeccionById] ?, ?, ?, ?, ?, ?, ?, ?', 
+        $element = DB::select('exec [usp_PuntoInspeccion_UpdPuntoInspeccionById] ?, ?, ?, ?, ?, ?', 
                                                                 [   $request->nIdPuntoInspeccion,
                                                                     $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->cNombrePuntoInspeccion, 
                                                                     $request->nFlagTipoMovimiento,
-                                                                    $request->nFlagIngresoSucursal,
-                                                                    $request->nFlagSalidaSucursal,
+                                                                    /*$request->nFlagIngresoSucursal,
+                                                                    $request->nFlagSalidaSucursal,*/
                                                                     Auth::user()->id
                                                                 ]);
         return response()->json($element); 

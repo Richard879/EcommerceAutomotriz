@@ -173,7 +173,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Ingreso Sucursal</label>
@@ -204,11 +204,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
+                                                    <label class="col-sm-4 form-control-label">* Tipo Movimiento</label>
                                                     <div class="col-sm-8">
                                                         <el-select v-model="formPunto.nidflagmovimiento" filterable placeholder="Select" >
                                                             <el-option
@@ -552,15 +552,15 @@
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     cNombrePuntoInspeccion: this.formPunto.cnombre,
-                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
+                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento/*,
                     nFlagIngresoSucursal: this.formPunto.nidflagingreso,
-                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
+                    nFlagSalidaSucursal: this.formPunto.nidflagsalida*/
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Item Agregado registrada');
                         this.vistaFormulario = 1;
-                        //this.listarItemPlantilla();
+                        this.listarPuntoInspeccion(1);
                     }
                     else{
                         swal('Ya existe Item');
@@ -576,11 +576,8 @@
                 if(!this.formPunto.cnombre){
                     this.mensajeError.push('Debes Ingresar Nombre');
                 };
-                if(this.formPunto.nidflagingreso == 0){
-                    this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
-                };
-                if(this.formPunto.nidflagsalida == 0){
-                    this.mensajeError.push('Debes Seleccionar Salida Sucursal');
+                if(this.formPunto.nidflagmovimiento == 0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Movimiento');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -656,9 +653,9 @@
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     cNombrePuntoInspeccion: this.formPunto.cnombre,
-                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento,
+                    nFlagTipoMovimiento: this.formPunto.nidflagmovimiento/*,
                     nFlagIngresoSucursal: this.formPunto.nidflagingreso,
-                    nFlagSalidaSucursal: this.formPunto.nidflagsalida
+                    nFlagSalidaSucursal: this.formPunto.nidflagsalida*/
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
