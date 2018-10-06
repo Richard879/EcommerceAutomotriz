@@ -40,7 +40,7 @@
                                                                     <div class="row">
                                                                         <label class="col-md-4 form-control-label">*Tipo Persona</label>
                                                                         <div class="col-md-8 widthFull">
-                                                                            <el-radio-group v-model="fillBusquedaVehiculo.ntipopersona" @change="cambiarTipoPersona()">
+                                                                            <el-radio-group v-model="fillBusquedaVehiculo.ntipopersona">
                                                                                 <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
                                                                             </el-radio-group>
                                                                         </div>
@@ -624,12 +624,12 @@
                                                                                 <div class="container-fluid">
                                                                                     <div class="col-lg-12">
                                                                                         <form class="form-horizontal">
-                                                                                            <div class="form-group row">
+                                                                                            <div v-if="cFlagEditar == 1 && cFlagTipoPersona == null || cFlagEditar == 2 && cFlagTipoPersona == null" class="form-group row">
                                                                                                 <div class="col-sm-6">
                                                                                                     <div class="row">
                                                                                                         <label class="col-md-4 form-control-label">*Tipo Persona</label>
                                                                                                         <div class="col-md-8 widthFull">
-                                                                                                            <el-radio-group v-model="fillPropietario.ntipopersona" @change="cambiarTipoPersona()">
+                                                                                                            <el-radio-group v-model="fillPropietario.ntipopersona" @change="cambiarTipoPersona">
                                                                                                                 <el-radio v-for="tipo in arrayTipoPersona" :key="tipo.id" :label="tipo.value"> {{ tipo.text }} </el-radio>
                                                                                                             </el-radio-group>
                                                                                                         </div>
@@ -1281,7 +1281,9 @@
                 // VARIABLES SUBTAB VEHÍCULO
                 // ======================================
                 cFlagEditar: '',
+                cFlagTipoPersona: null,
                 fillNuevoVehiculo: {
+                    nidvehiculo: '',
                     cnroplaca: '',
                     cnrotarjetapropiedad: '',
                     nidclase: '',
@@ -1315,6 +1317,7 @@
                 // =======================
                 fillPropietario: {
                     //Tab DATOS PERSONALES
+                    nidpersona: '',
                     ntipopersona: '1',
                     ntpodocumento : '',
                     cnrodocumento : '',
@@ -1350,11 +1353,11 @@
                 arrayDist: [],
                 arrayEstadoCivil: [],
                 arrayProfesion: [],
-                arrayTipoDocumentoNaturales: [],
                 // ======================================
                 // VARIABLES SUBTAB SOAT
                 // ======================================
                 fillSOAT: {
+                    nidsoat: '',
                     csoat: '',
                     dfechainicio: '',
                     dfechafin: '',
@@ -1480,8 +1483,8 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    if(data == 1 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=0
-                    if(data == 2 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=0
+                    if(data == 1 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=''
+                    if(data == 2 && flag != 2) this.fillBusquedaVehiculo.nidmodelo=''
                     // (data == 1) ? this.fillBusquedaVehiculo.nidmodelo=0 : this.fillNuevoVehiculo.nidmodelo=0;
                 }).catch(error => {
                     console.log(error);
@@ -1499,9 +1502,8 @@
                     console.log(error);
                 });
             },
-            cambiarTipoPersona(){
-            },
             buscarVehiculo(page){
+                this.loading = true;
                 var url = this.ruta + '/maestrovehiculo/GetDetalleMaestroVehiculo';
                 axios.get(url, {
                     params: {
@@ -1524,6 +1526,7 @@
                     this.pagination.last_page      =   info.last_page;
                     this.pagination.from           =   info.from;
                     this.pagination.to             =   info.to;
+                    this.loading = false;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1552,16 +1555,14 @@
                 this.cFlagEditar = op;
                 this.tabVehiculo();
                 this.limpiarTabBusquedaVehiculo();
-                this.llenarComboClase();
-                this.llenarComboMarca(2);
                 //this.llenarComboModelo(2);
-                (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
                 this.llenarComboColor();
                 this.llenarComboAnioFabricacion();
                 this.llenarComboCombustible();
-                this.$nextTick(function () {
-                    (this.cFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
-                })
+                (this.cFlagEditar == 1) ? this.limpiarVehiculo(): this.cargarDatosEditar(data);
+                this.llenarComboClase();
+                this.llenarComboMarca(2);
+                (this.cFlagEditar == 1) ? this.llenarComboModelo(2): this.llenarComboModelo(2,2);
             },
             // ================================
             // METODOS SUBTAB VEHICULO
@@ -1648,9 +1649,11 @@
                 if(!this.fillNuevoVehiculo.cnroplaca){
                     this.mensajeError.push('Debes ingresar un número de placa');
                 };
-                if(this.fillNuevoVehiculo.cnroplaca.length != 7){
-                    this.mensajeError.push('Ingrese un número de placa válido');
-                };
+                if(this.fillNuevoVehiculo.cnroplaca){
+                    if(this.fillNuevoVehiculo.cnroplaca.length != 7){
+                        this.mensajeError.push('Ingrese un número de placa válido');
+                    };
+                }
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1665,7 +1668,9 @@
                 this.tabDatosPersonales();
             },
             limpiarPropietario(){
+                this.cFlagTipoPersona = null;//setear a null si se entra desde tab para mostrar el radio
                 //Tab DATOS PERSONALES
+                this.fillPropietario.nidpersona = ''
                 this.fillPropietario.ntipopersona = '1'
                 this.fillPropietario.ntpodocumento = '';
                 this.fillPropietario.cnrodocumento = '';
@@ -1785,9 +1790,12 @@
                     this.mensajeError.push('Debes Ingresar Nro Documento');
                 }
                 if(this.fillPropietario.ntipopersona == 1) {
-                    if(nrodocumento.length != 8) {
-                        this.mensajeError.push('El Nro Documento debe contener 8 dígitos');
+                    if(nrodocumento){
+                        if(nrodocumento.length != 8) {
+                            this.mensajeError.push('El Nro Documento debe contener 8 dígitos');
+                        }
                     }
+
                     if(!this.fillPropietario.capepaterno){
                         this.mensajeError.push('Debes Ingresar Apellido Paterno');
                     }
@@ -1800,18 +1808,23 @@
                     if(!this.fillPropietario.dfecnacimiento){
                         this.mensajeError.push('Debes Ingresar una Fecha de Nacimiento');
                     }
-                    let fecha_actual     = moment();
-                    let fecha_nacimiento = moment(this.fillPropietario.dfecnacimiento);
-                    if(fecha_actual.diff(fecha_nacimiento, 'days') < 0){
-                        this.mensajeError.push('La Fecha de Nacimiento debe ser menor a la fecha de Actual');
+
+                    if(this.fillPropietario.dfecnacimiento){
+                        let fecha_actual     = moment();
+                        let fecha_nacimiento = moment(this.fillPropietario.dfecnacimiento);
+                        if(fecha_actual.diff(fecha_nacimiento, 'days') < 0){
+                            this.mensajeError.push('La Fecha de Nacimiento debe ser menor a la fecha de Actual');
+                        }
                     }
                 }
                 if(this.fillPropietario.ntipopersona == 2) {
                     if(nrodocumento.length != 11) {
                         this.mensajeError.push('El Nro Documento debe contener 11 números');
                     }
-                    if(!this.fillPropietario.cnombre){
-                        this.mensajeError.push('Debes Ingresar Razon Social');
+                    if(nrodocumento){
+                        if(!this.fillPropietario.cnombre){
+                            this.mensajeError.push('Debes Ingresar Razon Social');
+                        }
                     }
                 }
 
@@ -1829,7 +1842,6 @@
                 this.llenarComboDist();
                 this.llenarComboEstadoCivil();
                 this.llenarComboProfesion();
-                this.llenarComboTpoDocumentoDatoConctactoJurifico();
             },
             limpiarDatosContacto(){
                 //Tab DATOS DE CONTACTO
@@ -1863,7 +1875,7 @@
                     }
                 }).then(response => {
                     this.arrayProv = response.data;
-                    this.fillPropietario.nidprovincia = 0;
+                    (this.cFlagEditar == 1) ? this.fillPropietario.nidprovincia = 0 : ''
                     this.arrayDist = [];
                     this.llenarComboDist();
                 }).catch(error => {
@@ -1878,7 +1890,7 @@
                     }
                 }).then(response => {
                     this.arrayDist = response.data;
-                    this.fillPropietario.niddistrito = 0;
+                    (this.cFlagEditar == 1) ? this.fillPropietario.niddistrito = 0 : ''
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1903,18 +1915,6 @@
                     }
                 }).then(response => {
                     this.arrayProfesion = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboTpoDocumentoDatoConctactoJurifico(){
-                var url = this.ruta + '/parametro/GetDocumentoNatural';
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid': 110047
-                    }
-                }).then(response => {
-                    this.arrayTipoDocumentoNaturales = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1962,8 +1962,10 @@
                 if(!this.fillPropietario.ncelular){
                     this.mensajeError.push('Debes Ingresar Celular');
                 }
-                if(this.fillPropietario.ncelular.length > 9){
-                    this.mensajeError.push('El numero de Celular es incorrecto');
+                if(this.fillPropietario.ncelular){
+                    if(this.fillPropietario.ncelular.length > 9){
+                        this.mensajeError.push('El numero de Celular es incorrecto');
+                    }
                 }
 
                 if(this.mensajeError.length){
@@ -1981,6 +1983,7 @@
             tabSoat(){},
             limpiarSOAT(){
                 //Tab DATOS SOAT
+                this.fillSOAT.nidsoat = '';
                 this.fillSOAT.csoat = '';
                 this.fillSOAT.dfechainicio = '';
                 this.fillSOAT.dfechafin = '';
@@ -2033,6 +2036,7 @@
                 let fecha_fin      = moment(this.fillSOAT.dfechafin);
 
                 this.arraySOAT.push({
+                    nidsoat             : this.fillSOAT.nidsoat,
                     csoat               : this.fillSOAT.csoat,
                     cproveedornombre    : this.fillProveedor.cproveedornombre,
                     dfechainicio        : this.fillSOAT.dfechainicio,
@@ -2088,7 +2092,8 @@
                 }
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarVehiculoPlaca';
                 axios.post(url, {
-                    fillNuevoVehiculo : this.fillNuevoVehiculo
+                    fillNuevoVehiculo : this.fillNuevoVehiculo,
+                    cFlagEditar       : this.cFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarNuevoContacto(response.data[0].nIdVehiculoPlaca);
@@ -2116,7 +2121,8 @@
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarPerNatural';
                 axios.post(url, {
                     fillPropietario     :   this.fillPropietario,
-                    nIdVehiculoPlaca    :   data
+                    nIdVehiculoPlaca    :   data,
+                    cFlagEditar         :   this.cFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarSOAT(data);
@@ -2133,8 +2139,9 @@
             registrarPersonaJuridica(data){
                 var url = this.ruta + '/maestrovehiculo/SetRegistrarPerJuridica';
                 axios.post(url, {
-                    fillPropietario         :   this.fillPropietario,
-                    nIdVehiculoPlaca        :   data
+                    fillPropietario     :   this.fillPropietario,
+                    nIdVehiculoPlaca    :   data,
+                    cFlagEditar         :   this.cFlagEditar
                 }).then(response => {
                     if(response.data[0].nFlagMsje==1){
                         this.registrarSOAT(data);
@@ -2153,7 +2160,8 @@
                 axios.post(url, {
                     arraySOAT           :   this.arraySOAT,
                     fillProveedor       :   this.fillProveedor,
-                    nIdVehiculoPlaca    :   data
+                    nIdVehiculoPlaca    :   data,
+                    cFlagEditar         :   this.cFlagEditar
                 }).then(response => {
                     this.limpiarVehiculo();
                     this.limpiarPropietario();
@@ -2164,6 +2172,7 @@
                 });
             },
             limpiarVehiculo(){
+                this.fillNuevoVehiculo.nidvehiculo = '';
                 this.fillNuevoVehiculo.cnroplaca = '';
                 this.fillNuevoVehiculo.cnrotarjetapropiedad = '';
                 this.fillNuevoVehiculo.nidclase = '';
@@ -2175,6 +2184,7 @@
                 this.fillNuevoVehiculo.dfechaventa = '';
                 this.fillNuevoVehiculo.cnrocilindros = '';
                 this.fillNuevoVehiculo.cnrorueda = '';
+                this.fillNuevoVehiculo.cnroserie = '';
                 this.fillNuevoVehiculo.cnropasajeros = '';
                 this.fillNuevoVehiculo.cnroasiento = '';
                 this.fillNuevoVehiculo.fpesoseco = '';
@@ -2218,6 +2228,16 @@
                 return this.error;
             },
             cargarDatosEditar(data){
+                this.limpiarVehiculo();
+                this.limpiarPropietario();
+                this.limpiarSOAT();
+
+                let me = this;
+
+                this.cFlagTipoPersona = data['cFlagTipoPersona'];//Cpaturo el Flag para saber si es PN, PJ o Libre
+
+                //CAPTURAR DATOS DEL VEHICULO
+                this.fillNuevoVehiculo.nidvehiculo = data['nIdVehiculoPlaca'];
                 this.fillNuevoVehiculo.cnroplaca = data['cPlaca'];
                 this.fillNuevoVehiculo.cnrotarjetapropiedad = data['cNroTarjeta'];
                 this.fillNuevoVehiculo.nidclase = (data['nIdClaseVehiculo'] == 0) ? '' : data['nIdClaseVehiculo'];
@@ -2238,7 +2258,83 @@
                 this.fillNuevoVehiculo.faltura = data['fAltura'];
                 this.fillNuevoVehiculo.flongitud = data['fLongitud'];
                 this.fillNuevoVehiculo.fcargautil = data['fCargaUtil'];
-                this.fillNuevoVehiculo.fancho = data['fAncho'];
+
+                //CAPTURAR DATOS DEL A PERSONA NATURAL
+                if (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) {
+                    this.fillPropietario.nidpersona = (data['nIdPersonaNatural'] == undefined) ? '' : data['nIdPersonaNatural'];
+                    this.fillPropietario.ntipopersona = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '1': '2';
+                    this.vistaDatosPersonaNatural = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? 1 : 0;
+                    this.fillPropietario.ntpodocumento = data['nIdTipoDocumento'];
+                    this.fillPropietario.cnrodocumento = data['cNumeroDocumento'];
+                    this.fillPropietario.capepaterno = data['cApellidoPaterno'];
+                    this.fillPropietario.capematerno = data['cApellidoMaterno'];
+                    this.fillPropietario.cnombre = data['cNombre'];
+                    this.fillPropietario.dfecnacimiento = data['dFechaNacimiento'];
+                    this.fillPropietario.lblcnombres = (data['cFlagTipoPersona'] == 'N' || data['cFlagTipoPersona'] == null) ? '* Nombres': '* Razón Social';
+                    this.fillPropietario.niddepartamento = data['nIdDepartamento'];
+                    this.fillPropietario.nidprovincia = data['nIdProvincia'];
+                    this.fillPropietario.niddistrito = data['nIdDistrito'];
+                    this.fillPropietario.cdireccion = data['cDireccion'];
+                    this.fillPropietario.cmailprincipal = data['cEmail'];
+                    this.fillPropietario.cmailalternativo = data['cEmailAlternativo'];
+                    this.fillPropietario.ctelefonofijo = data['cTelefonoFijo'];
+                    this.fillPropietario.ncelular = data['nTelefonoMovil'];
+                    this.fillPropietario.ncelularalternativo = data['nTelefonoMovilAlternativo'];
+                    this.fillPropietario.nestadocivil = (data['nIdEstadoCivil'] == 0) ? '' : data['nIdEstadoCivil'];
+                    this.fillPropietario.nprofesion = (data['nIdProfesion'] == 0) ? '' : data['nIdProfesion'];
+                    this.fillPropietario.ccentrolaboral = (data['cCentroLaboral'] == 0) ? '' : data['cCentroLaboral'];
+                    this.fillPropietario.cnrolicencia = data['cNumeroLicenciaConducir'];
+                } else {
+                    ///CAPTURAR DATOS DE LA PERSONA JURIDICA
+                    this.fillPropietario.nidpersona = (data['nIdPersonaJuridica'] == undefined) ? '' : data['nIdPersonaJuridica'];
+                    this.fillPropietario.ntipopersona = (data['cFlagTipoPersona'] == 'J') ? '2': '1';
+                    this.llenarComboTpoDocumento();//cargo el listado de documentos de tipo juridico
+                    this.vistaDatosPersonaNatural = (data['cFlagTipoPersona'] == 'J') ? 0 : 1;
+                    this.fillPropietario.cnrodocumento = data['cRuc'];
+                    this.fillPropietario.cnombre = data['cRazonSocial'];
+                    this.fillPropietario.lblcnombres = (data['cFlagTipoPersona'] == 'J') ? '* Razón Social': '* Nombres';
+                    this.fillPropietario.niddepartamento = data['nIdDepartamento'];
+                    this.fillPropietario.nidprovincia = data['nIdProvincia'];
+                    this.fillPropietario.niddistrito = data['nIdDistrito'];
+                    this.fillPropietario.cdireccion = data['cDireccion'];
+                    this.fillPropietario.cmailprincipal = data['cEmail'];
+                    this.fillPropietario.cmailalternativo = data['cEmailAlternativo'];
+                    this.fillPropietario.ctelefonofijo = data['cTelefonoFijo'];
+                    this.fillPropietario.ncelular = data['nTelefonoMovil'];
+                    this.fillPropietario.ncelularalternativo = data['nTelefonoMovilAlternativo'];
+
+                    setTimeout(function() {
+                        me.setearTipoDocumento(data)//Asignar idTipoDocumento cuando es del Rol Juridico despues de 2.5 seg (esperar a que cargue la lista de tipos de documento)
+                    }, 3800);
+                }
+
+                //CAPTURAR DATOS DEL SOAT
+                if (data['cNumeroSoat'] != null) {
+                    this.fillSOAT.nidsoat = (data['nIdSoatVehiculo'] == undefined) ? '' : data['nIdSoatVehiculo'];
+                    this.fillSOAT.csoat = data['cNumeroSoat'];
+                    this.fillSOAT.dfechainicio = data['dFechaInicioSOAT'];
+                    this.fillSOAT.dfechafin = data['dFechaFinSOAT'];
+                    this.fillSOAT.nidestado = data['cFlagEstadoActivoSOAT'];
+                    this.fillProveedor.nidproveedor = data['nIdProveedorSOAT'];
+                    this.fillProveedor.cproveedornombre = data['cNombreProveedorSOAT'];
+
+                    this.arraySOAT.push({
+                        nidsoat             : this.fillSOAT.nidsoat,
+                        csoat               : this.fillSOAT.csoat,
+                        cproveedornombre    : this.fillProveedor.cproveedornombre,
+                        dfechainicio        : this.fillSOAT.dfechainicio,
+                        dfechafin           : this.fillSOAT.dfechafin,
+                        cnombreestado       : (this.fillSOAT.nidestado == 'A') ? 'Activo' : 'Inactivo',
+                        nidestado           : this.fillSOAT.nidestado
+                    });
+                }
+            },
+            setearTipoDocumento(data){
+                let me = this;
+                this.$nextTick().then(function () {
+                    console.log(me.arrayTipoDocumento[1]);
+                    me.fillPropietario.ntpodocumento = me.arrayTipoDocumento[1].nIdPar;//asigno el tipo de documento RUC
+                })
             },
             // =================================================================
             // METODOS GENERICOS

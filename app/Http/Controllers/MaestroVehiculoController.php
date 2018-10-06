@@ -13,6 +13,7 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nidvehiculo            =   $request->fillNuevoVehiculo['nidvehiculo'];
         $cnroplaca              =   $request->fillNuevoVehiculo['cnroplaca'];
         $cnrotarjetapropiedad   =   $request->fillNuevoVehiculo['cnrotarjetapropiedad'];
         $nidclase               =   $request->fillNuevoVehiculo['nidclase'];
@@ -35,6 +36,7 @@ class MaestroVehiculoController extends Controller
         $cancho                 =   $request->fillNuevoVehiculo['fancho'];
         $ccargautil             =   $request->fillNuevoVehiculo['fcargautil'];
 
+        $nidvehiculo            = ($nidvehiculo == NULL)   ? ($nidvehiculo = ' ') : $nidvehiculo;
         $cnroplaca              = ($cnroplaca == NULL)              ? ($cnroplaca = ' ') : $cnroplaca;
         $cnrotarjetapropiedad   = ($cnrotarjetapropiedad == NULL)   ? ($cnrotarjetapropiedad = ' ') : $cnrotarjetapropiedad;
         $nidclase               = ($nidclase == NULL)       ? ($nidclase = ' ')         : $nidclase;
@@ -56,10 +58,13 @@ class MaestroVehiculoController extends Controller
         $cancho                 = ($cancho == NULL)         ? ($cancho = ' ')           : $cancho;
         $ccargautil             = ($ccargautil == NULL)     ? ($ccargautil = ' ')       : $ccargautil;
 
-        $arrayVehiculoPlaca = DB::select('exec usp_MaestroVehiculo_SetVehiculoPlaca ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $cFlagEditar = $request->cFlagEditar;
+
+        $arrayVehiculoPlaca = DB::select('exec usp_MaestroVehiculo_SetVehiculoPlaca ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         NULL,
                                         NULL,
+                                        $nidvehiculo,
                                         $cnroplaca,
                                         $cnrotarjetapropiedad,
                                         $nidclase,
@@ -81,6 +86,7 @@ class MaestroVehiculoController extends Controller
                                         $caltura,
                                         $cancho,
                                         $ccargautil,
+                                        $cFlagEditar,
                                         Auth::user()->id
                                     ]);
 
@@ -91,6 +97,7 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nidpersona             =   $request->fillPropietario['nidpersona'];
         $ntpodocumento          =   $request->fillPropietario['ntpodocumento'];
         $cnrodocumento          =   $request->fillPropietario['cnrodocumento'];
         $cnombre                =   $request->fillPropietario['cnombre'];
@@ -109,6 +116,7 @@ class MaestroVehiculoController extends Controller
         $nprofesion             =   $request->fillPropietario['nprofesion'];
         $cnrolicencia           =   $request->fillPropietario['cnrolicencia'];
 
+        $nidpersona             = ($nidpersona == NULL) ? ($nidpersona = ' ') : $nidpersona;
         $ntpodocumento          = ($ntpodocumento == NULL) ? ($ntpodocumento = ' ') : $ntpodocumento;
         $cnrodocumento          = ($cnrodocumento == NULL) ? ($cnrodocumento = ' ') : $cnrodocumento;
         $cnombre                = ($cnombre == NULL) ? ($cnombre = ' ') : $cnombre;
@@ -128,12 +136,14 @@ class MaestroVehiculoController extends Controller
         $cnrolicencia           = ($cnrolicencia == NULL) ? ($cnrolicencia = ' ') : $cnrolicencia;
 
 
-        $nIdVehiculoPlaca = $request->nIdVehiculoPlaca;
+        $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
+        $cFlagEditar        = $request->cFlagEditar;
 
-        $arrayPropietario = DB::select('exec usp_MaestroVehiculo_SetPersonaNatural ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPropietario = DB::select('exec usp_MaestroVehiculo_SetPersonaNatural ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                 [
+                                                    $nidpersona,
                                                     $ntpodocumento,
-                                                    $cnrodocumento,
+                                                    trim($cnrodocumento),
                                                     $cnombre,
                                                     $capepaterno,
                                                     $capematerno,
@@ -150,6 +160,7 @@ class MaestroVehiculoController extends Controller
                                                     $nprofesion,
                                                     $cnrolicencia,
                                                     $nIdVehiculoPlaca,
+                                                    $cFlagEditar,
                                                     Auth::user()->id
                                                 ]);
         return response()->json($arrayPropietario);
@@ -159,6 +170,7 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nidpersona             =   $request->fillPropietario['nidpersona'];
         $cnrodocumento          =   $request->fillPropietario['cnrodocumento'];
         $cnombre                =   $request->fillPropietario['cnombre'];
         $niddistrito            =   $request->fillPropietario['niddistrito'];
@@ -169,6 +181,7 @@ class MaestroVehiculoController extends Controller
         $ncelular               =   $request->fillPropietario['ncelular'];
         $ncelularalternativo    =   $request->fillPropietario['ncelularalternativo'];
 
+        $nidpersona             = ($nidpersona == NULL) ? ($nidpersona = ' ') : $nidpersona;
         $cnrodocumento          = ($cnrodocumento == NULL) ? ($cnrodocumento = ' ') : $cnrodocumento;
         $cnombre                = ($cnombre == NULL) ? ($cnombre = ' ') : $cnombre;
         $niddistrito            = ($niddistrito == NULL) ? ($niddistrito = ' ') : $niddistrito;
@@ -179,11 +192,13 @@ class MaestroVehiculoController extends Controller
         $ncelular               = ($ncelular == NULL) ? ($ncelular = ' ') : $ncelular;
         $ncelularalternativo    = ($ncelularalternativo == NULL) ? ($ncelularalternativo = ' ') : $ncelularalternativo;
 
-        $nIdVehiculoPlaca = $request->nIdVehiculoPlaca;
+        $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
+        $cFlagEditar        = $request->cFlagEditar;
 
-        $arrayPropietario = DB::select('exec usp_MaestroVehiculo_SetPerJuridica ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPropietario = DB::select('exec usp_MaestroVehiculo_SetPerJuridica ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $cnrodocumento,
+                                        $nidpersona,
+                                        trim($cnrodocumento),
                                         $cnombre,
                                         $niddistrito,
                                         $cdireccion,
@@ -193,6 +208,7 @@ class MaestroVehiculoController extends Controller
                                         $ncelular,
                                         $ncelularalternativo,
                                         $nIdVehiculoPlaca,
+                                        $cFlagEditar,
                                         Auth::user()->id
                                     ]);
 
@@ -203,25 +219,26 @@ class MaestroVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arraySOAT = $request->arraySOAT;
-        $fillProveedor = $request->fillProveedor;
-        $nIdVehiculoPlaca = $request->nIdVehiculoPlaca;
-
-        print_r($arraySOAT);
+        $arraySOAT          = $request->arraySOAT;
+        $fillProveedor      = $request->fillProveedor;
+        $nIdVehiculoPlaca   = $request->nIdVehiculoPlaca;
+        $cFlagEditar        = $request->cFlagEditar;
 
         try{
             DB::beginTransaction();
             $arraySOATLength = sizeof($arraySOAT);
             if($arraySOATLength > 0){
                 foreach ($arraySOAT as $key => $value) {
-                    $arraySoat = DB::select('exec usp_MaestroVehiculo_SetSoat ?, ?, ?, ?, ?, ?, ?',
+                    $arraySoat = DB::select('exec usp_MaestroVehiculo_SetSoat ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
+                                        $value['nidsoat'],
                                         $value['csoat'],
                                         $nIdVehiculoPlaca,
                                         $fillProveedor['nidproveedor'],
                                         $value['dfechainicio'],
                                         $value['dfechafin'],
                                         $value['nidestado'],
+                                        $cFlagEditar,
                                         Auth::user()->id
                                     ]);
                 }
