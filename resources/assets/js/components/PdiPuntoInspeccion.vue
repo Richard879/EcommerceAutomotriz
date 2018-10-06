@@ -574,12 +574,12 @@
                 this.mensajeError =[];
 
                 if(!this.formPunto.cnombre){
-                    this.mensajeError.push('Debes Seleccionar Sección');
+                    this.mensajeError.push('Debes Ingresar Nombre');
                 };
-                if(this.formPunto.nFlagIngresoSucursal == 0){
+                if(this.formPunto.nidflagingreso == 0){
                     this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
                 };
-                if(this.formPunto.nFlagSalidaSucursal == 0){
+                if(this.formPunto.nidflagsalida == 0){
                     this.mensajeError.push('Debes Seleccionar Salida Sucursal');
                 };
                 if(this.mensajeError.length){

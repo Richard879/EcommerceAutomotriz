@@ -246,13 +246,22 @@ class PedidoController extends Controller
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEstadoPedido = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
 
         $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoAprobados ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $nIdEmpresa, $nIdSucursal, $dFechaInicio, $dFechaFin,
-                                        $cNumeroPedido, $cNumeroVin,
-                                        $nIdMarca, $nIdModelo,
-                                        $nIdEstadoPedido, Auth::user()->id
+                                        $nIdEmpresa, 
+                                        $nIdSucursal, 
+                                        $dFechaInicio, 
+                                        $dFechaFin,
+                                        $cNumeroPedido, 
+                                        $cNumeroVin,
+                                        $nIdMarca, 
+                                        $nIdModelo,
+                                        $nIdEstadoPedido, 
+                                        Auth::user()->id
                                     ]);
 
         $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);

@@ -19,7 +19,12 @@ class AsignaVendedorModeloController extends Controller
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
         $nIdJefeVentas = $request->nidjefeventas;
-        $arrayVendedorLinea = DB::select('exec usp_AsigVendedorModelo_GetListVendedoresAsignados ?, ?, ?, ?, ?, ?, ?',
+
+        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+
+        $arrayVendedorModelo = DB::select('exec usp_AsigVendedorModelo_GetListVendedoresAsignados ?, ?, ?, ?, ?, ?, ?',
                                                             array($nIdEmpresa,
                                                                   $nIdSucursal,
                                                                   $nIdProveedor, 
@@ -28,8 +33,8 @@ class AsignaVendedorModeloController extends Controller
                                                                   $nIdModelo,
                                                                   $nIdJefeVentas));
 
-        $arrayVendedorLinea = ParametroController::arrayPaginator($arrayVendedorLinea, $request);
-        return ['arrayVendedorLinea'=>$arrayVendedorLinea];
+        $arrayVendedorModelo = ParametroController::arrayPaginator($arrayVendedorModelo, $request);
+        return ['arrayVendedorModelo'=>$arrayVendedorModelo];
     }
 
     public function SetAsignaModelo(Request $request)

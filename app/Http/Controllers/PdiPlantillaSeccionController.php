@@ -32,6 +32,10 @@ class PdiPlantillaSeccionController extends Controller
         $nIdTipoInspeccion = $request->nidtipoinspeccion;
         $nIdFlag = $request->nidflag;
         $nIdSeccion = $request->nidseccion;
+
+        $nIdTipoInspeccion = ($nIdTipoInspeccion == NULL) ? ($nIdTipoInspeccion = 0) : $nIdTipoInspeccion;
+        $nIdFlag = ($nIdFlag == NULL) ? ($nIdFlag = 0) : $nIdFlag;
+        $nIdSeccion = ($nIdSeccion == NULL) ? ($nIdSeccion = 0) : $nIdSeccion;
                 
         $arrayPlantilla = DB::select('exec [usp_PlantillaInspeccion_GetListItems] ?, ?, ?, ?', 
                                                                     [   $nIdEmpresa, 
@@ -90,23 +94,10 @@ class PdiPlantillaSeccionController extends Controller
 
         $cNombreTipoInspeccion = ($cNombreTipoInspeccion == NULL) ? ($cNombreTipoInspeccion = '') : $cNombreTipoInspeccion;
 
-        $parametro = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ? ', 
+        $data = DB::select('exec [usp_TipoInspeccion_GetListTipoInspeccion] ?, ? ', 
                                                                         [   $nIdEmpresa, 
                                                                             $cNombreTipoInspeccion
                                                                         ]);
-        $data = [];
-        if($variable == "0"){
-            $data[0] = [
-                'nIdTipoInspeccion'   => 0,
-                'cNombreTipoInspeccion' =>'SELECCIONE',
-            ];
-        }
-        foreach ($parametro as $key => $value) {
-           $data[$key+1] =[
-                'nIdTipoInspeccion'   => $value->nIdTipoInspeccion,
-                'cNombreTipoInspeccion' => $value->cNombreTipoInspeccion,
-            ];
-        }
         return response()->json($data);
     }
 }

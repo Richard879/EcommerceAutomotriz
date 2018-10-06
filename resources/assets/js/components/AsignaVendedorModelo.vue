@@ -171,92 +171,95 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                    </div>
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -270,138 +273,128 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">ASIGNACION MODELO A VENDEDOR</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Proveedor</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" v-model="fillVendedor.cnombreproveedor" class="form-control form-control-sm" readonly>
-                                                    </div>
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">ASIGNACION MODELO A VENDEDOR</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Proveedor</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" v-model="fillVendedor.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Linea Venta</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" v-model="fillVendedor.cnombrelineaventa" class="form-control form-control-sm" readonly>
-                                                        <input type="hidden" v-model="fillVendedor.nidlineaventa" class="form-control form-control-sm" readonly>
-                                                    </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Linea Venta</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" v-model="fillVendedor.cnombrelineaventa" class="form-control form-control-sm" readonly>
+                                                    <input type="hidden" v-model="fillVendedor.nidlinea" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Jefe de ventas</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" v-model="fillVendedor.cnombrejefeventas" class="form-control form-control-sm" readonly>
-                                                    </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Jefe de ventas</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" v-model="fillVendedor.cnombrejefeventas" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Marca</label>
-                                                    <div class="col-sm-4">
-                                                        <el-select v-model="fillVendedor.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelo();">
-                                                            <el-option
-                                                            v-for="marca in arrayMarca"
-                                                            :key="marca.nIdPar"
-                                                            :label="marca.cParNombre"
-                                                            :value="marca.nIdPar">
-                                                            </el-option>
-                                                        </el-select>
-                                                    </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Marca</label>
+                                                <div class="col-sm-4">
+                                                    <el-select v-model="fillVendedor.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo();">
+                                                        <el-option
+                                                        v-for="marca in arrayMarca"
+                                                        :key="marca.nIdPar"
+                                                        :label="marca.cParNombre"
+                                                        :value="marca.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-2 form-control-label">Modelo</label>
-                                                    <div class="col-sm-4">
-                                                        <el-select v-model="fillVendedor.nidmodelo" filterable placeholder="Select" v-on:change="listarVendedorLinea(1);">
-                                                            <el-option
-                                                            v-for="modelo in arrayModelo"
-                                                            :key="modelo.nIdPar"
-                                                            :label="modelo.cParNombre"
-                                                            :value="modelo.nIdPar">
-                                                            </el-option>
-                                                        </el-select>
-                                                    </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 form-control-label">Modelo</label>
+                                                <div class="col-sm-4">
+                                                    <el-select v-model="fillVendedor.nidmodelo" filterable clearable placeholder="SELECCIONE" v-on:change="listarVendedorModelo(1);">
+                                                        <el-option
+                                                        v-for="modelo in arrayModelo"
+                                                        :key="modelo.nIdPar"
+                                                        :label="modelo.cParNombre"
+                                                        :value="modelo.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayVendedorLinea.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Asignar</th>
-                                                                <th>Asesor comercial</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="vendedor in arrayVendedorLinea" :key="vendedor.nIdMiVendedor">
-                                                                <td>
-                                                                    <template v-if="vendedor.nIdVendedor == 0">
-                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                            <div slot="content">Asignar {{ vendedor.cNombreMiVendedor }}</div>
-                                                                            <i @click="asignar(vendedor.nIdMiVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                        </el-tooltip>
-                                                                    </template>
-                                                                    <template v-else>
-                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                            <div slot="content">Desasignar {{ vendedor.cNombreMiVendedor }}</div>
-                                                                            <i @click="designar(vendedor.nIdAsignacionVendedorModelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                        </el-tooltip>
-                                                                    </template>
-                                                                </td>
-                                                                <td v-text="vendedor.cNombreMiVendedor"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaVendedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayVendedorModelo.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Asignar</th>
+                                                            <th>Asesor comercial</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vendedor in arrayVendedorModelo" :key="vendedor.nIdMiVendedor">
+                                                            <td>
+                                                                <template v-if="vendedor.nIdVendedor == 0">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Asignar {{ vendedor.cNombreMiVendedor }}</div>
+                                                                        <i @click="asignar(vendedor.nIdMiVendedor)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Desasignar {{ vendedor.cNombreMiVendedor }}</div>
+                                                                        <i @click="designar(vendedor.nIdAsignacionVendedorModelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                            </td>
+                                                            <td v-text="vendedor.cNombreMiVendedor"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVendedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVendedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div> 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -425,17 +418,17 @@
                 arrayProveedor: [],
                 arrayMarca: [],
                 arrayModelo: [],
-                arrayVendedorLinea: [],
+                arrayVendedorModelo: [],
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
                 fillVendedor:{
                     cnombreproveedor: '',
                     cnombrelineaventa: '',
-                    nidlineaventa: 0,
+                    nidlinea: 0,
                     cnombrejefeventas: '',
-                    nidmarca: 0,
-                    nidmodelo: 0
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 formAsignaModelo:{
                     nidproveedor: 0,
@@ -542,6 +535,21 @@
                     }
                 });
             },
+            validarVerificaJefeVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formAsignaModelo.nJefeVentaId == 0){
+                    this.mensajeError.push('Debe ser Jefe de Ventas para realizar la búsqueda');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            // ===============================================================
+            // ===========  LISTAR LINEAS POR PROVEEDOR ================
             buscarProveedorLinea(){
                 if(this.validarbuscarProveedorLinea()){
                     this.accionmodal=1;
@@ -582,48 +590,9 @@
                     }
                 });
             },
-            validarVerificaJefeVenta(){
-                this.error = 0;
-                this.mensajeError =[];
-
-                if(this.formAsignaModelo.nJefeVentaId == 0){
-                    this.mensajeError.push('Debe ser Jefe de Ventas para realizar la búsqueda');
-                }
-
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
-            listarVendedorLinea(page){
-                var url = this.ruta + '/asignavendedormodelo/GetLstVendedorModelo';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
-                        'nidproveedor': this.formAsignaModelo.nidproveedor,
-                        'nidlinea': this.fillVendedor.nidlineaventa,
-                        'nidmarca': this.fillVendedor.nidmarca,
-                        'nidmodelo': this.fillVendedor.nidmodelo,
-                        'nidjefeventas': this.formAsignaModelo.nJefeVentaId
-                        //'page' : page
-                    }
-                }).then(response => {
-                    this.arrayVendedorLinea = response.data.arrayVendedorLinea.data;
-                    this.paginationModal.current_page =  response.data.arrayVendedorLinea.current_page;
-                    this.paginationModal.total = response.data.arrayVendedorLinea.total;
-                    this.paginationModal.per_page    = response.data.arrayVendedorLinea.per_page;
-                    this.paginationModal.last_page   = response.data.arrayVendedorLinea.last_page;
-                    this.paginationModal.from        = response.data.arrayVendedorLinea.from;
-                    this.paginationModal.to           = response.data.arrayVendedorLinea.to;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
+            cambiarPagina(page){
+                this.pagination.current_page=page;
+                this.listarProveedorLinea(page);
             },
             validarbuscarProveedorLinea(){
                 this.error = 0;
@@ -639,6 +608,90 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            // ===============================================================
+            // ===========  LISTAR VENEDEDOR MODELO ASIGNADOS ================
+            llenarComboMarca(){
+                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea' : this.fillVendedor.nidlinea
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                    if(this.vistaFormulario){
+                        this.fillVendedor.nidmarca = '';
+                    }
+                    this.arrayModelo = [];
+                    this.llenarComboModelo();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url, {
+                    params: {
+                        'nidmarca' : this.fillVendedor.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    if(this.vistaFormulario){
+                        this.fillVendedor.nidmodelo = '';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            }, 
+            listarVendedorModelo(page){
+                if(!this.fillVendedor.nidmodelo || !this.fillVendedor.nidmarca){
+                    this.arrayVendedorModelo = []
+                }else{
+                    var url = this.ruta + '/asignavendedormodelo/GetLstVendedorModelo';
+                    axios.get(url, {
+                        params: {
+                            'nidempresa': 1300011,
+                            'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                            'nidproveedor': this.formAsignaModelo.nidproveedor,
+                            'nidlinea': this.fillVendedor.nidlinea,
+                            'nidmarca': this.fillVendedor.nidmarca,
+                            'nidmodelo': this.fillVendedor.nidmodelo,
+                            'nidjefeventas': this.formAsignaModelo.nJefeVentaId
+                            //'page' : page
+                        }
+                    }).then(response => {
+                        this.arrayVendedorModelo = response.data.arrayVendedorModelo.data;
+                        this.paginationModal.current_page =  response.data.arrayVendedorModelo.current_page;
+                        this.paginationModal.total = response.data.arrayVendedorModelo.total;
+                        this.paginationModal.per_page    = response.data.arrayVendedorModelo.per_page;
+                        this.paginationModal.last_page   = response.data.arrayVendedorModelo.last_page;
+                        this.paginationModal.from        = response.data.arrayVendedorModelo.from;
+                        this.paginationModal.to           = response.data.arrayVendedorModelo.to;
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
+                    });
+                }
+            },
+            cambiarPaginaVendedor(page){
+                this.paginationModal.current_page=page;
+                this.listarVendedorModelo(page);
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
@@ -667,9 +720,9 @@
                                 this.modal = 1;
                                 this.fillVendedor.cnombreproveedor= this.formAsignaModelo.cproveedornombre;
                                 this.fillVendedor.cnombrelineaventa = data['cLineaNombre'];
-                                this.fillVendedor.nidlineaventa = data['nIdLinea'];
+                                this.fillVendedor.nidlinea = data['nIdLinea'];
                                 this.llenarComboMarca();
-                                this.arrayVendedorLinea=[];
+                                this.arrayVendedorModelo=[];
                                 break;
                             }
                         }
@@ -677,14 +730,70 @@
                 }
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
+            // ==========================================================
+            // =============  REGISTRO ========================
+            asignar(nIdMiVendedor){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/asignavendedormodelo/SetAsignaModelo';
+                axios.post(url, {
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdProveedor: parseInt(this.formAsignaModelo.nidproveedor),
+                    nIdVendedor: nIdMiVendedor,
+                    nIdLinea: parseInt(this.fillVendedor.nidlinea),
+                    nIdMarca: parseInt(this.fillVendedor.nidmarca),
+                    nIdModelo: parseInt(this.fillVendedor.nidmodelo),
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Asignación Vendedor Modelo registrado Con Exito');
+                        this.listarVendedorModelo();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            designar(nIdAsignacionVendedorModelo){
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/asignavendedormodelo/SetDesasignaModelo';
+                axios.post(url, {
+                    nIdAsignacion: nIdAsignacionVendedorModelo,
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Desasignación Vendedor Modelo Realizado Con Exito');
+                        this.listarVendedorModelo();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            // ==========================================================
+            // =============  MODAL PROVEEDORES ========================
             buscaProveedores(){
                 this.listarProveedores(1);
             },
@@ -723,10 +832,11 @@
                 this.arrayMarca = [];
                 this.arrayModelo = [];
             },
-            cambiarPagina(page){
-                this.pagination.current_page=page;
-                this.listarProveedorLinea(page);
+            cambiarPaginaProveedor(page){
+                this.paginationModal.current_page=page;
+                this.listarProveedores(page);
             },
+            // ==========================================================
             limpiarFormulario(){
             },
             cambiarVistaFormulario(){
@@ -737,115 +847,7 @@
                     this.limpiarFormulario();
                     this.vistaFormulario = 1;
                 }
-            },
-            llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
-
-                axios.get(url, {
-                    params: {
-                        'nidlinea' : this.fillVendedor.nidlineaventa
-                    }
-                }).then(response => {
-                    this.arrayMarca = response.data;
-                    if(this.vistaFormulario){
-                        this.fillVendedor.nidmarca = 0;
-                    }
-                    this.arrayModelo = [];
-                    this.llenarComboModelo();
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
-
-                axios.get(url, {
-                    params: {
-                        'nidmarca' : this.fillVendedor.nidmarca
-                    }
-                }).then(response => {
-                    this.arrayModelo = response.data;
-                    if(this.vistaFormulario){
-                        this.fillVendedor.nidmodelo = 0;
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            cambiarPaginaVendedor(page){
-                this.paginationModal.current_page=page;
-                this.listarVendedorLinea(page);
-            },
-            asignar(nIdMiVendedor){
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                var url = this.ruta + '/asignavendedormodelo/SetAsignaModelo';
-                axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    nIdProveedor: parseInt(this.formAsignaModelo.nidproveedor),
-                    nIdVendedor: nIdMiVendedor,
-                    nIdLinea: parseInt(this.fillVendedor.nidlineaventa),
-                    nIdMarca: parseInt(this.fillVendedor.nidmarca),
-                    nIdModelo: parseInt(this.fillVendedor.nidmodelo),
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Asignación Vendedor Modelo registrado Con Exito');
-                        this.listarVendedorLinea();
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            designar(nIdAsignacionVendedorModelo){
-                if(this.validar()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                var url = this.ruta + '/asignavendedormodelo/SetDesasignaModelo';
-                axios.post(url, {
-                    nIdAsignacion: nIdAsignacionVendedorModelo,
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
-                        swal('Desasignación Vendedor Modelo Realizado Con Exito');
-                        this.listarVendedorLinea();
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
+            },           
             validar(){
                 this.error = 0;
                 this.mensajeError =[];

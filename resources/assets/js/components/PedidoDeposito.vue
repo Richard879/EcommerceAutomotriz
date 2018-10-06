@@ -107,7 +107,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidmarca" filterable placeholder="Select" v-on:change="llenarComboModelos()">
+                                                                                <el-select v-model="fillPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -122,7 +122,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidmodelo" filterable placeholder="Select">
+                                                                                <el-select v-model="fillPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -139,7 +139,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidestadopedido" filterable placeholder="Select">
+                                                                                <el-select v-model="fillPedido.nidestadopedido" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayEstadoPedido"
                                                                                     :key="item.nIdPar"
@@ -179,8 +179,8 @@
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
+                                                                                <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
-                                                                                <th>Estado Aprobación</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -200,8 +200,8 @@
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
-                                                                                <td v-text="pedido.cEstadoPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
+                                                                                <td v-text="pedido.cEstadoPedido"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -295,7 +295,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="Select" v-on:change="onchangeBanco_Destino()">
+                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeBanco_Destino()">
                                                                                         <el-option
                                                                                         v-for="item in arrayBanco_Destino"
                                                                                         :key="item.nIdPar"
@@ -310,7 +310,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="Select" v-on:change="onchangeMoneda_Destino()">
+                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
                                                                                         <el-option
                                                                                         v-for="item in arrayMoneda_Destino"
                                                                                         :key="item.nIdPar"
@@ -327,7 +327,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Cuenta</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="Select" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayCuenta_Destino"
                                                                                         :key="item.nIdCuenta"
@@ -438,7 +438,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable placeholder="Select" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayBanco_Origen"
                                                                                         :key="item.nIdPar"
@@ -453,7 +453,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable placeholder="Select" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayMoneda_Origen"
                                                                                         :key="item.nIdPar"
@@ -565,7 +565,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="Select" v-on:change="onchangeBanco_Destino()">
+                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeBanco_Destino()">
                                                                                         <el-option
                                                                                         v-for="item in arrayBanco_Destino"
                                                                                         :key="item.nIdPar"
@@ -580,7 +580,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="Select" v-on:change="onchangeMoneda_Destino()">
+                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
                                                                                         <el-option
                                                                                         v-for="item in arrayMoneda_Destino"
                                                                                         :key="item.nIdPar"
@@ -597,7 +597,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Cuenta</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="Select" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayCuenta_Destino"
                                                                                         :key="item.nIdCuenta"
@@ -785,9 +785,9 @@
                     dfechafin: '',
                     cnumeropedido: '',
                     cnumerovin: '',
-                    nidmarca: 0,
-                    nidmodelo: 0,
-                    nidestadopedido: 0
+                    nidmarca: '',
+                    nidmodelo: '',
+                    nidestadopedido: ''
                 },
                 arrayPedido: [],
                 arrayEstadoPedido: [],
@@ -921,8 +921,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110063,
-                        'opcion' : 0
+                        'ngrupoparid' : 110063
                     }
                 }).then(response => {
                     this.arrayEstadoPedido = response.data;
@@ -935,8 +934,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110032,
-                        'opcion' : 0
+                        'ngrupoparid' : 110032
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
@@ -953,7 +951,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillPedido.nidmodelo = 0;
+                    this.fillPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                 });
@@ -986,8 +984,7 @@
                     this.pagination.last_page   = response.data.arrayPedido.last_page;
                     this.pagination.from        = response.data.arrayPedido.from;
                     this.pagination.to           = response.data.arrayPedido.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
+                    $("#myBar").hide(); 
                 }).catch(error => {
                     console.log(error);
                 });
