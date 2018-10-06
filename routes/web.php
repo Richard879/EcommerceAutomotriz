@@ -144,6 +144,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pdi/SetCabeceraInspeccion', 'PdiProcesoController@SetCabeceraInspeccion');
     Route::get('/pdi/GetListPdi', 'PdiProcesoController@GetListPdi');
     Route::get('/pdi/GetDetalleTipoInspeccionById', 'PdiProcesoController@GetDetalleTipoInspeccionById');
+    Route::get('/pdi/GetListPuntoInspeccion', 'PdiProcesoController@GetListPuntoInspeccion');
 
 
 

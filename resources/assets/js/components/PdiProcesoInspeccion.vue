@@ -237,7 +237,7 @@
                                                     <label class="col-sm-3 form-control-label">Solicitud Autorización</label>
                                                     <div class="col-sm-5">
                                                         <div class="input-group">
-                                                            <input type="text" v-model="formPdi.csolicitudnombre" disabled="disabled" class="form-control form-control-sm">
+                                                            <input type="text" v-model="formPdi.cnombresolicitud" disabled="disabled" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Buscar Solicitud Autorización</div>
@@ -260,7 +260,7 @@
                                                             <label class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </label>
                                                     </label>
-                                                    <label v-if="this.accion==2" class="col-sm-3 form-control-label">VIN/PLACA</label>
+                                                    <label v-if="this.accion==2" class="col-sm-3 form-control-label" v-text="this.formPdi.cFlagVinPlaca=='P' ? 'Nro Placa' : 'Nro Vin'"></label>
                                                     <div class="col-sm-5">
                                                         <div class="input-group">
                                                             <input type="text" v-model="formPdi.cvinplacanombre" disabled="disabled" class="form-control form-control-sm">
@@ -395,21 +395,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <!--<div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label" v-text="formPdi.nflagconformidad ? 'Conforme' : 'NO Conforme'"></label>
-                                                    <div class="col-sm-1">
-                                                        <el-switch v-model="formPdi.nflagconformidad">
-                                                        </el-switch>
-                                                    </div>
-                                                    <div class="col-sm-7">
-                                                        <input type="text" v-if="!formPdi.nflagconformidad" v-model="formPdi.cflagconformidaddescripcion" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>-->
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Adjuntar</label>
+                                                    <label class="col-sm-4 form-control-label">Adjuntar</label>
                                                     <div class="col-sm-8">
                                                         <input type="file" id="file-upload" @change="getFile" accept=".xls,.xlsx" class="form-control form-control-sm"/>
                                                     </div>
@@ -480,13 +468,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTA SOLICITUDES</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA SOLICITUDES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <!--<div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -504,72 +492,72 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>-->
-                                            <template v-if="arraySolicitud.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nro Solicitud</th>
-                                                                <th>Tipo Solicitud</th>
-                                                                <th>Estado Solicitud</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="sa in arraySolicitud" :key="sa.nIdSolicitudAutorizacion">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ sa.cTipoSolicitud }}</div>
-                                                                        <i @click="asignarSolicitud(sa.nIdSolicitudAutorizacion, sa.cNumeroSolicitud, sa.cTipoSolicitud)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="sa.cNumeroSolicitud"></td>
-                                                                <td v-text="sa.cTipoSolicitud"></td>
-                                                                <td v-text="sa.cEstadoSolicitud"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaSolicitud(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaSolicitud(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaSolicitud(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                            <br/>-->
+                                        </form>
+                                        <template v-if="arraySolicitud.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Nro Solicitud</th>
+                                                            <th>Tipo Solicitud</th>
+                                                            <th>Estado Solicitud</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="sa in arraySolicitud" :key="sa.nIdSolicitudAutorizacion">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ sa.cTipoSolicitud }}</div>
+                                                                    <i @click="asignarSolicitud(sa.nIdSolicitudAutorizacion, sa.cNumeroSolicitud, sa.cTipoSolicitud)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="sa.cNumeroSolicitud"></td>
+                                                            <td v-text="sa.cTipoSolicitud"></td>
+                                                            <td v-text="sa.cEstadoSolicitud"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaSolicitud(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaSolicitud(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaSolicitud(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -583,13 +571,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTA PUNTO DE INSPECCIÓN</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA PUNTO DE INSPECCIÓN</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <!--<div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -608,75 +596,75 @@
                                                 </div>
                                             </div>
                                             <hr/>-->
-                                            <template v-if="arrayPuntoInspeccion.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Código</th>
-                                                                <th>Nombre</th>
-                                                                <th>Tipo Movimiento</th>
-                                                                <th>Ingreso Sucursal</th>
-                                                                <th>Salida Sucursal</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="punto in arrayPuntoInspeccion" :key="punto.nIdSolicitudAutorizacion">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ punto.cNombrePuntoInspeccion }}</div>
-                                                                        <i @click="asignarPuntoInspeccion(punto.nIdPuntoInspeccion, punto.cNombrePuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="punto.nIdPuntoInspeccion"></td>
-                                                                <td v-text="punto.cNombrePuntoInspeccion"></td>
-                                                                <td v-text="punto.cFlagTipoMovimiento"></td>
-                                                                <td v-text="punto.cFlagIngresoSucursal"></td>
-                                                                <td v-text="punto.cFlagSalidaSucursal"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaPuntoInspeccion(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaPuntoInspeccion(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaPuntoInspeccion(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <template v-if="arrayPuntoInspeccion.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Código</th>
+                                                            <th>Nombre</th>
+                                                            <th>Tipo Movimiento</th>
+                                                            <th>Ingreso Sucursal</th>
+                                                            <th>Salida Sucursal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="punto in arrayPuntoInspeccion" :key="punto.nIdSolicitudAutorizacion">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ punto.cNombrePuntoInspeccion }}</div>
+                                                                    <i @click="asignarPuntoInspeccion(punto.nIdPuntoInspeccion, punto.cNombrePuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="punto.nIdPuntoInspeccion"></td>
+                                                            <td v-text="punto.cNombrePuntoInspeccion"></td>
+                                                            <td v-text="punto.cFlagTipoMovimiento"></td>
+                                                            <td v-text="punto.cFlagIngresoSucursal"></td>
+                                                            <td v-text="punto.cFlagSalidaSucursal"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaPuntoInspeccion(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaPuntoInspeccion(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaPuntoInspeccion(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -690,13 +678,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO COMPRA</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO COMPRA</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -784,84 +772,84 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayCompra.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Código</th>
-                                                                <th>Periodo</th>
-                                                                <th>OC</th>
-                                                                <th>Línea</th>
-                                                                <th>Almacén<nav></nav></th>
-                                                                <th>Nro Vin</th>
-                                                                <th>Nombre Comercial</th>
-                                                                <th>Año Fab</th>
-                                                                <th>Año Mod</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
-                                                                        <i @click="asignarVin(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="compra.nIdCompra"></td>
-                                                                <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                <td v-text="compra.nOrdenCompra"></td>
-                                                                <td v-text="compra.cNombreLinea"></td>
-                                                                <td v-text="compra.cNombreAlmacen"></td>
-                                                                <td v-text="compra.cNumeroVin"></td>
-                                                                <td v-text="compra.cNombreComercial"></td>
-                                                                <td v-text="compra.nAnioFabricacion"></td>
-                                                                <td v-text="compra.nAnioVersion"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaVin(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaVin(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaVin(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayCompra.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Código</th>
+                                                            <th>Periodo</th>
+                                                            <th>OC</th>
+                                                            <th>Línea</th>
+                                                            <th>Almacén<nav></nav></th>
+                                                            <th>Nro Vin</th>
+                                                            <th>Nombre Comercial</th>
+                                                            <th>Año Fab</th>
+                                                            <th>Año Mod</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ compra.cNumeroVin }}</div>
+                                                                    <i @click="asignarVin(compra.nIdCompra, compra.cNumeroVin)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="compra.nIdCompra"></td>
+                                                            <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
+                                                            <td v-text="compra.nOrdenCompra"></td>
+                                                            <td v-text="compra.cNombreLinea"></td>
+                                                            <td v-text="compra.cNombreAlmacen"></td>
+                                                            <td v-text="compra.cNumeroVin"></td>
+                                                            <td v-text="compra.cNombreComercial"></td>
+                                                            <td v-text="compra.nAnioFabricacion"></td>
+                                                            <td v-text="compra.nAnioVersion"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVin(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVin(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -874,105 +862,100 @@
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">BUSQUEDA VEHICULO POR PLACA</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombre</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
-                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
+                        <div class="modal-body">        
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">BUSQUEDA VEHICULO POR PLACA</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillVehiculoPlaca.cdescripcion" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <template v-if="arrayVehiculoPlaca.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Seleccione</th>
-                                                                        <th>Placa</th>
-                                                                        <th>Nombre Comercial</th>
-                                                                        <th>Año / Mes</th>
-                                                                        <th>Linea</th>
-                                                                        <th>Forma de Pago</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td v-text="vehiculo.cPlaca"></td>
-                                                                        <td v-text="vehiculo.cNombreComercial"></td>
-                                                                        <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                        <td v-text="vehiculo.cNombreLinea"></td>
-                                                                        <td v-text="vehiculo.cFormaPago"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <div class="row">
-                                                                <div class="col-sm-7">
-                                                                    <nav>
-                                                                        <ul class="pagination">
-                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                            </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                            :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaVehiculosByCriterio(page)"
-                                                                                v-text="page"></a>
-                                                                            </li>
-                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                                <div class="col-sm-5">
-                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="10">No existen registros!</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </template>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayVehiculoPlaca.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Placa</th>
+                                                            <th>Nombre Comercial</th>
+                                                            <th>Año / Mes</th>
+                                                            <th>Linea</th>
+                                                            <th>Forma de Pago</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                            <td>
+                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                    <i class='fa-md fa fa-check-circle'></i>
+                                                                </a>
+                                                            </td>
+                                                            <td v-text="vehiculo.cPlaca"></td>
+                                                            <td v-text="vehiculo.cNombreComercial"></td>
+                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
+                                                            <td v-text="vehiculo.cNombreLinea"></td>
+                                                            <td v-text="vehiculo.cFormaPago"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVehiculosByCriterio(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -1060,12 +1043,9 @@
                                                 </div>
                                             </li>
                                             <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-5">
+                                                <div class="col-sm-9 offset-sm-6">
                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="aceptarPlantilla()">
                                                         <i class="fa fa-save"></i> Aceptar
-                                                    </button>
-                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
-                                                        <i class="fa fa-close"></i> Cerrar
                                                     </button>
                                                 </div>
                                             </div>
@@ -1074,7 +1054,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div v-if="!arraySeccion.length" class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
@@ -1156,12 +1136,9 @@
                                                 </vs-table>-->
                                             </div>
                                             <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-5">
+                                                <div class="col-sm-9 offset-sm-6">
                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="aceptarAccesorio()">
                                                         <i class="fa fa-save"></i> Aceptar
-                                                    </button>
-                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
-                                                        <i class="fa fa-close"></i> Cerrar
                                                     </button>
                                                 </div>
                                             </div>
@@ -1179,7 +1156,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div v-if="!arrayAccesorio.length" class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
                         </div>
                     </div>
@@ -1223,7 +1200,7 @@
                 formPdi:{
                     nidcabecerainspeccion: 0,
                     nidsolicitud: 0,
-                    csolicitudnombre: '',
+                    cnombresolicitud: '',
                     nidflagvinplaca: 1,
                     cvinplacanombre: '',
                     nidcompra: 0,
@@ -1239,6 +1216,7 @@
                     dfechaalmacen: '',
                     nflagconformidad: 0,
                     cflagconformidaddescripcion: '',
+                    cFlagVinPlaca: '',
                     cobservacion: '',
                 },
                 arraySolicitud: [],
@@ -1289,6 +1267,7 @@
                     cnombre: ''
                 },
                 arrayAccesorio: [],
+                arrayTempAccesorio: [],
                 arrayAccesorioFlagMarca:  [],
                 arrayAccesorioDescripcion: [],
                 arrayAccesorioCantidad: [],
@@ -1463,12 +1442,12 @@
             },
             asignarSolicitud(nIdSolicitudAutorizacion, cNumeroSolicitud, cTipoSolicitud){
                 this.formPdi.nidsolicitud = nIdSolicitudAutorizacion;
-                this.formPdi.csolicitudnombre = cNumeroSolicitud + ' - ' + cTipoSolicitud;
+                this.formPdi.cnombresolicitud = cNumeroSolicitud + ' - ' + cTipoSolicitud;
                 this.cerrarModal();
             },
             //=============== PUNTO INSPECCION ===================
             listarPuntoInspeccion(page){
-                var url = this.ruta + '/puntoinspeccion/GetListPuntoInspeccion';
+                var url = this.ruta + '/pdi/GetListPuntoInspeccion';
 
                 axios.get(url, {
                     params: {
@@ -1651,7 +1630,11 @@
                         'nidflag': this.formPlantilla.nidflag
                     }
                 }).then(response => {
-                    this.arrayItems = response.data;
+                    let me = this;
+                    me.arrayItems = response.data;
+                    me.arrayItems.map(function(value, key){
+                        me.arrayPlantillaFlagMarca[value.nIdPlantillaInspeccionSeccionItem] = false;
+                    });
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1676,11 +1659,12 @@
                 me.arrayItems.map(function(value, key){
                     me.arrayPlantilla.push({
                         nIdPlantillaInspeccionSeccionItem: value.nIdPlantillaInspeccionSeccionItem,
-                        nFlagMarca: me.arrayPlantillaFlagMarca[key],
+                        nFlagMarca: me.arrayPlantillaFlagMarca[value.nIdPlantillaInspeccionSeccionItem],
                         cDescripcionNoConformidad: me.arrayPlantillaDescripcion[key]
                     });
-                    alert(me.arrayPlantillaFlagMarca[key]);
                 });
+                
+                this.cerrarModal();
             },
             //=============== LISTAR MODAL ACCESORIO ===================
             listarAccesorio(){
@@ -1700,6 +1684,21 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            aceptarAccesorio(){
+                let me = this;
+
+                me.arrayTempAccesorio = [];
+
+                me.arrayAccesorio.map(function(value, key){
+                    me.arrayTempAccesorio.push({
+                        nIdAccesorio: value.nIdPar, 
+                        nFlagMarca: me.arrayAccesorioFlagMarca[key],
+                        cDescripcionNoConformidad: me.arrayAccesorioDescripcion[key]
+                    });
+                });
+                
+                this.cerrarModal();
             },
             //=============== ADJUNTAR DOCUMENTO ===================
             getFile(e){
@@ -1900,12 +1899,11 @@
                                 this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
                                 this.formPdi.cnombrepuntoinspeccion = data['cNombrePuntoInspeccion'];
                                 this.formPdi.nidsolicitud = data['nIdSolicitudAutorizacion'];
-                                this.formPdi.csolicitudnombre = data['cNumeroSolicitud'] + ' ' + data['cNombreSolicitud'];
+                                this.formPdi.cnombresolicitud = data['cNumeroSolicitud'] + ' ' + data['cNombreSolicitud'];
                                 this.formPdi.cvinplacanombre = data['cVinPlaca'];
                                 this.formPdi.nidflagmovimiento = data['nFlagMovimiento'];
-                                //this.formPdi.nidflagmovimiento = (data['nFlagTipoMovimiento'] == 0 ? 0 : data['nFlagTipoMovimiento']);
-                                //this.formPdi.nidflagingreso = data['nFlagIngresoSucursal'];
-                                //this.formPdi.nidflagsalida = data['nFlagSalidaSucursal'];
+                                this.formPdi.cFlagVinPlaca = data['cFlagVinPlaca'];
+                                this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
                                 break;
                             }
                         }
@@ -1994,12 +1992,24 @@
                 return this.error;
             },
             limpiarFormulario(){
+                this.formPdi.nidpuntoinspeccion = 0,
+                this.formPdi.cnombrepuntoinspeccion = '',
+                this.formPdi.nidsolicitud = 0,
+                this.formPdi.cnombresolicitud = '',
+                this.formPdi.cvinplacanombre = '',
                 this.formPdi.nidtipoinspeccion= '',
                 this.nflagalmacen= 0,
                 this.nflagaccesorio= 0,
                 this.nflagtestdrive= 0,
                 this.nflagseccioninspeccion= 0,
-                this.nflagvalidarfichatecnica= 0
+                this.nflagvalidarfichatecnica= 0,
+                this.nidflagmovimiento = 1,
+                this.formPdi.cnumeroinspeccion = '',
+                this.formPdi.dfechainspeccion = '',
+                this.formPdi.chorainspeccion = '',
+                this.formPdi.nidalmacen = '',
+                this.formPdi.dfechaalmacen = '',
+                this.formPdi.cobservacion = ''
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;

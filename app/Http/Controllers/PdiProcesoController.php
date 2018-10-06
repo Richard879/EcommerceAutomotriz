@@ -95,7 +95,20 @@ class PdiProcesoController extends Controller
 
     public function SetCabeceraInspeccion(Request $request)
     {
-        
+        if (!$request->ajax()) return redirect('/');
+
+        $versionvehiculo = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $request->nIdEmpresa,
+                                                                    $request->nIdProveedor,
+                                                                    $request->nIdClase,
+                                                                    $request->nIdSubClase,
+                                                                    $request->nIdLinea,
+                                                                    $request->nIdMarca,
+                                                                    $request->nIdModelo,
+                                                                    $request->cNombreComercial,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($versionvehiculo);
     }
 
     public function GetLstVehiculoPaca(Request $request)
@@ -162,5 +175,25 @@ class PdiProcesoController extends Controller
                                                                     ]);
 
         return response()->json($arrayTipoInspeccion);
+    }
+
+    public function GetListPuntoInspeccion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        $nIdEmpresa  = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $cNombrePuntoInspeccion = $request->cnombre;
+
+        $cNombrePuntoInspeccion = ($cNombrePuntoInspeccion == NULL) ? ($cNombrePuntoInspeccion = '') : $cNombrePuntoInspeccion;
+                
+        $arrayPuntoInspeccion = DB::select('exec [usp_Pdi_GetListPuntoInspeccion] ?, ?, ?', 
+                                                                                    [   $nIdEmpresa, 
+                                                                                        $nIdSucursal,
+                                                                                        $cNombrePuntoInspeccion
+                                                                                    ]);
+
+        $arrayPuntoInspeccion = ParametroController::arrayPaginator($arrayPuntoInspeccion, $request);
+        return ['arrayPuntoInspeccion'=>$arrayPuntoInspeccion];
     }
 }
