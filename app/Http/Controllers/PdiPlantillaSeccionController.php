@@ -52,8 +52,9 @@ class PdiPlantillaSeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_DesactivaById] ?', 
-                                                            [  $request->nIdPlantillaInspeccionSeccionItem
+        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_DesactivaById] ?, ?', 
+                                                            [  $request->nIdPlantillaInspeccionSeccionItem,
+                                                                Auth::user()->id
                                                             ]);
         return response()->json($objPlantilla);   
     }
@@ -62,8 +63,9 @@ class PdiPlantillaSeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_ActivaById] ?', 
-                                                            [   $request->nIdPlantillaInspeccionSeccionItem
+        $objPlantilla = DB::select('exec [usp_PlantillaInspeccion_ActivaById] ?, ?', 
+                                                            [   $request->nIdPlantillaInspeccionSeccionItem,
+                                                                Auth::user()->id
                                                             ]);
         return response()->json($objPlantilla);   
     }
