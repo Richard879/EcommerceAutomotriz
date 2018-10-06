@@ -48,8 +48,9 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec [usp_TipoInspeccion_DesactivaById] ?', 
-                                                            [   $request->nIdTipoInspeccion
+        $objTpoInspecion = DB::select('exec [usp_TipoInspeccion_DesactivaById] ?, ?', 
+                                                            [   $request->nIdTipoInspeccion,
+                                                                Auth::user()->id
                                                             ]);
         return response()->json($objTpoInspecion);   
     }
@@ -58,8 +59,9 @@ class PdiTipoInspeccionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $objTpoInspecion = DB::select('exec [usp_TipoInspeccion_ActivaById] ?', 
-                                                        [   $request->nIdTipoInspeccion
+        $objTpoInspecion = DB::select('exec [usp_TipoInspeccion_ActivaById] ?, ?', 
+                                                        [   $request->nIdTipoInspeccion,
+                                                            Auth::user()->id
                                                         ]);
         return response()->json($objTpoInspecion);   
     }

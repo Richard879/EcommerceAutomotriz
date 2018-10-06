@@ -336,8 +336,8 @@
                                                                                         <th>Nro Documento</th>
                                                                                         <th>Telefono</th>
                                                                                         <th>Email</th>
-                                                                                        <th>Vendedor</th>
                                                                                         <th>Persona Contacto</th>
+                                                                                        <th>Vendedor</th>
                                                                                         <th>Acciones</th>
                                                                                     </tr>
                                                                                 </thead>
