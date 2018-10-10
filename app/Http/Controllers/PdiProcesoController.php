@@ -97,18 +97,27 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $versionvehiculo = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $pdi = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdEmpresa,
-                                                                    $request->nIdProveedor,
-                                                                    $request->nIdClase,
-                                                                    $request->nIdSubClase,
-                                                                    $request->nIdLinea,
-                                                                    $request->nIdMarca,
-                                                                    $request->nIdModelo,
-                                                                    $request->cNombreComercial,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdPuntoInspeccion,
+                                                                    $request->nIdSolicitudAutorizacion,
+                                                                    $request->nIdCompra,
+                                                                    $request->nIdVehiculoPlaca,
+                                                                    $request->nIdTipoInspeccion,
+                                                                    $request->nIdAlmacen,
+                                                                    $request->cNumeroInspeccion,
+                                                                    $request->dFechaInspeccion,
+                                                                    $request->cHoraInspeccion,
+                                                                    $request->cFlagTipoMovimiento,
+                                                                    $request->cFlagVinPlaca,
+                                                                    $request->cNumeroMovimientoAlmacen,
+                                                                    $request->dFechaMovimientoAlmacen,
+                                                                    $request->nIdMotivoNoConformidad,
+                                                                    $request->cObservacion,
                                                                     Auth::user()->id
                                                                 ]);
-        return response()->json($versionvehiculo);
+        return response()->json($pdi);
     }
 
     public function GetLstVehiculoPaca(Request $request)
