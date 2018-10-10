@@ -117,7 +117,7 @@
                                 <form class="form-horizontal">
                                     <template v-if="arrayFlagVendedoresByIdJV.length">
                                         <div class="table-responsive">
-                                            <vs-table max-items="10" pagination :data="arrayFlagVendedoresByIdJV">
+                                            <vs-table max-items="10" pagination :data="arrayFlagVendedoresByIdJV" notSpacer>
                                                 <template slot="thead">
                                                     <vs-th>Proveedor</vs-th>
                                                     <vs-th>Linea</vs-th>
@@ -513,7 +513,7 @@
                     }
                 }).then(response => {
                     this.arrayLinea = response.data;
-                    this.fillAsigVendedorCuota.nidlinea = 0;
+                    this.fillAsigVendedorCuota.nidlinea = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -689,6 +689,9 @@
 </script>
 
 <style>
+    .col {
+        width: inherit !important;
+    }
     /* TRANSITION */
     /* Enter and leave animations can use different */
     /* durations and timing functions.              */

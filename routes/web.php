@@ -212,5 +212,5 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/asignavendedormodelo/SetDesasignaModelo','AsignaVendedorModeloController@SetDesasignaModelo');
     Route::get('/asignavendedorcuota/GetLstVendedorCuota','AsignaVendedorCuotaController@GetLstVendedorCuota');
     Route::post('/asignavendedorcuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaController@SetRegistraAsignacionCuota');
-    Route::get('/entregavehiculo/GetLstInspecciones','AsignaVendedorModeloController@GetLstInspecciones');
+    Route::get('/entregavehiculo/GetLstInspecciones','EntregaVehiculoController@GetLstInspecciones');
 });

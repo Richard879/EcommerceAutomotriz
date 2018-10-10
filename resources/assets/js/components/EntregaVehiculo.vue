@@ -90,7 +90,7 @@
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisInspecciones(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
-                                                                        <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisSolicitudesEntregaVehiculo()">
+                                                                        <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarMisMisInspecciones()">
                                                                             <i class="fa fa-recycle"></i> Limpiar
                                                                         </button>
                                                                     </div>

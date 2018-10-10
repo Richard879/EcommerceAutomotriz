@@ -1874,7 +1874,7 @@
                 }).then(response => {
                     console.log(response.data);
                     swal('Solicitud de Autorización registrada exitosamente');
-                    this.getDetalleSolicitudConforme(response.data);//Capturar datos para la generación del PDF
+                    //this.getDetalleSolicitudConforme(response.data);//Capturar datos para la generación del PDF
                     this.limpiarMisSolicitudes();
                     this.tabVolverMisSolicitudes();
                 }).catch(error => {

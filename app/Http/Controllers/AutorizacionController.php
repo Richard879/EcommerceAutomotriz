@@ -99,11 +99,18 @@ class AutorizacionController extends Controller
         $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = NULL) : $nIdAsigContacto;
         $cFlagJeveVentas = $request->cFlagJeveVentas;
 
+        $nIdVehiculoPlaca = $request->nIdVehiculoPlaca;
+        $nIdCompra = $request->nIdCompra;
+
+        $nIdVehiculoPlaca = ($nIdVehiculoPlaca == NULL) ? ($nIdVehiculoPlaca = 0) : $nIdVehiculoPlaca;
+        $nIdCompra = ($nIdCompra == NULL) ? ($nIdCompra = 0) : $nIdCompra;
+
+
         $data = DB::select('exec usp_Autorizacion_SetRegistrarSolicitudAutorizacion ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdAsigContacto,
-                                        $request->nIdVehiculoPlaca,
-                                        $request->nIdCompra,
+                                        $nIdVehiculoPlaca,
+                                        $nIdCompra,
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
                                         $request->nIdTipoSolicitud,
