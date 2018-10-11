@@ -213,7 +213,7 @@ class ParametroController extends Controller
         $nIdGrupoPar = $request->ngrupoparid;
         $variable   = $request->opcion;
 
-        $arrayParametro = DB::select('exec [usp_Par_GetParametroByGrupo] ?',
+        $data = DB::select('exec [usp_Par_GetParametroByGrupo] ?',
                                                         [   $nIdGrupoPar
                                                         ]);
         return response()->json($data);

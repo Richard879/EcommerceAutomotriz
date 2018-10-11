@@ -947,7 +947,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div v-if="arrayCompraVin.length" class="col-lg-6">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
@@ -963,7 +963,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div v-if="arrayCompraPrecioLista.length" class="col-lg-6">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
