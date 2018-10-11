@@ -2280,10 +2280,10 @@
                     this.fillPropietario.ctelefonofijo = data['cTelefonoFijo'];
                     this.fillPropietario.ncelular = data['nTelefonoMovil'];
                     this.fillPropietario.ncelularalternativo = data['nTelefonoMovilAlternativo'];
-                    this.fillPropietario.nestadocivil = (data['nIdEstadoCivil'] == 0) ? '' : data['nIdEstadoCivil'];
-                    this.fillPropietario.nprofesion = (data['nIdProfesion'] == 0) ? '' : data['nIdProfesion'];
-                    this.fillPropietario.ccentrolaboral = (data['cCentroLaboral'] == 0) ? '' : data['cCentroLaboral'];
-                    this.fillPropietario.cnrolicencia = data['cNumeroLicenciaConducir'];
+                    this.fillPropietario.nestadocivil = (data['nIdEstadoCivil'] == 0 || data['nIdEstadoCivil'] == undefined) ? '' : data['nIdEstadoCivil'];
+                    this.fillPropietario.nprofesion = (data['nIdProfesion'] == 0 || data['nIdProfesion'] == undefined) ? '' : data['nIdProfesion'];
+                    this.fillPropietario.ccentrolaboral = (data['cCentroLaboral'] == 0 || data['cCentroLaboral'] == undefined) ? '' : data['cCentroLaboral'];
+                    this.fillPropietario.cnrolicencia = (data['cNumeroLicenciaConducir'] == 0 || data['cNumeroLicenciaConducir'] == undefined) ? '' : data['cNumeroLicenciaConducir'];
                 } else {
                     ///CAPTURAR DATOS DE LA PERSONA JURIDICA
                     this.fillPropietario.nidpersona = (data['nIdPersonaJuridica'] == undefined) ? '' : data['nIdPersonaJuridica'];

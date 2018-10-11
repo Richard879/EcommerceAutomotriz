@@ -99,10 +99,77 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="h4">LISTADO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="col-lg-12">
+                                                                    <template v-if="arrayInspeccionesAprobadas.length">
+                                                                        <div class="table-responsive barraLateral">
+                                                                            <el-table v-loading="loading" :data="arrayInspeccionesAprobadas" style="width: 100%">
+                                                                                <el-table-column  property="dFechaInspeccion" label="Fecha Inpsección"   width="100"></el-table-column>
+                                                                                <el-table-column  property="cHoraInspeccion" label="Hora Inspección"   width="100"></el-table-column>
+                                                                                <el-table-column  label="VIN/Placa" width="120">
+                                                                                    <template slot-scope="scope">
+                                                                                        <template v-if="scope.row.nIdCompra">
+                                                                                            <label v-text="scope.row.cNumeroVin"></label>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            <label v-text="scope.row.cPlaca"></label>
+                                                                                        </template>
+                                                                                    </template>
+                                                                                </el-table-column>
+                                                                                <el-table-column  property="encargado" label="Encargado" width="170"></el-table-column>
+                                                                                <el-table-column  fixed="right"   label="Acciones"   width="80">
+                                                                                    <template slot-scope="scope">
+                                                                                        <el-tooltip class="item"
+                                                                                                    effect="dark"
+                                                                                                    content="Editar"
+                                                                                                    placement="top-start">
+                                                                                            <el-button><i class="fa fa-edit"></i></el-button>
+                                                                                        </el-tooltip>
+                                                                                    </template>
+                                                                                </el-table-column>
+                                                                            </el-table>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-7">
+                                                                                        <nav>
+                                                                                            <ul class="pagination">
+                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                    <a @click.prevent="cambiarPaginaMisInspecciones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                                </li>
+                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                                :class="[page==isActived?'active':'']">
+                                                                                                    <a class="page-link"
+                                                                                                    href="#" @click.prevent="cambiarPaginaMisInspecciones(page)"
+                                                                                                    v-text="page"></a>
+                                                                                                </li>
+                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                    <a @click.prevent="cambiarPaginaMisInspecciones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </nav>
+                                                                                    </div>
+                                                                                    <div class="col-lg-5">
+                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </section>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade in active show" id="TaEntregaVehiculo">
+                                    <div role="tabpanel" class="tab-pane fade" id="TaEntregaVehiculo">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -264,7 +331,7 @@
 
 <script>
     export default {
-        props:['ruta', 'usuario'],
+        props:['ruta'],
         data(){
             return {
                 // =============================================================
@@ -293,6 +360,7 @@
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
+                loading: false,
                 flagBuscarContacto: 0,
                 pagination: {
                     'total': 0,
@@ -441,6 +509,7 @@
                         'page' : page,
                     }
                 }).then(response => {
+                    console.log(response);
                     let info = response.data.arrayInspeccionesAprobadas;
                     this.arrayInspeccionesAprobadas     = info.data;
                     this.pagination.current_page =  info.current_page;
