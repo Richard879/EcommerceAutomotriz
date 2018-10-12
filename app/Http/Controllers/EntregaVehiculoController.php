@@ -32,9 +32,10 @@ class EntregaVehiculoController extends Controller
         $dFechaSolicitud  = $request->dfechaSolicitud;
         $nIdEstado  = $request->nidestado;
 
-        $nIdVehiculo  = ($nIdVehiculo == NULL) ? ($nIdVehiculo = ' ') : $nIdVehiculo;
-        $dFechaSolicitud  = ($dFechaSolicitud == NULL) ? ($dFechaSolicitud = ' ') : $dFechaSolicitud;
-        $nIdEstado  = ($nIdEstado == NULL) ? ($nIdEstado = ' ') : $nIdEstado;
+        $nIdVehiculo  = ($nIdVehiculo == NULL) ? ($nIdVehiculo = 0) : $nIdVehiculo;
+        $dFechaSolicitud  = ($dFechaSolicitud == NULL) ? ($dFechaSolicitud = '') : $dFechaSolicitud;
+        $nIdEstado  = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
+
 
         $arrayInspeccionesAprobadas = DB::select('exec usp_EntregaVehiculo_GetLstInspecciones ?, ?, ?, ?, ?, ?',
                                                             [
