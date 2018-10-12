@@ -90,7 +90,7 @@
                                                                                     filterable
                                                                                     clearable
                                                                                     loading-text
-                                                                                    placeholder="Seleccione un Estado">
+                                                                                    placeholder="SELECCIONE">
                                                                                 <el-option
                                                                                     v-for="estado in arrayEstado"
                                                                                     :key="estado.nIdPar"
@@ -163,38 +163,42 @@
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </template>
                                                                 <template v-else>
-                                                                    <tr>
-                                                                        <td>No existen registros</td>
-                                                                    </tr>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </template>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="row">
-                                                                    <div class="col-lg-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link"
-                                                                                    href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
-                                                                                    v-text="page"></a>
-                                                                                </li>
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-lg-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -236,7 +240,7 @@
                                                                                             value-format="yyyy-MM-dd"
                                                                                             format="dd/MM/yyyy"
                                                                                             type="date"
-                                                                                            placeholder="Seleccionar fecha de solicitud">
+                                                                                            placeholder="dd/mm/aaaa">
                                                                                         </el-date-picker>
                                                                                     </div>
                                                                                 </div>
@@ -249,7 +253,7 @@
                                                                                                     @change="tipoBusquedaVehiculoPorTipoSolicitud"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione un Tipo de Solicitud">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                             v-for="item in arrayTipoSolicitudes"
                                                                                             :key="item.nIdPar"
