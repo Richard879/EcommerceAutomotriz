@@ -17,8 +17,8 @@ class ElementoController extends Controller
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoElemento = $request->nidtipoelemen;
         $cElemenNombre = $request->celementonombre;
-
-        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = ' ') : $cElemenNombre;
+        $nIdTipoElemento = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
+        $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
                 
         $arrayElementoVenta = DB::select('exec [usp_Elemen_GetElementoByTipo] ?, ?, ?', 
                                                                 [   $nIdEmpresa, 

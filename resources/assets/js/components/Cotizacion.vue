@@ -1467,40 +1467,36 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <label class="col-sm-2 form-control-label">Tipo Elemento</label>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <el-select v-model="fillBusqTipoElemento.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
-                                                            <el-option
-                                                            v-for="item in arrayTipoElemento"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
-                                                            </el-option>
-                                                        </el-select>
-                                                        <!--<div class="input-group-prepend">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Buscar Elemento Venta </div>
-                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </el-tooltip>
-                                                        </div>-->
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Tipo Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillBusqTipoElemento.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayTipoElemento"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-2 form-control-label">Nombre Elemento</label>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="fillBusqTipoElemento.celementonombre" @keyup.enter="buscarElementoVenta(1)" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Buscar Elemento Venta </div>
-                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </el-tooltip>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillBusqTipoElemento.celementonombre" @keyup.enter="buscarElementoVenta(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Elemento Venta </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2694,9 +2690,9 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillBusqTipoElemento.ntpoelemen == 0 || this.fillBusqTipoElemento.ntpoelemen == ''){
+                /*if(this.fillBusqTipoElemento.ntpoelemen == 0 || this.fillBusqTipoElemento.ntpoelemen == ''){
                     this.mensajeError.push('Debe seleccionar un tipo de elemento de venta');
-                }
+                }*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
