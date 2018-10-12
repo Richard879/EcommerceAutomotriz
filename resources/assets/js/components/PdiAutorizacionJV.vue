@@ -435,6 +435,7 @@
                                                                                     <label class="col-sm-4 form-control-label">* Tipo Solicitud</label>
                                                                                     <div class="col-sm-8 widthFull">
                                                                                         <el-select v-model="fillNuevaSolicitud.nidtiposolicitud"
+                                                                                                    @change="tipoBusquedaVehiculoPorTipoSolicitud"
                                                                                                     filterable
                                                                                                     clearable
                                                                                                     placeholder="Seleccione un Tipo de Solicitud">
@@ -553,7 +554,7 @@
                                                                                 <div class="row">
                                                                                     <label class="col-md-4 form-control-label">
                                                                                         <el-radio-group v-model="fillNuevaSolicitud.nidtipobusqueda" @change="cambiarVehiculoByCriterio">
-                                                                                            <el-radio v-for="tipobsq in arrayTipoBusquedaVehiculo" :key="tipobsq.id" :label="tipobsq.value"> {{ tipobsq.text }} </el-radio>
+                                                                                            <el-radio v-for="tipobsq in arrayTipoBusquedaVehiculoTDV" :key="tipobsq.nIdTipoPar" :label="tipobsq.nDatoParNumerico">{{ tipobsq.cDatoParDescripcion }}</el-radio>
                                                                                         </el-radio-group>
                                                                                     </label>
                                                                                     <div class="col-md-8 widthFull">
@@ -1214,6 +1215,7 @@
                     { value: '1', text: 'VIN'},
                     { value: '2', text: 'PLACA'}
                 ],
+                arrayTipoBusquedaVehiculoTDV: [],
                 arrayEstado: [],
                 arrayMisSolicitudes : [],
                 // =============================================================
@@ -1776,6 +1778,21 @@
                     }
                 }).then(response => {
                     this.arrayTipoSolicitudes = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            tipoBusquedaVehiculoPorTipoSolicitud(){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : this.fillNuevaSolicitud.nidtiposolicitud,
+                        'ctipoparametro' : 'D',
+                        'nidtipopar': 0
+                    }
+                }).then(response => {
+                    this.arrayTipoBusquedaVehiculoTDV = response.data;
+                    this.fillNuevaSolicitud.nidtipobusqueda = this.arrayTipoBusquedaVehiculoTDV[0].nDatoParNumerico;//SETEAR AL ITEM CARGADO
                 }).catch(error => {
                     console.log(error);
                 });

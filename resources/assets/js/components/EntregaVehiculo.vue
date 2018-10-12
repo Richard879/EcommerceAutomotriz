@@ -14,7 +14,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="tab01" href="#TabMisInspecciones" role="tab" @click.prevent="TabMisInspecciones" data-toggle="tab">
+                                        <a class="nav-link active" id="tab01" href="#TabMisInspecciones" role="tab" @click.prevent="tabMisInspecciones" data-toggle="tab">
                                             <i class="fa fa-search"></i> MIS VEHÍCULOS
                                         </a>
                                     </li>
@@ -388,7 +388,7 @@
             }
         },
         mounted() {
-            this.TabMisInspecciones();
+            this.tabMisInspecciones();
         },
         computed:{
             isActived: function(){
@@ -443,7 +443,7 @@
             },
         },
         methods: {
-            TabMisInspecciones(){
+            tabMisInspecciones(){
                 this.llenarEstados();
                 this.buscarMisInspecciones(1);
             },
