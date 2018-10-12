@@ -117,7 +117,7 @@
                                                         <th>Código</th>
                                                         <th>Fecha</th>
                                                         <th>Hora</th>
-                                                        <th>Solicitud</th>
+                                                        <th>Tipo Solicitud</th>
                                                         <th>Tipo Movimiento</th>
                                                         <th>Vin/Placa</th>
                                                         <th>Tipo Inspección</th>
@@ -214,6 +214,40 @@
                                         <div class="form-group row">
                                             <div class="col-sm-12">
                                                 <div class="row">
+                                                    <label class="col-sm-3 form-control-label">Tipo Inspección</label>
+                                                    <div class="col-sm-5">
+                                                        <el-select v-model="formPdi.nidtipoinspeccion" 
+                                                                    filterable 
+                                                                    clearable
+                                                                    placeholder="SELECCIONE" v-on:change="changeTipoInspeccion()" :class="[this.accion==1 ? '' : 'disabled']" >
+                                                            <el-option
+                                                            v-for="item in arrayTipoInspeccion"
+                                                            :key="item.nIdTipoInspeccion"
+                                                            :label="item.cNombreTipoInspeccion"
+                                                            :value="item.nIdTipoInspeccion">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Ver Plantilla </div>
+                                                            <button v-if="this.nflagseccioninspeccion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','plantilla')">
+                                                                <i class="fa fa-eye"></i>&nbsp;Plantilla
+                                                            </button>
+                                                        </el-tooltip>
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Ver Accesorio </div>
+                                                            <button v-if="this.nflagaccesorio==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','accesorio')">
+                                                                <i class="fa fa-eye"></i>&nbsp;Accesorio
+                                                            </button>
+                                                        </el-tooltip>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
                                                     <label class="col-sm-3 form-control-label">* Punto Inspección</label>
                                                     <div class="col-sm-5">
                                                         <div class="input-group">
@@ -278,40 +312,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <label class="col-sm-3 form-control-label">Tipo Inspección</label>
-                                                    <div class="col-sm-5">
-                                                        <el-select v-model="formPdi.nidtipoinspeccion" 
-                                                                    filterable 
-                                                                    clearable
-                                                                    placeholder="SELECCIONE" v-on:change="changeTipoInspeccion()" >
-                                                            <el-option
-                                                            v-for="item in arrayTipoInspeccion"
-                                                            :key="item.nIdTipoInspeccion"
-                                                            :label="item.cNombreTipoInspeccion"
-                                                            :value="item.nIdTipoInspeccion">
-                                                            </el-option>
-                                                        </el-select>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Ver Plantilla </div>
-                                                            <button v-if="this.nflagseccioninspeccion==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','plantilla')">
-                                                                <i class="fa fa-eye"></i>&nbsp;Plantilla
-                                                            </button>
-                                                        </el-tooltip>
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Ver Accesorio </div>
-                                                            <button v-if="this.nflagaccesorio==1" type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('pdi','accesorio')">
-                                                                <i class="fa fa-eye"></i>&nbsp;Accesorio
-                                                            </button>
-                                                        </el-tooltip>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Tipo Movimiento</label>
@@ -363,37 +363,39 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Almacén</label>
-                                                    <div class="col-sm-8">
-                                                        <el-select v-model="formPdi.nidalmacen" filterable clearable placeholder="SELECCIONE" >
-                                                            <el-option
-                                                            v-for="item in arrayAlmacen"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
-                                                            </el-option>
-                                                        </el-select>
+                                        <template v-if="this.nflagalmacen ==1">
+                                             <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Almacén</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="formPdi.nidalmacen" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayAlmacen"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Fecha Mov. Almacén</label>
+                                                        <div class="col-sm-8">
+                                                            <el-date-picker
+                                                                v-model="formPdi.dfechamovimientoalmacen"
+                                                                type="date"
+                                                                value-format="yyyy-MM-dd"
+                                                                format="dd/MM/yyyy"
+                                                                placeholder="dd/mm/aaaa">
+                                                            </el-date-picker>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Fecha Mov. Almacén</label>
-                                                    <div class="col-sm-8">
-                                                        <el-date-picker
-                                                            v-model="formPdi.dfechaalmacen"
-                                                            type="date"
-                                                            value-format="yyyy-MM-dd"
-                                                            format="dd/MM/yyyy"
-                                                            placeholder="dd/mm/aaaa">
-                                                        </el-date-picker>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </template>
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
@@ -1195,6 +1197,12 @@
                 nflagtestdrive: 0,
                 nflagseccioninspeccion: 0,
                 nflagvalidarfichatecnica: 0,
+                // ============ Variables Valida Flag Tipo Inspeccion =================
+                nflagalmacenValida: 0,
+                nflagaccesorioValida: 0,
+                nflagtestdriveValida: 0,
+                nflagseccioninspeccionValida: 0,
+                nflagvalidarfichatecnicaValida: 0,
                 // ============================================
                 // ============ REGISTRO PDI =================
                 formPdi:{
@@ -1213,7 +1221,7 @@
                     nidalmacen: '',
                     dfechainspeccion: '',
                     chorainspeccion: '',
-                    dfechaalmacen: '',
+                    dfechamovimientoalmacen: '',
                     nflagconformidad: 0,
                     cflagconformidaddescripcion: '',
                     cFlagVinPlaca: '',
@@ -1442,7 +1450,7 @@
             },
             asignarSolicitud(nIdSolicitudAutorizacion, cNumeroSolicitud, cTipoSolicitud){
                 this.formPdi.nidsolicitud = nIdSolicitudAutorizacion;
-                this.formPdi.cnombresolicitud = cNumeroSolicitud + ' - ' + cTipoSolicitud;
+                this.formPdi.cnombresolicitud = cTipoSolicitud + ' - ' + cNumeroSolicitud;
                 this.cerrarModal();
             },
             //=============== PUNTO INSPECCION ===================
@@ -1495,6 +1503,27 @@
                     this.pagination.last_page   = response.data.arrayTipoInspeccion.last_page;
                     this.pagination.from        = response.data.arrayTipoInspeccion.from;
                     this.pagination.to           = response.data.arrayTipoInspeccion.to;
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            changeTipoInspeccion(){
+                this.obtenerDetalleTipoInspeccionById();
+            },
+            obtenerDetalleTipoInspeccionById(){
+                var url = this.ruta + '/pdi/GetDetalleTipoInspeccionById';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidtipoinspeccion': this.formPdi.nidtipoinspeccion
+                    }
+                }).then(response => {
+                    this.nflagalmacen = response.data[0].nFlagAlmacen;
+                    this.nflagaccesorio = response.data[0].nFlagAccesorio;
+                    this.nflagtestdrive = response.data[0].nFlagTestDrive;
+                    this.nflagseccioninspeccion = response.data[0].nFlagSeccionInspeccion;
+                    this.nflagvalidarfichatecnica = response.data[0].nFlagValidarFichaTecnica;
                 }).catch(error => {
                     this.errors = error
                 });
@@ -1653,9 +1682,7 @@
             },
             aceptarPlantilla(){
                 let me = this;
-
                 me.arrayPlantilla = [];
-
                 me.arrayItems.map(function(value, key){
                     me.arrayPlantilla.push({
                         nIdPlantillaInspeccionSeccionItem: value.nIdPlantillaInspeccionSeccionItem,
@@ -1663,7 +1690,7 @@
                         cDescripcionNoConformidad: me.arrayPlantillaDescripcion[key]
                     });
                 });
-                
+                this.nflagseccioninspeccionValida = 1;
                 this.cerrarModal();
             },
             //=============== LISTAR MODAL ACCESORIO ===================
@@ -1687,9 +1714,7 @@
             },
             aceptarAccesorio(){
                 let me = this;
-
                 me.arrayTempAccesorio = [];
-
                 me.arrayAccesorio.map(function(value, key){
                     me.arrayTempAccesorio.push({
                         nIdAccesorio: value.nIdPar, 
@@ -1697,7 +1722,7 @@
                         cDescripcionNoConformidad: me.arrayAccesorioDescripcion[key]
                     });
                 });
-                
+                this.nflagaccesorioValida =1;
                 this.cerrarModal();
             },
             //=============== ADJUNTAR DOCUMENTO ===================
@@ -1708,27 +1733,6 @@
                 //this.textFile = e.target.files[0].name;
             },
             //================= REGISTRO =======================
-            changeTipoInspeccion(){
-                this.obtenerDetalleTipoInspeccionById();
-            },
-            obtenerDetalleTipoInspeccionById(){
-                var url = this.ruta + '/pdi/GetDetalleTipoInspeccionById';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidtipoinspeccion': this.formPdi.nidtipoinspeccion
-                    }
-                }).then(response => {
-                    this.nflagalmacen = response.data[0].nFlagAlmacen;
-                    this.nflagaccesorio = response.data[0].nFlagAccesorio;
-                    this.nflagtestdrive = response.data[0].nFlagTestDrive;
-                    this.nflagseccioninspeccion = response.data[0].nFlagSeccionInspeccion;
-                    this.nflagvalidarfichatecnica = response.data[0].nFlagValidarFichaTecnica;
-                }).catch(error => {
-                    this.errors = error
-                });
-            },
             registrar(){
                 if(this.validar()){
                     this.accionmodal=1;
@@ -1741,7 +1745,7 @@
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdPuntoInspeccion: this.formPdi.nidpuntoinspeccion,
-                    nIdSolicitudAutorizacion: this.formPdi.nIdSolicitudAutorizacion,
+                    nIdSolicitudAutorizacion: this.formPdi.nidsolicitud,
                     nIdCompra: this.formPdi.nidcompra,
                     nIdVehiculoPlaca: this.formPdi.nidvehiculoplaca,
                     nIdTipoInspeccion: this.formPdi.nidtipoinspeccion,
@@ -1752,8 +1756,7 @@
                     cFlagTipoMovimiento: this.formPdi.nidflagmovimiento == 1 ? 'I' : 'S',
                     cFlagVinPlaca: this.formPdi.nidcompra == 0 ? 'P' : 'V',
                     cNumeroMovimientoAlmacen: '',
-                    dFechaMovimientoAlmacen: this.formPdi.dfechaalmacen,
-                    nIdMotivoNoConformidad: this.formPdi.nflagconformidad,
+                    dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
                     cObservacion: this.formPdi.cobservacion
                 }).then(response => {
                     /*if(response.data[0].nFlagMsje == 1)
@@ -1776,11 +1779,42 @@
                 if(!this.formPdi.nidpuntoinspeccion){
                     this.mensajeError.push('Debes Seleccionar Punto Inspección');
                 };
-                if(this.formPdi.nFlagIngresoSucursal == 0){
-                    this.mensajeError.push('Debes Seleccionar Ingreso Sucursal');
+                if(this.accion==2){
+                    if(this.formPdi.nidsolicitud==0 || this.formPdi.nidsolicitud==''){
+                        this.mensajeError.push('Debes ingresar una Solicitud Autorización');
+                    };
+                }
+                if(this.formPdi.cvinplacanombre ==''){
+                    this.mensajeError.push('Debes ingresar un Nro Vin o Placa');
                 };
-                if(this.formPdi.nFlagSalidaSucursal == 0){
-                    this.mensajeError.push('Debes Seleccionar Salida Sucursal');
+                if(this.formPdi.nidtipoinspeccion ==0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Inspección');
+                };
+                if(this.formPdi.nidflagmovimiento ==0){
+                    this.mensajeError.push('Debes Seleccionar Tipo Movimiento');
+                };
+                if(this.formPdi.cnumeroinspeccion ==''){
+                    this.mensajeError.push('Debes Ingresar Número Inspección');
+                };
+                if(this.formPdi.dfechainspeccion ==''){
+                    this.mensajeError.push('Debes Ingresar Fecha Inspección');
+                };
+                if(this.formPdi.chorainspeccion ==''){
+                    this.mensajeError.push('Debes Ingresar Hora Inspección');
+                };
+                if(this.nflagseccioninspeccion ==1 && this.nflagseccioninspeccionValida ==0){
+                    this.mensajeError.push('Debes Validar Plantilla');
+                };
+                if(this.nflagaccesorio ==1 && this.nflagaccesorioValida ==0){
+                    this.mensajeError.push('Debes Validar Accesorios');
+                };
+                if(this.nflagalmacen ==1 && this.nflagalmacenValida ==0){
+                    if(this.formPdi.nidalmacen ==0){
+                        this.mensajeError.push('Debes Seleccionar Almacén');
+                    };
+                    if(this.formPdi.dfechamovimientoalmacen ==''){
+                        this.mensajeError.push('Debes Ingresar Fecha Movimiento Almacén');
+                    };
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1850,26 +1884,28 @@
                     return;
                 }
 
-                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';            
+                var url = this.ruta + '/pdi/UpdCabeceraInspeccion';    
                 axios.post(url, {
-                    nIdPuntoInspeccion: parseInt(this.formPdi.nidpuntoinspeccion),
+                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    cNombrePuntoInspeccion: this.formPdi.cnombre,
-                    nFlagTipoMovimiento: this.formPdi.nidflagmovimiento,
-                    nFlagIngresoSucursal: this.formPdi.nidflagingreso,
-                    nFlagSalidaSucursal: this.formPdi.nidflagsalida
+                    nIdAlmacen: this.formPdi.nidalmacen,
+                    cNumeroInspeccion: this.formPdi.cnumeroinspeccion,
+                    dFechaInspeccion: this.formPdi.dfechainspeccion,
+                    cHoraInspeccion: this.formPdi.chorainspeccion,
+                    cNumeroMovimientoAlmacen: '',
+                    dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
+                    cObservacion: this.formPdi.cobservacion
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
+                    /*if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Punto Inspección Actualizado');
-                        //this.limpiarFormulario();
-                        this.vistaFormulario = 1;
-                        this.listarPuntoInspeccion(1);
+                        swal('Item Agregado registrada');
+                        //this.vistaFormulario = 1;
+                        //this.listarItemPlantilla();
                     }
                     else{
-                        swal('Ya existe Punto Inspección');
-                    }
+                        swal('Ya existe Item');
+                    }*/
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1896,14 +1932,16 @@
                                 this.tituloFormulario = 'ACTUALIZAR PUNTO DE INSPECCIÓN';
                                 this.llenarAlmacen();
                                 this.formPdi.nidcabecerainspeccion = data['nIdCabeceraInspeccion'];
+                                this.formPdi.nidtipoinspeccion = data['nIdTipoInspeccion'];
                                 this.formPdi.nidpuntoinspeccion = data['nIdPuntoInspeccion'];
                                 this.formPdi.cnombrepuntoinspeccion = data['cNombrePuntoInspeccion'];
                                 this.formPdi.nidsolicitud = data['nIdSolicitudAutorizacion'];
-                                this.formPdi.cnombresolicitud = data['cNumeroSolicitud'] + ' ' + data['cNombreSolicitud'];
+                                this.formPdi.cnombresolicitud = data['cNombreSolicitud'] + ' - ' + data['cNumeroSolicitud'];
                                 this.formPdi.cvinplacanombre = data['cVinPlaca'];
                                 this.formPdi.nidflagmovimiento = data['nFlagMovimiento'];
                                 this.formPdi.cFlagVinPlaca = data['cFlagVinPlaca'];
-                                this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
+                                //this.formPdi.dfechainspeccion = data['dFechaInspeccion'];
+                                this.obtenerDetalleTipoInspeccionById();
                                 break;
                             }
                         }
@@ -2003,12 +2041,17 @@
                 this.nflagtestdrive= 0,
                 this.nflagseccioninspeccion= 0,
                 this.nflagvalidarfichatecnica= 0,
+                this.nflagalmacenValida= 0,
+                this.nflagaccesorioValida= 0,
+                this.nflagtestdriveValida= 0,
+                this.nflagseccioninspeccionValida= 0,
+                this.nflagvalidarfichatecnicaValida= 0,
                 this.nidflagmovimiento = 1,
                 this.formPdi.cnumeroinspeccion = '',
                 this.formPdi.dfechainspeccion = '',
                 this.formPdi.chorainspeccion = '',
                 this.formPdi.nidalmacen = '',
-                this.formPdi.dfechaalmacen = '',
+                this.formPdi.dfechamovimientoalmacen = '',
                 this.formPdi.cobservacion = ''
             },
             cambiarVistaFormulario(){
