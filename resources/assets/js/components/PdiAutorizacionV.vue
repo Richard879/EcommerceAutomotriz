@@ -307,11 +307,17 @@
                                                                                     <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
                                                                                         <el-row>
                                                                                             <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                    <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
-                                                                                                </el-input>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Listar Contactos</div>
+                                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                                        <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
+                                                                                                    </el-input>
+                                                                                                </el-tooltip>
                                                                                             </div>
-                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Nuevo Contacto </div>
+                                                                                                <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
+                                                                                            </el-tooltip>
                                                                                         </el-row>
                                                                                     </div>
                                                                                 </div>
