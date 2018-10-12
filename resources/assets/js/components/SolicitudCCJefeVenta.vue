@@ -2068,7 +2068,7 @@
                 this.limpiarCartaVendedores();
             },
             buscarCartaVendedores(page){
-                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
+                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristicaByTodos';
                 axios.get(url, {
                     params: {
                         'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
@@ -2434,7 +2434,7 @@
                 this.llenarVendedores();
             },
             buscarCartasVendedoresAnuladas(page){
-                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
+                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristicaByTodos';
                 axios.get(url, {
                     params: {
                         'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,

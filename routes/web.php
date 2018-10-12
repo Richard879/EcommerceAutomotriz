@@ -178,6 +178,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/cartacaracteristica/GetLstCotizacionAprobadas', 'CartaCaracteristicaController@GetLstCotizacionAprobadas');
     Route::post('/cartacaracteristica/SetRegistrarSCC', 'CartaCaracteristicaController@SetRegistrarSCC');
     Route::get('/cartacaracteristica/GetLstCartaCaracteristica', 'CartaCaracteristicaController@GetLstCartaCaracteristica');
+    Route::get('/cartacaracteristica/GetLstCartaCaracteristicaByTodos', 'CartaCaracteristicaController@GetLstCartaCaracteristicaByTodos');
     Route::get('/cartacaracteristica/GetDetalleSolicitud', 'CartaCaracteristicaController@GetDetalleSolicitud');
     Route::put('/cartacaracteristica/SetConformeNoConforme', 'CartaCaracteristicaController@SetConformeNoConforme');
     Route::post('/cartacaracteristica/SetAprobadoNoAprobado', 'CartaCaracteristicaController@SetAprobadoNoAprobado');
