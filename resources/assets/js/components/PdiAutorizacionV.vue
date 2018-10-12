@@ -386,9 +386,15 @@
                                                                                     </label>
                                                                                     <div class="col-md-8 widthFull">
                                                                                         <div class="input-group">
-                                                                                            <el-input placeholder="Busque en base a un criterio" v-model="fillNuevaSolicitud.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 2)"></el-button>
-                                                                                            </el-input>
+                                                                                            <input type="text" v-model="fillNuevaSolicitud.cnrovehiculo" disabled="disabled" placeholder="Busque en base a un criterio" class="form-control form-control-sm">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Por Vin o Placa </div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculo','buscar', 2)">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -430,7 +436,7 @@
                                                                                             value-format="yyyy-MM-dd"
                                                                                             format="dd/MM/yyyy"
                                                                                             type="date"
-                                                                                            placeholder="Seleccionar fecha de Movimiento">
+                                                                                            placeholder="dd/mm/aaaa">
                                                                                         </el-date-picker>
                                                                                     </div>
                                                                                 </div>
@@ -475,7 +481,7 @@
                                                                                                 filterable
                                                                                                 clearable
                                                                                                 loading-text
-                                                                                                placeholder="Seleccione quien moverá el vehículo">
+                                                                                                placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                                 v-for="movervehiculo in arrayMoverVehiculo"
                                                                                                 :key="movervehiculo.nIdPar"
@@ -489,7 +495,7 @@
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
-                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarAutorizacion">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarAutorizacion">
                                                                                     <i class="fa fa-save"></i> Registrar
                                                                                 </button>
                                                                             </div>
