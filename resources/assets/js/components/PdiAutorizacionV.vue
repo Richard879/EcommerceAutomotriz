@@ -308,7 +308,7 @@
                                                                                         <el-row>
                                                                                             <div class="input-group" :class="[checked ? 'disabled' : '']">
                                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                    <div slot="content">Listar Contactos</div>
+                                                                                                    <div slot="content">Buscar Contacto</div>
                                                                                                     <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
                                                                                                         <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
                                                                                                     </el-input>
