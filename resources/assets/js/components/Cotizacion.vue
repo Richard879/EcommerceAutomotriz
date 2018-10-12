@@ -278,7 +278,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio Compra</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="fillConfigBasica.tipoCambioCompra" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="fillConfigBasica.tipoCambioCompra" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -286,7 +286,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio Venta </label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="fillConfigBasica.tipoCambioVenta" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="fillConfigBasica.tipoCambioVenta" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -296,7 +296,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="fillConfigBasica.fechaInicio" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="fillConfigBasica.fechaInicio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -304,7 +304,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="fillConfigBasica.fechaFin" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="fillConfigBasica.fechaFin" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -321,9 +321,6 @@
                                                                 </div>-->
                                                                 <div class="form-group row" v-if="fValorTipocambioComercial > 0">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('contacto','buscar')">
-                                                                            <i class="fa fa-search"></i> Buscar
-                                                                        </button>-->
                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click="tabAsignarContacto();">
                                                                             <i class="fa fa-arrow-right"></i> Siguiente
                                                                         </button>
@@ -390,10 +387,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Tipo Medio</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <select v-model="fillAsignarContacto.nidreferencia" class="form-control form-control-sm">
-                                                                                        <option v-for="item in arrayTipoMedio" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
+                                                                                    <el-select v-model="fillAsignarContacto.nidreferencia" filterable clearable placeholder="SELECCIONE" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoMedio"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1283,10 +1284,14 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">TIPO DE LISTA</label>
                                                         <div class="col-md-8">
-                                                            <select name="account" v-model="fillBusqVehiculo.nidtipolista" class="form-control form-control-sm" @change="mostrarDetalleLista">
-                                                                <option value="0">SELECCIONE</option>
-                                                                <option v-for="lista in arrayTipoLista" :key="lista.value" :value="lista.value" v-text="lista.text"></option>
-                                                            </select>
+                                                            <el-select v-model="fillBusqVehiculo.nidtipolista" filterable clearable placeholder="SELECCIONE" @change="mostrarDetalleLista">
+                                                                <el-option
+                                                                v-for="item in arrayTipoLista"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1462,30 +1467,25 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <label class="col-sm-2 form-control-label">Tipo Elemento</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group">
-                                                        <select name="account" v-model="fillBusqTipoElemento.ntpoelemen" class="form-control form-control-sm">
-                                                            <option v-for="elemento in arrayTipoElemento" :key="elemento.nIdPar" :value="elemento.nIdPar" v-text="elemento.cParNombre">
-                                                            </option>
-                                                        </select>
-                                                        <div class="input-group-prepend">
+                                                        <el-select v-model="fillBusqTipoElemento.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
+                                                            <el-option
+                                                            v-for="item in arrayTipoElemento"
+                                                            :key="item.nIdPar"
+                                                            :label="item.cParNombre"
+                                                            :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                        <!--<div class="input-group-prepend">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Buscar Elemento Venta </div>
                                                                 <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVenta(1)">
                                                                     <i class="fa-lg fa fa-search"></i>
                                                                 </button>
                                                             </el-tooltip>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1503,6 +1503,13 @@
                                                             </el-tooltip>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-9 offset-md-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElementoVenta(1)">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1708,7 +1715,7 @@
                     cnrodocumento: '',
                     cdireccion: '',
                     cemail: '',
-                    nidreferencia: 0,
+                    nidreferencia: '',
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: ''
@@ -1724,16 +1731,13 @@
                 },
                 arrayProveedor: [],
                 // ================= MODAL BUSCAR VEHICULO =================
-                arrayTipoLista: [
-                    { value: '1300082', text: 'NORMAL'},
-                    { value: '1300083', text: 'ESPECIAL'}
-                ],
+                arrayTipoLista: [],
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
                 fillBusqVehiculo:{
                     cinfotipolista: '',
-                    nidtipolista: 0,
+                    nidtipolista: '',
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: '',
@@ -1749,7 +1753,7 @@
                 montoTotalVehiculoSoles: 0,
                 // ================= SUBTAB Elemento Venta =================
                 fillBusqTipoElemento: {
-                    ntpoelemen: 0,
+                    ntpoelemen: '',
                     celementonombre: ''
                 },
                 arrayTipoElemento: [],
@@ -2220,8 +2224,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110057,
-                        'opcion' : 0,
+                        'ngrupoparid' : 110057
                     }
                 }).then(response => {
                     let info = response.data;
@@ -2310,7 +2313,7 @@
                 if(!this.fillAsignarContacto.cemail){
                     this.mensajeError.push('El email no puede estar vacío');
                 }
-                if(this.fillAsignarContacto.nidreferencia == 0){
+                if(this.fillAsignarContacto.nidreferencia == 0 || this.fillAsignarContacto.nidreferencia == ''){
                     this.mensajeError.push('Debes Seleccionar un Tipo Medio');
                 }
                 if(this.fillAsignarContacto.nidasignarcontacto == 0 ||
@@ -2341,6 +2344,25 @@
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
+            },
+            llenarTipoLista(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110044
+                    }
+                }).then(response => {
+                    let info = response.data;
+                    //Data
+                    this.arrayTipoLista = info;
+                }).catch(error => {
+                    this.errors = error.response.data
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             buscaProveedores(){
                 this.listarProveedores(1);
@@ -2672,7 +2694,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillBusqTipoElemento.ntpoelemen == 0){
+                if(this.fillBusqTipoElemento.ntpoelemen == 0 || this.fillBusqTipoElemento.ntpoelemen == ''){
                     this.mensajeError.push('Debe seleccionar un tipo de elemento de venta');
                 }
 
@@ -3111,7 +3133,7 @@
                 this.fillAsignarContacto.cnrodocumento = '';
                 this.fillAsignarContacto.nidasignarcontacto = '';
                 this.fillAsignarContacto.nidcontacto = '';
-                this.fillAsignarContacto.nidreferencia = 0;
+                this.fillAsignarContacto.nidreferencia = '';
                 this.arrayReferenciavehiculo = [];
                 //Tab Detalle Cotización
                 this.fillProveedor.cproveedornombre = '';
@@ -3121,7 +3143,7 @@
                 this.fillBusqVehiculo.nidlinea = '';
                 this.fillBusqVehiculo.nidmarca = '';
                 this.fillBusqVehiculo.nidmodelo = '';
-                this.fillBusqVehiculo.nidtipolista = 0;
+                this.fillBusqVehiculo.nidtipolista = '';
 
                 this.arrayVehiculo = [];
                 this.arrayElementoVenta = [];
@@ -3234,6 +3256,7 @@
                                 }
                                 this.accionmodal=4;
                                 this.modal = 1;
+                                this.llenarTipoLista();
                                 this.llenarComboLinea();
                                 break;
                             }
@@ -3371,6 +3394,9 @@
         flex-direction: column;
         align-items: flex-end;
         margin-right: 2rem;
+    }
+    .widthFull>.el-select>.el-input {
+        width: 100%;
     }
 </style>
 

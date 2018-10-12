@@ -1897,15 +1897,13 @@
                     dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
                     cObservacion: this.formPdi.cobservacion
                 }).then(response => {
-                    /*if(response.data[0].nFlagMsje == 1)
+                    if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Item Agregado registrada');
-                        //this.vistaFormulario = 1;
-                        //this.listarItemPlantilla();
+                        swal('Inspección realizada con éxito');
                     }
                     else{
-                        swal('Ya existe Item');
-                    }*/
+                        swal('ERROR EN LA INSPECCIÓN');
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
