@@ -824,9 +824,9 @@
                                                     </template>
                                                 </table>
                                             </div>
-                                            <div class="col-lg-12">
+                                            <div class="col-sm-12">
                                                 <div class="row">
-                                                    <div class="col-lg-7">
+                                                    <div class="col-sm-7">
                                                         <nav>
                                                             <ul class="pagination">
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
@@ -844,7 +844,7 @@
                                                             </ul>
                                                         </nav>
                                                     </div>
-                                                    <div class="col-lg-5">
+                                                    <div class="col-sm-5">
                                                         <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                     </div>
                                                 </div>
