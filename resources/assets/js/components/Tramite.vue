@@ -1296,12 +1296,13 @@
             handleSelectionChange(val){
                 let me = this;
 
+                //AGREGO PROPIEDADES ADICIONALES AL OBJETO (PORQUE NO TIENE LOS TOTALES, VIENE DE SAP)
                 val.map(function(value, key){
                     val[key].fTotalTramiteTarjeta = 10;
                     val[key].fTotalTramitePlaca = 5;
                     val[key].fTotalGAdicional = 2;
                 })
-
+                //AGREGA AL ARRAY EL OBJETO SELECCIONADO
                 this.arrayPedidosChecked = val;
             },
             tabGenerarTramite(){
