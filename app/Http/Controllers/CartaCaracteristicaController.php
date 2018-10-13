@@ -103,22 +103,6 @@ class CartaCaracteristicaController extends Controller
         $nIdEstado = $request->nIdEstado;
         $nTipoRol = $request->tipoRol;
         $cFlagEstado = $request->flagEstado;
-        $nIdVendedor = $request->nIdVendedor;
-
-        switch ($nTipoRol) {
-            case 1:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            case 21:
-                $nIdVendedor = ($nIdVendedor == null) ? 0 : $nIdVendedor;
-                break;
-            case 22:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            default:
-                $nIdVendedor = 0;
-                break;
-        }
 
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
         $nIdContacto = ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
@@ -136,7 +120,42 @@ class CartaCaracteristicaController extends Controller
                                                                             $nIdEstado,
                                                                             $nTipoRol,
                                                                             $cFlagEstado,
-                                                                            $nIdVendedor
+                                                                            Auth::user()->id
+                                                                        ]);
+
+        $arrayCartaCaracteristicas = ParametroController::arrayPaginator($arrayCartaCaracteristicas, $request);
+        return ['arrayCartaCaracteristicas'=>$arrayCartaCaracteristicas];
+    }
+
+    public function GetLstCartaCaracteristicaByTodos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $cNumeroVin = $request->cNumeroVin;
+        $nIdContacto = $request->nIdContacto;
+        $dFechaInicio = $request->dFechaInicio;
+        $dFechaFin = $request->dFechaFin;
+        $nIdEstado = $request->nIdEstado;
+        $nTipoRol = $request->tipoRol;
+        $cFlagEstado = $request->flagEstado;
+
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $nIdContacto = ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = ' ') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = ' ') : $dFechaFin;
+        $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
+        $cFlagEstado = ($cFlagEstado == NULL) ? ($cFlagEstado = ' ') : $cFlagEstado;
+
+        $arrayCartaCaracteristicas = DB::select('exec usp_CartaCaracteristica_GetLstCartaCaracteristicaByTodos ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [
+                                                                            $cNumeroVin,
+                                                                            $nIdContacto,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
+                                                                            $nIdEstado,
+                                                                            $nTipoRol,
+                                                                            $cFlagEstado,
+                                                                            Auth::user()->id
                                                                         ]);
 
         $arrayCartaCaracteristicas = ParametroController::arrayPaginator($arrayCartaCaracteristicas, $request);

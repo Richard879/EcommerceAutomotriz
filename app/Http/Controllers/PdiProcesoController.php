@@ -97,7 +97,7 @@ class PdiProcesoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $pdi = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $pdi = DB::select('exec [usp_Pdi_SetCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdPuntoInspeccion,
@@ -113,7 +113,26 @@ class PdiProcesoController extends Controller
                                                                     $request->cFlagVinPlaca,
                                                                     $request->cNumeroMovimientoAlmacen,
                                                                     $request->dFechaMovimientoAlmacen,
-                                                                    $request->nIdMotivoNoConformidad,
+                                                                    $request->cObservacion,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($pdi);
+    }
+
+    public function UpdCabeceraInspeccion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $pdi = DB::select('exec [usp_Pdi_UpdCabeceraInspeccion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $request->nIdCabeceraInspeccion,
+                                                                    $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdAlmacen,
+                                                                    $request->cNumeroInspeccion,
+                                                                    $request->dFechaInspeccion,
+                                                                    $request->cHoraInspeccion,
+                                                                    $request->cNumeroMovimientoAlmacen,
+                                                                    $request->dFechaMovimientoAlmacen,
                                                                     $request->cObservacion,
                                                                     Auth::user()->id
                                                                 ]);

@@ -1648,7 +1648,7 @@ section.charts div[class*="col-"] {
 */
 .form-control {
   border: 1px solid #dee2e6;
-  border-radius: 0;
+  border-radius: 4px;
   /*padding: 0.375rem 0.75rem;*/
 }
 
@@ -1728,7 +1728,8 @@ section.charts div[class*="col-"] {
   background-color: #e9ecef;
   opacity: 1;
   width: 100%;
-  padding: 0.375rem 0.75rem;
+  padding: 0.475rem 0.75rem;
+  border-radius: 4px;
 }
 
 button, input[type='submit'] {

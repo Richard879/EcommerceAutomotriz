@@ -45,9 +45,15 @@
                                                                         </label>
                                                                         <div class="col-md-8 widthFull">
                                                                             <div class="input-group">
-                                                                                <el-input placeholder="Busque en base a un criterio" v-model="fillBusquedaSolicitud.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 1)"></el-button>
-                                                                                </el-input>
+                                                                                <input type="text" v-model="fillBusquedaSolicitud.cnrovehiculo" disabled="disabled" placeholder="Busque en base a un criterio" class="form-control form-control-sm">
+                                                                                <div class="input-group-prepend">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Buscar Por Vin o Placa </div>
+                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculo','buscar', 1)">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </el-tooltip>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -70,12 +76,18 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                        <label class="col-sm-4 form-control-label">Contacto</label>
                                                                         <div class="col-sm-8">
                                                                             <div class="input-group">
-                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillBusquedaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                    <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar', 1)"></el-button>
-                                                                                </el-input>
+                                                                                <input type="text" v-model="fillBusquedaSolicitud.cnombrecontacto" disabled="disabled" placeholder="Seleccione un Contacto" class="form-control form-control-sm">
+                                                                                <div class="input-group-prepend">
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Buscar Contacto </div>
+                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar', 1)">
+                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                        </button>
+                                                                                    </el-tooltip>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -90,7 +102,7 @@
                                                                                     filterable
                                                                                     clearable
                                                                                     loading-text
-                                                                                    placeholder="Seleccione un Estado">
+                                                                                    placeholder="SELECCIONE">
                                                                                 <el-option
                                                                                     v-for="estado in arrayEstado"
                                                                                     :key="estado.nIdPar"
@@ -163,38 +175,42 @@
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </template>
                                                                 <template v-else>
-                                                                    <tr>
-                                                                        <td>No existen registros</td>
-                                                                    </tr>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="10">No existen registros!</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </template>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="row">
-                                                                    <div class="col-lg-7">
-                                                                        <nav>
-                                                                            <ul class="pagination">
-                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                </li>
-                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                :class="[page==isActived?'active':'']">
-                                                                                    <a class="page-link"
-                                                                                    href="#" @click.prevent="cambiarPaginaMiSolicitudes(page)"
-                                                                                    v-text="page"></a>
-                                                                                </li>
-                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                    <a @click.prevent="cambiarPaginaMiSolicitudes(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="col-lg-5">
-                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -236,7 +252,7 @@
                                                                                             value-format="yyyy-MM-dd"
                                                                                             format="dd/MM/yyyy"
                                                                                             type="date"
-                                                                                            placeholder="Seleccionar fecha de solicitud">
+                                                                                            placeholder="dd/mm/aaaa">
                                                                                         </el-date-picker>
                                                                                     </div>
                                                                                 </div>
@@ -249,7 +265,7 @@
                                                                                                     @change="tipoBusquedaVehiculoPorTipoSolicitud"
                                                                                                     filterable
                                                                                                     clearable
-                                                                                                    placeholder="Seleccione un Tipo de Solicitud">
+                                                                                                    placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                             v-for="item in arrayTipoSolicitudes"
                                                                                             :key="item.nIdPar"
@@ -291,11 +307,17 @@
                                                                                     <div class="col-sm-8" :class="[checked ? 'disabled' : '']">
                                                                                         <el-row>
                                                                                             <div class="input-group" :class="[checked ? 'disabled' : '']">
-                                                                                                <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                    <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
-                                                                                                </el-input>
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Contacto</div>
+                                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillNuevaSolicitud.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
+                                                                                                        <el-button slot="append" icon="el-icon-search"  @click="abrirModal('contacto','buscar', 2)"></el-button>
+                                                                                                    </el-input>
+                                                                                                </el-tooltip>
                                                                                             </div>
-                                                                                            <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Nuevo Contacto </div>
+                                                                                                <el-button type="primary" icon="el-icon-circle-plus"  @click="abrirModal('contacto','nuevo', 110026)" circle></el-button>
+                                                                                            </el-tooltip>
                                                                                         </el-row>
                                                                                     </div>
                                                                                 </div>
@@ -370,9 +392,15 @@
                                                                                     </label>
                                                                                     <div class="col-md-8 widthFull">
                                                                                         <div class="input-group">
-                                                                                            <el-input placeholder="Busque en base a un criterio" v-model="fillNuevaSolicitud.cnrovehiculo" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                                <el-button slot="append" icon="el-icon-search" @click="abrirModal('vehiculo','buscar', 2)"></el-button>
-                                                                                            </el-input>
+                                                                                            <input type="text" v-model="fillNuevaSolicitud.cnrovehiculo" disabled="disabled" placeholder="Busque en base a un criterio" class="form-control form-control-sm">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                    <div slot="content">Buscar Por Vin o Placa </div>
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculo','buscar', 2)">
+                                                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                                                    </button>
+                                                                                                </el-tooltip>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -414,7 +442,7 @@
                                                                                             value-format="yyyy-MM-dd"
                                                                                             format="dd/MM/yyyy"
                                                                                             type="date"
-                                                                                            placeholder="Seleccionar fecha de Movimiento">
+                                                                                            placeholder="dd/mm/aaaa">
                                                                                         </el-date-picker>
                                                                                     </div>
                                                                                 </div>
@@ -459,7 +487,7 @@
                                                                                                 filterable
                                                                                                 clearable
                                                                                                 loading-text
-                                                                                                placeholder="Seleccione quien moverá el vehículo">
+                                                                                                placeholder="SELECCIONE">
                                                                                             <el-option
                                                                                                 v-for="movervehiculo in arrayMoverVehiculo"
                                                                                                 :key="movervehiculo.nIdPar"
@@ -473,7 +501,7 @@
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <div class="col-md-9 offset-md-5">
-                                                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarAutorizacion">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarAutorizacion">
                                                                                     <i class="fa fa-save"></i> Registrar
                                                                                 </button>
                                                                             </div>
@@ -522,188 +550,200 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">BUSQUEDA VEHICULO POR {{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }} </h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <div class="row">
-                                                            <label class="col-sm-4 form-control-label">Nombre</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="text" v-model="modalVehiculo.cnrovehiculo" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
-                                                                    <div class="input-group-prepend">
-                                                                        <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">BUSQUEDA VEHICULO POR {{ (fillBusquedaSolicitud.nidtipobusqueda == 1) ? 'VIN' : 'PLACA' }} </h3>
+                                </div>
+                                <div class="card-body">
+                                    <form v-on:submit.prevent class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Vin o Placa</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            <input type="text" v-model="modalVehiculo.cnrovehiculo" @keyup.enter="listarVehiculo(1)" class="form-control form-control-sm">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" title="Buscar Vehiculos" class="btn btn-info btn-corner btn-sm" @click="listarVehiculo(1);">
+                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayVehiculosByCriterio.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <template v-if="flagBuscarVehiculoByCriterio == 1">
-                                                                <template v-if="fillBusquedaSolicitud.nidtipobusqueda == 1">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>VIN</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año / Mes</th>
-                                                                            <th>Linea</th>
-                                                                            <th>Forma de Pago</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cNumeroVin">
-                                                                            <td>
-                                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td v-text="vehiculo.cNumeroVin"></td>
-                                                                            <td v-text="vehiculo.cNombreComercial"></td>
-                                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                            <td v-text="vehiculo.cNombreLinea"></td>
-                                                                            <td v-text="vehiculo.cFormaPago"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>Placa</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año / Mes</th>
-                                                                            <th>Linea</th>
-                                                                            <th>Forma de Pago</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
-                                                                            <td>
-                                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td v-text="vehiculo.cPlaca"></td>
-                                                                            <td v-text="vehiculo.cNombreComercial"></td>
-                                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                            <td v-text="vehiculo.cNombreLinea"></td>
-                                                                            <td v-text="vehiculo.cFormaPago"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </template>
-                                                            </template>
-                                                            <template v-else>
-                                                                <template v-if="fillNuevaSolicitud.nidtipobusqueda == 1">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>VIN</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año / Mes</th>
-                                                                            <th>Linea</th>
-                                                                            <th>Forma de Pago</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cNumeroVin">
-                                                                            <td>
-                                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td v-text="vehiculo.cNumeroVin"></td>
-                                                                            <td v-text="vehiculo.cNombreComercial"></td>
-                                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                            <td v-text="vehiculo.cNombreLinea"></td>
-                                                                            <td v-text="vehiculo.cFormaPago"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Seleccione</th>
-                                                                            <th>Placa</th>
-                                                                            <th>Nombre Comercial</th>
-                                                                            <th>Año / Mes</th>
-                                                                            <th>Linea</th>
-                                                                            <th>Forma de Pago</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
-                                                                            <td>
-                                                                                <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td v-text="vehiculo.cPlaca"></td>
-                                                                            <td v-text="vehiculo.cNombreComercial"></td>
-                                                                            <td> {{ vehiculo.cAnio }} / {{ vehiculo.cMes }} </td>
-                                                                            <td v-text="vehiculo.cNombreLinea"></td>
-                                                                            <td v-text="vehiculo.cFormaPago"></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </template>
-                                                            </template>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaVehiculosByCriterio(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <table>
-                                                        <tbody>
+                                        </div>
+                                    </form>
+                                    <br/>
+                                    <template v-if="arrayVehiculosByCriterio.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <template v-if="flagBuscarVehiculoByCriterio == 1">
+                                                    <template v-if="fillBusquedaSolicitud.nidtipobusqueda == 1">
+                                                        <thead>
                                                             <tr>
-                                                                <td colspan="10">No existen registros!</td>
+                                                                <th>Seleccione</th>
+                                                                <th>VIN</th>
+                                                                <th>Nombre Comercial</th>
+                                                                <th>Año Fab.</th>
+                                                                <th>Año Modelo</th>
+                                                                <th>Periodo</th>
+                                                                <th>Linea</th>
+                                                                <th>Forma de Pago</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cNumeroVin">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ vehiculo.cNumeroVin }}</div>
+                                                                        <i @click="asignarVehiculo(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td v-text="vehiculo.cNumeroVin"></td>
+                                                                <td v-text="vehiculo.cNombreComercial"></td>
+                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.nAnioVersion"></td>
+                                                                <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
+                                                                <td v-text="vehiculo.cNombreLinea"></td>
+                                                                <td v-text="vehiculo.cFormaPago"></td>
                                                             </tr>
                                                         </tbody>
-                                                    </table>
+                                                    </template>
+                                                    <template v-else>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Placa</th>
+                                                                <th>Nombre Comercial</th>
+                                                                <th>Año Fab.</th>
+                                                                <th>Año Modelo</th>
+                                                                <th>Periodo</th>
+                                                                <th>Linea</th>
+                                                                <th>Forma de Pago</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                                <td>
+                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="vehiculo.cPlaca"></td>
+                                                                <td v-text="vehiculo.cNombreComercial"></td>
+                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.nAnioVersion"></td>
+                                                                <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
+                                                                <td v-text="vehiculo.cNombreLinea"></td>
+                                                                <td v-text="vehiculo.cFormaPago"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </template>
                                                 </template>
+                                                <template v-else>
+                                                    <template v-if="fillNuevaSolicitud.nidtipobusqueda == 1">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>VIN</th>
+                                                                <th>Nombre Comercial</th>
+                                                                 <th>Año Fab.</th>
+                                                                <th>Año Modelo</th>
+                                                                <th>Periodo</th>
+                                                                <th>Linea</th>
+                                                                <th>Forma de Pago</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cNumeroVin">
+                                                                <td>
+                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="vehiculo.cNumeroVin"></td>
+                                                                <td v-text="vehiculo.cNombreComercial"></td>
+                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.nAnioVersion"></td>
+                                                                <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
+                                                                <td v-text="vehiculo.cNombreLinea"></td>
+                                                                <td v-text="vehiculo.cFormaPago"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </template>
+                                                    <template v-else>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Placa</th>
+                                                                <th>Nombre Comercial</th>
+                                                                <th>Año Fab.</th>
+                                                                <th>Año Modelo</th>
+                                                                <th>Periodo</th>
+                                                                <th>Linea</th>
+                                                                <th>Forma de Pago</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cPlaca">
+                                                                <td>
+                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="vehiculo.cPlaca"></td>
+                                                                <td v-text="vehiculo.cNombreComercial"></td>
+                                                                <td v-text="vehiculo.nAnioFabricacion"></td>
+                                                                <td v-text="vehiculo.nAnioVersion"></td>
+                                                                <td>{{ vehiculo.cMes }} / {{ vehiculo.cAnio }}</td>
+                                                                <td v-text="vehiculo.cNombreLinea"></td>
+                                                                <td v-text="vehiculo.cFormaPago"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </template>
+                                                </template>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                            :class="[page==isActivedModal?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPaginaVehiculosByCriterio(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaVehiculosByCriterio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>
@@ -716,158 +756,151 @@
         <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">BUSQUEDA CONTACTOS</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <form class="form-horizontal">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Tipo Persona</label>
-                                                                <div class="col-sm-8">
-                                                                    <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
-                                                                        <input type="radio" class="radio-template" v-model="modalMisContactos.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
-                                                                        <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                    <div class="modal-body">                   
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">BUSQUEDA CONTACTOS</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form v-on:submit.prevent class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Tipo Persona</label>
+                                                    <div class="col-sm-8">
+                                                        <label class="checkbox-inline" v-for="tipo in arrayTipoPersona" :key="tipo.id">
+                                                            <input type="radio" class="radio-template" v-model="modalMisContactos.ntipopersona" :value="tipo.value" v-on:change="cambiarTipoPersonaMisContactos()">
+                                                            <label for="" class="form-control-label" v-text="tipo.text"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </label>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Nro Documento</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" v-model="modalMisContactos.cnrodocumento" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">* Nombres</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" v-model="modalMisContactos.cfiltrodescripcion" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-9 offset-sm-5">
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactos(1);">
-                                                                <i class="fa fa-search"></i> Buscar
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <template v-if="arrayContacto.length">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-sm">
-                                                            <template v-if="modalMisContactos.ntipopersona == 1">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Acciones</th>
-                                                                        <th>Contacto</th>
-                                                                        <th>Nro Documento</th>
-                                                                        <th>Telefono</th>
-                                                                        <th>Dirección</th>
-                                                                        <th>Email</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
-                                                                        <td>
-                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Seleccionar Contacto</div>
-                                                                                <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                            </el-tooltip>
-                                                                        </td>
-                                                                        <td v-text="c.cContacto"></td>
-                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                        <td v-text="c.cDireccion"></td>
-                                                                        <td v-text="c.cEmail"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </template>
-                                                            <template v-else>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Acciones</th>
-                                                                        <th>Razon Social</th>
-                                                                        <th>Nro Documento</th>
-                                                                        <th>Telefono</th>
-                                                                        <th>Email</th>
-                                                                        <th>Persona Contacto</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
-                                                                        <td>
-                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                <div slot="content">Seleccionar Contacto</div>
-                                                                                <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                            </el-tooltip>
-                                                                        </td>
-                                                                        <td v-text="c.cRazonSocial"></td>
-                                                                        <td v-text="c.cNumeroDocumento"></td>
-                                                                        <td v-text="c.nTelefonoMovil"></td>
-                                                                        <td v-text="c.cEmail"></td>
-                                                                        <td v-text="c.cContacto"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </template>
-                                                        </table>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="modalMisContactos.cnrodocumento" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <nav>
-                                                                    <ul class="pagination">
-                                                                        <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                        </li>
-                                                                        <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                        :class="[page==isActivedModal?'active':'']">
-                                                                            <a class="page-link"
-                                                                            href="#" @click.prevent="cambiarPaginaMisContactos(page)"
-                                                                            v-text="page"></a>
-                                                                        </li>
-                                                                        <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                            <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                            </div>
-                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nombres</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="modalMisContactos.cfiltrodescripcion" @keyup.enter="listarContactos(1)" class="form-control form-control-sm">
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarContactos(1);">
+                                                    <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <br/>
+                                    <template v-if="arrayContacto.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <template v-if="modalMisContactos.ntipopersona == 1">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Contacto</th>
+                                                            <th>Nro Documento</th>
+                                                            <th>Telefono</th>
+                                                            <th>Dirección</th>
+                                                            <th>Email</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ c.cContacto }}</div>
+                                                                    <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="c.cContacto"></td>
+                                                            <td v-text="c.cNumeroDocumento"></td>
+                                                            <td v-text="c.nTelefonoMovil"></td>
+                                                            <td v-text="c.cDireccion"></td>
+                                                            <td v-text="c.cEmail"></td>
+                                                        </tr>
+                                                    </tbody>
                                                 </template>
                                                 <template v-else>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="10">No existen registros!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Razon Social</th>
+                                                            <th>Nro Documento</th>
+                                                            <th>Telefono</th>
+                                                            <th>Email</th>
+                                                            <th>Persona Contacto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ c.cRazonSocial }}</div>
+                                                                    <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="c.cRazonSocial"></td>
+                                                            <td v-text="c.cNumeroDocumento"></td>
+                                                            <td v-text="c.nTelefonoMovil"></td>
+                                                            <td v-text="c.cEmail"></td>
+                                                            <td v-text="c.cContacto"></td>
+                                                        </tr>
+                                                    </tbody>
                                                 </template>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                            :class="[page==isActivedModal?'active':'']">
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPaginaMisContactos(page)"
+                                                                v-text="page"></a>
+                                                            </li>
+                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaMisContactos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud()">Cerrar</button>

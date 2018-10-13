@@ -310,7 +310,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
+                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
                                                                                         <el-option
                                                                                         v-for="item in arrayMoneda_Destino"
                                                                                         :key="item.nIdPar"
@@ -327,7 +327,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Cuenta</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable clearable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayCuenta_Destino"
                                                                                         :key="item.nIdCuenta"
@@ -438,7 +438,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable clearable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayBanco_Origen"
                                                                                         :key="item.nIdPar"
@@ -453,7 +453,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable clearable placeholder="SELECCIONE" >
                                                                                         <el-option
                                                                                         v-for="item in arrayMoneda_Origen"
                                                                                         :key="item.nIdPar"
@@ -804,13 +804,13 @@
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formNuevoDeposito:{
-                    nidbanco_origen: 0,
-                    nidmoneda_origen: 0,
+                    nidbanco_origen: '',
+                    nidmoneda_origen: '',
                     cnumerocuenta_origen: '',
                     cnumerocuenta_origen: '',
-                    nidbanco_destino: 0,
-                    nidmoneda_destino: 0,
-                    nidnumerocuenta_destino: 0,
+                    nidbanco_destino: '',
+                    nidmoneda_destino: '',
+                    nidnumerocuenta_destino: '',
                     fmonto: 0,
                     cnombrecontacto: '',
                     dfechadeposito: '',
@@ -912,8 +912,8 @@
         },
         methods:{
             tabBuscarPedido(){
-                this.fillPedido.nidmarca = 0;
-                this.fillPedido.nidmodelo = 0;
+                this.fillPedido.nidmarca = '';
+                this.fillPedido.nidmodelo = '';
                 this.arrayPedido = [];
             },
             llenarEstadoPedido(){
@@ -1055,8 +1055,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidgrupopar': 110021,
-                        'opcion': 0
+                        'nidgrupopar': 110021
                     }
                 }).then(response => {
                     this.arrayBanco_Destino = response.data;
@@ -1068,8 +1067,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110028,
-                        'opcion': 0
+                        'ngrupoparid': 110028
                     }
                 }).then(response => {
                     this.arrayMoneda_Destino = response.data;
@@ -1078,7 +1076,7 @@
                 });
             },
             onchangeBanco_Destino(){
-                this.formNuevoDeposito.nidmoneda_destino = 0;
+                this.formNuevoDeposito.nidmoneda_destino = '';
                 this.llenarComboCuenta_Destino();
             },
             onchangeMoneda_Destino(){
@@ -1090,12 +1088,11 @@
                     params: {
                         'nidempresa': 1300011,
                         'nidbanco': this.formNuevoDeposito.nidbanco_destino,
-                        'nidmoneda': this.formNuevoDeposito.nidmoneda_destino,
-                        'opcion': 0
+                        'nidmoneda': this.formNuevoDeposito.nidmoneda_destino
                     }
                 }).then(response => {
                     this.arrayCuenta_Destino = response.data;
-                    this.formNuevoDeposito.nidnumerocuenta_destino = 0;
+                    this.formNuevoDeposito.nidnumerocuenta_destino = '';
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1104,8 +1101,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110042,
-                        'opcion': 0
+                        'ngrupoparid': 110042
                     }
                 }).then(response => {
                     this.arrayBanco_Origen = response.data;
@@ -1117,8 +1113,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110028,
-                        'opcion': 0
+                        'ngrupoparid': 110028
                     }
                 }).then(response => {
                     this.arrayMoneda_Origen = response.data;
