@@ -42,7 +42,7 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* VIN</label>
                                                                             <div class="col-sm-8">
@@ -246,7 +246,7 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* VIN</label>
                                                                             <div class="col-sm-8">
