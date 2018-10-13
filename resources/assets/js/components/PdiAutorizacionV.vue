@@ -596,9 +596,10 @@
                                                         <tbody>
                                                             <tr v-for="vehiculo in arrayVehiculosByCriterio" :key="vehiculo.cNumeroVin">
                                                                 <td>
-                                                                    <a href="#" @click="asignarVehiculo(vehiculo)" data-toggle="tooltip">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Seleccionar {{ vehiculo.cNumeroVin }}</div>
+                                                                        <i @click="asignarVehiculo(vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    </el-tooltip>
                                                                 </td>
                                                                 <td v-text="vehiculo.cNumeroVin"></td>
                                                                 <td v-text="vehiculo.cNombreComercial"></td>
@@ -821,7 +822,7 @@
                                                         <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar Contacto</div>
+                                                                    <div slot="content">Seleccionar {{ c.cContacto }}</div>
                                                                     <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
@@ -848,7 +849,7 @@
                                                         <tr v-for="c in arrayContacto" :key="c.nIdAsignacionContactoVendedor">
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Seleccionar Contacto</div>
+                                                                    <div slot="content">Seleccionar {{ c.cRazonSocial }}</div>
                                                                     <i @click.prevent="abrirModal('contacto', 'asignar', c)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
