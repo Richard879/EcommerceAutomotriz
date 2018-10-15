@@ -36,7 +36,6 @@ class EntregaVehiculoController extends Controller
         $dFechaSolicitud  = ($dFechaSolicitud == NULL) ? ($dFechaSolicitud = '') : $dFechaSolicitud;
         $cFlagEstado  = ($cFlagEstado == NULL) ? ($cFlagEstado = '') : $cFlagEstado;
 
-
         $arrayInspeccionesAprobadas = DB::select('exec usp_EntregaVehiculo_GetLstInspecciones ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
@@ -83,11 +82,12 @@ class EntregaVehiculoController extends Controller
             foreach($request->file('files') as $file){
                 if($file){
                     $bandera = str_random(10);
+                    $nombreArchivoServidor = $bandera .'_'. $file->getClientOriginalName();
                     //Almaceno el archivo en un ruta especifica
-                    $ruta = Storage::putFileAs('public/EntregaVehiculo', $file, $bandera .'_'. $file->getClientOriginalName());
+                    $ruta = Storage::putFileAs('public/EntregaVehiculo', $file, $nombreArchivoServidor);
                     //Guarda el Documento Adjunto
                     $arrayDocumento = DB::select('exec usp_EntregaVehiculo_SetDocumentoAdjunto ?, ?, ?',
-                                                                            [   asset($ruta),
+                                                                            [   asset('storage/EntregaVehiculo/' . $nombreArchivoServidor),
                                                                                 $file->getClientOriginalName(),
                                                                                 Auth::user()->id
                                                                             ]);
@@ -105,5 +105,22 @@ class EntregaVehiculoController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function GetLstArchivosAdjuntos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEntregaVehiculo  = $request->nIdEntregaVehiculo;
+
+        $nIdEntregaVehiculo  = ($nIdEntregaVehiculo == NULL) ? ($nIdEntregaVehiculo = 0) : $nIdEntregaVehiculo;
+
+        $arrayArchivosAdjuntos = DB::select('exec usp_EntregaVehiculo_GetLstArchivosAdjuntos ?, ?',
+                                                            [
+                                                                $nIdEntregaVehiculo,
+                                                                Auth::user()->id
+                                                            ]);
+
+        return response()->json($arrayArchivosAdjuntos);
     }
 }

@@ -116,14 +116,16 @@
                                                                                 <el-table-column  property="encargado" label="Encargado" width="150"></el-table-column>
                                                                                 <el-table-column  property="cNumeroSolicitud" label="Ref.Solicitud Entrega" width="130"></el-table-column>
                                                                                 <el-table-column  property="dFechaEntregaVehiculo" label="Fecha Entrega" width="100"></el-table-column>
-                                                                                <el-table-column  property="cHoraEntregaVehiculo" label="Hora de Entrega" width="100"></el-table-column>
-                                                                                <el-table-column  fixed="right" label="Acciones"   width="80">
+                                                                                <el-table-column  property="cHoraEntregaVehiculo" label="Hora de Entrega" show-overflow-tooltip></el-table-column>
+                                                                                <el-table-column  fixed="right" label="Acciones"   width="150">
                                                                                     <template slot-scope="scope">
-                                                                                        <el-tooltip class="item"
-                                                                                                    effect="dark"
-                                                                                                    content="Editar"
-                                                                                                    placement="top-start">
-                                                                                            <el-button><i class="fa fa-edit" @click="tabEntregaVehiculo(scope.row)"></i></el-button>
+                                                                                        <template v-if="scope.row.dFechaEntregaVehiculo != null">
+                                                                                            <el-tooltip class="item" effect="dark" :content="'Ver Archivos Adjuntos : ' + scope.row.cPlaca " placement="top-start">
+                                                                                                <el-button @click="abrirModal('entregavehiculo', 'mostrar', scope.row)"><i class="fa fa-file"></i></el-button>
+                                                                                            </el-tooltip>
+                                                                                        </template>
+                                                                                        <el-tooltip class="item" effect="dark" content="Editar" placement="top-start">
+                                                                                            <el-button @click="tabEntregaVehiculo(scope.row)"><i class="fa fa-edit"></i></el-button>
                                                                                         </el-tooltip>
                                                                                     </template>
                                                                                 </el-table-column>
@@ -579,6 +581,57 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Show Archivos Adjuntos -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Archivos Adjuntos</h2>
+                            <button type="button" class="close" @click="cerrarModalSolicitud" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div v-for="archivos in arrayArchivosAdjuntos" :key="archivos.nIdDocumentoAdjunto">
+                                                            <a :href="archivos.cRutaDocumento" target="_blank" class="listaArchivosAdjuntos">
+                                                                <el-alert
+                                                                    :title="archivos.cArchivo"
+                                                                    type="success"
+                                                                    :closable="false"
+                                                                    show-icon>
+                                                                </el-alert>
+                                                            </a>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSolicitud">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -603,6 +656,7 @@
                 },
                 arrayEstado: [],
                 arrayMisVehiculos : [],
+                arrayArchivosAdjuntos: [],
                 // ===============================
                 // VARIABLES MODAL VEHICULO
                 // ===============================
@@ -838,6 +892,32 @@
                 this.fillBusquedaVehiculo.dfechaSolicitud = '';
                 this.fillBusquedaVehiculo.nidestado = '';
             },
+            listarArchivosAdjuntos(data){
+                console.log(data);
+                var url = this.ruta + '/entregavehiculo/GetLstArchivosAdjuntos';
+                axios.get(url, {
+                    params: {
+                        'nIdEntregaVehiculo' : data['nIdEntregaVehiculo']
+                    }
+                }).then(response => {
+                    console.log(response);
+                    let info = response.data;
+                    this.arrayArchivosAdjuntos        = info;
+                    this.paginationModal.current_page =  info.current_page;
+                    this.paginationModal.total        = info.total;
+                    this.paginationModal.per_page     = info.per_page;
+                    this.paginationModal.last_page    = info.last_page;
+                    this.paginationModal.from         = info.from;
+                    this.paginationModal.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // ======================
             // TAB ENTREGA VEHÍCULO
             // ======================
@@ -942,7 +1022,7 @@
                 if(!this.fillEntregaVehiculo.dfechaEntrega){
                     this.mensajeError.push('Debe seleccionar una fecha de entrega, es campo obligatorio');
                 } else {
-                    let fecha_actual     = moment();
+                    let fecha_actual   = moment();
                     let fecha_entrega  = moment(this.fillEntregaVehiculo.dfechaEntrega);
                     if(fecha_actual.diff(fecha_entrega, 'days') > 0){
                         this.mensajeError.push('La Fecha de Entrega debe ser una fecha posterior a la fecha de Actual');
@@ -1070,6 +1150,19 @@
                             }
                         }
                     }
+                    break;
+                    case "entregavehiculo":
+                    {
+                        switch(accion){
+                            case 'mostrar':
+                            {
+                                this.listarArchivosAdjuntos(data);
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
                 }
             },
             //Limpiar Paginación
@@ -1103,6 +1196,7 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+                this.arrayArchivosAdjuntos = [];
             }
         }
     }
@@ -1188,6 +1282,10 @@
         opacity: 0.65;
         cursor: not-allowed;
         pointer-events:none;
+    }
+    .listaArchivosAdjuntos{
+        width: 100%;
+        margin-bottom: .5rem;
     }
 </style>
 
