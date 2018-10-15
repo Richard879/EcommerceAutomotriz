@@ -1179,7 +1179,7 @@
                 // ============================================
                 // ============ BUSQUEDA PDI =================
                 fillPdi:{
-                    ncriterio: '0',
+                    ncriterio: '1',
                     cdescripcioncriterio: '',
                     dfechainicio: '',
                     dfechafin: '',
@@ -1305,6 +1305,9 @@
                 errors: [],
                 mensajeError: [],
                 vistaFormulario: 1,
+                attachment: null,
+                form: new FormData,
+                textFile: '',
                 validaAccionModal: 0
             }
         },
@@ -1380,13 +1383,7 @@
                 });
             },
             cambiarBusquedaPorCriterio(){
-                if (this.flagBuscarVehiculoByCriterio == 1) {
-                    this.fillBusquedaSolicitud.nidvehiculo = '';
-                    this.fillBusquedaSolicitud.cnrovehiculo = '';
-                } else {
-                    this.fillNuevaSolicitud.nidvehiculo = '';
-                    this.fillNuevaSolicitud.cnrovehiculo = '';
-                }
+                this.fillPdi.cdescripcioncriterio = '';
             },
             listarPdi(page){
                 this.mostrarProgressBar();
@@ -1727,10 +1724,8 @@
             },
             //=============== ADJUNTAR DOCUMENTO ===================
             getFile(e){
-                //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
-                //this.textFile = e.target.files[0].name;
             },
             //================= REGISTRO =======================
             registrar(){
@@ -1909,9 +1904,13 @@
                                 this.registrarAccesorios();
                             }
                         }
+                        if(this.attachment){
+                            this.subirArchivo();
+                        }
                         swal('Inspección realizada con éxito');
                         this.limpiarFormulario();
                         this.vistaFormulario = 1;
+                        this.listarPdi(1);
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
@@ -1926,7 +1925,6 @@
                     nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
                     data: this.arrayPlantilla
                 }).then(response => {
-
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1934,12 +1932,34 @@
             registrarAccesorios(){
                 var url = this.ruta + '/pdi/SetAccesorioPdi';    
                 axios.post(url, {
-                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
-                    data: this.arrayTempAccesorio
+                    'nIdCabeceraInspeccion': this.formPdi.nidcabecerainspeccion,
+                    'data': this.arrayTempAccesorio
                 }).then(response => {
 
                 }).catch(error => {
                     console.log(error);
+                });
+            },
+            subirArchivo(){
+                this.form.append('file', this.attachment);
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                var url = this.ruta + '/documentoadjunto/subirArchivo';
+
+                axios.post(url, this.form, config).then(response=>{
+                    this.registrarCabeceraInspeccionDocumento(response.data[0].nIdDocumentoAdjunto);
+                }).then(function (response) {
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registrarCabeceraInspeccionDocumento(nIdDocumentoAdjunto){
+                var url = this.ruta + '/pdi/SetCabeceraInspeccionDocumento';
+                axios.post(url, {
+                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
+                    nIdDocumentoAdjunto: nIdDocumentoAdjunto
+                }).then(response => {
+                }).catch(error => {
+                    this.errors = error
                 });
             },
             abrirFormulario(modelo, accion, data =[]){
@@ -2011,7 +2031,7 @@
                                     this.modal =1;
                                     this.llenarComboMarca();
                                     this.llenarComboModelo();
-                                    //this.listarPorVin(1);
+                                    this.listarPorVin(1);
                                 }
                                 else{
                                     this.accionmodal=6;
@@ -2084,7 +2104,13 @@
                 this.formPdi.chorainspeccion = '',
                 this.formPdi.nidalmacen = '',
                 this.formPdi.dfechamovimientoalmacen = '',
-                this.formPdi.cobservacion = ''
+                this.formPdi.cobservacion = '',
+                this.arraySeccion=[],
+                this.arrayItems=[],
+                this.arrayPlantilla =[],
+                this.arrayAccesorio =[],
+                this.arrayTempAccesorio =[],
+                this.arrayAccesorioCantidad=[]
             },
             cambiarVistaFormulario(){
                 this.vistaFormulario = 1;

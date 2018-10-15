@@ -1,7 +1,7 @@
 <template>
     <transition name="slide-fade" appear>
         <li class="nav-item d-flex align-items-center">
-            <el-select v-model="formCabecera.nidsucursal" filterable clearable placeholder="SELEECCIONE" v-on:change="changeSucursal()">
+            <el-select v-model="formCabecera.nidsucursal" filterable clearable placeholder="SELECCIONE" v-on:change="changeSucursal()">
                 <el-option
                 v-for="item in arraySucursal"
                 :key="item.nIdPar"

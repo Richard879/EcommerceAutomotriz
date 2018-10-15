@@ -148,6 +148,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pdi/UpdCabeceraInspeccion', 'PdiProcesoController@UpdCabeceraInspeccion');
     Route::post('/pdi/SetPlantillaPdi', 'PdiProcesoController@SetPlantillaPdi');
     Route::post('/pdi/SetAccesorioPdi', 'PdiProcesoController@SetAccesorioPdi');
+    Route::post('/pdi/SetCabeceraInspeccionDocumento', 'PdiProcesoController@SetCabeceraInspeccionDocumento');
+    Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
 
 
 

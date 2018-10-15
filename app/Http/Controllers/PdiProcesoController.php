@@ -276,4 +276,18 @@ class PdiProcesoController extends Controller
             DB::rollBack();
         }   
     }
+
+    public function SetCabeceraInspeccionDocumento(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayPedido = DB::select('exec [usp_Pdi_SetCabeceraInspeccionDocumento] ?, ?, ?',
+                                    [
+                                        $request->nIdCabeceraInspeccion,
+                                        $request->nIdDocumentoAdjunto,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayPedido);
+    }
 }
