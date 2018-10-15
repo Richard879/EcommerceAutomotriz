@@ -108,6 +108,6 @@
         <tramite :ruta="ruta"></tramite>
     </template>
     <template v-if="menu==1300342">
-        <entregavehiculo :ruta="ruta"></entregavehiculo>
+        <entregavehiculo :ruta="ruta" @vista="CambiarMenu"></entregavehiculo>
     </template>
 @endsection

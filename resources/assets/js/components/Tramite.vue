@@ -92,46 +92,21 @@
                                                                                 :data="arrayPedidosCancelados"
                                                                                 style="width: 100%"
                                                                                 @selection-change="handleSelectionChange">
-                                                                                <el-table-column
-                                                                                    :fixed="flagFixed"
-                                                                                    :type="flagType"
-                                                                                    :width="flagWidth"
-                                                                                    >
+                                                                                <el-table-column :fixed="flagFixed" :type="flagType" :width="flagWidth">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    label="Fecha Pedido"
-                                                                                    property="dFechaPedido"
-                                                                                    width="120">
+                                                                                <el-table-column label="Fecha Pedido" property="dFechaPedido" width="120">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cNumeroPedido"
-                                                                                    label="Nro Pedido"
-                                                                                    width="120">
+                                                                                <el-table-column property="cNumeroPedido" label="Nro Pedido" width="120">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cNumeroVin"
-                                                                                    label="Nro VIN"
-                                                                                    width="160">
+                                                                                <el-table-column property="cNumeroVin" label="Nro VIN" width="160">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cNombreComercial"
-                                                                                    label="Nombre Comercial"
-                                                                                    width="180">
+                                                                                <el-table-column property="cNombreComercial" label="Nombre Comercial" width="180">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="nAnioFabricacion"
-                                                                                    label="Año Fabricación"
-                                                                                    width="120">
+                                                                                <el-table-column property="nAnioFabricacion" label="Año Fabricación" width="120">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cEstadoTramite"
-                                                                                    label="Estado"
-                                                                                    show-overflow-tooltip>
+                                                                                <el-table-column property="cEstadoTramite" label="Estado" show-overflow-tooltip>
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    fixed="right"
-                                                                                    label="Acciones"
-                                                                                    width="80">
+                                                                                <el-table-column fixed="right" label="Acciones" width="80">
                                                                                     <template slot-scope="scope">
 
                                                                                     </template>
@@ -1296,12 +1271,13 @@
             handleSelectionChange(val){
                 let me = this;
 
+                //AGREGO PROPIEDADES ADICIONALES AL OBJETO (PORQUE NO TIENE LOS TOTALES, VIENE DE SAP)
                 val.map(function(value, key){
                     val[key].fTotalTramiteTarjeta = 10;
                     val[key].fTotalTramitePlaca = 5;
                     val[key].fTotalGAdicional = 2;
                 })
-
+                //AGREGA AL ARRAY EL OBJETO SELECCIONADO
                 this.arrayPedidosChecked = val;
             },
             tabGenerarTramite(){

@@ -54,11 +54,19 @@
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <label class="col-md-4 form-control-label">* Concepto de Comisión</label>
-                                                <div class="col-md-8">
-                                                    <select name="account" v-model="fillConfigurarComision.nidconcepto" class="form-control form-control-sm">
-                                                        <option v-for="concepto in arrayConceptoComision" :key="concepto.nIdPar" :value="concepto.nIdPar" v-text="concepto.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                <div class="col-md-8 widthFull">
+                                                    <el-select v-model="fillConfigurarComision.nidconcepto"
+                                                            filterable
+                                                            clearable
+                                                            loading-text
+                                                            placeholder="Seleccione un Concepto Comisión">
+                                                        <el-option
+                                                            v-for="concepto in arrayConceptoComision"
+                                                            :key="concepto.nIdPar"
+                                                            :label="concepto.cParNombre"
+                                                            :value="concepto.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,22 +114,38 @@
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Tipo Comisión</label>
-                                                <div class="col-sm-8">
-                                                    <select name="account" v-model="fillConfigurarComision.nidtipocomision" class="form-control form-control-sm">
-                                                        <option v-for="concepto in arrayTipoComision" :key="concepto.nIdPar" :value="concepto.nIdPar" v-text="concepto.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                <div class="col-md-8 widthFull">
+                                                    <el-select v-model="fillConfigurarComision.nidtipocomision"
+                                                            filterable
+                                                            clearable
+                                                            loading-text
+                                                            placeholder="Seleccione un Tipo Comisión">
+                                                        <el-option
+                                                            v-for="tipocomision in arrayTipoComision"
+                                                            :key="tipocomision.nIdPar"
+                                                            :label="tipocomision.cParNombre"
+                                                            :value="tipocomision.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                <div class="col-sm-8">
-                                                    <select name="account" v-model="fillConfigurarComision.nidtipomoneda" class="form-control form-control-sm">
-                                                        <option v-for="moneda in arrayTipoMoneda" :key="moneda.nIdPar" :value="moneda.nIdPar" v-text="moneda.cParNombre">
-                                                        </option>
-                                                    </select>
+                                                <div class="col-md-8 widthFull">
+                                                    <el-select v-model="fillConfigurarComision.nidtipomoneda"
+                                                            filterable
+                                                            clearable
+                                                            loading-text
+                                                            placeholder="Seleccione un Tipo Moneda">
+                                                        <el-option
+                                                            v-for="moneda in arrayTipoMoneda"
+                                                            :key="moneda.nIdPar"
+                                                            :label="moneda.cParNombre"
+                                                            :value="moneda.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
                                                 </div>
                                             </div>
                                         </div>
