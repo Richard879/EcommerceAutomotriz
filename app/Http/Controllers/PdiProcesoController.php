@@ -224,4 +224,56 @@ class PdiProcesoController extends Controller
         $arrayPuntoInspeccion = ParametroController::arrayPaginator($arrayPuntoInspeccion, $request);
         return ['arrayPuntoInspeccion'=>$arrayPuntoInspeccion];
     }
+
+    public function SetPlantillaPdi(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        try{
+            DB::beginTransaction();
+        
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec [usp_Pdi_SetPlantillaPdi] ?, ?, ?, ?, ?', 
+                                                    [   $request->nIdCabeceraInspeccion,
+                                                        $det['nIdPlantillaInspeccionSeccionItem'],
+                                                        $det['cFlagMarca'],
+                                                        $det['cDescripcionNoConformidad'],
+                                                        Auth::user()->id
+                                                    ]);
+            }  
+
+            DB::commit(); 
+        } catch (Exception $e){
+            DB::rollBack();
+        }   
+    }
+
+    public function SetAccesorioPdi(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        try{
+            DB::beginTransaction();
+        
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec [usp_Pdi_SetAccerioPdi] ?, ?, ?, ?, ?', 
+                                                    [   $request->nIdCabeceraInspeccion,
+                                                        $det['nIdAccesorio'],
+                                                        $det['cFlagMarca'],
+                                                        $det['cDescripcionNoConformidad'],
+                                                        Auth::user()->id
+                                                    ]);
+            }  
+
+            DB::commit(); 
+        } catch (Exception $e){
+            DB::rollBack();
+        }   
+    }
 }

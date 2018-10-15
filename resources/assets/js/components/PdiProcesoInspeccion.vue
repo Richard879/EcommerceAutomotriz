@@ -1686,8 +1686,8 @@
                 me.arrayItems.map(function(value, key){
                     me.arrayPlantilla.push({
                         nIdPlantillaInspeccionSeccionItem: value.nIdPlantillaInspeccionSeccionItem,
-                        nFlagMarca: me.arrayPlantillaFlagMarca[value.nIdPlantillaInspeccionSeccionItem],
-                        cDescripcionNoConformidad: me.arrayPlantillaDescripcion[key]
+                        cFlagMarca: me.arrayPlantillaFlagMarca[value.nIdPlantillaInspeccionSeccionItem]==false ? 'N' : 'C',
+                        cDescripcionNoConformidad: me.arrayPlantillaDescripcion[key]==null ? '' : me.arrayPlantillaDescripcion[key]
                     });
                 });
                 this.nflagseccioninspeccionValida = 1;
@@ -1717,9 +1717,9 @@
                 me.arrayTempAccesorio = [];
                 me.arrayAccesorio.map(function(value, key){
                     me.arrayTempAccesorio.push({
-                        nIdAccesorio: value.nIdPar, 
-                        nFlagMarca: me.arrayAccesorioFlagMarca[key],
-                        cDescripcionNoConformidad: me.arrayAccesorioDescripcion[key]
+                        nIdAccesorio: value.nIdPar,
+                        cFlagMarca: me.arrayAccesorioFlagMarca[key]==false ? 'N' : 'C',
+                        cDescripcionNoConformidad: me.arrayAccesorioDescripcion[key]==null ? '' : me.arrayAccesorioDescripcion[key]
                     });
                 });
                 this.nflagaccesorioValida =1;
@@ -1899,11 +1899,45 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
+                        if(this.nflagseccioninspeccionValida==1){
+                            if(this.arrayPlantilla.length){
+                                this.registrarPlantilla();
+                            }
+                        }
+                        if(this.nflagaccesorioValida==1){
+                            if(this.arrayTempAccesorio.length){
+                                this.registrarAccesorios();
+                            }
+                        }
                         swal('Inspección realizada con éxito');
+                        this.limpiarFormulario();
+                        this.vistaFormulario = 1;
                     }
                     else{
                         swal('ERROR EN LA INSPECCIÓN');
                     }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registrarPlantilla(){
+                var url = this.ruta + '/pdi/SetPlantillaPdi';    
+                axios.post(url, {
+                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
+                    data: this.arrayPlantilla
+                }).then(response => {
+
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registrarAccesorios(){
+                var url = this.ruta + '/pdi/SetAccesorioPdi';    
+                axios.post(url, {
+                    nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
+                    data: this.arrayTempAccesorio
+                }).then(response => {
+
                 }).catch(error => {
                     console.log(error);
                 });
