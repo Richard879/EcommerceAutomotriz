@@ -236,7 +236,7 @@ class PdiProcesoController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_Pdi_SetPlantillaPdi] ?, ?, ?, ?, ?', 
+                DB::select('exec [usp_Pdi_SetDetallePlantillaPdi] ?, ?, ?, ?, ?', 
                                                     [   $request->nIdCabeceraInspeccion,
                                                         $det['nIdPlantillaInspeccionSeccionItem'],
                                                         $det['cFlagMarca'],
@@ -262,7 +262,7 @@ class PdiProcesoController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_Pdi_SetAccerioPdi] ?, ?, ?, ?, ?', 
+                DB::select('exec [usp_Pdi_SetDetalleAccerioPdi] ?, ?, ?, ?, ?', 
                                                     [   $request->nIdCabeceraInspeccion,
                                                         $det['nIdAccesorio'],
                                                         $det['cFlagMarca'],
