@@ -764,7 +764,6 @@
                                                                                     <td v-text="forum.nNumeroPedido"></td>
                                                                                     <td v-text="forum.cFlagFloorPlan"></td>
                                                                                     <td v-text="forum.dFechaInicioFloorPlan"></td>
-                                                                                    <td></td>
                                                                                     <td v-text="forum.fMonto"></td>
                                                                                 </tr>
                                                                             </tbody>
