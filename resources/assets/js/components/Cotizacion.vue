@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">COTIZACIÓN</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">COTIZACIÓN</h2>
+                </div>
             </header>
 
             <section>
@@ -588,9 +588,9 @@
                                                                                                     <div class="col-lg-6">
                                                                                                         <div class="form-group row">
                                                                                                             <label class="col-sm-2 form-control-label">SP: </label>
-                                                                                                            <label class="form-control-label"><strong>2438</strong></label>
+                                                                                                            <label class="form-control-label"><strong> {{ fSobrePecio }} </strong></label>
                                                                                                             <label class="col-sm-2 form-control-label">Dx: </label>
-                                                                                                            <label class="form-control-label"><strong>2438.00</strong></label>
+                                                                                                            <label class="form-control-label"><strong>{{ fDx }} </strong></label>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="col-lg-6 direction-money">
@@ -1445,7 +1445,7 @@
                                         </template>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -1742,6 +1742,8 @@
                 arrayVehiculoModal : [],
                 // ================= SUB TAB VEHICULO =================
                 arrayVehiculo: [],
+                fSobrePecio: 0,
+                fDx: 0,
                 montoTotalVehiculoDolar: 0,
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
@@ -1887,6 +1889,16 @@
                 let montoconvertido = me.montoTotalVehiculoDolar * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
+            },
+            calcularSobrePrecio: function(){
+                if (this.arrayVehiculo) {
+                    return this.fSobrePecio = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
+                }
+            },
+            calcularDx: function(){
+                if (this.arrayVehiculo) {
+                    return this.fDx = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
+                }
             },
             //Calcula SubTotales y Total del TAB Elemento Venta
             totalElementoVenta: function(){
@@ -2524,8 +2536,6 @@
                     this.paginationModal.to             = response.data.arrayListaVehiculos.to;
                     //this.limpiarfillBusqVehiculo();
                     $("#myBar").hide();
-                }).then(function (response) {//Es Igual que el de arriba
-
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2585,6 +2595,9 @@
                         nIdMarca         : vehiculo.nIdMarca,
                         nIdModelo        : vehiculo.nIdModelo
                     });
+
+                    this.fSobrePecio = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
+                    this.fDx = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
 
                     /*toastr.options.progressBar = true;
                     toastr.options.closeButton = true;
