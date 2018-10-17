@@ -104,12 +104,12 @@ class CartaCaracteristicaController extends Controller
         $nTipoRol = $request->tipoRol;
         $cFlagEstado = $request->flagEstado;
 
-        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
         $nIdContacto = ($nIdContacto == NULL) ? ($nIdContacto = 0) : $nIdContacto;
-        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = ' ') : $dFechaInicio;
-        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = ' ') : $dFechaFin;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
-        $cFlagEstado = ($cFlagEstado == NULL) ? ($cFlagEstado = ' ') : $cFlagEstado;
+        $cFlagEstado = ($cFlagEstado == NULL) ? ($cFlagEstado = '') : $cFlagEstado;
 
         $arrayCartaCaracteristicas = DB::select('exec usp_CartaCaracteristica_GetLstCartaCaracteristica ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [

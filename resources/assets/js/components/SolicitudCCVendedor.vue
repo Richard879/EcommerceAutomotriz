@@ -20,7 +20,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab02" href="#TabAnularSCC" @click="tabAnularSCC" role="tab" data-toggle="tab">
-                                            <i class="fa fa-search"></i> ANULAR SCC
+                                            <i class="fa fa-times-circle"></i> ANULAR SCC
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -37,14 +37,44 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR MIS CARTAS.</h3>
+                                                            <h3 class="h4">BUSCAR MIS CARTAS</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <input type="text" v-model="fillCartaCaracteristica.cnumerovin" disabled="disabled" class="form-control form-control-sm">
@@ -62,7 +92,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
@@ -82,38 +112,8 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">Estado</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechafin"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="row">
-                                                                            <label class="col-md-4 form-control-label">*Estado</label>
-                                                                            <div class="col-md-8 widthFull">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidestado"
                                                                                         filterable
                                                                                         clearable
@@ -131,7 +131,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartas(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
@@ -153,7 +153,7 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayCartaCaracteristicas.length">
-                                                                        <div class="table-responsive barraLateral">
+                                                                        <div class="table-responsive">
                                                                             <table class="table table-striped table-sm">
                                                                                 <thead>
                                                                                     <tr>
@@ -248,7 +248,37 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <input type="text" v-model="fillCartaCaracteristica.cnumerovin" disabled="disabled" class="form-control form-control-sm">
@@ -266,7 +296,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Contacto</label>
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
@@ -284,37 +314,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechafin"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartasAnuladas(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
@@ -336,7 +336,7 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayCartasAnuladas.length">
-                                                                        <div class="table-responsive barraLateral">
+                                                                        <div class="table-responsive">
                                                                             <table class="table table-striped table-sm">
                                                                                 <thead>
                                                                                     <tr>
@@ -374,7 +374,8 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                            <div class="col-sm-12">
+                                                                        </div>
+                                                                        <div class="col-sm-12">
                                                                                 <div class="row">
                                                                                     <div class="col-sm-7">
                                                                                         <nav>
@@ -399,7 +400,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
                                                                     </template>
                                                                     <template v-else>
                                                                         <table>
@@ -429,7 +429,7 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-6">
+                                                                    <div class="col-md-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* N° Carta</label>
                                                                             <div class="col-sm-8">
@@ -437,7 +437,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6">
+                                                                    <div class="col-md-6">
                                                                         <div class="row">
                                                                             <el-input placeholder="Atendió" v-model="fillCartaCaracteristica.catencion" class="input-with-select col-sm-12">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidref" slot="prepend" placeholder="Ref.">
@@ -450,7 +450,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechainicio"
@@ -464,7 +464,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechafin"
@@ -478,7 +478,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* VIN</label>
                                                                             <div class="col-sm-8">
@@ -518,29 +518,13 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
+                                                                            <label class="col-sm-4 form-control-label">*Banco</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
-                                                                            </div>
-                                                                            <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fcuotainicial" class="form-control form-control-sm">
-                                                                            </div>
-                                                                            <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fmontodesembolar" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="row">
-                                                                            <label class="col-md-4 form-control-label">*Banco</label>
-                                                                            <div class="col-md-8 widthFull">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidbanco"
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
-                                                                                        placeholder="Seleccione un banco">
+                                                                                        placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                         v-for="banco in arrayBanco"
                                                                                         :key="banco.nIdPar"
@@ -551,9 +535,35 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fcuotainicial" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" min="1" v-model="fillCartaCaracteristica.fmontodesembolar" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarSCC">
                                                                             <i class="fa fa-save"></i> Registrar
                                                                         </button>
@@ -718,7 +728,7 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
+                                                <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                         <div class="col-sm-8">
@@ -1151,7 +1161,7 @@
                     fpreciodolar: 1,
                     fcuotainicial: 1,
                     fmontodesembolar: 1,
-                    nidbanco: 0,
+                    nidbanco: '',
                     nidestado: '',
                     nidmotivo: '',
                     cdescripcion: ''
@@ -1511,7 +1521,7 @@
                 if(this.fillCartaCaracteristica.fmontodesembolar <= 0){
                     this.mensajeError.push('El monto a desembolar no puede ser menor a 0');
                 }
-                if(this.fillCartaCaracteristica.nidbanco == 0){
+                if(this.fillCartaCaracteristica.nidbanco == 0 || !this.fillCartaCaracteristica.nidbanco){
                     this.mensajeError.push('Debe seleccionar un Banco');
                 }
 
@@ -1533,7 +1543,7 @@
                 this.fillCartaCaracteristica.fpreciodolar = 1;
                 this.fillCartaCaracteristica.fcuotainicial = 1;
                 this.fillCartaCaracteristica.fmontodesembolar = 1;
-                this.fillCartaCaracteristica.nidbanco = 0;
+                this.fillCartaCaracteristica.nidbanco = '';
             },
             // ======================
             // TAB MIS CARTAS
@@ -1882,12 +1892,6 @@
         text-align: center;
         margin: auto;
     }
-    .input-with-select .el-input-group__prepend {
-        background-color: #fff;
-    }
-    .widthFull>.el-select>.el-input {
-        width: 100%;
-    }
     /* Estilos Modal */
     .menosPadding{
         padding: .31rem;
@@ -1920,7 +1924,7 @@
     }
     .input-with-select .el-input-group__prepend
     {
-            width: 25%;
+            width: 30%;
     }
 </style>
 
