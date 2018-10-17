@@ -52,6 +52,12 @@ class EntregaVehiculoController extends Controller
 
     public function SetGenerarEntregaVehículo(Request $request)
     {
+        // print_r($request->file('files'));
+        // foreach($request->file('files') as $file) {
+        //     print_r($file->getClientOriginalName());
+        // }
+        // return 1;
+
         if (!$request->ajax()) return redirect('/');
 
         try{

@@ -124,9 +124,11 @@
                                                                                                 <el-button @click="abrirModal('entregavehiculo', 'mostrar', scope.row)"><i class="fa fa-file"></i></el-button>
                                                                                             </el-tooltip>
                                                                                         </template>
-                                                                                        <el-tooltip class="item" effect="dark" content="Editar" placement="top-start">
-                                                                                            <el-button @click="tabEntregaVehiculo(scope.row)"><i class="fa fa-edit"></i></el-button>
-                                                                                        </el-tooltip>
+                                                                                        <template v-if="scope.row.cFlagEntregado == null">
+                                                                                            <el-tooltip class="item" effect="dark" content="Editar" placement="top-start">
+                                                                                                <el-button @click="tabEntregaVehiculo(scope.row)"><i class="fa fa-edit"></i></el-button>
+                                                                                            </el-tooltip>
+                                                                                        </template>
                                                                                     </template>
                                                                                 </el-table-column>
                                                                             </el-table>
@@ -256,22 +258,19 @@
                                                                  <div class="form-group row">
                                                                      <div class="col-sm-12">
                                                                          <div class="row">
-                                                                             <el-upload
-                                                                                class="upload-demo"
-                                                                                drag
-                                                                                action="https://jsonplaceholder.typicode.com/posts/"
-                                                                                :on-preview="handlePreview"
-                                                                                :on-remove="handleRemove"
-                                                                                :file-list="fileList"
-                                                                                :on-change="handleChange"
-                                                                                :on-progress="handleProgress"
-                                                                                multiple
-                                                                                :limit="8"
-                                                                                clearFiles>
-                                                                                <i class="el-icon-upload"></i>
-                                                                                <div class="el-upload__text">Soltar el archivo aquí o <em>haga click para subir</em></div>
-                                                                            </el-upload>
+                                                                            <input type="file" multiple="multiple" id="attachments" @change="uploadFieldChange" class="form-control form-control-sm"/>
                                                                          </div>
+                                                                         <div class="row upload">
+                                                                             <div class="attachment-holder animated fadeIn" v-cloak v-for="(attachment, index) in attachments" :key="index">
+                                                                                 <el-alert
+                                                                                    :title="' (' + String(index+1) + ') '"
+                                                                                    type="success"
+                                                                                    :closable="false">
+                                                                                    <span class="h6">{{ attachment.name + ' (' + Number((attachment.size / 1024 / 1024).toFixed(1)) + 'MB)'}}</span>
+                                                                                    <el-button @click.prevent="removeAttachment(attachment)" type="danger" size="mini" icon="el-icon-delete" circle></el-button>
+                                                                                </el-alert>
+                                                                            </div>
+                                                                        </div>
                                                                      </div>
                                                                  </div>
                                                                 <div class="form-group row">
@@ -678,8 +677,9 @@
                     fFacebook: true
                 },
                 checked: true,
-                fileList: [],
-                form: new FormData,
+                attachments: [],// Listado de archivos a almacenar
+                form: new FormData,// Cada archivo tendrá que ser enviado como elemento FormData
+                percentCompleted: 0,// Puede almacenar el progreso de carga 0-100 en valor y mostrarlo en la pantalla
                 // ===============================
                 // VARIABLES MODAL CONTACTO
                 // ===============================
@@ -900,7 +900,6 @@
                         'nIdEntregaVehiculo' : data['nIdEntregaVehiculo']
                     }
                 }).then(response => {
-                    console.log(response);
                     let info = response.data;
                     this.arrayArchivosAdjuntos        = info;
                     this.paginationModal.current_page =  info.current_page;
@@ -956,27 +955,43 @@
                 this.fillEntregaVehiculo.cNombrePersonaRecibe = '';
                 this.fillEntregaVehiculo.fConforme = true;
                 this.fillEntregaVehiculo.fFacebook = true;
+                this.attachments = [];
+                this.$forceUpdate();
             },
             //LOAD IMAGE DROPZONE
-            handleChange(file, fileList) {
-                this.fileList = fileList.slice(-3);
+            // Esta función será llamada cada vez que agregue un archivo.
+            uploadFieldChange(e) {
+                var files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                for (var i = files.length - 1; i >= 0; i--) {
+                    this.attachments.push(files[i]);
+                }
+                // Restablezca el formulario para evitar copiar estos archivos varias veces en this.attachments
+                document.getElementById("attachments").value = [];
             },
-            handlePreview(file) {
-                console.log(file);
+            // Esta función será llamada cada vez que remueva un archivo.
+            removeAttachment(attachment) {
+                this.attachments.splice(this.attachments.indexOf(attachment), 1);
+                this.getAttachmentSize();
             },
-            handleRemove(file, fileList) {
-                let me = this;
-                // console.log("Archivo a eliminar ", file['uid']);
+            // Esta función actualizará el tamaño del archivo
+            getAttachmentSize() {
+                this.upload_size = 0; //Restablecer al inicioƒ
+                this.attachments.map((item) => { this.upload_size += parseInt(item.size); });
 
-                me.fileList.map(function(value, key){
-                    // console.log("Lista de UIDS : ",value['uid']);
-                    if(file['uid'] == value['uid']) {
-                        // console.log("Buscar Archivo a Eliminar en la Lista", value['uid']);
-                        me.$delete(me.fileList, key);
-                    }
-                })
+                this.upload_size = Number((this.upload_size).toFixed(1));
+                this.$forceUpdate();
             },
-            handleProgress(event, file, fileList){},
+            //Agrega los archivos al Form Data
+            prepareFields() {
+                if (this.attachments.length > 0) {
+                    for (var i = 0; i < this.attachments.length; i++) {
+                        let attachment = this.attachments[i];
+                        this.form.append('files[]', attachment);
+                    }
+                }
+            },
             registrarEntregaVehiculo(){
                 if(this.validarRegistrarEntregaVehiculo()){
                     this.accionmodal=1;
@@ -987,9 +1002,7 @@
                 let me = this;
                 this.form = new FormData;//Setear cada vez que entre a registrar
 
-                me.fileList.map(function(value, key){
-                    me.form.append('files['+key+']', value['raw']);
-                })
+                this.prepareFields();
 
                 //this.form.append('files', this.fileList);
                 this.form.append('nIdCabeceraInspeccion', this.fillEntregaVehiculo.nIdCabeceraInspeccion);
@@ -999,12 +1012,20 @@
                 this.form.append('fConforme', (this.fillEntregaVehiculo.fConforme == true) ? 'C' : 'N');
                 this.form.append('fFacebook', (this.fillEntregaVehiculo.fFacebook == true) ? 'S' : 'N');
 
-                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+                var config = {
+                    headers: { 'Content-Type': 'multipart/form-data' } ,
+                    onUploadProgress: function(progressEvent) {
+                        this.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+                        this.$forceUpdate();
+                    }.bind(this)
+                };
+                // Realizar peticòn HTTP
                 var url = this.ruta + '/entregavehiculo/SetGenerarEntregaVehículo';
-                axios.post(url, this.form, config).then(response => {
-                    console.log(response);
+                axios.post(url, this.form, config).
+                then(response => {
                     this.tabMisInspecciones();
-                    this.fileList = [];
+                    toastr.success('Se generò la entrega del vehìculo!', 'Success');
+                    this.attachments = [];
                     this.form = new FormData;
                 }).catch(error => {
                     console.log(error);
@@ -1034,8 +1055,8 @@
                 if(!this.fillEntregaVehiculo.nIdPersonaRecibe && !this.fillEntregaVehiculo.cNombrePersonaRecibe){
                     this.mensajeError.push('Debe seleccionar una persona, es campo obligatorio');
                 }
-                if(this.fileList.length == 0){
-                    this.mensajeError.push('Debe subir al menos una imagen');
+                if(this.attachments.length == 0){
+                    this.mensajeError.push('Debe subir al menos un archivo');
                 }
 
                 if(this.mensajeError.length){
@@ -1203,8 +1224,16 @@
 </script>
 
 <style>
-    .upload-demo{
+    .upload{
         display: flex;
+        flex-direction: column;
+    }
+    .attachment-holder{
+        margin-bottom: .5rem;
+    }
+    .remove{
+        background: red;
+        cursor: pointer;
     }
     .mostrar{
         display: list-item !important;
