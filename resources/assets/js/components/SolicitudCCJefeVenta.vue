@@ -20,12 +20,12 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab02" href="#TabCartaVendedores" @click="tabCartaVendedores" role="tab" data-toggle="tab">
-                                            <i class="fa fa-search"></i> CARTA VENDEDORES
+                                            <i class="fa fa-users"></i> CARTA VENDEDORES
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab03" href="#TabAnularSCC" @click="tabAnularSCC" role="tab" data-toggle="tab">
-                                            <i class="fa fa-search"></i> ANULAR SCC
+                                            <i class="fa fa-times-circle"></i> ANULAR SCC
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -52,26 +52,38 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillCartaCaracteristica.cnumerovin" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Vin</div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('compra','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Contacto</div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -80,35 +92,35 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechainicio"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechafin"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartas(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
@@ -130,7 +142,7 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayMisCartas.length">
-                                                                        <div class="table-responsive barraLateral">
+                                                                        <div class="table-responsive">
                                                                             <table class="table table-striped table-sm">
                                                                                 <thead>
                                                                                     <tr>
@@ -164,29 +176,29 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-7">
-                                                                                        <nav>
-                                                                                            <ul class="pagination">
-                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaMisCC(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                </li>
-                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                :class="[page==isActived?'active':'']">
-                                                                                                    <a class="page-link"
-                                                                                                    href="#" @click.prevent="cambiarPaginaMisCC(page)"
-                                                                                                    v-text="page"></a>
-                                                                                                </li>
-                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaMisCC(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                    </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCC(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMisCC(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCC(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -219,26 +231,38 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillCartaCaracteristica.cnumerovin" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Vin</div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('compra','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Contacto</div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -247,43 +271,43 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechainicio"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechafin"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-md-4 form-control-label">*Estado</label>
-                                                                            <div class="col-md-8 widthFull">
+                                                                            <label class="col-sm-4 form-control-label">*Estado</label>
+                                                                            <div class="col-sm-8">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidestado"
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
-                                                                                        placeholder="Seleccione un Estado">
+                                                                                        placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                         v-for="estado in arrayEstado"
                                                                                         :key="estado.nIdPar"
@@ -296,7 +320,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarCartaVendedores(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
@@ -318,7 +342,7 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayCartaCaracteristicas.length">
-                                                                        <div class="table-responsive barraLateral">
+                                                                        <div class="table-responsive">
                                                                             <table class="table table-striped table-sm">
                                                                                 <thead>
                                                                                     <tr>
@@ -354,29 +378,29 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-7">
-                                                                                        <nav>
-                                                                                            <ul class="pagination">
-                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaCartaByVendedores(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                </li>
-                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                :class="[page==isActived?'active':'']">
-                                                                                                    <a class="page-link"
-                                                                                                    href="#" @click.prevent="cambiarPaginaCartaByVendedores(page)"
-                                                                                                    v-text="page"></a>
-                                                                                                </li>
-                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaCartaByVendedores(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                    </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaCartaByVendedores(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaCartaByVendedores(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaCartaByVendedores(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -409,26 +433,38 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('compra','buscar')"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillCartaCaracteristica.cnumerovin" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Vin</div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('compra','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
-                                                                                        <el-button slot="append" icon="el-icon-search" @click="abrirModal('contacto','buscar')"></el-button>
-                                                                                    </el-input>
+                                                                                    <input type="text" v-model="fillCartaCaracteristica.cnombrecontacto" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Contacto</div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('contacto','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -437,35 +473,35 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechainicio"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechafin"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarMisCartasAnuladas(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
@@ -487,7 +523,7 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayCartasAnuladas.length">
-                                                                        <div class="table-responsive barraLateral">
+                                                                        <div class="table-responsive">
                                                                             <table class="table table-striped table-sm">
                                                                                 <thead>
                                                                                     <tr>
@@ -521,35 +557,41 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-7">
-                                                                                        <nav>
-                                                                                            <ul class="pagination">
-                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                </li>
-                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                :class="[page==isActived?'active':'']">
-                                                                                                    <a class="page-link"
-                                                                                                    href="#" @click.prevent="cambiarPaginaMisCCAnuladas(page)"
-                                                                                                    v-text="page"></a>
-                                                                                                </li>
-                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                    </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarPaginaMisCCAnuladas(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarPaginaMisCCAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </template>
                                                                     <template v-else>
-                                                                        <h1>No existen registros</h1>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </template>
                                                                 </div>
                                                             </form>
@@ -572,7 +614,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-md-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* VIN</label>
+                                                                            <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <el-input placeholder="Seleccione un VIN" v-model="fillCartaCaracteristica.cnumerovin" :disabled="true" class="input-with-select" :clearable="true">
@@ -584,7 +626,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Cotización</label>
+                                                                            <label class="col-sm-4 form-control-label">Contacto</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
                                                                                     <el-input placeholder="Seleccione un Contacto" v-model="fillCartaCaracteristica.cnombrecontacto" :disabled="true" class="input-with-select" :clearable="true">
@@ -598,43 +640,43 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechainicio"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de inicio">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCartaCaracteristica.dfechafin"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
                                                                                     type="date"
-                                                                                    placeholder="Seleccionar fecha de fin">
+                                                                                    placeholder="dd/mm/aaaa">
                                                                                 </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-md-4 form-control-label">*Vendedores</label>
-                                                                            <div class="col-md-8 widthFull">
+                                                                            <label class="col-sm-4 form-control-label">Vendedor</label>
+                                                                            <div class="col-sm-8">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidvendedor"
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
-                                                                                        placeholder="Seleccione un Estado">
+                                                                                        placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                         v-for="vendedor in arrayVendedores"
                                                                                         :key="vendedor.nIdPar"
@@ -647,7 +689,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <div class="col-md-9 offset-md-5">
+                                                                    <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="buscarCartasVendedoresAnuladas(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
@@ -669,7 +711,7 @@
                                                             <form class="form-horizontal">
                                                                 <div class="col-lg-12">
                                                                     <template v-if="arrayCartasAnuladasVendedor.length">
-                                                                        <div class="table-responsive barraLateral">
+                                                                        <div class="table-responsive">
                                                                             <table class="table table-striped table-sm">
                                                                                 <thead>
                                                                                     <tr>
@@ -702,35 +744,41 @@
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-7">
-                                                                                        <nav>
-                                                                                            <ul class="pagination">
-                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                    <a @click.prevent="cambiarCartasVendedoresAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                </li>
-                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                :class="[page==isActived?'active':'']">
-                                                                                                    <a class="page-link"
-                                                                                                    href="#" @click.prevent="cambiarCartasVendedoresAnuladas(page)"
-                                                                                                    v-text="page"></a>
-                                                                                                </li>
-                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                    <a @click.prevent="cambiarCartasVendedoresAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                    </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-7">
+                                                                                    <nav>
+                                                                                        <ul class="pagination">
+                                                                                            <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                                <a @click.prevent="cambiarCartasVendedoresAnuladas(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                            </li>
+                                                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                            :class="[page==isActived?'active':'']">
+                                                                                                <a class="page-link"
+                                                                                                href="#" @click.prevent="cambiarCartasVendedoresAnuladas(page)"
+                                                                                                v-text="page"></a>
+                                                                                            </li>
+                                                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                                <a @click.prevent="cambiarCartasVendedoresAnuladas(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </template>
                                                                     <template v-else>
-                                                                        <h1>No existen registros</h1>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </template>
                                                                 </div>
                                                             </form>
@@ -1744,7 +1792,7 @@
             this.llenarBancos();
             this.llenarReferencias();
             this.llenarEstados();
-            this.buscarMisCartas(1);
+            //this.buscarMisCartas(1);
         },
         computed:{
             isActived: function(){
@@ -2064,7 +2112,7 @@
                 $('#TabAnularSCC').removeClass("in active show");
                 $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
-                this.buscarCartaVendedores(1);
+                //this.buscarCartaVendedores(1);
                 this.limpiarCartaVendedores();
             },
             buscarCartaVendedores(page){
@@ -2232,7 +2280,7 @@
                 $('#TabAnularSCC').removeClass("in active show");
                 $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
-                this.buscarMisCartas(1);
+                //this.buscarMisCartas(1);
                 this.limpiarCartaVendedores();
             },
             buscarMisCartas(page){
@@ -2327,7 +2375,7 @@
                 $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
                 this.limpiarProcesoRegistrarCC();
-                this.buscarMisCartasAnuladas(1);
+                //this.buscarMisCartasAnuladas(1);
             },
             buscarMisCartasAnuladas(page){
                 var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
@@ -2430,7 +2478,7 @@
                 $('#TabVerCartasAnuladasVendedor').addClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
                 this.limpiarProcesoRegistrarCC();
-                this.buscarCartasVendedoresAnuladas(1);
+                //this.buscarCartasVendedoresAnuladas(1);
                 this.llenarVendedores();
             },
             buscarCartasVendedoresAnuladas(page){
