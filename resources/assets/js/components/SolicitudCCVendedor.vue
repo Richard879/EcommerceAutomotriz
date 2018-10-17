@@ -37,10 +37,40 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR MIS CARTAS.</h3>
+                                                            <h3 class="h4">BUSCAR MIS CARTAS</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -82,37 +112,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechafin"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Estado</label>
+                                                                            <label class="col-sm-4 form-control-label">Estado</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidestado"
                                                                                         filterable
@@ -248,6 +248,36 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-date-picker
+                                                                                    v-model="fillCartaCaracteristica.dfechafin"
+                                                                                    value-format="yyyy-MM-dd"
+                                                                                    format="dd/MM/yyyy"
+                                                                                    type="date"
+                                                                                    placeholder="dd/mm/aaaa">
+                                                                                </el-date-picker>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
@@ -279,36 +309,6 @@
                                                                                         </el-tooltip>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechainicio"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-date-picker
-                                                                                    v-model="fillCartaCaracteristica.dfechafin"
-                                                                                    value-format="yyyy-MM-dd"
-                                                                                    format="dd/MM/yyyy"
-                                                                                    type="date"
-                                                                                    placeholder="dd/mm/aaaa">
-                                                                                </el-date-picker>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -524,7 +524,7 @@
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
-                                                                                        placeholder="Seleccione un banco">
+                                                                                        placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                         v-for="banco in arrayBanco"
                                                                                         :key="banco.nIdPar"
@@ -1161,7 +1161,7 @@
                     fpreciodolar: 1,
                     fcuotainicial: 1,
                     fmontodesembolar: 1,
-                    nidbanco: 0,
+                    nidbanco: '',
                     nidestado: '',
                     nidmotivo: '',
                     cdescripcion: ''
@@ -1521,7 +1521,7 @@
                 if(this.fillCartaCaracteristica.fmontodesembolar <= 0){
                     this.mensajeError.push('El monto a desembolar no puede ser menor a 0');
                 }
-                if(this.fillCartaCaracteristica.nidbanco == 0){
+                if(this.fillCartaCaracteristica.nidbanco == 0 || !this.fillCartaCaracteristica.nidbanco){
                     this.mensajeError.push('Debe seleccionar un Banco');
                 }
 
@@ -1543,7 +1543,7 @@
                 this.fillCartaCaracteristica.fpreciodolar = 1;
                 this.fillCartaCaracteristica.fcuotainicial = 1;
                 this.fillCartaCaracteristica.fmontodesembolar = 1;
-                this.fillCartaCaracteristica.nidbanco = 0;
+                this.fillCartaCaracteristica.nidbanco = '';
             },
             // ======================
             // TAB MIS CARTAS
