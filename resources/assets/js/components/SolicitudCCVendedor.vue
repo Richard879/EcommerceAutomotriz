@@ -728,7 +728,7 @@
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
+                                                <div class="col-md-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Tipo Persona</label>
                                                         <div class="col-sm-8">
@@ -1891,12 +1891,6 @@
         font-size: 0.75rem;
         text-align: center;
         margin: auto;
-    }
-    .input-with-select .el-input-group__prepend {
-        background-color: #fff;
-    }
-    .widthFull>.el-select>.el-input {
-        width: 100%;
     }
     /* Estilos Modal */
     .menosPadding{
