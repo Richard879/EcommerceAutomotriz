@@ -301,7 +301,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">*Estado</label>
+                                                                            <label class="col-sm-4 form-control-label">Estado</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidestado"
                                                                                         filterable
