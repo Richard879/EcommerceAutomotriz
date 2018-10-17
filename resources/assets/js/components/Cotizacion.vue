@@ -622,21 +622,23 @@
                                                                                                             <div class="col-md-12">
                                                                                                                 <div class="row">
                                                                                                                     <label class="col-md-4 form-control-label">OBSERVACIÓN</label>
-                                                                                                                    <el-input
-                                                                                                                        type="textarea"
-                                                                                                                        autosize
-                                                                                                                        placeholder="Registre Observación del Descuento"
-                                                                                                                        v-model="observacionDscto">
-                                                                                                                    </el-input>
+                                                                                                                    <div class="col-md-8">
+                                                                                                                        <el-input
+                                                                                                                            type="textarea"
+                                                                                                                            autosize
+                                                                                                                            placeholder="Registre Observación del Descuento"
+                                                                                                                            v-model="observacionDscto">
+                                                                                                                        </el-input>
+                                                                                                                    </div>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="form-group row" v-if="arrayVehiculo[0].sobrePrecio != '' ||
-                                                                                                                              arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
-                                                                                                                              arrayVehiculo[0].descuento != ''">
+                                                                                            <div class="form-group row" :class="[(arrayVehiculo[0].sobrePrecio != '' ||
+                                                                                                                                  arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
+                                                                                                                                  arrayVehiculo[0].descuento != '') ? '' : 'datos']" >
                                                                                                 <div class="col-sm-9 offset-sm-4">
                                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
                                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
@@ -1917,6 +1919,7 @@
                 if(me.arrayVehiculo){
                     return me.arrayVehiculo.map(function(x){
                         if((x.PrecioBase - x.PrecioCierre - x.descuento) >= 0) {
+                            me.observacionDscto = '';
                             return x.PrecioBase - x.PrecioCierre - x.descuento;
                         } else {
                             return 0;
@@ -2659,6 +2662,7 @@
                     this.cerrarModal();
                 }
             },
+            //Evalua el cambio del sobre Precio
             changeSobrePrecio(value){
                 //Si existe descuento
                 if (this.arrayVehiculo[0].descuento > 0) {
@@ -2669,7 +2673,7 @@
                     if(value == ''){
                         this.arrayVehiculo[0].sobrePrecio = 0;
                     }
-                    //Sino entonces calcular el 10% y evaluarlo con el sobre precio
+                    //Sino entonces calcular el 10% y evaluarlo con el sobre precio actual
                     this.flagLimiteSobrePrecio = this.arrayVehiculo[0].PrecioBase * 0.1;
                     if (value > this.flagLimiteSobrePrecio) {
                         this.$message.error(`El sobre precio (${value}) no puede superar el limite del 10% del Precio Base (${this.arrayVehiculo[0].PrecioBase})`);
@@ -2685,6 +2689,7 @@
                 }
                 this.$forceUpdate();
             },
+            //Evalua el cambio de Dscto
             changeDscto(value){
                 let me = this;
                 if (this.arrayVehiculo[0].sobrePrecio > 0) {
@@ -2719,6 +2724,7 @@
                 this.fSobrePecio = 0;
                 this.fDx = 0;
                 this.fDy = 0;
+                this.observacionDscto = '';
             },
             siguienteTabDCElementoVenta(){
                 if(this.validarTabDCElementoVenta()){
@@ -3187,18 +3193,19 @@
                 var url = this.ruta + '/gescotizacion/SetCabeceraCotizacion';
                 axios.post(url, {
                     'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
-                    'cNumeroCotizacion' : 'COT-001',
-                    'nIdEmpresa' : 1300011,
-                    'nIdSucursal':sessionStorage.getItem("nIdSucursal"),
-                    'nIdReferencia':1300129,
-                    'dFechaCotizacion':moment().format('YYYY-MM-DD'),
-                    'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),
-                    'fTipoCambioVenta':this.fValorTipoCambioVenta,
-                    'fTipoCambioCompra':this.fValorTipoCambioCompra,
-                    'fTotalCotizacionVehiculoDolar': this.montoTotalConfiCotiVehiculo,
-                    'fTotalCotizacionVehiculoSol': this.montoTotalConfiCotiVehiculoSoles,
-                    'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
-                    'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
+                    'cNumeroCotizacion' :   'COT-001',
+                    'nIdEmpresa'        :   1300011,
+                    'nIdSucursal'       :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdReferencia'     :   1300129,
+                    'dFechaCotizacion'  :   moment().format('YYYY-MM-DD'),
+                    'dFechaVencimientoCotizacion'   :   moment().add(7, 'days').format('YYYY-MM-DD'),
+                    'fTipoCambioVenta'  :   this.fValorTipoCambioVenta,
+                    'fTipoCambioCompra' :   this.fValorTipoCambioCompra,
+                    'fTotalCotizacionVehiculoDolar' :   this.montoTotalConfiCotiVehiculo,
+                    'fTotalCotizacionVehiculoSol'   :   this.montoTotalConfiCotiVehiculoSoles,
+                    'fTotalElementoVentaDolar'      :   this.montoTotalConfiCotiEleVenta,
+                    'fTotalElementoVentaSol'        :   this.montoTotalConfiCotiEleVentaSoles,
+                    'cGlosa'    :   this.observacionDscto
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
