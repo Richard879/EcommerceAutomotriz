@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom"> APROBACIÓN DEL PEDIDO</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom"> APROBACIÓN DEL PEDIDO</h2>
+                </div>
             </header>
 
             <section class="forms">

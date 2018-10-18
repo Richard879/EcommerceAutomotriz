@@ -621,8 +621,8 @@
                                                                                                         <div class="form-group row">
                                                                                                             <div class="col-md-12">
                                                                                                                 <div class="row">
-                                                                                                                    <label class="col-md-4 form-control-label">OBSERVACIÓN</label>
-                                                                                                                    <div class="col-md-8">
+                                                                                                                    <label class="col-md-2 form-control-label">OBSERVACIÓN</label>
+                                                                                                                    <div class="col-md-10">
                                                                                                                         <el-input
                                                                                                                             type="textarea"
                                                                                                                             autosize
@@ -3226,12 +3226,22 @@
                     var url = this.ruta + '/gescotizacion/SetDetalleCotizacion';
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
+                        fDy: this.fDy,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
                         arrayelemventa: this.arrayConfiCotiEleVenta,
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
                         this.limpiarProcesoCotizacion();
-                        swal('Cotización registrado exitosamente');
+                        //CAPTURO EL SOBRE PRECIO Y DSCTO
+                        console.log(response.data[0].fSobrePrecio);
+                        console.log(response.data[0].fDescuento);
+                        if (response.data[0].fSobrePrecio == 0 && response.data[0].fSuperaDescuento == 0) {
+                            //GENERO LA APROBACION DEL PEDIDO DE MANERA AUTOMATICA
+                            swal('Cotización registrado exitosamente');
+                        } else {
+                            swal('Cotización registrado exitosamente, a la espera de Aprobación');
+                        }
+
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
