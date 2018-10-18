@@ -64,7 +64,7 @@ class WarrantOperativoController extends Controller
                                                                 $request->dFechaInicio,
                                                                 $request->dFechaVence,
                                                                 Auth::user()->id
-                                                            ));                                                 
+                                                            ));                 
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
             $detalles = $request->data;

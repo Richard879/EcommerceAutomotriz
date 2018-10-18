@@ -26,7 +26,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 form-control-label">Tipo Elemento</label>
                                             <div class="col-sm-4">
-                                                <el-select v-model="formEle.ntpoelemen" filterable placeholder="SELECCIONE" >
+                                                <el-select v-model="formEle.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
                                                     <el-option
                                                     v-for="item in arrayTipoElemento"
                                                     :key="item.nIdPar"
@@ -191,7 +191,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Tipo Elemento</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formEle.ntpoelemen" filterable placeholder="SELECCIONE" >
+                                                        <el-select v-model="formEle.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayTipoElemento"
                                                             :key="item.nIdPar"
@@ -206,7 +206,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formEle.nidmoneda" filterable placeholder="Select" >
+                                                        <el-select v-model="formEle.nidmoneda" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="tpomoneda in arrayTipoMoneda"
                                                             :key="tpomoneda.nIdPar"
@@ -429,7 +429,7 @@
                     nidproveedor: 0,
                     cproveedornombre: '',
                     ntpoelemen: '',
-                    nidmoneda: 0,
+                    nidmoneda: '',
                     nidelemento: 0,
                     celenombre: '',
                     celecodigoerp: '',
@@ -534,8 +534,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110028,
-                        'opcion' : 0
+                        'ngrupoparid' : 110028
                     }
                 }).then(response => {
                     this.arrayTipoMoneda = response.data;
@@ -657,7 +656,7 @@
                 if(this.formEle.ntpoelemen == 0 || !this.formEle.ntpoelemen){
                     this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
                 };
-                if(this.formEle.nidmoneda == 0){
+                if(this.formEle.nidmoneda == 0 || !this.formEle.nidmoneda){
                     this.mensajeError.push('Debes Ingresar un Tipo de Moneda');
                 };
                 if(!this.formEle.celenombre){
@@ -826,7 +825,7 @@
                 this.formEle.nidproveedor= 0,
                 this.formEle.cproveedornombre= '',
                 this.formEle.ntpoelemen= '',
-                this.formEle.nidmoneda= 0,
+                this.formEle.nidmoneda= '',
                 this.formEle.celenombre= '',
                 this.formEle.celecodigoerp= '',
                 this.formEle.felevalorventa= '',

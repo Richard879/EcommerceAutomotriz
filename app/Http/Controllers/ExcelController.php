@@ -40,24 +40,26 @@ class ExcelController extends Controller
 
         $data = [];
         foreach ($sheetData as $key => $value) {
-            $data[$key+1] =[
-                'nOrdenCompra'   => $value[0],
-                'cNombreLinea' => $value[1],
-                'cNombreAlmacen' => $value[2],
-                'nNumeroReserva' => $value[3],
-                'cNumeroVin' => $value[4],
-                'cFormaPago' => $value[5],
-                'cNombreMarca' => $value[6],
-                'cNombreModelo' => $value[7],
-                'cNombreComercial' => $value[8],
-                'cNombreColor' => $value[9],
-                'nAnioFabricacion' => $value[10],
-                'nAnioVersion' => $value[11],
-                'cSimboloMoneda' => $value[12],
-                'fTotalCompra' => $value[13],
-                'cNumeroFactura' => $value[14],
-                'dFechaFacturado' => $value[15]
-            ];
+            if($value[4]!='' || $value[4]!=null){
+                $data[$key+1] =[
+                    'nOrdenCompra'   => $value[0],
+                    'cNombreLinea' => $value[1],
+                    'cNombreAlmacen' => $value[2],
+                    'nNumeroReserva' => $value[3],
+                    'cNumeroVin' => $value[4],
+                    'cFormaPago' => $value[5],
+                    'cNombreMarca' => $value[6],
+                    'cNombreModelo' => $value[7],
+                    'cNombreComercial' => $value[8],
+                    'cNombreColor' => $value[9],
+                    'nAnioFabricacion' => $value[10],
+                    'nAnioVersion' => $value[11],
+                    'cSimboloMoneda' => $value[12],
+                    'fTotalCompra' => $value[13],
+                    'cNumeroFactura' => $value[14],
+                    'dFechaFacturado' => $value[15]
+                ];
+            }
         }
 
         $data = new Collection($data);
@@ -83,27 +85,29 @@ class ExcelController extends Controller
 
         $data = [];
         foreach ($sheetData as $key => $value) {
-            $data[$key+1] =[
-                'nIdVersionVeh'   => $value[0],
-                'cNombreComercial' => $value[1],
-                'nAnioFabricacion' => $value[2],
-                'nAnioModelo' => $value[3],
-                'cUnidadMedida' => $value[4],
-                'cMoneda' => $value[5],
-                'fPrecioBase' => $value[6],
-                'fDescuento' => $value[7],
-                'fPrecioCierre' => $value[8],
-                'fPlaca' => $value[9],
-                'fMargen' => $value[10],
-                'fCostoDealer' => $value[11],
-                'fBono' => $value[12],
-                'fPrecioCierre2' => $value[13],
-                'fFlete' => $value[14],
-                'fTYP' => $value[15],
-                'fPrecioVentaP' => $value[16],
-                'fPrecioBonoDealer' => $value[17],
-                'fBonoEspecial' => $value[18]
-            ];
+            if($value[1]!='' || $value[1]!=null){
+                $data[$key+1] =[
+                    'nIdVersionVeh'   => $value[0],
+                    'cNombreComercial' => $value[1],
+                    'nAnioFabricacion' => $value[2],
+                    'nAnioModelo' => $value[3],
+                    'cUnidadMedida' => $value[4],
+                    'cMoneda' => $value[5],
+                    'fPrecioBase' => $value[6],
+                    'fDescuento' => $value[7],
+                    'fPrecioCierre' => $value[8],
+                    'fPlaca' => $value[9],
+                    'fMargen' => $value[10],
+                    'fCostoDealer' => $value[11],
+                    'fBono' => $value[12],
+                    'fPrecioCierre2' => $value[13],
+                    'fFlete' => $value[14],
+                    'fTYP' => $value[15],
+                    'fPrecioVentaP' => $value[16],
+                    'fPrecioBonoDealer' => $value[17],
+                    'fBonoEspecial' => $value[18]
+                ];
+            }
         }
 
         $data = new Collection($data);
@@ -174,18 +178,17 @@ class ExcelController extends Controller
 
         $data = [];
         foreach ($sheetData as $key => $value) {
-            $data[$key+1] =[
-                'cNombreModelo'   => $value[0],
-                'cNumeroVin' => $value[1],
-                'cNumeroMotor' => $value[2],
-                'cNombreColor' => $value[3],
-                'dFechaFactura' => $value[4],
-                'cNumeroFactura' => $value[5],
-                'nNumeroPedido' => $value[6],
-                'cFlagFloorPlan' => $value[7],
-                'dFechaInicioFloorPlan' => $value[8],
-                'fMonto' => $value[9]
-            ];
+            if($value[1]!='' || $value[1]!=null){
+                $data[$key+1] =[
+                    'cNombreModelo'   => $value[0],
+                    'cNumeroVin' => $value[1],
+                    'cNumeroMotor' => $value[2],
+                    'cNombreColor' => $value[3],
+                    'cFlagFloorPlan' => $value[4],
+                    'dFechaInicioFloorPlan' => $value[5],
+                    'fMonto' => $value[6]
+                ];
+            }
         }
 
         $data = new Collection($data);

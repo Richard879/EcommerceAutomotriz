@@ -60,8 +60,9 @@ class ParametroController extends Controller
                                                             $nIdGrupoPar,
                                                             $cNombreProveedor
                                                         ]);
-
-        $parametro = $this->arrayPaginator($parametro, $request);
+        if($variable == "1"){
+            $parametro = $this->arrayPaginator($parametro, $request);
+        }
         return ['arrayProveedor'=>$parametro];
     }
 
