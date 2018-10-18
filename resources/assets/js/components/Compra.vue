@@ -708,7 +708,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">GENERAR COMPRA</h3>
+                                                            <h3 class="h4">GENERAR WARRANT OPERATIVO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">

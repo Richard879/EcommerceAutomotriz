@@ -54,6 +54,7 @@ class ParametroController extends Controller
         $cNombreProveedor = $request->cnombreproveedor;
         $variable   = $request->opcion;
         $cNombreProveedor = ($cNombreProveedor == NULL) ? ($cNombreProveedor = ' ') : $cNombreProveedor;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $parametro = DB::select('exec [usp_Proveedor_GetLstProveedor] ?, ?, ?',
                                                         [   $nIdEmpresa,
@@ -66,46 +67,23 @@ class ParametroController extends Controller
         return ['arrayProveedor'=>$parametro];
     }
 
-    public function GetLstProveedorSinPaginar(Request $request)
-    {
-        $nIdEmpresa = $request->nidempresa;
-        $nIdGrupoPar = $request->nidgrupopar;
-        $variable   = $request->opcion;
-
-        $parametro = DB::select('exec [usp_Proveedor_GetLstProveedor] ?, ?',
-                                                        [   $nIdEmpresa,
-                                                            $nIdGrupoPar
-                                                        ]);
-        $data = [];
-        if($variable == "0"){
-            $data[0] = [
-                'nIdPar'   => 0,
-                'cParNombre' =>'SELECCIONE',
-            ];
-        }
-        foreach ($parametro as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdPar,
-                'cParNombre' => $value->cParNombre,
-            ];
-        }
-        return response()->json($data);
-    }
-
     public function GetLineasByProveedor(Request $request)
     {
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cLineaNombre = $request->clineanombre;
+        $variable   = $request->opcion;
         $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdProveedor,
                                                                 $cLineaNombre
                                                             ]);
-
-        $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
+        if($variable == "1"){
+            $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
+        }
         return ['arrayLinea'=>$arrayLinea];
     }
 
@@ -114,15 +92,18 @@ class ParametroController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cMarcaNombre = $request->cmarcanombre;
+        $variable   = $request->opcion;
         $cMarcaNombre = ($cMarcaNombre == NULL) ? ($cMarcaNombre = ' ') : $cMarcaNombre;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayMarca = DB::select('exec [usp_Par_GetMarcaByProveedor] ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdProveedor,
                                                                 $cMarcaNombre
                                                             ]);
-
-        $arrayMarca = $this->arrayPaginator($arrayMarca, $request);
+        if($variable == "1"){
+            $arrayMarca = $this->arrayPaginator($arrayMarca, $request);
+        }
         return ['arrayMarca'=>$arrayMarca];
     }
 
@@ -131,15 +112,18 @@ class ParametroController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
         $cModeloNombre = $request->cmodelonombre;
+        $variable   = $request->opcion;
         $cModeloNombre = ($cModeloNombre == NULL) ? ($cModeloNombre = ' ') : $cModeloNombre;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arrayModelo = DB::select('exec [usp_Par_GetModeloByProveedor] ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdProveedor,
                                                                 $cModeloNombre
                                                             ]);
-
-        $arrayModelo = $this->arrayPaginator($arrayModelo, $request);
+        if($variable == "1"){
+            $arrayModelo = $this->arrayPaginator($arrayModelo, $request);
+        }
         return ['arrayModelo'=>$arrayModelo];
     }
 

@@ -2039,6 +2039,7 @@
                         'nidempresa': 1300011,
                         'nidproveedor' : this.formEventoCamp.nidproveedor,
                         'clineanombre' : this.fillModal.clineanombre.toString(),
+                        'opcion': 1,
                         'page' : page
                     }
                 }).then(response => {
@@ -2097,6 +2098,7 @@
                         'nidempresa': 1300011,
                         'nidproveedor' : this.formEventoCamp.nidproveedor,
                         'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
+                        'opcion': 1,
                         'page' : page
                     }
                 }).then(response => {
@@ -2155,6 +2157,7 @@
                         'nidempresa': 1300011,
                         'nidproveedor' : this.formEventoCamp.nidproveedor,
                         'cmodelonombre' : this.fillModal.cmodelonombre.toString(),
+                        'opcion': 1,
                         'page' : page
                     }
                 }).then(response => {
