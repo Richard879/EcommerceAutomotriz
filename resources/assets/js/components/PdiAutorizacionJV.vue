@@ -663,7 +663,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-4 form-control-label">*Fecha Movimiento</label>
+                                                                                        <label class="col-sm-4 form-control-label">* Fecha Movimiento</label>
                                                                                         <div class="col-sm-8 widthFull">
                                                                                             <el-date-picker
                                                                                                 v-model="fillNuevaSolicitud.dfechamovimiento"

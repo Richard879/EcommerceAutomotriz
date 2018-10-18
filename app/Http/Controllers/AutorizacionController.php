@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -11,17 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AutorizacionController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetLstVehiculosByCriterio(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -41,7 +31,7 @@ class AutorizacionController extends Controller
                                                                 $nCriterio
                                                             ]);
 
-        $arrayVehiculosByCriterio = $this->arrayPaginator($arrayVehiculosByCriterio, $request);
+        $arrayVehiculosByCriterio = ParametroController::arrayPaginator($arrayVehiculosByCriterio, $request);
         return ['arrayVehiculosByCriterio'=>$arrayVehiculosByCriterio];
     }
 
@@ -87,7 +77,7 @@ class AutorizacionController extends Controller
                                                                             $nIdVendedor
                                                                         ]);
 
-        $arrayContactosByUsuario = $this->arrayPaginator($arrayContactosByUsuario, $request);
+        $arrayContactosByUsuario = ParametroController::arrayPaginator($arrayContactosByUsuario, $request);
         return ['arrayContactosByUsuario'=>$arrayContactosByUsuario];
     }
 
@@ -229,7 +219,7 @@ class AutorizacionController extends Controller
                                                                             $nIdVendedor
                                                                         ]);
 
-        $arrayMisSolicitudes = $this->arrayPaginator($arrayMisSolicitudes, $request);
+        $arrayMisSolicitudes = ParametroController::arrayPaginator($arrayMisSolicitudes, $request);
         return ['arrayMisSolicitudes'=>$arrayMisSolicitudes];
     }
 
