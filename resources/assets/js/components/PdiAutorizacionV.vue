@@ -1149,7 +1149,7 @@
                 });
             },
             buscarMisSolicitudes(page){
-                var url = this.ruta + '/autorizacion/GetLstSolicitudes';
+                var url = this.ruta + '/autorizacion/GetLstMisSolicitudes';
                 axios.get(url, {
                     params: {
                         'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,

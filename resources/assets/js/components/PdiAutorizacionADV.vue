@@ -1491,7 +1491,7 @@
                 });
             },
             buscarMisSolicitudes(page){
-                var url = this.ruta + '/autorizacion/GetLstSolicitudes';
+                var url = this.ruta + '/autorizacion/GetLstMisSolicitudes';
                 axios.get(url, {
                     params: {
                         'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
@@ -1552,7 +1552,7 @@
                 this.buscarSolicitudesJefeVentas(1);
             },
             buscarSolicitudesJefeVentas(page){
-                var url = this.ruta + '/autorizacion/GetLstSolicitudes';
+                var url = this.ruta + '/autorizacion/GetLstSolicitudesByTodos';
                 axios.get(url, {
                     params: {
                         'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
@@ -2005,7 +2005,7 @@
             },
             //Metodo Solo cuando Registrar el JV
             getDetalleSolicitudConforme(data){
-                var url = this.ruta + '/autorizacion/GetLstSolicitudes';
+                var url = this.ruta + '/autorizacion/GetLstMisSolicitudes';
                 axios.get(url, {
                     params: {
                         'nIdTipoBusquedaVehiculo': (data['cFlagVinPlaca'] == 'V') ? '1' : '2',
