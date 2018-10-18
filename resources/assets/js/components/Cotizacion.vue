@@ -560,8 +560,9 @@
                                                                                                             <th>Precio Base</th>
                                                                                                             <th>Sobre Precio</th>
                                                                                                             <th>Dscto</th>
-                                                                                                            <th>Precio Cierre</th>
-                                                                                                            <th>Precio Cliente</th>
+                                                                                                            <th>Precio Cierre + Flete</th>
+                                                                                                            <th>Limite de PVP</th>
+                                                                                                            <th>Precio Cierre a Cliente</th>
                                                                                                         </tr>
                                                                                                     </thead>
                                                                                                     <tbody>
@@ -573,12 +574,17 @@
                                                                                                                 </el-tooltip>
                                                                                                             </td>
                                                                                                             <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
-                                                                                                            <td v-text="vehiculo.cantidad"></td>
+                                                                                                            <td v-html="vehiculo.cantidad"></td>
                                                                                                             <td v-text="vehiculo.PrecioBase"></td>
-                                                                                                            <td><input type="number" min="0" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio"/></td>
-                                                                                                            <td><input type="number" min="0" class="form-control form-control-sm" v-model="vehiculo.descuento"/></td>
+                                                                                                            <td>
+                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio" @change="changeSobrePrecio(vehiculo.sobrePrecio)" min="0"/>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.descuento" @change="changeDscto(vehiculo.descuento)" min="0"/>
+                                                                                                            </td>
                                                                                                             <td v-text="vehiculo.PrecioCierre"></td>
-                                                                                                            <td> {{ vehiculo.subtotal = vehiculo.PrecioVenta - vehiculo.descuento }} </td>
+                                                                                                            <td v-text="vehiculo.PrecioVenta"></td>
+                                                                                                            <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td>
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                 </table>
@@ -587,10 +593,18 @@
                                                                                                 <div class="row">
                                                                                                     <div class="col-lg-6">
                                                                                                         <div class="form-group row">
-                                                                                                            <label class="col-sm-2 form-control-label">SP: </label>
-                                                                                                            <label class="form-control-label"><strong> {{ fSobrePecio }} </strong></label>
-                                                                                                            <label class="col-sm-2 form-control-label">Dx: </label>
-                                                                                                            <label class="form-control-label"><strong>{{ fDx }} </strong></label>
+                                                                                                            <div class="col-sm-12" :class="[(fSobrePecio >= 0) ? '' : 'datos']">
+                                                                                                                <label class="col-sm-2 form-control-label">SP: </label>
+                                                                                                                <label class="form-control-label"><strong> {{ fSobrePecio = calcularSobrePrecio[0] }} </strong></label>
+                                                                                                            </div>
+                                                                                                            <div class="col-sm-12" :class="[(fDy > 0) ? '' : 'datos']">
+                                                                                                                <label class="col-sm-2 form-control-label">Dy: </label>
+                                                                                                                <label class="form-control-label"><strong>{{ fDy = Math.abs(calcularDy[0]) }} </strong></label>
+                                                                                                            </div>
+                                                                                                            <div class="col-sm-12">
+                                                                                                                <label class="col-sm-2 form-control-label">Dx: </label>
+                                                                                                                <label class="form-control-label"><strong>{{ fDx = calcularDx[0] }} </strong></label>
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="col-lg-6 direction-money">
@@ -603,9 +617,28 @@
                                                                                                             <label class="form-control-label"><strong>{{ montoTotalVehiculoSoles = totalVehiculoSoles }}</strong></label>
                                                                                                         </div>
                                                                                                     </div>
+                                                                                                    <div class="col-lg-12" :class="[(fDy > 0) ? '' : 'datos']">
+                                                                                                        <div class="form-group row">
+                                                                                                            <div class="col-md-12">
+                                                                                                                <div class="row">
+                                                                                                                    <label class="col-md-2 form-control-label">OBSERVACIÓN</label>
+                                                                                                                    <div class="col-md-10">
+                                                                                                                        <el-input
+                                                                                                                            type="textarea"
+                                                                                                                            autosize
+                                                                                                                            placeholder="Registre Observación del Descuento"
+                                                                                                                            v-model="observacionDscto">
+                                                                                                                        </el-input>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="form-group row">
+                                                                                            <div class="form-group row" :class="[(arrayVehiculo[0].sobrePrecio != '' ||
+                                                                                                                                  arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
+                                                                                                                                  arrayVehiculo[0].descuento != '') ? '' : 'datos']" >
                                                                                                 <div class="col-sm-9 offset-sm-4">
                                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
                                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
@@ -1742,8 +1775,11 @@
                 arrayVehiculoModal : [],
                 // ================= SUB TAB VEHICULO =================
                 arrayVehiculo: [],
+                flagLimiteSobrePrecio: 0,
                 fSobrePecio: 0,
                 fDx: 0,
+                fDy: 0,
+                observacionDscto: '',
                 montoTotalVehiculoDolar: 0,
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
@@ -1877,6 +1913,42 @@
                 }
                 return pagesArray;
             },
+            //Calcula el Sobre Precio
+            calcularSobrePrecio: function(){
+                let me = this;
+                if(me.arrayVehiculo){
+                    return me.arrayVehiculo.map(function(x){
+                        if((x.PrecioBase - x.PrecioCierre - x.descuento) >= 0) {
+                            me.observacionDscto = '';
+                            return x.PrecioBase - x.PrecioCierre - x.descuento;
+                        } else {
+                            return 0;
+                        }
+                    });
+                }
+            },
+            //Calcula el Dy
+            calcularDy: function(){
+                let me = this;
+                if(me.arrayVehiculo){
+                    return me.arrayVehiculo.map(function(x){
+                        if((x.PrecioBase - x.PrecioCierre - x.descuento) < 0) {
+                            return x.PrecioBase - x.PrecioCierre - x.descuento;
+                        } else {
+                            return 0;
+                        }
+                    });
+                }
+            },
+            //Calcula el Dx
+            calcularDx: function(){
+                let me = this;
+                if(me.arrayVehiculo) {
+                    return me.arrayVehiculo.map(function(x){
+                        return x.PrecioBase - x.PrecioCierre;
+                    });
+                }
+            },
             //Calcula SubTotales y Total del TAB Vehículo
             totalVehiculo: function(){
                 let me = this;
@@ -1889,16 +1961,6 @@
                 let montoconvertido = me.montoTotalVehiculoDolar * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
-            },
-            calcularSobrePrecio: function(){
-                if (this.arrayVehiculo) {
-                    return this.fSobrePecio = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
-                }
-            },
-            calcularDx: function(){
-                if (this.arrayVehiculo) {
-                    return this.fDx = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
-                }
             },
             //Calcula SubTotales y Total del TAB Elemento Venta
             totalElementoVenta: function(){
@@ -2596,15 +2658,56 @@
                         nIdModelo        : vehiculo.nIdModelo
                     });
 
-                    this.fSobrePecio = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
-                    this.fDx = this.arrayVehiculo[0].PrecioBase - this.arrayVehiculo[0].PrecioVenta;
-
-                    /*toastr.options.progressBar = true;
-                    toastr.options.closeButton = true;
-                    toastr.options.positionClass = "toast-top-full-width";*/
                     toastr.success('Se Agregó vehículo "'+ vehiculo.NombreComercial +'"');
                     this.cerrarModal();
                 }
+            },
+            //Evalua el cambio del sobre Precio
+            changeSobrePrecio(value){
+                //Si existe descuento
+                if (this.arrayVehiculo[0].descuento > 0) {
+                    this.$message.error(`Primero borre el Descuento para generar el Sobre Precio`);
+                    this.arrayVehiculo[0].sobrePrecio = 0;
+                    this.$forceUpdate();
+                } else {
+                    if(value == ''){
+                        this.arrayVehiculo[0].sobrePrecio = 0;
+                    }
+                    //Sino entonces calcular el 10% y evaluarlo con el sobre precio actual
+                    this.flagLimiteSobrePrecio = this.arrayVehiculo[0].PrecioBase * 0.1;
+                    if (value > this.flagLimiteSobrePrecio) {
+                        this.$message.error(`El sobre precio (${value}) no puede superar el limite del 10% del Precio Base (${this.arrayVehiculo[0].PrecioBase})`);
+                        this.arrayVehiculo[0].sobrePrecio = 0;
+                        this.flagLimiteSobrePrecio = 0;
+                        this.$forceUpdate();
+                    } else {
+                        if(value > (this.flagLimiteSobrePrecio/1.2) && value < this.flagLimiteSobrePrecio) {
+                            this.$message.warning(`El sobre precio es (${value}), Se encuentra cerca del 10% del Precio Base (${this.flagLimiteSobrePrecio})`);
+                        }
+                    }
+                    this.$forceUpdate();
+                }
+                this.$forceUpdate();
+            },
+            //Evalua el cambio de Dscto
+            changeDscto(value){
+                let me = this;
+                if (this.arrayVehiculo[0].sobrePrecio > 0) {
+                    this.$message.error(`Primero borre el Sobre Precio para generar el Descuento`);
+                    this.arrayVehiculo[0].descuento = 0;
+                    this.$forceUpdate();
+                } else {
+                    if(value == ''){
+                        this.arrayVehiculo[0].descuento = 0;
+                    }
+                    if(parseInt(this.arrayVehiculo[0].subtotal) < parseInt(this.arrayVehiculo[0].PrecioVenta) ) {
+                        this.$message.error(`El descuento no puede superar el limite del PVP`);
+                        this.arrayVehiculo[0].descuento = 0;
+                        this.$forceUpdate();
+                    }
+                    this.$forceUpdate();
+                }
+                this.$forceUpdate();
             },
             encontrarVehiculo(vehiculo){
                 var sw=0;
@@ -2617,6 +2720,11 @@
             },
             removerVehiculoLista(index){
                 this.$delete(this.arrayVehiculo, index);
+                this.flagLimiteSobrePrecio = 0;
+                this.fSobrePecio = 0;
+                this.fDx = 0;
+                this.fDy = 0;
+                this.observacionDscto = '';
             },
             siguienteTabDCElementoVenta(){
                 if(this.validarTabDCElementoVenta()){
@@ -2641,6 +2749,21 @@
 
                 if(this.arrayVehiculo.length == 0){
                     this.mensajeError.push('Debe haber un vehiculo agregado');
+                }
+
+                if(parseInt(this.arrayVehiculo[0].sobrePrecio) === "" || parseInt(this.arrayVehiculo[0].sobrePrecio) < 0){
+                    this.mensajeError.push('Sobre Precio debe tener un valor asignado (0 - 10% Precio Base)');
+                    this.arrayVehiculo[0].sobrePrecio = 0;
+                }
+                if(parseInt(this.arrayVehiculo[0].descuento) === "" || parseInt(this.arrayVehiculo[0].descuento) < 0){
+                    this.mensajeError.push('Dscto debe tener un valor asignado (0-limite permitido)');
+                    this.arrayVehiculo[0].descuento = 0;
+                }
+
+                if(this.fDy > 0){
+                    if(!this.observacionDscto) {
+                        this.mensajeError.push('Debe registrar una Observación de Dscto');
+                    }
                 }
 
                 if(this.mensajeError.length){
@@ -3001,6 +3124,7 @@
                         codigo       : v.codListaPrecioVD,
                         detalle      : v.NombreComercial,
                         cantidad     : v.cantidad,
+                        sobreprecio  : v.sobrePrecio,
                         dscto        : v.descuento,
                         preciofinal  : v.PrecioCierre,
                         subtotal     : v.subtotal,
@@ -3069,18 +3193,19 @@
                 var url = this.ruta + '/gescotizacion/SetCabeceraCotizacion';
                 axios.post(url, {
                     'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
-                    'cNumeroCotizacion' : 'COT-001',
-                    'nIdEmpresa' : 1300011,
-                    'nIdSucursal':sessionStorage.getItem("nIdSucursal"),
-                    'nIdReferencia':1300129,
-                    'dFechaCotizacion':moment().format('YYYY-MM-DD'),
-                    'dFechaVencimientoCotizacion':moment().add(7, 'days').format('YYYY-MM-DD'),
-                    'fTipoCambioVenta':this.fValorTipoCambioVenta,
-                    'fTipoCambioCompra':this.fValorTipoCambioCompra,
-                    'fTotalCotizacionVehiculoDolar': this.montoTotalConfiCotiVehiculo,
-                    'fTotalCotizacionVehiculoSol': this.montoTotalConfiCotiVehiculoSoles,
-                    'fTotalElementoVentaDolar': this.montoTotalConfiCotiEleVenta,
-                    'fTotalElementoVentaSol': this.montoTotalConfiCotiEleVentaSoles
+                    'cNumeroCotizacion' :   'COT-001',
+                    'nIdEmpresa'        :   1300011,
+                    'nIdSucursal'       :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdReferencia'     :   1300129,
+                    'dFechaCotizacion'  :   moment().format('YYYY-MM-DD'),
+                    'dFechaVencimientoCotizacion'   :   moment().add(7, 'days').format('YYYY-MM-DD'),
+                    'fTipoCambioVenta'  :   this.fValorTipoCambioVenta,
+                    'fTipoCambioCompra' :   this.fValorTipoCambioCompra,
+                    'fTotalCotizacionVehiculoDolar' :   this.montoTotalConfiCotiVehiculo,
+                    'fTotalCotizacionVehiculoSol'   :   this.montoTotalConfiCotiVehiculoSoles,
+                    'fTotalElementoVentaDolar'      :   this.montoTotalConfiCotiEleVenta,
+                    'fTotalElementoVentaSol'        :   this.montoTotalConfiCotiEleVentaSoles,
+                    'cGlosa'    :   this.observacionDscto
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
@@ -3101,12 +3226,22 @@
                     var url = this.ruta + '/gescotizacion/SetDetalleCotizacion';
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
+                        fDy: this.fDy,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
                         arrayelemventa: this.arrayConfiCotiEleVenta,
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
                         this.limpiarProcesoCotizacion();
-                        swal('Cotización registrado exitosamente');
+                        //CAPTURO EL SOBRE PRECIO Y DSCTO
+                        console.log(response.data[0].fSobrePrecio);
+                        console.log(response.data[0].fDescuento);
+                        if (response.data[0].fSobrePrecio == 0 && response.data[0].fSuperaDescuento == 0) {
+                            //GENERO LA APROBACION DEL PEDIDO DE MANERA AUTOMATICA
+                            swal('Cotización registrado exitosamente');
+                        } else {
+                            swal('Cotización registrado exitosamente, a la espera de Aprobación');
+                        }
+
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -3123,6 +3258,12 @@
 
                 if(this.arrayVehiculo.length == 0){
                     this.mensajeError.push('Debe haber un vehiculo agregado');
+                }
+
+                if(this.fDy > 0){
+                    if(!this.observacionDscto) {
+                        this.mensajeError.push('Debe registrar una Observación de Dscto');
+                    }
                 }
 
                 if(!this.fillAsignarContacto.nidcontacto){
@@ -3364,6 +3505,9 @@
 </script>
 
 <style>
+    .datos{
+        opacity: 0 !important;
+    }
     .mostrar{
         display: list-item !important;
         opacity: 1 !important;

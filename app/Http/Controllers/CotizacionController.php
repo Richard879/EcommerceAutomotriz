@@ -61,7 +61,7 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdAsignacionContactoVendedor,
                                                                     $request->cNumeroCotizacion,
                                                                     $request->nIdEmpresa,
@@ -75,6 +75,7 @@ class CotizacionController extends Controller
                                                                     $request->fTotalCotizacionVehiculoSol,
                                                                     $request->fTotalElementoVentaDolar,
                                                                     $request->fTotalElementoVentaSol,
+                                                                    $request->cGlosa,
                                                                     Auth::user()->id
                                                                 ]);
 
@@ -90,7 +91,11 @@ class CotizacionController extends Controller
             $arrayvehiculos = $request->arrayvehiculos;
             foreach($arrayvehiculos as $ep=>$det)
             {
-                DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $fDy = $request->fDy;
+
+                $fDy = ($fDy == NULL) ? ($fDy = '') : $fDy;
+
+                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
                                                                         $det['flagTipoItem'],
                                                                         $det['codigo'],
@@ -98,11 +103,13 @@ class CotizacionController extends Controller
                                                                         0,
                                                                         'N',
                                                                         0,
-                                                                        'N',
+                                                                        ($fDy > 0) ? 'S' : 'N' ,//SI DY ENTONCES "S" SINO "N"
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
+                                                                        $det['sobreprecio'],
                                                                         $det['dscto'],
+                                                                        $fDy,
                                                                         $det['subtotal'],
                                                                         Auth::user()->id
                                                                     ]);
@@ -113,7 +120,7 @@ class CotizacionController extends Controller
                 $arrayelemventa = $request->arrayelemventa;
                 foreach($arrayelemventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
                                                                         $det['flagTipoItem'],
                                                                         0,
@@ -125,7 +132,9 @@ class CotizacionController extends Controller
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
+                                                                        0,
                                                                         $det['dscto'],
+                                                                        0,
                                                                         $det['subtotal'],
                                                                         Auth::user()->id
                                                                     ]);
@@ -138,7 +147,7 @@ class CotizacionController extends Controller
                 //Itera todas las referencias de vehiculos
                 foreach($arrayeventoeleventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
                                                                         $det['flagTipoItem'],
                                                                         0,
@@ -150,12 +159,22 @@ class CotizacionController extends Controller
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
+                                                                        0,
                                                                         $det['dscto'],
+                                                                        0,
                                                                         $det['preciofinal'],
                                                                         Auth::user()->id
                                                                     ]);
                 }
             }
+
+            //Capturo el nIdCabeceraCotizacion
+            $nIdCabeceraCotizacion =  $arrayDetalleCoti[0]->nIdCabeceraCotizacion;
+
+            //Obtengo datos del Sobre Precio y Dscto para validar si se Aprueba o No el Pedido Automaticamente
+            $arrayDatosCotizacion = DB::select('exec usp_Cotizacion_GetDatosCotizacion ? ', [ $nIdCabeceraCotizacion ]);
+            return response()->json($arrayDatosCotizacion);
+
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
@@ -247,16 +266,16 @@ class CotizacionController extends Controller
     public function GetElementoByTipo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $nIdEmpresa   = $request->nidempresa;
         $nIdTipoElemento = $request->nidtipoelemen;
         $cElemenNombre = $request->celementonombre;
         $nIdTipoElemento = ($nIdTipoElemento == NULL) ? ($nIdTipoElemento = 0) : $nIdTipoElemento;
         $cElemenNombre = ($cElemenNombre == NULL) ? ($cElemenNombre = '') : $cElemenNombre;
-                
-        $arrayElementoVenta = DB::select('exec [usp_Cotizacion_GetElementoByTipo] ?, ?, ?', 
-                                                                [   $nIdEmpresa, 
-                                                                    $nIdTipoElemento, 
+
+        $arrayElementoVenta = DB::select('exec [usp_Cotizacion_GetElementoByTipo] ?, ?, ?',
+                                                                [   $nIdEmpresa,
+                                                                    $nIdTipoElemento,
                                                                     $cElemenNombre
                                                                 ]);
 

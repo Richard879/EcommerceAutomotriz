@@ -93,12 +93,12 @@ class PedidoController extends Controller
 
         $arrayPedido = DB::select('exec usp_Pedido_GetLstPedidosPendienteAprobacion ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $nidempresa, 
+                                        $nidempresa,
                                         $nidsucursal,
-                                        $nidmarca, 
+                                        $nidmarca,
                                         $nidmodelo,
-                                        $dfechainicio, 
-                                        $dfechafin, 
+                                        $dfechainicio,
+                                        $dfechafin,
                                         Auth::user()->id
                                     ]);
 
@@ -112,7 +112,7 @@ class PedidoController extends Controller
 
         $nidpedido  =  $request->nidpedido;
 
-        $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?, ?', 
+        $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?, ?',
                                                     [   $nidpedido,
                                                         Auth::user()->id
                                                     ]);
@@ -180,12 +180,7 @@ class PedidoController extends Controller
                                                                             $nIdDocumentoAdjunto,
                                                                             Auth::user()->id
                                                                         ]);
-
-
                 }
-
-
-
             }
             DB::commit();
         } catch (Exception $e){
@@ -252,15 +247,15 @@ class PedidoController extends Controller
 
         $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoAprobados ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
-                                        $nIdEmpresa, 
-                                        $nIdSucursal, 
-                                        $dFechaInicio, 
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $dFechaInicio,
                                         $dFechaFin,
-                                        $cNumeroPedido, 
+                                        $cNumeroPedido,
                                         $cNumeroVin,
-                                        $nIdMarca, 
+                                        $nIdMarca,
                                         $nIdModelo,
-                                        $nIdEstadoPedido, 
+                                        $nIdEstadoPedido,
                                         Auth::user()->id
                                     ]);
 
