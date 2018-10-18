@@ -81,7 +81,7 @@ class ParametroController extends Controller
                                                                 $nIdProveedor,
                                                                 $cLineaNombre
                                                             ]);
-        if($variable == "1"){
+        if($variable == "0"){
             $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
         }
         return ['arrayLinea'=>$arrayLinea];
@@ -101,7 +101,7 @@ class ParametroController extends Controller
                                                                 $nIdProveedor,
                                                                 $cMarcaNombre
                                                             ]);
-        if($variable == "1"){
+        if($variable == "0"){
             $arrayMarca = $this->arrayPaginator($arrayMarca, $request);
         }
         return ['arrayMarca'=>$arrayMarca];
@@ -121,7 +121,7 @@ class ParametroController extends Controller
                                                                 $nIdProveedor,
                                                                 $cModeloNombre
                                                             ]);
-        if($variable == "1"){
+        if($variable == "0"){
             $arrayModelo = $this->arrayPaginator($arrayModelo, $request);
         }
         return ['arrayModelo'=>$arrayModelo];
