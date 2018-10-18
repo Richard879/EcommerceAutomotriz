@@ -64,7 +64,7 @@
                                                                         <label class="col-sm-4 form-control-label">Fecha</label>
                                                                         <div class="col-sm-8">
                                                                             <el-date-picker
-                                                                                v-model="fillBusquedaSolicitud.dfecha"
+                                                                                v-model="fillBusquedaSolicitud.dfechainicio"
                                                                                 type="date"
                                                                                 value-format="yyyy-MM-dd"
                                                                                 format="dd/MM/yyyy"
@@ -242,7 +242,7 @@
                                                                         <label class="col-sm-4 form-control-label">Fecha</label>
                                                                         <div class="col-sm-8">
                                                                             <el-date-picker
-                                                                                v-model="fillBusquedaSolicitud.dfecha"
+                                                                                v-model="fillBusquedaSolicitud.dfechainicio"
                                                                                 type="date"
                                                                                 value-format="yyyy-MM-dd"
                                                                                 format="dd/MM/yyyy"
@@ -1209,7 +1209,7 @@
                     nidtipobusqueda: '1',
                     nidvehiculo: '',
                     cnrovehiculo: '',
-                    dfecha: '',
+                    dfechainicio: '',
                     nidasigcontacto: '',
                     nidcontacto: '',
                     cnombrecontacto: '',
@@ -1437,7 +1437,7 @@
                     params: {
                         'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
                         'cNroVehiculo' : this.fillBusquedaSolicitud.cnrovehiculo,
-                        'dFecha' : this.fillBusquedaSolicitud.dfecha,
+                        'dFechaInicio' : this.fillBusquedaSolicitud.dfechainicio,
                         'nIdAsigContacto' : this.fillBusquedaSolicitud.nidasigcontacto,
                         'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
                         'tipoRol': 3,
@@ -1467,7 +1467,7 @@
                 this.fillBusquedaSolicitud.nidtipobusqueda = '1';
                 this.fillBusquedaSolicitud.nidvehiculo = '';
                 this.fillBusquedaSolicitud.cnrovehiculo = '';
-                this.fillBusquedaSolicitud.dfecha = '';
+                this.fillBusquedaSolicitud.dfechainicio = '';
                 this.fillBusquedaSolicitud.nidasigcontacto = '';
                 this.fillBusquedaSolicitud.cnombrecontacto = '';
                 this.fillBusquedaSolicitud.nidestado = '';
@@ -1496,7 +1496,7 @@
                     params: {
                         'nIdTipoBusquedaVehiculo': this.fillBusquedaSolicitud.nidtipobusqueda,
                         'cNroVehiculo' : this.fillBusquedaSolicitud.cnrovehiculo,
-                        'dFecha' : this.fillBusquedaSolicitud.dfecha,
+                        'dFechaInicio' : this.fillBusquedaSolicitud.dfechainicio,
                         'nIdAsigContacto' : this.fillBusquedaSolicitud.nidasigcontacto,
                         'nIdEstado' : this.fillBusquedaSolicitud.nidestado,
                         'tipoRol': 3,
@@ -1948,7 +1948,7 @@
                     params: {
                         'nIdTipoBusquedaVehiculo': (data['cFlagVinPlaca'] == 'V') ? '1' : '2',
                         'cNroVehiculo' : '',
-                        'dFecha' : '',
+                        'dFechaInicio' : '',
                         'nIdAsigContacto' : '',
                         'nIdEstado' : '',
                         'tipoRol': 3,

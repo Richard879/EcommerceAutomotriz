@@ -152,7 +152,8 @@ class AutorizacionController extends Controller
 
         $nIdTipoBusquedaVehiculo = $request->nIdTipoBusquedaVehiculo;
         $cNroVehiculo = $request->cNroVehiculo;
-        $dFecha = $request->dFecha;
+        $dFechaInicio = $request->dFechaInicio;
+        $dFechaFin = $request->dFechaFin;
         $nIdAsigContacto = $request->nIdAsigContacto;
         $nIdEstado = $request->nIdEstado;
         $nTipoRol = $request->tipoRol;
@@ -205,18 +206,20 @@ class AutorizacionController extends Controller
 
         $nIdTipoBusquedaVehiculo = ($nIdTipoBusquedaVehiculo == NULL) ? ($nIdTipoBusquedaVehiculo = 0) : $nIdTipoBusquedaVehiculo;
         $cNroVehiculo = ($cNroVehiculo == NULL) ? ($cNroVehiculo = '') : $cNroVehiculo;
-        $dFecha = ($dFecha == NULL) ? ($dFecha = ' ') : $dFecha;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = 0) : $nIdAsigContacto;
         $nIdTipoBusquedaAutorizacion = ($nIdTipoBusquedaAutorizacion == NULL) ? ($nIdTipoBusquedaAutorizacion = 0) : $nIdTipoBusquedaAutorizacion;
         $cFlagEstadoAutorizacion = ($cFlagEstadoAutorizacion == NULL) ? ($cFlagEstadoAutorizacion = 0) : $cFlagEstadoAutorizacion;
         $nIdSolicitudAutorizacion = ($nIdSolicitudAutorizacion == NULL) ? ($nIdSolicitudAutorizacion = 0) : $nIdSolicitudAutorizacion;
         $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
 
-        $arrayMisSolicitudes = DB::select('exec usp_Autorizacion_GetLstAutorizaciones ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayMisSolicitudes = DB::select('exec [usp_Autorizacion_GetLstAutorizaciones] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdTipoBusquedaVehiculo,
                                                                             $cNroVehiculo,
-                                                                            $dFecha,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
                                                                             $nIdAsigContacto,
                                                                             $nIdEstado,
                                                                             $nTipoRol,
