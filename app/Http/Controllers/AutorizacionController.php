@@ -47,25 +47,10 @@ class AutorizacionController extends Controller
         $cFiltroDescripcion = $request->cfiltrodescripcion;
         $nIdTipoRol  = $request->tipoRol;
 
-        switch ($nIdTipoRol) {
-            case 1:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            case 2:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            case 3:
-                $nIdVendedor = 0;
-                break;
-            default:
-                $nIdVendedor = 0;
-                break;
-        }
-
         $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
-        $arrayContactosByUsuario = DB::select('exec usp_Autorizacion_GetListContactosByUsuario ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayContactosByUsuario = DB::select('exec [usp_Autorizacion_GetListContactosByUsuario] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdEmpresa,
                                                                             $nIdSucursal,
@@ -74,7 +59,7 @@ class AutorizacionController extends Controller
                                                                             $cNroDocumento,
                                                                             $cFiltroDescripcion,
                                                                             $nIdTipoRol,
-                                                                            $nIdVendedor
+                                                                            Auth::user()->id
                                                                         ]);
 
         $arrayContactosByUsuario = ParametroController::arrayPaginator($arrayContactosByUsuario, $request);
