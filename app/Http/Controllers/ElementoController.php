@@ -87,7 +87,7 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec [usp_Elemen_UpdElementoById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+        $element = DB::select('exec [usp_Elemen_UpdElementoById] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdProveedor,
                                                                 $request->nIdElementoVenta,
