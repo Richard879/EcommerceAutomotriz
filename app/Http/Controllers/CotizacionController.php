@@ -92,18 +92,18 @@ class CotizacionController extends Controller
             foreach($arrayvehiculos as $ep=>$det)
             {
                 $fDy = $request->fDy;
+                $fDy = ($fDy == NULL) ? ($fDy = 0) : $fDy;
 
-                $fDy = ($fDy == NULL) ? ($fDy = '') : $fDy;
-
-                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
                                                                         $det['flagTipoItem'],
                                                                         $det['codigo'],
                                                                         0,
                                                                         0,
                                                                         'N',
+                                                                        $det['flagactivaregalo'],
                                                                         0,
-                                                                        ($fDy > 0) ? 'S' : 'N' ,//SI DY ENTONCES "S" SINO "N"
+                                                                        ($fDy > 0) ? 'S' : 'N' ,//SI DY ES MAYOR 0 ENTONCES "S" SINO "N"
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
@@ -115,18 +115,46 @@ class CotizacionController extends Controller
                                                                     ]);
             }
 
-            $arrayelemventalength = sizeof($request->arrayelemventa);
-            if($arrayelemventalength > 0){
-                $arrayelemventa = $request->arrayelemventa;
-                foreach($arrayelemventa as $ep=>$det)
+            $arrayevporregalarlength = sizeof($request->arrayevporregalar);
+            if($arrayevporregalarlength > 0){
+                $arrayevporregalar = $request->arrayevporregalar;
+                foreach($arrayevporregalar as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
                                                                         $det['flagTipoItem'],
                                                                         0,
                                                                         0,
                                                                         $det['codigo'],
                                                                         'N',
+                                                                        $det['flagactivaregalo'],
+                                                                        0,
+                                                                        'N',
+                                                                        $det['nidmoneda'],
+                                                                        $det['cantidad'],
+                                                                        $det['preciofinal'],
+                                                                        0,
+                                                                        $det['dscto'],
+                                                                        0,
+                                                                        $det['subtotal'],
+                                                                        Auth::user()->id
+                                                                    ]);
+                }
+            }
+
+            $arrayelemventalength = sizeof($request->arrayelemventa);
+            if($arrayelemventalength > 0){
+                $arrayelemventa = $request->arrayelemventa;
+                foreach($arrayelemventa as $ep=>$det)
+                {
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                    [   $request->nIdCabeCoti,
+                                                                        $det['flagTipoItem'],
+                                                                        0,
+                                                                        0,
+                                                                        $det['codigo'],
+                                                                        'N',
+                                                                        $det['flagactivaregalo'],
                                                                         0,
                                                                         'N',
                                                                         $det['nidmoneda'],
@@ -147,13 +175,14 @@ class CotizacionController extends Controller
                 //Itera todas las referencias de vehiculos
                 foreach($arrayeventoeleventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
                                                                         $det['flagTipoItem'],
                                                                         0,
                                                                         0,
                                                                         $det['codigoEV'],
                                                                         'S',
+                                                                        $det['flagactivaregalo'],
                                                                         $det['codigoEEV'],
                                                                         'N',
                                                                         $det['nidmoneda'],
@@ -173,9 +202,25 @@ class CotizacionController extends Controller
 
             //Obtengo datos del Sobre Precio y Dscto para validar si se Aprueba o No el Pedido Automaticamente
             $arrayDatosCotizacion = DB::select('exec usp_Cotizacion_GetDatosCotizacion ? ', [ $nIdCabeceraCotizacion ]);
-            return response()->json($arrayDatosCotizacion);
+
+            //Flags para verificar si existen elemento venta por regalar
+            $cFlagActivaEVPorRegalar = 0;
+            $cont = 0;
+            //recorro todo el detalle de cotización verificando si existen EV Por Regalar
+            foreach($arrayDatosCotizacion as $cotizacion) {
+                if($cotizacion->cFlagActivaEVPorRegalar == 'S') {
+                    $cont ++;
+                    $cFlagActivaEVPorRegalar = $cont;
+                }
+            }
+
+            $data = [
+                'arrayDatosCotizacion' => $arrayDatosCotizacion,
+                'cFlagActivaEVPorRegalar' => $cFlagActivaEVPorRegalar
+            ];
 
             DB::commit();
+            return response()->json($data);
         } catch (Exception $e){
             DB::rollBack();
         }
@@ -281,5 +326,19 @@ class CotizacionController extends Controller
 
         $arrayElementoVenta = ParametroController::arrayPaginator($arrayElementoVenta, $request);
         return ['arrayElementoVenta'=>$arrayElementoVenta];
+    }
+
+    public function SetCambiarEstadoCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?, ?',
+                                                                [   $request->nIdCabeceraCotizacion,
+                                                                    $request->nIdEstadoCotizacion,
+                                                                    $request->cFlagEstadoCotizacion,
+                                                                    Auth::user()->id
+                                                                ]);
+
+        return response()->json($arrayCabeceraCotizacion);
     }
 }
