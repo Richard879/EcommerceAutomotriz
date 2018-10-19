@@ -67,10 +67,14 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado</label>
                                                                             <div class="col-sm-8">
-                                                                                <select v-model="fillWOperativo.nidestadowarrant" class="form-control form-control-sm">
-                                                                                    <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="fillWOperativo.nidestadowarrant" filterable clearable placeholder="SELECCIONE" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayEstadoWarrant"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -344,17 +348,15 @@
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
                                                                     <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Registro</label>
+                                                                        <label class="col-sm-4 form-control-label">* Fecha Registro</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="date" v-model="formWOperativo.dfechainicio" class="form-control form-control-sm">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <label class="col-sm-4 form-control-label">*Fecha Vencimiento</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="date" v-model="formWOperativo.dfechafin" class="form-control form-control-sm">
+                                                                            <el-date-picker
+                                                                                v-model="formWOperativo.dfechainicio"
+                                                                                type="date"
+                                                                                value-format="yyyy-MM-dd"
+                                                                                format="dd/MM/yyyy"
+                                                                                placeholder="dd/mm/aaaa">
+                                                                            </el-date-picker>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -628,13 +630,13 @@
                 arrayCompra: [],
                 fTotalWarrant: 0,
                 fillWOperativo:{
-                    nidestadowarrant: 0,
+                    nidestadowarrant: '',
                     cnrowarrant: ''
                 },
                 fillWOperativoDetalle:{
                     nidwarrantoperativo: 0,
                     cnumerovin: '',
-                    nidestadowarrant: 0
+                    nidestadowarrant: ''
                 },
                 formWOperativo:{
                     nidbanco: '',
@@ -743,9 +745,12 @@
                 });
             },
             llenarComboEstadoWarrant(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110043 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110043
+                    }
+                }).then(response => {
                     this.arrayEstadoWarrant = response.data;
                 }).catch(error => {
                     console.log(error);
