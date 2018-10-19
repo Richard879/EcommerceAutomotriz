@@ -484,17 +484,22 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="tab0402" href="#TabDCElementoVenta" role="tab" data-toggle="tab">
-                                                                <i class="fa fa fa-sign-out"></i> ELEMENTO VENTA
+                                                            <a class="nav-link disabled" id="tab0402" href="#TabDCElementoVentaPorRegalar" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-gift"></i> E.V POR REGALAR
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="tab0403" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="tab0403" href="#TabDCElementoVenta" role="tab" data-toggle="tab">
+                                                                <i class="fa fa-list-ol"></i> ELEMENTO VENTA
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link disabled" id="tab0404" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-check-square"></i> VERIFICAR CAMPAÑA
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="tab0404" href="#TabDCConfirmarCotizacion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="tab0405" href="#TabDCConfirmarCotizacion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-check"></i> CONFIRMAR COTIZACIÓN
                                                             </a>
                                                         </li>
@@ -640,11 +645,11 @@
                                                                                                                                   arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
                                                                                                                                   arrayVehiculo[0].descuento != '') ? '' : 'datos']" >
                                                                                                 <div class="col-sm-9 offset-sm-4">
-                                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVentaPorRegalar">
                                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
                                                                                                     </button>
-                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                                        <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
+                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                        <i class="fa fa-arrow-right"></i> Ir a Elemento Venta
                                                                                                     </button>
                                                                                                     <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
                                                                                                         <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
@@ -661,6 +666,103 @@
                                                                                                 </tbody>
                                                                                             </table>
                                                                                         </template>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabDCElementoVentaPorRegalar">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">ELEMENTO VENTA POR REGALAR</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <div class="col-lg-12">
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <div class="row">
+                                                                                                    <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
+                                                                                                    <div class="col-sm-8">
+                                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventaPorRegalar','buscar')">
+                                                                                                            <i class="fa fa-search"></i> Buscar
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr/>
+                                                                                    <div class="col-lg-12">
+                                                                                        <template v-if="arrayElementoVentaPorRegalar.length">
+                                                                                            <div class="table-responsive">
+                                                                                                <table class="table table-striped table-sm">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Acción</th>
+                                                                                                            <th>Elemento Venta</th>
+                                                                                                            <th colspan="2">Cantidad</th>
+                                                                                                            <th>Precio</th>
+                                                                                                            <th>SubTotal</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr v-for="(elementoventa, index) in arrayElementoVentaPorRegalar" :key="elementoventa.nIdContacto">
+                                                                                                            <td>
+                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                    <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
+                                                                                                                    <i @click="removerElementoVentaListaPorRegalar(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                                </el-tooltip>
+                                                                                                            </td>
+                                                                                                            <td v-text="elementoventa.cElemenNombre"></td>
+                                                                                                            <td colspan="2"><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
+                                                                                                            <td v-text="elementoventa.fElemenValorVenta"></td>
+                                                                                                            <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                            <div class="col-lg-12">
+                                                                                                <div class="row flex-rigth-margin">
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
+                                                                                                    </div>
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </template>
+                                                                                        <template v-else>
+                                                                                            <table>
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td colspan="10">No existen registros!</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </template>
+                                                                                        <div class="form-group row">
+                                                                                            <div class="col-sm-9 offset-sm-4">
+                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                                </button>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Campaña
+                                                                                                </button>
+                                                                                                <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                                </button>-->
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
@@ -878,6 +980,45 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
+                                                                            <hr/>
+                                                                            <span>Elementos de Venta por Regalar</span>
+                                                                            <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-sm">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th colspan="3">Elemento Venta</th>
+                                                                                                <th>Cantidad</th>
+                                                                                                <th>Dscto</th>
+                                                                                                <th>Precio Final</th>
+                                                                                                <th>SubTotal</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
+                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                                <td v-text="cotieleventa.cantidad"></td>
+                                                                                                <td v-text="cotieleventa.dscto"></td>
+                                                                                                <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                <td v-text="cotieleventa.subtotal"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="row flex-rigth-margin">
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalConfiCotiEleVentaPorRegalar }}</strong></label>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalConfiCotiEleVentaPorRegalarSoles }}</strong></label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </template>
+                                                                            <hr/>
                                                                             <template v-if="arrayConfiCotiEleVenta.length">
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1553,6 +1694,7 @@
                                                             <th>Proveedor</th>
                                                             <th>Tipo Elemento</th>
                                                             <th>Nombre Elemento</th>
+                                                            <th>Tipo Moneda</th>
                                                             <th>Precio de Venta</th>
                                                             <th>Precio de Venta Mínimo</th>
                                                         </tr>
@@ -1569,6 +1711,7 @@
                                                             <td v-text="elemento.cProveedorNombre"></td>
                                                             <td v-text="elemento.cTipoElemenNombre"></td>
                                                             <td v-text="elemento.cElemenNombre"></td>
+                                                            <td v-text="elemento.cMonedaNombre"></td>
                                                             <td v-text="elemento.fElemenValorVenta"></td>
                                                             <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                         </tr>
@@ -1693,6 +1836,142 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Buscar Elemento de Venta Por Regalar-->
+            <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO ELEMENTO VENTA A REGALAR</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Tipo Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillBusqTipoElementoPorRegalar.ntpoelemen" filterable clearable placeholder="SELECCIONE">
+                                                                <el-option
+                                                                    v-for="item in arrayTipoElemento"
+                                                                    :key="item.nIdPar"
+                                                                    :label="item.cParNombre"
+                                                                    :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nombre Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillBusqTipoElementoPorRegalar.celementonombre" @keyup.enter="buscarElementoVentaPorRegalar(1)" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Elemento Venta </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElementoVentaPorRegalar(1)">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-9 offset-md-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElementoVentaPorRegalar(1)">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayElementoVentaModalPorRegalar.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Código</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Tipo Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Tipo Moneda</th>
+                                                            <th>Precio de Venta</th>
+                                                            <th>Precio de Venta Mínimo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="elemento in arrayElementoVentaModalPorRegalar" :key="elemento.nIdContacto">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Agregar {{ elemento.cElemenNombre }}</div>
+                                                                    <i @click.prevent="agregarElementoVentaListaPorRegalar(elemento)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="elemento.nIdElemento"></td>
+                                                            <td v-text="elemento.cProveedorNombre"></td>
+                                                            <td v-text="elemento.cTipoElemenNombre"></td>
+                                                            <td v-text="elemento.cElemenNombre"></td>
+                                                            <td v-text="elemento.cMonedaNombre"></td>
+                                                            <td v-text="elemento.fElemenValorVenta"></td>
+                                                            <td v-text="elemento.fElemenValorMinimoVenta"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaTipoElementoVentaPorRegalar(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaTipoElementoVentaPorRegalar(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaTipoElementoVentaPorRegalar(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1785,6 +2064,15 @@
                 fValorTipoCambioVenta: 0,
                 fValorTipocambioComercial: 0,
                 montoTotalVehiculoSoles: 0,
+                // ================= SUBTAB Elemento Venta POR REGALAR=================
+                fillBusqTipoElementoPorRegalar: {
+                    ntpoelemen: '',
+                    celementonombre: ''
+                },
+                arrayElementoVentaModalPorRegalar: [],
+                arrayElementoVentaPorRegalar: [],
+                montoTotalElementoVentaPorRegalar: 0,
+                montoTotalElementoVentaPorRegalarSoles: 0,
                 // ================= SUBTAB Elemento Venta =================
                 fillBusqTipoElemento: {
                     ntpoelemen: '',
@@ -1810,18 +2098,23 @@
                 montoTotalEventoElementoVenta: 0,
                 montoTotalEventoElementoVentaSoles: 0,
                 //SUBTAB CONFIRMAR COTIZACIÓN
+                //Vehiculo
                 arrayConfiCotiVehiculo: [],
                 montoTotalConfiCotiVehiculo: 0,
                 montoTotalConfiCotiVehiculoSoles: 0,
-
+                //Ele Venta Por Regalar
+                arrayConfiCotiEleVentaPorRegalar: [],
+                montoTotalConfiCotiEleVentaPorRegalar: 0,
+                montoTotalConfiCotiEleVentaPorRegalarSoles: 0,
+                //Ele Venta
                 arrayConfiCotiEleVenta: [],
                 montoTotalConfiCotiEleVenta: 0,
                 montoTotalConfiCotiEleVentaSoles: 0,
-
+                //Ele Venta de Campaña
                 arrayConfiCotiEventoEleVenta: [],
                 montoTotalConfiCotiEventoEleVenta: 0,
                 montoTotalConfiCotiEventoEleVentaSoles: 0,
-
+                //Totales
                 arrayMontosCotizacion: [],
                 montoTotalCotizacion: 0,
                 montoTotalCotizacionSoles: 0,
@@ -1975,6 +2268,19 @@
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
+            //Calcula SubTotales y Total del TAB Elemento Venta
+            totalElementoVentaPorRegalar: function(){
+                let me = this;
+                return me.arrayElementoVentaPorRegalar.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseFloat(valorActual.subtotal);
+                }, 0);
+            },
+            totalElementoVentaPorRegalarSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalElementoVentaPorRegalar * me.fValorTipocambioComercial;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
             //Calcula SubTotales y Total del TAB Evento Campaña
             totalEventoEleVentaModal: function(){
                 let me = this;
@@ -1998,6 +2304,19 @@
             totalConfiCotiVehiculoSoles: function(){
                 let me = this;
                 let montoconvertido = me.montoTotalConfiCotiVehiculo * me.fValorTipocambioComercial;
+                montoconvertido = Number((montoconvertido).toFixed(2));
+                return montoconvertido;
+            },
+            //Calcula SubTotales y Total del TAB Cotización - Elemento Venta Por Regalar
+            totalConfiCotiEleVentaPorRegalar: function(){
+                let me = this;
+                return me.arrayConfiCotiEleVentaPorRegalar.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseFloat(valorActual.subtotal);
+                }, 0);
+            },
+            totalConfiCotiEleVentaPorRegalarSoles: function(){
+                let me = this;
+                let montoconvertido = me.montoTotalConfiCotiEleVentaPorRegalar * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },
@@ -2410,7 +2729,10 @@
                 $('#tab0403').addClass('nav-link disabled');
                 $('#tab0404').removeClass('nav-link active');
                 $('#tab0404').addClass('nav-link disabled');
+                $('#tab0405').removeClass('nav-link active');
+                $('#tab0405').addClass('nav-link disabled');
                 $('#TabDCVehiculo').addClass('in active show');
+                $('#TabDCElementoVentaPorRegalar').removeClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
@@ -2726,8 +3048,8 @@
                 this.fDy = 0;
                 this.observacionDscto = '';
             },
-            siguienteTabDCElementoVenta(){
-                if(this.validarTabDCElementoVenta()){
+            siguienteTabDCElementoVentaPorRegalar(){
+                if(this.validarTabDCElementoVentaPorRegalar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -2739,11 +3061,12 @@
                 $('#tab0402').addClass('nav-link active');
 
                 $('#TabDCVehiculo').removeClass('in active show');
-                $('#TabDCElementoVenta').addClass('in active show');
+                $('#TabDCElementoVentaPorRegalar').addClass('in active show');
+                $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
             },
-            validarTabDCElementoVenta(){
+            validarTabDCElementoVentaPorRegalar(){
                 this.error = 0;
                 this.mensajeError =[];
 
@@ -2770,6 +3093,98 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            // ================================
+            // SUBTAB ELEMENTO VENTA POR REGALAR
+            // ================================
+            buscarElementoVentaPorRegalar(page){
+                var url = this.ruta + '/gescotizacion/GetElementoByTipo';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidtipoelemen' : this.fillBusqTipoElementoPorRegalar.ntpoelemen,
+                        'celementonombre': this.fillBusqTipoElementoPorRegalar.celementonombre,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayElementoVentaModalPorRegalar  =   response.data.arrayElementoVenta.data;
+                    this.paginationModal.current_page       =   response.data.arrayElementoVenta.current_page;
+                    this.paginationModal.total              =   response.data.arrayElementoVenta.total;
+                    this.paginationModal.per_page           =   response.data.arrayElementoVenta.per_page;
+                    this.paginationModal.last_page          =   response.data.arrayElementoVenta.last_page;
+                    this.paginationModal.from               =   response.data.arrayElementoVenta.from;
+                    this.paginationModal.to                 =   response.data.arrayElementoVenta.to;
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaTipoElementoVentaPorRegalar(page){
+                this.pagination.current_page=page;
+                this.buscarElementoVentaPorRegalar(page);
+            },
+            agregarElementoVentaListaPorRegalar(elemento){
+                if(this.encontrarElementoVentaPorRegalar(elemento.cElemenNombre)){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'El elemento de venta ha regalar ya se encuentra agregado!',
+                    })
+                } else {
+                    this.arrayElementoVentaPorRegalar.push({
+                        cCodigoERP              : elemento.cCodigoERP,
+                        cElemenNombre           : elemento.cElemenNombre,
+                        cMonedaNombre           : elemento.cMonedaNombre,
+                        cProveedorNombre        : elemento.cProveedorNombre,
+                        cTipoElemenNombre       : elemento.cTipoElemenNombre,
+                        fElemenValorMinimoVenta : elemento.fElemenValorMinimoVenta,
+                        fElemenValorVenta       : elemento.fElemenValorVenta,
+                        nIdElemento             : elemento.nIdElemento,
+                        nIdMoneda               : elemento.nIdMoneda,
+                        nIdProveedor            : elemento.nIdProveedor,
+                        nIdTipoElemento         : elemento.nIdTipoElemento,
+                        cantidad                : 1,
+                        subtotal                : 0
+                    });
+
+                    toastr.success('Se Agregó "'+ elemento.cElemenNombre +'" ');
+                }
+            },
+            encontrarElementoVentaPorRegalar(elemento){
+                var sw=0;
+                this.arrayElementoVentaPorRegalar.map(function (x) {
+                    if(x.cElemenNombre == elemento){
+                        sw = true;
+                    }
+                });
+                return sw;
+            },
+            removerElementoVentaListaPorRegalar(index){
+                this.$delete(this.arrayElementoVentaPorRegalar, index);
+            },
+            siguienteTabDCElementoVenta(){
+                if(this.validarTabDCElementoVentaPorRegalar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                $('#tab0401').removeClass('nav-link active');
+                $('#tab0401').addClass('nav-link');
+                $('#tab0402').removeClass('nav-link active');
+                $('#tab0402').addClass('nav-link');
+                $('#tab0403').removeClass('nav-link disabled');
+                $('#tab0403').addClass('nav-link active');
+
+                $('#TabDCVehiculo').removeClass('in active show');
+                $('#TabDCElementoVentaPorRegalar').removeClass('in active show');
+                $('#TabDCElementoVenta').addClass('in active show');
+                $('#TabDCVerificarCampana').removeClass('in active show');
+                $('#TabDCConfirmarCotizacion').removeClass('in active show');
             },
             // ======================
             // SUBTAB ELEMENTO VENTA
@@ -2882,20 +3297,21 @@
                 this.$delete(this.arrayElementoVenta, index);
             },
             siguienteTabDCVerificarCampania(){
-                if(this.validarTabDCElementoVenta()){
+                if(this.validarTabDCElementoVentaPorRegalar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
-                $('#tab0401').removeClass('nav-link active');
-                $('#tab0401').addClass('nav-link');
                 $('#tab0402').removeClass('nav-link active');
                 $('#tab0402').addClass('nav-link');
-                $('#tab0403').removeClass('nav-link disabled');
-                $('#tab0403').addClass('nav-link active');
+                $('#tab0403').removeClass('nav-link active');
+                $('#tab0403').addClass('nav-link');
+                $('#tab0404').removeClass('nav-link disabled');
+                $('#tab0404').addClass('nav-link active');
 
                 $('#TabDCVehiculo').removeClass('in active show');
+                $('#TabDCElementoVentaPorRegalar').removeClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').addClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
@@ -3112,6 +3528,7 @@
 
                 //Setear arrays vacío
                 me.arrayConfiCotiVehiculo = [];//Seteo array detalle de vehiculos
+                me.arrayConfiCotiEleVentaPorRegalar = []//Seteo array de ele venta por regalar
                 me.arrayConfiCotiEleVenta = [];//Seteo array detalle de ele venta
                 me.arrayConfiCotiEventoEleVenta = [];//Seteo array detalle ele venta de campaña
                 me.arrayMontosCotizacion = [];//Seteo array de totales calculados
@@ -3129,13 +3546,33 @@
                         preciofinal  : v.PrecioCierre,
                         subtotal     : v.subtotal,
                         nidmoneda    : v.nIdMoneda,
-                        flagTipoItem : 'V'
+                        flagTipoItem : 'V',
+                        flagactivaregalo : 'N'
                     });
                 });
-
+                //ALMACENO EL MONTO TOTAL DEL VEHICULO EN EL ARRAY, PARA ACUMULARLO
                 me.arrayMontosCotizacion.push({
                     monto: me.montoTotalVehiculoDolar
                 });
+
+                // ====================================
+                // DETALLE ELEMENTO VENTA POR REGALAR
+                // ====================================
+                if(me.arrayElementoVentaPorRegalar.length > 0){
+                    me.arrayElementoVentaPorRegalar.map(function(ev){
+                        me.arrayConfiCotiEleVentaPorRegalar.push({
+                            codigo       : ev.nIdElemento,
+                            detalle      : ev.cElemenNombre,
+                            cantidad     : ev.cantidad,
+                            dscto        : 0,
+                            preciofinal  : ev.fElemenValorVenta,
+                            subtotal     : ev.subtotal,
+                            flagTipoItem : 'E',
+                            flagactivaregalo : 'S',
+                            nidmoneda    : ev.nIdMoneda
+                        });
+                    });
+                }
 
                 // ======================
                 // DETALLE ELEMENTO VENTA
@@ -3146,14 +3583,15 @@
                             codigo       : ev.nIdElemento,
                             detalle      : ev.cElemenNombre,
                             cantidad     : ev.cantidad,
-                            dscto        : 1,
+                            dscto        : 0,
                             preciofinal  : ev.fElemenValorVenta,
                             subtotal     : ev.subtotal,
                             flagTipoItem : 'E',
+                            flagactivaregalo : 'N',
                             nidmoneda    : ev.nIdMoneda
                         });
                     });
-
+                    //ALMACENO EL MONTO TOTAL DEL ELE VENTA EN EL ARRAY, PARA ACUMULARLO
                     me.arrayMontosCotizacion.push({
                         monto: me.montoTotalElementoVenta
                     });
@@ -3171,13 +3609,14 @@
                             nombreEV     : ev.cNombre,
                             nombreEC     : ev.cNombreEventoCampania,
                             cantidad     : ev.cantidad,
-                            dscto        : 1,
+                            dscto        : 0,
                             preciofinal  : ev.fValorVenta,
                             flagTipoItem : 'E',
+                            flagactivaregalo : 'N',
                             nidmoneda    : ev.nIdMoneda
                         });
                     });
-
+                    //ALMACENO EL MONTO TOTAL DEL ELE VENTA DE CAMAPAÑA EN EL ARRAY, PARA ACUMULARLO
                     me.arrayMontosCotizacion.push({
                         monto: me.montoTotalEventoElementoVenta
                     });
@@ -3227,21 +3666,27 @@
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
                         fDy: this.fDy,
+                        arrayevporregalar: this.arrayConfiCotiEleVentaPorRegalar,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
                         arrayelemventa: this.arrayConfiCotiEleVenta,
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
-                        this.limpiarProcesoCotizacion();
+                        // console.log(response);
                         //CAPTURO EL SOBRE PRECIO Y DSCTO
-                        console.log(response.data[0].fSobrePrecio);
-                        console.log(response.data[0].fDescuento);
-                        if (response.data[0].fSobrePrecio == 0 && response.data[0].fSuperaDescuento == 0) {
-                            //GENERO LA APROBACION DEL PEDIDO DE MANERA AUTOMATICA
-                            swal('Cotización registrado exitosamente');
-                        } else {
-                            swal('Cotización registrado exitosamente, a la espera de Aprobación');
-                        }
+                        // console.log(parseFloat(response.data.arrayDatosCotizacion[0].fSobrePrecio));
+                        // console.log(parseFloat(response.data.arrayDatosCotizacion[0].fSuperaDescuento));
+                        // console.log(response.data.cFlagActivaEVPorRegalar);
 
+                        if (parseFloat(response.data.arrayDatosCotizacion[0].fSobrePrecio) == 0 &&
+                            parseFloat(response.data.arrayDatosCotizacion[0].fSuperaDescuento) == 0 &&
+                            response.data.cFlagActivaEVPorRegalar == 0) {
+                            //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
+                            this.cambiarEsatadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
+                            swal('Cotización generada y aprobada exitosamente');
+                        } else {
+                            this.cambiarEsatadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
+                            swal('Cotización generada exitosamente, pendiente de Aprobación');
+                        }
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -3251,6 +3696,25 @@
                         }
                     });
                 }
+            },
+            cambiarEsatadoCotizacion(nIdCabeceraCotizacion, op){
+                // console.log(nIdCabeceraCotizacion, op);
+                var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
+                    axios.put(url, {
+                        nIdCabeceraCotizacion: nIdCabeceraCotizacion,
+                        nIdEstadoCotizacion: (op == 1) ? 1300346 : 1300132,
+                        cFlagEstadoCotizacion: (op == 1) ? 'A' : 'P'
+                    }).then(response => {
+                        console.log(response);
+                        this.limpiarProcesoCotizacion();
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
+                    });
             },
             validarRegistrarCotizacion(){
                 this.error = 0;
@@ -3296,18 +3760,21 @@
                 this.fillBusqVehiculo.nidtipolista = '';
 
                 this.arrayVehiculo = [];
+                this.arrayElementoVentaPorRegalar = [];
                 this.arrayElementoVenta = [];
                 this.arrayEventoEleVenta= [];
                 this.arrayEventoEleVentaModal= [];
 
-
                 this.arrayMontosCotizacion = [];
                 this.arrayConfiCotiVehiculo = [];
+                this.arrayConfiCotiEleVentaPorRegalar = [];
                 this.arrayConfiCotiEleVenta = [];
                 this.arrayConfiCotiEventoEleVenta = [];
 
                 this.montoTotalVehiculoDolar = 0;
                 this.montoTotalVehiculoSoles = 0;
+                this.montoTotalElementoVentaPorRegalar = 0;
+                this.montoTotalElementoVentaPorRegalarSoles = 0;
                 this.montoTotalElementoVenta = 0;
                 this.montoTotalElementoVentaSoles = 0;
                 this.montoTotalEventoElementoVenta= 0;
@@ -3315,6 +3782,8 @@
 
                 this.montoTotalConfiCotiVehiculo = 0;
                 this.montoTotalConfiCotiVehiculoSoles = 0;
+                this.montoTotalConfiCotiEleVentaPorRegalar = 0;
+                this.montoTotalConfiCotiEleVentaPorRegalarSoles = 0;
                 this.montoTotalConfiCotiEleVenta = 0;
                 this.montoTotalConfiCotiEleVentaSoles = 0;
                 this.montoTotalCotizacion = 0;
@@ -3342,8 +3811,11 @@
                 $('#tab0403').addClass('nav-link disabled');
                 $('#tab0404').removeClass('nav-link active');
                 $('#tab0404').addClass('nav-link disabled');
+                $('#tab0405').removeClass('nav-link active');
+                $('#tab0405').addClass('nav-link disabled');
 
                 $('#TabDCVehiculo').addClass('in active show');
+                $('#TabDCElementoVentaPorRegalar').removeClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
@@ -3425,6 +3897,17 @@
                         }
                     }
                     break;
+                    case 'elementoventaPorRegalar':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=7;
+                                this.modal = 1;
+                                this.cargarTipoElemento();
+                            }
+                        }
+                    }
                     case 'campaña':
                     {
                         switch(accion){
@@ -3474,7 +3957,7 @@
                 this.arrayElementoVentaModal = [];
             },
             siguienteTabDConfirmarcotizacion(){
-                if(this.validarTabDCElementoVenta()){
+                if(this.validarTabDCElementoVentaPorRegalar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -3486,10 +3969,13 @@
                 $('#tab0402').addClass('nav-link');
                 $('#tab0403').removeClass('nav-link active');
                 $('#tab0403').addClass('nav-link');
-                $('#tab0404').removeClass('nav-link disabled');
-                $('#tab0404').addClass('nav-link active');
+                $('#tab0404').removeClass('nav-link active');
+                $('#tab0404').addClass('nav-link');
+                $('#tab0405').removeClass('nav-link disabled');
+                $('#tab0405').addClass('nav-link active');
 
                 $('#TabDCVehiculo').removeClass('in active show');
+                $('#TabDCElementoVentaPorRegalar').removeClass('in active show');
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').addClass('in active show');
