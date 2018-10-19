@@ -138,22 +138,12 @@
                                                         <td v-text="pdi.cEvaluacion"></td>
                                                         <td v-text="pdi.cEstadoPdi"></td>
                                                         <td>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Seleccionar {{ pdi.cNombreSolicitud }}</div>
-                                                                <i @click="abrirFormulario('pdi','actualizar', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                            </el-tooltip>&nbsp;
-                                                            <!--<template v-if="punto.cSituacionRegistro=='A'">
+                                                            <template v-if="pdi.nIdEstadoPdi==1300339">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Desactivar {{ punto.cNombreTipoInspeccion }}</div>
-                                                                    <i @click="desactivar(punto.nIdPuntoInspeccion)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                </el-tooltip>
+                                                                    <div slot="content">Seleccionar {{ pdi.cNombreSolicitud }}</div>
+                                                                    <i @click="abrirFormulario('pdi','actualizar', pdi)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>&nbsp;
                                                             </template>
-                                                            <template v-else>
-                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                    <div slot="content">Activar {{ punto.cNombreTipoInspeccion }}</div>
-                                                                    <i @click="activar(punto.nIdPuntoInspeccion)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                </el-tooltip>
-                                                            </template>-->
                                                         </td>
                                                     </tr>
                                                 </tbody>

@@ -1147,8 +1147,8 @@
                 }
                 var url = this.ruta + '/getComision/SetRegistrarComision';
                 axios.post(url, {
-                    'nIdEmpresa'            :   this.fillConfigurarComision.nidempresa,
-                    'nIdSucursal'           :   this.fillConfigurarComision.nidsucursal,
+                    'nIdEmpresa'            :   1300011,
+                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdConceptoComision'   :   this.fillConfigurarComision.nidconcepto,
                     'nIdMoneda'             :   this.fillConfigurarComision.nidtipomoneda,

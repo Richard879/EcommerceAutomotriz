@@ -746,14 +746,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!--<div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro Warranat</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formWOperativo.cnrowarrant" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>-->
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -807,9 +799,9 @@
                                                                                     <th>VIN</th>
                                                                                     <th>Nro. Motor</th>
                                                                                     <th>Color</th>
-                                                                                    <th>Declarado Floor Plan</th>
-                                                                                    <th>Fecha Declarado Floor Plan</th>
+                                                                                    <th>Moneda</th>
                                                                                     <th>Monto</th>
+                                                                                    <th>Fecha</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -822,9 +814,9 @@
                                                                                     <td v-text="forum.cNumeroVin"></td>
                                                                                     <td v-text="forum.cNumeroMotor"></td>
                                                                                     <td v-text="forum.cNombreColor"></td>
-                                                                                    <td v-text="forum.cFlagFloorPlan"></td>
-                                                                                    <td v-text="forum.dFechaInicioFloorPlan"></td>
+                                                                                    <td v-text="forum.cMoneda"></td>
                                                                                     <td v-text="forum.fMonto"></td>
+                                                                                    <td v-text="forum.dFecha"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -1816,7 +1808,7 @@
                     params: {
                         'nidempresa': 1300011,
                         'nidgrupopar' : 110094,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString()
+                        'cnombreproveedor' : ''
                     }
                 }).then(response => {
                     this.arrayProveedorForum = response.data.arrayProveedor;
@@ -1853,8 +1845,7 @@
                 });
             },
             readFileForum(nameFile){
-                //this.mostrarProgressBar();
-
+                this.mostrarProgressBar();
                 var url = this.ruta + '/compra/readFileForum';
                 axios.post(url, {
                     nameFile: nameFile
@@ -1936,18 +1927,14 @@
 
                 var url = this.ruta + '/compra/SetForum';
                 axios.post(url, {
+                    nIdProveedor: this.formForum.nidproveedor,
+                    dFechaInicio: '',
                     data: this.arrayForum
                 }).then(response => {
-                    swal('Forum registrados');
+                    swal('Warrant Operativo registrado');
                     this.arrayForum = [];
-                    $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
                 });
             },
             validarRegistroForum(){
@@ -1956,6 +1943,9 @@
 
                 if(this.arrayForum == []){
                     this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.formForum.nidproveedor == 0 || !this.formForum.nidproveedor){
+                    this.mensajeError.push('Seleccione Proveedor');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;

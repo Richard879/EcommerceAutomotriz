@@ -321,10 +321,14 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                         <div class="col-sm-8">
-                                                                            <select v-model="formWOperativo.nidbanco" class="form-control form-control-sm">
-                                                                                <option v-for="item in arrayBanco" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                </option>
-                                                                            </select>
+                                                                            <el-select v-model="formWOperativo.nidbanco" filterable clearable placeholder="SELECCIONE" >
+                                                                                <el-option
+                                                                                v-for="item in arrayBanco"
+                                                                                :key="item.nIdPar"
+                                                                                :label="item.cParNombre"
+                                                                                :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -633,7 +637,7 @@
                     nidestadowarrant: 0
                 },
                 formWOperativo:{
-                    nidbanco: 0,
+                    nidbanco: '',
                     cnrowarrant: '',
                     dfechainicio: '',
                     dfechafin: ''
@@ -724,10 +728,16 @@
         },
         methods:{
             llenarComboProvFinanciero(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110023 
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayBanco = response.data;
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110094,
+                        'cnombreproveedor' : ''
+                    }
+                }).then(response => {
+                    this.arrayBanco = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -910,38 +920,21 @@
                 
                 var url = this.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
-                    nIdBanco: this.formWOperativo.nidbanco,
-                    cNumeroWarrant: this.formWOperativo.cnrowarrant,
+                    nIdProveedor: this.formWOperativo.nidbanco,
                     dFechaInicio: this.formWOperativo.dfechainicio,
-                    dFechaVence: this.formWOperativo.dfechafin,
-                    data: this.arrayTemporal,
-                    nIdUsuario: 190011
+                    data: this.arrayTemporal
                 }).then(response => {
                     swal('Warrant Operativo registrado');
                     this.arrayTemporal = [];
-                    //this.registrarDetalle(response.data[0].nIdWarrantOperativo);
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            /*registrarDetalle(nIdWarrantOperativo){
-                var url = this.ruta + '/woperativo/SetWOperativoDetalle';
-                axios.post(url, {
-                    nIdWarrantOperativo: nIdWarrantOperativo,
-                    data: this.arrayTemporal,
-                    nIdUsuario: 190011
-                }).then(response => {
-                    swal('Warrant Operativo registrado');
-                    this.arrayTemporal = [];
-                }).catch(error => {
-                    console.log(error);
-                });
-            },*/
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formWOperativo.nidbanco == 0){
+                if(this.formWOperativo.nidbanco == 0 || !this.formWOperativo.nidbanco){
                     this.mensajeError.push('Debes Seleecionar un Banco');
                 };
                 if(this.formWOperativo.dfechainicio == ''){

@@ -184,9 +184,9 @@ class ExcelController extends Controller
                     'cNumeroVin' => $value[1],
                     'cNumeroMotor' => $value[2],
                     'cNombreColor' => $value[3],
-                    'cFlagFloorPlan' => $value[4],
-                    'dFechaInicioFloorPlan' => $value[5],
-                    'fMonto' => $value[6]
+                    'cMoneda' => $value[4],
+                    'fMonto' => $value[5],
+                    'dFecha' => $value[6]
                 ];
             }
         }
