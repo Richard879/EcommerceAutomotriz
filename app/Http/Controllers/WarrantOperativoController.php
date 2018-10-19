@@ -16,14 +16,13 @@ class WarrantOperativoController extends Controller
 
         $nIdEstadoWarrant = $request->nidestadowarrant;
         $cNroWarrant = $request->cnrowarrant;
-        if($cNroWarrant == ''){
-            $cNroWarrant = "";
-        }
-        
+        $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
+        $cNroWarrant = ($cNroWarrant == NULL) ? ($cNroWarrant = '') : $cNroWarrant;
+                
         $arrayWOperativo = DB::select('exec usp_WO_GetWarrantByEstado ?, ?', 
-                                                                        array(  $nIdEstadoWarrant,
-                                                                                $cNroWarrant
-                                                                                ));
+                                                            [   $nIdEstadoWarrant,
+                                                                $cNroWarrant
+                                                            ]);
 
         $arrayWOperativo = ParametroController::arrayPaginator($arrayWOperativo, $request);
         return ['arrayWOperativo'=>$arrayWOperativo];   
