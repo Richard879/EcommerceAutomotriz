@@ -980,9 +980,10 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-                                                                            <hr/>
-                                                                            <span>Elementos de Venta por Regalar</span>
                                                                             <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Elementos de Venta por Regalar
+                                                                                </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
                                                                                         <thead>
@@ -1017,8 +1018,9 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
                                                                             </template>
-                                                                            <hr/>
+
                                                                             <template v-if="arrayConfiCotiEleVenta.length">
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
