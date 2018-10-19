@@ -58,13 +58,11 @@ class WarrantOperativoController extends Controller
         try{
            DB::beginTransaction();
 
-            $wo = DB::select('exec usp_WO_SetWOperativo ?, ?, ?, ?, ?', 
-                                                            array($request->nIdBanco,
-                                                                $request->cNumeroWarrant,
+            $wo = DB::select('exec usp_WO_SetWOperativo ?, ?, ?', 
+                                                            array($request->nIdProveedor,
                                                                 $request->dFechaInicio,
-                                                                $request->dFechaVence,
                                                                 Auth::user()->id
-                                                            ));                                                 
+                                                            ));                 
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
             $detalles = $request->data;

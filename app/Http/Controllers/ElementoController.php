@@ -46,7 +46,7 @@ class ElementoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec [usp_Elemen_SetElemento] ?, ?, ? ,? ,?, ?, ?, ?, ?', 
+        $element = DB::select('exec [usp_Elemen_SetElemento] ?, ?, ? ,? ,?, ?, ?, ?, ?, ?', 
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdProveedor,
                                                                 $request->nIdTipoElemento, 
@@ -55,6 +55,7 @@ class ElementoController extends Controller
                                                                 $request->fElemenValorVenta,
                                                                 $request->fElemenValorMinimoVenta,
                                                                 $request->cCodigoERP,
+                                                                $request->fElemenValorCosto,
                                                                 Auth::user()->id
                                                             ]);
         return response()->json($element);         
@@ -96,6 +97,7 @@ class ElementoController extends Controller
                                                                 $request->fElemenValorVenta,
                                                                 $request->fElemenValorMinimoVenta,
                                                                 $request->cCodigoERP,
+                                                                $request->fElemenValorCosto,
                                                                 Auth::user()->id
                                                             ]);
         return response()->json($element);         

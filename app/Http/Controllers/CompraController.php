@@ -174,30 +174,38 @@ class CompraController extends Controller
     public function SetForum(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-
+ 
         try{
-            DB::beginTransaction();
+           DB::beginTransaction();
+
+            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?', 
+                                                        [
+                                                            $request->nIdProveedor,
+                                                            $request->dFechaInicio,
+                                                            Auth::user()->id
+                                                        ]);                 
+            $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
+
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_Compra_SetForum] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
-                                                            [   $det['cNombreModelo'],
+                DB::select('exec [usp_Compra_SetWOperativoDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdWarrantOperativo,
+                                                                $det['cNombreModelo'],
                                                                 $det['cNumeroVin'],
                                                                 $det['cNumeroMotor'],
                                                                 $det['cNombreColor'],
-                                                                $det['dFechaFactura'],
-                                                                $det['cNumeroFactura'],
-                                                                $det['nNumeroPedido'],
-                                                                $det['dFechaInicioFloorPlan'],
-                                                                $det['dFechaVenceFloorPlan'],
+                                                                $det['cMoneda'],
                                                                 $det['fMonto'],
+                                                                $det['dFecha'],
                                                                 Auth::user()->id
                                                             ]);
-            }
-            DB::commit();
+            }  
+            DB::commit(); 
         } catch (Exception $e){
             DB::rollBack();
-        }
+        }    
+
     }
 
     public function UpdCompraById(Request $request)

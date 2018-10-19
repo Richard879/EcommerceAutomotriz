@@ -26,7 +26,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 form-control-label">Tipo Elemento</label>
                                             <div class="col-sm-4">
-                                                <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
+                                                <el-select v-model="formEle.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
                                                     <el-option
                                                     v-for="item in arrayTipoElemento"
                                                     :key="item.nIdPar"
@@ -67,8 +67,10 @@
                                                         <th>Proveedor</th>
                                                         <th>Tipo Elemento</th>
                                                         <th>Nombre Elemento</th>
-                                                        <th>Precio de Venta</th>
-                                                        <th>Precio de Venta Mínimo</th>
+                                                        <th>Moneda</th>
+                                                        <th>Precio Venta</th>
+                                                        <th>Precio Venta Mínimo</th>
+                                                        <th>Valor Costo</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -78,8 +80,10 @@
                                                         <td v-text="elemento.cProveedorNombre"></td>
                                                         <td v-text="elemento.cTipoElemenNombre"></td>
                                                         <td v-text="elemento.cElemenNombre"></td>
+                                                        <td v-text="elemento.cMonedaNombre"></td>
                                                         <td v-text="elemento.fElemenValorVenta"></td>
                                                         <td v-text="elemento.fElemenValorMinimoVenta"></td>
+                                                        <td v-text="elemento.fElementValorCosto"></td>
                                                         <td>
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ elemento.cElemenNombre }}</div>
@@ -187,7 +191,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Tipo Elemento</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formEle.ntpoelemen" filterable placeholder="Select" >
+                                                        <el-select v-model="formEle.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="item in arrayTipoElemento"
                                                             :key="item.nIdPar"
@@ -202,7 +206,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="formEle.nidmoneda" filterable placeholder="Select" >
+                                                        <el-select v-model="formEle.nidmoneda" filterable clearable placeholder="SELECCIONE" >
                                                             <el-option
                                                             v-for="tpomoneda in arrayTipoMoneda"
                                                             :key="tpomoneda.nIdPar"
@@ -246,6 +250,16 @@
                                                     <label class="col-sm-4 form-control-label">Valor Mínimo Venta</label>
                                                     <div class="col-sm-8">
                                                         <input type="number" v-model="formEle.felevarlorminventa" class="form-control form-control-sm" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Valor Costo</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" v-model="formEle.felevalorcosto" class="form-control form-control-sm" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -414,14 +428,15 @@
                 formEle:{
                     nidproveedor: 0,
                     cproveedornombre: '',
-                    ntpoelemen: 0,
-                    nidmoneda: 0,
+                    ntpoelemen: '',
+                    nidmoneda: '',
                     nidelemento: 0,
                     celenombre: '',
                     celecodigoerp: '',
                     felevalorventa: '',
                     felevarlorminventa: '',
-                    celementonombre: ''
+                    celementonombre: '',
+                    felevalorcosto: ''
                 },
                 pagination: {
                     'total': 0,
@@ -507,8 +522,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110027,
-                        'opcion' : 0
+                        'ngrupoparid' : 110027
                     }
                 }).then(response => {
                     this.arrayTipoElemento = response.data;
@@ -520,8 +534,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110028,
-                        'opcion' : 0
+                        'ngrupoparid' : 110028
                     }
                 }).then(response => {
                     this.arrayTipoMoneda = response.data;
@@ -613,7 +626,8 @@
                     cElemenNombre: this.formEle.celenombre.toUpperCase(),
                     fElemenValorVenta: this.formEle.felevalorventa,
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp
+                    cCodigoERP: this.formEle.celecodigoerp,
+                    fElemenValorCosto: this.formEle.felevalorcosto
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -631,13 +645,18 @@
             validar(){
                 this.error = 0;
                 this.mensajeError =[];
+                if(this.accion == 2){
+                    if(this.formEle.nidelemento == 0){
+                     this.mensajeError.push('Debes Seleccionar Elemento Venta');
+                    };
+                };
                 if(this.formEle.nidproveedor == 0){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formEle.ntpoelemen == '0'){
+                if(this.formEle.ntpoelemen == 0 || !this.formEle.ntpoelemen){
                     this.mensajeError.push('Debes Ingresar un Tipo de Elemento');
                 };
-                if(this.formEle.nidmoneda == '0'){
+                if(this.formEle.nidmoneda == 0 || !this.formEle.nidmoneda){
                     this.mensajeError.push('Debes Ingresar un Tipo de Moneda');
                 };
                 if(!this.formEle.celenombre){
@@ -671,7 +690,8 @@
                     cElemenNombre: this.formEle.celenombre.toUpperCase(),
                     fElemenValorVenta: this.formEle.felevalorventa,
                     fElemenValorMinimoVenta: this.formEle.felevarlorminventa,
-                    cCodigoERP: this.formEle.celecodigoerp
+                    cCodigoERP: this.formEle.celecodigoerp,
+                    fElemenValorCosto: this.formEle.felevalorcosto
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -743,11 +763,7 @@
                 })
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
@@ -798,6 +814,7 @@
                                 this.formEle.celecodigoerp = data['cCodigoERP'];
                                 this.formEle.felevalorventa = data['fElemenValorVenta'];
                                 this.formEle.felevarlorminventa = data['fElemenValorMinimoVenta'];
+                                this.formEle.felevalorcosto = data['fElementValorCosto'];
                                 break;
                             }
                         }
@@ -806,13 +823,14 @@
             },
             limpiarFormulario(){
                 this.formEle.nidproveedor= 0,
-                this.formEle.cproveedornombre=  '',
-                this.formEle.ntpoelemen= 0,
-                this.formEle.nidmoneda= 0,
+                this.formEle.cproveedornombre= '',
+                this.formEle.ntpoelemen= '',
+                this.formEle.nidmoneda= '',
                 this.formEle.celenombre= '',
                 this.formEle.celecodigoerp= '',
                 this.formEle.felevalorventa= '',
-                this.formEle.felevarlorminventa='',
+                this.formEle.felevarlorminventa= '',
+                this.formEle.felevalorcosto= '',
                 this.arrayElementoVenta = []
             },
             cambiarVistaFormulario(){

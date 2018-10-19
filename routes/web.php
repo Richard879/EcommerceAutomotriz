@@ -195,7 +195,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/maestrovehiculo/GetDetalleMaestroVehiculo', 'MaestroVehiculoController@GetDetalleMaestroVehiculo');
     Route::get('/autorizacion/GetLstVehiculosByCriterio', 'AutorizacionController@GetLstVehiculosByCriterio');
     Route::get('/autorizacion/GetLstContactosByUsuario', 'AutorizacionController@GetLstContactosByUsuario');
-    Route::get('/autorizacion/GetLstSolicitudes', 'AutorizacionController@GetLstSolicitudes');
+    Route::get('/autorizacion/GetLstMisSolicitudes', 'AutorizacionController@GetLstMisSolicitudes');
+    Route::get('/autorizacion/GetLstSolicitudesByTodos', 'AutorizacionController@GetLstSolicitudesByTodos');
     Route::get('/autorizacion/GetRefVehiculoByContacto', 'AutorizacionController@GetRefVehiculoByContacto');
     Route::post('/autorizacion/SetRegistrarSolicitudAutorizacion', 'AutorizacionController@SetRegistrarSolicitudAutorizacion');
     Route::put('/autorizacion/SetConformeNoConforme', 'AutorizacionController@SetConformeNoConforme');

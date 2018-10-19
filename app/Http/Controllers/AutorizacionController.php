@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -11,17 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AutorizacionController extends Controller
 {
-    public function arrayPaginator($array, $request)
-    {
-        $page = $request->page;
-        $perPage = 10;
-        $offset = ($page * $perPage) - $perPage;
-
-        $array = new Collection($array);
-        $result = $array->forPage($page, $perPage)->values()->all();
-        return  new LengthAwarePaginator($result, $array->count(), $perPage,$page);
-    }
-
     public function GetLstVehiculosByCriterio(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -41,7 +31,7 @@ class AutorizacionController extends Controller
                                                                 $nCriterio
                                                             ]);
 
-        $arrayVehiculosByCriterio = $this->arrayPaginator($arrayVehiculosByCriterio, $request);
+        $arrayVehiculosByCriterio = ParametroController::arrayPaginator($arrayVehiculosByCriterio, $request);
         return ['arrayVehiculosByCriterio'=>$arrayVehiculosByCriterio];
     }
 
@@ -57,25 +47,10 @@ class AutorizacionController extends Controller
         $cFiltroDescripcion = $request->cfiltrodescripcion;
         $nIdTipoRol  = $request->tipoRol;
 
-        switch ($nIdTipoRol) {
-            case 1:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            case 2:
-                $nIdVendedor = Auth::user()->id;
-                break;
-            case 3:
-                $nIdVendedor = 0;
-                break;
-            default:
-                $nIdVendedor = 0;
-                break;
-        }
-
         $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
         $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
 
-        $arrayContactosByUsuario = DB::select('exec usp_Autorizacion_GetListContactosByUsuario ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayContactosByUsuario = DB::select('exec [usp_Autorizacion_GetListContactosByUsuario] ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdEmpresa,
                                                                             $nIdSucursal,
@@ -84,10 +59,10 @@ class AutorizacionController extends Controller
                                                                             $cNroDocumento,
                                                                             $cFiltroDescripcion,
                                                                             $nIdTipoRol,
-                                                                            $nIdVendedor
+                                                                            Auth::user()->id
                                                                         ]);
 
-        $arrayContactosByUsuario = $this->arrayPaginator($arrayContactosByUsuario, $request);
+        $arrayContactosByUsuario = ParametroController::arrayPaginator($arrayContactosByUsuario, $request);
         return ['arrayContactosByUsuario'=>$arrayContactosByUsuario];
     }
 
@@ -146,13 +121,14 @@ class AutorizacionController extends Controller
         return response()->json($nIdSolicitudAutorizacion);
     }
 
-    public function GetLstSolicitudes(Request $request)
+    public function GetLstMisSolicitudes(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         $nIdTipoBusquedaVehiculo = $request->nIdTipoBusquedaVehiculo;
         $cNroVehiculo = $request->cNroVehiculo;
-        $dFecha = $request->dFecha;
+        $dFechaInicio = $request->dFechaInicio;
+        $dFechaFin = $request->dFechaFin;
         $nIdAsigContacto = $request->nIdAsigContacto;
         $nIdEstado = $request->nIdEstado;
         $nTipoRol = $request->tipoRol;
@@ -161,72 +137,77 @@ class AutorizacionController extends Controller
         $nIdSolicitudAutorizacion = $request->nIdSolicitudAutorizacion;
         $nIdVendedor = $request->nIdVendedor;
 
-        switch ($nTipoRol) {
-            case 1:
-                switch ($nIdTipoBusquedaAutorizacion) {
-                    case 1:
-                        $nIdVendedor = Auth::user()->id;
-                        break;
-                    default:
-                        $nIdVendedor = 0;
-                        break;
-                }
-                break;
-            case 2:
-                switch ($nIdTipoBusquedaAutorizacion) {
-                    case 1:
-                        $nIdVendedor = Auth::user()->id;
-                        break;
-                    case 2:
-                        $nIdVendedor = Auth::user()->id;
-                        break;
-                    default:
-                        $nIdVendedor = 0;
-                        break;
-                }
-                break;
-            case 3:
-                switch ($nIdTipoBusquedaAutorizacion) {
-                    case 1:
-                        $nIdVendedor = Auth::user()->id;
-                        break;
-                    case 2:
-                        $nIdVendedor = ($nIdVendedor == null) ? Auth::user()->id : $nIdVendedor;
-                        break;
-                    default:
-                        $nIdVendedor = 0;
-                        break;
-                }
-                break;
-            default:
-                $nIdVendedor = 0;
-                break;
-        }
-
         $nIdTipoBusquedaVehiculo = ($nIdTipoBusquedaVehiculo == NULL) ? ($nIdTipoBusquedaVehiculo = 0) : $nIdTipoBusquedaVehiculo;
         $cNroVehiculo = ($cNroVehiculo == NULL) ? ($cNroVehiculo = '') : $cNroVehiculo;
-        $dFecha = ($dFecha == NULL) ? ($dFecha = ' ') : $dFecha;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = 0) : $nIdAsigContacto;
         $nIdTipoBusquedaAutorizacion = ($nIdTipoBusquedaAutorizacion == NULL) ? ($nIdTipoBusquedaAutorizacion = 0) : $nIdTipoBusquedaAutorizacion;
         $cFlagEstadoAutorizacion = ($cFlagEstadoAutorizacion == NULL) ? ($cFlagEstadoAutorizacion = 0) : $cFlagEstadoAutorizacion;
         $nIdSolicitudAutorizacion = ($nIdSolicitudAutorizacion == NULL) ? ($nIdSolicitudAutorizacion = 0) : $nIdSolicitudAutorizacion;
         $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
 
-        $arrayMisSolicitudes = DB::select('exec usp_Autorizacion_GetLstAutorizaciones ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayMisSolicitudes = DB::select('exec [usp_Autorizacion_GetLstMisAutorizaciones] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                         [
                                                                             $nIdTipoBusquedaVehiculo,
                                                                             $cNroVehiculo,
-                                                                            $dFecha,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
                                                                             $nIdAsigContacto,
                                                                             $nIdEstado,
                                                                             $nTipoRol,
                                                                             $nIdTipoBusquedaAutorizacion,
                                                                             $cFlagEstadoAutorizacion,
                                                                             $nIdSolicitudAutorizacion,
-                                                                            $nIdVendedor
+                                                                            Auth::user()->id
                                                                         ]);
 
-        $arrayMisSolicitudes = $this->arrayPaginator($arrayMisSolicitudes, $request);
+        $arrayMisSolicitudes = ParametroController::arrayPaginator($arrayMisSolicitudes, $request);
+        return ['arrayMisSolicitudes'=>$arrayMisSolicitudes];
+    }
+
+    public function GetLstSolicitudesByTodos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdTipoBusquedaVehiculo = $request->nIdTipoBusquedaVehiculo;
+        $cNroVehiculo = $request->cNroVehiculo;
+        $dFechaInicio = $request->dFechaInicio;
+        $dFechaFin = $request->dFechaFin;
+        $nIdAsigContacto = $request->nIdAsigContacto;
+        $nIdEstado = $request->nIdEstado;
+        $nTipoRol = $request->tipoRol;
+        $nIdTipoBusquedaAutorizacion = $request->nIdTipoBusquedaAutorizacion;
+        $cFlagEstadoAutorizacion = $request->cFlagEstadoAutorizacion;
+        $nIdSolicitudAutorizacion = $request->nIdSolicitudAutorizacion;
+        $nIdVendedor = $request->nIdVendedor;
+
+        $nIdTipoBusquedaVehiculo = ($nIdTipoBusquedaVehiculo == NULL) ? ($nIdTipoBusquedaVehiculo = 0) : $nIdTipoBusquedaVehiculo;
+        $cNroVehiculo = ($cNroVehiculo == NULL) ? ($cNroVehiculo = '') : $cNroVehiculo;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $nIdAsigContacto = ($nIdAsigContacto == NULL) ? ($nIdAsigContacto = 0) : $nIdAsigContacto;
+        $nIdTipoBusquedaAutorizacion = ($nIdTipoBusquedaAutorizacion == NULL) ? ($nIdTipoBusquedaAutorizacion = 0) : $nIdTipoBusquedaAutorizacion;
+        $cFlagEstadoAutorizacion = ($cFlagEstadoAutorizacion == NULL) ? ($cFlagEstadoAutorizacion = 0) : $cFlagEstadoAutorizacion;
+        $nIdSolicitudAutorizacion = ($nIdSolicitudAutorizacion == NULL) ? ($nIdSolicitudAutorizacion = 0) : $nIdSolicitudAutorizacion;
+        $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = 0) : $nIdEstado;
+
+        $arrayMisSolicitudes = DB::select('exec [usp_Autorizacion_GetLstAutorizacionesByTodos] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                        [
+                                                                            $nIdTipoBusquedaVehiculo,
+                                                                            $cNroVehiculo,
+                                                                            $dFechaInicio,
+                                                                            $dFechaFin,
+                                                                            $nIdAsigContacto,
+                                                                            $nIdEstado,
+                                                                            $nTipoRol,
+                                                                            $nIdTipoBusquedaAutorizacion,
+                                                                            $cFlagEstadoAutorizacion,
+                                                                            $nIdSolicitudAutorizacion,
+                                                                            Auth::user()->id
+                                                                        ]);
+
+        $arrayMisSolicitudes = ParametroController::arrayPaginator($arrayMisSolicitudes, $request);
         return ['arrayMisSolicitudes'=>$arrayMisSolicitudes];
     }
 

@@ -34,7 +34,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabForum" role="tab" data-toggle="tab">
+                                        <a class="nav-link" href="#TabForum" @click="tabForum()" role="tab" data-toggle="tab">
                                             <i class="fa fa fa-signal"></i> LÍNEA FORUM
                                         </a>
                                     </li>
@@ -72,7 +72,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCompra.dfechainicio"
@@ -86,7 +86,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillCompra.dfechafin"
@@ -708,10 +708,68 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
+                                                            <h3 class="h4">GENERAR WARRANT OPERATIVO</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form class="form-horizontal">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formForum.nidproveedor" filterable clearable placeholder="SELECCIONE" >
+                                                                                    <el-option
+                                                                                    v-for="item in arrayProveedorForum"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="col-lg-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Descargar Formato</label>
+                                                                            <div class="col-sm-8">
+                                                                                <a href="#" @click="descargaFormatoForum">
+                                                                                    <i class="fa-md fa fa-file-excel-o"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-8">
                                                                         <div class="row">
@@ -741,12 +799,9 @@
                                                                                     <th>VIN</th>
                                                                                     <th>Nro. Motor</th>
                                                                                     <th>Color</th>
-                                                                                    <th>Fec. Factura</th>
-                                                                                    <th>Nro Factura</th>
-                                                                                    <th>Nro. Nota Pedido</th>
-                                                                                    <th>Declarado Floor Plan</th>
-                                                                                    <th>Fecha Declarado Floor Plan</th>
+                                                                                    <th>Moneda</th>
                                                                                     <th>Monto</th>
+                                                                                    <th>Fecha</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -759,12 +814,9 @@
                                                                                     <td v-text="forum.cNumeroVin"></td>
                                                                                     <td v-text="forum.cNumeroMotor"></td>
                                                                                     <td v-text="forum.cNombreColor"></td>
-                                                                                    <td v-text="forum.dFechaFactura"></td>
-                                                                                    <td v-text="forum.cNumeroFactura"></td>
-                                                                                    <td v-text="forum.nNumeroPedido"></td>
-                                                                                    <td v-text="forum.cFlagFloorPlan"></td>
-                                                                                    <td v-text="forum.dFechaInicioFloorPlan"></td>
+                                                                                    <td v-text="forum.cMoneda"></td>
                                                                                     <td v-text="forum.fMonto"></td>
+                                                                                    <td v-text="forum.dFecha"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -1127,6 +1179,10 @@
                 checkBoxLinea: [],
                 // ============================================================
                 // =========== TAB FORUM ============
+                formForum:{
+                    nidproveedor: ''
+                },
+                arrayProveedorForum: [],
                 arrayForum: [],
                 contadorArrayForum: 0,
                 // ==========================================================
@@ -1742,6 +1798,27 @@
             },
             // ====================================================
             // =============  TAB FORUM ======================
+            tabForum(){
+                this.listarProveedorWO();
+            },
+            listarProveedorWO(){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidgrupopar' : 110094,
+                        'cnombreproveedor' : ''
+                    }
+                }).then(response => {
+                    this.arrayProveedorForum = response.data.arrayProveedor;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            descargaFormatoForum(){
+                window.open(this.ruta + '/storage/FormatosDescarga/FormatoForum.xlsx');
+            },
             getFileForum(e){
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
@@ -1768,8 +1845,7 @@
                 });
             },
             readFileForum(nameFile){
-                //this.mostrarProgressBar();
-
+                this.mostrarProgressBar();
                 var url = this.ruta + '/compra/readFileForum';
                 axios.post(url, {
                     nameFile: nameFile
@@ -1851,18 +1927,14 @@
 
                 var url = this.ruta + '/compra/SetForum';
                 axios.post(url, {
+                    nIdProveedor: this.formForum.nidproveedor,
+                    dFechaInicio: '',
                     data: this.arrayForum
                 }).then(response => {
-                    swal('Forum registrados');
+                    swal('Warrant Operativo registrado');
                     this.arrayForum = [];
-                    $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
                 });
             },
             validarRegistroForum(){
@@ -1871,6 +1943,9 @@
 
                 if(this.arrayForum == []){
                     this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(this.formForum.nidproveedor == 0 || !this.formForum.nidproveedor){
+                    this.mensajeError.push('Seleccione Proveedor');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
