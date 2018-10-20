@@ -3804,9 +3804,10 @@
                 this.montoTotalConfiCotiEventoEleVenta= 0;
                 this.montoTotalConfiCotiEventoEleVentaSoles= 0;
 
-
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link active');
                 $('#tab02').removeClass('nav-link active');
-                $('#tab02').addClass('nav-link active');
+                $('#tab02').addClass('nav-link');
                 $('#tab03').removeClass('nav-link active');
                 $('#tab03').addClass('nav-link');
                 $('#tab04').removeClass('nav-link active');

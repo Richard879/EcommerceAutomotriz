@@ -79,13 +79,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-<<<<<<< HEAD
                                                                 <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-4">
-=======
-                                                                <div class="form-group row">        
                                                                     <div class="col-sm-9 offset-sm-5">
->>>>>>> b421c549f8ca7e5e5aceee1a267a6deca0e1576a
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
                                                                 </div>
@@ -222,7 +217,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">        
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativoDetalle()"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
@@ -552,80 +547,12 @@
                                                 </div>
                                             </div>
                                         </div>
-<<<<<<< HEAD
-                                        <hr/>
-                                        <template v-if="arrayVersionVehiculo.length">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Seleccione</th>
-                                                            <th>Nro VIN</th>
-                                                            <th>Nombre Comercial</th>
-                                                            <th>Año Fab.</th>
-                                                            <th>Año Modelo</th>
-                                                            <th>Forma Pago</th>
-                                                            <th>Moneda</th>
-                                                            <th>Costo</th>
-                                                            <th>Nro Factura</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
-                                                            <td>
-                                                                <a href="#" @click="asignarVehiculo(vehiculo)">
-                                                                    <i class='fa-md fa fa-check-circle'></i>
-                                                                </a>
-                                                            </td>
-                                                            <td>{{vehiculo.cNumeroVin}}</td>
-                                                            <td>{{vehiculo.cNombreComercial}}</td>
-                                                            <td>{{vehiculo.nAnioFabricacion}}</td>
-                                                            <td>{{vehiculo.nAnioVersion}}</td>
-                                                            <td>{{vehiculo.cFormaPago}}</td>
-                                                            <td>{{vehiculo.cSimboloMoneda}}</td>
-                                                            <td>{{vehiculo.fTotalCompra}}</td>
-                                                            <td>{{vehiculo.cNumeroFactura}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-7">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link"
-                                                                    href="#" @click.prevent="cambiarPaginaVehiculos(page)"
-                                                                    v-text="page"></a>
-                                                                </li>
-                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-=======
                                     </form>
                                     <br/>
                                     <template v-if="arrayVersionVehiculo.length">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
                                                 <thead>
->>>>>>> b421c549f8ca7e5e5aceee1a267a6deca0e1576a
                                                     <tr>
                                                         <th>Seleccione</th>
                                                         <th>Nro VIN</th>
@@ -665,12 +592,12 @@
                                                             <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                 <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                             </li>
-                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                             :class="[page==isActivedModal?'active':'']">
-                                                                <a class="page-link" 
-                                                                href="#" @click.prevent="cambiarPaginaVehiculos(page)" 
+                                                                <a class="page-link"
+                                                                href="#" @click.prevent="cambiarPaginaVehiculos(page)"
                                                                 v-text="page"></a>
-                                                            </li>                            
+                                                            </li>
                                                             <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                 <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                             </li>
