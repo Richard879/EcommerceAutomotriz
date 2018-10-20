@@ -330,12 +330,15 @@ class CotizacionController extends Controller
 
     public function SetCambiarEstadoCotizacion(Request $request)
     {
+        print_r($request->nIdCabeceraCotizacion . ' - '. $request->opcion . ' - ' . Auth::user()->id);
+
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?, ?',
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?',
                                                                 [   $request->nIdCabeceraCotizacion,
-                                                                    $request->nIdEstadoCotizacion,
-                                                                    $request->cFlagEstadoCotizacion,
+                                                                    $request->opcion,
+                                                                    // $request->nIdEstadoCotizacion,
+                                                                    // $request->cFlagEstadoCotizacion,
                                                                     Auth::user()->id
                                                                 ]);
 

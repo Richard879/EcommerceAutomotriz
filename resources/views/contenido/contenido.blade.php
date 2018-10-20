@@ -62,6 +62,9 @@
     <template v-if="menu==1300274">
         <cotizacion :ruta="ruta"></cotizacion>
     </template>
+    <template v-if="menu==1300349">
+        <cotizacionaprobar :ruta="ruta"></cotizacionaprobar>
+    </template>
     <template v-if="menu==1300275">
         <pedido :ruta="ruta"></pedido>
     </template>

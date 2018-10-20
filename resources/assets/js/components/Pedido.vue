@@ -3,7 +3,7 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                <h2 class="no-margin-bottom">GENERAR PEDIDO</h2>
+                    <h2 class="no-margin-bottom">GENERAR PEDIDO</h2>
                 </div>
             </header>
 

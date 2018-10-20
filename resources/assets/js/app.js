@@ -9,9 +9,15 @@ import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/es';
 window.Vue.use(ElementUI, { locale })
 
+/**
+ * Biblioteca VueSax - Interfaces Web
+ */
 import Vuesax from 'vuesax'
 window.Vue.use(Vuesax)
 
+/**
+ * Biblioteca VueEventBus - Comunicación Componentes
+ */
 var VueEventBus = require('vue-event-bus')
 Vue.use(VueEventBus)
 
@@ -54,6 +60,7 @@ Vue.component('entregavehiculo', require('./components/EntregaVehiculo.vue'));
 Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('permisos', require('./components/AdmPermisos.vue'));
 Vue.component('cabecera', require('./components/Cabecera.vue'));
+Vue.component('cotizacionaprobar', require('./components/CotizacionAprobar.vue'));
 
 const app = new Vue({
     el: '#app',

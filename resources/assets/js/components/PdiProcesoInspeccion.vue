@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">PROCESO DE INSPECCIÓN</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">PROCESO DE INSPECCIÓN</h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">
@@ -108,7 +108,7 @@
                                 <div class="card-header">
                                     <h3 class="h4">LISTADO PDI</h3>
                                 </div>
-                                <div class="card-body">                   
+                                <div class="card-body">
                                     <template v-if="arrayPdi.length">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
@@ -206,8 +206,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 form-control-label">Tipo Inspección</label>
                                                     <div class="col-sm-5">
-                                                        <el-select v-model="formPdi.nidtipoinspeccion" 
-                                                                    filterable 
+                                                        <el-select v-model="formPdi.nidtipoinspeccion"
+                                                                    filterable
                                                                     clearable
                                                                     placeholder="SELECCIONE" v-on:change="changeTipoInspeccion()" :class="[this.accion==1 ? '' : 'disabled']" >
                                                             <el-option
@@ -854,7 +854,7 @@
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">        
+                        <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
@@ -1012,7 +1012,7 @@
                                             </div>
                                         </form>
                                         <br/>
-                                        <template v-if="arraySeccion.length">  
+                                        <template v-if="arraySeccion.length">
                                             <li v-for="seccion in arraySeccion" :key="seccion.nIdSeccion">{{ seccion.cSeccionNombre }}
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
@@ -1110,7 +1110,7 @@
                                                 <!--<vs-table max-items="10" stripe pagination :data="arrayAccesorio">
                                                     <template slot="thead">
                                                         <vs-th>
-                                                            
+
                                                         </vs-th>
                                                     </template>
 
@@ -1162,7 +1162,7 @@
     export default {
         props:['ruta'],
         data(){
-                    
+
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
@@ -1258,7 +1258,7 @@
                 arraySeccion: [],
                 arrayItems: [],
                 arrayFlag: [],
-                arrayPlantillaFlagMarca: [],  
+                arrayPlantillaFlagMarca: [],
                 arrayPlantillaDescripcion: [],
                 // ============ MODAL ACCESORIO =================
                 fillAccesorio:{
@@ -1378,7 +1378,7 @@
             listarPdi(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/pdi/GetListPdi';
-                
+
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -1567,7 +1567,7 @@
             },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110032
@@ -1683,7 +1683,7 @@
             //=============== LISTAR MODAL ACCESORIO ===================
             listarAccesorio(){
                 var url = this.ruta + '/parametro/GetParametroByNombre';
-                
+
                 axios.get(url, {
                     params: {
                         'ngrupoparid': 110089,
@@ -1725,7 +1725,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/pdi/SetCabeceraInspeccion';    
+                var url = this.ruta + '/pdi/SetCabeceraInspeccion';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
@@ -1869,7 +1869,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/pdi/UpdCabeceraInspeccion';    
+                var url = this.ruta + '/pdi/UpdCabeceraInspeccion';
                 axios.post(url, {
                     nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
                     nIdEmpresa: 1300011,
@@ -1910,7 +1910,7 @@
                 });
             },
             registrarPlantilla(){
-                var url = this.ruta + '/pdi/SetPlantillaPdi';    
+                var url = this.ruta + '/pdi/SetPlantillaPdi';
                 axios.post(url, {
                     nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
                     data: this.arrayPlantilla
@@ -1920,7 +1920,7 @@
                 });
             },
             registrarAccesorios(){
-                var url = this.ruta + '/pdi/SetAccesorioPdi';    
+                var url = this.ruta + '/pdi/SetAccesorioPdi';
                 axios.post(url, {
                     'nIdCabeceraInspeccion': this.formPdi.nidcabecerainspeccion,
                     'data': this.arrayTempAccesorio
