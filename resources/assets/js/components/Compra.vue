@@ -529,7 +529,7 @@
                                                                                 <div class="input-group-prepend">
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Buscar Compras </div>
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('lineacredito','buscar')">
+                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('compra','lineacredito')">
                                                                                             <i class="fa-lg fa fa-search"></i>
                                                                                         </button>
                                                                                     </el-tooltip>
@@ -1454,10 +1454,6 @@
                 this.pagination.current_page=page;
                 this.listarCompras(page);
             },
-            tabGenerarCompra(){
-                this.listarTipoLista();
-                this.limpiarFormulario();
-            },
             buscaProveedores(){
                 this.listarProveedores(1);
             },
@@ -1519,6 +1515,10 @@
             },
             // ====================================================
             // =============  GENERAR COMPRA ======================
+            tabGenerarCompra(){
+                this.listarTipoLista();
+                this.limpiarFormulario();
+            },
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
@@ -1707,9 +1707,9 @@
             validarReadFileCompra(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
+                if(!this.attachment){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1915,6 +1915,7 @@
             // =============  TAB FORUM ======================
             tabForum(){
                 this.listarProveedorWO();
+                this.limpiarFormulario();
             },
             listarProveedorWO(){
                 var url = this.ruta + '/parametro/GetLstProveedor';
@@ -1987,7 +1988,10 @@
             validarReadFileForum(){
                 this.error = 0;
                 this.mensajeError =[];
-
+                
+                if(!this.attachment){
+                    this.mensajeError.push('No hay Archivos Seleccionados');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2104,25 +2108,21 @@
                                 this.formModalCompra.cnombrecolor = data['cNombreColor'];
                                 break;
                             }
-                        }
-                    }
-                    case 'lineacredito':
-                    {
-                        switch(accion){
-                            case 'buscar':
+                            case 'lineacredito':
                             {
                                 this.accionmodal=5;
                                 this.modal = 1;
                                 break;
                             }
                         }
-                    }
+                    };
                 }
             },
             // ===========================================================
             limpiarFormulario(){
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',
+                this.attachment= null,
                 this.arrayExcel = [],
                 this.arrayCompra = [],
                 this.limpiarPaginacion()
