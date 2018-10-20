@@ -302,7 +302,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Evento</label>
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Campaña</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
@@ -316,7 +316,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Valor Presupuesto</label>
@@ -340,7 +340,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -421,13 +421,16 @@
                                                                                     <div class="col-sm-12">
                                                                                         <div class="row">
                                                                                             <label class="col-sm-3 form-control-label">* Detalle Evento Campaña</label>
-                                                                                            <div class="col-sm-4">
+                                                                                            <div class="col-sm-4 widthFull">
                                                                                                 <div class="input-group">
-                                                                                                    <input type="hidden" v-model="formEventoCamp.cflagdetalleevento">
-                                                                                                    <select v-model="formEventoCamp.ndetalle" class="form-control form-control-sm">
-                                                                                                        <option v-for="item in arrayDetalleEC" :key="item.nIdGrupoPar" :value="item.nIdGrupoPar" v-text="item.cGrupoParNombre">
-                                                                                                        </option>
-                                                                                                    </select>
+                                                                                                    <el-select v-model="formEventoCamp.ndetalle" filterable clearable placeholder="SELECCIONE" >
+                                                                                                        <el-option
+                                                                                                        v-for="item in arrayDetalleEC"
+                                                                                                        :key="item.nIdGrupoPar"
+                                                                                                        :label="item.cGrupoParNombre"
+                                                                                                        :value="item.nIdGrupoPar">
+                                                                                                        </el-option>
+                                                                                                    </el-select>
                                                                                                     <div class="input-group-prepend">
                                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                             <div slot="content">Buscar </div>
@@ -1892,7 +1895,6 @@
 
                 axios.get(url, {
                     params: {
-                        'opcion' : 0
                     }
                 }).then(response => {
                     this.arrayDetalleEC = response.data;
@@ -2747,24 +2749,30 @@
     }
 </script>
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+    .widthFull>.el-select>.el-input {
+    width: 100%;
+    }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        width: 100%;
+    }
 </style>
