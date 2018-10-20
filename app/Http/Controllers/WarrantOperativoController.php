@@ -19,7 +19,7 @@ class WarrantOperativoController extends Controller
         $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
         $cNroWarrant = ($cNroWarrant == NULL) ? ($cNroWarrant = '') : $cNroWarrant;
                 
-        $arrayWOperativo = DB::select('exec usp_WO_GetWarrantByEstado ?, ?', 
+        $arrayWOperativo = DB::select('exec [usp_WO_GetWarrantByEstado] ?, ?', 
                                                             [   $nIdEstadoWarrant,
                                                                 $cNroWarrant
                                                             ]);
@@ -36,15 +36,14 @@ class WarrantOperativoController extends Controller
         $cNumeroVin = $request->cnumerovin;
         $nIdEstadoWarrant = $request->nidestadowarrant;
         
-        if($cNumeroVin == ''){
-            $cNumeroVin = "";
-        }
+        $nIdEstadoWarrant = ($nIdEstadoWarrant == NULL) ? ($nIdEstadoWarrant = 0) : $nIdEstadoWarrant;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
 
-        $arrayWOperativoDetalle = DB::select('exec usp_WO_GetWarrantDetalleByEstado ?, ?, ?', 
-                                                                        array(  $nIdWarrantOperativo,
-                                                                                $cNumeroVin,
-                                                                                $nIdEstadoWarrant
-                                                                                ));
+        $arrayWOperativoDetalle = DB::select('exec [usp_WO_GetWarrantDetalleByEstado] ?, ?, ?', 
+                                                                    [   $nIdWarrantOperativo,
+                                                                        $cNumeroVin,
+                                                                        $nIdEstadoWarrant
+                                                                    ]);
 
         $arrayWOperativoDetalle = ParametroController::arrayPaginator($arrayWOperativoDetalle, $request);
         return ['arrayWOperativoDetalle'=>$arrayWOperativoDetalle];   
@@ -57,24 +56,25 @@ class WarrantOperativoController extends Controller
         try{
            DB::beginTransaction();
 
-            $wo = DB::select('exec usp_WO_SetWOperativo ?, ?, ?', 
-                                                            array($request->nIdProveedor,
-                                                                $request->dFechaInicio,
-                                                                Auth::user()->id
-                                                            ));                 
+            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?', 
+                                                    [   $request->nIdProveedor,
+                                                        $request->dFechaInicio,
+                                                        Auth::user()->id
+                                                    ]);                 
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec usp_WO_SetWOperativoDetalle ?, ?, ?, ?', 
-                                                            array($nIdWarrantOperativo,
-                                                                $det['nIdCompra'],
-                                                                $det['fTotalCompra'],
-                                                                Auth::user()->id
-                                                            ));
+                DB::select('exec [usp_WO_SetWOperativoDetalle] ?, ?, ?, ?, ?', 
+                                                    [   $nIdWarrantOperativo,
+                                                        $request->dFechaInicio,
+                                                        $det['nIdCompra'],
+                                                        $det['fTotalCompra'],
+                                                        Auth::user()->id
+                                                    ]);
             }  
-            DB::commit(); 
+            DB::commit();
         } catch (Exception $e){
             DB::rollBack();
         }    

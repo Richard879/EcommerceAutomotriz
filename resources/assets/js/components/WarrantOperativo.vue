@@ -79,8 +79,13 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+<<<<<<< HEAD
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-4">
+=======
+                                                                <div class="form-group row">        
+                                                                    <div class="col-sm-9 offset-sm-5">
+>>>>>>> b421c549f8ca7e5e5aceee1a267a6deca0e1576a
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
                                                                 </div>
@@ -128,9 +133,9 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -148,7 +153,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -186,11 +191,15 @@
                                                                             <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="hidden" v-model="fillWOperativoDetalle.nidwarrantoperativo">
-                                                                                    <input type="text" v-model="fillWOperativoDetalle.cnumerovin" @keyup.enter="buscarWOperativoDetalle()" class="form-control form-control-sm">
-                                                                                    <span class="input-group-btn">
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWOperativoDetalle();"><i class="fa-lg fa fa-search"></i></button>
-                                                                                    </span>
+                                                                                    <input type="text" v-model="fillWOperativoDetalle.cnumerovin" @keyup.enter="buscarWOperativoDetalle" class="form-control form-control-sm">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Warrant </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWOperativoDetalle">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -200,17 +209,22 @@
                                                                             <label class="col-sm-4 form-control-label">Estado</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="hidden" v-model="fillWOperativoDetalle.nidwarrantoperativo">
-                                                                                    <select v-model="fillWOperativoDetalle.nidestadowarrant" class="form-control form-control-sm">
-                                                                                        <option v-for="item in arrayEstadoWarrant" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <span class="input-group-btn">
-                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarWOperativoDetalle();"><i class="fa-lg fa fa-search"></i></button>
-                                                                                    </span>
+                                                                                    <el-select v-model="fillWOperativoDetalle.nidestadowarrant" filterable clearable placeholder="SELECCIONE" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayEstadoWarrant"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">        
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativoDetalle()"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -250,9 +264,9 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -270,7 +284,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
@@ -377,11 +391,14 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="input-group">
                                                                         <input type="text" value="VEHICULO MOTORIZADO" class="form-control form-control-sm" readonly>
-                                                                        <span class="input-group-btn">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','buscar')">
-                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                            </button>
-                                                                        </span>
+                                                                        <div class="input-group-prepend">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Buscar Vehículos </div>
+                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('vehiculos','buscar')">
+                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                </button>
+                                                                            </el-tooltip>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -490,13 +507,13 @@
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form v-on:submit.prevent class="form-horizontal">
-                            <div class="container-fluid">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="h4">LISTADO</h3>
-                                    </div>
-                                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">LISTADO</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form v-on:submit.prevent class="form-horizontal">
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
@@ -504,9 +521,14 @@
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillVersionVehiculo.cnumerovin" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
-                                                            </span>
+                                                            <div class="input-group-prepend">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Vehículos </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -517,14 +539,20 @@
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
                                                             <input type="text" v-model="fillVersionVehiculo.cnombrecomercial" @keyup.enter="buscarVersionVehiculo()" class="form-control form-control-sm">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo();"><i class="fa-lg fa fa-search"></i></button>
-                                                            </span>
+                                                            <div class="input-group-prepend">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Buscar Vehículos </div>
+                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarVersionVehiculo">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </el-tooltip>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+<<<<<<< HEAD
                                         <hr/>
                                         <template v-if="arrayVersionVehiculo.length">
                                             <div class="table-responsive">
@@ -590,16 +618,83 @@
                                         <template v-else>
                                             <table>
                                                 <tbody>
+=======
+                                    </form>
+                                    <br/>
+                                    <template v-if="arrayVersionVehiculo.length">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+>>>>>>> b421c549f8ca7e5e5aceee1a267a6deca0e1576a
                                                     <tr>
-                                                        <td colspan="10">No existen registros!</td>
+                                                        <th>Seleccione</th>
+                                                        <th>Nro VIN</th>
+                                                        <th>Nombre Comercial</th>
+                                                        <th>Año Fab.</th>
+                                                        <th>Año Modelo</th>
+                                                        <th>Forma Pago</th>
+                                                        <th>Moneda</th>
+                                                        <th>Costo</th>
+                                                        <th>Nro Factura</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdCompra">
+                                                        <td>
+                                                            <a href="#" @click="asignarVehiculo(vehiculo)">
+                                                                <i class='fa-md fa fa-check-circle'></i>
+                                                            </a>
+                                                        </td>
+                                                        <td>{{vehiculo.cNumeroVin}}</td>
+                                                        <td>{{vehiculo.cNombreComercial}}</td>
+                                                        <td>{{vehiculo.nAnioFabricacion}}</td>
+                                                        <td>{{vehiculo.nAnioVersion}}</td>
+                                                        <td>{{vehiculo.cFormaPago}}</td>
+                                                        <td>{{vehiculo.cSimboloMoneda}}</td>
+                                                        <td>{{vehiculo.fTotalCompra}}</td>
+                                                        <td>{{vehiculo.cNumeroFactura}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </template>
-                                    </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <nav>
+                                                        <ul class="pagination">
+                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            </li>
+                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                            :class="[page==isActivedModal?'active':'']">
+                                                                <a class="page-link" 
+                                                                href="#" @click.prevent="cambiarPaginaVehiculos(page)" 
+                                                                v-text="page"></a>
+                                                            </li>                            
+                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10">No existen registros!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -940,16 +1035,10 @@
                 this.mensajeError =[];
 
                 if(this.formWOperativo.nidbanco == 0 || !this.formWOperativo.nidbanco){
-                    this.mensajeError.push('Debes Seleecionar un Banco');
+                    this.mensajeError.push('Debes Seleecionar un Proveedor');
                 };
                 if(this.formWOperativo.dfechainicio == ''){
                     this.mensajeError.push('Debes Ingresar Fecha Registro');
-                };
-                if(this.formWOperativo.dfechafin == ''){
-                    this.mensajeError.push('Debes Ingresar Fecha Vencimiento');
-                };
-                if(this.formWOperativo.dfechainicio > this.formWOperativo.dfechafin){
-                    this.mensajeError.push('La Fecha Registro debe ser menor a la Fecha Venc.');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -959,6 +1048,7 @@
             limpiarFormulario(){
                 this.fillWOperativo.nordencompra= '',
                 this.fillWOperativo.cnumerovin=  '',
+                this.formWOperativo.dfechainicio = '',
                 this.arrayCompra = [],
                 this.arrayWOperativo = [],
                 this.limpiarPaginacion()
