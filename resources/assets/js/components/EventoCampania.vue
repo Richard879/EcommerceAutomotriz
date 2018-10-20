@@ -3,7 +3,7 @@
         <main>
             <header class="page-header">
             <div class="container-fluid">
-                <h2 class="no-margin-bottom">EVENTO CAMPAÑA</h2>
+                <h2 class="no-margin-bottom">CAMPAÑAS</h2>
             </div>
             </header>
 
@@ -14,13 +14,13 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaEventoCampania" @click="tabBuscarEventoCampania();" role="tab" data-toggle="tab">
-                                            <i class="fa fa-search"></i> BUSCAR EVENTO/CAMPAÑA
+                                        <a class="nav-link active" href="#TabBuscaEventoCampania" @click="tabBuscarEventoCampania()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> BUSCAR CAMPAÑAS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoEventoCampania();" role="tab" data-toggle="tab">
-                                            <i class="fa fa-bullhorn"></i> NUEVO EVENTO/CAMAPAÑA
+                                        <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoEventoCampania()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bullhorn"></i> NUEVA CAMPAÑA
                                         </a>
                                     </li>
                                 </ul>
@@ -33,7 +33,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">BUSCAR EVENTO/CAMPAÑA</h3>
+                                                                <h3 class="h4">BUSCAR CAMPAÑAS</h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
@@ -58,7 +58,37 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formEventoCamp.dfechainicio"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formEventoCamp.dfechafin"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Proveedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
                                                                                         <input type="hidden" v-model="formEventoCamp.nidproveedor">
@@ -77,9 +107,9 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Evento</label>
+                                                                                <label class="col-sm-4 form-control-label">Tipo Evento</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                    <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
                                                                                         <el-option
                                                                                         v-for="item in arrayTipoEC"
                                                                                         :key="item.nIdPar"
@@ -198,7 +228,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">NUEVO EVENTO/CAMPAÑA</h3>
+                                                            <h3 class="h4">NUEVA CAMPAÑA</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -274,7 +304,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Evento</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoEC"
                                                                                     :key="item.nIdPar"
@@ -299,7 +329,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable placeholder="Select">
+                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoMoneda"
                                                                                     :key="item.nIdPar"
@@ -316,7 +346,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidtipocambio" filterable placeholder="Select" v-on:change="onchangeTipoCambio()">
+                                                                                <el-select v-model="formEventoCamp.nidtipocambio" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeTipoCambio()">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoCambio"
                                                                                     :key="item.nIdPar"
@@ -1384,7 +1414,7 @@
                 </div>
             </div>
 
-            <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑA -->
+            <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑAS -->
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -1521,14 +1551,14 @@
                     nidproveedor: 0,
                     cproveedornombre: '',
                     csituacion: 'ACTIVA',
-                    ntipo: 0,
+                    ntipo: '',
                     fvalorpresupuesto: '',
                     descripcion:'',
                     filedocumento:'',
-                    ndetalle: 0,
+                    ndetalle: '',
                     cflagdetalleevento: 'CA',
-                    nidmoneda: 0,
-                    nidtipocambio: 0, 
+                    nidmoneda: '',
+                    nidtipocambio: '', 
                     fvalortipocambio: 0.0
                 },
                 arrayEventoCampania: [],
@@ -1575,7 +1605,7 @@
                 arrayIndexEntidadValor: [],
                 arrayElementoDistribucionEnvia: [],
                 lstTipoDistribucion: [
-                    { value: '1', text: 'POR EVENTO CAMPAÑA'},
+                    { value: '1', text: 'POR CAMPAÑA'},
                     { value: '2', text: 'POR ELEMENTO VENTA'}
                 ],
                 lstProveedorDitribucion:[
@@ -1672,8 +1702,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110045,
-                        'opcion' : 0
+                        'ngrupoparid' : 110045
                     }
                 }).then(response => {
                     this.arrayTipoEC = response.data;
@@ -1686,8 +1715,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110027,
-                        'opcion' : 0
+                        'ngrupoparid' : 110027
                     }
                 }).then(response => {
                     this.arrayTipoElemento = response.data;
@@ -1697,6 +1725,7 @@
             },
             tabBuscarEventoCampania(){
                 this.vistaFormularioTabBuscar = 1;
+                this.limpiarFormulario();
                 this.llenarComboTipoEC();
             },
             buscarEventoCampania(){
@@ -1708,19 +1737,21 @@
                 var url = this.ruta + '/ec/GetEventoCampania';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
-                        'page' : page
+                        'nidempresa'    : 1300011,
+                        'nidsucursal'   : sessionStorage.getItem("nIdSucursal"),
+                        'dfechainicio'  : this.formEventoCamp.dfechainicio,
+                        'dfechafin'     : this.formEventoCamp.dfechafin,
+                        'nidproveedor'  : this.formEventoCamp.nidproveedor,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayEventoCampania = response.data.arrayEventoCampania.data;
-                    this.pagination.current_page =  response.data.arrayEventoCampania.current_page;
-                    this.pagination.total = response.data.arrayEventoCampania.total;
+                    this.arrayEventoCampania    = response.data.arrayEventoCampania.data;
+                    this.pagination.current_page= response.data.arrayEventoCampania.current_page;
+                    this.pagination.total       = response.data.arrayEventoCampania.total;
                     this.pagination.per_page    = response.data.arrayEventoCampania.per_page;
                     this.pagination.last_page   = response.data.arrayEventoCampania.last_page;
                     this.pagination.from        = response.data.arrayEventoCampania.from;
-                    this.pagination.to           = response.data.arrayEventoCampania.to;
+                    this.pagination.to          = response.data.arrayEventoCampania.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -1806,8 +1837,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110028,
-                        'opcion' : 0
+                        'ngrupoparid' : 110028
                     }
                 }).then(response => {
                     this.arrayTipoMoneda = response.data;
@@ -1819,8 +1849,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110059,
-                        'opcion' : 0
+                        'ngrupoparid' : 110059
                     }
                 }).then(response => {
                     this.arrayTipoCambio = response.data;
@@ -2689,7 +2718,7 @@
                 this.formEventoCamp.cproveedornombre= '',
                 this.formEventoCamp.fvalorpresupuesto = '',
                 this.formEventoCamp.descripcion = '',
-                this.formEventoCamp.ntipo = 0,
+                this.formEventoCamp.ntipo = '',
                 this.formDistribucion.nideventocampania = 0,
                 this.arrayTemporalLinea = [],
                 this.arrayTemporalMarca = [],
