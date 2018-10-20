@@ -272,7 +272,7 @@
                                                                             </div>
                                                                         </div>
                                                                      </div>
-                                                                 </div>
+                                                                </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 offset-md-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarEntregaVehiculo">

@@ -2,11 +2,11 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">LISTA DE PRECIOS</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">LISTA DE PRECIOS</h2>
+                </div>
             </header>
-            
+
             <section>
                 <div class="container-fluid">
                     <div class="col-lg-12">
@@ -40,7 +40,7 @@
                                                             <div class="card-header">
                                                                 <h3 class="h4">BUSCAR LISTA</h3>
                                                             </div>
-                                                            <div class="card-body"> 
+                                                            <div class="card-body">
                                                                 <form class="form-horizontal">
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
@@ -80,7 +80,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">        
+                                                                    <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-4">
                                                                             <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarListaPrecioVh();">
                                                                                 <i class="fa fa-search"></i> Buscar
@@ -101,11 +101,11 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <template v-if="arrayListaPrecioVh.length">
-                                                                    <div class="table-responsive">                              
+                                                                    <div class="table-responsive">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Código</th>       
+                                                                                    <th>Código</th>
                                                                                     <th>Proveedor</th>
                                                                                     <th>Periodo</th>
                                                                                     <th>Nro Lista</th>
@@ -127,9 +127,9 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Agregar Detalle</div>
-                                                                                            <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                            <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes,
                                                                                                                 lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
-                                                                                        </el-tooltip>&nbsp;                                                       
+                                                                                        </el-tooltip>&nbsp;
                                                                                         <template v-if="lista.cListaEstado=='A'">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Desactivar Lista {{ lista.nIdListaPrecioVh }}</div>
@@ -141,11 +141,11 @@
                                                                                                 <div slot="content">Activar Lista {{ lista.nIdListaPrecioVh }}</div>
                                                                                                 <i @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                             </el-tooltip>
-                                                                                        </template>&nbsp; 
+                                                                                        </template>&nbsp;
                                                                                         <template v-if="lista.nListadoDetalleContador > 0">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Ver Detalle</div>
-                                                                                                <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes, 
+                                                                                                <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes,
                                                                                                                     lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                             </el-tooltip>
                                                                                         </template>
@@ -165,12 +165,12 @@
                                                                                         <li v-if="pagination.current_page > 1" class="page-item">
                                                                                             <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                         </li>
-                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                         :class="[page==isActived?'active':'']">
-                                                                                            <a class="page-link" 
-                                                                                            href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                            <a class="page-link"
+                                                                                            href="#" @click.prevent="cambiarPagina(page)"
                                                                                             v-text="page"></a>
-                                                                                        </li>                            
+                                                                                        </li>
                                                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                             <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                         </li>
@@ -198,7 +198,7 @@
                                                 </div>
                                             </section>
                                         </template>
-                                        
+
                                         <template v-else>
                                             <section class="forms">
                                                 <div class="container-fluid">
@@ -207,7 +207,7 @@
                                                             <div class="card-header">
                                                                 <h3 class="h4" v-text="tituloFormulario"></h3>
                                                             </div>
-                                                            <div class="card-body"> 
+                                                            <div class="card-body">
                                                                 <form class="form-horizontal">
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
@@ -301,7 +301,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">        
+                                                                    <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-4">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar();">
                                                                                 <i class="fa fa-save"></i> Registrar
@@ -327,7 +327,7 @@
                                                         <div class="card-header">
                                                             <h3 class="h4">AGREGAR DETALLE</h3>
                                                         </div>
-                                                        <div class="card-body"> 
+                                                        <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
@@ -494,7 +494,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">        
+                                                                    <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarDetalle()">
                                                                                 <i class="fa fa-save"></i> Registrar
@@ -510,7 +510,7 @@
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
-                                                                </template>        
+                                                                </template>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -526,7 +526,7 @@
                                                         <div class="card-header">
                                                             <h3 class="h4">INFORMACIÓN DETALLE</h3>
                                                         </div>
-                                                        <div class="card-body"> 
+                                                        <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
@@ -629,12 +629,12 @@
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                     </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                     :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link" 
-                                                                                        href="#" @click.prevent="cambiarPaginaDetalle(page)" 
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaDetalle(page)"
                                                                                         v-text="page"></a>
-                                                                                    </li>                            
+                                                                                    </li>
                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                     </li>
@@ -681,7 +681,7 @@
                         <div class="modal-body">
                             <div class="text-center">
                                 <div v-for="e in mensajeError" :key="e" v-text="e">
-                                        
+
                                 </div>
                             </div>
                         </div>
@@ -691,12 +691,12 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- MODAL PROVEEDORES -->
             <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
@@ -756,12 +756,12 @@
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                     <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link" 
-                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)" 
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
                                                                     v-text="page"></a>
-                                                                </li>                            
+                                                                </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                     <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
@@ -866,16 +866,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -891,16 +891,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -920,9 +920,9 @@
                 this.listarProveedores(1);
             },
             listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011 
+                var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011
                                                                     + '&nidgrupopar=' + 110023
-                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString() 
+                                                                    + '&cnombreproveedor=' + this.fillProvedor.cnombreproveedor.toString()
                                                                     + '&opcion=' + 1
                                                                     + '&page='+ page;
                 axios.get(url).then(response => {
@@ -1067,23 +1067,23 @@
                                 nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh,
                                 nIdProveedor: nIdProveedor,
                                 nIdTipoLista: nIdTipoLista
-                            }).then(response =>{     
+                            }).then(response =>{
                                 if(response.data[0].nFlagMsje == 1)
                                 {
                                     swal(
                                     'Activado!',
                                     'El registro fue activado.'
                                     );
-                                    this.listarListaPrecioVh(1);  
+                                    this.listarListaPrecioVh(1);
                                 }
                                 else{
                                     swal('Ya existe Lista activa');
-                                }                                                                               
+                                }
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -1102,17 +1102,17 @@
                             var url = this.ruta + '/listapreciovh/desactivar';
                             axios.put(url, {
                                 nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh
-                            }).then(response =>{                            
+                            }).then(response =>{
                                 swal(
                                 'Desactivado!',
                                 'El registro fue desactivado.'
                                 );
-                                this.listarListaPrecioVh(1);                           
+                                this.listarListaPrecioVh(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                        } else if (result.dismiss === swal.DismissReason.cancel) 
+                        } else if (result.dismiss === swal.DismissReason.cancel)
                         {
                         }
                     })
@@ -1263,7 +1263,7 @@
                 axios.post(url, {
                     nameFile: nameFile
                 }).then(response => {
-                    
+
                     if(this.validaCamposExcel(response.data)){
                         this.accionmodal=1;
                         this.modal = 1;
@@ -1300,7 +1300,7 @@
                         };
                     };
                 });
-                    
+
                 if(list.length){
                     this.mensajeError = list;
                     this.error = 1;
@@ -1318,7 +1318,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 var url = this.ruta + '/listapreciovh/SetListaPrecioVhDetalle';
                 axios.post(url, {
                     nIdListaPrecioVersionVeh: this.formListaPrecioVh.nidlistaprecioversionVeh,

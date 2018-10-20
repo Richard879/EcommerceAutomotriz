@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">DEPÓSITOS DE PEDIDO</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">DEPÓSITOS DE PEDIDO</h2>
+                </div>
             </header>
 
             <section>
@@ -984,7 +984,7 @@
                     this.pagination.last_page   = response.data.arrayPedido.last_page;
                     this.pagination.from        = response.data.arrayPedido.from;
                     this.pagination.to           = response.data.arrayPedido.to;
-                    $("#myBar").hide(); 
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });

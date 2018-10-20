@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">PUNTO DE INSPECCIÓN</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">PUNTO DE INSPECCIÓN</h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">
@@ -60,7 +60,7 @@
                                 <div class="card-header">
                                     <h3 class="h4">LISTADO ITEMS</h3>
                                 </div>
-                                <div class="card-body">                   
+                                <div class="card-body">
                                     <template v-if="arrayPuntoInspeccion.length">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
@@ -429,7 +429,7 @@
         },
          mounted(){
             this.llenarComboTipoInspeccion();
-            this.llenarFlag(); 
+            this.llenarFlag();
         },
         computed:{
             isActived: function(){
@@ -547,7 +547,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';    
+                var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
@@ -647,7 +647,7 @@
                     return;
                 }
 
-                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';            
+                var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';
                 axios.post(url, {
                     nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
                     nIdEmpresa: 1300011,

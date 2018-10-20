@@ -936,6 +936,9 @@
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
                                                                             <template v-if="arrayConfiCotiVehiculo.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Vehículo
+                                                                                </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
                                                                                         <thead>
@@ -970,6 +973,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
                                                                             </template>
                                                                             <template v-else>
                                                                                 <table>
@@ -1022,6 +1026,9 @@
                                                                             </template>
 
                                                                             <template v-if="arrayConfiCotiEleVenta.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Elementos de Venta
+                                                                                </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
                                                                                         <thead>
@@ -1056,6 +1063,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
                                                                             </template>
                                                                             <template v-else>
                                                                                 <table>
@@ -1067,6 +1075,9 @@
                                                                                 </table>
                                                                             </template>
                                                                             <template v-if="arrayConfiCotiEventoEleVenta.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Elementos de Venta de la Campaña
+                                                                                </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
                                                                                         <thead>
@@ -1101,6 +1112,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
                                                                             </template>
                                                                             <template v-else>
                                                                                 <table>
@@ -3673,12 +3685,7 @@
                         arrayelemventa: this.arrayConfiCotiEleVenta,
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
-                        // console.log(response);
-                        //CAPTURO EL SOBRE PRECIO Y DSCTO
-                        // console.log(parseFloat(response.data.arrayDatosCotizacion[0].fSobrePrecio));
-                        // console.log(parseFloat(response.data.arrayDatosCotizacion[0].fSuperaDescuento));
-                        // console.log(response.data.cFlagActivaEVPorRegalar);
-
+                        //CAPTURO EL SOBRE PRECIO - DSCTO Y SI HAY E.V POR REGALAR
                         if (parseFloat(response.data.arrayDatosCotizacion[0].fSobrePrecio) == 0 &&
                             parseFloat(response.data.arrayDatosCotizacion[0].fSuperaDescuento) == 0 &&
                             response.data.cFlagActivaEVPorRegalar == 0) {
@@ -3702,21 +3709,22 @@
             cambiarEsatadoCotizacion(nIdCabeceraCotizacion, op){
                 // console.log(nIdCabeceraCotizacion, op);
                 var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
-                    axios.put(url, {
-                        nIdCabeceraCotizacion: nIdCabeceraCotizacion,
-                        nIdEstadoCotizacion: (op == 1) ? 1300346 : 1300132,
-                        cFlagEstadoCotizacion: (op == 1) ? 'A' : 'P'
-                    }).then(response => {
-                        console.log(response);
-                        this.limpiarProcesoCotizacion();
-                    }).catch(error => {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                location.reload('0');
-                            }
+                axios.put(url, {
+                    nIdCabeceraCotizacion: nIdCabeceraCotizacion,
+                    opcion: op,
+                    // nIdEstadoCotizacion: (op == 1) ? 1300346 : 1300132,
+                    // cFlagEstadoCotizacion: (op == 1) ? 'A' : 'P'
+                }).then(response => {
+                    console.log(response);
+                    this.limpiarProcesoCotizacion();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
                         }
-                    });
+                    }
+                });
             },
             validarRegistrarCotizacion(){
                 this.error = 0;
@@ -3740,6 +3748,9 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            cancelarCotizacion(){
+                this.limpiarProcesoCotizacion();
             },
             limpiarProcesoCotizacion(){
                 //Tab Asignar Cotización

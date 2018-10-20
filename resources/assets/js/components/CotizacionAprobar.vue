@@ -3,7 +3,7 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom"> APROBACIÓN DEL PEDIDO</h2>
+                    <h2 class="no-margin-bottom"> APROBACIÓN DE LA COTIZACIÓN</h2>
                 </div>
             </header>
 
@@ -12,7 +12,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">BUSCAR PEDIDO</h3>
+                                <h3 class="h4">BUSCAR COTIZACIONES PENDIENTES</h3>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">

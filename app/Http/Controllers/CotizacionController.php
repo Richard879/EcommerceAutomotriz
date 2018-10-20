@@ -332,10 +332,11 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?, ?',
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCambiarEstadoCotizacion] ?, ?, ?',
                                                                 [   $request->nIdCabeceraCotizacion,
-                                                                    $request->nIdEstadoCotizacion,
-                                                                    $request->cFlagEstadoCotizacion,
+                                                                    $request->opcion,
+                                                                    // $request->nIdEstadoCotizacion,
+                                                                    // $request->cFlagEstadoCotizacion,
                                                                     Auth::user()->id
                                                                 ]);
 

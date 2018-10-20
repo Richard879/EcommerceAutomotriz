@@ -1,11 +1,11 @@
 <template>
     <main>
         <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">WARRANT OPERATIVO</h2>
-          </div>
+            <div class="container-fluid">
+                <h2 class="no-margin-bottom">WARRANT OPERATIVO</h2>
+            </div>
         </header>
-        
+
         <section>
             <div class="container-fluid">
                 <div class="col-lg-12">
@@ -34,7 +34,7 @@
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR WARRANT OPERATIVO</h3>
                                                         </div>
-                                                        <div class="card-body"> 
+                                                        <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
@@ -79,7 +79,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">        
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-4">
                                                                     <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarWOperativo();"><i class="fa fa-search"></i> Buscar</button>
                                                                     </div>
@@ -111,7 +111,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="operativo in arrayWOperativo" :key="operativo.nIdWarrantOperativo">                                                                        
+                                                                            <tr v-for="operativo in arrayWOperativo" :key="operativo.nIdWarrantOperativo">
                                                                                 <td>{{ operativo.nIdWarrantOperativo }}</td>
                                                                                 <td>{{ operativo.cNumeroWarrant }}</td>
                                                                                 <td>{{ operativo.cProveedorNombre }}</td>
@@ -136,12 +136,12 @@
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
                                                                                         <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                     </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                     :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link" 
-                                                                                        href="#" @click.prevent="cambiarPagina(page)" 
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPagina(page)"
                                                                                         v-text="page"></a>
-                                                                                    </li>                            
+                                                                                    </li>
                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                         <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                     </li>
@@ -169,7 +169,7 @@
                                             </div>
                                         </section>
                                     </template>
-                                    
+
                                     <template v-else>
                                         <section class="forms">
                                             <div class="container-fluid">
@@ -178,7 +178,7 @@
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR WARRANT OPERATIVO</h3>
                                                         </div>
-                                                        <div class="card-body"> 
+                                                        <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
@@ -238,7 +238,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="odetalle in arrayWOperativoDetalle" :key="odetalle.nIdDetalleWarrant">                                                                        
+                                                                            <tr v-for="odetalle in arrayWOperativoDetalle" :key="odetalle.nIdDetalleWarrant">
                                                                                 <td>{{ odetalle.nIdDetalleWarrant }}</td>
                                                                                 <td>{{ odetalle.nOrdenCompra }}</td>
                                                                                 <td>{{ odetalle.cNombreComercial }}</td>
@@ -258,12 +258,12 @@
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaDetalle(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                     </li>
-                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page" 
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                     :class="[page==isActived?'active':'']">
-                                                                                        <a class="page-link" 
-                                                                                        href="#" @click.prevent="cambiarPaginaDetalle(page)" 
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaDetalle(page)"
                                                                                         v-text="page"></a>
-                                                                                    </li>                            
+                                                                                    </li>
                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                                                                                         <a @click.prevent="cambiarPaginaDetalle(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                     </li>
@@ -300,7 +300,7 @@
                                                     <div class="card-header">
                                                         <h3 class="h4">GENERAR WARRANT OPERATIVO</h3>
                                                     </div>
-                                                    <div class="card-body"> 
+                                                    <div class="card-body">
                                                         <form class="form-horizontal">
                                                             <div class="form-group row">
                                                                 <div class="col-sm-6">
@@ -433,7 +433,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">        
+                                                            <div class="form-group row">
                                                                 <div class="col-sm-9 offset-sm-5">
                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrar()">
                                                                         <i class="fa fa-save"></i> Registrar
@@ -475,7 +475,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <div v-for="e in mensajeError" :key="e" v-text="e">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -485,7 +485,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-primary modal-lg" role="document">
                 <div class="modal-content">
@@ -569,12 +569,12 @@
                                                                 <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                     <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
-                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page" 
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
                                                                 :class="[page==isActivedModal?'active':'']">
-                                                                    <a class="page-link" 
-                                                                    href="#" @click.prevent="cambiarPaginaVehiculos(page)" 
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaVehiculos(page)"
                                                                     v-text="page"></a>
-                                                                </li>                            
+                                                                </li>
                                                                 <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
                                                                     <a @click.prevent="cambiarPaginaVehiculos(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
@@ -606,7 +606,7 @@
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
 
     </main>
 </template>
@@ -684,16 +684,16 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -709,16 +709,16 @@
                 if(!this.paginationModal.to) {
                     return [];
                 }
-                
-                var from = this.paginationModal.current_page - this.offset; 
+
+                var from = this.paginationModal.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
 
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.paginationModal.last_page){
                     to = this.paginationModal.last_page;
-                }  
+                }
 
                 var pagesArray = [];
                 while(from <= to) {
@@ -914,7 +914,7 @@
                 }
                 return sw;
             },
-            registrar(){                
+            registrar(){
                 this.arrayTemporal;
 
                 if(this.validar()){
@@ -922,7 +922,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 var url = this.ruta + '/woperativo/SetWOperativo';
                 axios.post(url, {
                     nIdProveedor: this.formWOperativo.nidbanco,
@@ -978,24 +978,24 @@
     }
 </script>
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
 </style>

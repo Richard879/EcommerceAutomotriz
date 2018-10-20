@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">TIPO DE INSPECCIÓN</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">TIPO DE INSPECCIÓN</h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">
@@ -427,7 +427,7 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 var url = this.ruta + '/tipoinspeccion/UpdTipoInspeccionById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -569,24 +569,24 @@
     }
 </script>
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
 </style>
