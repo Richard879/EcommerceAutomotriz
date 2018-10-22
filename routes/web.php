@@ -22,14 +22,17 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
     Route::get('/parametro/GetListParametroByNombre', 'ParametroController@GetListParametroByNombre');
     Route::get('/parametro/GetParametroByNombre', 'ParametroController@GetParametroByNombre');
+
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
+
     Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo');
     Route::post('/elemento/SetElemento', 'ElementoController@store');
     Route::put('/elemento/desactivar','ElementoController@desactivar');
     Route::put('/elemento/activar','ElementoController@activar');
     Route::post('/elemento/UpdElementoById', 'ElementoController@UpdElementoById');
+
     Route::post('/versionvehiculo/SetVersion', 'VersionVehiculoController@store');
     Route::get('/versionvehiculo/GetVersionVehiculo', 'VersionVehiculoController@GetVersionVehiculo');
     Route::post('/versionvehiculo/UpdVersionVehiculoById', 'VersionVehiculoController@UpdVersionVehiculoById');
@@ -38,6 +41,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/versionvehiculo/GetLineasByProveedor', 'VersionVehiculoController@GetLineasByProveedor');
     Route::get('/versionvehiculo/GetMarcaByLinea', 'VersionVehiculoController@GetMarcaByLinea');
     Route::get('/versionvehiculo/GetModeloByMarca', 'VersionVehiculoController@GetModeloByMarca');
+
     Route::post('/compra/importFileCompra', 'ExcelController@importFileCompra');
     Route::post('/compra/readFileCompra', 'ExcelController@readFileCompra');
     Route::post('/compra/SetCompra', 'CompraController@store');
@@ -51,6 +55,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/UpdCompraById', 'CompraController@UpdCompraById');
     Route::get('/compra/GetLstCompraNoLineaCredito', 'CompraController@GetLstCompraNoLineaCredito');
     Route::post('/compra/UpdCompraLineaCreditoById', 'CompraController@UpdCompraLineaCreditoById');
+
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
     Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');
     Route::post('/listapreciovh/importFileListaPrecioVh', 'ExcelController@importFileListaPrecioVh');
@@ -59,14 +64,17 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/listapreciovh/GetListaVhDetalle', 'ListaPrecioVersionVehController@GetListaVhDetalle');
     Route::put('/listapreciovh/activar','ListaPrecioVersionVehController@activar');
     Route::put('/listapreciovh/desactivar','ListaPrecioVersionVehController@desactivar');
+
     Route::get('/woperativo/GetWOperativo', 'WarrantOperativoController@GetWOperativo');
     Route::post('/woperativo/SetWOperativo', 'WarrantOperativoController@SetWOperativo');
     Route::post('/woperativo/SetWOperativoDetalle', 'WarrantOperativoController@SetWOperativoDetalle');
     Route::get('/woperativo/GetWOperativoDetalle', 'WarrantOperativoController@GetWOperativoDetalle');
+
     Route::get('/wfinanciero/GetWFinanciero', 'WarrantFinancieroController@GetWFinanciero');
     Route::post('/wfinanciero/SetWFinanciero', 'WarrantFinancieroController@SetWFinanciero');
     Route::post('/wfinanciero/SetWFinancieroDetalle', 'WarrantFinancieroController@SetWFinancieroDetalle');
     Route::get('/wfinanciero/GetWFinancieroDetalle', 'WarrantFinancieroController@GetWFinancieroDetalle');
+
     Route::post('/ec/SetEventoCampania', 'EventoCampaniaController@store');
     Route::post('/ec/SetDetalleEventoCampania', 'EventoCampaniaController@SetDetalleEventoCampania');
     Route::post('/ec/SetEventoElementoVenta', 'EventoCampaniaController@SetEventoElementoVenta');
@@ -76,9 +84,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/ec/GetDistribucionByElementoVenta', 'EventoCampaniaController@GetDistribucionByElementoVenta');
     Route::put('/ec/desactivar', 'EventoCampaniaController@desactivar');
     Route::put('/ec/activar', 'EventoCampaniaController@activar');
+
     Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
     Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
     Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');
+
     Route::post('/gescontacto/SetContactoPerNatural', 'GestionContactoController@SetContactoPerNatural');
     Route::post('/gescontacto/SetContactoPerJuridica', 'GestionContactoController@SetContactoPerJuridica');
     Route::post('/gescontacto/SetContactoRefVehiculo', 'GestionContactoController@SetContactoRefVehiculo');
@@ -104,6 +114,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
     Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
     Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
+
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
     Route::get('/pedido/GetListaPrecioDetalleByIdCotizacion', 'PedidoController@GetListaPrecioDetalleByIdCotizacion');
@@ -113,30 +124,37 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListPedidoAprobados', 'PedidoController@GetListPedidoAprobados');
     Route::get('/pedido/GetLstPedidosPendienteAprobacion', 'PedidoController@GetLstPedidosPendienteAprobacion');
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
+
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'PedidoDepositoController@SetDepositoPedido');
+
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
+
     Route::post('/tipoinspeccion/SetTipoInspeccion', 'PdiTipoInspeccionController@SetTipoInspeccion');
     Route::get('/tipoinspeccion/GetListTipoInspeccion', 'PdiTipoInspeccionController@GetListTipoInspeccion');
     Route::put('/tipoinspeccion/activar', 'PdiTipoInspeccionController@activar');
     Route::put('/tipoinspeccion/desactivar', 'PdiTipoInspeccionController@desactivar');
     Route::post('/tipoinspeccion/UpdTipoInspeccionById', 'PdiTipoInspeccionController@UpdTipoInspeccionById');
     Route::get('/tipoinspeccion/GetFillTipoInspeccion', 'PdiTipoInspeccionController@GetFillTipoInspeccion');
+
     Route::get('/plantilla/GetListItems', 'PdiPlantillaSeccionController@GetListItems');
     Route::post('/plantilla/SetItemPlantilla', 'PdiPlantillaSeccionController@SetItemPlantilla');
     Route::put('/plantilla/activar', 'PdiPlantillaSeccionController@activar');
     Route::put('/plantilla/desactivar', 'PdiPlantillaSeccionController@desactivar');
+
     Route::get('/puntoinspeccion/GetListPuntoInspeccion', 'PdiPuntoInspeccionController@GetListPuntoInspeccion');
     Route::post('/puntoinspeccion/SetPuntoInspeccion', 'PdiPuntoInspeccionController@SetPuntoInspeccion');
     Route::post('/puntoinspeccion/UpdPuntoInspeccionById', 'PdiPuntoInspeccionController@UpdPuntoInspeccionById');
     Route::put('/puntoinspeccion/activar', 'PdiPuntoInspeccionController@activar');
     Route::put('/puntoinspeccion/desactivar', 'PdiPuntoInspeccionController@desactivar');
+
     Route::get('/puga/GetListMenuByUsuario', 'PerUsuGruAccController@GetListMenuByUsuario');
     Route::get('/puga/GetLstUsuarios', 'PerUsuGruAccController@GetLstUsuarios');
     Route::get('/puga/GetListPermisosByUsuario', 'PerUsuGruAccController@GetListPermisosByUsuario');
     Route::post('/puga/SetPermisosByUsuario', 'PerUsuGruAccController@SetPermisosByUsuario');
     Route::post('/puga/DeletePermisosByUsuario', 'PerUsuGruAccController@DeletePermisosByUsuario');
+
     Route::get('/pdi/GetListSolicitudByEstado', 'PdiProcesoController@GetListSolicitudByEstado');
     Route::get('/pdi/GetListCompra', 'PdiProcesoController@GetListCompra');
     Route::get('/pdi/GetListSeccion', 'PdiProcesoController@GetListSeccion');
@@ -149,10 +167,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pdi/SetPlantillaPdi', 'PdiProcesoController@SetPlantillaPdi');
     Route::post('/pdi/SetAccesorioPdi', 'PdiProcesoController@SetAccesorioPdi');
     Route::post('/pdi/SetCabeceraInspeccionDocumento', 'PdiProcesoController@SetCabeceraInspeccionDocumento');
+
     Route::post('/documentoadjunto/subirArchivo', 'DocumentoAdjuntoController@subirArchivo');
-
-
-
 
     Route::get('/gescotizacion/GetListReferencias', 'CotizacionController@GetListReferencias');
     Route::get('/gescotizacion/GetTipoLista', 'CotizacionController@GetTipoLista');
@@ -166,9 +182,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetElementoByTipo', 'CotizacionController@GetElementoByTipo');
     Route::get('/gescotizacion/GetRefVehiculoByContacto', 'CotizacionController@GetRefVehiculoByContacto');
     Route::put('/setcotizacion/SetCambiarEstadoCotizacion', 'CotizacionController@SetCambiarEstadoCotizacion');
+    Route::get('/getcotizacion/GetLstCotizacionPendientes', 'CotizacionController@GetLstCotizacionPendientes');
+
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
     Route::post('/getComision/SetRegistrarComision', 'ComisionController@SetRegistrarComision');
+
     Route::get('/objComercial/getCompraActiva', 'ObjComercialController@getCompraActiva');
     Route::get('/objComercial/GetLstTipoBeneficio', 'ObjComercialController@GetLstTipoBeneficio');
     Route::get('/objComercial/getVentaActiva', 'ObjComercialController@getVentaActiva');
@@ -176,9 +195,11 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/objComercial/SetRegistrarObjComercialCompra', 'ObjComercialController@SetRegistrarObjComercialCompra');
     Route::get('/objComercial/GetDetalleVehiculoVenta', 'ObjComercialController@GetDetalleVehiculoVenta');
     Route::post('/objComercial/SetRegistrarObjComercialVenta', 'ObjComercialController@SetRegistrarObjComercialVenta');
+
     Route::get('/asigVendedorTurno/GetParametroByParParent', 'AsigVendedorTurnoController@GetParametroByParParent');
     Route::post('/asigVendedorTurno/SetRegistrarVendedorTurno', 'AsigVendedorTurnoController@SetRegistrarVendedorTurno');
     Route::get('/asigVendedorTurno/GeLstDetalleTurno', 'AsigVendedorTurnoController@GeLstDetalleTurno');
+
     Route::get('/cartacaracteristica/GeLstCompras', 'CartaCaracteristicaController@GeLstCompras');
     Route::get('/cartacaracteristica/GetLstCotizacionAprobadas', 'CartaCaracteristicaController@GetLstCotizacionAprobadas');
     Route::post('/cartacaracteristica/SetRegistrarSCC', 'CartaCaracteristicaController@SetRegistrarSCC');
@@ -188,11 +209,13 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/cartacaracteristica/SetConformeNoConforme', 'CartaCaracteristicaController@SetConformeNoConforme');
     Route::post('/cartacaracteristica/SetAprobadoNoAprobado', 'CartaCaracteristicaController@SetAprobadoNoAprobado');
     Route::put('/cartacaracteristica/SetAnularSCC', 'CartaCaracteristicaController@SetAnularSCC');
+
     Route::post('/maestrovehiculo/SetRegistrarVehiculoPlaca', 'MaestroVehiculoController@SetRegistrarVehiculoPlaca');
     Route::post('/maestrovehiculo/SetRegistrarPerNatural', 'MaestroVehiculoController@SetRegistrarPerNatural');
     Route::post('/maestrovehiculo/SetRegistrarPerJuridica', 'MaestroVehiculoController@SetRegistrarPerJuridica');
     Route::post('/maestrovehiculo/SetRegistrarSoat', 'MaestroVehiculoController@SetRegistrarSoat');
     Route::get('/maestrovehiculo/GetDetalleMaestroVehiculo', 'MaestroVehiculoController@GetDetalleMaestroVehiculo');
+
     Route::get('/autorizacion/GetLstVehiculosByCriterio', 'AutorizacionController@GetLstVehiculosByCriterio');
     Route::get('/autorizacion/GetLstContactosByUsuario', 'AutorizacionController@GetLstContactosByUsuario');
     Route::get('/autorizacion/GetLstMisSolicitudes', 'AutorizacionController@GetLstMisSolicitudes');
@@ -200,6 +223,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/autorizacion/GetRefVehiculoByContacto', 'AutorizacionController@GetRefVehiculoByContacto');
     Route::post('/autorizacion/SetRegistrarSolicitudAutorizacion', 'AutorizacionController@SetRegistrarSolicitudAutorizacion');
     Route::put('/autorizacion/SetConformeNoConforme', 'AutorizacionController@SetConformeNoConforme');
+
     Route::get('/tramite/GetPedidosCanceladosByEstadoTramite', 'TramiteController@GetPedidosCanceladosByEstadoTramite');
     Route::post('/tramite/SetCabeceraTramite', 'TramiteController@SetCabeceraTramite');
     Route::post('/tramite/SetTramiteTarjeta', 'TramiteController@SetTramiteTarjeta');
@@ -218,8 +242,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/asignavendedormodelo/GetLstVendedorModelo','AsignaVendedorModeloController@GetLstVendedorModelo');
     Route::post('/asignavendedormodelo/SetAsignaModelo','AsignaVendedorModeloController@SetAsignaModelo');
     Route::post('/asignavendedormodelo/SetDesasignaModelo','AsignaVendedorModeloController@SetDesasignaModelo');
+
     Route::get('/asignavendedorcuota/GetLstVendedorCuota','AsignaVendedorCuotaController@GetLstVendedorCuota');
     Route::post('/asignavendedorcuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaController@SetRegistraAsignacionCuota');
+
     Route::get('/entregavehiculo/GetLstInspecciones','EntregaVehiculoController@GetLstInspecciones');
     Route::post('/entregavehiculo/SetGenerarEntregaVehículo','EntregaVehiculoController@SetGenerarEntregaVehículo');
     Route::get('/entregavehiculo/GetLstArchivosAdjuntos','EntregaVehiculoController@GetLstArchivosAdjuntos');
