@@ -341,7 +341,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>-->
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
@@ -365,7 +365,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -658,12 +658,15 @@
                                                                                                     <label class="col-sm-4 form-control-label">* Asignar Presupuesto</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <div class="input-group">
-                                                                                                            <select name="account" v-model="formDistribucion.ntipoproveedor" class="form-control form-control-sm" v-on:change="asignaEmpresaEC()">
-                                                                                                                <option v-for="provdist in lstProveedorDitribucion" :value="provdist.value" :key="provdist.value">
-                                                                                                                    {{ provdist.text }}
-                                                                                                                </option>
-                                                                                                            </select>
                                                                                                             <div class="input-group-prepend">
+                                                                                                                <el-select v-model="formDistribucion.ntipoproveedor" filterable clearable placeholder="SELECCIONE" v-on:change="asignaEmpresaEC()">
+                                                                                                                    <el-option
+                                                                                                                    v-for="item in lstProveedorDitribucion"
+                                                                                                                    :key="item.value"
+                                                                                                                    :label="item.text"
+                                                                                                                    :value="item.value">
+                                                                                                                    </el-option>
+                                                                                                                </el-select>
                                                                                                                 <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorEC()">
                                                                                                                     <i class="fa-sm fa fa-search"></i>
                                                                                                                 </button>
@@ -1604,7 +1607,7 @@
                     nidproveedor: 0,
                     cproveedornombre: '',
                     nindex: 0,
-                    ntipoproveedor: 0,
+                    ntipoproveedor: '',
                     fValorPorcentual: 0,
                     nentidad: 0
                 },
@@ -1620,7 +1623,6 @@
                     { value: '2', text: 'POR ELEMENTO VENTA'}
                 ],
                 lstProveedorDitribucion:[
-                    { value: '0', text: 'SELECCIONE'},
                     { value: '1', text: 'PROVEEDOR'},
                     { value: '2', text: 'EMPRESA'}
                 ],
@@ -1652,7 +1654,7 @@
                 mensajeError: [],
                 vistaModal: 0,
                 vistaFormularioTabBuscar: 0,
-                vistaFormularioDistribucion: 0
+                vistaFormularioDistribucion: 1
             }
         },
         computed:{
@@ -2321,7 +2323,7 @@
                 if(this.formEventoCamp.ntipo == 0){
                     this.mensajeError.push('Debes Seleccionar un Tipo Evento');
                 };
-                if(!this.formEventoCamp.fvalorpresupuesto){
+                /*if(!this.formEventoCamp.fvalorpresupuesto){
                     this.mensajeError.push('Debes Ingresar Valor Presupuesto');
                 };
                 if(this.formEventoCamp.nidmoneda == 0){
@@ -2332,7 +2334,7 @@
                 };
                 if(this.formEventoCamp.fvalortipocambio == 0){
                     this.mensajeError.push('Debes Enviar valor Tipo de Cambio');
-                };
+                };*/
                 if(!this.formEventoCamp.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
                 };
@@ -2397,28 +2399,27 @@
                 $('#Tab3').addClass("nav-link active");
                 $('#TabECAsignaElemento').removeClass('in active show');
                 $('#TabECAsignaDistribucion').addClass('in active show');
-                this.vistaFormularioDistribucion = 1;
-            },
-            cargarDistPorEventoCampania(){
-                this.cambiarVistaDistribucion();
-            },
-            cargarDistPorElementoVenta(){
-                var url = this.ruta + '/ec/GetDistribucionByElementoVenta?nideventocampania=' + this.formDistribucion.nideventocampania;
-                axios.get(url).then(response => {
-                    this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
-                }).catch(error => {
-                    console.log(error);
-                });
             },
             cambiarVistaDistribucion(){
                 if(this.formDistribucion.ntipodistribucion==1){
                     this.vistaFormularioDistribucion = 1;
-                    this.cargarDistPorEventoCampania();
                 }
                 else{
                     this.vistaFormularioDistribucion = 0;
                     this.cargarDistPorElementoVenta();
                 }
+            },
+            cargarDistPorElementoVenta(){
+                var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
+                axios.get(url, {
+                    params: {
+                        'nideventocampania' : this.formDistribucion.nideventocampania
+                    }
+                }).then(response => {
+                    this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             buscarProveedorPorElementoVenta(index){
                 this.accionmodal=5;
@@ -2469,12 +2470,12 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formDistribucion.ntipoproveedor == 0){
+                if(this.formDistribucion.ntipoproveedor == 0 || !this.formDistribucion){
                     this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
                 };
-                if(this.formDistribucion.ntipoproveedor == 2){
+                /*if(this.formDistribucion.ntipoproveedor == 2){
                     this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
-                };
+                };*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
