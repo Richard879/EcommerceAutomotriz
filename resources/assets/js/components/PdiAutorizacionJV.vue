@@ -480,7 +480,7 @@
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Fecha</label>
-                                                                                        <div class="col-sm-8 widthFull">
+                                                                                        <div class="col-sm-8">
                                                                                             <el-date-picker
                                                                                                 v-model="fillNuevaSolicitud.dfechasolicitud"
                                                                                                 value-format="yyyy-MM-dd"
@@ -494,7 +494,7 @@
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Solicitud</label>
-                                                                                        <div class="col-sm-8 widthFull">
+                                                                                        <div class="col-sm-8">
                                                                                             <el-select v-model="fillNuevaSolicitud.nidtiposolicitud"
                                                                                                         @change="tipoBusquedaVehiculoPorTipoSolicitud"
                                                                                                         filterable
@@ -664,7 +664,7 @@
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Fecha Movimiento</label>
-                                                                                        <div class="col-sm-8 widthFull">
+                                                                                        <div class="col-sm-8">
                                                                                             <el-date-picker
                                                                                                 v-model="fillNuevaSolicitud.dfechamovimiento"
                                                                                                 value-format="yyyy-MM-dd"
@@ -678,7 +678,7 @@
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">Hora Movimiento</label>
-                                                                                        <div class="col-sm-8 widthFull">
+                                                                                        <div class="col-sm-8">
                                                                                             <el-time-picker
                                                                                                 v-model="fillNuevaSolicitud.choraMovimiento"
                                                                                                 value-format="HH:mm"
@@ -695,7 +695,7 @@
                                                                                 <div class="col-sm-12">
                                                                                     <div class="row">
                                                                                         <label class="col-sm-2 form-control-label">* Observación</label>
-                                                                                        <div class="col-sm-10 widthFull">
+                                                                                        <div class="col-sm-10">
                                                                                             <el-input
                                                                                                 type="textarea"
                                                                                                 autosize
@@ -710,7 +710,7 @@
                                                                                 <div class="col-md-6">
                                                                                     <div class="row">
                                                                                         <label class="col-md-4 form-control-label">*¿Quien va a mover el vehículo?</label>
-                                                                                        <div class="col-md-8 widthFull">
+                                                                                        <div class="col-md-8">
                                                                                             <el-select v-model="fillNuevaSolicitud.nidmovervehiculo"
                                                                                                     filterable
                                                                                                     clearable
@@ -2191,21 +2191,6 @@
         font-size: 0.75rem;
         text-align: center;
         margin: auto;
-    }
-    .el-select {
-        width: 100%;
-    }
-    .input-with-select .el-input-group__prepend {
-        background-color: #fff;
-    }
-    .widthFull>.el-select>.el-input {
-        width: 100%;
-    }
-    .el-date-editor.el-input, .el-date-editor.el-input__inner{
-        width: 100%;
-    }
-    .el-input-number{
-        width: 100% !important;
     }
     /* Estilos Modal */
     .menosPadding{

@@ -3,7 +3,7 @@
         <main>
             <header class="page-header">
             <div class="container-fluid">
-                <h2 class="no-margin-bottom">EVENTO CAMPAÑA</h2>
+                <h2 class="no-margin-bottom">CAMPAÑAS</h2>
             </div>
             </header>
 
@@ -14,13 +14,13 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaEventoCampania" @click="tabBuscarEventoCampania();" role="tab" data-toggle="tab">
-                                            <i class="fa fa-search"></i> BUSCAR EVENTO/CAMPAÑA
+                                        <a class="nav-link active" href="#TabBuscaEventoCampania" @click="tabBuscarEventoCampania()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-search"></i> BUSCAR CAMPAÑAS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoEventoCampania();" role="tab" data-toggle="tab">
-                                            <i class="fa fa-bullhorn"></i> NUEVO EVENTO/CAMAPAÑA
+                                        <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoEventoCampania()" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bullhorn"></i> NUEVA CAMPAÑA
                                         </a>
                                     </li>
                                 </ul>
@@ -33,7 +33,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">BUSCAR EVENTO/CAMPAÑA</h3>
+                                                                <h3 class="h4">BUSCAR CAMPAÑAS</h3>
                                                             </div>
                                                             <div class="card-body">
                                                                 <form class="form-horizontal">
@@ -58,7 +58,37 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formEventoCamp.dfechainicio"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formEventoCamp.dfechafin"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Proveedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
                                                                                         <input type="hidden" v-model="formEventoCamp.nidproveedor">
@@ -77,9 +107,9 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Evento</label>
+                                                                                <label class="col-sm-4 form-control-label">Tipo Evento</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                    <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
                                                                                         <el-option
                                                                                         v-for="item in arrayTipoEC"
                                                                                         :key="item.nIdPar"
@@ -198,7 +228,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">NUEVO EVENTO/CAMPAÑA</h3>
+                                                            <h3 class="h4">NUEVA CAMPAÑA</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -272,9 +302,9 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Evento</label>
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Campaña</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.ntipo" filterable placeholder="Select">
+                                                                                <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoEC"
                                                                                     :key="item.nIdPar"
@@ -286,7 +316,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Valor Presupuesto</label>
@@ -299,7 +329,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable placeholder="Select">
+                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoMoneda"
                                                                                     :key="item.nIdPar"
@@ -310,13 +340,13 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
+                                                                </div>-->
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidtipocambio" filterable placeholder="Select" v-on:change="onchangeTipoCambio()">
+                                                                                <el-select v-model="formEventoCamp.nidtipocambio" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeTipoCambio()">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoCambio"
                                                                                     :key="item.nIdPar"
@@ -335,7 +365,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -387,30 +417,34 @@
                                                                                 <h3 class="h4">ASIGNAR DETALLE</h3>
                                                                             </div>
                                                                             <div class="card-body">
-                                                                                <form class="form-horizontal">
-                                                                                    <div class="col-sm-12">
-                                                                                        <div class="row">
-                                                                                            <label class="col-sm-3 form-control-label">* Detalle Evento Campaña</label>
-                                                                                            <div class="col-sm-4">
-                                                                                                <div class="input-group">
-                                                                                                    <input type="hidden" v-model="formEventoCamp.cflagdetalleevento">
-                                                                                                    <select v-model="formEventoCamp.ndetalle" class="form-control form-control-sm">
-                                                                                                        <option v-for="item in arrayDetalleEC" :key="item.nIdGrupoPar" :value="item.nIdGrupoPar" v-text="item.cGrupoParNombre">
-                                                                                                        </option>
-                                                                                                    </select>
-                                                                                                    <div class="input-group-prepend">
-                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                            <div slot="content">Buscar </div>
-                                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
-                                                                                                                <i class="fa-lg fa fa-search"></i>
-                                                                                                            </button>
-                                                                                                        </el-tooltip>
-                                                                                                    </div>
+                                                                                <div class="form-group row">
+                                                                                    <label class="col-sm-3 form-control-label">* Detalle Evento Campaña</label>
+                                                                                    <div class="col-sm-9">
+                                                                                        <div class="form-group">
+                                                                                            <div class="input-group">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-select v-model="formEventoCamp.ndetalle" filterable clearable placeholder="SELECCIONE" >
+                                                                                                        <el-option
+                                                                                                        v-for="item in arrayDetalleEC"
+                                                                                                        :key="item.nIdGrupoPar"
+                                                                                                        :label="item.cGrupoParNombre"
+                                                                                                        :value="item.nIdGrupoPar">
+                                                                                                        </el-option>
+                                                                                                    </el-select>
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
+                                                                                        <!--<div class="form-group">
+                                                                                            <input type="text" placeholder=".input-sm" class="form-control form-control-sm">
+                                                                                        </div>-->
                                                                                     </div>
-                                                                                </form>
+                                                                                </div>
                                                                                 <br>
                                                                                 <template v-if="arrayTemporalLinea.length">
                                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
@@ -624,12 +658,15 @@
                                                                                                     <label class="col-sm-4 form-control-label">* Asignar Presupuesto</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <div class="input-group">
-                                                                                                            <select name="account" v-model="formDistribucion.ntipoproveedor" class="form-control form-control-sm" v-on:change="asignaEmpresaEC()">
-                                                                                                                <option v-for="provdist in lstProveedorDitribucion" :value="provdist.value" :key="provdist.value">
-                                                                                                                    {{ provdist.text }}
-                                                                                                                </option>
-                                                                                                            </select>
                                                                                                             <div class="input-group-prepend">
+                                                                                                                <el-select v-model="formDistribucion.ntipoproveedor" filterable clearable placeholder="SELECCIONE" v-on:change="asignaEmpresaEC()">
+                                                                                                                    <el-option
+                                                                                                                    v-for="item in lstProveedorDitribucion"
+                                                                                                                    :key="item.value"
+                                                                                                                    :label="item.text"
+                                                                                                                    :value="item.value">
+                                                                                                                    </el-option>
+                                                                                                                </el-select>
                                                                                                                 <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorEC()">
                                                                                                                     <i class="fa-sm fa fa-search"></i>
                                                                                                                 </button>
@@ -781,13 +818,13 @@
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                        </div>
-                                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE PROVEEDORES</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -808,68 +845,68 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayProveedor.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="10">No existen registros!</td>
+                                                            <th>Seleccione</th>
+                                                            <th>Nombre Proveedor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
+                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="proveedor.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>
-                                        </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -1171,41 +1208,48 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group row">
-                                                <label class="col-sm-2 form-control-label">Tipo Elemento</label>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <select v-model="formEle.ntpoelemen" class="form-control form-control-sm">
-                                                            <option v-for="item in arrayTipoElemento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                            </option>
-                                                        </select>
-                                                        <div class="input-group-prepend">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Buscar Elemento Venta</div>
-                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </el-tooltip>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Tipo Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="formEle.ntpoelemen" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayTipoElemento"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre Elemento</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Elemento Venta</div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-2 form-control-label">Nombre Elemento</label>
-                                                <div class="col-sm-4">
-                                                    <div class="input-group">
-                                                        <input type="text" v-model="formEle.celementonombre" @keyup.enter="buscarElemento()" class="form-control form-control-sm">
-                                                        <div class="input-group-prepend">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Buscar Elemento Venta</div>
-                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscarElemento()">
-                                                                    <i class="fa-lg fa fa-search"></i>
-                                                                </button>
-                                                            </el-tooltip>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarElemento()">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <hr/>
+                                            <br/>
                                             <template v-if="arrayElementoVenta.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
@@ -1238,16 +1282,16 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-sm-12">
                                                     <div class="row">
-                                                        <div class="col-lg-7">
+                                                        <div class="col-sm-7">
                                                             <nav>
                                                                 <ul class="pagination">
                                                                     <li v-if="paginationModal.current_page > 1" class="page-item">
                                                                         <a @click.prevent="cambiarPaginaElemento(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                     </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                    :class="[page==isActived?'active':'']">
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
                                                                         <a class="page-link"
                                                                         href="#" @click.prevent="cambiarPaginaElemento(page)"
                                                                         v-text="page"></a>
@@ -1258,7 +1302,7 @@
                                                                 </ul>
                                                             </nav>
                                                         </div>
-                                                        <div class="col-lg-5">
+                                                        <div class="col-sm-5">
                                                             <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                         </div>
                                                     </div>
@@ -1384,7 +1428,7 @@
                 </div>
             </div>
 
-            <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑA -->
+            <!-- MODAL PROVEEDORES DISTRIBUCION POR EVENTO CAMPAÑAS -->
             <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -1507,7 +1551,7 @@
                 formEle:{
                     nidproveedor: 0,
                     cproveedornombre: '',
-                    ntpoelemen: 0,
+                    ntpoelemen: '',
                     nidelemento: 0,
                     celementonombre: ''
                 },
@@ -1521,14 +1565,14 @@
                     nidproveedor: 0,
                     cproveedornombre: '',
                     csituacion: 'ACTIVA',
-                    ntipo: 0,
+                    ntipo: '',
                     fvalorpresupuesto: '',
                     descripcion:'',
                     filedocumento:'',
-                    ndetalle: 0,
+                    ndetalle: '',
                     cflagdetalleevento: 'CA',
-                    nidmoneda: 0,
-                    nidtipocambio: 0, 
+                    nidmoneda: '',
+                    nidtipocambio: '', 
                     fvalortipocambio: 0.0
                 },
                 arrayEventoCampania: [],
@@ -1563,7 +1607,7 @@
                     nidproveedor: 0,
                     cproveedornombre: '',
                     nindex: 0,
-                    ntipoproveedor: 0,
+                    ntipoproveedor: '',
                     fValorPorcentual: 0,
                     nentidad: 0
                 },
@@ -1575,11 +1619,10 @@
                 arrayIndexEntidadValor: [],
                 arrayElementoDistribucionEnvia: [],
                 lstTipoDistribucion: [
-                    { value: '1', text: 'POR EVENTO CAMPAÑA'},
+                    { value: '1', text: 'POR CAMPAÑA'},
                     { value: '2', text: 'POR ELEMENTO VENTA'}
                 ],
                 lstProveedorDitribucion:[
-                    { value: '0', text: 'SELECCIONE'},
                     { value: '1', text: 'PROVEEDOR'},
                     { value: '2', text: 'EMPRESA'}
                 ],
@@ -1611,7 +1654,7 @@
                 mensajeError: [],
                 vistaModal: 0,
                 vistaFormularioTabBuscar: 0,
-                vistaFormularioDistribucion: 0
+                vistaFormularioDistribucion: 1
             }
         },
         computed:{
@@ -1672,8 +1715,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110045,
-                        'opcion' : 0
+                        'ngrupoparid' : 110045
                     }
                 }).then(response => {
                     this.arrayTipoEC = response.data;
@@ -1686,8 +1728,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110027,
-                        'opcion' : 0
+                        'ngrupoparid' : 110027
                     }
                 }).then(response => {
                     this.arrayTipoElemento = response.data;
@@ -1697,6 +1738,7 @@
             },
             tabBuscarEventoCampania(){
                 this.vistaFormularioTabBuscar = 1;
+                this.limpiarFormulario();
                 this.llenarComboTipoEC();
             },
             buscarEventoCampania(){
@@ -1708,19 +1750,21 @@
                 var url = this.ruta + '/ec/GetEventoCampania';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
-                        'page' : page
+                        'nidempresa'    : 1300011,
+                        'nidsucursal'   : sessionStorage.getItem("nIdSucursal"),
+                        'dfechainicio'  : this.formEventoCamp.dfechainicio,
+                        'dfechafin'     : this.formEventoCamp.dfechafin,
+                        'nidproveedor'  : this.formEventoCamp.nidproveedor,
+                        'page'          : page
                     }
                 }).then(response => {
-                    this.arrayEventoCampania = response.data.arrayEventoCampania.data;
-                    this.pagination.current_page =  response.data.arrayEventoCampania.current_page;
-                    this.pagination.total = response.data.arrayEventoCampania.total;
+                    this.arrayEventoCampania    = response.data.arrayEventoCampania.data;
+                    this.pagination.current_page= response.data.arrayEventoCampania.current_page;
+                    this.pagination.total       = response.data.arrayEventoCampania.total;
                     this.pagination.per_page    = response.data.arrayEventoCampania.per_page;
                     this.pagination.last_page   = response.data.arrayEventoCampania.last_page;
                     this.pagination.from        = response.data.arrayEventoCampania.from;
-                    this.pagination.to           = response.data.arrayEventoCampania.to;
+                    this.pagination.to          = response.data.arrayEventoCampania.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -1806,8 +1850,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110028,
-                        'opcion' : 0
+                        'ngrupoparid' : 110028
                     }
                 }).then(response => {
                     this.arrayTipoMoneda = response.data;
@@ -1819,8 +1862,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110059,
-                        'opcion' : 0
+                        'ngrupoparid' : 110059
                     }
                 }).then(response => {
                     this.arrayTipoCambio = response.data;
@@ -1863,7 +1905,6 @@
 
                 axios.get(url, {
                     params: {
-                        'opcion' : 0
                     }
                 }).then(response => {
                     this.arrayDetalleEC = response.data;
@@ -2167,7 +2208,7 @@
                 this.listarElementos(1);
             },
             listarElementos(page){
-                var url = this.ruta + '/elemento/GetElementoByTipo';
+                var url = this.ruta + '/gescotizacion/GetElementoByTipo';
 
                 axios.get(url, {
                     params: {
@@ -2178,12 +2219,12 @@
                     }
                 }).then(response => {
                     this.arrayElementoVenta = response.data.arrayElementoVenta.data;
-                    this.pagination.current_page =  response.data.arrayElementoVenta.current_page;
-                    this.pagination.total = response.data.arrayElementoVenta.total;
-                    this.pagination.per_page    = response.data.arrayElementoVenta.per_page;
-                    this.pagination.last_page   = response.data.arrayElementoVenta.last_page;
-                    this.pagination.from        = response.data.arrayElementoVenta.from;
-                    this.pagination.to           = response.data.arrayElementoVenta.to;
+                    this.paginationModal.current_page =  response.data.arrayElementoVenta.current_page;
+                    this.paginationModal.total = response.data.arrayElementoVenta.total;
+                    this.paginationModal.per_page    = response.data.arrayElementoVenta.per_page;
+                    this.paginationModal.last_page   = response.data.arrayElementoVenta.last_page;
+                    this.paginationModal.from        = response.data.arrayElementoVenta.from;
+                    this.paginationModal.to           = response.data.arrayElementoVenta.to;
                 }).catch(error => {
                     this.errors = error
                 });
@@ -2282,7 +2323,7 @@
                 if(this.formEventoCamp.ntipo == 0){
                     this.mensajeError.push('Debes Seleccionar un Tipo Evento');
                 };
-                if(!this.formEventoCamp.fvalorpresupuesto){
+                /*if(!this.formEventoCamp.fvalorpresupuesto){
                     this.mensajeError.push('Debes Ingresar Valor Presupuesto');
                 };
                 if(this.formEventoCamp.nidmoneda == 0){
@@ -2293,7 +2334,7 @@
                 };
                 if(this.formEventoCamp.fvalortipocambio == 0){
                     this.mensajeError.push('Debes Enviar valor Tipo de Cambio');
-                };
+                };*/
                 if(!this.formEventoCamp.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
                 };
@@ -2358,28 +2399,27 @@
                 $('#Tab3').addClass("nav-link active");
                 $('#TabECAsignaElemento').removeClass('in active show');
                 $('#TabECAsignaDistribucion').addClass('in active show');
-                this.vistaFormularioDistribucion = 1;
-            },
-            cargarDistPorEventoCampania(){
-                this.cambiarVistaDistribucion();
-            },
-            cargarDistPorElementoVenta(){
-                var url = this.ruta + '/ec/GetDistribucionByElementoVenta?nideventocampania=' + this.formDistribucion.nideventocampania;
-                axios.get(url).then(response => {
-                    this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
-                }).catch(error => {
-                    console.log(error);
-                });
             },
             cambiarVistaDistribucion(){
                 if(this.formDistribucion.ntipodistribucion==1){
                     this.vistaFormularioDistribucion = 1;
-                    this.cargarDistPorEventoCampania();
                 }
                 else{
                     this.vistaFormularioDistribucion = 0;
                     this.cargarDistPorElementoVenta();
                 }
+            },
+            cargarDistPorElementoVenta(){
+                var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
+                axios.get(url, {
+                    params: {
+                        'nideventocampania' : this.formDistribucion.nideventocampania
+                    }
+                }).then(response => {
+                    this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             buscarProveedorPorElementoVenta(index){
                 this.accionmodal=5;
@@ -2430,12 +2470,12 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formDistribucion.ntipoproveedor == 0){
+                if(this.formDistribucion.ntipoproveedor == 0 || !this.formDistribucion){
                     this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
                 };
-                if(this.formDistribucion.ntipoproveedor == 2){
+                /*if(this.formDistribucion.ntipoproveedor == 2){
                     this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
-                };
+                };*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -2689,7 +2729,7 @@
                 this.formEventoCamp.cproveedornombre= '',
                 this.formEventoCamp.fvalorpresupuesto = '',
                 this.formEventoCamp.descripcion = '',
-                this.formEventoCamp.ntipo = 0,
+                this.formEventoCamp.ntipo = '',
                 this.formDistribucion.nideventocampania = 0,
                 this.arrayTemporalLinea = [],
                 this.arrayTemporalMarca = [],
@@ -2718,24 +2758,24 @@
     }
 </script>
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
 </style>

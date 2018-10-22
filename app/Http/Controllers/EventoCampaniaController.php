@@ -15,11 +15,17 @@ class EventoCampaniaController extends Controller
 
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
         $nIdProveedor = $request->nidproveedor;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         
-        $arrayEventoCampania = DB::select('exec [usp_EC_GetEventoCampania] ?, ?, ?', 
+        $arrayEventoCampania = DB::select('exec [usp_EC_GetEventoCampania] ?, ?, ?, ?, ?', 
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
                                                                 $nIdProveedor
                                                             ]);
         
