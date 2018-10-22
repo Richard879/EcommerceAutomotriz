@@ -12,7 +12,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="h4">BUSCAR COTIZACIONES PENDIENTES</h3>
+                                <h3 class="h4">BUSCAR COTIZACIONES PENDIENTES DE CONFORMIDAD</h3>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal">
@@ -21,7 +21,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="fillCotizacionesPendiente.cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -29,7 +29,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.csucursal" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="fillCotizacionesPendiente.csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -40,7 +40,7 @@
                                                 <label class="col-sm-4 form-control-label">Fecha Inicio</label>
                                                 <div class="col-sm-8">
                                                     <el-date-picker
-                                                        v-model="fillBusquedaPedido.dfechainicio"
+                                                        v-model="fillCotizacionesPendiente.dfechainicio"
                                                         type="date"
                                                         value-format="yyyy-MM-dd"
                                                         format="dd/MM/yyyy"
@@ -54,7 +54,7 @@
                                                 <label class="col-sm-4 form-control-label">Fecha Fin</label>
                                                 <div class="col-sm-8">
                                                     <el-date-picker
-                                                        v-model="fillBusquedaPedido.dfechafin"
+                                                        v-model="fillCotizacionesPendiente.dfechafin"
                                                         type="date"
                                                         value-format="yyyy-MM-dd"
                                                         format="dd/MM/yyyy"
@@ -69,7 +69,7 @@
                                             <div class="row">
                                                 <label class="col-md-4 form-control-label">Marca</label>
                                                 <div class="col-md-8">
-                                                    <el-select v-model="fillBusquedaPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                    <el-select v-model="fillCotizacionesPendiente.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                         <el-option
                                                         v-for="item in arrayMarca"
                                                         :key="item.nIdPar"
@@ -84,7 +84,7 @@
                                             <div class="row">
                                                 <label class="col-md-4 form-control-label">Modelo</label>
                                                 <div class="col-md-8">
-                                                    <el-select v-model="fillBusquedaPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                    <el-select v-model="fillCotizacionesPendiente.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                         <el-option
                                                         v-for="item in arrayModelo"
                                                         :key="item.nIdPar"
@@ -98,8 +98,11 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos(1)">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesPendientes(1)">
                                                 <i class="fa fa-search"></i> Buscar
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBusqCotizacionesPendientes">
+                                                <i class="fa fa-recycle"></i> Limpiar
                                             </button>
                                         </div>
                                     </div>
@@ -113,40 +116,56 @@
                                 <h3 class="h4">LISTADO</h3>
                             </div>
                             <div class="card-body">
-                                <template v-if="arrayPedidos.length">
+                                <template v-if="arrayCotizacionesPendientes.length">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
                                                     <th>Acciones</th>
-                                                    <th>Nro Pedido</th>
+                                                    <th>Nro Cotizacion</th>
                                                     <th>Contacto</th>
                                                     <th>Vehiculo</th>
-                                                    <th>Número VIN</th>
-                                                    <th>Número DUA</th>
-                                                    <th>Fecha Pedido</th>
+                                                    <th>Dirección</th>
+                                                    <th>Celular</th>
+                                                    <th>Email</th>
+                                                    <th>Fecha Inicio</th>
+                                                    <th>Fecha Venc.</th>
                                                     <th>Aprobación</th>
-                                                    <th>Estado Pedido</th>
+                                                    <th>Estado Cotización</th>
                                                     <th>Vendedor</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
+                                                <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraCotizacion">
                                                     <td>
+                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                <i @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                            </el-tooltip>
+                                                        </template>
+                                                        <template v-if="cotizacionpendiente.cTipoRol == 110083">
+                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                            </el-tooltip>
+                                                        </template>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                            <div slot="content">No Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                            <i @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                         </el-tooltip>
                                                     </td>
-                                                    <td v-text="pedido.cNumeroPedido"></td>
-                                                    <td v-text="pedido.cContacto"></td>
-                                                    <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
-                                                    <td v-text="pedido.cNumeroVin"></td>
-                                                    <td v-text="pedido.cNumeroDUA"></td>
-                                                    <td v-text="pedido.dFechaPedido"></td>
-                                                    <td v-text="pedido.cEstadoAprobacion"></td>
-                                                    <td v-text="pedido.cEstadoPedido"></td>
-                                                    <td v-text="pedido.Vendedor"></td>
+                                                    <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
+                                                    <td v-text="cotizacionpendiente.cContacto"></td>
+                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioFabricacion + '-' + cotizacionpendiente.nAnioModelo"></td>
+                                                    <td v-text="cotizacionpendiente.cDireccion"></td>
+                                                    <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
+                                                    <td v-text="cotizacionpendiente.cEmail"></td>
+                                                    <td v-text="cotizacionpendiente.dFechaCotizacion"></td>
+                                                    <td v-text="cotizacionpendiente.dFechaVencimientoCotizacion"></td>
+                                                    <td v-text="cotizacionpendiente.cEstadoAprobacion"></td>
+                                                    <td v-text="cotizacionpendiente.cEstadoCotizacion"></td>
+                                                    <td v-text="cotizacionpendiente.cVendedorNombre"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -157,16 +176,16 @@
                                                 <nav>
                                                     <ul class="pagination">
                                                         <li v-if="pagination.current_page > 1" class="page-item">
-                                                            <a @click.prevent="cambiarPaginaPedido(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                         </li>
                                                         <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                         :class="[page==isActived?'active':'']">
                                                             <a class="page-link"
-                                                            href="#" @click.prevent="cambiarPaginaPedido(page)"
+                                                            href="#" @click.prevent="cambiarPaginaCotizacion(page)"
                                                             v-text="page"></a>
                                                         </li>
                                                         <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                            <a @click.prevent="cambiarPaginaPedido(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                         </li>
                                                     </ul>
                                                 </nav>
@@ -230,7 +249,7 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
-                fillBusquedaPedido:{
+                fillCotizacionesPendiente:{
                     nidempresa: 1300011,
                     cempresa: 'SAISAC',
                     nidsucursal: sessionStorage.getItem("nIdSucursal"),
@@ -241,7 +260,7 @@
                     dfechainicio: '',
                     dfechafin: ''
                 },
-                arrayPedidos: [],
+                arrayCotizacionesPendientes: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -332,28 +351,38 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.fillBusquedaPedido.nidmarca = '';
+                    this.fillCotizacionesPendiente.nidmarca = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelo(){
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url, {
                     params: {
-                        'nidmarca': this.fillBusquedaPedido.nidmarca
+                        'nidmarca': this.fillCotizacionesPendiente.nidmarca
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillBusquedaPedido.nidmodelo = '';
+                    this.fillCotizacionesPendiente.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
-            buscarPedidos(page){
-                if(this.validarBuscarPedidos()){
+            buscarCotizacionesPendientes(page){
+                if(this.validarbuscarCotizacionesPendientes()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -361,45 +390,49 @@
 
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/pedido/GetLstPedidosPendienteAprobacion';
+                var url = this.ruta + '/getcotizacion/GetLstCotizacionPendientes';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillBusquedaPedido.nidempresa,
-                        'nidsucursal' : this.fillBusquedaPedido.nidsucursal,
-                        'nidmarca' : this.fillBusquedaPedido.nidmarca,
-                        'nidmodelo' : this.fillBusquedaPedido.nidmodelo,
-                        'dfechainicio': this.fillBusquedaPedido.dfechainicio,
-                        'dfechafin': this.fillBusquedaPedido.dfechafin,
+                        'nidempresa': this.fillCotizacionesPendiente.nidempresa,
+                        'nidsucursal' : this.fillCotizacionesPendiente.nidsucursal,
+                        'nidmarca' : this.fillCotizacionesPendiente.nidmarca,
+                        'nidmodelo' : this.fillCotizacionesPendiente.nidmodelo,
+                        'dfechainicio': this.fillCotizacionesPendiente.dfechainicio,
+                        'dfechafin': this.fillCotizacionesPendiente.dfechafin,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedidos = response.data.arrayPedido.data;
-                    this.pagination.current_page   =  response.data.arrayPedido.current_page;
-                    this.pagination.total          = response.data.arrayPedido.total;
-                    this.pagination.per_page       = response.data.arrayPedido.per_page;
-                    this.pagination.last_page      = response.data.arrayPedido.last_page;
-                    this.pagination.from           = response.data.arrayPedido.from;
-                    this.pagination.to             = response.data.arrayPedido.to;
-                }).then(function (response) {
+                    this.arrayCotizacionesPendientes = response.data.arrayCotizacionesPendientes.data;
+                    this.pagination.current_page   =  response.data.arrayCotizacionesPendientes.current_page;
+                    this.pagination.total          = response.data.arrayCotizacionesPendientes.total;
+                    this.pagination.per_page       = response.data.arrayCotizacionesPendientes.per_page;
+                    this.pagination.last_page      = response.data.arrayCotizacionesPendientes.last_page;
+                    this.pagination.from           = response.data.arrayCotizacionesPendientes.from;
+                    this.pagination.to             = response.data.arrayCotizacionesPendientes.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
-            validarBuscarPedidos(){
+            validarbuscarCotizacionesPendientes(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(!this.fillBusquedaPedido.dfechainicio){
+                /*if(!this.fillCotizacionesPendiente.dfechainicio){
                     this.mensajeError.push('Debe ingresar una fecha de inicio');
                 }
 
-                if(!this.fillBusquedaPedido.dfechafin){
+                if(!this.fillCotizacionesPendiente.dfechafin){
                     this.mensajeError.push('Debe ingresar una fecha de fin');
                 }*/
 
-                let fecha_ini = moment(this.fillBusquedaPedido.dfechainicio);
-                let fecha_fin = moment(this.fillBusquedaPedido.dfechafin);
+                let fecha_ini = moment(this.fillCotizacionesPendiente.dfechainicio);
+                let fecha_fin = moment(this.fillCotizacionesPendiente.dfechafin);
 
                 if(fecha_fin.diff(fecha_ini, 'days') < 0){
                     this.mensajeError.push('La Fecha de Fin no puede ser menor a la fecha de inicio');
@@ -410,47 +443,64 @@
                 }
                 return this.error;
             },
-            cambiarPaginaPedido(page){
+            cambiarPaginaCotizacion(page){
                 this.paginationModal.current_page=page;
-                this.buscarPedidos(page);
+                this.buscarCotizacionesPendientes(page);
             },
-            aprobarPedido(nIdPedido){
+            conformeNoConformeCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
+                console.log(op + '-' + nIdCabeceraCotizacion + '-' + cNumeroCotizacion);
                 swal({
-                    title: '¿Esta seguro de aprobar el pedido N°' + nIdPedido + '?',
+                    title: '¿Esta seguro de' + ((op == 2) ? ' dar ' : ' no dar ') + 'conformidad a la cotización N°' + cNumeroCotizacion + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Aprobar!',
+                    confirmButtonText: 'Si,' + ((op == 2) ? '' : ' No ') + 'Conforme!',
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
                     if (result.value) {
                         let me = this;
-                        var url = me.ruta + '/pedido/SetAprobarPedido';
-                        axios.put(url,{
-                            nidpedido: nIdPedido
-                        }).then(function (response) {
-                            me.buscarPedidos(1);
+                        this.mostrarProgressBar();
+
+                        var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
+                        axios.put(url, {
+                            nIdCabeceraCotizacion : nIdCabeceraCotizacion,
+                            opcion : op
+                        }).then(response => {
+                            me.buscarCotizacionesPendientes(1);
                             swal(
-                                'Aprobado!',
-                                'El pedido ' + nIdPedido +' ha sido aprobado con éxito.',
+                                ((op == 2) ? '' : ' No ') + 'Conforme!',
+                                'La Cotización ' + cNumeroCotizacion +' ha sido otorgada la ' + ((op == 2) ? '' : ' No ') + ' Conformidad con éxito.',
                                 'success'
                             )
-                        }).catch(function (error) {
+                        }).catch(error => {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
+            },
+            limpiarBusqCotizacionesPendientes(){
+                this.fillCotizacionesPendiente.nidlinea = '';
+                this.fillCotizacionesPendiente.nidmarca = '';
+                this.fillCotizacionesPendiente.nidmodelo = '';
+                this.fillCotizacionesPendiente.dfechainicio = '';
+                this.fillCotizacionesPendiente.dfechafin = '';
+                this.$forceUpdate();
             },
             // =================================================================
             // MODAL
             // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case "proveedor":
+                    case "distribucion":
                     {
                         switch(accion){
-                            case 'buscar':
+                            case 'abrir':
                             {
                                 this.accionmodal=2;
                                 this.modal = 1;

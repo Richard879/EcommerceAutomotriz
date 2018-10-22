@@ -344,4 +344,35 @@ class CotizacionController extends Controller
 
         return response()->json($arrayCabeceraCotizacion);
     }
+
+    public function GetLstCotizacionPendientes(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa    =   $request->nidempresa;
+        $nidsucursal   =   $request->nidsucursal;
+        $nidmarca      =   $request->nidmarca;
+        $nidmodelo     =   $request->nidmodelo;
+        $dfechainicio  =   $request->dfechainicio;
+        $dfechafin     =   $request->dfechafin;
+
+        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+        $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
+        $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
+
+        $arrayCotizacionesPendientes = DB::select('exec usp_Cotizacion_GetLstCotizacionPendiente ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nidempresa,
+                                        $nidsucursal,
+                                        $nidmarca,
+                                        $nidmodelo,
+                                        $dfechainicio,
+                                        $dfechafin,
+                                        Auth::user()->id
+                                    ]);
+
+        $arrayCotizacionesPendientes = ParametroController::arrayPaginator($arrayCotizacionesPendientes, $request);
+        return ['arrayCotizacionesPendientes'=>$arrayCotizacionesPendientes];
+    }
 }
