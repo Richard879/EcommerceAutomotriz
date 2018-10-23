@@ -440,9 +440,6 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <!--<div class="form-group">
-                                                                                            <input type="text" placeholder=".input-sm" class="form-control form-control-sm">
-                                                                                        </div>-->
                                                                                     </div>
                                                                                 </div>
                                                                                 <br>
@@ -685,7 +682,7 @@
                                                                                                                     :value="item.value">
                                                                                                                     </el-option>
                                                                                                                 </el-select>
-                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorEC()">
+                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="abrirModal('distribucion','cabecera')">
                                                                                                                     <i class="fa-sm fa fa-search"></i>
                                                                                                                 </button>
                                                                                                             </div>
@@ -1279,8 +1276,9 @@
                                                                 <th>Tipo Elemento</th>
                                                                 <th>Nombre Elemento</th>
                                                                 <th>Moneda</th>
-                                                                <th>Precio de Venta</th>
-                                                                <th>Precio de Venta Mínimo</th>
+                                                                <th>Precio Venta</th>
+                                                                <th>Precio Venta Mínimo</th>
+                                                                <th>Valor Costo</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -1298,6 +1296,7 @@
                                                                 <td v-text="elemento.cMonedaNombre"></td>
                                                                 <td v-text="elemento.fElemenValorVenta"></td>
                                                                 <td v-text="elemento.fElemenValorMinimoVenta"></td>
+                                                                <td v-text="elemento.fElementValorCosto"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1600,6 +1599,7 @@
                 arrayTipoMoneda: [],
                 arrayTipoCambio: [],
                 fValorTipoCambioTransaccion: 0.0,
+                nIdTipoCambio: 0,
                 // ============================================================
                 // =========== VARIABLES TAB ASIGNA DETALLE ===========
                 arrayDetalleEC: [],
@@ -1736,7 +1736,7 @@
                 return me.arrayTemporalElemento.reduce(function(valorAnterior, valorActual){
                     //Si moneda es soles
                     if(valorActual.nIdMoneda == 1300027){
-                        sumaDolares = valorAnterior + (parseFloat(valorActual.fSubTotal) * me.fValorTipoCambioTransaccion);
+                        sumaDolares = valorAnterior + (parseFloat(valorActual.fSubTotal) / me.fValorTipoCambioTransaccion);
                     }else{
                         sumaDolares = valorAnterior + parseFloat(valorActual.fSubTotal);
                     }
@@ -1749,7 +1749,7 @@
                 return me.arrayTemporalElemento.reduce(function(valorAnterior, valorActual){
                     //Si moneda es dolares
                     if(valorActual.nIdMoneda == 1300028){
-                        sumaSoles = valorAnterior + (parseFloat(valorActual.fSubTotal) / me.fValorTipoCambioTransaccion);
+                        sumaSoles = valorAnterior + (parseFloat(valorActual.fSubTotal) * me.fValorTipoCambioTransaccion);
                     }else{
                         sumaSoles = valorAnterior + parseFloat(valorActual.fSubTotal);
                     }
@@ -1933,6 +1933,7 @@
                         this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
                         //PARA ENVIAR EN LA TRANSACCION
                         this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
+                        this.nIdTipoCambio = response.data[0].nIdTipoCambio;
                     }).then(function (response) {
                         $("#myBar").hide();
                     }).catch(error => {
@@ -2164,6 +2165,11 @@
             },
             // =============  TAB ASIGNA ELEMENTO VENTA ===================
             activarTab2(){
+                if(this.validaTab2()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
@@ -2174,13 +2180,16 @@
             cargarTabAsignaElemento(){
                 this.llenarComboTpoElemento();
             },
-            validaAsignaElemento(){
+            validaTab2(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(this.formEventoCamp.nidproveedor == 0){
-                    this.mensajeError.push('Debes Seleccionar un Proveedor');
-                };*/
+                if(this.formEventoCamp.nidtipocambio == 0 || !this.formEventoCamp.nidtipocambio){
+                    this.mensajeError.push('Debes seleccionar Tipo Cambio');
+                };
+                if(this.formEventoCamp.fvalortipocambio == 0){
+                    this.mensajeError.push('El Tipo Cambio debe ser mayor a 0');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2271,10 +2280,10 @@
                     nIdTipoEvento: this.formEventoCamp.ntipo,
                     dFechaInicio: this.formEventoCamp.dfechainicio,
                     dFechaFin: this.formEventoCamp.dfechafin,
-                    fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                    nIdMoneda: this.formEventoCamp.nidmoneda,
-                    nIdTipoCambio: this.formEventoCamp.nidtipocambio,
-                    fValorTipoCambio: this.formEventoCamp.fvalortipocambio,
+                    nIdTipoCambio: this.nIdTipoCambio,
+                    fTipoCambio: this.formEventoCamp.fvalortipocambio,
+                    fMontoPresupuestoDolar: this.montoTotalElementoVentaDolar,
+                    fMontoPresupuestoSol:  this.montoTotalElementoVentaSol,
                     cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
@@ -2283,8 +2292,8 @@
                         this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
                         $("#myBar").hide();
                         swal('Evento Campaña registrado');
-                        this.activarTab3();
                         this.formDistribucion.nideventocampania = response.data[0].nIdEventoCampania;
+                        this.activarTab3();
                     }
                     else{
                         swal('NO se puede registrar Evento');
@@ -2367,7 +2376,9 @@
 
                     axios.post(url, {
                         nIdEventoCampania: nIdEventoCampania,
-                        data: this.arrayTemporalElemento
+                        data: this.arrayTemporalElemento,
+                        nIdTipoCambio: this.nIdTipoCambio,
+                        fTipoCambio: this.fValorTipoCambioTransaccion
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2440,17 +2451,6 @@
                 var index = this.formDistribucion.nindex;
                 this.arrayIndexProvId[index] = nIdProveedor;
                 this.arrayIndexProvNombre[index] = cProveedorNombre;
-            },
-            buscarProveedorPorEC(){
-                if(this.validaBuscaProveedorPorEC()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
-
-                this.accionmodal=6;
-                this.modal = 1;
-                this.listarProveedorPorEC(1);
             },
             validaBuscaProveedorPorEC(){
                 this.error = 0;
@@ -2624,7 +2624,7 @@
                 };
 
                 if(valorPorEC != 100){
-                    this.mensajeError.push('La suma de los valores de porcentaje debe ser = 100%');
+                    this.mensajeError.push('La suma de los valores de porcentaje debe ser 100');
                 };
 
                 if(this.mensajeError.length){
@@ -2710,12 +2710,6 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                if(this.validaAsignaElemento()){
-                                    this.accionmodal=1;
-                                    this.modal = 1;
-                                    return;
-                                }
-
                                 this.accionmodal=4;
                                 this.modal = 1;
                                 break;
@@ -2760,6 +2754,23 @@
 
                                 break;
                             }
+                        }
+                    }break;
+                    case 'distribucion':
+                    {
+                        switch(accion){
+                            case 'cabecera':
+                            {
+                                if(this.validaBuscaProveedorPorEC()){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
+                                this.accionmodal=6;
+                                this.modal = 1;
+                                this.listarProveedorPorEC(1);
+                            }break;
                         }
                     }
                 }
