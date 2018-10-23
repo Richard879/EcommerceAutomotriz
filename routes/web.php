@@ -183,6 +183,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetRefVehiculoByContacto', 'CotizacionController@GetRefVehiculoByContacto');
     Route::put('/setcotizacion/SetCambiarEstadoCotizacion', 'CotizacionController@SetCambiarEstadoCotizacion');
     Route::get('/getcotizacion/GetLstCotizacionPendientes', 'CotizacionController@GetLstCotizacionPendientes');
+    Route::get('/getcotizacion/GetDistribucionBySuperaDscto', 'CotizacionController@GetDistribucionBySuperaDscto');
+    Route::get('/getcotizacion/GetDistribucionByElementoVenta', 'CotizacionController@GetDistribucionByElementoVenta');
 
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');

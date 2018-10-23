@@ -3685,9 +3685,8 @@
                         arrayelemventa: this.arrayConfiCotiEleVenta,
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
-                        //CAPTURO EL SOBRE PRECIO - DSCTO Y SI HAY E.V POR REGALAR
-                        if (parseFloat(response.data.arrayDatosCotizacion[0].fSobrePrecio) == 0 &&
-                            parseFloat(response.data.arrayDatosCotizacion[0].fSuperaDescuento) == 0 &&
+                        //CAPTURO EL SUPERA DSCTO Y SI HAY E.V POR REGALAR
+                        if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N' &&
                             response.data.cFlagActivaEVPorRegalar == 0) {
                             //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
                             this.cambiarEsatadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);

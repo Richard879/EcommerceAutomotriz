@@ -147,7 +147,7 @@
                                                         <template v-if="cotizacionpendiente.cTipoRol == 110083">
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-usd"></i>
                                                             </el-tooltip>
                                                         </template>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
@@ -232,6 +232,142 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL DISTRIBUCIÓN DE ELEMENTOS DE VENTA POR REGALAR Y DESCUENTO -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DISTRIBUCIÓN</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="listDistribucionDescuento.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Distribución de Elementos de Venta por Regalar
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Nombre Comercial</th>
+                                                            <th>Precio de Venta</th>
+                                                            <th>Descuento</th>
+                                                            <th>Supera Dscto</th>
+                                                            <th>Proveedor</th>
+                                                            <th>% Distribución</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
+                                                            <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                            <td v-text="descuento.cProveedorNombre"></td>
+                                                            <td v-text="descuento.cNombreComercial"></td>
+                                                            <td v-text="descuento.fSubTotal"></td>
+                                                            <td v-text="descuento.fDescuento"></td>
+                                                            <td v-text="descuento.fSuperaDescuento"></td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <el-select v-model="descuento.nIdProveedor"
+                                                                               filterable clearable
+                                                                               placeholder="SELECCIONE PROVEEDOR" >
+                                                                        <el-option
+                                                                            v-for="item in arrayProveedor"
+                                                                            :key="item.nIdPar"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.nIdPar">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" v-model="descuento.fDistribucion" class="form-control form-control-sm">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                        <template v-if="listDistribucionEVPorRegalar.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Distribución de Elementos de Venta por Regalar
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Tipo Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Precio de Venta</th>
+                                                            <th>SubTotal</th>
+                                                            <th>Proveedor</th>
+                                                            <th>% Distribución</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="elemento in listDistribucionEVPorRegalar" :key="elemento.nIdElementoVenta">
+                                                            <td v-text="elemento.nIdElementoVenta"></td>
+                                                            <td v-text="elemento.cProveedorNombre"></td>
+                                                            <td v-text="elemento.cTipoElemenNombre"></td>
+                                                            <td v-text="elemento.cElemenNombre"></td>
+                                                            <td v-text="elemento.fElemenValorVenta"></td>
+                                                            <td v-text="elemento.fSubTotal"></td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <el-select v-model="elemento.nIdProveedor"
+                                                                               filterable clearable
+                                                                               placeholder="SELECCIONE PROVEEDOR" >
+                                                                        <el-option
+                                                                            v-for="item in arrayProveedor"
+                                                                            :key="item.nIdPar"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.nIdPar">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" v-model="elemento.fDistribucion" class="form-control form-control-sm">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -261,6 +397,11 @@
                     dfechafin: ''
                 },
                 arrayCotizacionesPendientes: [],
+                //Modal Distribucion
+                arrayDistribucionDescuento: [],
+                listDistribucionDescuento: [],
+                arrayDistribucionEVPorRegalar: [],
+                listDistribucionEVPorRegalar: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -448,7 +589,7 @@
                 this.buscarCotizacionesPendientes(page);
             },
             conformeNoConformeCotizacion(op, nIdCabeceraCotizacion, cNumeroCotizacion){
-                console.log(op + '-' + nIdCabeceraCotizacion + '-' + cNumeroCotizacion);
+                // console.log(op + '-' + nIdCabeceraCotizacion + '-' + cNumeroCotizacion);
                 swal({
                     title: '¿Esta seguro de' + ((op == 2) ? ' dar ' : ' no dar ') + 'conformidad a la cotización N°' + cNumeroCotizacion + '?',
                     type: 'warning',
@@ -492,6 +633,104 @@
                 this.fillCotizacionesPendiente.dfechafin = '';
                 this.$forceUpdate();
             },
+            listarDistribucionDescuento(nIdCabeceraCotizacion){
+                var url = this.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    this.arrayDistribucionDescuento = response.data;
+                    this.cargarDistribucionSuperaDscto();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarDistribucionSuperaDscto(){
+                let me = this;
+                me.listDistribucionDescuento = [];
+
+                if(me.arrayDistribucionDescuento.length > 0){
+                    me.arrayDistribucionDescuento.map(function(ec){
+                        me.listDistribucionDescuento.push({
+                            cProveedorNombre        :   ec.cProveedorNombre,
+                            nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
+                            nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
+                            cFlagSuperaDescuento    :   ec.cFlagSuperaDescuento,
+                            cNombreComercial        :   ec.cNombreComercial,
+                            fSubTotal               :   ec.fSubTotal,
+                            fDescuento              :   ec.fDescuento,
+                            fSuperaDescuento        :   ec.fSuperaDescuento,
+                            nIdProveedor            :   '',
+                            fDistribucion           :   0
+                        });
+                    });
+                }
+            },
+            listarDistribucionEVPorRegalar(nIdCabeceraCotizacion){
+                var url = this.ruta + '/getcotizacion/GetDistribucionByElementoVenta';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    this.arrayDistribucionEVPorRegalar = response.data;
+                    this.cargarDistribucionEVPorRegalar();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarDistribucionEVPorRegalar(){
+                let me = this;
+                me.listDistribucionEVPorRegalar = [];
+
+                if(me.arrayDistribucionEVPorRegalar.length > 0){
+                    me.arrayDistribucionEVPorRegalar.map(function(ec){
+                        me.listDistribucionEVPorRegalar.push({
+                            nIdElementoVenta    :   ec.nIdElementoVenta,
+                            cProveedorNombre    :   ec.cProveedorNombre,
+                            cTipoElemenNombre   :   ec.cTipoElemenNombre,
+                            cElemenNombre       :   ec.cElemenNombre,
+                            fElemenValorVenta   :   ec.fElemenValorVenta,
+                            fSubTotal           :   ec.fSubTotal,
+                            nIdProveedor        :   '',
+                            fDistribucion       :   0
+                        });
+                    });
+                }
+            },
+            listarProveedores(page){
+                var url = this.ruta + '/parametro/GetLstProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillCotizacionesPendiente.nidempresa,
+                        'nidgrupopar' : 110023,
+                        'cnombreproveedor' : '',
+                        'opcion' : 0,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayProveedor = response.data.arrayProveedor;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // =================================================================
             // MODAL
             // =================================================================
@@ -505,6 +744,8 @@
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 this.listarProveedores(1);
+                                this.listarDistribucionDescuento(data);
+                                this.listarDistribucionEVPorRegalar(data);
                                 break;
                             }
                         }
