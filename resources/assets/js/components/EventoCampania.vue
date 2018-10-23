@@ -316,31 +316,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--<div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Valor Presupuesto</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formEventoCamp.fvalorpresupuesto" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable clearable placeholder="SELECCIONE">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayTipoMoneda"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -733,19 +708,35 @@
                                                                                                                     <th>Proveedor</th>
                                                                                                                     <th>Tipo Elemento</th>
                                                                                                                     <th>Nombre Elemento</th>
-                                                                                                                    <th>Precio de Venta</th>
-                                                                                                                    <th>Proveedor</th>
+                                                                                                                    <th>Moneda</th>
+                                                                                                                    <th>Precio Venta</th>
+                                                                                                                    <th>Valor Costo</th>
+                                                                                                                    <th>Cantidad</th>
+                                                                                                                    <th>SubTotal Soles</th>
+                                                                                                                    <th>SubTotal Dolares</th>
                                                                                                                     <th>% Distribución</th>
+                                                                                                                    <!--<th>Proveedor</th>
+                                                                                                                    <th>% Distribución</th>-->
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
-                                                                                                                <tr v-for="(eledist, index) in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
+                                                                                                                <tr v-for="eledist in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
                                                                                                                     <td v-text="eledist.nIdEventoElementoVenta"></td>
                                                                                                                     <td v-text="eledist.cProveedorNombre"></td>
                                                                                                                     <td v-text="eledist.cTipoElemenNombre"></td>
                                                                                                                     <td v-text="eledist.cElemenNombre"></td>
-                                                                                                                    <td v-text="eledist.fElemenValorVenta"></td>
+                                                                                                                    <td v-text="eledist.cMonedaNombre"></td>
+                                                                                                                    <td v-text="eledist.fValorVenta"></td>
+                                                                                                                    <td v-text="eledist.fValorCosto"></td>
+                                                                                                                    <td v-text="eledist.nCantidad"></td>
+                                                                                                                    <td v-text="eledist.fSubTotalElementoSol"></td>
+                                                                                                                    <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
+                                                                                                                        <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
+                                                                                                                            <i @click="abrirFormulario('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                                                        </el-tooltip>&nbsp;
+                                                                                                                    </td>
+                                                                                                                    <!--<td>
                                                                                                                         <div class="input-group">
                                                                                                                             <input type="hidden" v-model="arrayIndexProvId[index]">
                                                                                                                             <input type="text" v-model="arrayIndexProvNombre[index]" class="form-control form-control-sm" readonly>
@@ -758,7 +749,7 @@
                                                                                                                     </td>
                                                                                                                     <td>
                                                                                                                         <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
-                                                                                                                    </td>
+                                                                                                                    </td>-->
                                                                                                                 </tr>
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1348,8 +1339,7 @@
                 </div>
             </div>
 
-            <!-- MODAL PROVEEDORES DISTRIBUCION POR ELEMENTO VENTA -->
-            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <!--<div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -1435,6 +1425,122 @@
                                                     </tbody>
                                                 </table>
                                             </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <!-- MODAL PROVEEDORES DISTRIBUCION POR ELEMENTO VENTA -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="formVersion.nidclase" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayClase"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="hidden" v-model="formDistribucion.nindex">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <!--<hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarProveedorPorElementoVenta(proveedor.nIdPar, proveedor.cParNombre);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>-->
                                         </div>
                                     </div>
                                 </div>
@@ -1543,7 +1649,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
 
         </main>
     </transition>
@@ -1986,8 +2092,8 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
-                        'clineanombre' : this.fillModal.clineanombre.toString(),
+                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
+                        'clineanombre': this.fillModal.clineanombre.toString(),
                         'page' : page
                     }
                 }).then(response => {
@@ -2044,7 +2150,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
+                        'nidproveedor' : parseInt(this.formEventoCamp.nidproveedor),
                         'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
                         'page' : page
                     }
@@ -2102,8 +2208,8 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
-                        'cmodelonombre' : this.fillModal.cmodelonombre.toString(),
+                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
+                        'cmodelonombre': this.fillModal.cmodelonombre.toString(),
                         'page' : page
                     }
                 }).then(response => {
@@ -2204,7 +2310,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidtipoelemen' : this.formEle.ntpoelemen,
+                        'nidtipoelemen': this.formEle.ntpoelemen,
                         'celementonombre': this.formEle.celementonombre,
                         'page' : page
                     }
@@ -2277,10 +2383,10 @@
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
                     cNombreEventoCampania: this.formEventoCamp.descripcion,
-                    nIdTipoEvento: this.formEventoCamp.ntipo,
+                    nIdTipoEvento: parseInt(this.formEventoCamp.ntipo),
                     dFechaInicio: this.formEventoCamp.dfechainicio,
                     dFechaFin: this.formEventoCamp.dfechafin,
-                    nIdTipoCambio: this.nIdTipoCambio,
+                    nIdTipoCambio: parseInt(this.nIdTipoCambio),
                     fTipoCambio: this.formEventoCamp.fvalortipocambio,
                     fMontoPresupuestoDolar: this.montoTotalElementoVentaDolar,
                     fMontoPresupuestoSol:  this.montoTotalElementoVentaSol,
@@ -2406,11 +2512,12 @@
                     this.cargarDistPorElementoVenta();
                 }
             },
+            //======= Distribucion por Elemento Venta
             cargarDistPorElementoVenta(){
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        'nideventocampania' : this.formDistribucion.nideventocampania
+                        'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2418,12 +2525,12 @@
                     console.log(error);
                 });
             },
-            buscarProveedorPorElementoVenta(index){
+            /*buscarProveedorPorElementoVenta(index){
                 this.accionmodal=5;
                 this.modal = 1;
                 this.formDistribucion.nindex = index;
                 this.listarProveedorPorElementoVenta(1);
-            },
+            },*/
             listarProveedorPorElementoVenta(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
 
@@ -2452,6 +2559,7 @@
                 this.arrayIndexProvId[index] = nIdProveedor;
                 this.arrayIndexProvNombre[index] = cProveedorNombre;
             },
+            //======= Distribucion por Cabecera
             validaBuscaProveedorPorEC(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -2459,10 +2567,6 @@
                 if(this.formDistribucion.ntipoproveedor == 0 || !this.formDistribucion){
                     this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
                 };
-                /*if(this.formDistribucion.ntipoproveedor == 2){
-                    this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
-                };*/
-
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2770,6 +2874,18 @@
                                 this.accionmodal=6;
                                 this.modal = 1;
                                 this.listarProveedorPorEC(1);
+                            }break;
+                        }
+                    }break;
+                    case 'asignadistribucion':
+                    {
+                        switch(accion){
+                            case 'elemento':
+                            {
+                                this.accionmodal=5;
+                                this.modal = 1;
+                                this.formDistribucion.nindex = index;
+                                this.listarProveedorPorElementoVenta(1);
                             }break;
                         }
                     }

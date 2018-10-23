@@ -197,13 +197,16 @@ class EventoCampaniaController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdEventoCampania = $request->nideventocampania;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
         
         $arrayElementoDistribucion = DB::select('exec [usp_EC_GetDistribucionByElementoVenta] ?', 
                                                             [   $nIdEventoCampania
                                                             ]);
-        
-        $arrayElementoDistribucion = ParametroController::arrayPaginator($arrayElementoDistribucion, $request);
-        return ['arrayElementoDistribucion'=>$arrayElementoDistribucion]; 
+        if($variable == "0"){
+            $arrayElementoDistribucion = ParametroController::arrayPaginator($arrayElementoDistribucion, $request);
+        }
+        return ['arrayElementoDistribucion'=>$arrayElementoDistribucion];
     }
 
     public function desactivar (Request $request)
