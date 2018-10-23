@@ -1608,15 +1608,15 @@
                 if(this.fillModalTarjetaPlaca.nIdEstado == '') {
                    this.vistaEstado = 2;//Si es RECIBIDO
                    this.fillModalTarjetaPlaca.flagRegTramiteByEstado = '';//RECIBIDO
-               }
-               if(this.fillModalTarjetaPlaca.nIdEstado == 1300329) {
-                   this.vistaEstado = 1;//Si es RECIBIDO
-                   this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 1;//RECIBIDO
-               }
-               if(this.fillModalTarjetaPlaca.nIdEstado == 1300330) {
-                   this.vistaEstado = 0;//Si es OBSERVADA
-                   this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 0;//OBSERVADA
-               }
+                }
+                if(this.fillModalTarjetaPlaca.nIdEstado == 1300329) {
+                    this.vistaEstado = 1;//Si es RECIBIDO
+                    this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 1;//RECIBIDO
+                }
+                if(this.fillModalTarjetaPlaca.nIdEstado == 1300330) {
+                    this.vistaEstado = 0;//Si es OBSERVADA
+                    this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 0;//OBSERVADA
+                }
             },
             registrarTramiteTarjeta(){
                 if(this.validarTramiteTarjeta()){

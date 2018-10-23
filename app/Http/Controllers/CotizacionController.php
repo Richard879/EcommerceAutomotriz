@@ -330,7 +330,7 @@ class CotizacionController extends Controller
 
     public function SetCambiarEstadoCotizacion(Request $request)
     {
-        print_r($request->nIdCabeceraCotizacion . ' - '. $request->opcion . ' - ' . Auth::user()->id);
+        // print_r($request->nIdCabeceraCotizacion . ' - '. $request->opcion . ' - ' . Auth::user()->id);
 
         if (!$request->ajax()) return redirect('/');
 
@@ -374,5 +374,35 @@ class CotizacionController extends Controller
 
         $arrayCotizacionesPendientes = ParametroController::arrayPaginator($arrayCotizacionesPendientes, $request);
         return ['arrayCotizacionesPendientes'=>$arrayCotizacionesPendientes];
+    }
+
+    public function GetDistribucionByElementoVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraCotizacion    =   $request->nIdCabeceraCotizacion;
+
+        $arrayDistribucionEVPorRegalar = DB::select('exec usp_Cotizacion_GetDistribucionByElementoVenta ?, ?',
+                                    [
+                                        $nIdCabeceraCotizacion,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayDistribucionEVPorRegalar);
+    }
+
+    public function GetDistribucionBySuperaDscto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraCotizacion    =   $request->nIdCabeceraCotizacion;
+
+        $arrayDistribucionDescuento = DB::select('exec usp_Cotizacion_GetDistribucionBySuperaDscto ?, ?',
+                                    [
+                                        $nIdCabeceraCotizacion,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayDistribucionDescuento);
     }
 }
