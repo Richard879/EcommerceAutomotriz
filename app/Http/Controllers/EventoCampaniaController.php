@@ -178,8 +178,9 @@ class EventoCampaniaController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_EC_SetDistribucionEventoByElemento] ?, ?, ?, ?', 
+                DB::select('exec [usp_EC_SetDistribucionEventoByElemento] ?, ?, ?, ?, ?', 
                                                     [   $det['nIdEventoElementoVenta'],
+                                                        $det['cFlagEntidad'],
                                                         $det['nIdEntidad'],
                                                         $det['fValorPorcentual'],
                                                         Auth::user()->id
