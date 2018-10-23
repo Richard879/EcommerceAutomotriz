@@ -268,4 +268,24 @@ class ParametroController extends Controller
                                                         ]);
         return response()->json($data);
     }
+
+    public function GetLstProveedorTodos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $cNombreProveedor = $request->cnombreproveedor;
+        $variable   = $request->opcion;
+        $cNombreProveedor = ($cNombreProveedor == NULL) ? ($cNombreProveedor = ' ') : $cNombreProveedor;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $parametro = DB::select('exec [usp_Proveedor_GetLstProveedorTodos] ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $cNombreProveedor
+                                                        ]);
+        if($variable == "0"){
+            $parametro = $this->arrayPaginator($parametro, $request);
+        }
+        return ['arrayProveedor'=>$parametro];
+    }
 }

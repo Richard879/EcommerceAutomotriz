@@ -733,7 +733,7 @@
                                                                                                                     <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
                                                                                                                         <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
-                                                                                                                            <i @click="abrirFormulario('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                                                            <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                                                         </el-tooltip>&nbsp;
                                                                                                                     </td>
                                                                                                                     <!--<td>
@@ -1339,104 +1339,6 @@
                 </div>
             </div>
 
-            <!--<div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="hidden" v-model="formDistribucion.nindex">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <a href="#" @click="asignarProveedorPorElementoVenta(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </template>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-
             <!-- MODAL PROVEEDORES DISTRIBUCION POR ELEMENTO VENTA -->
             <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -1454,9 +1356,9 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="formVersion.nidclase" filterable clearable placeholder="SELECCIONE" >
+                                                            <el-select v-model="fillProveedor.nidproveedor" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
-                                                                v-for="item in arrayClase"
+                                                                v-for="item in arrayProveedor"
                                                                 :key="item.nIdPar"
                                                                 :label="item.cParNombre"
                                                                 :value="item.nIdPar">
@@ -1466,70 +1368,39 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="hidden" v-model="formDistribucion.nindex">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarDistribucionElementoVenta()">
+                                                        <i class="fa fa-arrow-down"></i> ASIGNAR
+                                                    </button>
                                                 </div>
-                                            </div>-->
-                                            <!--<hr/>
-                                            <template v-if="arrayProveedor.length">
+                                            </div>
+                                            <br/>
+                                            <template v-if="arrayElementoDistribucionEnvia.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Seleccione</th>
+                                                                <th>Opciones</th>
                                                                 <th>Nombre Proveedor</th>
+                                                                <th>%Distribución</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <a href="#" @click="asignarProveedorPorElementoVenta(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
+                                                            <tr v-for="(distribucion, index) in arrayElementoDistribucionEnvia" :key="distribucion.nIdEventoElementoVenta + '-'  + distribucion.nIdProveedor">
+                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Eliminar Item</div>
+                                                                        <i @click="eliminarDistribucionElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                    </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
+                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreProveedor"></td>
+                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
+                                                                    <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </template>
                                             <template v-else>
@@ -1540,7 +1411,7 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </template>-->
+                                            </template>
                                         </div>
                                     </div>
                                 </div>
@@ -1668,6 +1539,7 @@
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
+                    nidproveedor: '',
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
@@ -2509,11 +2381,11 @@
                 }
                 else{
                     this.vistaFormularioDistribucion = 0;
-                    this.cargarDistPorElementoVenta();
+                    this.listarDistribucionElementoVenta();
                 }
             },
             //======= Distribucion por Elemento Venta
-            cargarDistPorElementoVenta(){
+            listarDistribucionElementoVenta(){
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
@@ -2525,39 +2397,59 @@
                     console.log(error);
                 });
             },
-            /*buscarProveedorPorElementoVenta(index){
-                this.accionmodal=5;
-                this.modal = 1;
-                this.formDistribucion.nindex = index;
-                this.listarProveedorPorElementoVenta(1);
-            },*/
             listarProveedorPorElementoVenta(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
+                var url = this.ruta + '/parametro/GetLstProveedorTodos';
 
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
+                        'cnombreproveedor': '',
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                    this.arrayProveedor = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            asignarProveedorPorElementoVenta(nIdProveedor, cProveedorNombre){
-                var index = this.formDistribucion.nindex;
-                this.arrayIndexProvId[index] = nIdProveedor;
-                this.arrayIndexProvNombre[index] = cProveedorNombre;
+            asignarDistribucionElementoVenta(){
+                let me = this;
+                var cNombreProveedor = "";
+
+                $.each(me.arrayProveedor, function (index, value) {
+                    if(value.nIdPar == me.fillProveedor.nidproveedor){
+                        me.cNombreProveedor = value.cParNombre;
+                    }
+                });
+
+                if(this.encuentraDistribucionElementoVenta()){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Esa Distribución ya se encuentra agregada!',
+                            })
+                }
+                else{
+                    me.arrayElementoDistribucionEnvia.push({
+                        nIdEventoElementoVenta: me.formDistribucion.nindex,
+                        nIdProveedor: me.fillProveedor.nidproveedor,
+                        cNombreProveedor: me.cNombreProveedor
+                    });
+                }
+            },
+            encuentraDistribucionElementoVenta(){
+                var sw=0;
+                for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
+                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucion.nindex &&
+                        this.arrayElementoDistribucionEnvia[i].nIdProveedor==this.fillProveedor.nidproveedor)
+                    {
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            eliminarDistribucionElementoVenta(index){
+                this.$delete(this.arrayElementoDistribucionEnvia, index);
             },
             //======= Distribucion por Cabecera
             validaBuscaProveedorPorEC(){
@@ -2884,7 +2776,7 @@
                             {
                                 this.accionmodal=5;
                                 this.modal = 1;
-                                this.formDistribucion.nindex = index;
+                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'];
                                 this.listarProveedorPorElementoVenta(1);
                             }break;
                         }

@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetListSucursalByEmpresa', 'ParametroController@GetListSucursalByEmpresa');
     Route::get('/parametro/GetListParametroByNombre', 'ParametroController@GetListParametroByNombre');
     Route::get('/parametro/GetParametroByNombre', 'ParametroController@GetParametroByNombre');
+    Route::get('/parametro/GetLstProveedorTodos', 'ParametroController@GetLstProveedorTodos');
 
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
