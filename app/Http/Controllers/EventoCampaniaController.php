@@ -45,14 +45,14 @@ class EventoCampaniaController extends Controller
                                                                     $request->nIdTipoEvento, 
                                                                     $request->dFechaInicio,
                                                                     $request->dFechaFin,
-                                                                    $request->fValorPresupuesto,
-                                                                    $request->nIdMoneda,
                                                                     $request->nIdTipoCambio,
-                                                                    $request->fValorTipoCambio,
+                                                                    $request->fTipoCambio,
+                                                                    $request->fMontoPresupuestoDolar,
+                                                                    $request->fMontoPresupuestoSol,
                                                                     $request->cFlagDetalleEvento,
                                                                     Auth::user()->id
                                                                 ]);
-        return response()->json($eventocampania);                                        
+        return response()->json($eventocampania);                                       
     }
 
     public function SetDetalleEventoCampania(Request $request)
@@ -121,18 +121,20 @@ class EventoCampaniaController extends Controller
  
         try{
             DB::beginTransaction();
-        
             $detalles = $request->data;
-
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?', 
+                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?, ?, ?, ?, ?, ?', 
                                                     [   $request->nIdEventoCampania,
                                                         $det['nIdElemento'],
+                                                        $det['nCantidad'],
+                                                        $det['nIdMoneda'],
+                                                        $det['fSubTotal'],
+                                                        $request->nIdTipoCambio,
+                                                        $request->fTipoCambio,
                                                         Auth::user()->id
                                                     ]);
             }  
-
             DB::commit(); 
         } catch (Exception $e){
             DB::rollBack();
@@ -195,13 +197,16 @@ class EventoCampaniaController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdEventoCampania = $request->nideventocampania;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
         
         $arrayElementoDistribucion = DB::select('exec [usp_EC_GetDistribucionByElementoVenta] ?', 
                                                             [   $nIdEventoCampania
                                                             ]);
-        
-        $arrayElementoDistribucion = ParametroController::arrayPaginator($arrayElementoDistribucion, $request);
-        return ['arrayElementoDistribucion'=>$arrayElementoDistribucion]; 
+        if($variable == "0"){
+            $arrayElementoDistribucion = ParametroController::arrayPaginator($arrayElementoDistribucion, $request);
+        }
+        return ['arrayElementoDistribucion'=>$arrayElementoDistribucion];
     }
 
     public function desactivar (Request $request)

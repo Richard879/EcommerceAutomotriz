@@ -316,31 +316,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--<div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Valor Presupuesto</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formEventoCamp.fvalorpresupuesto" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Moneda</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidmoneda" filterable clearable placeholder="SELECCIONE">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayTipoMoneda"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -440,9 +415,6 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <!--<div class="form-group">
-                                                                                            <input type="text" placeholder=".input-sm" class="form-control form-control-sm">
-                                                                                        </div>-->
                                                                                     </div>
                                                                                 </div>
                                                                                 <br>
@@ -685,7 +657,7 @@
                                                                                                                     :value="item.value">
                                                                                                                     </el-option>
                                                                                                                 </el-select>
-                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorEC()">
+                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="abrirModal('distribucion','cabecera')">
                                                                                                                     <i class="fa-sm fa fa-search"></i>
                                                                                                                 </button>
                                                                                                             </div>
@@ -736,19 +708,35 @@
                                                                                                                     <th>Proveedor</th>
                                                                                                                     <th>Tipo Elemento</th>
                                                                                                                     <th>Nombre Elemento</th>
-                                                                                                                    <th>Precio de Venta</th>
-                                                                                                                    <th>Proveedor</th>
+                                                                                                                    <th>Moneda</th>
+                                                                                                                    <th>Precio Venta</th>
+                                                                                                                    <th>Valor Costo</th>
+                                                                                                                    <th>Cantidad</th>
+                                                                                                                    <th>SubTotal Soles</th>
+                                                                                                                    <th>SubTotal Dolares</th>
                                                                                                                     <th>% Distribución</th>
+                                                                                                                    <!--<th>Proveedor</th>
+                                                                                                                    <th>% Distribución</th>-->
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
-                                                                                                                <tr v-for="(eledist, index) in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
+                                                                                                                <tr v-for="eledist in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
                                                                                                                     <td v-text="eledist.nIdEventoElementoVenta"></td>
                                                                                                                     <td v-text="eledist.cProveedorNombre"></td>
                                                                                                                     <td v-text="eledist.cTipoElemenNombre"></td>
                                                                                                                     <td v-text="eledist.cElemenNombre"></td>
-                                                                                                                    <td v-text="eledist.fElemenValorVenta"></td>
+                                                                                                                    <td v-text="eledist.cMonedaNombre"></td>
+                                                                                                                    <td v-text="eledist.fValorVenta"></td>
+                                                                                                                    <td v-text="eledist.fValorCosto"></td>
+                                                                                                                    <td v-text="eledist.nCantidad"></td>
+                                                                                                                    <td v-text="eledist.fSubTotalElementoSol"></td>
+                                                                                                                    <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
+                                                                                                                        <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
+                                                                                                                            <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                                                        </el-tooltip>&nbsp;
+                                                                                                                    </td>
+                                                                                                                    <!--<td>
                                                                                                                         <div class="input-group">
                                                                                                                             <input type="hidden" v-model="arrayIndexProvId[index]">
                                                                                                                             <input type="text" v-model="arrayIndexProvNombre[index]" class="form-control form-control-sm" readonly>
@@ -761,7 +749,7 @@
                                                                                                                     </td>
                                                                                                                     <td>
                                                                                                                         <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
-                                                                                                                    </td>
+                                                                                                                    </td>-->
                                                                                                                 </tr>
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1279,8 +1267,9 @@
                                                                 <th>Tipo Elemento</th>
                                                                 <th>Nombre Elemento</th>
                                                                 <th>Moneda</th>
-                                                                <th>Precio de Venta</th>
-                                                                <th>Precio de Venta Mínimo</th>
+                                                                <th>Precio Venta</th>
+                                                                <th>Precio Venta Mínimo</th>
+                                                                <th>Valor Costo</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -1298,6 +1287,7 @@
                                                                 <td v-text="elemento.cMonedaNombre"></td>
                                                                 <td v-text="elemento.fElemenValorVenta"></td>
                                                                 <td v-text="elemento.fElemenValorMinimoVenta"></td>
+                                                                <td v-text="elemento.fElementValorCosto"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1364,67 +1354,53 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                         <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="hidden" v-model="formDistribucion.nindex">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
+                                                            <el-select v-model="fillProveedor.nidproveedor" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayProveedor"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarDistribucionElementoVenta()">
+                                                        <i class="fa fa-arrow-down"></i> ASIGNAR
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <template v-if="arrayElementoDistribucionEnvia.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Seleccione</th>
+                                                                <th>Opciones</th>
                                                                 <th>Nombre Proveedor</th>
+                                                                <th>%Distribución</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <a href="#" @click="asignarProveedorPorElementoVenta(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
+                                                            <tr v-for="(distribucion, index) in arrayElementoDistribucionEnvia" :key="distribucion.nIdEventoElementoVenta + '-'  + distribucion.nIdProveedor">
+                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Eliminar Item</div>
+                                                                        <i @click="eliminarDistribucionElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                    </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
+                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreProveedor"></td>
+                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
+                                                                    <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </template>
                                             <template v-else>
@@ -1544,7 +1520,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
 
         </main>
     </transition>
@@ -1563,6 +1539,7 @@
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
+                    nidproveedor: '',
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
@@ -1600,6 +1577,7 @@
                 arrayTipoMoneda: [],
                 arrayTipoCambio: [],
                 fValorTipoCambioTransaccion: 0.0,
+                nIdTipoCambio: 0,
                 // ============================================================
                 // =========== VARIABLES TAB ASIGNA DETALLE ===========
                 arrayDetalleEC: [],
@@ -1736,7 +1714,7 @@
                 return me.arrayTemporalElemento.reduce(function(valorAnterior, valorActual){
                     //Si moneda es soles
                     if(valorActual.nIdMoneda == 1300027){
-                        sumaDolares = valorAnterior + (parseFloat(valorActual.fSubTotal) * me.fValorTipoCambioTransaccion);
+                        sumaDolares = valorAnterior + (parseFloat(valorActual.fSubTotal) / me.fValorTipoCambioTransaccion);
                     }else{
                         sumaDolares = valorAnterior + parseFloat(valorActual.fSubTotal);
                     }
@@ -1749,7 +1727,7 @@
                 return me.arrayTemporalElemento.reduce(function(valorAnterior, valorActual){
                     //Si moneda es dolares
                     if(valorActual.nIdMoneda == 1300028){
-                        sumaSoles = valorAnterior + (parseFloat(valorActual.fSubTotal) / me.fValorTipoCambioTransaccion);
+                        sumaSoles = valorAnterior + (parseFloat(valorActual.fSubTotal) * me.fValorTipoCambioTransaccion);
                     }else{
                         sumaSoles = valorAnterior + parseFloat(valorActual.fSubTotal);
                     }
@@ -1933,6 +1911,7 @@
                         this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
                         //PARA ENVIAR EN LA TRANSACCION
                         this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
+                        this.nIdTipoCambio = response.data[0].nIdTipoCambio;
                     }).then(function (response) {
                         $("#myBar").hide();
                     }).catch(error => {
@@ -1985,8 +1964,8 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
-                        'clineanombre' : this.fillModal.clineanombre.toString(),
+                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
+                        'clineanombre': this.fillModal.clineanombre.toString(),
                         'page' : page
                     }
                 }).then(response => {
@@ -2043,7 +2022,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
+                        'nidproveedor' : parseInt(this.formEventoCamp.nidproveedor),
                         'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
                         'page' : page
                     }
@@ -2101,8 +2080,8 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidproveedor' : this.formEventoCamp.nidproveedor,
-                        'cmodelonombre' : this.fillModal.cmodelonombre.toString(),
+                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
+                        'cmodelonombre': this.fillModal.cmodelonombre.toString(),
                         'page' : page
                     }
                 }).then(response => {
@@ -2164,6 +2143,11 @@
             },
             // =============  TAB ASIGNA ELEMENTO VENTA ===================
             activarTab2(){
+                if(this.validaTab2()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
@@ -2174,13 +2158,16 @@
             cargarTabAsignaElemento(){
                 this.llenarComboTpoElemento();
             },
-            validaAsignaElemento(){
+            validaTab2(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                /*if(this.formEventoCamp.nidproveedor == 0){
-                    this.mensajeError.push('Debes Seleccionar un Proveedor');
-                };*/
+                if(this.formEventoCamp.nidtipocambio == 0 || !this.formEventoCamp.nidtipocambio){
+                    this.mensajeError.push('Debes seleccionar Tipo Cambio');
+                };
+                if(this.formEventoCamp.fvalortipocambio == 0){
+                    this.mensajeError.push('El Tipo Cambio debe ser mayor a 0');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2195,7 +2182,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidtipoelemen' : this.formEle.ntpoelemen,
+                        'nidtipoelemen': this.formEle.ntpoelemen,
                         'celementonombre': this.formEle.celementonombre,
                         'page' : page
                     }
@@ -2268,13 +2255,13 @@
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
                     cNombreEventoCampania: this.formEventoCamp.descripcion,
-                    nIdTipoEvento: this.formEventoCamp.ntipo,
+                    nIdTipoEvento: parseInt(this.formEventoCamp.ntipo),
                     dFechaInicio: this.formEventoCamp.dfechainicio,
                     dFechaFin: this.formEventoCamp.dfechafin,
-                    fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto,
-                    nIdMoneda: this.formEventoCamp.nidmoneda,
-                    nIdTipoCambio: this.formEventoCamp.nidtipocambio,
-                    fValorTipoCambio: this.formEventoCamp.fvalortipocambio,
+                    nIdTipoCambio: parseInt(this.nIdTipoCambio),
+                    fTipoCambio: this.formEventoCamp.fvalortipocambio,
+                    fMontoPresupuestoDolar: this.montoTotalElementoVentaDolar,
+                    fMontoPresupuestoSol:  this.montoTotalElementoVentaSol,
                     cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
@@ -2283,8 +2270,8 @@
                         this.registrarAsignaElemento(response.data[0].nIdEventoCampania);
                         $("#myBar").hide();
                         swal('Evento Campaña registrado');
-                        this.activarTab3();
                         this.formDistribucion.nideventocampania = response.data[0].nIdEventoCampania;
+                        this.activarTab3();
                     }
                     else{
                         swal('NO se puede registrar Evento');
@@ -2367,7 +2354,9 @@
 
                     axios.post(url, {
                         nIdEventoCampania: nIdEventoCampania,
-                        data: this.arrayTemporalElemento
+                        data: this.arrayTemporalElemento,
+                        nIdTipoCambio: this.nIdTipoCambio,
+                        fTipoCambio: this.fValorTipoCambioTransaccion
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2392,14 +2381,15 @@
                 }
                 else{
                     this.vistaFormularioDistribucion = 0;
-                    this.cargarDistPorElementoVenta();
+                    this.listarDistribucionElementoVenta();
                 }
             },
-            cargarDistPorElementoVenta(){
+            //======= Distribucion por Elemento Venta
+            listarDistribucionElementoVenta(){
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        'nideventocampania' : this.formDistribucion.nideventocampania
+                        'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2407,51 +2397,61 @@
                     console.log(error);
                 });
             },
-            buscarProveedorPorElementoVenta(index){
-                this.accionmodal=5;
-                this.modal = 1;
-                this.formDistribucion.nindex = index;
-                this.listarProveedorPorElementoVenta(1);
-            },
             listarProveedorPorElementoVenta(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
+                var url = this.ruta + '/parametro/GetLstProveedorTodos';
 
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
+                        'cnombreproveedor': '',
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                    this.arrayProveedor = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            asignarProveedorPorElementoVenta(nIdProveedor, cProveedorNombre){
-                var index = this.formDistribucion.nindex;
-                this.arrayIndexProvId[index] = nIdProveedor;
-                this.arrayIndexProvNombre[index] = cProveedorNombre;
-            },
-            buscarProveedorPorEC(){
-                if(this.validaBuscaProveedorPorEC()){
-                    this.accionmodal=1;
-                    this.modal = 1;
-                    return;
-                }
+            asignarDistribucionElementoVenta(){
+                let me = this;
+                var cNombreProveedor = "";
 
-                this.accionmodal=6;
-                this.modal = 1;
-                this.listarProveedorPorEC(1);
+                $.each(me.arrayProveedor, function (index, value) {
+                    if(value.nIdPar == me.fillProveedor.nidproveedor){
+                        me.cNombreProveedor = value.cParNombre;
+                    }
+                });
+
+                if(this.encuentraDistribucionElementoVenta()){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Esa Distribución ya se encuentra agregada!',
+                            })
+                }
+                else{
+                    me.arrayElementoDistribucionEnvia.push({
+                        nIdEventoElementoVenta: me.formDistribucion.nindex,
+                        nIdProveedor: me.fillProveedor.nidproveedor,
+                        cNombreProveedor: me.cNombreProveedor
+                    });
+                }
             },
+            encuentraDistribucionElementoVenta(){
+                var sw=0;
+                for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
+                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucion.nindex &&
+                        this.arrayElementoDistribucionEnvia[i].nIdProveedor==this.fillProveedor.nidproveedor)
+                    {
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            eliminarDistribucionElementoVenta(index){
+                this.$delete(this.arrayElementoDistribucionEnvia, index);
+            },
+            //======= Distribucion por Cabecera
             validaBuscaProveedorPorEC(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -2459,10 +2459,6 @@
                 if(this.formDistribucion.ntipoproveedor == 0 || !this.formDistribucion){
                     this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
                 };
-                /*if(this.formDistribucion.ntipoproveedor == 2){
-                    this.mensajeError.push('Debes Seleccionar la opción PROVEEDOR');
-                };*/
-
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2624,7 +2620,7 @@
                 };
 
                 if(valorPorEC != 100){
-                    this.mensajeError.push('La suma de los valores de porcentaje debe ser = 100%');
+                    this.mensajeError.push('La suma de los valores de porcentaje debe ser 100');
                 };
 
                 if(this.mensajeError.length){
@@ -2710,12 +2706,6 @@
                         switch(accion){
                             case 'buscar':
                             {
-                                if(this.validaAsignaElemento()){
-                                    this.accionmodal=1;
-                                    this.modal = 1;
-                                    return;
-                                }
-
                                 this.accionmodal=4;
                                 this.modal = 1;
                                 break;
@@ -2760,6 +2750,35 @@
 
                                 break;
                             }
+                        }
+                    }break;
+                    case 'distribucion':
+                    {
+                        switch(accion){
+                            case 'cabecera':
+                            {
+                                if(this.validaBuscaProveedorPorEC()){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
+                                this.accionmodal=6;
+                                this.modal = 1;
+                                this.listarProveedorPorEC(1);
+                            }break;
+                        }
+                    }break;
+                    case 'asignadistribucion':
+                    {
+                        switch(accion){
+                            case 'elemento':
+                            {
+                                this.accionmodal=5;
+                                this.modal = 1;
+                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'];
+                                this.listarProveedorPorElementoVenta(1);
+                            }break;
                         }
                     }
                 }
