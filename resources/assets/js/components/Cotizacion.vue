@@ -3689,10 +3689,10 @@
                         if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N' &&
                             response.data.cFlagActivaEVPorRegalar == 0) {
                             //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
-                            this.cambiarEsatadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
+                            this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
                             swal('Cotización generada y aprobada exitosamente');
                         } else {
-                            this.cambiarEsatadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
+                            this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
                         }
                     }).catch(error => {
@@ -3705,7 +3705,7 @@
                     });
                 }
             },
-            cambiarEsatadoCotizacion(nIdCabeceraCotizacion, op){
+            cambiarEstadoCotizacion(nIdCabeceraCotizacion, op){
                 // console.log(nIdCabeceraCotizacion, op);
                 var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
                 axios.put(url, {

@@ -200,7 +200,7 @@ class CotizacionController extends Controller
             //Capturo el nIdCabeceraCotizacion
             $nIdCabeceraCotizacion =  $arrayDetalleCoti[0]->nIdCabeceraCotizacion;
 
-            //Obtengo datos del Sobre Precio y Dscto para validar si se Aprueba o No el Pedido Automaticamente
+            //Obtengo datos del Supera Dscto para validar si se Aprueba o No el Pedido Automaticamente
             $arrayDatosCotizacion = DB::select('exec usp_Cotizacion_GetDatosCotizacion ? ', [ $nIdCabeceraCotizacion ]);
 
             //Flags para verificar si existen elemento venta por regalar
@@ -404,5 +404,57 @@ class CotizacionController extends Controller
                                     ]);
 
         return response()->json($arrayDistribucionDescuento);
+    }
+
+    public function SetDistribucionCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $listDistribucionDescuentolength = sizeof($request->listDistribucionDescuento);
+            if($listDistribucionDescuentolength > 0){
+                $listDistribucionDescuento = $request->listDistribucionDescuento;
+                foreach($listDistribucionDescuento as $ep=>$det)
+                {
+                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?',
+                                                                    [   $det['nIdCabeceraCotizacion'],
+                                                                        $det['nIdDetalleCotizacion'],
+                                                                        $det['nIdProveedor'],
+                                                                        $det['fDistribucion'],
+                                                                        Auth::user()->id
+                                                                    ]);
+                }
+            }
+
+            $listDistribucionEVPorRegalarlength = sizeof($request->listDistribucionEVPorRegalar);
+            if($listDistribucionEVPorRegalarlength > 0){
+                $listDistribucionEVPorRegalar = $request->listDistribucionEVPorRegalar;
+                foreach($listDistribucionEVPorRegalar as $ep=>$det)
+                {
+                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?',
+                                                                    [   $det['nIdCabeceraCotizacion'],
+                                                                        $det['nIdDetalleCotizacion'],
+                                                                        $det['nIdProveedor'],
+                                                                        $det['fDistribucion'],
+                                                                        Auth::user()->id
+                                                                    ]);
+                }
+            }
+
+            if($listDistribucionDescuentolength > 0) {
+                //Capturo el nIdCabeceraCotizacion
+                $nIdCabeceraCotizacion =  $arrayDetalleCoti[0]->nIdCabeceraCotizacion;
+            } else {
+                //Capturo el nIdCabeceraCotizacion
+                $nIdCabeceraCotizacion =  $arrayDetalleCoti[0]->nIdCabeceraCotizacion;
+            }
+
+            DB::commit();
+            return response()->json($nIdCabeceraCotizacion);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 }
