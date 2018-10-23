@@ -341,7 +341,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>-->
-                                                                <!--<div class="form-group row">
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
@@ -365,7 +365,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>-->
+                                                                </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
@@ -433,7 +433,7 @@
                                                                                                     </el-select>
                                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                         <div slot="content">Buscar </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModalAsignaDetalle('detalle','buscar')">
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('detalle','buscar')">
                                                                                                             <i class="fa-lg fa fa-search"></i>
                                                                                                         </button>
                                                                                                     </el-tooltip>
@@ -564,7 +564,7 @@
                                                                                             <div class="row">
                                                                                                 <label class="col-sm-4 form-control-label">* ELEMENTO VENTA</label>
                                                                                                 <div class="col-sm-8">
-                                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="abrirModalAsignaElemento('elemento','buscar')">
+                                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="abrirModal('elemento','buscar')">
                                                                                                         <i class="fa fa-search"></i> Buscar
                                                                                                     </button>
                                                                                                 </div>
@@ -581,7 +581,10 @@
                                                                                                     <th>Acciones</th>
                                                                                                     <th>Nombre Proveedor</th>
                                                                                                     <th>Nombre Elemento</th>
+                                                                                                    <th>Moneda</th>
+                                                                                                    <th>Cantidad</th>
                                                                                                     <th>Valor Venta</th>
+                                                                                                    <th>SubTotal</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
@@ -594,12 +597,27 @@
                                                                                                     </td>
                                                                                                     <td v-text="tempelemento.cProveedorNombre"></td>
                                                                                                     <td v-text="tempelemento.cElemenNombre"></td>
+                                                                                                    <td v-text="tempelemento.cMonedaNombre"></td>
+                                                                                                    <td><input type="number" min="1" class="form-control form-control-sm" v-model="tempelemento.nCantidad"/></td>
                                                                                                     <td v-text="tempelemento.fElemenValorVenta"></td>
+                                                                                                    <td> {{ tempelemento.fSubTotal = tempelemento.nCantidad * parseFloat(tempelemento.fElemenValorVenta) }} </td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
+                                                                                    <div class="col-lg-12">
+                                                                                        <div class="row flex-rigth-margin">
+                                                                                            <div class="form-group row">
+                                                                                                <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{ montoTotalElementoVentaDolar = totalElementoVentaDolar }}</strong></label>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{ montoTotalElementoVentaSol = totalElementoVentaSol }}</strong></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </template>
                                                                                 <template v-else>
                                                                                     <table>
@@ -1260,6 +1278,7 @@
                                                                 <th>Proveedor</th>
                                                                 <th>Tipo Elemento</th>
                                                                 <th>Nombre Elemento</th>
+                                                                <th>Moneda</th>
                                                                 <th>Precio de Venta</th>
                                                                 <th>Precio de Venta Mínimo</th>
                                                             </tr>
@@ -1276,6 +1295,7 @@
                                                                 <td v-text="elemento.cProveedorNombre"></td>
                                                                 <td v-text="elemento.cTipoElemenNombre"></td>
                                                                 <td v-text="elemento.cElemenNombre"></td>
+                                                                <td v-text="elemento.cMonedaNombre"></td>
                                                                 <td v-text="elemento.fElemenValorVenta"></td>
                                                                 <td v-text="elemento.fElemenValorMinimoVenta"></td>
                                                             </tr>
@@ -1599,6 +1619,8 @@
                 // ============================================================
                 // =========== VARIABLES TAB ASIGNA ELEMENTO VENTA ===========
                 arrayTemporalElemento: [],
+                montoTotalElementoVentaDolar: 0.00,
+                montoTotalElementoVentaSol: 0.00,
                 // ============================================================
                 // =========== VARIABLES TAB DISTRIBUCION ===========
                 formDistribucion:{
@@ -1707,7 +1729,33 @@
                     from++;
                 }
                 return pagesArray;
-            }
+            },
+            totalElementoVentaDolar: function(){
+                let me = this;
+                let sumaDolares;
+                return me.arrayTemporalElemento.reduce(function(valorAnterior, valorActual){
+                    //Si moneda es soles
+                    if(valorActual.nIdMoneda == 1300027){
+                        sumaDolares = valorAnterior + (parseFloat(valorActual.fSubTotal) * me.fValorTipoCambioTransaccion);
+                    }else{
+                        sumaDolares = valorAnterior + parseFloat(valorActual.fSubTotal);
+                    }
+                    return Number((sumaDolares).toFixed(2));
+                }, 0);
+            },
+            totalElementoVentaSol: function(){
+                let me = this;
+                let sumaSoles;
+                return me.arrayTemporalElemento.reduce(function(valorAnterior, valorActual){
+                    //Si moneda es dolares
+                    if(valorActual.nIdMoneda == 1300028){
+                        sumaSoles = valorAnterior + (parseFloat(valorActual.fSubTotal) / me.fValorTipoCambioTransaccion);
+                    }else{
+                        sumaSoles = valorAnterior + parseFloat(valorActual.fSubTotal);
+                    }
+                    return Number((sumaSoles).toFixed(2));
+                }, 0);
+            },
         },
         methods:{
             llenarComboTipoEC(){
@@ -1911,50 +1959,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            abrirModalAsignaDetalle(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'detalle':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                if(this.validaAsignaDetalle()){
-                                    this.accionmodal=1;
-                                    this.modal = 1;
-                                    return;
-                                }
-
-                                if(this.formEventoCamp.ndetalle == 110031){
-                                    this.formEventoCamp.cflagdetalleevento = "LI";
-                                    this.vistaModal = 0;
-                                    this.accionmodal=3;
-                                    this.modal = 1;
-                                    this.buscarLineasByProveedor();
-                                }
-
-                                if(this.formEventoCamp.ndetalle == 110032){
-                                    this.formEventoCamp.cflagdetalleevento = "MA";
-                                    this.vistaModal = 1;
-                                    this.accionmodal=3;
-                                    this.modal = 1;
-                                    this.buscarMarcasByProveedor();
-                                }
-
-                                if(this.formEventoCamp.ndetalle == 110033){
-                                    this.formEventoCamp.cflagdetalleevento = "MO";
-                                    this.vistaModal = 2;
-                                    this.accionmodal=3;
-                                    this.modal = 1;
-                                    this.buscarModelosByProveedor();
-                                }
-
-
-                                break;
-                            }
-                        }
-                    }
-                }
             },
             validaAsignaDetalle(){
                 this.error = 0;
@@ -2170,28 +2174,6 @@
             cargarTabAsignaElemento(){
                 this.llenarComboTpoElemento();
             },
-            abrirModalAsignaElemento(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'elemento':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                if(this.validaAsignaElemento()){
-                                    this.accionmodal=1;
-                                    this.modal = 1;
-                                    return;
-                                }
-
-                                this.accionmodal=4;
-                                this.modal = 1;
-                                //this.buscarElemento();
-                                break;
-                            }
-                        }
-                    }
-                }
-            },
             validaAsignaElemento(){
                 this.error = 0;
                 this.mensajeError =[];
@@ -2243,12 +2225,16 @@
                 }
                 else{
                     this.arrayTemporalElemento.push({
-                                nIdElemento: data['nIdElemento'],
-                                cTipoElemenNombre: data['cTipoElemenNombre'],
-                                cElemenNombre: data['cElemenNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre'],
-                                fElemenValorVenta: data['fElemenValorVenta']
+                                nIdElemento         : data['nIdElemento'],
+                                cTipoElemenNombre   : data['cTipoElemenNombre'],
+                                cElemenNombre       : data['cElemenNombre'],
+                                nIdProveedor        : data['nIdProveedor'],
+                                cProveedorNombre    : data['cProveedorNombre'],
+                                nCantidad           : 1,
+                                nIdMoneda           : data['nIdMoneda'],
+                                fElemenValorVenta   : data['fElemenValorVenta'],
+                                cMonedaNombre       : data['cMonedaNombre'],
+                                fSubTotal           : 0.00
                     });
                     toastr.success('Se Agregó Elemento ' + data['cElemenNombre']);
                 }
@@ -2328,13 +2314,13 @@
                 };
                 if(this.formEventoCamp.nidmoneda == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Moneda');
-                };
+                };*/
                 if(this.formEventoCamp.nidtipocambio == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Cambio');
                 };
                 if(this.formEventoCamp.fvalortipocambio == 0){
                     this.mensajeError.push('Debes Enviar valor Tipo de Cambio');
-                };*/
+                };
                 if(!this.formEventoCamp.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
                 };
@@ -2718,6 +2704,63 @@
                                 break;
                             }
                         }
+                    }break;
+                    case 'elemento':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                if(this.validaAsignaElemento()){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                break;
+                            }
+                        }
+                    }break;
+                    case 'detalle':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                if(this.validaAsignaDetalle()){
+                                    this.accionmodal=1;
+                                    this.modal = 1;
+                                    return;
+                                }
+
+                                if(this.formEventoCamp.ndetalle == 110031){
+                                    this.formEventoCamp.cflagdetalleevento = "LI";
+                                    this.vistaModal = 0;
+                                    this.accionmodal=3;
+                                    this.modal = 1;
+                                    this.buscarLineasByProveedor();
+                                }
+
+                                if(this.formEventoCamp.ndetalle == 110032){
+                                    this.formEventoCamp.cflagdetalleevento = "MA";
+                                    this.vistaModal = 1;
+                                    this.accionmodal=3;
+                                    this.modal = 1;
+                                    this.buscarMarcasByProveedor();
+                                }
+
+                                if(this.formEventoCamp.ndetalle == 110033){
+                                    this.formEventoCamp.cflagdetalleevento = "MO";
+                                    this.vistaModal = 2;
+                                    this.accionmodal=3;
+                                    this.modal = 1;
+                                    this.buscarModelosByProveedor();
+                                }
+
+
+                                break;
+                            }
+                        }
                     }
                 }
             },
@@ -2777,5 +2820,23 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+    }
+    .direction-money{
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        flex-direction: column;
+    }
+    .centrarbtn{
+        display: flex;
+        justify-content: center;
+    }
+    .flex-rigth-margin{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-around;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-right: 2rem;
     }
 </style>

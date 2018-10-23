@@ -2091,7 +2091,7 @@
                                 break;
                             }
                         }
-                    };
+                    }break;
                     case 'compra':
                     {
                         switch(accion){
