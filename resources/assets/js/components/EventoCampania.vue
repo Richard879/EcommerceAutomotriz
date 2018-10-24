@@ -649,7 +649,7 @@
                                                                                                     <div class="col-sm-8">
                                                                                                         <div class="input-group">
                                                                                                             <div class="input-group-prepend">
-                                                                                                                <el-select v-model="formDistribucion.ntipoproveedor" filterable clearable placeholder="SELECCIONE" v-on:change="asignaEmpresaEC()">
+                                                                                                                <el-select v-model="formDistribucion.ntipoproveedor" filterable clearable placeholder="SELECCIONE" v-on:change="asignaEmpresaCabecera()">
                                                                                                                     <el-option
                                                                                                                     v-for="item in lstProveedorDitribucion"
                                                                                                                     :key="item.value"
@@ -681,7 +681,7 @@
                                                                                                 <tbody>
                                                                                                     <tr v-for="(proveedor, index) in arrayProveedorPorEC" :key="proveedor.nIdEntidad">
                                                                                                         <td>
-                                                                                                            <a href="#" @click="eliminarItemProveedorEC(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +proveedor.cProveedorNombre">
+                                                                                                            <a href="#" @click="eliminarProveedorCabecera(index);" data-toggle="tooltip" data-placement="top" :title="'Eliminar ' +proveedor.cProveedorNombre">
                                                                                                             <i :style="'color:red'" class="fa-md fa fa-times-circle"></i></a>
                                                                                                         </td>
                                                                                                         <td v-text="proveedor.nIdEntidad"></td>
@@ -715,8 +715,6 @@
                                                                                                                     <th>SubTotal Soles</th>
                                                                                                                     <th>SubTotal Dolares</th>
                                                                                                                     <th>% Distribución</th>
-                                                                                                                    <!--<th>Proveedor</th>
-                                                                                                                    <th>% Distribución</th>-->
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
@@ -736,20 +734,6 @@
                                                                                                                             <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                                                         </el-tooltip>&nbsp;
                                                                                                                     </td>
-                                                                                                                    <!--<td>
-                                                                                                                        <div class="input-group">
-                                                                                                                            <input type="hidden" v-model="arrayIndexProvId[index]">
-                                                                                                                            <input type="text" v-model="arrayIndexProvNombre[index]" class="form-control form-control-sm" readonly>
-                                                                                                                            <div class="input-group-prepend">
-                                                                                                                                <button type="button" title="Buscar" class="btn btn-info btn-corner btn-sm" @click="buscarProveedorPorElementoVenta(index)">
-                                                                                                                                    <i class="fa-sm fa fa-search"></i>
-                                                                                                                                </button>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
-                                                                                                                    </td>-->
                                                                                                                 </tr>
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1354,7 +1338,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <label class="col-sm-4 form-control-label">* Entidad</label>
                                                         <div class="col-sm-8">
                                                             <el-select v-model="fillProveedor.nidproveedor" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
@@ -1466,7 +1450,7 @@
                                                         <tbody>
                                                             <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
                                                                 <td>
-                                                                    <a href="#" @click="asignarProveedorPorEC(proveedor);">
+                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
                                                                         <i class='fa-md fa fa-check-circle'></i>
                                                                     </a>
                                                                 </td>
@@ -1611,21 +1595,21 @@
                     fValorPorcentual: 0,
                     nentidad: 0
                 },
-                arrayElementoDistribucion: [],
-                arrayProveedorPorEC: [],
-                arrayIndexProvNombre: [],
-                arrayIndexProvId: [],
-                arrayIndexProvValor: [],
-                arrayIndexEntidadValor: [],
-                arrayElementoDistribucionEnvia: [],
                 lstTipoDistribucion: [
                     { value: '1', text: 'POR CAMPAÑA'},
                     { value: '2', text: 'POR ELEMENTO VENTA'}
                 ],
+                // ======== VARIABLES DISTRIBUCION CABECERA ===========
+                arrayElementoDistribucion: [],
+                arrayIndexProvValor: [],
                 lstProveedorDitribucion:[
                     { value: '1', text: 'PROVEEDOR'},
                     { value: '2', text: 'EMPRESA'}
                 ],
+                // ======== VARIABLES DISTRIBUCION ELEMENTO VENTA ===========
+                arrayProveedorPorEC: [],
+                arrayIndexEntidadValor: [],
+                arrayElementoDistribucionEnvia: [],
                 // ==============================================
                 pagination: {
                     'total': 0,
@@ -2397,7 +2381,7 @@
                     console.log(error);
                 });
             },
-            listarProveedorPorElementoVenta(page){
+            listarProveedorElementoVenta(page){
                 var url = this.ruta + '/parametro/GetLstProveedorTodos';
 
                 axios.get(url, {
@@ -2452,7 +2436,7 @@
                 this.$delete(this.arrayElementoDistribucionEnvia, index);
             },
             //======= Distribucion por Cabecera
-            validaBuscaProveedorPorEC(){
+            validaBuscaProveedorCabecera(){
                 this.error = 0;
                 this.mensajeError =[];
 
@@ -2464,7 +2448,7 @@
                 }
                 return this.error;
             },
-            listarProveedorPorEC(page){
+            listarProveedorCabecera(page){
                 var url = this.ruta + '/parametro/GetLstProveedor?nidempresa=' + 1300011
                                                                     + '&nidgrupopar=' + 110023
                                                                     + '&cnombreproveedor=' + this.fillProveedor.cnombreproveedor.toString()
@@ -2482,8 +2466,8 @@
                     console.log(error);
                 });
             },
-            asignarProveedorPorEC(data =[]){
-                if(this.encuentraProveedorPorEC(data['nIdPar'])){
+            asignarProveedorCabecera(data =[]){
+                if(this.encuentraProveedorCabecera(data['nIdPar'])){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -2499,22 +2483,9 @@
                     toastr.success('Se Agregó Proveedor');
                 }
             },
-            encuentraProveedorPorEC(nIdEntidad){
-                var sw=0;
-                for(var i=0;i<this.arrayProveedorPorEC.length;i++){
-                    if(this.arrayProveedorPorEC[i].nIdEntidad==nIdEntidad){
-                        sw=true;
-                    }
-                }
-                return sw;
-            },
-            eliminarItemProveedorEC(index){
-                this.$delete(this.arrayProveedorPorEC, index);
-                toastr.success('Se Eliminó Item Proveedor');
-            },
-            asignaEmpresaEC(){
+            asignaEmpresaCabecera(){
                 if(this.formDistribucion.ntipoproveedor == 2){
-                    if(this.encuentraProveedorPorEC(1300011)){
+                    if(this.encuentraProveedorCabecera(1300011)){
                             swal({
                                 type: 'error',
                                 title: 'Error...',
@@ -2531,14 +2502,27 @@
                     }
                 }
             },
+            encuentraProveedorCabecera(nIdEntidad){
+                var sw=0;
+                for(var i=0;i<this.arrayProveedorPorEC.length;i++){
+                    if(this.arrayProveedorPorEC[i].nIdEntidad==nIdEntidad){
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            eliminarProveedorCabecera(index){
+                this.$delete(this.arrayProveedorPorEC, index);
+                toastr.success('Se Eliminó Item Proveedor');
+            },
             desactivarTabs(){
                 $('#Tab2').addClass('disabled');
-                //$('#Tab3').addClass('disabled');
             },
            // =============  REGISTRAR DISTRIBUCION ===================
             registrarAsignaDistribucion(){
                 let me = this;
 
+                //Registro por Cabecera
                 if(me.formDistribucion.ntipodistribucion==1){
 
                     if(me.arrayProveedorPorEC.length > 0){
@@ -2547,8 +2531,8 @@
 
                         me.arrayProveedorPorEC.map(function(value, key) {
                             list.push({
-                                nIdEntidad: value.nIdEntidad,
                                 cFlagEntidad: value.cFlagEntidad,
+                                nIdEntidad: value.nIdEntidad,
                                 fValorPorcentual: me.arrayIndexEntidadValor[key]
                             });
                             valorPorEC = valorPorEC + parseInt(me.arrayIndexEntidadValor[key]);
@@ -2562,7 +2546,7 @@
 
                         var url = me.ruta + '/ec/SetDistribucionEventoByEC';
                         axios.post(url, {
-                            nIdEventoCampania: me.formDistribucion.nideventocampania,
+                            nIdEventoCampania: parseInt(me.formDistribucion.nideventocampania),
                             data: list
                         }).then(response => {
                             swal('Distribución registrada');
@@ -2573,14 +2557,16 @@
                         });
                     }
                 }
+                //Registro por Elemento Venta
                 else{
-                    if(me.arrayElementoDistribucion.length > 0){
+                    if(me.arrayElementoDistribucionEnvia.length > 0){
                         var list=[];
 
-                        me.arrayElementoDistribucion.map(function(value, key) {
+                        me.arrayElementoDistribucionEnvia.map(function(value, key) {
                             list.push({
                                 nIdEventoElementoVenta: value.nIdEventoElementoVenta,
-                                nIdEntidad: me.arrayIndexProvId[key],
+                                cFlagEntidad: 'P',
+                                nIdEntidad: value.nIdProveedor,
                                 fValorPorcentual: me.arrayIndexProvValor[key]
                             });
                         });
@@ -2757,7 +2743,7 @@
                         switch(accion){
                             case 'cabecera':
                             {
-                                if(this.validaBuscaProveedorPorEC()){
+                                if(this.validaBuscaProveedorCabecera()){
                                     this.accionmodal=1;
                                     this.modal = 1;
                                     return;
@@ -2765,7 +2751,7 @@
 
                                 this.accionmodal=6;
                                 this.modal = 1;
-                                this.listarProveedorPorEC(1);
+                                this.listarProveedorCabecera(1);
                             }break;
                         }
                     }break;
@@ -2777,7 +2763,8 @@
                                 this.accionmodal=5;
                                 this.modal = 1;
                                 this.formDistribucion.nindex = data['nIdEventoElementoVenta'];
-                                this.listarProveedorPorElementoVenta(1);
+                                this.listarProveedorElementoVenta(1);
+                                this.fillProveedor.nidproveedor = '';
                             }break;
                         }
                     }
@@ -2799,7 +2786,9 @@
                 this.arrayTemporalElemento = [],
                 this.arrayElementoDistribucion = [],
                 this.arrayProveedorPorEC = [],
-                this.arrayElementoDistribucion = []
+                this.formEventoCamp.ndetalle = '',
+                this.fillProveedor.nidproveedor = '',
+                this.arrayElementoDistribucionEnvia = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
