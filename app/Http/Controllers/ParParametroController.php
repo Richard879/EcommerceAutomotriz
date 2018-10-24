@@ -40,26 +40,17 @@ class ParParametroController extends Controller
         $nParSrcGrupoParametro = $request->nparsrcgrupoarametro;
         $nParDstCodigo = $request->npardstcodigo;
         $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $parparametro = DB::select('exec [usp_ParParametro_GetParParametro] ?, ?, ?', 
+        $arrayParParametro = DB::select('exec [usp_ParParametro_GetParParametro] ?, ?, ?', 
                                                                 [   $nParSrcCodigo, 
                                                                     $nParSrcGrupoParametro, 
                                                                     $nParDstCodigo
                                                                 ]);
-        $data = [];
         if($variable == "0"){
-            $data[0] = [
-                'nIdPar'   => 0,
-                'cParNombre' =>'SELECCIONE',
-            ];
+            $arrayParParametro = ParametroController::arrayPaginator($arrayParParametro, $request);
         }
-        foreach ($parparametro as $key => $value) {
-           $data[$key+1] =[
-                'nIdPar'   => $value->nIdPar,
-                'cParNombre' => $value->cParNombre,
-            ];
-        }
-        return response()->json($data);
+        return ['arrayParParametro'=>$arrayParParametro];
     }
 
 }

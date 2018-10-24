@@ -61,7 +61,7 @@ class ParametroController extends Controller
                                                             $nIdGrupoPar,
                                                             $cNombreProveedor
                                                         ]);
-        if($variable == "1"){
+        if($variable == "0"){
             $parametro = $this->arrayPaginator($parametro, $request);
         }
         return ['arrayProveedor'=>$parametro];
@@ -193,6 +193,7 @@ class ParametroController extends Controller
         return response()->json($tipoparametro);
     }
 
+    /*
     public function GetListParametroByGrupo(Request $request)
     {
         $nIdGrupoPar = $request->ngrupoparid;
@@ -203,6 +204,7 @@ class ParametroController extends Controller
                                                         ]);
         return response()->json($data);
     }
+    */
 
     public function GetParametroById(Request $request)
     {

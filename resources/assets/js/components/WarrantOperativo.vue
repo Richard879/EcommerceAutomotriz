@@ -757,8 +757,9 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidgrupopar' : 110094,
-                        'cnombreproveedor' : ''
+                        'nidgrupopar': 110094,
+                        'cnombreproveedor': '',
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayBanco = response.data.arrayProveedor;

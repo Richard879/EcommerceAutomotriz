@@ -2002,7 +2002,7 @@
                         'nidempresa': 1300011,
                         'nidgrupopar' : 110076,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
-                        'opcion' : 1,
+                        'opcion' : 0,
                         'page' : page
                     }
                 }).then(response => {

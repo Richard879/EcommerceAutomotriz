@@ -1623,8 +1623,8 @@
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    naniofabricacion: 0,
-                    naniomodelo: 0,
+                    naniofabricacion: '',
+                    naniomodelo: '',
                     nidcontacto: 0
                 },
                 formNuevoContactoJurifico:{
@@ -2765,7 +2765,7 @@
                         'nidempresa': 1300011,
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
+                        'opcion' : 0,
                         'page' : page
                     }
                 }).then(response => {

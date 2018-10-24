@@ -1465,7 +1465,7 @@
                         'nidempresa': 1300011,
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
+                        'opcion' : 0,
                         'page' : page
                     }
                 }).then(response => {
@@ -1923,8 +1923,9 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidgrupopar' : 110094,
-                        'cnombreproveedor' : ''
+                        'nidgrupopar': 110094,
+                        'cnombreproveedor': '',
+                        'opcion' : 1
                     }
                 }).then(response => {
                     this.arrayProveedorForum = response.data.arrayProveedor;
@@ -2124,8 +2125,7 @@
                 this.fillCompra.cnumerovin=  '',
                 this.attachment= null,
                 this.arrayExcel = [],
-                this.arrayCompra = [],
-                this.limpiarPaginacion()
+                this.arrayCompra = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

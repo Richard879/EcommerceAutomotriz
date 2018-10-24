@@ -778,11 +778,11 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="col-sm-6">
+                                                                                            <div class="col-sm-6" v-if="this.cvalidabanco=='SI'">
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <el-select v-model="formDocRef.nidbanco" filterable clearable placeholder="SELECCIONE" disabled="disabled" >
+                                                                                                        <el-select v-model="formDocRef.nidbanco" filterable clearable placeholder="SELECCIONE" >
                                                                                                             <el-option
                                                                                                             v-for="item in arrayBanco"
                                                                                                             :key="item.nIdPar"
@@ -868,106 +868,6 @@
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">LISTADO</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombre</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <template v-if="arrayProveedor.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Seleccione</th>
-                                                                        <th>Nombre Proveedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>{{proveedor.cParNombre}}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-7">
-                                                                    <nav>
-                                                                        <ul class="pagination">
-                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                            </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                            :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                                v-text="page"></a>
-                                                                            </li>
-                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                                <div class="col-lg-5">
-                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="10">No existen registros!</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </template>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
@@ -1452,10 +1352,10 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formDocRef.nidformapago == 0){
+                if(!this.formDocRef.nidformapago ||this.formDocRef.nidformapago == 0){
                     this.mensajeError.push('Debes Seleccionar Forma de Pago');
                 };
-                if(this.cvalidabanco == 'SI'){
+                if(this.cvalidabanco == 'SI' && (!this.formDocRef.nidbanco || this.formDocRef.nidbanco==0)){
                     this.mensajeError.push('Debes Seleccionar Banco');
                 }
                 if(this.mensajeError.length){
@@ -1539,43 +1439,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            // ==========================================================
-            // =============  BUSCAR PROVEEDORES ========================
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 1,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formPedido.nidproveedor = nProveedorId;
-                this.formPedido.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
             },
             // =============================================
             // =============  MODAL ========================
