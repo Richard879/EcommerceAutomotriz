@@ -1362,16 +1362,7 @@
                 this.llenarFormaPago();
             },
             obtenerFechaRegistroPedido(){
-                var f = new Date();
-                var day = String(f.getDate());
-                var month = String((f.getMonth() +1));
-                if (month.length < 2){
-                    month = "0" + "" + month;
-                }
-                if (day.length < 2){
-                    day = "0" + "" + day;
-                }
-                this.formDocRef.dfechapedido  = day + "/" + month + "/" + f.getFullYear();
+                this.formDocRef.dfechapedido = moment().format('DD/MM/YYYY');
             },
             listarDatosListaPrecioDetalle(nidcabeceracotizacion){
                 this.mostrarProgressBar();
