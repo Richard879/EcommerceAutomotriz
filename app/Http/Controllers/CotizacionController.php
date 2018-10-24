@@ -376,6 +376,37 @@ class CotizacionController extends Controller
         return ['arrayCotizacionesPendientes'=>$arrayCotizacionesPendientes];
     }
 
+    public function GetLstCotizacionPendienteADV(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nidempresa    =   $request->nidempresa;
+        $nidsucursal   =   $request->nidsucursal;
+        $nidmarca      =   $request->nidmarca;
+        $nidmodelo     =   $request->nidmodelo;
+        $dfechainicio  =   $request->dfechainicio;
+        $dfechafin     =   $request->dfechafin;
+
+        $nidmarca = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
+        $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
+        $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
+        $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
+
+        $arrayMisCotizacionesPendientes = DB::select('exec usp_Cotizacion_GetLstCotizacionPendienteADV ?, ?, ?, ?, ?, ?, ?',
+                                    [
+                                        $nidempresa,
+                                        $nidsucursal,
+                                        $nidmarca,
+                                        $nidmodelo,
+                                        $dfechainicio,
+                                        $dfechafin,
+                                        Auth::user()->id
+                                    ]);
+
+        $arrayMisCotizacionesPendientes = ParametroController::arrayPaginator($arrayMisCotizacionesPendientes, $request);
+        return ['arrayMisCotizacionesPendientes'=>$arrayMisCotizacionesPendientes];
+    }
+
     public function GetDistribucionByElementoVenta(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

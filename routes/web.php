@@ -184,6 +184,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetRefVehiculoByContacto', 'CotizacionController@GetRefVehiculoByContacto');
     Route::put('/setcotizacion/SetCambiarEstadoCotizacion', 'CotizacionController@SetCambiarEstadoCotizacion');
     Route::get('/getcotizacion/GetLstCotizacionPendientes', 'CotizacionController@GetLstCotizacionPendientes');
+    Route::get('/getcotizacion/GetLstCotizacionPendienteADV', 'CotizacionController@GetLstCotizacionPendienteADV');
     Route::get('/getcotizacion/GetDistribucionBySuperaDscto', 'CotizacionController@GetDistribucionBySuperaDscto');
     Route::get('/getcotizacion/GetDistribucionByElementoVenta', 'CotizacionController@GetDistribucionByElementoVenta');
     Route::post('/setcotizacion/SetDistribucionCotizacion', 'CotizacionController@SetDistribucionCotizacion');

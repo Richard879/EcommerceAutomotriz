@@ -11,217 +11,225 @@
                 <div class="container-fluid">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">BUSCAR COTIZACIONES PENDIENTES DE CONFORMIDAD</h3>
-                            </div>
                             <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Empresa</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="fillCotizacionesPendiente.cempresa" class="form-control form-control-sm" readonly>
-                                                </div>
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">BUSCAR COTIZACIONES PENDIENTES DE CONFORMIDAD</h3>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Sucursal</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" v-model="fillCotizacionesPendiente.csucursal" class="form-control form-control-sm" readonly>
-                                                </div>
+                                            <div class="card-body">
+                                                <form class="form-horizontal">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Empresa</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" v-model="fillCotizacionesPendiente.cempresa" class="form-control form-control-sm" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" v-model="fillCotizacionesPendiente.csucursal" class="form-control form-control-sm" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-date-picker
+                                                                        v-model="fillCotizacionesPendiente.dfechainicio"
+                                                                        type="date"
+                                                                        value-format="yyyy-MM-dd"
+                                                                        format="dd/MM/yyyy"
+                                                                        placeholder="dd/mm/aaaa">
+                                                                    </el-date-picker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-date-picker
+                                                                        v-model="fillCotizacionesPendiente.dfechafin"
+                                                                        type="date"
+                                                                        value-format="yyyy-MM-dd"
+                                                                        format="dd/MM/yyyy"
+                                                                        placeholder="dd/mm/aaaa">
+                                                                    </el-date-picker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-4 form-control-label">Marca</label>
+                                                                <div class="col-md-8">
+                                                                    <el-select v-model="fillCotizacionesPendiente.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                        <el-option
+                                                                        v-for="item in arrayMarca"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-4 form-control-label">Modelo</label>
+                                                                <div class="col-md-8">
+                                                                    <el-select v-model="fillCotizacionesPendiente.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                        <el-option
+                                                                        v-for="item in arrayModelo"
+                                                                        :key="item.nIdPar"
+                                                                        :label="item.cParNombre"
+                                                                        :value="item.nIdPar">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-5">
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesPendientes(1)">
+                                                                <i class="fa fa-search"></i> Buscar
+                                                            </button>
+                                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBusqCotizacionesPendientes">
+                                                                <i class="fa fa-recycle"></i> Limpiar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Fecha Inicio</label>
-                                                <div class="col-sm-8">
-                                                    <el-date-picker
-                                                        v-model="fillCotizacionesPendiente.dfechainicio"
-                                                        type="date"
-                                                        value-format="yyyy-MM-dd"
-                                                        format="dd/MM/yyyy"
-                                                        placeholder="dd/mm/aaaa">
-                                                    </el-date-picker>
-                                                </div>
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="h4">LISTADO</h3>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <label class="col-sm-4 form-control-label">Fecha Fin</label>
-                                                <div class="col-sm-8">
-                                                    <el-date-picker
-                                                        v-model="fillCotizacionesPendiente.dfechafin"
-                                                        type="date"
-                                                        value-format="yyyy-MM-dd"
-                                                        format="dd/MM/yyyy"
-                                                        placeholder="dd/mm/aaaa">
-                                                    </el-date-picker>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">Marca</label>
-                                                <div class="col-md-8">
-                                                    <el-select v-model="fillCotizacionesPendiente.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
-                                                        <el-option
-                                                        v-for="item in arrayMarca"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <label class="col-md-4 form-control-label">Modelo</label>
-                                                <div class="col-md-8">
-                                                    <el-select v-model="fillCotizacionesPendiente.nidmodelo" filterable clearable placeholder="SELECCIONE">
-                                                        <el-option
-                                                        v-for="item in arrayModelo"
-                                                        :key="item.nIdPar"
-                                                        :label="item.cParNombre"
-                                                        :value="item.nIdPar">
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesPendientes(1)">
-                                                <i class="fa fa-search"></i> Buscar
-                                            </button>
-                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarBusqCotizacionesPendientes">
-                                                <i class="fa fa-recycle"></i> Limpiar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="h4">LISTADO</h3>
-                            </div>
-                            <div class="card-body">
-                                <template v-if="arrayCotizacionesPendientes.length">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Acciones</th>
-                                                    <th>Nro Cotizacion</th>
-                                                    <th>Contacto</th>
-                                                    <th>Vehiculo</th>
-                                                    <th>Dirección</th>
-                                                    <th>Celular</th>
-                                                    <th>Email</th>
-                                                    <th>Fecha Inicio</th>
-                                                    <th>Fecha Venc.</th>
-                                                    <th>Aprobación</th>
-                                                    <th>Estado Cotización</th>
-                                                    <th>Vendedor</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraCotizacion">
-                                                    <td>
-                                                        <!-- Opcion del Jefe de Ventas -->
-                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                <i @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                        <!-- Opcion del ADV -->
-                                                        <template v-if="cotizacionpendiente.cTipoRol == 110083">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-usd"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                        <!-- Opción de Jefe de Ventas y ADV -->
-                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                <i @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                            </el-tooltip>
-                                                        </template>
+                                            <div class="card-body">
+                                                <template v-if="arrayCotizacionesPendientes.length">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Acciones</th>
+                                                                    <th>Nro Cotizacion</th>
+                                                                    <th>Contacto</th>
+                                                                    <th>Vehiculo</th>
+                                                                    <th>Dirección</th>
+                                                                    <th>Celular</th>
+                                                                    <th>Email</th>
+                                                                    <th>Fecha Inicio</th>
+                                                                    <th>Fecha Venc.</th>
+                                                                    <th>Aprobación</th>
+                                                                    <th>Estado Cotización</th>
+                                                                    <th>Vendedor</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="cotizacionpendiente in arrayCotizacionesPendientes" :key="cotizacionpendiente.nIdCabeceraCotizacion">
+                                                                    <td>
+                                                                        <!-- Opcion del Jefe de Ventas -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>
+                                                                        </template>
+                                                                        <!-- Opcion del ADV -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110083">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-usd"></i>
+                                                                            </el-tooltip>
+                                                                        </template>
+                                                                        <!-- Opción de Jefe de Ventas y ADV -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                            </el-tooltip>
+                                                                        </template>
 
-                                                        <!-- Opción de Gerencia -->
-                                                        <template v-if="cotizacionpendiente.cTipoRol == 110096">
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                <i @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                            </el-tooltip>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                <i @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                            </el-tooltip>
-                                                        </template>
-                                                    </td>
-                                                    <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
-                                                    <td v-text="cotizacionpendiente.cContacto"></td>
-                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioFabricacion + '-' + cotizacionpendiente.nAnioModelo"></td>
-                                                    <td v-text="cotizacionpendiente.cDireccion"></td>
-                                                    <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
-                                                    <td v-text="cotizacionpendiente.cEmail"></td>
-                                                    <td v-text="cotizacionpendiente.dFechaCotizacion"></td>
-                                                    <td v-text="cotizacionpendiente.dFechaVencimientoCotizacion"></td>
-                                                    <td v-text="cotizacionpendiente.cEstadoAprobacion"></td>
-                                                    <td v-text="cotizacionpendiente.cEstadoCotizacion"></td>
-                                                    <td v-text="cotizacionpendiente.cVendedorNombre"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-7">
-                                                <nav>
-                                                    <ul class="pagination">
-                                                        <li v-if="pagination.current_page > 1" class="page-item">
-                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                        </li>
-                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                        :class="[page==isActived?'active':'']">
-                                                            <a class="page-link"
-                                                            href="#" @click.prevent="cambiarPaginaCotizacion(page)"
-                                                            v-text="page"></a>
-                                                        </li>
-                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        <!-- Opción de Gerencia -->
+                                                                        <template v-if="cotizacionpendiente.cTipoRol == 110096">
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            </el-tooltip>
+                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
+                                                                                <i @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                            </el-tooltip>
+                                                                        </template>
+                                                                    </td>
+                                                                    <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cContacto"></td>
+                                                                    <td v-text="cotizacionpendiente.cNombreComercial + ' ' + cotizacionpendiente.nAnioFabricacion + '-' + cotizacionpendiente.nAnioModelo"></td>
+                                                                    <td v-text="cotizacionpendiente.cDireccion"></td>
+                                                                    <td v-text="cotizacionpendiente.nTelefonoMovil"></td>
+                                                                    <td v-text="cotizacionpendiente.cEmail"></td>
+                                                                    <td v-text="cotizacionpendiente.dFechaCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.dFechaVencimientoCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cEstadoAprobacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cEstadoCotizacion"></td>
+                                                                    <td v-text="cotizacionpendiente.cVendedorNombre"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-7">
+                                                                <nav>
+                                                                    <ul class="pagination">
+                                                                        <li v-if="pagination.current_page > 1" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                        </li>
+                                                                        <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                        :class="[page==isActived?'active':'']">
+                                                                            <a class="page-link"
+                                                                            href="#" @click.prevent="cambiarPaginaCotizacion(page)"
+                                                                            v-text="page"></a>
+                                                                        </li>
+                                                                        <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                            <a @click.prevent="cambiarPaginaCotizacion(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
-                                </template>
-                                <template v-else>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="10">No existen registros!</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </template>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -411,7 +419,7 @@
 
 <script>
     export default {
-        props:['ruta'],
+        props:['ruta', 'usuario'],
         data(){
             return {
                 fillProveedor:{
@@ -434,6 +442,7 @@
                     dfechafin: ''
                 },
                 arrayCotizacionesPendientes: [],
+                arrayMisCotizacionesPendientes: [],
                 //Modal Distribucion
                 arrayDistribucionDescuento: [],
                 listDistribucionDescuento: [],
@@ -458,6 +467,7 @@
                     'from' : 0,
                     'to' : 0,
                 },
+                nIdGrupoUsuario: '',
                 offset:3,
                 modal:0,
                 accionmodal: 0,
@@ -519,7 +529,25 @@
                 return pagesArray;
             },
         },
+        mounted(){
+            this.informacionUsuario();
+            this.llenarComboMarca();
+            this.llenarComboModelo();
+        },
         methods: {
+            informacionUsuario(){
+                var url = this.ruta + '/parametro/GetParametroById';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : this.usuario.id,
+                        'nidgrupopar': 110083
+                    }
+                }).then(response => {
+                    this.nIdGrupoUsuario = response.data[0].nIdGrupoPar;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
             llenarComboMarca(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
 
@@ -559,6 +587,7 @@
                     }
                 });
             },
+            // buscar cotizaciones
             buscarCotizacionesPendientes(page){
                 if(this.validarbuscarCotizacionesPendientes()){
                     this.accionmodal=1;
@@ -646,7 +675,7 @@
                         }).then(response => {
                             me.buscarCotizacionesPendientes(1);
                             swal(
-                                ((op == 2) ? '' : ' Conforme ') + 'Rechazar!',
+                                ((op == 2) ? 'Conforme' : ' Rechazar'),
                                 'La Cotización ' + cNumeroCotizacion +' ha sido otorgada la ' + ((op == 2) ? '' : ' No ') + ' Conformidad con éxito.',
                                 'success'
                             )
@@ -816,8 +845,13 @@
                     listDistribucionDescuento: this.listDistribucionDescuento,
                     listDistribucionEVPorRegalar: this.listDistribucionEVPorRegalar
                 }).then(response => {
-                    //GENERAR LA CONFORMIDAD HACIA EL GERENTE
-                    this.cambiarEstadoCotizacion(response.data, 2);
+                    if (this.nIdGrupoUsuario == '110083') {
+                        //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                        this.cambiarEstadoCotizacion(response.data, 4);
+                    } else {
+                        //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                        this.cambiarEstadoCotizacion(response.data, 4);
+                    }
                     swal('Cotización distribuida y pendiente de aprobación por Gerencia');
                 }).catch(error => {
                     console.log(error);
@@ -1008,10 +1042,6 @@
                 $("#myBar").show();
                 progress();
             }
-        },
-        mounted(){
-            this.llenarComboMarca();
-            this.llenarComboModelo();
         }
     }
 </script>

@@ -1534,7 +1534,7 @@
                 this.fillBusquedaSolicitud.nidestado = '';
             },
             // =================================================================
-            // METODOS TAB SOLICTIDUES JEFE VENTAS
+            // METODOS TAB SOLICTIDUES
             // =================================================================
             tabSolicitudesJefeVentas(){
                 $('#tab01').removeClass('nav-link active');
@@ -1655,6 +1655,9 @@
                 this.fillModalSolicitudAutorizacion.cFechaSolicitud             = ''
                 this.fillModalSolicitudAutorizacion.cHoraMovimientoVehiculo     = ''
             },
+            // =================================================================
+            // METODOS TAB MIS SOLICTIDUES ADV
+            // =================================================================
             // ======================
             // MODAL BUSCAR VEHICULO
             // ======================
