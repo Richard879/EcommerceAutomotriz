@@ -821,7 +821,7 @@
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
-                                                                                                <td v-text="documento.cParNombre"></td>
+                                                                                                <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
                                                                                                 <td><input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
                                                                                             </tr>
                                                                                         </tbody>
@@ -1364,15 +1364,15 @@
                 return this.error;
             },
             llenarTablaDocumentos(){
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/pedido/GetDocumentoByFormaPago';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110068,
-                        'opcion' : 1
+                        'nidformapago': this.formDocRef.nidformapago,
+                        'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayTablaDocumento = response.data;
+                    this.arrayTablaDocumento = response.data.arrayDocumento;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1384,11 +1384,11 @@
                 }
             },
             registrarPedido(){
-                /*if(this.validarRegistrarCotizacion()){
+                if(this.validaRegistraraPedido()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }*/
+                }
 
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
@@ -1403,14 +1403,33 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                        if(this.attachment.length){
+                            this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                        }
                     }
                     else{
-                        swal('VIN no Disponible');
+                        swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');
                     }
                 }).catch(error => {
                     this.errors = error
                 });
+            },
+            validaRegistraraPedido(){
+                let me = this;
+                me.error = 0;
+                me.mensajeError =[];
+
+                me.arrayTablaDocumento.map(function(value, key) {
+                    if(value.nValida == 1 && !me.attachment[key])
+                    {
+                        me.mensajeError.push('* ' + value.cParNombre + ' - Archivo Obligatorio');
+                    }
+                });
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
             },
             subirArchivos(nIdCabeceraPedido){
                 this.mostrarProgressBar();
