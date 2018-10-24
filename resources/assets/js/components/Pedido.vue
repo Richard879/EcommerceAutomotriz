@@ -188,7 +188,7 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayMisPedido" :key="pedido.nIdCabeceraPedido">
                                                                                 <!--<td>
-                                                                                    <a href="#" @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top"
+                                                                                    <a href="#" @click="generarPedido(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top"
                                                                                         :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
                                                                                         <i class="fa-md fa fa-check-circle"></i>
                                                                                     </a>
@@ -378,8 +378,8 @@
                                                                                 <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraCotizacion">
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Aprobar Cotización {{ pedido.cNumeroCotizacion }}</div>
-                                                                                            <i @click="aprobarCotizacion(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                            <div slot="content">Generar Pedido {{ pedido.cNumeroCotizacion }}</div>
+                                                                                            <i @click="generarPedido(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
                                                                                     <td v-text="pedido.cNumeroCotizacion"></td>
@@ -469,7 +469,7 @@
                                                                         <div class="col-lg-12">
                                                                             <div class="card">
                                                                                 <div class="card-header">
-                                                                                    <h3 class="h4">BUSCAR COTIZACIONES</h3>
+                                                                                    <h3 class="h4">ASIGNAR COMPRA</h3>
                                                                                 </div>
                                                                                 <div class="card-body">
                                                                                     <form class="form-horizontal">
@@ -529,9 +529,7 @@
                                                                                                         <td>
                                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                                 <div slot="content">Seleccionar Compra {{ compra.cNumeroVin }}</div>
-                                                                                                                <i @click="activarTabDocReferencias(compra.nIdCompra, compra.cNumeroVin, compra.nOrdenCompra,
-                                                                                                                                                    compra.cNombreComercial, compra.nAnioFabricacion, compra.nAnioVersion,
-                                                                                                                                                    compra.cNombreColor, compra.cNumeroMotor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                                                <i @click="activarTabDocReferencias(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                                             </el-tooltip>
                                                                                                         </td>
                                                                                                         <td v-text="compra.nIdCompra"></td>
@@ -604,7 +602,7 @@
                                                                                                     <label class="col-sm-4 form-control-label">Nro Cotización</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <input type="hidden" v-model="formDocRef.nidcompra">
-                                                                                                        <label v-text="formDocRef.cnrocotizacion" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.cnrocotizacion" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -612,7 +610,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.cnombrecomercial" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.cnombrecomercial" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -622,7 +620,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Año Fabricación</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -630,7 +628,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Año Modelo</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -640,7 +638,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Nro VIN</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.cnrovin" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.cnrovin" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -648,7 +646,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">O/C</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.nordencompra" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.nordencompra" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -658,7 +656,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Color</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.ccolor" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.ccolor" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -666,7 +664,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Motor</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.cmotor" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.cmotor" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -748,7 +746,7 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">Fecha Pedido</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <label v-text="formDocRef.dfechapedido" class="form-control-label-readonly"></label>
+                                                                                                        <label v-text="formDocRef.dfechapedido" class="form-control-label-readonly" style="text-align:right;"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -769,10 +767,14 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">* Forma de Pago</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <select v-model="formDocRef.nidformapago" class="form-control form-control-sm">
-                                                                                                            <option v-for="item in arrayFormaPago" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                            </option>
-                                                                                                        </select>
+                                                                                                        <el-select v-model="formDocRef.nidformapago" filterable clearable placeholder="SELECCIONE" @change="changeFormaPago()" >
+                                                                                                            <el-option
+                                                                                                            v-for="item in arrayFormaPago"
+                                                                                                            :key="item.nIdPar"
+                                                                                                            :label="item.cParNombre"
+                                                                                                            :value="item.nIdPar">
+                                                                                                            </el-option>
+                                                                                                        </el-select>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -780,10 +782,14 @@
                                                                                                 <div class="row">
                                                                                                     <label class="col-sm-4 form-control-label">* Banco</label>
                                                                                                     <div class="col-sm-8">
-                                                                                                        <select v-model="formDocRef.nidbanco" class="form-control form-control-sm">
-                                                                                                            <option v-for="item in arrayBanco" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                            </option>
-                                                                                                        </select>
+                                                                                                        <el-select v-model="formDocRef.nidbanco" filterable clearable placeholder="SELECCIONE" disabled="disabled" >
+                                                                                                            <el-option
+                                                                                                            v-for="item in arrayBanco"
+                                                                                                            :key="item.nIdPar"
+                                                                                                            :label="item.cParNombre"
+                                                                                                            :value="item.nIdPar">
+                                                                                                            </el-option>
+                                                                                                        </el-select>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1048,6 +1054,7 @@
                 },
                 arrayBanco: [],
                 arrayFormaPago: [],
+                cvalidabanco: '',
                 // ============== VARIABLES TAB DOCUMENTOS ASOCIADOS =================
                 arrayTablaDocumento: [],
                 // =============================================================
@@ -1286,10 +1293,10 @@
                     })
             },
             //=============== APROBAR COTIZACION ========================
-            aprobarCotizacion(nIdCabeceraCotizacion, cNumeroCotizacion, cContacto){
-                this.formPedido.cnombrecontacto = cContacto;
-                this.formCompra.nidcabeceracotizacion = nIdCabeceraCotizacion;
-                this.formDocRef.cnrocotizacion = cNumeroCotizacion;
+            generarPedido(pedido){
+                this.formPedido.cnombrecontacto = pedido.cContacto;
+                this.formCompra.nidcabeceracotizacion = pedido.nIdCabeceraCotizacion;
+                this.formDocRef.cnrocotizacion = pedido.cNumeroCotizacion;
                 this.vistaFormularioPedido = 0;
                 this.listarCompras(1);
             },
@@ -1334,21 +1341,21 @@
                 this.listarCompras(page);
             },
             //============= TAB DOCUMENTOS REFERENCIAS ==================
-            activarTabDocReferencias(nIdCompra, cNumeroVin, nOrdenCompra, cNombreComercial, nAnioFabricacion, nAnioModelo, cNombreColor, cNombreMotor){
+            activarTabDocReferencias(compra){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
                 $('#Tab2').addClass("nav-link active");
                 $('#TabAsignarCompra').removeClass('in active show');
                 $('#TabDocReferencias').addClass('in active show');
-                this.formDocRef.nidcompra = nIdCompra;
-                this.formDocRef.cnrovin = cNumeroVin;
-                this.formDocRef.nordencompra = nOrdenCompra;
-                this.formDocRef.cnombrecomercial = cNombreComercial;
-                this.formDocRef.naniofabricacion = nAnioFabricacion;
-                this.formDocRef.naniomodelo = nAnioModelo;
-                this.formDocRef.ccolor = cNombreColor;
-                this.formDocRef.cmotor = cNombreMotor;
+                this.formDocRef.nidcompra = compra.nIdCompra;
+                this.formDocRef.cnrovin = compra.cNumeroVin;
+                this.formDocRef.nordencompra = compra.nOrdenCompra;
+                this.formDocRef.cnombrecomercial = compra.cNombreComercial;
+                this.formDocRef.naniofabricacion = compra.nAnioFabricacion;
+                this.formDocRef.naniomodelo = compra.nAnioVersion;
+                this.formDocRef.ccolor = compra.cNombreColor;
+                this.formDocRef.cmotor = compra.cNombreMotor;
                 this.obtenerFechaRegistroPedido();
                 this.listarDatosListaPrecioDetalle(parseInt(this.formCompra.nidcabeceracotizacion));
                 this.llenarComboBanco();
@@ -1382,7 +1389,8 @@
                     this.formDocRef.fdescuentolista = response.data[0].fDescuento;
                     this.formDocRef.fbono = response.data[0].fBono;
                     this.formDocRef.fbonoespecial = response.data[0].fBonoEspecial;
-                }).then(function (response) {
+                    this.formDocRef.fpreciofinal = response.data[0].fSubTotal;
+                    this.formDocRef.fsobreprecio = response.data[0].fSobrePrecio;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1414,6 +1422,25 @@
                     console.log(error);
                 });
             },
+            changeFormaPago(){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : this.formDocRef.nidformapago,
+                        'ctipoparametro' : 'D',
+                        'nidtipopar': 0
+                    }
+                }).then(response => {
+                    this.cvalidabanco = response.data[0].cDatoParDescripcion;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             //============= TAB DOCUMENTOS ASOCIADOS ===================
             activarTabDocAsociados(){
                 if(this.validaMostrarTabAsociados()){
@@ -1437,6 +1464,9 @@
                 if(this.formDocRef.nidformapago == 0){
                     this.mensajeError.push('Debes Seleccionar Forma de Pago');
                 };
+                if(this.cvalidabanco == 'SI'){
+                    this.mensajeError.push('Debes Seleccionar Banco');
+                }
                 if(this.mensajeError.length){
                     this.error = 1;
                 }

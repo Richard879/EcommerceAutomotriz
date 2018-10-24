@@ -67,7 +67,7 @@ class PedidoController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $nIdCabeceraCotizacion = $request->nidcabeceracotizacion;
 
-        $objListaDetalle = DB::select('exec usp_Pedido_GetListaPrecioDetalleByIdCotizacion ?, ?, ?',
+        $objListaDetalle = DB::select('exec [usp_Pedido_GetListaPrecioDetalleByIdCotizacion] ?, ?, ?',
                                                                             array(  $nIdEmpresa,
                                                                                     $nIdSucursal,
                                                                                     $nIdCabeceraCotizacion
