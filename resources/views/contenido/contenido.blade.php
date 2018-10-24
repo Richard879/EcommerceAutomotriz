@@ -63,7 +63,7 @@
         <cotizacion :ruta="ruta"></cotizacion>
     </template>
     <template v-if="menu==1300349">
-        <cotizacionaprobar :ruta="ruta"></cotizacionaprobar>
+        <cotizacionaprobar :ruta="ruta" :usuario="{{ auth()->user() }}"></cotizacionaprobar>
     </template>
     <template v-if="menu==1300275">
         <pedido :ruta="ruta"></pedido>
