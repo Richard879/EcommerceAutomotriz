@@ -1338,7 +1338,7 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <label class="col-sm-4 form-control-label">* Entidad</label>
                                                         <div class="col-sm-8">
                                                             <el-select v-model="fillProveedor.nidproveedor" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
@@ -2517,7 +2517,6 @@
             },
             desactivarTabs(){
                 $('#Tab2').addClass('disabled');
-                //$('#Tab3').addClass('disabled');
             },
            // =============  REGISTRAR DISTRIBUCION ===================
             registrarAsignaDistribucion(){
@@ -2765,6 +2764,7 @@
                                 this.modal = 1;
                                 this.formDistribucion.nindex = data['nIdEventoElementoVenta'];
                                 this.listarProveedorElementoVenta(1);
+                                this.fillProveedor.nidproveedor = '';
                             }break;
                         }
                     }
@@ -2785,7 +2785,10 @@
                 this.arrayTemporalModelo = [],
                 this.arrayTemporalElemento = [],
                 this.arrayElementoDistribucion = [],
-                this.arrayProveedorPorEC = []
+                this.arrayProveedorPorEC = [],
+                this.formEventoCamp.ndetalle = '',
+                this.fillProveedor.nidproveedor = '',
+                this.arrayElementoDistribucionEnvia = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
