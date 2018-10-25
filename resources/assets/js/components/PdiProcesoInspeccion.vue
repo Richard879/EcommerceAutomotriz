@@ -1682,16 +1682,17 @@
             },
             //=============== LISTAR MODAL ACCESORIO ===================
             listarAccesorio(){
-                var url = this.ruta + '/parametro/GetParametroByNombre';
+                var url = this.ruta + '/parametro/GetListParametroByNombre';
 
                 axios.get(url, {
                     params: {
                         'ngrupoparid': 110089,
-                        'cparnombre': this.fillAccesorio.cnombre
+                        'cparnombre': this.fillAccesorio.cnombre,
+                        'opcion' : 1
                     }
                 }).then(response => {
                     let me = this;
-                    me.arrayAccesorio = response.data;
+                    me.arrayAccesorio = response.data.arrayParametro.data;
                     me.arrayAccesorio.map(function(value, key){
                        me.arrayAccesorioCantidad[key] = 0;
                     });

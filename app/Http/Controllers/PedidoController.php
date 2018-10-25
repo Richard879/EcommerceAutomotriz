@@ -262,4 +262,19 @@ class PedidoController extends Controller
         $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
         return ['arrayPedido'=>$arrayPedido];
     }
+
+    public function GetDocumentoByFormaPago(Request $request)
+    {
+        $nIdFormaPago = $request->nidformapago;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayDocumento = DB::select('exec [usp_Pedido_GetDocumentoByFormaPago] ?',
+                                                        [   $nIdFormaPago
+                                                        ]);
+        if($variable == "0"){
+            $arrayDocumento = $this->arrayPaginator($arrayDocumento, $request);
+        }
+        return ['arrayDocumento'=>$arrayDocumento];
+    }
 }

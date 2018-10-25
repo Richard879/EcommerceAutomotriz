@@ -474,7 +474,7 @@
                         'nidempresa': this.fillAsigVendedorCuota.nidempresa,
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
-                        'opcion' : 1,
+                        'opcion' : 0,
                         'page' : page
                     }
                 }).then(response => {
