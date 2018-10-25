@@ -820,9 +820,9 @@
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                            <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
+                                                                                            <tr v-for="(documento, index) in arrayTablaDocumento" :key="documento.nIdPar">
                                                                                                 <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
-                                                                                                <td><input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                                <td><input type="file" @change="getFile($event, index)" accept=".pdf,.xlsx"/></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -939,8 +939,8 @@
                     cnombrecomercial: '',
                     naniofabricacion: '',
                     naniomodelo: '',
-                    nidbanco: 0,
-                    nidformapago: 0,
+                    nidbanco: '',
+                    nidformapago: '',
                     dfechapedido: '',
                     fpreciolista: 0,
                     fprecioventap: 0,
@@ -984,8 +984,8 @@
                 errors: [],
                 mensajeError: [],
                 attachment: [],
-                form: new FormData,
-                textFile: ''
+                arrayValidaAttachment: [],
+                form: new FormData
             }
         },
         computed:{
@@ -1291,8 +1291,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110042,
-                        'opcion': 0
+                        'ngrupoparid': 110042
                     }
                 }).then(response => {
                     this.arrayBanco = response.data;
@@ -1304,8 +1303,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110062,
-                        'opcion': 0
+                        'ngrupoparid': 110062
                     }
                 }).then(response => {
                     this.arrayFormaPago = response.data;
@@ -1377,8 +1375,10 @@
                     console.log(error);
                 });
             },
-            getFile(e){
+            getFile(e, index){
                 let selectFile = e.target.files;
+                this.arrayValidaAttachment.length = this.arrayTablaDocumento.length;
+                this.arrayValidaAttachment[index] = selectFile;
                 for(let i= 0; i < selectFile.length; i++){
                     this.attachment.push(selectFile[i]);
                 }
@@ -1420,7 +1420,7 @@
                 me.mensajeError =[];
 
                 me.arrayTablaDocumento.map(function(value, key) {
-                    if(value.nValida == 1 && !me.attachment[key])
+                    if(value.nValida == 1 && !me.arrayValidaAttachment[key])
                     {
                         me.mensajeError.push('* ' + value.cParNombre + ' - Archivo Obligatorio');
                     }
