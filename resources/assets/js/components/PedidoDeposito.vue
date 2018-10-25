@@ -14,12 +14,12 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="Tab1" href="#TabBuscaPedido" @click="tabBuscarPedido()" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" id="Tab1" href="#TabBuscaPedido" @click="tabBuscarPedido" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR PEDIDOS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link disabled" id="Tab2" href="#TabGeneraDeposito" @click="tabGenerarDeposito()" role="tab" data-toggle="tab">
+                                        <a class="nav-link disabled" id="Tab2" href="#TabGeneraDeposito" @click="tabGenerarDeposito" role="tab" data-toggle="tab">
                                             <i class="fa fa-usd"></i> REALIZAR DEPÓSITOS
                                         </a>
                                     </li>
@@ -89,7 +89,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -97,7 +97,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -107,12 +107,12 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos()">
+                                                                                <el-select v-model="fillPedido.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelos">
                                                                                     <el-option
-                                                                                    v-for="item in arrayMarca"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayMarca"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -124,10 +124,10 @@
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillPedido.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
-                                                                                    v-for="item in arrayModelo"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayModelo"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -141,10 +141,10 @@
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillPedido.nidestadopedido" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
-                                                                                    v-for="item in arrayEstadoPedido"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayEstadoPedido"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -153,7 +153,9 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()"><i class="fa fa-search"></i> Buscar</button>
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -262,18 +264,25 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="hidden" v-model="formDeposito.nidcabecerapedido">
-                                                                                <select name="account" v-model="formDeposito.nidtipomovimiento" class="form-control form-control-sm" v-on:change="ocultarFormularioDeposito()">
-                                                                                    <option v-for="m in arrayTipoMovimiento" :key="m.nIdPar" :value="m.nIdPar" v-text="m.cParNombre">
-                                                                                    </option>
-                                                                                </select>
+                                                                                <el-select v-model="formDeposito.nidtipomovimiento"
+                                                                                           filterable
+                                                                                           clearable
+                                                                                           placeholder="SELECCIONE TIPO MOVIMIENTO"
+                                                                                           @change="ocultarFormularioDeposito">
+                                                                                    <el-option
+                                                                                        v-for="item in arrayTipoMovimiento"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormularioDeposito()">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormularioDeposito">
                                                                             <i class="fa fa-list-alt"></i> Nuevo
                                                                         </button>
                                                                     </div>
@@ -284,7 +293,7 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="card">
-                                                        <template v-if="vistaFormularioDeposito==1">
+                                                        <template v-if="arrayTipoMovimientoPermisos.includes('2')">
                                                             <div class="card-header">
                                                                 <h3 class="h4">DETALLE DEPÓSITO</h3>
                                                             </div>
@@ -427,7 +436,7 @@
                                                                 </div>
                                                             </div>
                                                         </template>
-                                                        <template v-if="vistaFormularioDeposito==2">
+                                                        <template v-if="arrayTipoMovimientoPermisos.includes('1')">
                                                             <div class="card-header">
                                                                 <h3 class="h4">BANCO ORIGEN</h3>
                                                             </div>
@@ -653,107 +662,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="h4">LISTADO</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <div class="row">
-                                                                <label class="col-sm-4 form-control-label">Nombre</label>
-                                                                <div class="col-sm-8">
-                                                                    <div class="input-group">
-                                                                        <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <button type="button" title="Buscar Vehículos" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();"><i class="fa-lg fa fa-search"></i></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <template v-if="arrayProveedor.length">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Seleccione</th>
-                                                                        <th>Nombre Proveedor</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                        <td>
-                                                                            <a href="#" @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre);">
-                                                                                <i class='fa-md fa fa-check-circle'></i>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>{{proveedor.cParNombre}}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="row">
-                                                                <div class="col-lg-7">
-                                                                    <nav>
-                                                                        <ul class="pagination">
-                                                                            <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                            </li>
-                                                                            <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                            :class="[page==isActivedModal?'active':'']">
-                                                                                <a class="page-link"
-                                                                                href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                                v-text="page"></a>
-                                                                            </li>
-                                                                            <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                                <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                </div>
-                                                                <div class="col-lg-5">
-                                                                    <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="10">No existen registros!</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </template>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </main>
     </transition>
 </template>
@@ -772,12 +680,6 @@
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
                 fValorTipocambioComercial: 0,
-                // =====================================================
-                // =========== VARIABLES MODAL PROVEEDOR ===============
-                fillProveedor:{
-                    cnombreproveedor: ''
-                },
-                arrayProveedor: [],
                 // ======================================================
                 // =========== VARIABLES TAB BUSCAR PEDIDO ==============
                 fillPedido:{
@@ -796,11 +698,11 @@
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formDeposito:{
-                    nidtipomovimiento: 0,
+                    nidtipomovimiento: '',
                     nidcabecerapedido: 0
                 },
                 arrayTipoMovimiento: [],
-                vistaFormularioDeposito: 0,
+                arrayTipoMovimientoPermisos: [],
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formNuevoDeposito:{
@@ -912,9 +814,7 @@
         },
         methods:{
             tabBuscarPedido(){
-                this.fillPedido.nidmarca = '';
-                this.fillPedido.nidmodelo = '';
-                this.arrayPedido = [];
+                this.limpiarFormulario();
             },
             llenarEstadoPedido(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -927,6 +827,11 @@
                     this.arrayEstadoPedido = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboMarcas(){
@@ -940,6 +845,11 @@
                     this.arrayMarca = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelos(){
@@ -954,6 +864,11 @@
                     this.fillPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             buscarPedidos(){
@@ -977,16 +892,21 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayPedido = response.data.arrayPedido.data;
-                    this.pagination.current_page =  response.data.arrayPedido.current_page;
-                    this.pagination.total = response.data.arrayPedido.total;
-                    this.pagination.per_page    = response.data.arrayPedido.per_page;
-                    this.pagination.last_page   = response.data.arrayPedido.last_page;
-                    this.pagination.from        = response.data.arrayPedido.from;
-                    this.pagination.to           = response.data.arrayPedido.to;
+                    this.arrayPedido                = response.data.arrayPedido.data;
+                    this.pagination.current_page    = response.data.arrayPedido.current_page;
+                    this.pagination.total           = response.data.arrayPedido.total;
+                    this.pagination.per_page        = response.data.arrayPedido.per_page;
+                    this.pagination.last_page       = response.data.arrayPedido.last_page;
+                    this.pagination.from            = response.data.arrayPedido.from;
+                    this.pagination.to              = response.data.arrayPedido.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -1007,7 +927,7 @@
                 this.formDeposito.nidcabecerapedido = nIdCabeceraPedido;
                 this.formNuevoDeposito.cnombrecontacto = cContacto;
                 this.llenarComboTipoMovimiento();
-                this.vistaFormularioDeposito = 0;
+                this.arrayTipoMovimientoPermisos = [];
             },
             llenarComboTipoMovimiento(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -1018,8 +938,14 @@
                     }
                 }).then(response => {
                     this.arrayTipoMovimiento = response.data;
+                    this.$delete(this.arrayTipoMovimiento, 0);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             //=============== MOSTRAR FORMULARIO DEPOSITO ========================
@@ -1126,30 +1052,47 @@
                 this.attachment = selectFile;
             },
             abrirFormularioDeposito(){
-                //SI ES SELECCIONE
-                if(this.formDeposito.nidtipomovimiento == 0){
+                //SI NO ESTA SELECCIONADO
+                if(this.formDeposito.nidtipomovimiento == ''){
                     if(this.validaMostrarFormularioDeposito()){
                         this.accionmodal=1;
                         this.modal = 1;
                         return;
                     }
-                }
-                //DEPÓSITO BANCARIO EFECTIVO
-                else if(this.formDeposito.nidtipomovimiento == 1300188){
-                    this.vistaFormularioDeposito = 1;
-                    this.mostrarFormularioDeposito();
-                }
-                //OTRO TIPO DEPOSITO
-                else{
-                    this.vistaFormularioDeposito = 2;
-                    this.mostrarFormularioOtroDeposito();
+                } else {
+                    var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                    axios.get(url, {
+                        params: {
+                            'nidpar' : this.formDeposito.nidtipomovimiento,
+                            'ctipoparametro' : 'N',
+                            'nidtipopar': 0
+                        }
+                    }).then(response => {
+                        let datos = response.data;
+                        let me = this;
+                        me.arrayTipoMovimientoPermisos = [];
+                        datos.map(function(x, y){
+                            //comprobar si un determinado elemento existe dentro de un array
+                            if (!me.arrayTipoMovimientoPermisos.includes(x.nDatoParNumerico)) {
+                                me.arrayTipoMovimientoPermisos.push(x.nDatoParNumerico);
+                            }
+                        });
+                        this.mostrarFormularioDeposito();
+                    }).catch(error => {
+                        console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
+                    });
                 }
             },
             validaMostrarFormularioDeposito(){
-                 this.error = 0;
+                this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formDeposito.nidtipomovimiento == 0){
+                if(this.formDeposito.nidtipomovimiento == ''){
                     this.mensajeError.push('Debes seleccionar Tipo Movimiento');
                 };
 
@@ -1355,6 +1298,13 @@
             },
             // ===========================================================
             limpiarFormulario(){
+                this.fillPedido.dfechainicio = '';
+                this.fillPedido.dfechafin = '';
+                this.fillPedido.cnumeropedido = '';
+                this.fillPedido.cnumerovin = '';
+                this.fillPedido.nidmarca = '';
+                this.fillPedido.nidmodelo = '';
+                this.fillPedido.nidestadopedido = '';
                 this.arrayPedido = [];
             },
             limpiarFormularioDesposito(){
@@ -1393,6 +1343,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
