@@ -89,7 +89,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -97,7 +97,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -153,7 +153,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -339,8 +339,18 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Nro Cotización</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="formPedido.cnumerocotizacion" @keyup.enter="listarCotizacionesIngresadas(1)" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesIngresadas()">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCotizacionesIngresadas(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                         </div>
@@ -913,8 +923,7 @@
                     dfechafin: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    cnumerodocumento: '',
-                    cfiltrodescripcion: '',
+                    cnumerocotizacion: '',
                     cnombrecontacto: ''
                 },
                 arrayMisPedido: [],
@@ -1059,9 +1068,6 @@
                     console.log(error);
                 });
             },
-            buscarPedidos(){
-                this.listarPedidos(1);
-            },
             listarPedidos(page){
                 this.mostrarProgressBar();
 
@@ -1133,21 +1139,19 @@
                 });
             },
             //============= LISTAR COTIZACIONES INGRESADAS ==============
-            buscarCotizacionesIngresadas(){
-                this.listarCotizacionesIngresadas(1);
-            },
             listarCotizacionesIngresadas(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/GetLstCotizacionIngresadas';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.formPedido.dfechainicio,
-                        'dfechafin' : this.formPedido.dfechafin,
-                        'nidmarca' : this.formPedido.nidmarca,
-                        'nidmodelo' : this.formPedido.nidmodelo,
-                        'page' : page
+                        'nidempresa': 1300011,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'dfechainicio': this.formPedido.dfechainicio,
+                        'dfechafin': this.formPedido.dfechafin,
+                        'nidmarca': this.formPedido.nidmarca,
+                        'nidmodelo': this.formPedido.nidmodelo,
+                        'cnumerocotizacion': this.formPedido.cnumerocotizacion,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayPedido = response.data.arrayPedido.data;

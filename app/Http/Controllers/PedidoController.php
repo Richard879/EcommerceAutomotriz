@@ -20,16 +20,21 @@ class PedidoController extends Controller
         $dFechaFin = $request->dfechafin;
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
+        $cNumeroCotizacion = $request->cnumerocotizacion;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNumeroCotizacion = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
 
-        $arrayPedido = DB::select('exec usp_Pedido_GetLstCotizacionIngresadas ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec [usp_Pedido_GetLstCotizacionIngresadas] ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
                                                                     $nIdMarca,
                                                                     $nIdModelo,
+                                                                    $cNumeroCotizacion,
                                                                     Auth::user()->id
                                                                     ));
 

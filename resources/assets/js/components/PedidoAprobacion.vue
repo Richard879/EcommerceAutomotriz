@@ -69,7 +69,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Nro Pedido</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.cnumeropedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                    <input type="text" v-model="fillBusquedaPedido.cnumeropedido" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.cnumerovin" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                    <input type="text" v-model="fillBusquedaPedido.cnumerovin" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos(1)">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
                                                 <i class="fa fa-search"></i> Buscar
                                             </button>
                                         </div>
@@ -371,7 +371,7 @@
                     console.log(error);
                 });
             },
-            buscarPedidos(page){
+            listarPedidos(page){
                 if(this.validarBuscarPedidos()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -433,7 +433,7 @@
             },
             cambiarPaginaPedido(page){
                 this.paginationModal.current_page=page;
-                this.buscarPedidos(page);
+                this.listarPedidos(page);
             },
             aprobarPedido(nIdPedido){
                 swal({
@@ -451,7 +451,7 @@
                         axios.put(url,{
                             nidpedido: nIdPedido
                         }).then(function (response) {
-                            me.buscarPedidos(1);
+                            me.listarPedidos(1);
                             swal(
                                 'Aprobado!',
                                 'El pedido ' + nIdPedido +' ha sido aprobado con éxito.',
