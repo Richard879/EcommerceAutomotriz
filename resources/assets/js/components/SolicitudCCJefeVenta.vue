@@ -2151,20 +2151,6 @@
                     console.log(error);
                 });
             },
-            accionConformeNoConforme(data){
-                var url = this.ruta + '/cartacaracteristica/SetConformeNoConforme';
-                axios.put(url, {
-                    'nIdScartaC' : this.fillCartaDetalleSolicitud.nIdSCC,
-                    'nIdEstadoCarta': (data == 1) ? 1300195 : 1300195,
-                    'FlagEstadoApro': (data == 1) ? 'CO' : 'NC',
-                    'nombre' : this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto
-                }).then(response => {
-                    this.cerrarModalSolicitud();
-                    this.buscarCartaVendedores(1);
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             //INICIO -- Ejecutar Al momento de registrar como JV
             getDetalleSolicitudConforme(nIdSCartaC){
                 var url = this.ruta + '/cartacaracteristica/GetDetalleSolicitud';
@@ -2377,6 +2363,20 @@
                 this.fillCartaDetalleSolicitud.fPrecioBase        = 0;
                 this.fillCartaDetalleSolicitud.fCuotaInicial      = 0;
                 this.fillCartaDetalleSolicitud.fMontoDesembolsado = 0;
+            },
+            accionConformeNoConforme(data){
+                var url = this.ruta + '/cartacaracteristica/SetConformeNoConforme';
+                axios.put(url, {
+                    'nIdScartaC' : this.fillCartaDetalleSolicitud.nIdSCC,
+                    'nIdEstadoCarta': (data == 1) ? 1300195 : 1300195,
+                    'FlagEstadoApro': (data == 1) ? 'CO' : 'NC',
+                    'nombre' : this.fillCartaDetalleSolicitud.cNumCarta + '-' + this.fillCartaDetalleSolicitud.cContacto
+                }).then(response => {
+                    this.cerrarModalSolicitud();
+                    this.buscarCartaVendedores(1);
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // ======================
             // TAB - MIS CARTAS ANULADAS

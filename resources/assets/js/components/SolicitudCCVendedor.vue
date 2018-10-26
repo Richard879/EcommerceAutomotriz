@@ -1253,7 +1253,6 @@
             this.llenarBancos();
             this.llenarReferencias();
             this.llenarEstados();
-            //this.buscarMisCartas(1);
         },
         computed:{
             isActived: function(){
@@ -1559,7 +1558,7 @@
                 $('#TabMisCartas').addClass('in active show');
                 $('#TabAnularSCC').removeClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
-                //this.buscarMisCartas(1);
+                this.limpiarFormulario();
             },
             buscarMisCartas(page){
                 var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
@@ -1692,8 +1691,8 @@
                 $('#TabMisCartas').removeClass('in active show');
                 $('#TabAnularSCC').addClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
+                this.limpiarFormulario();
                 this.limpiarProcesoRegistrarCC();
-                //this.buscarMisCartasAnuladas(1);
             },
             buscarMisCartasAnuladas(page){
                 var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
@@ -1848,6 +1847,10 @@
                 this.paginationModal.last_page = 0,
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
+            },
+            limpiarFormulario(){
+                this.arrayCartaCaracteristicas = [];
+                this.arrayCartasAnuladas = [];
             },
             //Cerrar Modal
             cerrarModal(){
