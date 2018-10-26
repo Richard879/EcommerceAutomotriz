@@ -2543,6 +2543,10 @@
                     }
                 });
             },
+            cambiarPaginaCotizacion(page){
+                this.pagination.current_page=page;
+                this.listarMisCotizaciones(page);
+            },
             // =================================================================
             // TAB COTIZACIÓN
             // =================================================================
