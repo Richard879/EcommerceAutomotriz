@@ -1045,7 +1045,7 @@
                                                                                 <table>
                                                                                     <tbody>
                                                                                         <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas cotizados!</td>
+                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
