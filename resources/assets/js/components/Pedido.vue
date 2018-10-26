@@ -57,7 +57,7 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillPedido.dfechainicio"
@@ -71,7 +71,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                                            <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
                                                                                     v-model="fillPedido.dfechafin"
@@ -87,9 +87,9 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nº Orden Pedido</label>
+                                                                            <label class="col-sm-4 form-control-label">Nro Pedido</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumeropedido" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -97,7 +97,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Vin</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="buscarPedidos()" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="fillPedido.cnumerovin" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -153,7 +153,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos()">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -339,8 +339,18 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Nro Cotización</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="text" v-model="formPedido.cnumerocotizacion" @keyup.enter="listarCotizacionesIngresadas(1)" class="form-control form-control-sm">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCotizacionesIngresadas()">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarCotizacionesIngresadas(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                         </div>
@@ -820,9 +830,9 @@
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                            <tr v-for="documento in arrayTablaDocumento" :key="documento.nIdPar">
+                                                                                            <tr v-for="(documento, index) in arrayTablaDocumento" :key="documento.nIdPar">
                                                                                                 <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
-                                                                                                <td><input type="file" @change="getFile" accept=".pdf,.xlsx"/></td>
+                                                                                                <td><input type="file" @change="getFile($event, index)" accept=".pdf,.xlsx"/></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -913,8 +923,7 @@
                     dfechafin: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    cnumerodocumento: '',
-                    cfiltrodescripcion: '',
+                    cnumerocotizacion: '',
                     cnombrecontacto: ''
                 },
                 arrayMisPedido: [],
@@ -939,8 +948,8 @@
                     cnombrecomercial: '',
                     naniofabricacion: '',
                     naniomodelo: '',
-                    nidbanco: 0,
-                    nidformapago: 0,
+                    nidbanco: '',
+                    nidformapago: '',
                     dfechapedido: '',
                     fpreciolista: 0,
                     fprecioventap: 0,
@@ -984,8 +993,8 @@
                 errors: [],
                 mensajeError: [],
                 attachment: [],
-                form: new FormData,
-                textFile: ''
+                arrayValidaAttachment: [],
+                form: new FormData
             }
         },
         computed:{
@@ -1059,9 +1068,6 @@
                     console.log(error);
                 });
             },
-            buscarPedidos(){
-                this.listarPedidos(1);
-            },
             listarPedidos(page){
                 this.mostrarProgressBar();
 
@@ -1133,21 +1139,19 @@
                 });
             },
             //============= LISTAR COTIZACIONES INGRESADAS ==============
-            buscarCotizacionesIngresadas(){
-                this.listarCotizacionesIngresadas(1);
-            },
             listarCotizacionesIngresadas(page){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/GetLstCotizacionIngresadas';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.formPedido.dfechainicio,
-                        'dfechafin' : this.formPedido.dfechafin,
-                        'nidmarca' : this.formPedido.nidmarca,
-                        'nidmodelo' : this.formPedido.nidmodelo,
-                        'page' : page
+                        'nidempresa': 1300011,
+                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'dfechainicio': this.formPedido.dfechainicio,
+                        'dfechafin': this.formPedido.dfechafin,
+                        'nidmarca': this.formPedido.nidmarca,
+                        'nidmodelo': this.formPedido.nidmodelo,
+                        'cnumerocotizacion': this.formPedido.cnumerocotizacion,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayPedido = response.data.arrayPedido.data;
@@ -1291,8 +1295,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110042,
-                        'opcion': 0
+                        'ngrupoparid': 110042
                     }
                 }).then(response => {
                     this.arrayBanco = response.data;
@@ -1304,8 +1307,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110062,
-                        'opcion': 0
+                        'ngrupoparid': 110062
                     }
                 }).then(response => {
                     this.arrayFormaPago = response.data;
@@ -1377,8 +1379,10 @@
                     console.log(error);
                 });
             },
-            getFile(e){
+            getFile(e, index){
                 let selectFile = e.target.files;
+                this.arrayValidaAttachment.length = this.arrayTablaDocumento.length;
+                this.arrayValidaAttachment[index] = selectFile;
                 for(let i= 0; i < selectFile.length; i++){
                     this.attachment.push(selectFile[i]);
                 }
@@ -1420,7 +1424,7 @@
                 me.mensajeError =[];
 
                 me.arrayTablaDocumento.map(function(value, key) {
-                    if(value.nValida == 1 && !me.attachment[key])
+                    if(value.nValida == 1 && !me.arrayValidaAttachment[key])
                     {
                         me.mensajeError.push('* ' + value.cParNombre + ' - Archivo Obligatorio');
                     }

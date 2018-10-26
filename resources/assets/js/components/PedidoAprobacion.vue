@@ -37,7 +37,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Fecha Inicio</label>
+                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                 <div class="col-sm-8">
                                                     <el-date-picker
                                                         v-model="fillBusquedaPedido.dfechainicio"
@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Fecha Fin</label>
+                                                <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                 <div class="col-sm-8">
                                                     <el-date-picker
                                                         v-model="fillBusquedaPedido.dfechafin"
@@ -60,6 +60,24 @@
                                                         format="dd/MM/yyyy"
                                                         placeholder="dd/mm/aaaa">
                                                     </el-date-picker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Nro Pedido</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="fillBusquedaPedido.cnumeropedido" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" v-model="fillBusquedaPedido.cnumerovin" @keyup.enter="listarPedidos(1)" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -98,7 +116,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-9 offset-sm-5">
-                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarPedidos(1)">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarPedidos(1)">
                                                 <i class="fa fa-search"></i> Buscar
                                             </button>
                                         </div>
@@ -235,11 +253,12 @@
                     cempresa: 'SAISAC',
                     nidsucursal: sessionStorage.getItem("nIdSucursal"),
                     csucursal: sessionStorage.getItem("cNombreSucursal"),
-                    nidlinea: '',
-                    nidmarca: '',
-                    nidmodelo: 0,
                     dfechainicio: '',
-                    dfechafin: ''
+                    dfechafin: '',
+                    cnumeropedido: '',
+                    cnumerovin: '',
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayPedidos: [],
                 // =============================================================
@@ -352,7 +371,7 @@
                     console.log(error);
                 });
             },
-            buscarPedidos(page){
+            listarPedidos(page){
                 if(this.validarBuscarPedidos()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -366,10 +385,12 @@
                     params: {
                         'nidempresa': this.fillBusquedaPedido.nidempresa,
                         'nidsucursal' : this.fillBusquedaPedido.nidsucursal,
-                        'nidmarca' : this.fillBusquedaPedido.nidmarca,
-                        'nidmodelo' : this.fillBusquedaPedido.nidmodelo,
                         'dfechainicio': this.fillBusquedaPedido.dfechainicio,
                         'dfechafin': this.fillBusquedaPedido.dfechafin,
+                        'cnumeropedido': this.fillBusquedaPedido.cnumeropedido,
+                        'cnumerovin': this.fillBusquedaPedido.cnumerovin,
+                        'nidmarca' : this.fillBusquedaPedido.nidmarca,
+                        'nidmodelo' : this.fillBusquedaPedido.nidmodelo,
                         'page' : page
                     }
                 }).then(response => {
@@ -412,7 +433,7 @@
             },
             cambiarPaginaPedido(page){
                 this.paginationModal.current_page=page;
-                this.buscarPedidos(page);
+                this.listarPedidos(page);
             },
             aprobarPedido(nIdPedido){
                 swal({
@@ -430,7 +451,7 @@
                         axios.put(url,{
                             nidpedido: nIdPedido
                         }).then(function (response) {
-                            me.buscarPedidos(1);
+                            me.listarPedidos(1);
                             swal(
                                 'Aprobado!',
                                 'El pedido ' + nIdPedido +' ha sido aprobado con éxito.',

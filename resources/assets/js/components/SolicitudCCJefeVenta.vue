@@ -2115,92 +2115,6 @@
                 this.fillCartaCaracteristica.nidbanco = '';
                 this.fillCartaCaracteristica.nidvendedor = '';
             },
-            tabCartaVendedores(){
-                this.limpiarProcesoRegistrarCC();
-                $('#tab01').removeClass('nav-link active');
-                $('#tab01').addClass('nav-link');
-                $('#tab02').removeClass('nav-link active');
-                $('#tab02').addClass('nav-link active');
-                $('#tab03').removeClass('nav-link active');
-                $('#tab03').addClass('nav-link ');
-                $('#tab04').removeClass('nav-link active');
-                $('#tab04').addClass('nav-link ');
-                $('#tab05').removeClass('nav-link active');
-                $('#tab05').addClass('nav-link ');
-
-                $('#TabMisCartas').removeClass('in active show');
-                $('#TabCartaVendedores').addClass('in active show');
-                $('#TabAnularSCC').removeClass("in active show");
-                $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
-                $('#TabRegistrarSCC').removeClass("in active show");
-                //this.buscarCartaVendedores(1);
-                this.limpiarCartaVendedores();
-            },
-            buscarCartaVendedores(page){
-                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristicaByTodos';
-                axios.get(url, {
-                    params: {
-                        'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
-                        'nIdContacto' : this.fillCartaCaracteristica.nidcontacto,
-                        'dFechaInicio' : this.fillCartaCaracteristica.dfechainicio,
-                        'dFechaFin' : this.fillCartaCaracteristica.dfechafin,
-                        'nIdEstado' : this.fillCartaCaracteristica.nidestado,
-                        'tipoRol': 21,
-                        'page' : page
-                    }
-                }).then(response => {
-                    let info = response.data.arrayCartaCaracteristicas;
-                    this.arrayCartaCaracteristicas    = info.data;
-                    this.pagination.current_page =  info.current_page;
-                    this.pagination.total        = info.total;
-                    this.pagination.per_page     = info.per_page;
-                    this.pagination.last_page    = info.last_page;
-                    this.pagination.from         = info.from;
-                    this.pagination.to           = info.to;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaCartaByVendedores(page){
-                this.pagination.current_page=page;
-                this.buscarCartaVendedores(page);
-            },
-            limpiarCartaVendedores(){
-                this.fillCartaCaracteristica.nidcompra = 0;
-                this.fillCartaCaracteristica.cnumerovin = '';
-                this.fillCartaCaracteristica.nidcontacto = 0;
-                this.fillCartaCaracteristica.cnombrecontacto = '';
-                this.fillCartaCaracteristica.dfechainicio = '';
-                this.fillCartaCaracteristica.dfechafin = '';
-                this.fillCartaCaracteristica.nidestado = '';
-                this.fillCartaCaracteristica.nidvendedor = '';
-                //Limpiar Carta Detalle Solicitud
-                this.fillCartaDetalleSolicitud.nIdSCC             = 0;
-                this.fillCartaDetalleSolicitud.fecha              = '';
-                this.fillCartaDetalleSolicitud.cNumCarta          = '';
-                this.fillCartaDetalleSolicitud.nIdBanco           = '';
-                this.fillCartaDetalleSolicitud.cAtencion          = '';
-                this.fillCartaDetalleSolicitud.cNombreBanco       = '';
-                this.fillCartaDetalleSolicitud.nIdContacto        = 0;
-                this.fillCartaDetalleSolicitud.cContacto          = '';
-                this.fillCartaDetalleSolicitud.cNumDocumento      = '';
-                this.fillCartaDetalleSolicitud.nIdVersionVeh      = 0;
-                this.fillCartaDetalleSolicitud.cNombreLinea       = '';
-                this.fillCartaDetalleSolicitud.cNombreMarca       = '';
-                this.fillCartaDetalleSolicitud.cNombreModelo      = '';
-                this.fillCartaDetalleSolicitud.cNombreComercial   = '';
-                this.fillCartaDetalleSolicitud.nAnioFabricacion   = 0;
-                this.fillCartaDetalleSolicitud.nAnioModelo        = 0;
-                this.fillCartaDetalleSolicitud.cNumeroChasis      = '';
-                this.fillCartaDetalleSolicitud.cNumeroMotor       = '';
-                this.fillCartaDetalleSolicitud.cNombreColor       = '';
-                this.fillCartaDetalleSolicitud.cNombreClase       = '';
-                this.fillCartaDetalleSolicitud.cNombreSubClase    = '';
-                this.fillCartaDetalleSolicitud.cMoneda            = '';
-                this.fillCartaDetalleSolicitud.fPrecioBase        = 0;
-                this.fillCartaDetalleSolicitud.fCuotaInicial      = 0;
-                this.fillCartaDetalleSolicitud.fMontoDesembolsado = 0;
-            },
             getDetalleSolicitud(nIdSCartaC){
                 var url = this.ruta + '/cartacaracteristica/GetDetalleSolicitud';
                 axios.get(url, {
@@ -2301,7 +2215,7 @@
                 $('#TabAnularSCC').removeClass("in active show");
                 $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
-                //this.buscarMisCartas(1);
+                this.limpiarFormulario();
                 this.limpiarCartaVendedores();
             },
             buscarMisCartas(page){
@@ -2376,6 +2290,95 @@
                 return this.error;
             },
             // ======================
+            // TAB - CARTA VENDEDORES
+            // ======================
+            tabCartaVendedores(){
+                this.limpiarProcesoRegistrarCC();
+                $('#tab01').removeClass('nav-link active');
+                $('#tab01').addClass('nav-link');
+                $('#tab02').removeClass('nav-link active');
+                $('#tab02').addClass('nav-link active');
+                $('#tab03').removeClass('nav-link active');
+                $('#tab03').addClass('nav-link ');
+                $('#tab04').removeClass('nav-link active');
+                $('#tab04').addClass('nav-link ');
+                $('#tab05').removeClass('nav-link active');
+                $('#tab05').addClass('nav-link ');
+
+                $('#TabMisCartas').removeClass('in active show');
+                $('#TabCartaVendedores').addClass('in active show');
+                $('#TabAnularSCC').removeClass("in active show");
+                $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
+                $('#TabRegistrarSCC').removeClass("in active show");
+                this.limpiarFormulario();
+                this.limpiarCartaVendedores();
+            },
+            buscarCartaVendedores(page){
+                var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristicaByTodos';
+                axios.get(url, {
+                    params: {
+                        'cNumeroVin' : this.fillCartaCaracteristica.cnumerovin,
+                        'nIdContacto' : this.fillCartaCaracteristica.nidcontacto,
+                        'dFechaInicio' : this.fillCartaCaracteristica.dfechainicio,
+                        'dFechaFin' : this.fillCartaCaracteristica.dfechafin,
+                        'nIdEstado' : this.fillCartaCaracteristica.nidestado,
+                        'tipoRol': 21,
+                        'page' : page
+                    }
+                }).then(response => {
+                    let info = response.data.arrayCartaCaracteristicas;
+                    this.arrayCartaCaracteristicas    = info.data;
+                    this.pagination.current_page =  info.current_page;
+                    this.pagination.total        = info.total;
+                    this.pagination.per_page     = info.per_page;
+                    this.pagination.last_page    = info.last_page;
+                    this.pagination.from         = info.from;
+                    this.pagination.to           = info.to;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaCartaByVendedores(page){
+                this.pagination.current_page=page;
+                this.buscarCartaVendedores(page);
+            },
+            limpiarCartaVendedores(){
+                this.fillCartaCaracteristica.nidcompra = 0;
+                this.fillCartaCaracteristica.cnumerovin = '';
+                this.fillCartaCaracteristica.nidcontacto = 0;
+                this.fillCartaCaracteristica.cnombrecontacto = '';
+                this.fillCartaCaracteristica.dfechainicio = '';
+                this.fillCartaCaracteristica.dfechafin = '';
+                this.fillCartaCaracteristica.nidestado = '';
+                this.fillCartaCaracteristica.nidvendedor = '';
+                //Limpiar Carta Detalle Solicitud
+                this.fillCartaDetalleSolicitud.nIdSCC             = 0;
+                this.fillCartaDetalleSolicitud.fecha              = '';
+                this.fillCartaDetalleSolicitud.cNumCarta          = '';
+                this.fillCartaDetalleSolicitud.nIdBanco           = '';
+                this.fillCartaDetalleSolicitud.cAtencion          = '';
+                this.fillCartaDetalleSolicitud.cNombreBanco       = '';
+                this.fillCartaDetalleSolicitud.nIdContacto        = 0;
+                this.fillCartaDetalleSolicitud.cContacto          = '';
+                this.fillCartaDetalleSolicitud.cNumDocumento      = '';
+                this.fillCartaDetalleSolicitud.nIdVersionVeh      = 0;
+                this.fillCartaDetalleSolicitud.cNombreLinea       = '';
+                this.fillCartaDetalleSolicitud.cNombreMarca       = '';
+                this.fillCartaDetalleSolicitud.cNombreModelo      = '';
+                this.fillCartaDetalleSolicitud.cNombreComercial   = '';
+                this.fillCartaDetalleSolicitud.nAnioFabricacion   = 0;
+                this.fillCartaDetalleSolicitud.nAnioModelo        = 0;
+                this.fillCartaDetalleSolicitud.cNumeroChasis      = '';
+                this.fillCartaDetalleSolicitud.cNumeroMotor       = '';
+                this.fillCartaDetalleSolicitud.cNombreColor       = '';
+                this.fillCartaDetalleSolicitud.cNombreClase       = '';
+                this.fillCartaDetalleSolicitud.cNombreSubClase    = '';
+                this.fillCartaDetalleSolicitud.cMoneda            = '';
+                this.fillCartaDetalleSolicitud.fPrecioBase        = 0;
+                this.fillCartaDetalleSolicitud.fCuotaInicial      = 0;
+                this.fillCartaDetalleSolicitud.fMontoDesembolsado = 0;
+            },
+            // ======================
             // TAB - MIS CARTAS ANULADAS
             // ======================
             tabAnularSCC(){
@@ -2395,8 +2398,8 @@
                 $('#TabAnularSCC').addClass("in active show");
                 $('#TabVerCartasAnuladasVendedor').removeClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
+                this.limpiarFormulario();
                 this.limpiarProcesoRegistrarCC();
-                //this.buscarMisCartasAnuladas(1);
             },
             buscarMisCartasAnuladas(page){
                 var url = this.ruta + '/cartacaracteristica/GetLstCartaCaracteristica';
@@ -2498,8 +2501,8 @@
                 $('#TabAnularSCC').removeClass("in active show");
                 $('#TabVerCartasAnuladasVendedor').addClass("in active show");
                 $('#TabRegistrarSCC').removeClass("in active show");
+                this.limpiarFormulario();
                 this.limpiarProcesoRegistrarCC();
-                //this.buscarCartasVendedoresAnuladas(1);
                 this.llenarVendedores();
             },
             buscarCartasVendedoresAnuladas(page){
@@ -2632,6 +2635,12 @@
                 this.paginationModal.last_page = 0,
                 this.paginationModal.from  = 0,
                 this.paginationModal.to = 0
+            },
+            limpiarFormulario(){
+                this.arrayCartaCaracteristicas = [];
+                this.arrayCartasAnuladasVendedor = [];
+                this.arrayCartasAnuladas = [];
+                this.arrayMisCartas = [];
             },
             //Cerrar Modal
             cerrarModal(){
