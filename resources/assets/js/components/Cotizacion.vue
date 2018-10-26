@@ -707,7 +707,8 @@
                                                                                                         <tr>
                                                                                                             <th>Acción</th>
                                                                                                             <th>Elemento Venta</th>
-                                                                                                            <th colspan="2">Cantidad</th>
+                                                                                                            <th>Moneda</th>
+                                                                                                            <th>Cantidad</th>
                                                                                                             <th>Precio</th>
                                                                                                             <th>SubTotal</th>
                                                                                                         </tr>
@@ -721,7 +722,8 @@
                                                                                                                 </el-tooltip>
                                                                                                             </td>
                                                                                                             <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                            <td colspan="2"><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
+                                                                                                            <td v-text="elementoventa.cMonedaNombre"></td>
+                                                                                                            <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
                                                                                                             <td v-text="elementoventa.fElemenValorVenta"></td>
                                                                                                             <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
                                                                                                         </tr>
@@ -804,7 +806,8 @@
                                                                                                         <tr>
                                                                                                             <th>Acción</th>
                                                                                                             <th>Elemento Venta</th>
-                                                                                                            <th colspan="2">Cantidad</th>
+                                                                                                            <th>Moneda</th>
+                                                                                                            <th>Cantidad</th>
                                                                                                             <th>Precio</th>
                                                                                                             <th>SubTotal</th>
                                                                                                         </tr>
@@ -818,7 +821,8 @@
                                                                                                                 </el-tooltip>
                                                                                                             </td>
                                                                                                             <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                            <td colspan="2"><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
+                                                                                                            <td v-text="elementoventa.cMonedaNombre"></td>
+                                                                                                            <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
                                                                                                             <td v-text="elementoventa.fElemenValorVenta"></td>
                                                                                                             <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
                                                                                                         </tr>
@@ -916,10 +920,22 @@
                                                                                             </table>
                                                                                         </template>
                                                                                         <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-4">
+                                                                                            <div class="col-sm-9 offset-sm-5">
                                                                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
                                                                                                     <i class="fa fa-arrow-right"></i> Siguiente
                                                                                                 </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12">
+                                                                                        <div class="row flex-rigth-margin">
+                                                                                            <div class="form-group row">
+                                                                                                <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalEventoEleVentaModal}}</strong></label>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVentaSoles=totalEventoEleVentaModalSoles}}</strong></label>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -984,6 +1000,7 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
+                                                                            
                                                                             <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Elementos de Venta por Regalar
@@ -994,7 +1011,7 @@
                                                                                             <tr>
                                                                                                 <th colspan="3">Elemento Venta</th>
                                                                                                 <th>Cantidad</th>
-                                                                                                <th>Dscto</th>
+                                                                                                <th>Moneda</th>
                                                                                                 <th>Precio Final</th>
                                                                                                 <th>SubTotal</th>
                                                                                             </tr>
@@ -1003,7 +1020,7 @@
                                                                                             <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
                                                                                                 <td colspan="3"> {{ cotieleventa.detalle }} </td>
                                                                                                 <td v-text="cotieleventa.cantidad"></td>
-                                                                                                <td v-text="cotieleventa.dscto"></td>
+                                                                                                <td v-text="cotieleventa.monedanombre"></td>
                                                                                                 <td v-text="cotieleventa.preciofinal"></td>
                                                                                                 <td v-text="cotieleventa.subtotal"></td>
                                                                                             </tr>
@@ -1014,52 +1031,11 @@
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
                                                                                             <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalConfiCotiEleVentaPorRegalar }}</strong></label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
                                                                                             <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalConfiCotiEleVentaPorRegalarSoles }}</strong></label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <vs-divider border-style="solid" color="dark"/>
-                                                                            </template>
-
-                                                                            <template v-if="arrayConfiCotiEleVenta.length">
-                                                                                <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta
-                                                                                </vs-divider>
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th colspan="3">Elemento Venta</th>
-                                                                                                <th>Cantidad</th>
-                                                                                                <th>Dscto</th>
-                                                                                                <th>Precio Final</th>
-                                                                                                <th>SubTotal</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVenta" :key="cotieleventa.nIdContacto">
-                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
-                                                                                                <td v-text="cotieleventa.cantidad"></td>
-                                                                                                <td v-text="cotieleventa.dscto"></td>
-                                                                                                <td v-text="cotieleventa.preciofinal"></td>
-                                                                                                <td v-text="cotieleventa.subtotal"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row flex-rigth-margin">
-                                                                                        <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVenta = totalConfiCotiEleVenta }}</strong></label>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaSoles = totalConfiCotiEleVentaSoles }}</strong></label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1074,6 +1050,57 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
+
+                                                                            <template v-if="arrayConfiCotiEleVenta.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Elementos de Venta
+                                                                                </vs-divider>
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-sm">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th colspan="3">Elemento Venta</th>
+                                                                                                <th>Cantidad</th>
+                                                                                                <th>Moneda</th>
+                                                                                                <th>Precio Final</th>
+                                                                                                <th>SubTotal</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVenta" :key="cotieleventa.nIdContacto">
+                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                                <td v-text="cotieleventa.cantidad"></td>
+                                                                                                <td v-text="cotieleventa.monedanombre"></td>
+                                                                                                <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                <td v-text="cotieleventa.subtotal"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="row flex-rigth-margin">
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVenta = totalElementoVenta }}</strong></label>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaSoles = totalElementoVentaSoles }}</strong></label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
+                                                                            </template>
+                                                                            <template v-else>
+                                                                                <table>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td colspan="10">No existen elementos de ventas cotizados!</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </template>
+
                                                                             <template v-if="arrayConfiCotiEventoEleVenta.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Elementos de Venta de la Campaña
@@ -1085,7 +1112,7 @@
                                                                                                 <th colspan="3">Campaña</th>
                                                                                                 <th>Elemento Venta</th>
                                                                                                 <th>Cantidad</th>
-                                                                                                <th>Dscto</th>
+                                                                                                <th>Moneda</th>
                                                                                                 <th>Precio Final</th>
                                                                                             </tr>
                                                                                         </thead>
@@ -1094,7 +1121,7 @@
                                                                                                 <td colspan="3" v-text=" cotieleventa.nombreEC"></td>
                                                                                                 <td v-text=" cotieleventa.nombreEV"></td>
                                                                                                 <td v-text="cotieleventa.cantidad"></td>
-                                                                                                <td v-text="cotieleventa.dscto"></td>
+                                                                                                <td v-text="cotieleventa.monedanombre"></td>
                                                                                                 <td v-text="cotieleventa.preciofinal"></td>
                                                                                             </tr>
                                                                                         </tbody>
@@ -1104,11 +1131,11 @@
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
                                                                                             <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalConfiCotiEventoEleVenta}}</strong></label>
+                                                                                            <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalEventoEleVentaModal}}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
                                                                                             <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVentaSoles=totalConfiCotiEventoEleVentaSoles}}</strong></label>
+                                                                                            <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVentaSoles=totalEventoEleVentaModalSoles}}</strong></label>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1811,6 +1838,7 @@
                                                         <tr>
                                                             <th>Acciones</th>
                                                             <th>Elemento Venta</th>
+                                                            <th>Moneda</th>
                                                             <th>Valor</th>
                                                         </tr>
                                                     </thead>
@@ -1824,6 +1852,7 @@
                                                                     </el-tooltip>
                                                                 </td>
                                                                 <td v-text="eleventa.cNombre"></td>
+                                                                <td v-text="eleventa.cMonedaNombre"></td>
                                                                 <td v-text="eleventa.fValorVenta"></td>
                                                             </template>
                                                         </tr>
@@ -2272,41 +2301,83 @@
             //Calcula SubTotales y Total del TAB Elemento Venta
             totalElementoVenta: function(){
                 let me = this;
+                let sumaElementoDolares;
                 return me.arrayElementoVenta.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.subtotal);
+                    //Si moneda es soles
+                    if(valorActual.nIdMoneda == 1300027){
+                        sumaElementoDolares = valorAnterior + (parseFloat(valorActual.subtotal) / me.fValorTipocambioComercial);
+                    }else{
+                        sumaElementoDolares = valorAnterior + parseFloat(valorActual.subtotal);
+                    }
+                    return Number((sumaElementoDolares).toFixed(2));
                 }, 0);
             },
             totalElementoVentaSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalElementoVenta * me.fValorTipocambioComercial;
-                montoconvertido = Number((montoconvertido).toFixed(2));
-                return montoconvertido;
+                let sumaElementoSoles;
+                return me.arrayElementoVenta.reduce(function(valorAnterior, valorActual){
+                    //Si moneda es dolares
+                    if(valorActual.nIdMoneda == 1300028){
+                        sumaElementoSoles = valorAnterior + (parseFloat(valorActual.subtotal) * me.fValorTipocambioComercial);
+                    }else{
+                        sumaElementoSoles = valorAnterior + parseFloat(valorActual.subtotal);
+                    }
+                    return Number((sumaElementoSoles).toFixed(2));
+                }, 0);
             },
             //Calcula SubTotales y Total del TAB Elemento Venta
             totalElementoVentaPorRegalar: function(){
                 let me = this;
+                let sumaElementoRegaloDolares;
                 return me.arrayElementoVentaPorRegalar.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.subtotal);
+                    //Si moneda es soles
+                    if(valorActual.nIdMoneda == 1300027){
+                        sumaElementoRegaloDolares = valorAnterior + (parseFloat(valorActual.subtotal) / me.fValorTipocambioComercial);
+                    }else{
+                        sumaElementoRegaloDolares = valorAnterior + parseFloat(valorActual.subtotal);
+                    }
+                    return Number((sumaElementoRegaloDolares).toFixed(2));
                 }, 0);
             },
             totalElementoVentaPorRegalarSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalElementoVentaPorRegalar * me.fValorTipocambioComercial;
-                montoconvertido = Number((montoconvertido).toFixed(2));
-                return montoconvertido;
+                let sumaElementoRegaloSoles;
+                return me.arrayElementoVentaPorRegalar.reduce(function(valorAnterior, valorActual){
+                    //Si moneda es dolares
+                    if(valorActual.nIdMoneda == 1300028){
+                        sumaElementoRegaloSoles = valorAnterior + (parseFloat(valorActual.subtotal) * me.fValorTipocambioComercial);
+                    }else{
+                        sumaElementoRegaloSoles = valorAnterior + parseFloat(valorActual.subtotal);
+                    }
+                    return Number((sumaElementoRegaloSoles).toFixed(2));
+                }, 0);
             },
             //Calcula SubTotales y Total del TAB Evento Campaña
             totalEventoEleVentaModal: function(){
                 let me = this;
+                let sumaElementoCampaniaDolares;
                 return me.arrayEventoEleVentaModal.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.fValorVenta);
+                    //Si moneda es soles
+                    if(valorActual.nIdMoneda == 1300027){
+                        sumaElementoCampaniaDolares = valorAnterior + (parseFloat(valorActual.fValorVenta) / me.fValorTipocambioComercial);
+                    }else{
+                        sumaElementoCampaniaDolares = valorAnterior + parseFloat(valorActual.fValorVenta);
+                    }
+                    return Number((sumaElementoCampaniaDolares).toFixed(2));
                 }, 0);
             },
-            totalEventoEleVentaModalSoles: function(){
+            totalEventoEleVentaModalSoles: function(){                
                 let me = this;
-                let montoconvertido = me.montoTotalEventoElementoVenta * me.fValorTipocambioComercial;
-                montoconvertido = Number((montoconvertido).toFixed(2));
-                return montoconvertido;
+                let sumaElementoCampaniaSoles;
+                return me.arrayEventoEleVentaModal.reduce(function(valorAnterior, valorActual){
+                    //Si moneda es dolares
+                    if(valorActual.nIdMoneda == 1300028){
+                        sumaElementoCampaniaSoles = valorAnterior + (parseFloat(valorActual.fValorVenta) * me.fValorTipocambioComercial);
+                    }else{
+                        sumaElementoCampaniaSoles = valorAnterior + parseFloat(valorActual.fValorVenta);
+                    }
+                    return Number((sumaElementoCampaniaSoles).toFixed(2));
+                }, 0);
             },
             //Calcula SubTotales y Total del TAB Cotización - Vehiculo
             totalConfiCotiVehiculo: function(){
@@ -2322,7 +2393,7 @@
                 return montoconvertido;
             },
             //Calcula SubTotales y Total del TAB Cotización - Elemento Venta Por Regalar
-            totalConfiCotiEleVentaPorRegalar: function(){
+            /*totalConfiCotiEleVentaPorRegalar: function(){
                 let me = this;
                 return me.arrayConfiCotiEleVentaPorRegalar.reduce(function(valorAnterior, valorActual){
                     return valorAnterior + parseFloat(valorActual.subtotal);
@@ -2333,9 +2404,9 @@
                 let montoconvertido = me.montoTotalConfiCotiEleVentaPorRegalar * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
-            },
+            },*/
             //Calcula SubTotales y Total del TAB Cotización - Elemento Venta
-            totalConfiCotiEleVenta: function(){
+            /*totalConfiCotiEleVenta: function(){
                 let me = this;
                 return me.arrayConfiCotiEleVenta.reduce(function(valorAnterior, valorActual){
                     return valorAnterior + parseFloat(valorActual.subtotal);
@@ -2346,9 +2417,9 @@
                 let montoconvertido = me.montoTotalConfiCotiEleVenta * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
-            },
+            },*/
             //Calcula SubTotales y Total del TAB Cotización - Evento Camapaña (Elemento Venta)
-            totalConfiCotiEventoEleVenta: function(){
+            /*totalConfiCotiEventoEleVenta: function(){
                 let me = this;
                 return me.arrayConfiCotiEventoEleVenta.reduce(function(valorAnterior, valorActual){
                     return valorAnterior + parseFloat(valorActual.preciofinal);
@@ -2359,7 +2430,7 @@
                 let montoconvertido = me.montoTotalConfiCotiEventoEleVenta * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
-            },
+            },*/
             //Calcula SubTotales y Total de toda la Cotización
             totalConfiCoti: function(){
                 let me = this;
@@ -3207,8 +3278,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110027,
-                        'opcion' : 0,
+                        'ngrupoparid': 110027
                     }
                 }).then(response => {
                     this.arrayTipoElemento = response.data;
@@ -3522,9 +3592,10 @@
                                 cNombreEventoCampania   : eev.cNombreEventoCampania,
                                 nIdElementoVenta        : eev.nIdElementoVenta,
                                 cNombre                 : eev.cNombre,
+                                nIdMoneda               : eev.nIdMoneda,
+                                cMonedaNombre           : eev.cMonedaNombre,
                                 nIdEventoElementoVenta  : eev.nIdEventoElementoVenta,
                                 fValorVenta             : eev.fValorVenta,
-                                nIdMoneda               : eev.nIdMoneda,
                                 cantidad                : 1
                             });
                         });
@@ -3583,7 +3654,8 @@
                             subtotal     : ev.subtotal,
                             flagTipoItem : 'E',
                             flagactivaregalo : 'S',
-                            nidmoneda    : ev.nIdMoneda
+                            nidmoneda    : ev.nIdMoneda,
+                            monedanombre : ev.cMonedaNombre
                         });
                     });
                 }
@@ -3602,7 +3674,8 @@
                             subtotal     : ev.subtotal,
                             flagTipoItem : 'E',
                             flagactivaregalo : 'N',
-                            nidmoneda    : ev.nIdMoneda
+                            nidmoneda    : ev.nIdMoneda,
+                            monedanombre : ev.cMonedaNombre
                         });
                     });
                     //ALMACENO EL MONTO TOTAL DEL ELE VENTA EN EL ARRAY, PARA ACUMULARLO
@@ -3627,12 +3700,9 @@
                             preciofinal  : ev.fValorVenta,
                             flagTipoItem : 'E',
                             flagactivaregalo : 'N',
-                            nidmoneda    : ev.nIdMoneda
+                            nidmoneda    : ev.nIdMoneda,
+                            monedanombre : ev.cMonedaNombre
                         });
-                    });
-                    //ALMACENO EL MONTO TOTAL DEL ELE VENTA DE CAMAPAÑA EN EL ARRAY, PARA ACUMULARLO
-                    me.arrayMontosCotizacion.push({
-                        monto: me.montoTotalEventoElementoVenta
                     });
                 }
             },
@@ -3845,7 +3915,7 @@
                             {
                                 this.accionmodal=2;
                                 this.modal = 1;
-                                this.buscarContactosPorVendedor(1);
+                                //this.buscarContactosPorVendedor(1);
                                 break;
                             }
                             break;
@@ -3905,6 +3975,7 @@
                             {
                                 this.accionmodal=5;
                                 this.modal = 1;
+                                this.arrayElementoVentaModal = [];
                                 this.cargarTipoElemento();
                             }
                         }
@@ -3917,6 +3988,7 @@
                             {
                                 this.accionmodal=7;
                                 this.modal = 1;
+                                this.arrayElementoVentaModalPorRegalar = [];
                                 this.cargarTipoElemento();
                             }
                         }

@@ -258,7 +258,7 @@
                     cnumeropedido: '',
                     cnumerovin: '',
                     nidmarca: '',
-                    nidmodelo: 0
+                    nidmodelo: ''
                 },
                 arrayPedidos: [],
                 // =============================================================
