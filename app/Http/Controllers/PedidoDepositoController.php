@@ -71,6 +71,7 @@ class PedidoDepositoController extends Controller
                                         $request->fTipoCambioComercial,
                                         $request->fMonto,
                                         $request->cGlosa,
+                                        $request->cFlagTipoCambioEspecial,
                                         Auth::user()->id
                                     ]);
 

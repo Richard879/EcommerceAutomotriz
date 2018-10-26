@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">CAMPAÑAS</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">CAMPAÑAS</h2>
+                </div>
             </header>
 
             <section>
@@ -123,7 +123,9 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarEventoCampania();"><i class="fa fa-search"></i> Buscar</button>
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarEventoCampania">
+                                                                                <i class="fa fa-search"></i> Buscar
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -1504,8 +1506,7 @@
                         </div>
                     </div>
                 </div>
-            </div>            
-
+            </div>
         </main>
     </transition>
 </template>
@@ -1553,7 +1554,7 @@
                     ndetalle: '',
                     cflagdetalleevento: 'CA',
                     nidmoneda: '',
-                    nidtipocambio: '', 
+                    nidtipocambio: '',
                     fvalortipocambio: 0.0
                 },
                 arrayEventoCampania: [],
@@ -2232,7 +2233,7 @@
                 }
 
                 this.mostrarProgressBar();
-                
+
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
@@ -2523,7 +2524,7 @@
             desactivarTabs(){
                 $('#Tab2').addClass('disabled');
             },
-           // =============  REGISTRAR DISTRIBUCION ===================
+            // =============  REGISTRAR DISTRIBUCION ===================
             registrarAsignaDistribucion(){
                 let me = this;
 
@@ -2813,6 +2814,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
