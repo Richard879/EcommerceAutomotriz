@@ -53,7 +53,7 @@ class PedidoController extends Controller
 
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
 
-        $arrayCompra = DB::select('exec usp_Pedido_GetLstCompraByIdModelo ?, ?, ?, ?',
+        $arrayCompra = DB::select('exec [usp_Pedido_GetLstCompraByIdModelo] ?, ?, ?, ?',
                                                             array(  $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $nIdCabeceraCotizacion,
@@ -134,7 +134,7 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayPedido = DB::select('exec usp_Pedido_SetGenerarPedidoByVendedor ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
@@ -166,7 +166,7 @@ class PedidoController extends Controller
 
                     $ruta = Storage::putFileAs('uploads/Pedido', $file, $bandera .'_'. $file->getClientOriginalName());
 
-                    $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',
+                    $arrayDocumento = DB::select('exec [usp_Pedido_SetDocumentoAdjunto] ?, ?, ?',
                                                                     [  asset($ruta),
                                                                         $file->getClientOriginalName(),
                                                                         Auth::user()->id
@@ -185,7 +185,7 @@ class PedidoController extends Controller
 
                     }
 
-                    DB::select('exec usp_Pedido_SetDocumentoAdjuntoPedido ?, ?, ?, ?',
+                    DB::select('exec [usp_Pedido_SetDocumentoAdjuntoPedido] ?, ?, ?, ?',
                                                                         [   $nIdCabeceraPedido,
                                                                             $nIdTablaDocumento,
                                                                             $nIdDocumentoAdjunto,
@@ -262,7 +262,7 @@ class PedidoController extends Controller
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $nIdEstadoPedido = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
 
-        $arrayPedido = DB::select('exec usp_Pedido_GetListPedidoAprobados ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoAprobados] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdEmpresa,
                                         $nIdSucursal,
@@ -293,5 +293,27 @@ class PedidoController extends Controller
             $arrayDocumento = $this->arrayPaginator($arrayDocumento, $request);
         }
         return ['arrayDocumento'=>$arrayDocumento];
+    }
+
+    public function GetDocumentosById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdCabeceraPedido  = $request->nidcabecerapedido;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayPedidoDoumento = DB::select('exec [usp_Pedido_GetDocumentosById] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido
+                                    ]);
+        if($variable == "0"){
+            $arrayPedidoDoumento = ParametroController::arrayPaginator($arrayPedidoDoumento, $request);
+        }
+        return ['arrayPedidoDoumento'=>$arrayPedidoDoumento];
     }
 }

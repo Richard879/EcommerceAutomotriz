@@ -154,7 +154,11 @@
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
-                                                        </el-tooltip>
+                                                        </el-tooltip>&nbsp;
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                        </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
                                                     <td v-text="pedido.cContacto"></td>
@@ -231,6 +235,86 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE PEDIDO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--<form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>-->
+                                        <br/>
+                                        <template v-if="arrayPedidoDoumento.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nombre</th>
+                                                            <th>Archivo</th>
+                                                            <th>Ver Documento</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar">
+                                                            <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
+                                                            <td v-text="documento.cArchivo"></td>
+                                                            <td>
+                                                                <el-tooltip class="item" :content="'Ver Pdf ' + documento.cArchivo" effect="dark" placement="top-start">
+                                                                    <a :href="documento.cRutaDocumento" v-if="documento.cRutaDocumento !=''" target="_blank">
+                                                                        <i class='fa-md fa fa-file'></i>
+                                                                    </a>
+                                                                </el-tooltip>&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -261,6 +345,9 @@
                     nidmodelo: ''
                 },
                 arrayPedidos: [],
+                 // =============================================================
+                // VER DETALLE DOCUMENTO PEDIDO
+                arrayPedidoDoumento: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -464,22 +551,43 @@
                 })
             },
             // =================================================================
+            // VER DETALLE PEDIDO
+            // =================================================================
+            verPedido(pedido){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/pedido/GetDocumentosById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillBusquedaPedido.nidempresa,
+                        'nidsucursal': this.fillBusquedaPedido.nidsucursal,
+                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            // =================================================================
             // MODAL
             // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case "proveedor":
+                    case "pedido":
                     {
                         switch(accion){
-                            case 'buscar':
+                            case 'detalle':
                             {
-                                this.accionmodal=2;
+                                this.accionmodal=3;
                                 this.modal = 1;
-                                this.listarProveedores(1);
+                                this.verPedido(data);
                                 break;
                             }
                         }
-                    }
+                    }break;
                 }
             },
             cerrarModal(){

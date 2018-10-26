@@ -188,10 +188,14 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayMisPedido" :key="pedido.nIdCabeceraPedido">
                                                                                 <!--<td>
-                                                                                    <a href="#" @click="generarPedido(pedido.nIdCabeceraCotizacion, pedido.cNumeroCotizacion, pedido.cContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Aprobar Cotización ' + pedido.nIdCabeceraCotizacion">
-                                                                                        <i class="fa-md fa fa-check-circle"></i>
-                                                                                    </a>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                        <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
+                                                                                        <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>&nbsp;
                                                                                 </td>-->
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
@@ -206,9 +210,9 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="col-lg-12">
+                                                                <div class="col-sm-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-7">
+                                                                        <div class="col-sm-7">
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
@@ -226,7 +230,7 @@
                                                                                 </ul>
                                                                             </nav>
                                                                         </div>
-                                                                        <div class="col-lg-5">
+                                                                        <div class="col-sm-5">
                                                                             <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                         </div>
                                                                     </div>
