@@ -1325,8 +1325,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110042,
-                        'opcion' : 0
+                        'ngrupoparid' : 110042
                     }
                 }).then(response => {
                     this.arrayBanco = response.data;
