@@ -420,6 +420,14 @@
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
+                                                                                <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
+                                                                                <div class="col-sm-5 widthFull">
+                                                                                    <el-switch
+                                                                                        v-model="formNuevoDeposito.cflagtce"
+                                                                                        active-color="#13ce66"
+                                                                                        inactive-color="#ff4949">
+                                                                                    </el-switch>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -722,7 +730,8 @@
                     nnumerooperacion: '',
                     ftipocambiovoucher: '',
                     ftipocambiocomercial: '',
-                    cglosa: ''
+                    cglosa: '',
+                    cflagtce: false
                 },
                 arrayBanco_Destino: [],
                 arrayMoneda_Destino: [],
@@ -1293,14 +1302,12 @@
                     'fTipoCambioComercial': this.formNuevoDeposito.ftipocambiocomercial,
                     'fMonto': this.formNuevoDeposito.fmonto,
                     'cGlosa': this.formNuevoDeposito.cglosa,
-                    'cFlagTipoCambioEspecial' : this.formNuevoDeposito.cflagtce,
+                    'cFlagTipoCambioEspecial' : (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                 }).then(response => {
-                    if(response.data[0].nFlagMsje == 1)
-                    {
+                    if(response.data[0].nFlagMsje == 1) {
                         this.limpiarFormularioDesposito();
                         swal('Deposito Registrado');
-                    }
-                    else{
+                    } else {
                         swal('El pedido ha sido Anulado o ya está Cancelado');
                     }
                 }).catch(error => {

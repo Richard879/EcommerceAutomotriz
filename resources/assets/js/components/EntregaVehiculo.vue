@@ -893,7 +893,6 @@
                 this.fillBusquedaVehiculo.nidestado = '';
             },
             listarArchivosAdjuntos(data){
-                console.log(data);
                 var url = this.ruta + '/entregavehiculo/GetLstArchivosAdjuntos';
                 axios.get(url, {
                     params: {
