@@ -61,6 +61,7 @@ Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('permisos', require('./components/AdmPermisos.vue'));
 Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('cotizacionaprobar', require('./components/CotizacionAprobar.vue'));
+Vue.component('pedidodepositoaprobar', require('./components/PedidoDepositoAprobar.vue'));
 
 const app = new Vue({
     el: '#app',

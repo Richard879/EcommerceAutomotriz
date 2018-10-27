@@ -629,6 +629,18 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
+                                                                                <div class="col-sm-5 widthFull">
+                                                                                    <el-switch
+                                                                                        v-model="formNuevoDeposito.cflagtce"
+                                                                                        active-color="#13ce66"
+                                                                                        inactive-color="#ff4949">
+                                                                                    </el-switch>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
@@ -677,6 +689,7 @@
         </main>
     </transition>
 </template>
+
 <script>
     export default {
         props:['ruta'],
@@ -684,10 +697,10 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
+                nidempresa: 1300011,
+                nidsucursal: sessionStorage.getItem("nIdSucursal"),
                 canio: '2018',
                 cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 // =========== VARIABLES TIPO CAMBIO ===============
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
@@ -898,8 +911,8 @@
                 var url = this.ruta + '/pedido/GetListPedidoAprobados';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': this.nidempresa,
+                        'nidsucursal': this.nidsucursal,
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -1007,7 +1020,7 @@
                 var url = this.ruta + '/parparametro/GetBancosByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': this.nidempresa,
                         'nidgrupopar': 110021
                     }
                 }).then(response => {
@@ -1049,7 +1062,7 @@
                 var url = this.ruta + '/deposito/GetNumeroCuentaByBancoAndMoneda';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': this.nidempresa,
                         'nidbanco': this.formNuevoDeposito.nidbanco_destino,
                         'nidmoneda': this.formNuevoDeposito.nidmoneda_destino
                     }
@@ -1186,8 +1199,8 @@
             setNuevoDeposito(nIdDocumentoAdjunto){
                 var url = this.ruta + '/deposito/SetDepositoPedido';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
-                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa': this.nidempresa,
+                    'nIdSucursal': this.nidsucursal,
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
                     'nIdTipoMovimiento': this.formDeposito.nidtipomovimiento,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,
@@ -1200,10 +1213,12 @@
                     'fTipoCambioDeposito': this.formNuevoDeposito.ftipocambiovoucher,
                     'fTipoCambioComercial': this.formNuevoDeposito.ftipocambiocomercial,
                     'fMonto': this.formNuevoDeposito.fmonto,
-                    'cGlosa': this.formNuevoDeposito.cglosa
+                    'cGlosa': this.formNuevoDeposito.cglosa,
+                    'cFlagTipoCambioEspecial' : (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         swal('Deposito Registrado');
+                        this.tabBuscarPedido();
                         this.limpiarFormularioDesposito();
                     }else{
                         swal('El pedido ha sido Anulado o ya está Cancelado');
@@ -1242,7 +1257,7 @@
                 if(this.formNuevoDeposito.ftipocambiocomercial == 0){
                     this.mensajeError.push('No existe Tipo Cambio Comercial, Comuníquese con SAISACTI');
                 };
-                if(this.formNuevoDeposito.fmonto == ''){
+                if(this.formNuevoDeposito.fmonto == '' > this.formNuevoDeposito.fmonto > 0){
                     this.mensajeError.push('Debes ingresar Monto');
                 };
                 if(!this.attachment){
@@ -1287,8 +1302,8 @@
             setNuevoOtroTipoDeposito(nIdDocumentoAdjunto){
                 var url = this.ruta + '/deposito/SetDepositoPedido';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
-                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa': this.nidempresa,
+                    'nIdSucursal': this.nidsucursal,
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
                     'nIdTipoMovimiento': this.formDeposito.nidtipomovimiento,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,
@@ -1305,6 +1320,7 @@
                     'cFlagTipoCambioEspecial' : (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
+                        this.tabBuscarPedido();
                         this.limpiarFormularioDesposito();
                         swal('Deposito Registrado');
                     } else {
@@ -1380,6 +1396,7 @@
                 this.formNuevoDeposito.nnumerooperacion = '',
                 this.formNuevoDeposito.ftipocambiovoucher = '',
                 //this.formNuevoDeposito.ftipocambiocomercial = '',
+                this.formNuevoDeposito.cflagtce = false;
                 this.formNuevoDeposito.cglosa = ''
             },
             limpiarPaginacion(){
