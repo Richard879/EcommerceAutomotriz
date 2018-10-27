@@ -126,6 +126,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetLstPedidosPendienteAprobacion', 'PedidoController@GetLstPedidosPendienteAprobacion');
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
     Route::get('/pedido/GetDocumentoByFormaPago', 'PedidoController@GetDocumentoByFormaPago');
+    Route::get('/pedido/GetDocumentosById', 'PedidoController@GetDocumentosById');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');
