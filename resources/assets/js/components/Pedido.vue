@@ -1493,6 +1493,7 @@
             // ===========================================================
             limpiarFormulario(){
                 this.arrayPedido = [];
+                this.attachment = [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
