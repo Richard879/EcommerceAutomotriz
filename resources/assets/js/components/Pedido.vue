@@ -1494,6 +1494,7 @@
             limpiarFormulario(){
                 this.arrayPedido = [];
                 this.attachment = [];
+                this.arrayValidaAttachment = [];
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
