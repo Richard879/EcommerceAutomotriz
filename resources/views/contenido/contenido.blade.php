@@ -74,6 +74,9 @@
     <template v-if="menu==1300292">
         <depositopedido :ruta="ruta"></depositopedido>
     </template>
+    <template v-if="menu==1300357">
+        <pedidodepositoaprobar :ruta="ruta"></pedidodepositoaprobar>
+    </template>
     <template v-if="menu==1300282">
         <solccjefeventa :ruta="ruta"></solccjefeventa>
     </template>
