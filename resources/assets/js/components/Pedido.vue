@@ -1509,6 +1509,7 @@
                 this.arrayPedido = [];
                 this.attachment = [];
                 this.arrayValidaAttachment = [];
+                this.form = new FormData;
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
