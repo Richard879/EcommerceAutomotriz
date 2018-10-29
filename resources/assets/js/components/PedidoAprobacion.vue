@@ -246,23 +246,158 @@
                                         <h3 class="h4">DETALLE PEDIDO</h3>
                                     </div>
                                     <div class="card-body">
-                                        <!--<form v-on:submit.prevent class="form-horizontal">
+                                        <!--<form class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <label class="col-sm-4 form-control-label">Nro Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Buscar Proveedor </div>
-                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
-                                                                            <i class="fa-lg fa fa-search"></i>
-                                                                        </button>
-                                                                    </el-tooltip>
-                                                                </div>
-                                                            </div>
+                                                            <input type="hidden" v-model="formDocRef.nidcompra">
+                                                            <label v-text="formDocRef.cnrocotizacion" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.cnombrecomercial" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Año Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nro VIN</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.cnrovin" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">O/C</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.nordencompra" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Color</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.ccolor" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Motor</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.cmotor" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Precio Lista</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fpreciolista" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Precio Sistema</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fprecioventap" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Descuento</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fdescuentolista" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Precio Cliente</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fpreciofinal" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Bono</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fbono" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Sobre Precio</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fsobreprecio" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Bono Especial</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fbonoespecial" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Descuento</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.fdescuento" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Fecha Pedido</label>
+                                                        <div class="col-sm-8">
+                                                            <label v-text="formDocRef.dfechapedido" class="form-control-label-readonly" style="text-align:right;"></label>
                                                         </div>
                                                     </div>
                                                 </div>
