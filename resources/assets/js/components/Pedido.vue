@@ -836,7 +836,7 @@
                                                                                         <tbody>
                                                                                             <tr v-for="(documento, index) in arrayTablaDocumento" :key="documento.nIdPar">
                                                                                                 <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
-                                                                                                <td><input type="file" @change="getFile($event, index)" accept=".pdf,.xlsx"/></td>
+                                                                                                <td><input type="file" @change="getFile($event, index, documento.nIdPar)" accept=".pdf,.xlsx"/></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -1383,12 +1383,19 @@
                     console.log(error);
                 });
             },
-            getFile(e, index){
+            getFile(e, index, nIdPar){
                 let selectFile = e.target.files;
                 this.arrayValidaAttachment.length = this.arrayTablaDocumento.length;
                 this.arrayValidaAttachment[index] = selectFile;
+                
+
                 for(let i= 0; i < selectFile.length; i++){
-                    this.attachment.push(selectFile[i]);
+                    this.attachment.push({
+                        archivo: selectFile[i],
+                        nameFile: selectFile[i].name,
+                        valorIndex: index,
+                        nIdTabla: nIdPar
+                    });
                 }
             },
             registrarPedido(){
@@ -1442,15 +1449,22 @@
             subirArchivos(nIdCabeceraPedido){
                 this.mostrarProgressBar();
                 let me = this;
-
-                for(let i= 0; i < this.attachment.length; i++){
-                    this.form.append('file[]', this.attachment[i]);
-                }
-
-                this.arrayTablaDocumento.map(function(info, i) {
-                    me.form.append('data['+i+']["nIdPar"]', info.nIdPar);
-                    me.form.append('data['+i+']["cParNombre"]', info.cParNombre);
-                    me.form.append('data['+i+']["nIdCabeceraPedido"]', nIdCabeceraPedido);
+                
+                me.attachment.map(function(value, i) {
+                    if(me.attachment[i]){
+                        me.form.append('file[]', value.archivo);
+                    }
+                });
+                
+                me.arrayTablaDocumento.map(function(info, key) {
+                    me.attachment.map(function(value, i) {
+                        if(me.attachment[i] && info.nIdPar == value.nIdTabla){
+                            me.form.append('data['+i+']["nIdPar"]', info.nIdPar);
+                            me.form.append('data['+i+']["cParNombre"]', info.cParNombre);
+                            me.form.append('data['+i+']["cParArchivoNombre"]', value.nameFile);
+                            me.form.append('data['+i+']["nIdCabeceraPedido"]', nIdCabeceraPedido);
+                        }
+                    });                    
                 });
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
