@@ -258,4 +258,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/entregavehiculo/GetLstInspecciones','EntregaVehiculoController@GetLstInspecciones');
     Route::post('/entregavehiculo/SetGenerarEntregaVehículo','EntregaVehiculoController@SetGenerarEntregaVehículo');
     Route::get('/entregavehiculo/GetLstArchivosAdjuntos','EntregaVehiculoController@GetLstArchivosAdjuntos');
+
+    Route::post('/exhibicion/importFileExhibicion','ExcelController@importFileExhibicion');
+    Route::post('/exhibicion/readFileExhibicion', 'ExcelController@readFileExhibicion');
 });

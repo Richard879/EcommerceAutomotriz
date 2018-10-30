@@ -1243,7 +1243,7 @@
                 // ============ REGISTRAR COMPRA =================
                 formCompra:{
                     nformapago: 0,
-                    nidtipolista: 0,
+                    nidtipolista: '',
                     nidproveedor: 0,
                     cproveedornombre: ''
                 },
@@ -1695,7 +1695,7 @@
                 if(this.formCompra.nidproveedor == 0){
                     this.mensajeError.push('Debes seleccionar un Proveedor');
                 };
-                if(this.formCompra.nidtipolista == 0){
+                if(this.formCompra.nidtipolista == 0 || !this.formCompra.nidtipolista){
                     this.mensajeError.push('Debes seleccionar un Tipo Lista');
                 };
 
@@ -2113,6 +2113,7 @@
                             {
                                 this.accionmodal=5;
                                 this.modal = 1;
+                                this.arrayLineaCredito = [];
                                 break;
                             }
                         }
@@ -2125,7 +2126,9 @@
                 this.fillCompra.cnumerovin=  '',
                 this.attachment= null,
                 this.arrayExcel = [],
-                this.arrayCompra = []
+                this.arrayCompra = [],
+                this.nidtipolista = '',
+                this.form = new FormData;
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

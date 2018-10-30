@@ -195,4 +195,44 @@ class ExcelController extends Controller
         $data = $data->values()->all();
         return response()->json($data);
     }
+
+    public function importFileExhibicion(Request $request)
+    {
+        $file = $request->file;
+        $bandera = str_random(10);
+        $ruta = Storage::putFileAs('uploads/ExcelExhibicion', $file, $bandera .'_'. $file->getClientOriginalName());
+        return $ruta;
+    }
+
+    public function readFileExhibicion(Request $request)
+    {
+        $nameFile = $request->nameFile;
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $fxls = storage_path('app/'.$nameFile);
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+        $data = [];
+        foreach ($sheetData as $key => $value) {
+            if($value[2]!='' || $value[2]!=null){
+                $data[$key+1] =[
+                    'cNombreLinea' => $value[0],
+                    'cNombreAlmacen' => $value[1],
+                    'cNumeroVin' => $value[2],
+                    'cNombreMarca' => $value[3],
+                    'cNombreModelo' => $value[4],
+                    'cNombreComercial' => $value[5],
+                    'cNombreColor' => $value[6],
+                    'nAnioFabricacion' => $value[7],
+                    'nAnioVersion' => $value[8],
+                    'cSimboloMoneda' => $value[9],
+                    'fTotalExhibicion' => $value[10]
+                ];
+            }
+        }
+
+        $data = new Collection($data);
+        $data = $data->values()->all();
+        return response()->json($data);
+    }
 }
