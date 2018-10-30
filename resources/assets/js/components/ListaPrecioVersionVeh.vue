@@ -524,7 +524,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">INFORMACIÓN DETALLE</h3>
+                                                            <h3 class="h4">DETALLE LISTA PRECIO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -569,7 +569,6 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="hidden" v-model="formListaPrecioVh.nidproveedor">
                                                                                 <input type="text" v-model="formListaPrecioVh.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
@@ -578,10 +577,26 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nro Lista Prov.</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="hidden" v-model="formListaPrecioVh.nidlistaprecioversionVeh">
                                                                                 <input type="text" v-model="formListaPrecioVh.nnrolistaprecio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formListaPrecioVh.cnombrecomercial" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-9 offset-sm-5">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarListaPrecioVhDetalle(1)">
+                                                                            <i class="fa fa-search"></i> Buscar
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -824,7 +839,8 @@
                     nidlistaprecioversionVeh: 0,
                     nnrolistaprecio: '',
                     dfechainicio: '',
-                    nidtipolista: 0
+                    nidtipolista: 0,
+                    cnombrecomercial: ''
                 },
                 pagination: {
                     'total': 0,
@@ -911,6 +927,8 @@
             }
         },
         methods:{
+            // ====================================================
+            // =============  BUSCAR LISTA PRECIO =================
             tabBuscaListaPrecioVh(){
                 this.formListaPrecioVh.nidproveedor = 0,
                 this.formListaPrecioVh.cproveedornombre = '',
@@ -1039,7 +1057,7 @@
                 }
                 return this.error;
             },
-            actualizar(){
+            /*actualizar(){
                 var url = this.ruta + '//categoria/actualizar';
                 if(this.validar()){
                     return;
@@ -1055,7 +1073,7 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
+            },*/
             activar(nIdListaPrecioVersionVeh, nIdProveedor, nIdTipoLista){
                 swal({
                     title: 'Estas seguro de activar esta Lista?',
@@ -1123,11 +1141,7 @@
                     })
             },
             cerrarModal(){
-                //this.accionmodal==1;
                 this.modal = 0
-                /*this.nombre = '',
-                this.descripcion = '',
-                this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
             },
@@ -1171,6 +1185,8 @@
                     }
                 }
             },
+            // ================================================
+            // =============  AGREGAR DETALLE =================
             cambiarVistaFormTab1(){
                 this.vistaFormTab1 = 1;
                 this.limpiarFormulario();
@@ -1189,56 +1205,6 @@
                 this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
                 this.formListaPrecioVh.nnrolistaprecio = nNroListaPrecio;
                 this.limpiarFormulario();
-            },
-            activarTab3(nIdListaPrecioVersionVeh, cAnio, cMes, nIdProveedor, cProveedorNombre, nNroListaPrecio){
-                $('#Tab1').removeClass('nav-link active');
-                $('#Tab1').addClass("nav-link");
-                $('#Tab3').removeClass('nav-link disabled');
-                $('#Tab3').addClass("nav-link active");
-                $('#TabBuscaListaPrecioVh').removeClass('in active show');
-                $('#TabVerDetalle').addClass('in active show');
-                this.formListaPrecioVh.nidlistaprecioversionVeh = nIdListaPrecioVersionVeh;
-                this.canio  = cAnio;
-                this.cmes = cMes
-                this.formListaPrecioVh.nidproveedor = nIdProveedor;
-                this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
-                this.formListaPrecioVh.nnrolistaprecio = nNroListaPrecio;
-                this.limpiarFormulario();
-                this.verDetalle();
-            },
-            desactivarTabs(){
-                $('#Tab2').addClass('disabled');
-                $('#Tab3').addClass('disabled');
-            },
-            verDetalle(){
-                this.listarListaPrecioVhDetalle(1);
-            },
-            listarListaPrecioVhDetalle(page){
-                this.mostrarProgressBar();
-
-                var url = this.ruta + '/listapreciovh/GetListaVhDetalle';
-                axios.get(url, {
-                    params: {
-                        'nidlistaprecioversionveh': this.formListaPrecioVh.nidlistaprecioversionVeh,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayListaPrecioVhDet = response.data.arrayListaPrecioVhDet.data;
-                    this.pagination.current_page =  response.data.arrayListaPrecioVhDet.current_page;
-                    this.pagination.total = response.data.arrayListaPrecioVhDet.total;
-                    this.pagination.per_page    = response.data.arrayListaPrecioVhDet.per_page;
-                    this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
-                    this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
-                    this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
-                }).then(function (response) {
-                    $("#myBar").hide();
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            cambiarPaginaDetalle(page){
-                this.pagination.current_page=page;
-                this.listarListaPrecioVhDetalle(page);
             },
             getFile(e){
                 //console.log(e);
@@ -1369,6 +1335,61 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            desactivarTabs(){
+                $('#Tab2').addClass('disabled');
+                $('#Tab3').addClass('disabled');
+            },
+            // ================================================
+            // =================  VER DETALLE =================
+            activarTab3(nIdListaPrecioVersionVeh, cAnio, cMes, nIdProveedor, cProveedorNombre, nNroListaPrecio){
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link");
+                $('#Tab3').removeClass('nav-link disabled');
+                $('#Tab3').addClass("nav-link active");
+                $('#TabBuscaListaPrecioVh').removeClass('in active show');
+                $('#TabVerDetalle').addClass('in active show');
+                this.formListaPrecioVh.nidlistaprecioversionVeh = nIdListaPrecioVersionVeh;
+                this.canio  = cAnio;
+                this.cmes = cMes
+                this.formListaPrecioVh.nidproveedor = nIdProveedor;
+                this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
+                this.formListaPrecioVh.nnrolistaprecio = nNroListaPrecio;
+                this.limpiarFormulario();
+                this.verDetalle();
+            },
+            verDetalle(){
+                this.listarListaPrecioVhDetalle(1);
+            },
+            listarListaPrecioVhDetalle(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/listapreciovh/GetListaVhDetalle';
+                axios.get(url, {
+                    params: {
+                        'nidlistaprecioversionveh': this.formListaPrecioVh.nidlistaprecioversionVeh,
+                        'nidmarca': 0,
+                        'nidmodelo': 0,
+                        'cnombrecomercial': this.formListaPrecioVh.cnombrecomercial,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayListaPrecioVhDet = response.data.arrayListaPrecioVhDet.data;
+                    this.pagination.current_page =  response.data.arrayListaPrecioVhDet.current_page;
+                    this.pagination.total = response.data.arrayListaPrecioVhDet.total;
+                    this.pagination.per_page    = response.data.arrayListaPrecioVhDet.per_page;
+                    this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
+                    this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
+                    this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
+                }).then(function (response) {
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            cambiarPaginaDetalle(page){
+                this.pagination.current_page=page;
+                this.listarListaPrecioVhDetalle(page);
             },
             cambiarVistaFormulario(){
                 this.limpiarFormulario();
