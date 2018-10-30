@@ -1087,7 +1087,7 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    nIdCronograma: 220011,
+                    nIdCronograma: 0,
                     nIdProveedor: parseInt(this.formExhibicion.nidproveedor),
                     data: this.arrayExhibicion
                 }).then(response => {

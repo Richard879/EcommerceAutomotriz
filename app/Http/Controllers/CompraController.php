@@ -48,7 +48,7 @@ class CompraController extends Controller
         return ['arrayCompra'=>$arrayCompra];
     }
 
-    public function store(Request $request)
+    public function SetCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -107,10 +107,8 @@ class CompraController extends Controller
                 'arrayVinExiste'=>$arrayVinExiste,
                 'arrayPrecioLista'=>$arrayPrecioLista
             ];
-
-            return response()->json($data);
-
             DB::commit();
+            return response()->json($data);
         } catch (Exception $e){
             DB::rollBack();
         }

@@ -166,7 +166,7 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayCompra.length">
+                                                            <template v-if="arrayExcel.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -191,7 +191,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                                            <tr v-for="compra in arrayExcel" :key="compra.nIdCompra">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
@@ -929,7 +929,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -1247,7 +1247,6 @@
                     nidproveedor: 0,
                     cproveedornombre: ''
                 },
-                arrayCompra: [],
                 arrayExcel: [],
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
@@ -1433,7 +1432,7 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayCompra = response.data.arrayCompra.data;
+                    this.arrayExcel = response.data.arrayCompra.data;
                     this.pagination.current_page =  response.data.arrayCompra.current_page;
                     this.pagination.total = response.data.arrayCompra.total;
                     this.pagination.per_page    = response.data.arrayCompra.per_page;
@@ -1616,8 +1615,6 @@
                 this.$delete(this.arrayExcel, index);
             },
             registrar(){
-                this.arrayCompra = this.arrayExcel;
-
                 if(this.validarRegistro()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1629,11 +1626,11 @@
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCronograma: 220011,
                     nIdProveedor: parseInt(this.formCompra.nidproveedor),
                     nIdTipoLista: parseInt(this.formCompra.nidtipolista),
-                    data: this.arrayCompra
+                    data: this.arrayExcel
                 }).then(response => {
                     let me = this;
                     var arrayTempVinExiste = [];
@@ -1663,33 +1660,31 @@
                         this.accionmodal=3;
                         this.modal = 1;
                         this.arrayExcel = [];
-                        this.arrayCompra = [];
+                        this.attachment = [];
+                        this.form = new FormData;
                         $("#file-upload").val("");
                     }else{
                         $("#myBar").hide();
                         swal('Compra registrada correctamente');
-                        this.accionmodal=3;
-                        this.modal = 1;
                         this.arrayExcel = [];
-                        this.arrayCompra = [];
+                        this.attachment = [];
+                        this.form = new FormData;
                         $("#file-upload").val("");
                     }
                 }).catch(error => {
                     console.log(error);
-                    if (error.response) {
+                    /*if (error.response) {
                         if (error.response.status == 401) {
                             location.reload('0');
                         }
-                    }
+                    }*/
                 });
             },
             validarRegistro(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
-                if(this.arrayCompra == []){
+
+                if(this.arrayExcel == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
                 if(this.formCompra.nidproveedor == 0){
@@ -2124,11 +2119,12 @@
             limpiarFormulario(){
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',
-                this.attachment= null,
+                this.attachment = [],
                 this.arrayExcel = [],
-                this.arrayCompra = [],
                 this.nidtipolista = '',
-                this.form = new FormData;
+                this.form = new FormData,
+                this.arrayCompraVin = [],
+                this.arrayCompraPrecioLista = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

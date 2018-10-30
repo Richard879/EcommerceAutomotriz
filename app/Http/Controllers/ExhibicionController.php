@@ -12,5 +12,52 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExhibicionController extends Controller
 {
-    //
+    public function SetExhibicion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+
+            $arrayVinExiste = [];
+            $arrayPrecioLista = [];
+
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec [usp_Exhibicion_SetExhibicion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdSucursal,
+                                                                $request->nIdCronograma,
+                                                                $request->nIdProveedor,
+                                                                $det['cNombreLinea'],
+                                                                $det['cNombreAlmacen'],
+                                                                $det['cNumeroVin'],
+                                                                $det['cNombreMarca'],
+                                                                $det['cNombreModelo'],
+                                                                $det['cNombreComercial'],
+                                                                $det['cNombreColor'],
+                                                                $det['nAnioFabricacion'],
+                                                                $det['nAnioVersion'],
+                                                                $det['cSimboloMoneda'],
+                                                                $det['fTotalExhibicion'],
+                                                                Auth::user()->id
+                                                            ]);
+                if($objCompra[0]->nFlagMsje == 0){
+                    array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
+                }
+                if($objCompra[0]->nFlagMsje == 2){
+                    array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
+                }
+            }
+            $data = [
+                'arrayVinExiste'=>$arrayVinExiste,
+                'arrayPrecioLista'=>$arrayPrecioLista
+            ];
+            DB::commit();
+            return response()->json($data);            
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
