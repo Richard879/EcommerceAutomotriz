@@ -58,6 +58,7 @@ class CompraController extends Controller
 
             $arrayVinExiste = [];
             $arrayPrecioLista = [];
+            $arrayNombreComercial = [];
 
             foreach($detalles as $ep=>$det)
             {
@@ -102,10 +103,14 @@ class CompraController extends Controller
                 if($objCompra[0]->nFlagMsje == 2){
                     array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
                 }
+                if($objCompra[0]->nFlagMsje == 3){
+                    array_push($arrayNombreComercial,$objCompra[0]->cNumeroVin);
+                }
             }
             $data = [
                 'arrayVinExiste'=>$arrayVinExiste,
-                'arrayPrecioLista'=>$arrayPrecioLista
+                'arrayPrecioLista'=>$arrayPrecioLista,
+                'arrayNombreComercial'=>$arrayNombreComercial
             ];
             DB::commit();
             return response()->json($data);

@@ -888,16 +888,16 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Automotores INKA</h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                            <button type="button" class="close" @click="limpiarFormulario(); cerrarModal()" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div v-if="arrayCompraVin.length" class="col-lg-6">
+                                <div v-if="arrayCompraVin.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                            <h3 class="h4">ESTOS VIN YA SE ECUENTRAN REGISTRADOS</h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
@@ -910,7 +910,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="arrayCompraPrecioLista.length" class="col-lg-6">
+                                <div v-if="arrayCompraPrecioLista.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
@@ -926,10 +926,26 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div v-if="arrayCompraNombreComercial.length" class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">NO EXISTEN NOMBRE COMERCIAL EN BD</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="compra in arrayCompraNombreComercial" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario(); cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -1265,6 +1281,10 @@
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
                 arrayCompraVin: [],
+                arrayCompraNombreComercial: [],
+                arrayTempVinExiste: [],
+                arrayTempVinListaPrecio:[],
+                arrayTempVinNombreComercial: [],
                 // ============================================================
                 // =========== TAB LINEA CREDITO ============
                 arrayLineaCredito: [],
@@ -1498,8 +1518,7 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110044,
-                        'opcion' : 0
+                        'ngrupoparid' : 110044
                     }
                 }).then(response => {
                     this.arrayTipoLista = response.data;
@@ -1633,10 +1652,15 @@
                     data: this.arrayExcel
                 }).then(response => {
                     let me = this;
-                    var arrayTempVinExiste = [];
-                    var arrayTempVinListaPrecio = [];
+                    
+                    me.arrayTempVinExiste = [];
+                    me.arrayTempVinListaPrecio = [];
+                    me.arrayTempVinNombreComercial = [];
+                    me.arrayCompraVin = [];
+                    me.arrayCompraPrecioLista = [];
+                    me.arrayCompraNombreComercial = [];
 
-                    if(response.data.arrayVinExiste.length > 0)
+                    if(response.data.arrayVinExiste.length)
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
@@ -1645,7 +1669,7 @@
                             });
                         });
                     }
-                    if(response.data.arrayPrecioLista.length > 0){
+                    if(response.data.arrayPrecioLista.length){
                         me.arrayTempVinListaPrecio = response.data.arrayPrecioLista;
                         me.arrayTempVinListaPrecio.map(function(value, key) {
                             me.arrayCompraPrecioLista.push({
@@ -1653,31 +1677,31 @@
                             });
                         });
                     }
+                    if(response.data.arrayNombreComercial.length){
+                        me.arrayTempVinNombreComercial = response.data.arrayNombreComercial;
+                        me.arrayTempVinNombreComercial.map(function(value, key) {
+                            me.arrayCompraNombreComercial.push({
+                                cNumeroVin: me.arrayTempVinNombreComercial[key]
+                            });
+                        });
+                    }
 
+                    $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
-                    if(this.arrayCompraVin.length > 0 || this.arrayCompraPrecioLista.length > 0){
-                        $("#myBar").hide();
-                        this.accionmodal=3;
-                        this.modal = 1;
-                        this.arrayExcel = [];
-                        this.attachment = [];
-                        this.form = new FormData;
-                        $("#file-upload").val("");
+                    if(me.arrayCompraVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                        me.accionmodal=3;
+                        me.modal = 1;
                     }else{
-                        $("#myBar").hide();
                         swal('Compra registrada correctamente');
-                        this.arrayExcel = [];
-                        this.attachment = [];
-                        this.form = new FormData;
-                        $("#file-upload").val("");
+                        this.limpiarFormulario();                     
                     }
                 }).catch(error => {
                     console.log(error);
-                    /*if (error.response) {
+                    if (error.response) {
                         if (error.response.status == 401) {
                             location.reload('0');
                         }
-                    }*/
+                    }
                 });
             },
             validarRegistro(){
@@ -1702,7 +1726,8 @@
             validarReadFileCompra(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.attachment){
+
+                if(!this.attachment || this.attachment==[] || this.attachment==null){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 };
                 if(this.mensajeError.length){
@@ -2123,8 +2148,7 @@
                 this.arrayExcel = [],
                 this.nidtipolista = '',
                 this.form = new FormData,
-                this.arrayCompraVin = [],
-                this.arrayCompraPrecioLista = []
+                $("#file-upload").val("")
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
