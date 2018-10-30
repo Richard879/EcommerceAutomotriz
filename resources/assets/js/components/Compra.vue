@@ -1745,24 +1745,36 @@
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
-                    var url = this.ruta + '/compra/desactivar';
-                    axios.put(url, {
-                        nIdCompra: nIdCompra
-                    }).then(response => {
-                        swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                        );
-                        this.listarCompras(1);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                location.reload('0');
+                    if (result.value) {
+                        var url = this.ruta + '/compra/desactivar';
+                        axios.put(url, {
+                            nIdCompra: nIdCompra
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Desactivado!',
+                                    response.data[0].cMensaje
+                                );
                             }
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarCompras(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
                         }
-                    });
                 })
             },
             descargaFormatoCompra(){
