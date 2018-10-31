@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/listapreciovh/GetListaVhDetalle', 'ListaPrecioVersionVehController@GetListaVhDetalle');
     Route::put('/listapreciovh/activar','ListaPrecioVersionVehController@activar');
     Route::put('/listapreciovh/desactivar','ListaPrecioVersionVehController@desactivar');
+    Route::put('/listapreciovh/desactivarDetalle','ListaPrecioVersionVehController@desactivarDetalle');
 
     Route::get('/woperativo/GetWOperativo', 'WarrantOperativoController@GetWOperativo');
     Route::post('/woperativo/SetWOperativo', 'WarrantOperativoController@SetWOperativo');
@@ -265,4 +266,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/exhibicion/importFileExhibicion','ExcelController@importFileExhibicion');
     Route::post('/exhibicion/readFileExhibicion', 'ExcelController@readFileExhibicion');
     Route::post('/exhibicion/SetExhibicion', 'ExhibicionController@SetExhibicion');
+
+    Route::get('/cronograma/GetCronogramaVentaActivo','CronogramaController@GetCronogramaVentaActivo');
+    Route::get('/cronograma/GetCronogramaCompraActivo','CronogramaController@GetCronogramaCompraActivo');
 });

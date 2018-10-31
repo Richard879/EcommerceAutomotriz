@@ -63,6 +63,36 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formListaPrecioVh.dfechainicio"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formListaPrecioVh.dfechafin"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Proveedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
@@ -82,7 +112,7 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-4">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarListaPrecioVh();">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarListaPrecioVh(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('listapreciovh','registrarDetalle');">
@@ -291,10 +321,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <select name="account" v-model="formListaPrecioVh.nidtipolista" class="form-control form-control-sm">
-                                                                                        <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
+                                                                                    <el-select v-model="formListaPrecioVh.nidtipolista" filterable clearable placeholder="SELECCIONE" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoLista"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -583,9 +617,41 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Marca</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formListaPrecioVh.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMarca"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formListaPrecioVh.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayModelo"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="formListaPrecioVh.cnombrecomercial" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="formListaPrecioVh.cnombrecomercial" @keyup.enter="listarListaPrecioVhDetalle(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -612,6 +678,7 @@
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
+                                                                                <th>Acciones</th>
                                                                                 <th>Código Det.</th>
                                                                                 <th>Código Veh.</th>
                                                                                 <th>Nombre Comercial</th>
@@ -623,6 +690,12 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="lpd in arrayListaPrecioVhDet" :key="lpd.nIdListaPrecioVersionVehDetalle">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar {{ lpd.cNombreComercial + ' ' + lpd.nAnioFabricacion + ' ' + lpd.nAnioModelo}}</div>
+                                                                                        <i @click="desactivarDetalle(lpd)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
+                                                                                </td>
                                                                                 <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
                                                                                 <td v-text="lpd.nIdVersionVeh"></td>
                                                                                 <td v-text="lpd.cNombreComercial"></td>
@@ -807,6 +880,59 @@
                 </div>
             </div>
 
+            <!-- MODAL RESPUESTAS DE LISTA PRECIO DETALLE-->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="limpiarFormulario(); cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div v-if="arrayListaPrecioExisteLista.length" class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">YA SE ECUENTRAN REGISTRADOS</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="lista in arrayListaPrecioExisteLista" :key="lista.cNombreComercial">
+                                                        <td v-text="lista.cNombreComercial"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="arrayListaPrecioNombreComercial.length" class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">NO EXISTEN NOMBRE COMERCIAL EN BD</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="lista in arrayListaPrecioNombreComercial" :key="lista.cNombreComercial">
+                                                        <td v-text="lista.cNombreComercial"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario(); cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -817,29 +943,38 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
-                arrayListaPrecioVh: [],
-                arrayProveedor: [],
-                arrayListaPrecioVhDet: [],
-                arrayTipoLista: [],
-                arrayExcel: [],
-                contadorArrayExcel: 0,
+                nidcronograma: 0,
+                canio: '',
+                cmes: '',
                 fillProvedor:{
                     cnombreproveedor: ''
                 },
                 formListaPrecioVh:{
                     nidproveedor: 0,
+                    dfechainicio: '',
+                    dfechafin: '',
                     cproveedornombre: '',
-                    nformapago: 0,
                     nidlistaprecioversionVeh: 0,
                     nnrolistaprecio: '',
-                    dfechainicio: '',
-                    nidtipolista: 0,
+                    nidtipolista: '',
                     cnombrecomercial: ''
                 },
+                arrayListaPrecioVh: [],
+                arrayProveedor: [],
+                arrayListaPrecioVhDet: [],
+                arrayTipoLista: [],
+                arrayExcel: [],
+                nidmarca: '',
+                nidmodelo: '',
+                arrayMarca: [],
+                arrayModelo: [],
+                contadorArrayExcel: 0,
+                // ============ VARIABLES DE RESPUESTA =================
+                arrayListaPrecioExisteLista: [],
+                arrayListaPrecioNombreComercial: [],
+                arrayTempListaExiste: [],
+                arrayTempListaNombreComercial: [],
+                // ====================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -928,9 +1063,11 @@
             // ====================================================
             // =============  BUSCAR LISTA PRECIO =================
             tabBuscaListaPrecioVh(){
-                this.formListaPrecioVh.nidproveedor = 0,
-                this.formListaPrecioVh.cproveedornombre = '',
+                this.formListaPrecioVh.nidproveedor = 0;
+                this.formListaPrecioVh.cproveedornombre = '';
+                this.arrayListaPrecioVhDet = [];
                 this.desactivarTabs();
+                this.listarListaPrecioVh(1);
             },
             buscaProveedores(){
                 this.listarProveedores(1);
@@ -980,9 +1117,6 @@
                     console.log(error);
                 });
             },
-            buscarListaPrecioVh(){
-                this.listarListaPrecioVh(1);
-            },
             listarListaPrecioVh(page){
                 this.mostrarProgressBar();
 
@@ -990,7 +1124,9 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.formListaPrecioVh.dfechainicio,
+                        'dfechafin': this.formListaPrecioVh.dfechafin,
                         'nidproveedor': this.formListaPrecioVh.nidproveedor,
                         'page': page
                     }
@@ -1002,7 +1138,6 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVh.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVh.from;
                     this.pagination.to           = response.data.arrayListaPrecioVh.to;
-                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1022,9 +1157,9 @@
                 var url = this.ruta + '/listapreciovh/SetListaVh';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdProveedor: parseInt(this.formListaPrecioVh.nidproveedor),
-                    nIdCronograma: 220016,
+                    nIdCronograma: parseInt(this.nidcronograma),
                     nNroListaPrecio: parseInt(this.formListaPrecioVh.nnrolistaprecio),
                     dFechaInicio: this.formListaPrecioVh.dfechainicio,
                     nIdTipoLista: this.formListaPrecioVh.nidtipolista
@@ -1047,8 +1182,11 @@
                 if(!this.formListaPrecioVh.dfechainicio){
                     this.mensajeError.push('Debes Ingresar Fecha Inicio');
                 };
-                if(this.formListaPrecioVh.nidtipolista == 0){
+                if(this.formListaPrecioVh.nidtipolista == 0 || !this.formListaPrecioVh.nidtipolista){
                     this.mensajeError.push('Debes Seleccionar Tipo Lista');
+                };
+                if(this.nidcronograma == 0){
+                    this.mensajeError.push('No existe Periodo Venta Activo');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1138,26 +1276,9 @@
                         }
                     })
             },
-            cerrarModal(){
-                this.modal = 0
-                this.error = 0,
-                this.mensajeError = ''
-            },
-            abrirModal(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'proveedor':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                this.accionmodal=2;
-                                this.modal = 1;
-                                this.listarProveedores(1);
-                                break;
-                            }
-                        }
-                    }
-                }
+            cambiarVistaFormulario(){
+                this.limpiarFormulario();
+                this.vistaFormTab1 = 1;
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
@@ -1168,6 +1289,7 @@
                             {
                                 this.vistaFormTab1 = 0;
                                 this.tituloFormulario = 'NUEVA LISTA PRECIO';
+                                this.obtenerCronogramaVentaActivo();
                                 this.limpiarFormulario();
                                 this.listarTipoLista();
                                 this.formListaPrecioVh.nnrolistaprecio = '';
@@ -1183,12 +1305,28 @@
                     }
                 }
             },
+            obtenerCronogramaVentaActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaVentaActivo';
+
+                axios.get(url,{
+                    params: {
+                        'nidempresa': 1300011
+                    }
+                }).then(response => {
+                    this.canio = response.data.arrayCronograma[0].cAnio;
+                    this.cmes = response.data.arrayCronograma[0].cMes;
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             // ================================================
             // =============  AGREGAR DETALLE =================
-            cambiarVistaFormTab1(){
-                this.vistaFormTab1 = 1;
-                this.limpiarFormulario();
-            },
             activarTab2(lista){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
@@ -1241,7 +1379,6 @@
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
                     this.contadorArrayExcel = response.data.length;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1279,25 +1416,55 @@
                 this.$delete(this.arrayExcel, index)
             },
             registrarDetalle(){
-                this.arrayListaPrecioVh = this.arrayExcel;
-
                 if(this.validarRegistroDetalle()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/listapreciovh/SetListaPrecioVhDetalle';
                 axios.post(url, {
                     nIdListaPrecioVersionVeh: this.formListaPrecioVh.nidlistaprecioversionVeh,
-                    data: this.arrayListaPrecioVh
+                    data: this.arrayExcel
                 }).then(response => {
-                    swal('Detalle de Lista registrada');
-                    this.arrayExcel = [];
-                    this.arrayListaPrecioVh = [];
-                    //this.attachment = null;
-                    //this.textFile = '';
-                    $("#file-upload").val("");
+                    let me = this;
+
+                    me.arrayTempListaExiste = [];
+                    me.arrayTempListaNombreComercial = [];
+                    me.arrayListaPrecioExisteLista = [];
+                    me.arrayListaPrecioNombreComercial = [];
+
+                    if(response.data.arrayListaExiste.length)
+                    {
+                        me.arrayTempListaExiste = response.data.arrayListaExiste;
+                        me.arrayTempListaExiste.map(function(value, key) {
+                            me.arrayListaPrecioExisteLista.push({
+                                cNombreComercial: me.arrayTempListaExiste[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayNombreComercial.length){
+                        me.arrayTempListaNombreComercial = response.data.arrayNombreComercial;
+                        me.arrayTempListaNombreComercial.map(function(value, key) {
+                            me.arrayListaPrecioNombreComercial.push({
+                                cNombreComercial: me.arrayTempListaNombreComercial[key]
+                            });
+                        });
+                    }
+
+                    $("#myBar").hide();
+                    //============= RESULTADO PARA MOSTRAR ================
+                    if(me.arrayListaPrecioExisteLista.length || me.arrayListaPrecioNombreComercial.length){
+                        me.accionmodal=3;
+                        me.modal = 1;
+                        me.attachment = [];
+                    }else{
+                        swal('Detalle de Lista registrada');
+                        me.attachment = [];
+                        me.limpiarFormulario();       
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1308,14 +1475,12 @@
             validarRegistroDetalle(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
-                if(this.arrayListaPrecioVh == []){
+
+                if(this.arrayExcel == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.nIdListaPrecioVersionVeh == 0){
-                    this.mensajeError.push('No ha seleecioando Lista de Precio');
+                if(this.nIdListaPrecioVersionVeh==0){
+                    this.mensajeError.push('No ha seleccioando Lista de Precio');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1325,9 +1490,10 @@
             validarReadFileListaPrecioVh(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
+
+                if(!this.attachment || this.attachment==[] || this.attachment==null){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
+                }
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1340,22 +1506,57 @@
             // ================================================
             // =================  VER DETALLE =================
             activarTab3(lista){
-                $('#Tab1').removeClass('nav-link active');
-                $('#Tab1').addClass("nav-link");
-                $('#Tab3').removeClass('nav-link disabled');
-                $('#Tab3').addClass("nav-link active");
-                $('#TabBuscaListaPrecioVh').removeClass('in active show');
-                $('#TabVerDetalle').addClass('in active show');
                 this.formListaPrecioVh.nidlistaprecioversionVeh = lista.nIdListaPrecioVh;
                 this.canio  = lista.cAnio;
                 this.cmes = lista.cMes
                 this.formListaPrecioVh.nidproveedor = lista.nIdProveedor;
                 this.formListaPrecioVh.cproveedornombre = lista.cProveedorNombre;
                 this.formListaPrecioVh.nnrolistaprecio = lista.nNroListaPrecio;
-                this.verDetalle();
-            },
-            verDetalle(){
+                this.llenarComboMarca();
                 this.listarListaPrecioVhDetalle(1);
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link");
+                $('#Tab3').removeClass('nav-link disabled');
+                $('#Tab3').addClass("nav-link active");
+                $('#TabBuscaListaPrecioVh').removeClass('in active show');
+                $('#TabVerDetalle').addClass('in active show');
+            },
+            llenarComboMarca(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110032
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url,{
+                    params: {
+                        'nidmarca' : this.formListaPrecioVh.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.formListaPrecioVh.nidmodelo = '';
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             listarListaPrecioVhDetalle(page){
                 this.mostrarProgressBar();
@@ -1364,8 +1565,8 @@
                 axios.get(url, {
                     params: {
                         'nidlistaprecioversionveh': this.formListaPrecioVh.nidlistaprecioversionVeh,
-                        'nidmarca': 0,
-                        'nidmodelo': 0,
+                        'nidmarca': this.formListaPrecioVh.nidmarca,
+                        'nidmodelo': this.formListaPrecioVh.nidmodelo,
                         'cnombrecomercial': this.formListaPrecioVh.cnombrecomercial,
                         'page' : page
                     }
@@ -1377,7 +1578,6 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
                     this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1387,13 +1587,76 @@
                 this.pagination.current_page=page;
                 this.listarListaPrecioVhDetalle(page);
             },
-            cambiarVistaFormulario(){
-                this.limpiarFormulario();
-                this.vistaFormTab1 = 1;
+            desactivarDetalle(lista){
+                swal({
+                    title: 'Estas seguro de eliminar este Detalle?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/listapreciovh/desactivarDetalle';
+                        axios.put(url, {
+                            nIdListaPrecioVersionVehDetalle: lista.nIdListaPrecioVersionVehDetalle
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Desactivado!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarListaPrecioVhDetalle(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                })
             },
+            // =============================================
+            // =============  MODAL ========================
+            cerrarModal(){
+                this.modal = 0
+                this.error = 0,
+                this.mensajeError = ''
+            },
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'proveedor':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            // ===========================================================
             limpiarFormulario(){
-                this.arrayExcel = [],
-                this.arrayListaPrecioVh = []
+                this.arrayExcel = [];
+                this.form = new FormData;
+                $("#file-upload").val("")
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

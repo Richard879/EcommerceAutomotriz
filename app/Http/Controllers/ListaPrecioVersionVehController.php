@@ -16,11 +16,18 @@ class ListaPrecioVersionVehController extends Controller
 
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
         $nIdProveedor = $request->nidproveedor;
         
-        $arrayListaPrecioVh = DB::select('exec [usp_ListaPrecioVh_GetListaPrecio] ?, ?, ?', 
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+
+        $arrayListaPrecioVh = DB::select('exec [usp_ListaPrecioVh_GetListaPrecio] ?, ?, ?, ?, ?', 
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
                                                                 $nIdProveedor
                                                             ]);
         
@@ -79,9 +86,12 @@ class ListaPrecioVersionVehController extends Controller
 
             $detalles = $request->data;
 
+            $arrayListaExiste = [];
+            $arrayNombreComercial = [];
+
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                $objLista = DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             [   $request->nIdListaPrecioVersionVeh,
                                                                 $det['nIdVersionVeh'],
                                                                 $det['cNombreComercial'],
@@ -104,14 +114,26 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['fBonoEspecial'],
                                                                 Auth::user()->id
                                                             ]);
-            }    
-            DB::commit(); 
+            
+                if($objLista[0]->nFlagMsje == 0){
+                    array_push($arrayListaExiste,$objLista[0]->cNombreComercial);
+                }
+                if($objLista[0]->nFlagMsje == 3){
+                    array_push($arrayNombreComercial,$objLista[0]->cNombreComercial);
+                }
+            }
+            $data = [
+                'arrayListaExiste'=>$arrayListaExiste,
+                'arrayNombreComercial'=>$arrayNombreComercial
+            ];
+            DB::commit();
+            return response()->json($data);
         } catch (Exception $e){
             DB::rollBack();
         }     
     }
 
-    public function desactivar (Request $request)
+    public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -122,7 +144,7 @@ class ListaPrecioVersionVehController extends Controller
         return response()->json($listapreciovh);   
     }
 
-    public function activar (Request $request)
+    public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -132,6 +154,17 @@ class ListaPrecioVersionVehController extends Controller
                                                         $request->nIdTipoLista,
                                                         Auth::user()->id
                                                     ]);
+        return response()->json($listapreciovh);   
+    }
+
+    public function desactivarDetalle(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaDetalleById] ?, ?', 
+                                                [   $request->nIdListaPrecioVersionVehDetalle,
+                                                    Auth::user()->id
+                                                ]);
         return response()->json($listapreciovh);   
     }
 }

@@ -166,7 +166,7 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayExcel.length">
+                                                            <template v-if="arrayCompra.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -191,7 +191,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayExcel" :key="compra.nIdCompra">
+                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
@@ -894,7 +894,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div v-if="arrayCompraVin.length" class="col-sm-4">
+                                <div v-if="arrayCompraExisteVin.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="h4">ESTOS VIN YA SE ECUENTRAN REGISTRADOS</h3>
@@ -902,7 +902,7 @@
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
+                                                    <tr v-for="compra in arrayCompraExisteVin" :key="compra.cNumeroVin">
                                                         <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
@@ -1241,8 +1241,9 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
+                canio: '',
+                cmes: '',
+                nidcronograma: 0,
                 // ============================================
                 // ============ BUSCAR COMPRA =================
                 fillCompra:{
@@ -1253,6 +1254,7 @@
                     nidmarca: '',
                     nidmodelo: ''
                 },
+                arrayCompra: [],
                 arrayMarca: [],
                 arrayModelo: [],
                 // ===============================================
@@ -1280,7 +1282,7 @@
                 },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
-                arrayCompraVin: [],
+                arrayCompraExisteVin: [],
                 arrayCompraNombreComercial: [],
                 arrayTempVinExiste: [],
                 arrayTempVinListaPrecio:[],
@@ -1452,7 +1454,7 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayExcel = response.data.arrayCompra.data;
+                    this.arrayCompra = response.data.arrayCompra.data;
                     this.pagination.current_page =  response.data.arrayCompra.current_page;
                     this.pagination.total = response.data.arrayCompra.total;
                     this.pagination.per_page    = response.data.arrayCompra.per_page;
@@ -1534,8 +1536,29 @@
             // ====================================================
             // =============  GENERAR COMPRA ======================
             tabGenerarCompra(){
+                this.obtenerCronogramaCompraActivo();
                 this.listarTipoLista();
                 this.limpiarFormulario();
+            },
+            obtenerCronogramaCompraActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
+
+                axios.get(url,{
+                    params: {
+                        'nidempresa': 1300011
+                    }
+                }).then(response => {
+                    this.canio = response.data.arrayCronograma[0].cAnio;
+                    this.cmes = response.data.arrayCronograma[0].cMes;
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             getFile(e){
                 //console.log(e);
@@ -1646,7 +1669,7 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdCronograma: 220011,
+                    nIdCronograma: parseInt(this.nidcronograma),
                     nIdProveedor: parseInt(this.formCompra.nidproveedor),
                     nIdTipoLista: parseInt(this.formCompra.nidtipolista),
                     data: this.arrayExcel
@@ -1656,7 +1679,7 @@
                     me.arrayTempVinExiste = [];
                     me.arrayTempVinListaPrecio = [];
                     me.arrayTempVinNombreComercial = [];
-                    me.arrayCompraVin = [];
+                    me.arrayCompraExisteVin = [];
                     me.arrayCompraPrecioLista = [];
                     me.arrayCompraNombreComercial = [];
 
@@ -1664,7 +1687,7 @@
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
-                            me.arrayCompraVin.push({
+                            me.arrayCompraExisteVin.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
                             });
                         });
@@ -1688,12 +1711,14 @@
 
                     $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
-                    if(me.arrayCompraVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                    if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
+                        me.attachment = [];
                     }else{
                         swal('Compra registrada correctamente');
-                        this.limpiarFormulario();                
+                        me.attachment = [],
+                        me.limpiarFormulario();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1717,7 +1742,9 @@
                 if(this.formCompra.nidtipolista == 0 || !this.formCompra.nidtipolista){
                     this.mensajeError.push('Debes seleccionar un Tipo Lista');
                 };
-
+                if(this.nidcronograma == 0){
+                    this.mensajeError.push('No existe Periodo Compra Activo');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1729,7 +1756,7 @@
 
                 if(!this.attachment || this.attachment==[] || this.attachment==null){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                };
+                }
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -2156,9 +2183,8 @@
             limpiarFormulario(){
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',
-                this.attachment = [],
+                this.formCompra.nidtipolista= '',
                 this.arrayExcel = [],
-                this.nidtipolista = '',
                 this.form = new FormData,
                 $("#file-upload").val("")
             },
