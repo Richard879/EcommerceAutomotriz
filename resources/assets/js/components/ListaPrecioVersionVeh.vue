@@ -1114,7 +1114,7 @@
                 if(!this.formListaPrecioVh.dfechainicio){
                     this.mensajeError.push('Debes Ingresar Fecha Inicio');
                 };
-                if(this.formListaPrecioVh.nidtipolista == 0){
+                if(this.formListaPrecioVh.nidtipolista == 0 || !this.formListaPrecioVh.nidtipolista){
                     this.mensajeError.push('Debes Seleccionar Tipo Lista');
                 };
                 if(this.mensajeError.length){
@@ -1205,26 +1205,9 @@
                         }
                     })
             },
-            cerrarModal(){
-                this.modal = 0
-                this.error = 0,
-                this.mensajeError = ''
-            },
-            abrirModal(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'proveedor':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                this.accionmodal=2;
-                                this.modal = 1;
-                                this.listarProveedores(1);
-                                break;
-                            }
-                        }
-                    }
-                }
+            cambiarVistaFormulario(){
+                this.limpiarFormulario();
+                this.vistaFormTab1 = 1;
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){
@@ -1252,10 +1235,6 @@
             },
             // ================================================
             // =============  AGREGAR DETALLE =================
-            cambiarVistaFormTab1(){
-                this.vistaFormTab1 = 1;
-                this.limpiarFormulario();
-            },
             activarTab2(lista){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
@@ -1487,10 +1466,30 @@
                 this.pagination.current_page=page;
                 this.listarListaPrecioVhDetalle(page);
             },
-            cambiarVistaFormulario(){
-                this.limpiarFormulario();
-                this.vistaFormTab1 = 1;
+            // =============================================
+            // =============  MODAL ========================
+            cerrarModal(){
+                this.modal = 0
+                this.error = 0,
+                this.mensajeError = ''
             },
+            abrirModal(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'proveedor':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=2;
+                                this.modal = 1;
+                                this.listarProveedores(1);
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            // ===========================================================
             limpiarFormulario(){
                 this.arrayExcel = [],
                 this.arrayListaPrecioVh = []
