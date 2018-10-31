@@ -166,7 +166,7 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayExcel.length">
+                                                            <template v-if="arrayCompra.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
@@ -191,7 +191,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayExcel" :key="compra.nIdCompra">
+                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
@@ -1254,6 +1254,7 @@
                     nidmarca: '',
                     nidmodelo: ''
                 },
+                arrayCompra: [],
                 arrayMarca: [],
                 arrayModelo: [],
                 // ===============================================
@@ -1453,7 +1454,7 @@
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayExcel = response.data.arrayCompra.data;
+                    this.arrayCompra = response.data.arrayCompra.data;
                     this.pagination.current_page =  response.data.arrayCompra.current_page;
                     this.pagination.total = response.data.arrayCompra.total;
                     this.pagination.per_page    = response.data.arrayCompra.per_page;

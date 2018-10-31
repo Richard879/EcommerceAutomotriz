@@ -1073,8 +1073,6 @@
                 this.$delete(this.arrayExcel, index);
             },
             registrar(){
-                this.arrayExhibicion = this.arrayExcel;
-
                 if(this.validarRegistro()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -1089,9 +1087,10 @@
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdCronograma: 0,
                     nIdProveedor: parseInt(this.formExhibicion.nidproveedor),
-                    data: this.arrayExhibicion
+                    data: this.arrayExcel
                 }).then(response => {
                     let me = this;
+
                     var arrayTempVinExiste = [];
                     var arrayTempVinListaPrecio = [];
 
@@ -1104,23 +1103,17 @@
                             });
                         });
                     }
-
+                    
+                    $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
-                    if(this.arrayExhibicionVin.length > 0){
-                        $("#myBar").hide();
-                        this.accionmodal=3;
-                        this.modal = 1;
-                        this.arrayExcel = [];
-                        this.arrayExhibicion = [];
-                        $("#file-upload").val("");
+                    if(me.arrayExhibicionVin.length > 0){
+                        me.accionmodal=3;
+                        me.modal = 1;
+                        me.attachment = [];
                     }else{
-                        $("#myBar").hide();
                         swal('Exhibicion registrada correctamente');
-                        this.accionmodal=3;
-                        this.modal = 1;
-                        this.arrayExcel = [];
-                        this.arrayExhibicion = [];
-                        $("#file-upload").val("");
+                        me.attachment = [],
+                        me.limpiarFormulario();
                     }
                 }).catch(error => {
                     console.log(error);
@@ -1134,10 +1127,8 @@
             validarRegistro(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
-                if(this.arrayExhibicion == []){
+
+                if(this.arrayExcel == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
                 if(this.formExhibicion.nidproveedor == 0){
@@ -1291,9 +1282,9 @@
             limpiarFormulario(){
                 this.fillExhibicion.nordencompra= '',
                 this.fillExhibicion.cnumerovin=  '',
-                this.attachment= null,
                 this.arrayExcel = [],
-                this.arrayExhibicion = []
+                this.form = new FormData,
+                $("#file-upload").val("")
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
