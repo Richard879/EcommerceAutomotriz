@@ -127,8 +127,7 @@
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Agregar Detalle</div>
-                                                                                            <i @click="activarTab2(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes,
-                                                                                                                lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
+                                                                                            <i @click="activarTab2(lista)" :style="'color:#796AEE'" class="fa-md fa fa-sign-in"></i>
                                                                                         </el-tooltip>&nbsp;
                                                                                         <template v-if="lista.cListaEstado=='A'">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
@@ -139,14 +138,13 @@
                                                                                         <template v-else>
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Activar Lista {{ lista.nIdListaPrecioVh }}</div>
-                                                                                                <i @click="activar(lista.nIdListaPrecioVh, lista.nIdProveedor, lista.nIdTipoLista)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                                <i @click="activar(lista)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                                             </el-tooltip>
                                                                                         </template>&nbsp;
                                                                                         <template v-if="lista.nListadoDetalleContador > 0">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Ver Detalle</div>
-                                                                                                <i @click="activarTab3(lista.nIdListaPrecioVh, lista.cAnio, lista.cMes,
-                                                                                                                    lista.nIdProveedor, lista.cProveedorNombre, lista.nNroListaPrecio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                                <i @click="activarTab3(lista)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                                                             </el-tooltip>
                                                                                         </template>
                                                                                         <template v-else>
@@ -1074,7 +1072,7 @@
                     console.log(error);
                 });
             },*/
-            activar(nIdListaPrecioVersionVeh, nIdProveedor, nIdTipoLista){
+            activar(lista){
                 swal({
                     title: 'Estas seguro de activar esta Lista?',
                     type: 'warning',
@@ -1087,9 +1085,9 @@
                         if (result.value) {
                             var url = this.ruta + '/listapreciovh/activar';
                             axios.put(url, {
-                                nIdListaPrecioVersionVeh: nIdListaPrecioVersionVeh,
-                                nIdProveedor: nIdProveedor,
-                                nIdTipoLista: nIdTipoLista
+                                nIdListaPrecioVersionVeh: lista.nIdListaPrecioVh,
+                                nIdProveedor: lista.nIdProveedor,
+                                nIdTipoLista: lista.nIdTipoLista
                             }).then(response =>{
                                 if(response.data[0].nFlagMsje == 1)
                                 {
@@ -1191,20 +1189,19 @@
                 this.vistaFormTab1 = 1;
                 this.limpiarFormulario();
             },
-            activarTab2(nIdListaPrecioVersionVeh, cAnio, cMes, nIdProveedor, cProveedorNombre, nNroListaPrecio){
+            activarTab2(lista){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
                 $('#Tab2').addClass("nav-link active");
                 $('#TabBuscaListaPrecioVh').removeClass('in active show');
                 $('#TabAsignaDetalle').addClass('in active show');
-                this.formListaPrecioVh.nidlistaprecioversionVeh = nIdListaPrecioVersionVeh;
-                this.canio  = cAnio;
-                this.cmes = cMes
-                this.formListaPrecioVh.nidproveedor = nIdProveedor;
-                this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
-                this.formListaPrecioVh.nnrolistaprecio = nNroListaPrecio;
-                this.limpiarFormulario();
+                this.formListaPrecioVh.nidlistaprecioversionVeh = lista.nIdListaPrecioVh;
+                this.canio  = lista.cAnio;
+                this.cmes = lista.cMes
+                this.formListaPrecioVh.nidproveedor = lista.nIdProveedor;
+                this.formListaPrecioVh.cproveedornombre = lista.cProveedorNombre;
+                this.formListaPrecioVh.nnrolistaprecio = lista.nNroListaPrecio;
             },
             getFile(e){
                 //console.log(e);
@@ -1342,20 +1339,19 @@
             },
             // ================================================
             // =================  VER DETALLE =================
-            activarTab3(nIdListaPrecioVersionVeh, cAnio, cMes, nIdProveedor, cProveedorNombre, nNroListaPrecio){
+            activarTab3(lista){
                 $('#Tab1').removeClass('nav-link active');
                 $('#Tab1').addClass("nav-link");
                 $('#Tab3').removeClass('nav-link disabled');
                 $('#Tab3').addClass("nav-link active");
                 $('#TabBuscaListaPrecioVh').removeClass('in active show');
                 $('#TabVerDetalle').addClass('in active show');
-                this.formListaPrecioVh.nidlistaprecioversionVeh = nIdListaPrecioVersionVeh;
-                this.canio  = cAnio;
-                this.cmes = cMes
-                this.formListaPrecioVh.nidproveedor = nIdProveedor;
-                this.formListaPrecioVh.cproveedornombre = cProveedorNombre;
-                this.formListaPrecioVh.nnrolistaprecio = nNroListaPrecio;
-                this.limpiarFormulario();
+                this.formListaPrecioVh.nidlistaprecioversionVeh = lista.nIdListaPrecioVh;
+                this.canio  = lista.cAnio;
+                this.cmes = lista.cMes
+                this.formListaPrecioVh.nidproveedor = lista.nIdProveedor;
+                this.formListaPrecioVh.cproveedornombre = lista.cProveedorNombre;
+                this.formListaPrecioVh.nnrolistaprecio = lista.nNroListaPrecio;
                 this.verDetalle();
             },
             verDetalle(){

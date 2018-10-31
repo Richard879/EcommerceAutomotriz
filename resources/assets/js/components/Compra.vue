@@ -1693,7 +1693,7 @@
                         me.modal = 1;
                     }else{
                         swal('Compra registrada correctamente');
-                        this.limpiarFormulario();                     
+                        this.limpiarFormulario();                
                     }
                 }).catch(error => {
                     console.log(error);

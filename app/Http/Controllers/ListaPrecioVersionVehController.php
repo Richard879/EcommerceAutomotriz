@@ -86,7 +86,7 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['nIdVersionVeh'],
                                                                 $det['cNombreComercial'],
                                                                 $det['nAnioFabricacion'],
-                                                                $det['nAnioVersion'],
+                                                                $det['nAnioModelo'],
                                                                 $det['cUnidadMedida'],
                                                                 $det['cMoneda'],
                                                                 $det['fPrecioBase'],
