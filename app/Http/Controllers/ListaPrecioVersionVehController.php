@@ -86,9 +86,12 @@ class ListaPrecioVersionVehController extends Controller
 
             $detalles = $request->data;
 
+            $arrayListaExiste = [];
+            $arrayNombreComercial = [];
+
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                $objLista = DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             [   $request->nIdListaPrecioVersionVeh,
                                                                 $det['nIdVersionVeh'],
                                                                 $det['cNombreComercial'],
@@ -111,8 +114,20 @@ class ListaPrecioVersionVehController extends Controller
                                                                 $det['fBonoEspecial'],
                                                                 Auth::user()->id
                                                             ]);
-            }    
-            DB::commit(); 
+            
+                if($objLista[0]->nFlagMsje == 0){
+                    array_push($arrayListaExiste,$objLista[0]->cNombreComercial);
+                }
+                if($objLista[0]->nFlagMsje == 3){
+                    array_push($arrayNombreComercial,$objLista[0]->cNombreComercial);
+                }
+            }
+            $data = [
+                'arrayListaExiste'=>$arrayListaExiste,
+                'arrayNombreComercial'=>$arrayNombreComercial
+            ];
+            DB::commit();
+            return response()->json($data);
         } catch (Exception $e){
             DB::rollBack();
         }     

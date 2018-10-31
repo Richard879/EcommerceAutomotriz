@@ -894,7 +894,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div v-if="arrayCompraVin.length" class="col-sm-4">
+                                <div v-if="arrayCompraExisteVin.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="h4">ESTOS VIN YA SE ECUENTRAN REGISTRADOS</h3>
@@ -902,7 +902,7 @@
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr v-for="compra in arrayCompraVin" :key="compra.cNumeroVin">
+                                                    <tr v-for="compra in arrayCompraExisteVin" :key="compra.cNumeroVin">
                                                         <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
@@ -1281,7 +1281,7 @@
                 },
                 // ============ VARIABLES DE RESPUESTA =================
                 arrayCompraPrecioLista: [],
-                arrayCompraVin: [],
+                arrayCompraExisteVin: [],
                 arrayCompraNombreComercial: [],
                 arrayTempVinExiste: [],
                 arrayTempVinListaPrecio:[],
@@ -1678,7 +1678,7 @@
                     me.arrayTempVinExiste = [];
                     me.arrayTempVinListaPrecio = [];
                     me.arrayTempVinNombreComercial = [];
-                    me.arrayCompraVin = [];
+                    me.arrayCompraExisteVin = [];
                     me.arrayCompraPrecioLista = [];
                     me.arrayCompraNombreComercial = [];
 
@@ -1686,7 +1686,7 @@
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
-                            me.arrayCompraVin.push({
+                            me.arrayCompraExisteVin.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
                             });
                         });
@@ -1710,14 +1710,14 @@
 
                     $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
-                    if(me.arrayCompraVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                    if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
-                        me.attachment = []
+                        me.attachment = [];
                     }else{
                         swal('Compra registrada correctamente');
-                        this.attachment = [],
-                        this.limpiarFormulario();        
+                        me.attachment = [],
+                        me.limpiarFormulario();
                     }
                 }).catch(error => {
                     console.log(error);

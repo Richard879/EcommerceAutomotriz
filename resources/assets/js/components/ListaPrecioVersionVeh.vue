@@ -873,6 +873,59 @@
                 </div>
             </div>
 
+            <!-- MODAL RESPUESTAS DE LISTA PRECIO DETALLE-->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="limpiarFormulario(); cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div v-if="arrayListaPrecioExisteLista.length" class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">YA SE ECUENTRAN REGISTRADOS</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="lista in arrayListaPrecioExisteLista" :key="lista.cNombreComercial">
+                                                        <td v-text="lista.cNombreComercial"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="arrayListaPrecioNombreComercial.length" class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">NO EXISTEN NOMBRE COMERCIAL EN BD</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="lista in arrayListaPrecioNombreComercial" :key="lista.cNombreComercial">
+                                                        <td v-text="lista.cNombreComercial"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario(); cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -909,6 +962,12 @@
                 arrayMarca: [],
                 arrayModelo: [],
                 contadorArrayExcel: 0,
+                // ============ VARIABLES DE RESPUESTA =================
+                arrayListaPrecioExisteLista: [],
+                arrayListaPrecioNombreComercial: [],
+                arrayTempListaExiste: [],
+                arrayTempListaNombreComercial: [],
+                // ====================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -1313,7 +1372,6 @@
                     this.$delete(response.data, 0)
                     this.arrayExcel = response.data;
                     this.contadorArrayExcel = response.data.length;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1351,22 +1409,55 @@
                 this.$delete(this.arrayExcel, index)
             },
             registrarDetalle(){
-                this.arrayListaPrecioVh = this.arrayExcel;
-
                 if(this.validarRegistroDetalle()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
+                this.mostrarProgressBar();
+
                 var url = this.ruta + '/listapreciovh/SetListaPrecioVhDetalle';
                 axios.post(url, {
                     nIdListaPrecioVersionVeh: this.formListaPrecioVh.nidlistaprecioversionVeh,
-                    data: this.arrayListaPrecioVh
+                    data: this.arrayExcel
                 }).then(response => {
-                    swal('Detalle de Lista registrada');
-                    this.attachment = [];
-                    this.limpiarFormulario();
+                    let me = this;
+
+                    me.arrayTempListaExiste = [];
+                    me.arrayTempListaNombreComercial = [];
+                    me.arrayListaPrecioExisteLista = [];
+                    me.arrayListaPrecioNombreComercial = [];
+
+                    if(response.data.arrayListaExiste.length)
+                    {
+                        me.arrayTempListaExiste = response.data.arrayListaExiste;
+                        me.arrayTempListaExiste.map(function(value, key) {
+                            me.arrayListaPrecioExisteLista.push({
+                                cNombreComercial: me.arrayTempListaExiste[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayNombreComercial.length){
+                        me.arrayTempListaNombreComercial = response.data.arrayNombreComercial;
+                        me.arrayTempListaNombreComercial.map(function(value, key) {
+                            me.arrayListaPrecioNombreComercial.push({
+                                cNombreComercial: me.arrayTempListaNombreComercial[key]
+                            });
+                        });
+                    }
+
+                    $("#myBar").hide();
+                    //============= RESULTADO PARA MOSTRAR ================
+                    if(me.arrayListaPrecioExisteLista.length || me.arrayListaPrecioNombreComercial.length){
+                        me.accionmodal=3;
+                        me.modal = 1;
+                        me.attachment = [];
+                    }else{
+                        swal('Detalle de Lista registrada');
+                        me.attachment = [];
+                        me.limpiarFormulario();       
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1378,7 +1469,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.arrayListaPrecioVh == []){
+                if(this.arrayExcel == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
                 if(this.nIdListaPrecioVersionVeh==0){
@@ -1515,7 +1606,6 @@
             // ===========================================================
             limpiarFormulario(){
                 this.arrayExcel = [];
-                this.arrayListaPrecioVh = [];
                 this.form = new FormData;
                 $("#file-upload").val("")
             },
