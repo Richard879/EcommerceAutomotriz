@@ -78,6 +78,29 @@ class PedidoDepositoController extends Controller
         return response()->json($arrayPedido);
     }
 
+    public function GetMontoTotalDepositos(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+        $cFlagEstadoAprobacion  =   $request->cFlagEstadoAprobacion;
+
+        $nIdCabeceraPedido = ($nIdCabeceraPedido == NULL) ? ($nIdCabeceraPedido = 0) : $nIdCabeceraPedido;
+
+        $arrayMontoTotalDepositos = DB::select('exec usp_Deposito_GetMontoTotalDepositos ?, ?, ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido,
+                                        $cFlagEstadoAprobacion,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayMontoTotalDepositos);
+    }
+
     public function GetListPedidoConDeposito(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -100,7 +123,7 @@ class PedidoDepositoController extends Controller
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         $nIdEstadoPedido = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
 
-        $arrayPedido = DB::select('exec usp_Depositos_GetListPedidoConDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Deposito_GetListPedidoConDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdEmpresa,
                                         $nIdSucursal,
@@ -124,7 +147,7 @@ class PedidoDepositoController extends Controller
 
         $nIdCabeceraPedido   =   $request->nIdCabeceraPedido;
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Depositos_GetListDepositosPorPedido ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_GetListDepositosPorPedido ?, ?',
                                     [
                                         $nIdCabeceraPedido,
                                         Auth::user()->id
