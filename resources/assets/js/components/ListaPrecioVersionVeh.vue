@@ -112,7 +112,7 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-4">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarListaPrecioVh();">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarListaPrecioVh(1)">
                                                                                 <i class="fa fa-search"></i> Buscar
                                                                             </button>
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('listapreciovh','registrarDetalle');">
@@ -894,7 +894,6 @@
                     dfechainicio: '',
                     dfechafin: '',
                     cproveedornombre: '',
-                    nformapago: 0,
                     nidlistaprecioversionVeh: 0,
                     nnrolistaprecio: '',
                     nidtipolista: '',
@@ -1002,6 +1001,7 @@
                 this.formListaPrecioVh.cproveedornombre = '';
                 this.arrayListaPrecioVhDet = [];
                 this.desactivarTabs();
+                this.listarListaPrecioVh(1);
             },
             buscaProveedores(){
                 this.listarProveedores(1);
@@ -1050,9 +1050,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            buscarListaPrecioVh(){
-                this.listarListaPrecioVh(1);
             },
             listarListaPrecioVh(page){
                 this.mostrarProgressBar();
