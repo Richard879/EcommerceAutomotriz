@@ -822,7 +822,7 @@
             validarDistribucionEV(){
                 let me = this;
                 this.listDistribucionEVPorRegalar.map(function (x, y) {
-                    console.log(x.fDistribucion, y);
+                    // console.log(x.fDistribucion, y);
                     if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
                         me.$message.error(`No puede superar los margenes del 0 - 100`);
                         me.listDistribucionEVPorRegalar[y].fDistribucion = 0;//Seteado a 0.

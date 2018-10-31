@@ -582,10 +582,10 @@
                                                                                                             <td v-html="vehiculo.cantidad"></td>
                                                                                                             <td v-text="vehiculo.PrecioBase"></td>
                                                                                                             <td>
-                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio" @change="changeSobrePrecio(vehiculo.sobrePrecio)" min="0"/>
+                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio" @keyup="changeSobrePrecio(vehiculo.sobrePrecio)" min="0"/>
                                                                                                             </td>
                                                                                                             <td>
-                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.descuento" @change="changeDscto(vehiculo.descuento)" min="0"/>
+                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.descuento" @keyup="changeDscto(vehiculo.descuento)" min="0"/>
                                                                                                             </td>
                                                                                                             <td v-text="vehiculo.PrecioCierre"></td>
                                                                                                             <td v-text="vehiculo.PrecioVenta"></td>
@@ -1000,7 +1000,7 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-                                                                            
+
                                                                             <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Elementos de Venta por Regalar
@@ -2366,7 +2366,7 @@
                     return Number((sumaElementoCampaniaDolares).toFixed(2));
                 }, 0);
             },
-            totalEventoEleVentaModalSoles: function(){                
+            totalEventoEleVentaModalSoles: function(){
                 let me = this;
                 let sumaElementoCampaniaSoles;
                 return me.arrayEventoEleVentaModal.reduce(function(valorAnterior, valorActual){
@@ -3632,7 +3632,7 @@
                         cantidad     : v.cantidad,
                         sobreprecio  : v.sobrePrecio,
                         dscto        : v.descuento,
-                        preciofinal  : v.PrecioCierre,
+                        preciofinal  : v.PrecioBase,
                         subtotal     : v.subtotal,
                         nidmoneda    : v.nIdMoneda,
                         flagTipoItem : 'V',

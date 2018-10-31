@@ -260,6 +260,65 @@
                                                         <vs-divider border-style="solid" color="dark"/>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <template v-if="arrayDepositosPorPedido.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>ACCIÓN</th>
+                                                                        <th>BANCO</th>
+                                                                        <th>N° OPERACIÓN</th>
+                                                                        <th>MONEDA</th>
+                                                                        <th>FECHA</th>
+                                                                        <th>TTPO CAMBIO</th>
+                                                                        <th>MONTO S/</th>
+                                                                        <th>MONTO USD/</th>
+                                                                        <th>TCE</th>
+                                                                        <th>TIPO</th>
+                                                                        <th>ESTADO</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="depositos in arrayDepositosPorPedido" :key="depositos.nIdDepositoPedido">
+                                                                        <td>
+                                                                            <template>
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Aprobar Deposito {{ depositos.cNumeroPedido }}</div>
+                                                                                    <i @click="aprobarDeposito(depositos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                </el-tooltip>
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Desaprobar Deposito {{ depositos.cNumeroPedido }}</div>
+                                                                                    <i @click="aprobarDeposito(depositos)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                </el-tooltip>
+                                                                            </template>
+                                                                        </td>
+                                                                        <td v-text="depositos.cNombreBanco"></td>
+                                                                        <td v-text="depositos.nNumeroOperacion"></td>
+                                                                        <td v-text="depositos.cNombreMoneda"></td>
+                                                                        <td v-text="depositos.dFechaDeposito"></td>
+                                                                        <td v-text="depositos.fTipoCambioComercial"></td>
+                                                                        <td v-text="Number((parseFloat(depositos.fMontoSoles)).toFixed(2))"></td>
+                                                                        <td v-text="Number((parseFloat(depositos.fMontoDolares)).toFixed(2))"></td>
+                                                                        <td v-text="depositos.cFlagTipoCambioEspecial"></td>
+                                                                        <td v-text="depositos.cFlagExcedente"></td>
+                                                                        <td v-text="depositos.cEstadoDeposito"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
+                                                </div>
+                                                <vs-divider border-style="solid" color="dark"/>
                                             </div>
                                         </section>
                                     </div>
@@ -524,19 +583,19 @@
                 this.arrayDepositosPorPedido = [];
             },
             llenarDepositos(pedido){
+                this.mostrarProgressBar();
+
                 this.formDistribuirDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
                 this.formDistribuirDeposito.cNumeroPedido = pedido.cNumeroPedido;
                 this.formDistribuirDeposito.cnombrecontacto = pedido.cContacto;
 
-                this.mostrarProgressBar();
-
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraPedido': this.nIdCabeceraPedido
+                        'nIdCabeceraPedido': pedido.nIdCabeceraPedido
                     }
                 }).then(response => {
-                    this.arrayDepositosPorPedido    = response.data;
+                    this.arrayDepositosPorPedido  = response.data;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
