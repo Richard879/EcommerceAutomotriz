@@ -19,7 +19,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link disabled" id="Tab2" href="#TabDistribucionDeposito" @click="tabDistribucionDeposito" role="tab" data-toggle="tab">
+                                        <a class="nav-link disabled" id="Tab2" href="#TabDistribucionDeposito" role="tab" data-toggle="tab">
                                             <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                         </a>
                                     </li>
@@ -194,6 +194,12 @@
                                                                                             <i @click="distribuirDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </template>
+                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Desaprobar Pedido {{ pedido.cNumeroPedido }}</div>
+                                                                                            <i @click="desaprobarPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
@@ -280,29 +286,31 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="depositos in arrayDepositosPorPedido" :key="depositos.nIdDepositoPedido">
+                                                                    <tr v-for="deposito in arrayDepositosPorPedido" :key="deposito.nIdDepositoPedido">
                                                                         <td>
-                                                                            <template>
+                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Aprobar Deposito {{ depositos.cNumeroPedido }}</div>
-                                                                                    <i @click="aprobarDeposito(depositos)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                    <div slot="content">Aprobar Deposito {{ deposito.cNumeroPedido }}</div>
+                                                                                    <i @click="aprobarDeposito(deposito)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                 </el-tooltip>
+                                                                            </template>
+                                                                            <template v-if="deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                    <div slot="content">Desaprobar Deposito {{ depositos.cNumeroPedido }}</div>
-                                                                                    <i @click="aprobarDeposito(depositos)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                    <div slot="content">Rechazar Deposito {{ deposito.cNumeroPedido }}</div>
+                                                                                    <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
                                                                             </template>
                                                                         </td>
-                                                                        <td v-text="depositos.cNombreBanco"></td>
-                                                                        <td v-text="depositos.nNumeroOperacion"></td>
-                                                                        <td v-text="depositos.cNombreMoneda"></td>
-                                                                        <td v-text="depositos.dFechaDeposito"></td>
-                                                                        <td v-text="depositos.fTipoCambioComercial"></td>
-                                                                        <td v-text="Number((parseFloat(depositos.fMontoSoles)).toFixed(2))"></td>
-                                                                        <td v-text="Number((parseFloat(depositos.fMontoDolares)).toFixed(2))"></td>
-                                                                        <td v-text="depositos.cFlagTipoCambioEspecial"></td>
-                                                                        <td v-text="depositos.cFlagExcedente"></td>
-                                                                        <td v-text="depositos.cEstadoDeposito"></td>
+                                                                        <td v-text="deposito.cNombreBanco"></td>
+                                                                        <td v-text="deposito.nNumeroOperacion"></td>
+                                                                        <td v-text="deposito.cNombreMoneda"></td>
+                                                                        <td v-text="deposito.dFechaDeposito"></td>
+                                                                        <td v-text="deposito.fTipoCambioComercial"></td>
+                                                                        <td v-text="Number((parseFloat(deposito.fMontoSoles)).toFixed(2))"></td>
+                                                                        <td v-text="Number((parseFloat(deposito.fMontoDolares)).toFixed(2))"></td>
+                                                                        <td v-text="deposito.cFlagTipoCambioEspecial"></td>
+                                                                        <td v-text="deposito.cFlagExcedente"></td>
+                                                                        <td v-text="deposito.cEstadoDeposito"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -580,6 +588,9 @@
                 this.llenarDepositos(pedido);
             },
             tabDistribucionDeposito(){
+                this.formDistribuirDeposito.nidcabecerapedido = 0;
+                this.formDistribuirDeposito.cNumeroPedido = '';
+                this.formDistribuirDeposito.cnombrecontacto = '';
                 this.arrayDepositosPorPedido = [];
             },
             llenarDepositos(pedido){
@@ -605,6 +616,111 @@
                         }
                     }
                 });
+            },
+            aprobarDeposito(deposito){
+                swal({
+                    title: 'Estas seguro de aprobar el Deposito',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Aprobar!',
+                    cancelButtonText: 'No, Cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
+                        axios.put(url , {
+                            nIdDepositoPedido : deposito.nIdDepositoPedido,
+                            nIdCabeceraPedido : deposito.nIdCabeceraPedido,
+                            cFlagEstadoDeposito : 'A'
+                        }).then(response => {
+                            swal(
+                                'Aprobado!',
+                                'El registro fue aprobado exitosamente.'
+                            );
+                            this.distribuirDeposito(deposito);
+                        }).catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
+            },
+            rechazarDeposito(deposito){
+                swal({
+                    title: 'Estas seguro de rechazar el Deposito',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Rechazar!',
+                    cancelButtonText: 'No, Cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/deposito/SetCambiarEstadoDeposito';
+                        axios.put(url , {
+                            nIdDepositoPedido : deposito.nIdDepositoPedido,
+                            nIdCabeceraPedido : deposito.nIdCabeceraPedido,
+                            cFlagEstadoDeposito : 'D'
+                        }).then(response => {
+                            swal(
+                                'Rechazado!',
+                                'El registro fue rechazado exitosamente.'
+                            );
+                            this.distribuirDeposito(deposito);
+                        }).catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
+            },
+            desaprobarPedido(pedido){
+                swal({
+                    title: 'Estas seguro de desaprobar el Pedido ' + pedido.cNumeroPedido,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desaprobar!',
+                    cancelButtonText: 'No, Cerrar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/deposito/SetCambiarEstadoPedido';
+                        axios.put(url , {
+                            nIdCabeceraPedido : pedido.nIdCabeceraPedido,
+                            cFlagEstadoPedido : 'D',
+                            nIdEstadoPedido   : 1300162
+                        }).then(response => {
+                            swal(
+                                'Desaprobado!',
+                                'El pedido ' + pedido.cNumeroPedido + ' fue desaprobado exitosamente.'
+                            );
+                            this.listarPedidosConDepositos(1);
+                        }).catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
+                })
             },
             // =================================================================
             // METODOS GENERICOS
