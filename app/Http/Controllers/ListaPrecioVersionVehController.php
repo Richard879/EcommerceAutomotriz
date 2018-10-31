@@ -16,11 +16,18 @@ class ListaPrecioVersionVehController extends Controller
 
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
         $nIdProveedor = $request->nidproveedor;
         
-        $arrayListaPrecioVh = DB::select('exec [usp_ListaPrecioVh_GetListaPrecio] ?, ?, ?', 
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+
+        $arrayListaPrecioVh = DB::select('exec [usp_ListaPrecioVh_GetListaPrecio] ?, ?, ?, ?, ?', 
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
                                                                 $nIdProveedor
                                                             ]);
         

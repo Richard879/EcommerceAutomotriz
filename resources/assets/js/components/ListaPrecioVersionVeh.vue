@@ -63,6 +63,36 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formListaPrecioVh.dfechainicio"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-date-picker
+                                                                                        v-model="formListaPrecioVh.dfechafin"
+                                                                                        type="date"
+                                                                                        value-format="yyyy-MM-dd"
+                                                                                        format="dd/MM/yyyy"
+                                                                                        placeholder="dd/mm/aaaa">
+                                                                                    </el-date-picker>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Proveedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
@@ -583,9 +613,41 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Marca</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formListaPrecioVh.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayMarca"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="formListaPrecioVh.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                                    <el-option
+                                                                                    v-for="item in arrayModelo"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Nombre Comercial</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="formListaPrecioVh.cnombrecomercial" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="formListaPrecioVh.cnombrecomercial" @keyup.enter="listarListaPrecioVhDetalle(1)" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -819,27 +881,30 @@
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 canio: '2018',
                 cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
-                arrayListaPrecioVh: [],
-                arrayProveedor: [],
-                arrayListaPrecioVhDet: [],
-                arrayTipoLista: [],
-                arrayExcel: [],
-                contadorArrayExcel: 0,
                 fillProvedor:{
                     cnombreproveedor: ''
                 },
                 formListaPrecioVh:{
                     nidproveedor: 0,
+                    dfechainicio: '',
+                    dfechafin: '',
                     cproveedornombre: '',
                     nformapago: 0,
                     nidlistaprecioversionVeh: 0,
                     nnrolistaprecio: '',
-                    dfechainicio: '',
                     nidtipolista: 0,
                     cnombrecomercial: ''
                 },
+                arrayListaPrecioVh: [],
+                arrayProveedor: [],
+                arrayListaPrecioVhDet: [],
+                arrayTipoLista: [],
+                arrayExcel: [],
+                nidmarca: '',
+                nidmodelo: '',
+                arrayMarca: [],
+                arrayModelo: [],
+                contadorArrayExcel: 0,
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -928,8 +993,9 @@
             // ====================================================
             // =============  BUSCAR LISTA PRECIO =================
             tabBuscaListaPrecioVh(){
-                this.formListaPrecioVh.nidproveedor = 0,
-                this.formListaPrecioVh.cproveedornombre = '',
+                this.formListaPrecioVh.nidproveedor = 0;
+                this.formListaPrecioVh.cproveedornombre = '';
+                this.arrayListaPrecioVhDet = [];
                 this.desactivarTabs();
             },
             buscaProveedores(){
@@ -990,7 +1056,9 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.formListaPrecioVh.dfechainicio,
+                        'dfechafin': this.formListaPrecioVh.dfechafin,
                         'nidproveedor': this.formListaPrecioVh.nidproveedor,
                         'page': page
                     }
@@ -1002,7 +1070,6 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVh.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVh.from;
                     this.pagination.to           = response.data.arrayListaPrecioVh.to;
-                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1308,14 +1375,12 @@
             validarRegistroDetalle(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
-                    this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
+
                 if(this.arrayListaPrecioVh == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(this.nIdListaPrecioVersionVeh == 0){
-                    this.mensajeError.push('No ha seleecioando Lista de Precio');
+                if(this.nIdListaPrecioVersionVeh==0){
+                    this.mensajeError.push('No ha seleccioando Lista de Precio');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1325,9 +1390,10 @@
             validarReadFileListaPrecioVh(){
                 this.error = 0;
                 this.mensajeError =[];
-                /*if(!this.textFile){
+
+                if(!this.attachment || this.attachment==[] || this.attachment==null){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                }*/
+                }
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1340,22 +1406,57 @@
             // ================================================
             // =================  VER DETALLE =================
             activarTab3(lista){
-                $('#Tab1').removeClass('nav-link active');
-                $('#Tab1').addClass("nav-link");
-                $('#Tab3').removeClass('nav-link disabled');
-                $('#Tab3').addClass("nav-link active");
-                $('#TabBuscaListaPrecioVh').removeClass('in active show');
-                $('#TabVerDetalle').addClass('in active show');
                 this.formListaPrecioVh.nidlistaprecioversionVeh = lista.nIdListaPrecioVh;
                 this.canio  = lista.cAnio;
                 this.cmes = lista.cMes
                 this.formListaPrecioVh.nidproveedor = lista.nIdProveedor;
                 this.formListaPrecioVh.cproveedornombre = lista.cProveedorNombre;
                 this.formListaPrecioVh.nnrolistaprecio = lista.nNroListaPrecio;
-                this.verDetalle();
-            },
-            verDetalle(){
+                this.llenarComboMarca();
                 this.listarListaPrecioVhDetalle(1);
+                $('#Tab1').removeClass('nav-link active');
+                $('#Tab1').addClass("nav-link");
+                $('#Tab3').removeClass('nav-link disabled');
+                $('#Tab3').addClass("nav-link active");
+                $('#TabBuscaListaPrecioVh').removeClass('in active show');
+                $('#TabVerDetalle').addClass('in active show');
+            },
+            llenarComboMarca(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110032
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+
+                axios.get(url,{
+                    params: {
+                        'nidmarca' : this.formListaPrecioVh.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.formListaPrecioVh.nidmodelo = '';
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             listarListaPrecioVhDetalle(page){
                 this.mostrarProgressBar();
@@ -1364,8 +1465,8 @@
                 axios.get(url, {
                     params: {
                         'nidlistaprecioversionveh': this.formListaPrecioVh.nidlistaprecioversionVeh,
-                        'nidmarca': 0,
-                        'nidmodelo': 0,
+                        'nidmarca': this.formListaPrecioVh.nidmarca,
+                        'nidmodelo': this.formListaPrecioVh.nidmodelo,
                         'cnombrecomercial': this.formListaPrecioVh.cnombrecomercial,
                         'page' : page
                     }
@@ -1377,7 +1478,6 @@
                     this.pagination.last_page   = response.data.arrayListaPrecioVhDet.last_page;
                     this.pagination.from        = response.data.arrayListaPrecioVhDet.from;
                     this.pagination.to           = response.data.arrayListaPrecioVhDet.to;
-                }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
