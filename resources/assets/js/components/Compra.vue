@@ -1564,6 +1564,7 @@
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
+                this.arrayExcel = [];
                 //this.textFile = e.target.files[0].name;
             },
             importFileCompra(){
@@ -1754,7 +1755,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.attachment || this.attachment==[] || this.attachment==null){
+                if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 }
                 if(this.mensajeError.length){
@@ -2049,7 +2050,7 @@
                 this.error = 0;
                 this.mensajeError =[];
                 
-                if(!this.attachment){
+                if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 };
                 if(this.mensajeError.length){
@@ -2112,6 +2113,8 @@
                 }).then(response => {
                     swal('Warrant Operativo registrado');
                     this.arrayForum = [];
+                    this.attachment = [];
+                    this.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                 });

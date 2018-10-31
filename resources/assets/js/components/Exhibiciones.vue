@@ -1030,6 +1030,7 @@
             getFile(e){
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
+                this.arrayExcel = [];
             },
             importFileExhibicion(){
                 if(this.validarReadFileExhibicion()){
@@ -1205,7 +1206,8 @@
             validarReadFileExhibicion(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.attachment){
+
+                if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 };
                 if(this.mensajeError.length){
