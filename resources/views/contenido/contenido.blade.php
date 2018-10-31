@@ -116,4 +116,7 @@
     <template v-if="menu==1300342">
         <entregavehiculo :ruta="ruta" @vista="CambiarMenu"></entregavehiculo>
     </template>
+    <template v-if="menu==1300358">
+        <exhibiciones :ruta="ruta"></exhibiciones>
+    </template>
 @endsection

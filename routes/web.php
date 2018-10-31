@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::post('/compra/importFileCompra', 'ExcelController@importFileCompra');
     Route::post('/compra/readFileCompra', 'ExcelController@readFileCompra');
-    Route::post('/compra/SetCompra', 'CompraController@store');
+    Route::post('/compra/SetCompra', 'CompraController@SetCompra');
     Route::get('/compra/GetCompra', 'CompraController@GetCompra');
     Route::put('/compra/desactivar','CompraController@desactivar');
     Route::post('/compra/importFileForum', 'ExcelController@importFileForum');
@@ -261,4 +261,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/entregavehiculo/GetLstInspecciones','EntregaVehiculoController@GetLstInspecciones');
     Route::post('/entregavehiculo/SetGenerarEntregaVehículo','EntregaVehiculoController@SetGenerarEntregaVehículo');
     Route::get('/entregavehiculo/GetLstArchivosAdjuntos','EntregaVehiculoController@GetLstArchivosAdjuntos');
+
+    Route::post('/exhibicion/importFileExhibicion','ExcelController@importFileExhibicion');
+    Route::post('/exhibicion/readFileExhibicion', 'ExcelController@readFileExhibicion');
+    Route::post('/exhibicion/SetExhibicion', 'ExhibicionController@SetExhibicion');
 });

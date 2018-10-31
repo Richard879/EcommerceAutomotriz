@@ -33,9 +33,20 @@ class ListaPrecioVersionVehController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdListaPrecioVersionVeh = $request->nidlistaprecioversionveh;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
+        $cNombreComercial = $request->cnombrecomercial;
+
         
-        $arrayListaPrecioVhDet = DB::select('exec [usp_ListaPrecioVh_GetDetalleById] ?', 
-                                                        [   $nIdListaPrecioVersionVeh
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNombreComercial = ($cNombreComercial == NULL) ? ($cNombreComercial = '') : $cNombreComercial;
+        
+        $arrayListaPrecioVhDet = DB::select('exec [usp_ListaPrecioVh_GetDetalleById] ?, ?, ?, ?', 
+                                                        [   $nIdListaPrecioVersionVeh,
+                                                            $nIdMarca,
+                                                            $nIdModelo,
+                                                            $cNombreComercial
                                                         ]);
         
         $arrayListaPrecioVhDet = ParametroController::arrayPaginator($arrayListaPrecioVhDet, $request);

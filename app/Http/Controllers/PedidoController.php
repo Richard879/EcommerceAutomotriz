@@ -163,11 +163,12 @@ class PedidoController extends Controller
                 if($file){
 
                     $bandera = str_random(10);
+                    $nameArchivo = $bandera .'_'. $file->getClientOriginalName();
 
-                    $ruta = Storage::putFileAs('uploads/Pedido', $file, $bandera .'_'. $file->getClientOriginalName());
-
+                    $ruta = Storage::putFileAs('public/Pedido', $file, $nameArchivo);
+                    
                     $arrayDocumento = DB::select('exec [usp_Pedido_SetDocumentoAdjunto] ?, ?, ?',
-                                                                    [  asset($ruta),
+                                                                    [   asset('storage/Pedido/'.$nameArchivo),
                                                                         $file->getClientOriginalName(),
                                                                         Auth::user()->id
                                                                     ]);
@@ -178,7 +179,7 @@ class PedidoController extends Controller
                     {
                         if($datakey == $key)
                         {
-                            //print_r($datakey . ' = ' . $key);
+                            //print_r($valorparametro['%22cParArchivoNombre%22'].' '.$valorparametro['%22nIdPar%22']);
                             $nIdTablaDocumento = $valorparametro['%22nIdPar%22'];
                             $nIdCabeceraPedido = $valorparametro['%22nIdCabeceraPedido%22'];
                         }

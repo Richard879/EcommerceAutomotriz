@@ -27,6 +27,8 @@ class CompraController extends Controller
         $nIdMarca   = $request->nidmarca;
         $nIdModelo  = $request->nidmodelo;
         
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
@@ -48,7 +50,7 @@ class CompraController extends Controller
         return ['arrayCompra'=>$arrayCompra];
     }
 
-    public function store(Request $request)
+    public function SetCompra(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -58,6 +60,7 @@ class CompraController extends Controller
 
             $arrayVinExiste = [];
             $arrayPrecioLista = [];
+            $arrayNombreComercial = [];
 
             foreach($detalles as $ep=>$det)
             {
@@ -102,15 +105,17 @@ class CompraController extends Controller
                 if($objCompra[0]->nFlagMsje == 2){
                     array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
                 }
+                if($objCompra[0]->nFlagMsje == 3){
+                    array_push($arrayNombreComercial,$objCompra[0]->cNumeroVin);
+                }
             }
             $data = [
                 'arrayVinExiste'=>$arrayVinExiste,
-                'arrayPrecioLista'=>$arrayPrecioLista
+                'arrayPrecioLista'=>$arrayPrecioLista,
+                'arrayNombreComercial'=>$arrayNombreComercial
             ];
-
-            return response()->json($data);
-
             DB::commit();
+            return response()->json($data);
         } catch (Exception $e){
             DB::rollBack();
         }

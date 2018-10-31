@@ -3917,6 +3917,7 @@
                         switch(accion){
                             case 'buscar':
                             {
+                                this.arrayContactosPorVendedor = [];
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 //this.buscarContactosPorVendedor(1);
