@@ -132,10 +132,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'PedidoDepositoController@SetDepositoPedido');
     Route::get('/deposito/GetMontoTotalDepositos', 'PedidoDepositoController@GetMontoTotalDepositos');
-
     Route::get('/deposito/GetListPedidoConDeposito', 'PedidoDepositoController@GetListPedidoConDeposito');
     Route::get('/deposito/GetListDepositosPorPedido', 'PedidoDepositoController@GetListDepositosPorPedido');
-
+    Route::put('/deposito/SetCambiarEstadoDeposito', 'PedidoDepositoController@SetCambiarEstadoDeposito');
+    Route::put('/deposito/SetCambiarEstadoPedido', 'PedidoDepositoController@SetCambiarEstadoPedido');
 
     Route::get('/tipocambio/GetTipoCambioById', 'TipoCambioController@GetTipoCambioById');
 

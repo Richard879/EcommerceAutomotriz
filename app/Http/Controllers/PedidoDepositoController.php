@@ -155,4 +155,42 @@ class PedidoDepositoController extends Controller
 
         return response()->json($arrayDepositosPorPedido);
     }
+
+    public function SetCambiarEstadoDeposito(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdDepositoPedido   =   $request->nIdDepositoPedido;
+        $nIdCabeceraPedido   =   $request->nIdCabeceraPedido;
+        $cFlagEstadoDeposito =   $request->cFlagEstadoDeposito;
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetcambiarEstadoDeposito ?, ?, ?, ?',
+                                    [
+                                        $nIdDepositoPedido,
+                                        $nIdCabeceraPedido,
+                                        $cFlagEstadoDeposito,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayDepositosPorPedido);
+    }
+
+    public function SetCambiarEstadoPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraPedido   =   $request->nIdCabeceraPedido;
+        $cFlagEstadoPedido   =   $request->cFlagEstadoPedido;
+        $nIdEstadoPedido     =   $request->nIdEstadoPedido;
+
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoPedido ?, ?, ?, ?',
+                                    [
+                                        $nIdCabeceraPedido,
+                                        $cFlagEstadoPedido,
+                                        $nIdEstadoPedido,
+                                        Auth::user()->id
+                                    ]);
+
+        return response()->json($arrayDepositosPorPedido);
+    }
 }

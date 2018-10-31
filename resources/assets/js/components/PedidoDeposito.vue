@@ -713,7 +713,7 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">COTIZACIÓN: CLIENTE {{ fillDetalleDeposito.cnombrecontacto }} </h3>
+                                        <h3 class="h4">PEDIDO: CLIENTE {{ fillDetalleDeposito.cnombrecontacto }} </h3>
                                     </div>
                                     <div class="card-body">
                                         <form class="form-horizontal">
@@ -734,7 +734,8 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="depositos in arrayDetalleDepositosPorPedido" :key="depositos.nIdDepositoPedido">
+                                                                <tr v-for="depositos in arrayDetalleDepositosPorPedido" :key="depositos.nIdDepositoPedido"
+                                                                        :style="{ background : depositos.colorearEstadoDeposito}">
                                                                     <td v-text="depositos.cNombreBanco"></td>
                                                                     <td v-text="depositos.nNumeroOperacion"></td>
                                                                     <td v-text="depositos.cNombreMoneda"></td>
@@ -1536,6 +1537,8 @@
                 });
             },
             listarDetalleDepositosPorPedido(pedido){
+                let me = this;
+
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
                     params: {
@@ -1543,6 +1546,23 @@
                     }
                 }).then(response => {
                     this.arrayDetalleDepositosPorPedido  = response.data;
+
+                    //Verifica si existen depositos
+                    if(this.arrayDetalleDepositosPorPedido.length > 0) {
+                        //recorre los depositos
+                        this.arrayDetalleDepositosPorPedido.map(function(value, key){
+                            //agrega un atributo de color por cada deposito dependiendo su estado
+                            if(value.cFlagEstadoAprobacion == 'A') {
+                                me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgb(188, 238, 188)';
+                            }
+                            if(value.cFlagEstadoAprobacion == 'D') {
+                                me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgb(233, 177, 151)';
+                            }
+                            if(value.cFlagEstadoAprobacion == 'P') {
+                                me.arrayDetalleDepositosPorPedido[key].colorearEstadoDeposito = 'rgba(233, 240, 96, 0.795)';
+                            }
+                        })
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
