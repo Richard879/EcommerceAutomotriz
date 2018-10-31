@@ -133,7 +133,7 @@ class ListaPrecioVersionVehController extends Controller
         }     
     }
 
-    public function desactivar (Request $request)
+    public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -144,7 +144,7 @@ class ListaPrecioVersionVehController extends Controller
         return response()->json($listapreciovh);   
     }
 
-    public function activar (Request $request)
+    public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -154,6 +154,17 @@ class ListaPrecioVersionVehController extends Controller
                                                         $request->nIdTipoLista,
                                                         Auth::user()->id
                                                     ]);
+        return response()->json($listapreciovh);   
+    }
+
+    public function desactivarDetalle(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $listapreciovh = DB::select('exec [usp_ListaPrecioVh_DesactivaDetalleById] ?, ?', 
+                                                [   $request->nIdListaPrecioVersionVehDetalle,
+                                                    Auth::user()->id
+                                                ]);
         return response()->json($listapreciovh);   
     }
 }

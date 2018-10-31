@@ -678,6 +678,7 @@
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
+                                                                                <th>Acciones</th>
                                                                                 <th>Código Det.</th>
                                                                                 <th>Código Veh.</th>
                                                                                 <th>Nombre Comercial</th>
@@ -689,6 +690,12 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="lpd in arrayListaPrecioVhDet" :key="lpd.nIdListaPrecioVersionVehDetalle">
+                                                                                <td>
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Eliminar {{ lpd.cNombreComercial + ' ' + lpd.nAnioFabricacion + ' ' + lpd.nAnioModelo}}</div>
+                                                                                        <i @click="desactivarDetalle(lpd)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>
+                                                                                </td>
                                                                                 <td v-text="lpd.nIdListaPrecioVersionVehDetalle"></td>
                                                                                 <td v-text="lpd.nIdVersionVeh"></td>
                                                                                 <td v-text="lpd.cNombreComercial"></td>
@@ -1579,6 +1586,48 @@
             cambiarPaginaDetalle(page){
                 this.pagination.current_page=page;
                 this.listarListaPrecioVhDetalle(page);
+            },
+            desactivarDetalle(lista){
+                swal({
+                    title: 'Estas seguro de eliminar este Detalle?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        var url = this.ruta + '/listapreciovh/desactivarDetalle';
+                        axios.put(url, {
+                            nIdListaPrecioVersionVehDetalle: lista.nIdListaPrecioVersionVehDetalle
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Desactivado!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarListaPrecioVhDetalle(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                })
             },
             // =============================================
             // =============  MODAL ========================
