@@ -570,38 +570,54 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Automotores INKA</h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                            <button type="button" class="close" @click="limpiarFormulario(); cerrarModal()" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div v-if="arrayExhibicionVin.length" class="col-lg-6">
+                                <div v-if="arrayCompraExisteVin.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                            <h3 class="h4">ESTOS VIN YA SE ECUENTRAN REGISTRADOS</h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr v-for="exhibicion in arrayExhibicionVin" :key="exhibicion.cNumeroVin">
-                                                        <td v-text="exhibicion.cNumeroVin"></td>
+                                                    <tr v-for="compra in arrayCompraExisteVin" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="arrayExhibicionPrecioLista.length" class="col-lg-6">
+                                <div v-if="arrayCompraPrecioLista.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
+                                            <h3 class="h4">ESTAS COMPRAS NO TIENEN EL FORMATO</h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr v-for="exhibicion in arrayExhibicionPrecioLista" :key="exhibicion.cNumeroVin">
-                                                        <td v-text="exhibicion.cNumeroVin"></td>
+                                                    <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="arrayCompraNombreComercial.length" class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">NO EXISTEN NOMBRE COMERCIAL EN BD</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="compra in arrayCompraNombreComercial" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -611,7 +627,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario(); cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -711,8 +727,9 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
+                canio: '',
+                cmes: '',
+                nidcronograma: 0,
                 // ============================================
                 // ============ BUSCAR EXHIBICION =================
                 fillExhibicion:{
@@ -750,8 +767,12 @@
                     nordencompra: ''
                 },
                 // ============ VARIABLES DE RESPUESTA =================
-                arrayExhibicionPrecioLista: [],
-                arrayExhibicionVin: [],
+                arrayCompraPrecioLista: [],
+                arrayCompraExisteVin: [],
+                arrayCompraNombreComercial: [],
+                arrayTempVinExiste: [],
+                arrayTempVinListaPrecio:[],
+                arrayTempVinNombreComercial: [],
                 // ============================================================
                 // =========== TAB LINEA CREDITO ============
                 arrayLineaCredito: [],
@@ -983,7 +1004,28 @@
             // ====================================================
             // =============  GENERAR EXHIBICION ======================
             tabGenerarExhibicion(){
+                this.obtenerCronogramaCompraActivo();
                 this.limpiarFormulario();
+            },
+            obtenerCronogramaCompraActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
+
+                axios.get(url,{
+                    params: {
+                        'nidempresa': 1300011
+                    }
+                }).then(response => {
+                    this.canio = response.data.arrayCronograma[0].cAnio;
+                    this.cmes = response.data.arrayCronograma[0].cMes;
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             getFile(e){
                 let selectFile = e.target.files[0];
@@ -1085,28 +1127,48 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    nIdCronograma: 0,
+                    nIdCronograma: parseInt(this.nidcronograma),
                     nIdProveedor: parseInt(this.formExhibicion.nidproveedor),
                     data: this.arrayExcel
                 }).then(response => {
                     let me = this;
 
-                    var arrayTempVinExiste = [];
-                    var arrayTempVinListaPrecio = [];
+                    me.arrayTempVinExiste = [];
+                    me.arrayTempVinListaPrecio = [];
+                    me.arrayTempVinNombreComercial = [];
+                    me.arrayCompraExisteVin = [];
+                    me.arrayCompraPrecioLista = [];
+                    me.arrayCompraNombreComercial = [];
 
-                    if(response.data.arrayVinExiste.length > 0)
+                    if(response.data.arrayVinExiste.length)
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
-                            me.arrayExhibicionVin.push({
+                            me.arrayCompraExisteVin.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayFormato.length){
+                        me.arrayTempVinListaPrecio = response.data.arrayFormato;
+                        me.arrayTempVinListaPrecio.map(function(value, key) {
+                            me.arrayCompraPrecioLista.push({
+                                cNumeroVin: me.arrayTempVinListaPrecio[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayNombreComercial.length){
+                        me.arrayTempVinNombreComercial = response.data.arrayNombreComercial;
+                        me.arrayTempVinNombreComercial.map(function(value, key) {
+                            me.arrayCompraNombreComercial.push({
+                                cNumeroVin: me.arrayTempVinNombreComercial[key]
                             });
                         });
                     }
                     
                     $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
-                    if(me.arrayExhibicionVin.length > 0){
+                    if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
                         me.attachment = [];
