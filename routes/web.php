@@ -266,6 +266,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/exhibicion/readFileExhibicion', 'ExcelController@readFileExhibicion');
     Route::post('/exhibicion/SetExhibicion', 'ExhibicionController@SetExhibicion');
 
-    Route::get('/cronograma/GetCronogramaActivoVenta','CronogramaController@GetCronogramaActivoVenta');
-    Route::get('/cronograma/GetCronogramaActivoCompra','CronogramaController@GetCronogramaActivoCompra');
+    Route::get('/cronograma/GetCronogramaVentaActivo','CronogramaController@GetCronogramaVentaActivo');
+    Route::get('/cronograma/GetCronogramaCompraActivo','CronogramaController@GetCronogramaCompraActivo');
 });

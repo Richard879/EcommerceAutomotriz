@@ -1241,8 +1241,9 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
+                canio: '',
+                cmes: '',
+                nidcronograma: 0,
                 // ============================================
                 // ============ BUSCAR COMPRA =================
                 fillCompra:{
@@ -1534,8 +1535,29 @@
             // ====================================================
             // =============  GENERAR COMPRA ======================
             tabGenerarCompra(){
+                this.obtenerCronogramaCompraActivo();
                 this.listarTipoLista();
                 this.limpiarFormulario();
+            },
+            obtenerCronogramaCompraActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
+
+                axios.get(url,{
+                    params: {
+                        'nidempresa': 1300011
+                    }
+                }).then(response => {
+                    this.canio = response.data.arrayCronograma[0].cAnio;
+                    this.cmes = response.data.arrayCronograma[0].cMes;
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             getFile(e){
                 //console.log(e);
@@ -1646,7 +1668,7 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdCronograma: 220011,
+                    nIdCronograma: parseInt(this.nidcronograma),
                     nIdProveedor: parseInt(this.formCompra.nidproveedor),
                     nIdTipoLista: parseInt(this.formCompra.nidtipolista),
                     data: this.arrayExcel
@@ -1717,7 +1739,9 @@
                 if(this.formCompra.nidtipolista == 0 || !this.formCompra.nidtipolista){
                     this.mensajeError.push('Debes seleccionar un Tipo Lista');
                 };
-
+                if(this.nidcronograma == 0){
+                    this.mensajeError.push('No existe Periodo Compra Activo');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -1729,7 +1753,7 @@
 
                 if(!this.attachment || this.attachment==[] || this.attachment==null){
                     this.mensajeError.push('No hay Archivos Seleccionados');
-                };
+                }
                 if(this.mensajeError.length){
                     this.error = 1;
                 }

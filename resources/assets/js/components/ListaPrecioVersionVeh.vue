@@ -1123,7 +1123,7 @@
                     this.mensajeError.push('Debes Seleccionar Tipo Lista');
                 };
                 if(this.nidcronograma == 0){
-                    this.mensajeError.push('No existe Cronograma Venta activo');
+                    this.mensajeError.push('No existe Periodo Venta Activo');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1226,7 +1226,7 @@
                             {
                                 this.vistaFormTab1 = 0;
                                 this.tituloFormulario = 'NUEVA LISTA PRECIO';
-                                this.obtenerCronogramaActivoVenta();
+                                this.obtenerCronogramaVentaActivo();
                                 this.limpiarFormulario();
                                 this.listarTipoLista();
                                 this.formListaPrecioVh.nnrolistaprecio = '';
@@ -1242,8 +1242,8 @@
                     }
                 }
             },
-            obtenerCronogramaActivoVenta(){
-                var url = this.ruta + '/cronograma/GetCronogramaActivoVenta';
+            obtenerCronogramaVentaActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaVentaActivo';
 
                 axios.get(url,{
                     params: {

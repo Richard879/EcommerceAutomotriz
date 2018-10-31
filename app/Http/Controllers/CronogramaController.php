@@ -10,7 +10,8 @@ use Illuminate\Support\Collection;
 
 class CronogramaController extends Controller
 {
-    public function GetCronogramaActivoVenta(Request $request){
+    public function GetCronogramaVentaActivo(Request $request)
+    {
         if (!$request->ajax()) return redirect('/');
 
         $nIdEmpresa = $request->nidempresa;
@@ -21,12 +22,13 @@ class CronogramaController extends Controller
         return ['arrayCronograma'=>$arrayCronograma];
     }
     
-    public function GetCronogramaActivoCompra(Request $request){
+    public function GetCronogramaCompraActivo(Request $request)
+    {
         if (!$request->ajax()) return redirect('/');
 
         $nIdEmpresa = $request->nidempresa;
 
-        $arrayCronograma = DB::select('exec [usp_Cronog_GetCompraActivo] ?, ?',
+        $arrayCronograma = DB::select('exec [usp_Cronog_GetCompraActivo] ?',
                                                         [   $nIdEmpresa
                                                         ]);
         return ['arrayCronograma'=>$arrayCronograma];
