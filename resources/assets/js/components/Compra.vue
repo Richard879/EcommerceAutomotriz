@@ -1444,14 +1444,14 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillCompra.dfechainicio,
+                        'dfechafin': this.fillCompra.dfechafin,
+                        'nordencompra': this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
+                        'cnumerovin': this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
-                        'page' : page
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayCompra = response.data.arrayCompra.data;
@@ -1818,7 +1818,7 @@
                 var url = this.ruta + '/compra/UpdCompraById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCompra: this.formModalCompra.nidcompra,
                     cNumeroVin: this.formModalCompra.cnumerovin,
                     cNumeroMotor: this.formModalCompra.cnumeromotor,
@@ -1874,14 +1874,14 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillCompra.dfechainicio,
+                        'dfechafin': this.fillCompra.dfechafin,
+                        'nordencompra': nordencompra,
+                        'cnumerovin': this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
-                        'page' : page
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayLineaCredito = response.data.arrayLineaCredito.data;
@@ -1948,7 +1948,7 @@
                 var url = this.ruta + '/compra/UpdCompraLineaCreditoById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     data: this.arrayTempLineaCredito
                 }).then(response => {
                     this.arrayTempLineaCredito = [];

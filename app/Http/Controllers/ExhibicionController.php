@@ -21,7 +21,8 @@ class ExhibicionController extends Controller
             $detalles = $request->data;
 
             $arrayVinExiste = [];
-            $arrayPrecioLista = [];
+            $arrayFormato = [];
+            $arrayNombreComercial = [];
 
             foreach($detalles as $ep=>$det)
             {
@@ -47,12 +48,16 @@ class ExhibicionController extends Controller
                     array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
                 }
                 if($objCompra[0]->nFlagMsje == 2){
-                    array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
+                    array_push($arrayFormato,$objCompra[0]->cNumeroVin);
+                }
+                if($objCompra[0]->nFlagMsje == 3){
+                    array_push($arrayNombreComercial,$objCompra[0]->cNumeroVin);
                 }
             }
             $data = [
                 'arrayVinExiste'=>$arrayVinExiste,
-                'arrayPrecioLista'=>$arrayPrecioLista
+                'arrayFormato'=>$arrayFormato,
+                'arrayNombreComercial'=>$arrayNombreComercial
             ];
             DB::commit();
             return response()->json($data);            
