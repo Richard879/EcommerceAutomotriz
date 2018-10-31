@@ -1713,9 +1713,11 @@
                     if(me.arrayCompraVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
+                        me.attachment = []
                     }else{
                         swal('Compra registrada correctamente');
-                        this.limpiarFormulario();                
+                        this.attachment = [],
+                        this.limpiarFormulario();        
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2180,9 +2182,8 @@
             limpiarFormulario(){
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',
-                this.attachment = [],
+                this.formCompra.nidtipolista= '',
                 this.arrayExcel = [],
-                this.nidtipolista = '',
                 this.form = new FormData,
                 $("#file-upload").val("")
             },

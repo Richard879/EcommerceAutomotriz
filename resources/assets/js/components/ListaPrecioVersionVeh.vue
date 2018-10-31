@@ -1365,10 +1365,8 @@
                     data: this.arrayListaPrecioVh
                 }).then(response => {
                     swal('Detalle de Lista registrada');
-                    this.arrayExcel = [];
-                    this.arrayListaPrecioVh = [];
                     this.attachment = [];
-                    $("#file-upload").val("");
+                    this.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -1516,8 +1514,10 @@
             },
             // ===========================================================
             limpiarFormulario(){
-                this.arrayExcel = [],
-                this.arrayListaPrecioVh = []
+                this.arrayExcel = [];
+                this.arrayListaPrecioVh = [];
+                this.form = new FormData;
+                $("#file-upload").val("")
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
