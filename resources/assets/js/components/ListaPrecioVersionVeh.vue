@@ -321,10 +321,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <select name="account" v-model="formListaPrecioVh.nidtipolista" class="form-control form-control-sm">
-                                                                                        <option v-for="tipolista in arrayTipoLista" :key="tipolista.nIdPar" :value="tipolista.nIdPar" v-text="tipolista.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
+                                                                                    <el-select v-model="formListaPrecioVh.nidtipolista" filterable clearable placeholder="SELECCIONE" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoLista"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -879,8 +883,9 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
+                nidcronograma: 0,
+                canio: '',
+                cmes: '',
                 fillProvedor:{
                     cnombreproveedor: ''
                 },
@@ -892,7 +897,7 @@
                     nformapago: 0,
                     nidlistaprecioversionVeh: 0,
                     nnrolistaprecio: '',
-                    nidtipolista: 0,
+                    nidtipolista: '',
                     cnombrecomercial: ''
                 },
                 arrayListaPrecioVh: [],
@@ -1089,9 +1094,9 @@
                 var url = this.ruta + '/listapreciovh/SetListaVh';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdProveedor: parseInt(this.formListaPrecioVh.nidproveedor),
-                    nIdCronograma: 220016,
+                    nIdCronograma: parseInt(this.nidcronograma),
                     nNroListaPrecio: parseInt(this.formListaPrecioVh.nnrolistaprecio),
                     dFechaInicio: this.formListaPrecioVh.dfechainicio,
                     nIdTipoLista: this.formListaPrecioVh.nidtipolista
@@ -1116,6 +1121,9 @@
                 };
                 if(this.formListaPrecioVh.nidtipolista == 0 || !this.formListaPrecioVh.nidtipolista){
                     this.mensajeError.push('Debes Seleccionar Tipo Lista');
+                };
+                if(this.nidcronograma == 0){
+                    this.mensajeError.push('No existe Cronograma Venta activo');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1218,6 +1226,7 @@
                             {
                                 this.vistaFormTab1 = 0;
                                 this.tituloFormulario = 'NUEVA LISTA PRECIO';
+                                this.obtenerCronogramaActivoVenta();
                                 this.limpiarFormulario();
                                 this.listarTipoLista();
                                 this.formListaPrecioVh.nnrolistaprecio = '';
@@ -1232,6 +1241,26 @@
                         }
                     }
                 }
+            },
+            obtenerCronogramaActivoVenta(){
+                var url = this.ruta + '/cronograma/GetCronogramaActivoVenta';
+
+                axios.get(url,{
+                    params: {
+                        'nidempresa': 1300011
+                    }
+                }).then(response => {
+                    this.canio = response.data.arrayCronograma[0].cAnio;
+                    this.cmes = response.data.arrayCronograma[0].cMes;
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // ================================================
             // =============  AGREGAR DETALLE =================
@@ -1341,8 +1370,7 @@
                     swal('Detalle de Lista registrada');
                     this.arrayExcel = [];
                     this.arrayListaPrecioVh = [];
-                    //this.attachment = null;
-                    //this.textFile = '';
+                    this.attachment = [];
                     $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
