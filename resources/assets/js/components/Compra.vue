@@ -1801,8 +1801,8 @@
                             }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
+                    {
+                    }
                 })
             },
             descargaFormatoCompra(){

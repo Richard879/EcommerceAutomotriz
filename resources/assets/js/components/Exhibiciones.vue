@@ -174,8 +174,8 @@
                                                                             <tr v-for="exhibicion in arrayExhibicion" :key="exhibicion.nIdExhibicion">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Anular O/C  {{ exhibicion.nOrdenExhibicion }}</div>
-                                                                                        <i @click="desactivar(exhibicion.nIdExhibicion)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        <div slot="content">Anular {{ exhibicion.cNumeroVin }}</div>
+                                                                                        <i @click="desactivar(exhibicion)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="exhibicion.nIdExhibicion"></td>
@@ -1200,7 +1200,7 @@
                 }
                 return this.error;
             },
-            desactivar(nIdExhibicion){
+            desactivar(exhibicion){
                 swal({
                     title: 'Estas seguro de eliminar esta Exhibicion?',
                     type: 'warning',
@@ -1210,24 +1210,36 @@
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
-                    var url = this.ruta + '/exhibicion/desactivar';
-                    axios.put(url, {
-                        nIdExhibicion: nIdExhibicion
-                    }).then(response => {
-                        swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                        );
-                        this.listarExhibicions(1);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                location.reload('0');
+                    if (result.value) {
+                        var url = this.ruta + '/exhibicion/desactivar';
+                        axios.put(url, {
+                            nIdExhibicion: exhibicion.nIdExhibicion
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Desactivado!',
+                                    response.data[0].cMensaje
+                                );
                             }
-                        }
-                    });
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarExhibicions(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
                 })
             },
             descargaFormatoExhibicion(){

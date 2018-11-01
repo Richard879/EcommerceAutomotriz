@@ -99,4 +99,15 @@ class ExhibicionController extends Controller
             DB::rollBack();
         }
     }
+
+    public function desactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayExhibicion = DB::select('exec [usp_Exhibicion_DesactivaById] ?, ?',
+                                                [   $request->nIdExhibicion,
+                                                    Auth::user()->id
+                                                ]);
+        return response()->json($arrayExhibicion);
+    }
 }
