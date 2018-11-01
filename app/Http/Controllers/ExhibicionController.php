@@ -12,6 +12,40 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExhibicionController extends Controller
 {
+    public function GetExhibicion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
+        $cNumeroVin = $request->cnumerovin;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
+        
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+
+
+
+        $arrayExhibicion = DB::select('exec [usp_Exhibicion_GetExhibicion] ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
+                                                                $nIdMarca,
+                                                                $nIdModelo,
+                                                                $cNumeroVin
+                                                            ]);
+
+        $arrayExhibicion = Parametro::arrayPaginator($arrayExhibicion, $request);
+        return ['arrayExhibicion'=>$arrayExhibicion];
+    }
+
     public function SetExhibicion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -39,7 +73,7 @@ class ExhibicionController extends Controller
                                                                 $det['cNombreComercial'],
                                                                 $det['cNombreColor'],
                                                                 $det['nAnioFabricacion'],
-                                                                $det['nAnioVersion'],
+                                                                $det['nAnioModelo'],
                                                                 $det['cSimboloMoneda'],
                                                                 $det['fTotalExhibicion'],
                                                                 Auth::user()->id

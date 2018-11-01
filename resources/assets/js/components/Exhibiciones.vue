@@ -159,20 +159,15 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
-                                                                                <th>OC</th>
                                                                                 <th>Línea</th>
                                                                                 <th>Almacén<nav></nav></th>
-                                                                                <th>Nro Reserva</th>
                                                                                 <th>Nro Vin</th>
-                                                                                <th>Forma Pago</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Fab</th>
                                                                                 <th>Año Mod</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
-                                                                                <th>Nro Factura</th>
-                                                                                <th>Fecha Facturado</th>
-                                                                                <th>Fecha Exhibicion</th>
+                                                                                <th>Fecha Reg.</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -182,27 +177,18 @@
                                                                                         <div slot="content">Anular O/C  {{ exhibicion.nOrdenExhibicion }}</div>
                                                                                         <i @click="desactivar(exhibicion.nIdExhibicion)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </el-tooltip>&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar O/C  {{ exhibicion.nOrdenExhibicion }}</div>
-                                                                                        <i @click="abrirModal('exhibicion','editar', exhibicion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="exhibicion.nIdExhibicion"></td>
                                                                                 <td v-text="exhibicion.cNumeroMes + '-' + exhibicion.cAnio"></td>
-                                                                                <td v-text="exhibicion.nOrdenExhibicion"></td>
                                                                                 <td v-text="exhibicion.cNombreLinea"></td>
                                                                                 <td v-text="exhibicion.cNombreAlmacen"></td>
-                                                                                <td v-text="exhibicion.nNumeroReserva"></td>
                                                                                 <td v-text="exhibicion.cNumeroVin"></td>
-                                                                                <td v-text="exhibicion.cFormaPago"></td>
                                                                                 <td v-text="exhibicion.cNombreComercial"></td>
                                                                                 <td v-text="exhibicion.nAnioFabricacion"></td>
-                                                                                <td v-text="exhibicion.nAnioVersion"></td>
+                                                                                <td v-text="exhibicion.nAnioModelo"></td>
                                                                                 <td v-text="exhibicion.cSimboloMoneda"></td>
                                                                                 <td v-text="exhibicion.fTotalExhibicion"></td>
-                                                                                <td v-text="exhibicion.cNumeroFactura"></td>
-                                                                                <td v-text="exhibicion.dFechaFacturado"></td>
-                                                                                <td v-text="exhibicion.dFechaExhibicion"></td>
+                                                                                <td v-text="exhibicion.dFechaRegistro"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -392,7 +378,7 @@
                                                                                     <td v-text="exhibicion.cNombreComercial"></td>
                                                                                     <td v-text="exhibicion.cNombreColor"></td>
                                                                                     <td v-text="exhibicion.nAnioFabricacion"></td>
-                                                                                    <td v-text="exhibicion.nAnioVersion"></td>
+                                                                                    <td v-text="exhibicion.nAnioModelo"></td>
                                                                                     <td v-text="exhibicion.cSimboloMoneda"></td>
                                                                                     <td v-text="exhibicion.fTotalExhibicion"></td>
                                                                                 </tr>
@@ -930,14 +916,13 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.fillExhibicion.dfechainicio,
-                        'dfechafin' : this.fillExhibicion.dfechafin,
-                        'nordencompra' : this.fillExhibicion.nordencompra == '' ? 0 : this.fillExhibicion.nordencompra,
-                        'cnumerovin' : this.fillExhibicion.cnumerovin,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillExhibicion.dfechainicio,
+                        'dfechafin': this.fillExhibicion.dfechafin,
                         'nidmarca': this.fillExhibicion.nidmarca,
                         'nidmodelo': this.fillExhibicion.nidmodelo,
-                        'page' : page
+                        'cnumerovin': this.fillExhibicion.cnumerovin,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayExhibicion = response.data.arrayExhibicion.data;
