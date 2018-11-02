@@ -182,7 +182,9 @@ class ParametroController extends Controller
         $nIdPar = $request->nidpar;
         $cTipoParametro = $request->ctipoparametro;
         $nIdTipoPar = $request->nidtipopar;
-        $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = ' ') : $cTipoParametro;
+
+        $cTipoParametro = ($cTipoParametro == NULL) ? ($cTipoParametro = '') : $cTipoParametro;
+        $nIdTipoPar = ($nIdTipoPar == NULL) ? ($nIdTipoPar = 0) : $nIdTipoPar;
 
         $tipoparametro = DB::select('exec [usp_TipoPar_GetTipoByIdParametro] ?, ?, ?',
                                                             [   $nIdPar,
