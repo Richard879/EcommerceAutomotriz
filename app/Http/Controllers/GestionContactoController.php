@@ -235,10 +235,9 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arraySeguimiento = DB::select('exec usp_Contacto_SetSeguimiento ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arraySeguimiento = DB::select('exec [usp_Contacto_SetSeguimiento] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             array(  $request->cFlagOrigenSeguimiento,
                                                                     $request->nIdAsignacionContactoVendedor,
-                                                                    $request->nIdCabeceraCotizacion,
                                                                     $request->nIdZona,
                                                                     $request->nIdTipoSeguimiento,
                                                                     $request->nIdFormaPago,
@@ -259,9 +258,9 @@ class GestionContactoController extends Controller
 
         $nIdAsignacionContactoVendedor = $request->nidasignacioncontactovendedor;
 
-        $arraySeguimiento = DB::select('exec usp_Contacto_GetListSeguimientoByIdAsignacion ?',
-                                                                        array(  $nIdAsignacionContactoVendedor
-                                                                                ));
+        $arraySeguimiento = DB::select('exec [usp_Contacto_GetListSeguimientoByIdAsignacion] ?',
+                                                            [  $nIdAsignacionContactoVendedor
+                                                            ]);
 
         $arraySeguimiento = ParametroController::arrayPaginator($arraySeguimiento, $request);
         return ['arraySeguimiento'=>$arraySeguimiento];
@@ -503,5 +502,32 @@ class GestionContactoController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function GetEstadoAsignacionSeguimiento(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdAsignacionContactoVendedor = $request->nidasignacioncontactovendedor;
+
+        $arrayEstadoSeguimiento = DB::select('exec [usp_Contacto_GetEstadoAsignacionSeguimiento] ?, ?, ?',
+                                                                [   $nIdEmpresa,
+                                                                    $nIdSucursal,
+                                                                    $nIdAsignacionContactoVendedor
+                                                                ]);
+        return ['arrayEstadoSeguimiento'=>$arrayEstadoSeguimiento];
+    }
+
+    public function desactivarSeguimiento(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $objSeguimiento = DB::select('exec [usp_Contacto_DesactivaSeguimientoById] ?, ?',
+                                                    [   $request->nIdSeguimientoContacto,
+                                                        Auth::user()->id
+                                                    ]);
+        return response()->json($objSeguimiento);
     }
 }

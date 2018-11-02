@@ -1160,11 +1160,14 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Zona</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="hidden" v-model="formNuevoSeguimiento.nidasignacioncontactovendedor">
-                                                                                            <select v-model="formNuevoSeguimiento.nidzona" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayZona" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <el-select v-model="formNuevoSeguimiento.nidzona" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayZona"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1172,10 +1175,7 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Estado</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoSeguimiento.nidestadoseguimiento" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayEstadoSeguimiento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <input type="text" v-model="formNuevoSeguimiento.cestadoseguimiento" disabled class="form-control form-control-sm">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1185,10 +1185,14 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Seguimiento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoSeguimiento.nidtiposeguimiento" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayTipoSeguimiento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <el-select v-model="formNuevoSeguimiento.nidtiposeguimiento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayTipoSeguimiento"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1196,10 +1200,14 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Forma de Pago</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoSeguimiento.nidformapago" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayFormaPago" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <el-select v-model="formNuevoSeguimiento.nidformapago" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayFormaPago"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1275,7 +1283,7 @@
                                                                                         <table class="table table-striped table-sm">
                                                                                             <thead>
                                                                                                 <tr>
-                                                                                                    <th>Cod. Seg.</th>
+                                                                                                    <th>Codigo</th>
                                                                                                     <th>Zona</th>
                                                                                                     <th>Tipo Seguimiento</th>
                                                                                                     <th>Forma Pago</th>
@@ -2363,10 +2371,6 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 arrayReferenciaVehiculo: [],
                 arraySegReferenciavehiculo: [],
                 arrayContacto: [],
@@ -2507,7 +2511,8 @@
                     choraseguimiento: '',
                     casunto: '',
                     crendirseguimiento: '',
-                    nidasignacioncontactovendedor: 0
+                    nidasignacioncontactovendedor: 0,
+                    cestadoseguimiento: ''
                 },
                 arrayTipoDocumento: [],
                 arrayLinea: [],
@@ -2629,7 +2634,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),
@@ -2693,7 +2698,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillContactoPorVendedor.ntipopersona,
                         'cnrodocumento' : String(this.fillContactoPorVendedor.cnrodocumento.toString()),
@@ -2736,7 +2741,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.formReasignarContacto.nidcontacto,
                         'nidvendedor' : this.formReasignarContacto.nreasignaidvendedor,
                         'page' : page
@@ -2778,7 +2783,7 @@
                             axios.post(url, {
                                 nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
                                 nIdEmpresa: 1300011,
-                                nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                                nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
                             }).then(response => {
@@ -2914,7 +2919,7 @@
                             axios.post(url, {
                                 nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
                                 nIdEmpresa: 1300011,
-                                nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                                nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formVendedor.nidvendedor)
                             }).then(response => {
@@ -3074,7 +3079,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.formNuevoContacto.nidcontacto,
                         'page' : page
                     }
@@ -3118,7 +3123,7 @@
 
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCronograma: 220016,
                     nIdContacto: this.formNuevoContacto.nidcontacto,
                     nIdProveedor: this.formNuevoContacto.nidproveedor,
@@ -3177,26 +3182,32 @@
                 $('#TabSegSeguimiento').addClass('in active show');
                 this.formNuevoSeguimiento.choraseguimiento = moment().format('HH:mm');
                 this.formNuevoSeguimiento.nidasignacioncontactovendedor = nIdAsignacionContactoVendedor;
+                this.obtenerEstadoAsignacionSeguimiento(nIdAsignacionContactoVendedor);
                 this.llenarComboZona();
-                this.llenarComboEstadoSeguimiento();
                 this.llenarComboTipoSeguimiento();
                 this.llenarComboFormaPago();
                 this.listarSeguimientoPorIdAsignacion(1);
+            },
+            obtenerEstadoAsignacionSeguimiento(nIdAsignacionContactoVendedor){
+                var url = this.ruta + '/gescontacto/GetEstadoAsignacionSeguimiento';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidasignacioncontactovendedor' : nIdAsignacionContactoVendedor
+                    }
+                }).then(response => {
+                    this.formNuevoSeguimiento.cestadoseguimiento = response.data.arrayEstadoSeguimiento[0].cEstadoSeguimiento;
+                    this.formNuevoSeguimiento.nidestadoseguimiento = response.data.arrayEstadoSeguimiento[0].nIdEstadoSeguimiento;
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             llenarComboZona(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110052
                                                                                 + '&opcion=' + 0;
                 axios.get(url).then(response => {
                     this.arrayZona = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboEstadoSeguimiento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110053
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
-                    this.arrayEstadoSeguimiento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -3846,7 +3857,7 @@
                     var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
                     axios.post(url, {
                         nIdEmpresa: 1300011,
-                        nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                        nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                         nIdCronograma: 220016,
                         nIdContacto: nIdContacto,
                         data: this.arrayReferenciaVehiculo
@@ -4217,7 +4228,7 @@
             },
             limpiarNuevoContacto(){
                 //Tab DATOS PERSONALES
-                this.formNuevoContacto.ntpodocumento = 0,
+                this.formNuevoContacto.ntpodocumento = '',
                 this.formNuevoContacto.cnrodocumento = '',
                 this.formNuevoContacto.capepaterno = '',
                 this.formNuevoContacto.capematerno = '',
@@ -4233,11 +4244,11 @@
                 this.formNuevoContacto.ctelefonofijo = '',
                 this.formNuevoContacto.ncelular = '',
                 this.formNuevoContacto.ncelularalternativo = '',
-                this.formNuevoContacto.nestadocivil = 0,
-                this.formNuevoContacto.nprofesion = 0,
+                this.formNuevoContacto.nestadocivil = '',
+                this.formNuevoContacto.nprofesion = '',
                 this.formNuevoContacto.ccentrolaboral = '',
                 //Tab DATOS DE CONTACTO - Datos Contacto Jurídico
-                this.formNuevoContactoJurifico.ntpodocumento = 0,
+                this.formNuevoContactoJurifico.ntpodocumento = '',
                 this.formNuevoContactoJurifico.cnrodocumento = '',
                 this.formNuevoContactoJurifico.capematerno = '',
                 this.formNuevoContactoJurifico.capepaterno = '',

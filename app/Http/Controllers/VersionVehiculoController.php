@@ -145,7 +145,7 @@ class VersionVehiculoController extends Controller
         return response()->json($data);
     }
 
-    public function desactivar (Request $request)
+    public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -156,7 +156,7 @@ class VersionVehiculoController extends Controller
         return response()->json($versionvehiculo);
     }
 
-    public function activar (Request $request)
+    public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 

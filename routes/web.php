@@ -116,6 +116,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
     Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
     Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
+    Route::get('/gescontacto/GetEstadoAsignacionSeguimiento', 'GestionContactoController@GetEstadoAsignacionSeguimiento');
+    Route::put('/gescontacto/desactivarSeguimiento', 'GestionContactoController@desactivarSeguimiento');
 
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
