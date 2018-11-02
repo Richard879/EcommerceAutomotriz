@@ -66,10 +66,14 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoContacto.ntpodocumento" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayTipoDocumento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <el-select v-model="formNuevoContacto.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayTipoDocumento"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -250,10 +254,14 @@
                                                                                         <div class="row">
                                                                                             <label class="col-sm-4 form-control-label">Estado Civil</label>
                                                                                             <div class="col-sm-8">
-                                                                                                <select v-model="formNuevoContacto.nestadocivil" class="form-control form-control-sm">
-                                                                                                    <option v-for="item in arrayEstadoCivil" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                    </option>
-                                                                                                </select>
+                                                                                                <el-select v-model="formNuevoContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
+                                                                                                    <el-option
+                                                                                                    v-for="item in arrayEstadoCivil"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                    </el-option>
+                                                                                                </el-select>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -302,10 +310,14 @@
                                                                                                     <div class="row">
                                                                                                         <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                                         <div class="col-sm-8">
-                                                                                                            <select v-model="formNuevoContactoJurifico.ntpodocumento" class="form-control form-control-sm">
-                                                                                                                <option v-for="item in arrayTipoDocumentoNaturales" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                                </option>
-                                                                                                            </select>
+                                                                                                            <el-select v-model="formNuevoContactoJurifico.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                                <el-option
+                                                                                                                v-for="item in arrayTipoDocumentoNaturales"
+                                                                                                                :key="item.nIdPar"
+                                                                                                                :label="item.cParNombre"
+                                                                                                                :value="item.nIdPar">
+                                                                                                                </el-option>
+                                                                                                            </el-select>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -691,6 +703,7 @@
                     </div>
                 </div>
             </div>
+
         </main>
     </transition>
 </template>
@@ -702,49 +715,29 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: 'CHICLAYO',
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
-                arrayTipoDocumento: [],
-                arrayLinea: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                arrayAnioFabricacion: [],
-                arrayAnioModelo: [],
-                arrayEstadoCivil: [],
-                arrayProfesion: [],
-                arrayProveedor: [],
-                arrayReferenciaVehiculo: [],
-                arraySegReferenciavehiculo: [],
-                arrayContacto: [],
-                arrayContactoCarteraMes: [],
-                arrayDptos:[],
-                arrayProv : [],
-                arrayDist: [],
-                arrayTipoPersona: [
-                    { value: '1', text: 'NATURAL'},
-                    { value: '2', text: 'JURIDICA'}
-                ],
-                arrayZona: [],
-                arrayEstadoSeguimiento: [],
-                arrayTipoSeguimiento: [],
-                arrayFormaPago: [],
-                arraySeguimiento: [],
-                arrayTipoDocumentoNaturales: [],
+                // ============================================================
+                // =========== VARIABLES MODAL PROVEEDOR ============         
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
+                // ============================================================
+                // =========== VARIABLES MIS CONTACTOS ============
+                arrayProveedor: [],
                 fillMisContactos:{
                     ntipopersona: 1,
                     cnrodocumento: '',
                     cfiltrodescripcion: ''
                 },
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
+                arrayContacto: [],
                 // =============================================================
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
                     ntipopersona: 1,
-                    ntpodocumento: 0,
+                    ntpodocumento: '',
                     cnrodocumento: '',
                     capepaterno: '',
                     capematerno: '',
@@ -762,8 +755,8 @@
                     ctelefonofijo: '',
                     ncelular: '',
                     ncelularalternativo: '',
-                    nestadocivil: 0,
-                    nprofesion: 0,
+                    nestadocivil: '',
+                    nprofesion: '',
                     ccentrolaboral: '',
                     nidlinea: '',
                     nidmarca: '',
@@ -781,6 +774,16 @@
                     cmailprincipal: '',
                     ncelular : ''
                 },
+                arrayTipoDocumentoNaturales: [],
+                arrayReferenciaVehiculo: [],
+                arrayTipoDocumento: [],
+                arrayEstadoCivil: [],
+                arrayProfesion: [],
+                arrayDptos:[],
+                arrayProv : [],
+                arrayDist: [],
+                // =============================================================
+                // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
                     ctipopersona: '',
                     ccontacto: '',
@@ -790,17 +793,31 @@
                     cemail: '',
                     nidpersona: 0
                 },
+                arraySegReferenciavehiculo: [],
+                arrayLinea: [],
+                arrayMarca: [],
+                arrayModelo: [],
+                arrayAnioFabricacion: [],
+                arrayAnioModelo: [],
+                // =============================================================
+                // ============== VARIABLES TAB NUEVO SEGUIMIENTO ==============
                 formNuevoSeguimiento:{
-                    nidzona: 0,
+                    nidzona: '',
                     nidestadoseguimiento: 0,
-                    nidtiposeguimiento: 0,
-                    nidformapago: 0,
+                    nidtiposeguimiento: '',
+                    nidformapago: '',
                     dfechaseguimiento: '',
                     choraseguimiento: '',
                     casunto: '',
                     crendirseguimiento: '',
-                    nidasignacioncontactovendedor: 0
+                    nidasignacioncontactovendedor: 0,
+                    cestadoseguimiento: ''
                 },
+                arraySeguimiento: [], 
+                arrayZona: [],
+                arrayEstadoSeguimiento: [],
+                arrayTipoSeguimiento: [],
+                arrayFormaPago: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -983,21 +1000,27 @@
             llenarComboTpoDocumento(){
                 if(this.formNuevoContacto.ntipopersona == 1)
                 {
-                    var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
-                                                                            + '&opcion=' + 0;
-                    axios.get(url).then(response => {
+                    var url = this.ruta + '/parametro/GetDocumentoNatural';
+                    axios.get(url, {
+                        params: {
+                            'ngrupoparid': 110047
+                        }
+                    }).then(response => {
                         this.arrayTipoDocumento = response.data;
-                        this.formNuevoContacto.ntpodocumento = 0;
+                        this.formNuevoContacto.ntpodocumento = '';
                     }).catch(error => {
                         console.log(error);
                     });
                 }
                 else{
-                    var url = this.ruta + '/parametro/GetDocumentoJuridica?ngrupoparid=' + 110047
-                                                                                + '&opcion=' + 0;
-                    axios.get(url).then(response => {
+                    var url = this.ruta + '/parametro/GetDocumentoJuridica';
+                    axios.get(url, {
+                        params: {
+                            'ngrupoparid': 110047
+                        }
+                    }).then(response => {
                         this.arrayTipoDocumento = response.data;
-                        this.formNuevoContacto.ntpodocumento = 0;
+                        this.formNuevoContacto.ntpodocumento = '';
                     }).catch(error => {
                         console.log(error);
                     });
@@ -1032,18 +1055,24 @@
                 });
             },
             llenarComboEstadoCivil(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110048
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110048
+                    }
+                }).then(response => {
                     this.arrayEstadoCivil = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboProfesion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110049
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110049
+                    }
+                }).then(response => {
                     this.arrayProfesion = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -1124,11 +1153,14 @@
                 return this.error;
             },
             llenarComboTpoDocumentoDatoConctactoJurifico(){
-                var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetDocumentoNatural';
+                axios.get(url, {
+                        params: {
+                            'ngrupoparid': 110047
+                        }
+                    }).then(response => {
                     this.arrayTipoDocumentoNaturales = response.data;
-                    this.formNuevoContactoJurifico.ntpodocumento = 0;
+                    this.formNuevoContactoJurifico.ntpodocumento = '';
                 }).catch(error => {
                     this.errors = error.response.data
                 });
@@ -1427,7 +1459,7 @@
                     var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
                     axios.post(url, {
                         nIdEmpresa: 1300011,
-                        nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                        nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                         nIdCronograma: 220016,
                         nIdContacto: nIdContacto,
                         data: this.arrayReferenciaVehiculo
@@ -1513,9 +1545,8 @@
                 this.fillMisContactos.cfiltrodescripcion = '';
             },
             limpiarSeguimiento(){
-                this.formNuevoSeguimiento.nidzona = 0;
-                this.formNuevoSeguimiento.nidestadoseguimiento = 0;
-                this.formNuevoSeguimiento.nidtiposeguimiento = 0;
+                this.formNuevoSeguimiento.nidzona = '';
+                this.formNuevoSeguimiento.nidtiposeguimiento = '';
                 this.formNuevoSeguimiento.dfechaseguimiento = '';
                 this.formNuevoSeguimiento.choraseguimiento = '';
                 this.formNuevoSeguimiento.casunto = '';
@@ -1523,7 +1554,7 @@
             },
             limpiarNuevoContacto(){
                 //Tab DATOS PERSONALES
-                this.formNuevoContacto.ntpodocumento = 0,
+                this.formNuevoContacto.ntpodocumento = '',
                 this.formNuevoContacto.cnrodocumento = '',
                 this.formNuevoContacto.capepaterno = '',
                 this.formNuevoContacto.capematerno = '',
@@ -1539,8 +1570,8 @@
                 this.formNuevoContacto.ctelefonofijo = '',
                 this.formNuevoContacto.ncelular = '',
                 this.formNuevoContacto.ncelularalternativo = '',
-                this.formNuevoContacto.nestadocivil = 0,
-                this.formNuevoContacto.nprofesion = 0,
+                this.formNuevoContacto.nestadocivil = '',
+                this.formNuevoContacto.nprofesion = '',
                 this.formNuevoContacto.ccentrolaboral = '',
                 //Tab DATOS DE CONTACTO - Datos Contacto Jurídico
                 this.formNuevoContactoJurifico.ntpodocumento = 0,
