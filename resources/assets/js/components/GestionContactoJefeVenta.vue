@@ -592,10 +592,14 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Tipo de Contacto</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <select v-model="fillContactoLibre.ntipocontacto" class="form-control form-control-sm">
-                                                                                        <option v-for="item in arrayTipoContacto" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                        </option>
-                                                                                    </select>
+                                                                                    <el-select v-model="fillContactoLibre.ntipocontacto" filterable clearable placeholder="SELECCIONE" >
+                                                                                        <el-option
+                                                                                        v-for="item in arrayTipoContacto"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
+                                                                                        </el-option>
+                                                                                    </el-select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1652,10 +1656,14 @@
                                                                                                     <div class="row">
                                                                                                         <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                                         <div class="col-sm-8">
-                                                                                                            <select v-model="formNuevoContactoJurifico.ntpodocumento" class="form-control form-control-sm">
-                                                                                                                <option v-for="item in arrayTipoDocumentoNaturales" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                                </option>
-                                                                                                            </select>
+                                                                                                            <el-select v-model="formNuevoContactoJurifico.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                                <el-option
+                                                                                                                v-for="item in arrayTipoDocumentoNaturales"
+                                                                                                                :key="item.nIdPar"
+                                                                                                                :label="item.cParNombre"
+                                                                                                                :value="item.nIdPar">
+                                                                                                                </el-option>
+                                                                                                            </el-select>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -2424,7 +2432,7 @@
                     ntipopersona: 1,
                     cnrodocumento: '',
                     cfiltrodescripcion: '',
-                    ntipocontacto: 0
+                    ntipocontacto: ''
                 },
                 arrayContactoLibre: [],
                 arrayTipoContacto: [],
@@ -2865,9 +2873,12 @@
                 });
             },
             llenarComboTipoContacto(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110056
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110056
+                    }
+                }).then(response => {
                     this.arrayTipoContacto = response.data;
                 }).catch(error => {
                     console.log(error);
@@ -3617,11 +3628,14 @@
                 return this.error;
             },
             llenarComboTpoDocumentoDatoConctactoJurifico(){
-                var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetDocumentoNatural';
+                axios.get(url, {
+                        params: {
+                            'ngrupoparid': 110047
+                        }
+                    }).then(response => {
                     this.arrayTipoDocumentoNaturales = response.data;
-                    this.formNuevoContactoJurifico.ntpodocumento = 0;
+                    this.formNuevoContactoJurifico.ntpodocumento = '';
                 }).catch(error => {
                     console.log(error);
                 });
