@@ -1306,19 +1306,19 @@
                                                                                                     <td v-text="s.cAsunto"></td>
                                                                                                     <td>
                                                                                                         <template v-if="s.cSeguimientoEstado=='A'">
-                                                                                                            <a href="#" @click="desactivar(s.nIdSeguimientoContacto)" data-toggle="tooltip" data-placement="top"
-                                                                                                            :title="'Desactivar ' + s.nIdSeguimientoContacto">
-                                                                                                                <i class="fa-md fa fa-check-square"></i>
-                                                                                                            </a>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Desactivar  {{ s.nIdSeguimientoContacto }}</div>
+                                                                                                                <i @click="desactivarSeguimiento(s.nIdSeguimientoContacto)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                                            </el-tooltip>
                                                                                                         </template>
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
-                                                                                    <div class="col-lg-12">
+                                                                                    <div class="col-sm-12">
                                                                                         <div class="row">
-                                                                                            <div class="col-lg-7">
+                                                                                            <div class="col-sm-7">
                                                                                                 <nav>
                                                                                                     <ul class="pagination">
                                                                                                         <li v-if="pagination.current_page > 1" class="page-item">
@@ -1336,7 +1336,7 @@
                                                                                                     </ul>
                                                                                                 </nav>
                                                                                             </div>
-                                                                                            <div class="col-lg-5">
+                                                                                            <div class="col-sm-5">
                                                                                                 <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
                                                                                             </div>
                                                                                         </div>
@@ -2443,7 +2443,7 @@
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
                     ntipopersona: 1,
-                    ntpodocumento: 0,
+                    ntpodocumento: '',
                     cnrodocumento: '',
                     capepaterno: '',
                     capematerno: '',
@@ -2461,8 +2461,8 @@
                     ctelefonofijo: '',
                     ncelular: '',
                     ncelularalternativo: '',
-                    nestadocivil: 0,
-                    nprofesion: 0,
+                    nestadocivil: '',
+                    nprofesion: '',
                     ccentrolaboral: '',
                     nidlinea: '',
                     nidmarca: '',
@@ -2472,7 +2472,7 @@
                     nidcontacto: 0
                 },
                 formNuevoContactoJurifico:{
-                    ntpodocumento: 0,
+                    ntpodocumento: '',
                     cnrodocumento: '',
                     capepaterno: '',
                     capematerno: '',
@@ -2509,10 +2509,10 @@
                 // =============================================================
                 // ============== VARIABLES TAB NUEVO SEGUIMIENTO ==============
                 formNuevoSeguimiento:{
-                    nidzona: 0,
+                    nidzona: '',
                     nidestadoseguimiento: 0,
-                    nidtiposeguimiento: 0,
-                    nidformapago: 0,
+                    nidtiposeguimiento: '',
+                    nidformapago: '',
                     dfechaseguimiento: '',
                     choraseguimiento: '',
                     casunto: '',
@@ -3074,6 +3074,7 @@
                 return this.error;
             },
             listarReferenciaVehiculoByContacto(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
 
                 axios.get(url, {
@@ -3091,6 +3092,7 @@
                     this.pagination.last_page   = response.data.arraySegReferenciavehiculo.last_page;
                     this.pagination.from        = response.data.arraySegReferenciavehiculo.from;
                     this.pagination.to           = response.data.arraySegReferenciavehiculo.to;
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -3204,33 +3206,43 @@
                 });
             },
             llenarComboZona(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110052
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110052
+                    }
+                }).then(response => {
                     this.arrayZona = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboTipoSeguimiento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110054
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110054
+                    }
+                }).then(response => {
                     this.arrayTipoSeguimiento = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboFormaPago(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110055
-                                                                                + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110055
+                    }
+                }).then(response => {
                     this.arrayFormaPago = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             listarSeguimientoPorIdAsignacion(page){
+                this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/GetListSeguimientoByIdAsignacion';
 
                 axios.get(url, {
@@ -3246,6 +3258,7 @@
                     this.pagination.last_page   = response.data.arraySeguimiento.last_page;
                     this.pagination.from        = response.data.arraySeguimiento.from;
                     this.pagination.to           = response.data.arraySeguimiento.to;
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -3257,12 +3270,12 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/SetSeguimiento';
 
                 axios.post(url, {
-                    cFlagOrigenSeguimiento: 'P',
+                    cFlagOrigenSeguimiento: 'EC',
                     nIdAsignacionContactoVendedor: this.formNuevoSeguimiento.nidasignacioncontactovendedor,
-                    nIdCabeceraCotizacion: 0,
                     nIdZona: this.formNuevoSeguimiento.nidzona,
                     nIdTipoSeguimiento: this.formNuevoSeguimiento.nidtiposeguimiento,
                     nIdFormaPago: this.formNuevoSeguimiento.nidformapago,
@@ -3272,6 +3285,7 @@
                     cAsunto: this.formNuevoSeguimiento.casunto,
                     cRendirSeguimiento: this.formNuevoSeguimiento.crendirseguimiento
                 }).then(response => {
+                    $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Seguimiento registrado');
@@ -3318,6 +3332,35 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            desactivarSeguimiento(nIdSeguimientoContacto){
+                swal({
+                    title: 'Estas seguro de desactivar este vehículo?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Desactivar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/gescontacto/desactivarSeguimiento';
+                            axios.put(url, {
+                                nIdSeguimientoContacto: parseInt(nIdSeguimientoContacto)
+                            }).then(response => {
+                                swal(
+                                'Desactivado!',
+                                'El registro fue desactivado.'
+                                );
+                                this.listarSeguimientoPorIdAsignacion(1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
             },
             // ========================================================
             // =============  TAB NUEVO CONTACTO ======================
@@ -4218,9 +4261,8 @@
                 this.fillContactoLibre.cfiltrodescripcion = '';
             },
             limpiarSeguimiento(){
-                this.formNuevoSeguimiento.nidzona = 0;
-                this.formNuevoSeguimiento.nidestadoseguimiento = 0;
-                this.formNuevoSeguimiento.nidtiposeguimiento = 0;
+                this.formNuevoSeguimiento.nidzona = '';
+                this.formNuevoSeguimiento.nidtiposeguimiento = '';
                 this.formNuevoSeguimiento.dfechaseguimiento = '';
                 this.formNuevoSeguimiento.choraseguimiento = '';
                 this.formNuevoSeguimiento.casunto = '';
