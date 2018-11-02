@@ -1408,10 +1408,14 @@
                                                                                     <div class="row">
                                                                                         <label class="col-sm-4 form-control-label">* Tipo Documento</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select v-model="formNuevoContacto.ntpodocumento" class="form-control form-control-sm">
-                                                                                                <option v-for="item in arrayTipoDocumento" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                </option>
-                                                                                            </select>
+                                                                                            <el-select v-model="formNuevoContacto.ntpodocumento" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayTipoDocumento"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1592,10 +1596,14 @@
                                                                                         <div class="row">
                                                                                             <label class="col-sm-4 form-control-label">Estado Civil</label>
                                                                                             <div class="col-sm-8">
-                                                                                                <select v-model="formNuevoContacto.nestadocivil" class="form-control form-control-sm">
-                                                                                                    <option v-for="item in arrayEstadoCivil" :key="item.nIdPar" :value="item.nIdPar" v-text="item.cParNombre">
-                                                                                                    </option>
-                                                                                                </select>
+                                                                                                <el-select v-model="formNuevoContacto.nestadocivil" filterable clearable placeholder="SELECCIONE" >
+                                                                                                    <el-option
+                                                                                                    v-for="item in arrayEstadoCivil"
+                                                                                                    :key="item.nIdPar"
+                                                                                                    :label="item.cParNombre"
+                                                                                                    :value="item.nIdPar">
+                                                                                                    </el-option>
+                                                                                                </el-select>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -3456,21 +3464,27 @@
             llenarComboTpoDocumento(){
                 if(this.formNuevoContacto.ntipopersona == 1)
                 {
-                    var url = this.ruta + '/parametro/GetDocumentoNatural?ngrupoparid=' + 110047
-                                                                            + '&opcion=' + 0;
-                    axios.get(url).then(response => {
+                    var url = this.ruta + '/parametro/GetDocumentoNatural';
+                    axios.get(url, {
+                        params: {
+                            'ngrupoparid': 110047
+                        }
+                    }).then(response => {
                         this.arrayTipoDocumento = response.data;
-                        this.formNuevoContacto.ntpodocumento = 0;
+                        this.formNuevoContacto.ntpodocumento = '';
                     }).catch(error => {
                         console.log(error);
                     });
                 }
                 else{
-                    var url = this.ruta + '/parametro/GetDocumentoJuridica?ngrupoparid=' + 110047
-                                                                                + '&opcion=' + 0;
-                    axios.get(url).then(response => {
+                    var url = this.ruta + '/parametro/GetDocumentoJuridica';
+                    axios.get(url, {
+                        params: {
+                            'ngrupoparid': 110047
+                        }
+                    }).then(response => {
                         this.arrayTipoDocumento = response.data;
-                        this.formNuevoContacto.ntpodocumento = 0;
+                        this.formNuevoContacto.ntpodocumento = '';
                     }).catch(error => {
                         console.log(error);
                     });
@@ -3505,18 +3519,24 @@
                 });
             },
             llenarComboEstadoCivil(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110048
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110048
+                    }
+                }).then(response => {
                     this.arrayEstadoCivil = response.data;
                 }).catch(error => {
                     console.log(error);
                 });
             },
             llenarComboProfesion(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo?ngrupoparid=' + 110049
-                                                                            + '&opcion=' + 0;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110049
+                    }
+                }).then(response => {
                     this.arrayProfesion = response.data;
                 }).catch(error => {
                     console.log(error);
