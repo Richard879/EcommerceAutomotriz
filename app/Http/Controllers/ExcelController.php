@@ -224,7 +224,7 @@ class ExcelController extends Controller
                     'cNombreComercial' => $value[5],
                     'cNombreColor' => $value[6],
                     'nAnioFabricacion' => $value[7],
-                    'nAnioVersion' => $value[8],
+                    'nAnioModelo' => $value[8],
                     'cSimboloMoneda' => $value[9],
                     'fTotalExhibicion' => $value[10]
                 ];

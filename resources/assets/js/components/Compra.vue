@@ -1444,14 +1444,14 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillCompra.dfechainicio,
+                        'dfechafin': this.fillCompra.dfechafin,
+                        'nordencompra': this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
+                        'cnumerovin': this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
-                        'page' : page
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayCompra = response.data.arrayCompra.data;
@@ -1564,6 +1564,7 @@
                 //console.log(e);
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
+                this.arrayExcel = [];
                 //this.textFile = e.target.files[0].name;
             },
             importFileCompra(){
@@ -1754,7 +1755,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(!this.attachment || this.attachment==[] || this.attachment==null){
+                if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 }
                 if(this.mensajeError.length){
@@ -1800,8 +1801,8 @@
                             }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
+                    {
+                    }
                 })
             },
             descargaFormatoCompra(){
@@ -1818,7 +1819,7 @@
                 var url = this.ruta + '/compra/UpdCompraById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCompra: this.formModalCompra.nidcompra,
                     cNumeroVin: this.formModalCompra.cnumerovin,
                     cNumeroMotor: this.formModalCompra.cnumeromotor,
@@ -1874,14 +1875,14 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.fillCompra.dfechainicio,
-                        'dfechafin' : this.fillCompra.dfechafin,
-                        'nordencompra' : nordencompra,
-                        'cnumerovin' : this.fillCompra.cnumerovin,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillCompra.dfechainicio,
+                        'dfechafin': this.fillCompra.dfechafin,
+                        'nordencompra': nordencompra,
+                        'cnumerovin': this.fillCompra.cnumerovin,
                         'nidmarca': this.fillCompra.nidmarca,
                         'nidmodelo': this.fillCompra.nidmodelo,
-                        'page' : page
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayLineaCredito = response.data.arrayLineaCredito.data;
@@ -1948,7 +1949,7 @@
                 var url = this.ruta + '/compra/UpdCompraLineaCreditoById';
                 axios.post(url, {
                     nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     data: this.arrayTempLineaCredito
                 }).then(response => {
                     this.arrayTempLineaCredito = [];
@@ -2049,7 +2050,7 @@
                 this.error = 0;
                 this.mensajeError =[];
                 
-                if(!this.attachment){
+                if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 };
                 if(this.mensajeError.length){
@@ -2112,6 +2113,8 @@
                 }).then(response => {
                     swal('Warrant Operativo registrado');
                     this.arrayForum = [];
+                    this.attachment = [];
+                    this.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                 });

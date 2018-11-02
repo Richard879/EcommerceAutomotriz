@@ -159,50 +159,36 @@
                                                                                 <th>Acciones</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
-                                                                                <th>OC</th>
                                                                                 <th>Línea</th>
                                                                                 <th>Almacén<nav></nav></th>
-                                                                                <th>Nro Reserva</th>
                                                                                 <th>Nro Vin</th>
-                                                                                <th>Forma Pago</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Fab</th>
                                                                                 <th>Año Mod</th>
                                                                                 <th>Moneda</th>
                                                                                 <th>Total</th>
-                                                                                <th>Nro Factura</th>
-                                                                                <th>Fecha Facturado</th>
-                                                                                <th>Fecha Exhibicion</th>
+                                                                                <th>Fecha Reg.</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="exhibicion in arrayExhibicion" :key="exhibicion.nIdExhibicion">
                                                                                 <td>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Anular O/C  {{ exhibicion.nOrdenExhibicion }}</div>
-                                                                                        <i @click="desactivar(exhibicion.nIdExhibicion)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        <div slot="content">Anular {{ exhibicion.cNumeroVin }}</div>
+                                                                                        <i @click="desactivar(exhibicion)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                     </el-tooltip>&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar O/C  {{ exhibicion.nOrdenExhibicion }}</div>
-                                                                                        <i @click="abrirModal('exhibicion','editar', exhibicion)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>
                                                                                 </td>
                                                                                 <td v-text="exhibicion.nIdExhibicion"></td>
                                                                                 <td v-text="exhibicion.cNumeroMes + '-' + exhibicion.cAnio"></td>
-                                                                                <td v-text="exhibicion.nOrdenExhibicion"></td>
                                                                                 <td v-text="exhibicion.cNombreLinea"></td>
                                                                                 <td v-text="exhibicion.cNombreAlmacen"></td>
-                                                                                <td v-text="exhibicion.nNumeroReserva"></td>
                                                                                 <td v-text="exhibicion.cNumeroVin"></td>
-                                                                                <td v-text="exhibicion.cFormaPago"></td>
                                                                                 <td v-text="exhibicion.cNombreComercial"></td>
                                                                                 <td v-text="exhibicion.nAnioFabricacion"></td>
-                                                                                <td v-text="exhibicion.nAnioVersion"></td>
+                                                                                <td v-text="exhibicion.nAnioModelo"></td>
                                                                                 <td v-text="exhibicion.cSimboloMoneda"></td>
                                                                                 <td v-text="exhibicion.fTotalExhibicion"></td>
-                                                                                <td v-text="exhibicion.cNumeroFactura"></td>
-                                                                                <td v-text="exhibicion.dFechaFacturado"></td>
-                                                                                <td v-text="exhibicion.dFechaExhibicion"></td>
+                                                                                <td v-text="exhibicion.dFechaRegistro"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -392,7 +378,7 @@
                                                                                     <td v-text="exhibicion.cNombreComercial"></td>
                                                                                     <td v-text="exhibicion.cNombreColor"></td>
                                                                                     <td v-text="exhibicion.nAnioFabricacion"></td>
-                                                                                    <td v-text="exhibicion.nAnioVersion"></td>
+                                                                                    <td v-text="exhibicion.nAnioModelo"></td>
                                                                                     <td v-text="exhibicion.cSimboloMoneda"></td>
                                                                                     <td v-text="exhibicion.fTotalExhibicion"></td>
                                                                                 </tr>
@@ -570,38 +556,54 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Automotores INKA</h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                            <button type="button" class="close" @click="limpiarFormulario(); cerrarModal()" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div v-if="arrayExhibicionVin.length" class="col-lg-6">
+                                <div v-if="arrayCompraExisteVin.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">ESTOS NUMEROS DE VIN YA SE ECUENTRAN REGISTRADOS</h3>
+                                            <h3 class="h4">ESTOS VIN YA SE ECUENTRAN REGISTRADOS</h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr v-for="exhibicion in arrayExhibicionVin" :key="exhibicion.cNumeroVin">
-                                                        <td v-text="exhibicion.cNumeroVin"></td>
+                                                    <tr v-for="compra in arrayCompraExisteVin" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="arrayExhibicionPrecioLista.length" class="col-lg-6">
+                                <div v-if="arrayCompraPrecioLista.length" class="col-sm-4">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">ESTAS COMPRAS NO COINCIDEN CON LA LISTA DE PRECIOS</h3>
+                                            <h3 class="h4">ESTAS COMPRAS NO TIENEN EL FORMATO</h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-striped table-sm">
                                                 <tbody>
-                                                    <tr v-for="exhibicion in arrayExhibicionPrecioLista" :key="exhibicion.cNumeroVin">
-                                                        <td v-text="exhibicion.cNumeroVin"></td>
+                                                    <tr v-for="compra in arrayCompraPrecioLista" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="arrayCompraNombreComercial.length" class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">NO EXISTEN NOMBRE COMERCIAL EN BD</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-sm">
+                                                <tbody>
+                                                    <tr v-for="compra in arrayCompraNombreComercial" :key="compra.cNumeroVin">
+                                                        <td v-text="compra.cNumeroVin"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -611,7 +613,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="limpiarFormulario(); cerrarModal()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -711,8 +713,9 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
+                canio: '',
+                cmes: '',
+                nidcronograma: 0,
                 // ============================================
                 // ============ BUSCAR EXHIBICION =================
                 fillExhibicion:{
@@ -750,8 +753,12 @@
                     nordencompra: ''
                 },
                 // ============ VARIABLES DE RESPUESTA =================
-                arrayExhibicionPrecioLista: [],
-                arrayExhibicionVin: [],
+                arrayCompraPrecioLista: [],
+                arrayCompraExisteVin: [],
+                arrayCompraNombreComercial: [],
+                arrayTempVinExiste: [],
+                arrayTempVinListaPrecio:[],
+                arrayTempVinNombreComercial: [],
                 // ============================================================
                 // =========== TAB LINEA CREDITO ============
                 arrayLineaCredito: [],
@@ -909,14 +916,13 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
-                        'dfechainicio' : this.fillExhibicion.dfechainicio,
-                        'dfechafin' : this.fillExhibicion.dfechafin,
-                        'nordencompra' : this.fillExhibicion.nordencompra == '' ? 0 : this.fillExhibicion.nordencompra,
-                        'cnumerovin' : this.fillExhibicion.cnumerovin,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillExhibicion.dfechainicio,
+                        'dfechafin': this.fillExhibicion.dfechafin,
                         'nidmarca': this.fillExhibicion.nidmarca,
                         'nidmodelo': this.fillExhibicion.nidmodelo,
-                        'page' : page
+                        'cnumerovin': this.fillExhibicion.cnumerovin,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayExhibicion = response.data.arrayExhibicion.data;
@@ -983,11 +989,33 @@
             // ====================================================
             // =============  GENERAR EXHIBICION ======================
             tabGenerarExhibicion(){
+                this.obtenerCronogramaCompraActivo();
                 this.limpiarFormulario();
+            },
+            obtenerCronogramaCompraActivo(){
+                var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
+
+                axios.get(url,{
+                    params: {
+                        'nidempresa': 1300011
+                    }
+                }).then(response => {
+                    this.canio = response.data.arrayCronograma[0].cAnio;
+                    this.cmes = response.data.arrayCronograma[0].cMes;
+                    this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             getFile(e){
                 let selectFile = e.target.files[0];
                 this.attachment = selectFile;
+                this.arrayExcel = [];
             },
             importFileExhibicion(){
                 if(this.validarReadFileExhibicion()){
@@ -1085,28 +1113,48 @@
                 axios.post(url, {
                     nIdEmpresa: 1300011,
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
-                    nIdCronograma: 0,
+                    nIdCronograma: parseInt(this.nidcronograma),
                     nIdProveedor: parseInt(this.formExhibicion.nidproveedor),
                     data: this.arrayExcel
                 }).then(response => {
                     let me = this;
 
-                    var arrayTempVinExiste = [];
-                    var arrayTempVinListaPrecio = [];
+                    me.arrayTempVinExiste = [];
+                    me.arrayTempVinListaPrecio = [];
+                    me.arrayTempVinNombreComercial = [];
+                    me.arrayCompraExisteVin = [];
+                    me.arrayCompraPrecioLista = [];
+                    me.arrayCompraNombreComercial = [];
 
-                    if(response.data.arrayVinExiste.length > 0)
+                    if(response.data.arrayVinExiste.length)
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
-                            me.arrayExhibicionVin.push({
+                            me.arrayCompraExisteVin.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayFormato.length){
+                        me.arrayTempVinListaPrecio = response.data.arrayFormato;
+                        me.arrayTempVinListaPrecio.map(function(value, key) {
+                            me.arrayCompraPrecioLista.push({
+                                cNumeroVin: me.arrayTempVinListaPrecio[key]
+                            });
+                        });
+                    }
+                    if(response.data.arrayNombreComercial.length){
+                        me.arrayTempVinNombreComercial = response.data.arrayNombreComercial;
+                        me.arrayTempVinNombreComercial.map(function(value, key) {
+                            me.arrayCompraNombreComercial.push({
+                                cNumeroVin: me.arrayTempVinNombreComercial[key]
                             });
                         });
                     }
                     
                     $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
-                    if(me.arrayExhibicionVin.length > 0){
+                    if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
                         me.attachment = [];
@@ -1143,7 +1191,8 @@
             validarReadFileExhibicion(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(!this.attachment){
+
+                if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 };
                 if(this.mensajeError.length){
@@ -1151,7 +1200,7 @@
                 }
                 return this.error;
             },
-            desactivar(nIdExhibicion){
+            desactivar(exhibicion){
                 swal({
                     title: 'Estas seguro de eliminar esta Exhibicion?',
                     type: 'warning',
@@ -1161,24 +1210,36 @@
                     confirmButtonText: 'Si, Desactivar!',
                     cancelButtonText: 'No, cancelar!'
                 }).then((result) => {
-                    var url = this.ruta + '/exhibicion/desactivar';
-                    axios.put(url, {
-                        nIdExhibicion: nIdExhibicion
-                    }).then(response => {
-                        swal(
-                            'Desactivado!',
-                            'El registro fue eliminado.'
-                        );
-                        this.listarExhibicions(1);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                location.reload('0');
+                    if (result.value) {
+                        var url = this.ruta + '/exhibicion/desactivar';
+                        axios.put(url, {
+                            nIdExhibicion: exhibicion.nIdExhibicion
+                        }).then(response => {
+                            if(response.data[0].nFlagMsje == 1){
+                                swal(
+                                    'Desactivado!',
+                                    response.data[0].cMensaje
+                                );
                             }
-                        }
-                    });
+                            else{
+                                swal(
+                                    'Alerta!',
+                                    response.data[0].cMensaje
+                                );
+                            }
+                            this.listarExhibicions(1);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel)
+                    {
+                    }
                 })
             },
             descargaFormatoExhibicion(){

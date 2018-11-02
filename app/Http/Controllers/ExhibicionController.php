@@ -12,6 +12,40 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExhibicionController extends Controller
 {
+    public function GetExhibicion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $dFechaInicio = $request->dfechainicio;
+        $dFechaFin = $request->dfechafin;
+        $cNumeroVin = $request->cnumerovin;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
+        
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+
+
+
+        $arrayExhibicion = DB::select('exec [usp_Exhibicion_GetExhibicion] ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $dFechaInicio,
+                                                                $dFechaFin,
+                                                                $nIdMarca,
+                                                                $nIdModelo,
+                                                                $cNumeroVin
+                                                            ]);
+
+        $arrayExhibicion = Parametro::arrayPaginator($arrayExhibicion, $request);
+        return ['arrayExhibicion'=>$arrayExhibicion];
+    }
+
     public function SetExhibicion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -21,7 +55,8 @@ class ExhibicionController extends Controller
             $detalles = $request->data;
 
             $arrayVinExiste = [];
-            $arrayPrecioLista = [];
+            $arrayFormato = [];
+            $arrayNombreComercial = [];
 
             foreach($detalles as $ep=>$det)
             {
@@ -38,7 +73,7 @@ class ExhibicionController extends Controller
                                                                 $det['cNombreComercial'],
                                                                 $det['cNombreColor'],
                                                                 $det['nAnioFabricacion'],
-                                                                $det['nAnioVersion'],
+                                                                $det['nAnioModelo'],
                                                                 $det['cSimboloMoneda'],
                                                                 $det['fTotalExhibicion'],
                                                                 Auth::user()->id
@@ -47,17 +82,32 @@ class ExhibicionController extends Controller
                     array_push($arrayVinExiste,$objCompra[0]->cNumeroVin);
                 }
                 if($objCompra[0]->nFlagMsje == 2){
-                    array_push($arrayPrecioLista,$objCompra[0]->cNumeroVin);
+                    array_push($arrayFormato,$objCompra[0]->cNumeroVin);
+                }
+                if($objCompra[0]->nFlagMsje == 3){
+                    array_push($arrayNombreComercial,$objCompra[0]->cNumeroVin);
                 }
             }
             $data = [
                 'arrayVinExiste'=>$arrayVinExiste,
-                'arrayPrecioLista'=>$arrayPrecioLista
+                'arrayFormato'=>$arrayFormato,
+                'arrayNombreComercial'=>$arrayNombreComercial
             ];
             DB::commit();
             return response()->json($data);            
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function desactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $arrayExhibicion = DB::select('exec [usp_Exhibicion_DesactivaById] ?, ?',
+                                                [   $request->nIdExhibicion,
+                                                    Auth::user()->id
+                                                ]);
+        return response()->json($arrayExhibicion);
     }
 }

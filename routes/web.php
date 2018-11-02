@@ -116,6 +116,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/importFileLeads', 'ExcelController@importFileLeads');
     Route::post('/gescontacto/readFileLeads', 'ExcelController@readFileLeads');
     Route::post('/gescontacto/SetLeads', 'GestionContactoController@SetLeads');
+    Route::get('/gescontacto/GetEstadoAsignacionSeguimiento', 'GestionContactoController@GetEstadoAsignacionSeguimiento');
+    Route::put('/gescontacto/desactivarSeguimiento', 'GestionContactoController@desactivarSeguimiento');
 
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
@@ -267,6 +269,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/exhibicion/importFileExhibicion','ExcelController@importFileExhibicion');
     Route::post('/exhibicion/readFileExhibicion', 'ExcelController@readFileExhibicion');
     Route::post('/exhibicion/SetExhibicion', 'ExhibicionController@SetExhibicion');
+    Route::get('/exhibicion/GetExhibicion', 'ExhibicionController@GetExhibicion');
+    Route::put('/exhibicion/desactivar','ExhibicionController@desactivar');
 
     Route::get('/cronograma/GetCronogramaVentaActivo','CronogramaController@GetCronogramaVentaActivo');
     Route::get('/cronograma/GetCronogramaCompraActivo','CronogramaController@GetCronogramaCompraActivo');
