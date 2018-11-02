@@ -300,6 +300,12 @@
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
                                                                             </template>
+                                                                            <template v-if="deposito.cFlagTipoCambioEspecial == 'SI'">
+                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <div slot="content">Tipo Cambio Especial {{ deposito.cNumeroPedido }}</div>
+                                                                                    <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
+                                                                                </el-tooltip>
+                                                                            </template>
                                                                         </td>
                                                                         <td v-text="deposito.cNombreBanco"></td>
                                                                         <td v-text="deposito.nNumeroOperacion"></td>
@@ -336,6 +342,111 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal CONFIGURAR EL TIPO CAMBIO ESPECIAL -->
+            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">TIPO CAMBIO ESPECIAL : {{ fillDepositoTCEspecial.fTipoCambioEspecial }} </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="col-lg-12">
+                                                <vs-divider border-style="solid" color="dark">IMPORTE ACTUAL</vs-divider>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN SOLES</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            S/. {{ fillDepositoTCEspecial.fMontoOrigenSoles }}
+                                                        </div>
+                                                    </el-col>
+                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN DOLARES</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            USD/. {{ fillDepositoTCEspecial.fMontoOrigenDolares }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
+                                                <vs-divider border-style="solid" color="dark"/>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6"><div class="grid-content bg-purple">TIPO CAMBIO ESPECIAL</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            <input
+                                                                type="number"
+                                                                class="form-control form-control-sm"
+                                                                min="0"
+                                                                placeholder="Ingrese Tipo de Cambio Especial"
+                                                                v-model="fillDepositoTCEspecial.flagfTipoCambioEspecial"
+                                                                @keyup="actualizarMontoSolesNuevo(fillDepositoTCEspecial.flagfTipoCambioEspecial)"/>
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
+                                                <vs-divider border-style="solid" color="dark">IMPORTE NUEVO + TCE</vs-divider>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RESULTANTE EN SOLES</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            S/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoResultanteSoles)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RESULTANTE EN DOLARES</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            USD/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoResultanteDolares)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
+                                                <vs-divider border-style="solid" color="dark"/>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-5">
+                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarDepositoPorTCE">
+                                                            <i class="fa fa-save"></i> REALIZAR CAMBIO
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModalSinPaginacion">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -366,7 +477,7 @@
                 arrayEstadoPedido: [],
                 arrayMarca: [],
                 arrayModelo: [],
-                // ======================================================
+                // =============================================================
                 // =========== VARIABLES TAB DISTRUBUIR DEPOSITOS ==============
                 formDistribuirDeposito: {
                     nidcabecerapedido: 0,
@@ -374,6 +485,19 @@
                     cnombrecontacto: ''
                 },
                 arrayDepositosPorPedido: [],
+                // =============================================================
+                // =========== VARIABLES TAB REALIZAR TCE ======================
+                fillDepositoTCEspecial: {
+                    deposito: '',
+                    nIdDepositoPedido: 0,
+                    nIdMonedaOrigen: 0,
+                    flagfTipoCambioEspecial : 0,
+                    fTipoCambioEspecial: 0,
+                    fMontoOrigenDolares: 0,
+                    fMontoOrigenSoles: 0,
+                    fMontoResultanteDolares: 0,
+                    fMontoResultanteSoles: 0
+                },
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -477,7 +601,6 @@
             },
             llenarEstadoPedido(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110063
@@ -495,7 +618,6 @@
             },
             llenarComboMarcas(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
-
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : 110032
@@ -513,7 +635,6 @@
             },
             llenarComboModelos(){
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
-
                 axios.get(url,{
                     params: {
                         'nidmarca' : this.fillPedido.nidmarca
@@ -723,16 +844,110 @@
                 })
             },
             // =================================================================
+            // METODOS MODAL ACTUALIZAR TCE
+            // =================================================================
+            cargarTipoCambioEspecial(data){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar': 1300356,
+                        'ctipoparametro': 'P'
+                    }
+                }).then(response => {
+                    this.fillDepositoTCEspecial.deposito = data;
+                    this.fillDepositoTCEspecial.nIdDepositoPedido  = data.nIdDepositoPedido;//Id del Deposito
+                    this.fillDepositoTCEspecial.nIdMonedaOrigen  = data.nIdMonedaOrigen;//Tipo de Moneda
+                    this.fillDepositoTCEspecial.fMontoOrigenDolares  = ((parseFloat(data.fMontoDolares)).toFixed(2));//Monto Actual en $
+                    this.fillDepositoTCEspecial.fMontoOrigenSoles    = ((parseFloat(data.fMontoSoles)).toFixed(2));//Monto Actual en S/
+                    this.fillDepositoTCEspecial.flagfTipoCambioEspecial  = response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
+                    this.fillDepositoTCEspecial.fTipoCambioEspecial  = response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
+
+                    //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
+                    if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {
+                        this.fillDepositoTCEspecial.fMontoResultanteSoles = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenDolares) * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoOrigenDolares;
+                    } else {
+                        this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoResultanteSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        this.fillDepositoTCEspecial.fMontoResultanteSoles = this.fillDepositoTCEspecial.fMontoOrigenSoles;
+                    }
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarMontoSolesNuevo(value){
+                let me = this;
+                if(value == '') {
+                    this.fillDepositoTCEspecial.flagfTipoCambioEspecial = 1;//Seta automaticamente a 1
+
+                    //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
+                    if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {
+                        this.fillDepositoTCEspecial.fMontoResultanteSoles = this.fillDepositoTCEspecial.fMontoOrigenDolares * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                    } else {
+                        this.fillDepositoTCEspecial.fMontoOrigenDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                    }
+                    me.$forceUpdate();
+                }
+                //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
+                if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {
+                    this.fillDepositoTCEspecial.fMontoResultanteSoles = this.fillDepositoTCEspecial.fMontoOrigenDolares * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+
+                } else {
+                    this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                }
+                me.$forceUpdate();
+            },
+            actualizarDepositoPorTCE(){
+                var url = this.ruta + '/deposito/SetCambiarMontosDepositoByTCE';
+                axios.put(url, {
+                    'nIdDepositoPedido': this.fillDepositoTCEspecial.nIdDepositoPedido,
+                    'fMontoResultanteDolares': this.fillDepositoTCEspecial.fMontoResultanteDolares,
+                    'fMontoResultanteSoles': this.fillDepositoTCEspecial.fMontoResultanteSoles,
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        swal('Monto del Deposito Actualizado');
+                        this.cerrarModalSinPaginacion();
+                        this.limpiarDepositoTCEspecial();
+                        this.distribuirDeposito(this.fillDepositoTCEspecial.deposito);
+                    }else{
+                        swal('Ocurrio un error al actualizar el nuevo monto del Deposito');
+                    }
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            limpiarDepositoTCEspecial(){
+                this.fillDepositoTCEspecial.deposito = '';
+                this.fillDepositoTCEspecial.nIdDepositoPedido = 0;
+                this.fillDepositoTCEspecial.nIdMonedaOrigen = 0;
+                this.fillDepositoTCEspecial.flagfTipoCambioEspecial = 0;
+                this.fillDepositoTCEspecial.fTipoCambioEspecial = 0;
+                this.fillDepositoTCEspecial.fMontoOrigenDolares = 0;
+                this.fillDepositoTCEspecial.fMontoOrigenSoles = 0;
+                this.fillDepositoTCEspecial.fMontoResultanteDolares = 0;
+                this.fillDepositoTCEspecial.fMontoResultanteSoles = 0;
+            },
+            // =================================================================
             // METODOS GENERICOS
             // =================================================================
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
-                    case "vehiculo":
+                    case "TipoCambioEspecial":
                     {
                         switch(accion){
-                            case 'buscar':
+                            case 'abrir':
                             {
-                                this.listarVehiculo(1);
+                                this.cargarTipoCambioEspecial(data);
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 break;
@@ -767,12 +982,11 @@
                 this.limpiarPaginacion();
                 this.limpiarPaginacionModal();
             },
-            cerrarModalSolicitud(){
+            cerrarModalSinPaginacion(){
                 this.modal = 0;
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
-                this.arrayArchivosAdjuntos = [];
             },
             limpiarFormulario(){
                 this.fillPedido.dfechainicio = '';

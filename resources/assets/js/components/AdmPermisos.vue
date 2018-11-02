@@ -155,7 +155,9 @@
                                                     <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
                                                         <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
                                                             <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
-                                                            {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }} <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template"></li>
+                                                                {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }}
+                                                                <input type="checkbox" v-model="arrayCheckSubPermisos[index2]" class="checkbox-template">
+                                                            </li>
                                                         </ul>
                                                     </li>
                                                 </ul>
