@@ -1589,7 +1589,7 @@
                 arrayAnioModelo: [],
                 arrayEstadoCivil: [],
                 arrayProfesion: [],
-                arrayProveedor: [],
+                
                 arrayReferenciaVehiculo: [],
                 arraySegReferenciavehiculo: [],
                 arrayContacto: [],
@@ -1607,9 +1607,14 @@
                 arrayFormaPago: [],
                 arraySeguimiento: [],
                 arrayTipoDocumentoNaturales: [],
+                // ============================================================
+                // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
+                arrayProveedor: [],
+                // ============================================================
+                // =========== VARIABLES MIS CONTACTOS ============
                 fillMisContactos:{
                     ntipopersona: 1,
                     cnrodocumento: '',
@@ -1656,6 +1661,8 @@
                     cmailprincipal: '',
                     ncelular : ''
                 },
+                // =============================================================
+                // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
                     ctipopersona: '',
                     ccontacto: '',
@@ -1665,6 +1672,8 @@
                     cemail: '',
                     nidpersona: 0
                 },
+                // =============================================================
+                // ============== VARIABLES TAB NUEVO SEGUIMIENTO ==============
                 formNuevoSeguimiento:{
                     nidzona: '',
                     nidestadoseguimiento: 0,
@@ -1677,6 +1686,7 @@
                     nidasignacioncontactovendedor: 0,
                     cestadoseguimiento: ''
                 },
+                // =============================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,

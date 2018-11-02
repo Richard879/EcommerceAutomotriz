@@ -2371,18 +2371,6 @@
             return {
                 cempresa: 'SAISAC',
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                arrayReferenciaVehiculo: [],
-                arraySegReferenciavehiculo: [],
-                arrayContacto: [],
-                arrayTipoPersona: [
-                    { value: '1', text: 'NATURAL'},
-                    { value: '2', text: 'JURIDICA'}
-                ],
-                arrayEstadoSeguimiento: [],
-                arrayTipoSeguimiento: [],
-                arrayFormaPago: [],
-                arraySeguimiento: [],
-                arrayTipoDocumentoNaturales: [],
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
@@ -2402,12 +2390,17 @@
                     cvendedornombre: ''
                 },
                 // ============================================================
-                // =========== VARIABLES BUSCAR CONTACTO ============
+                // =========== VARIABLES MIS CONTACTOS ============
                 fillMisContactos:{
                     ntipopersona: 1,
                     cnrodocumento: '',
                     cfiltrodescripcion: ''
                 },
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],
+                arrayContacto: [],
                 // =============================================================
                 // =========== VARIABLES TAB CONTACTOS POR VENDEDOR ============
                 fillContactoPorVendedor:{
@@ -2487,6 +2480,14 @@
                     cmailprincipal: '',
                     ncelular : ''
                 },
+                arrayTipoDocumentoNaturales: [],
+                arrayReferenciaVehiculo: [],
+                arrayTipoDocumento: [],
+                arrayEstadoCivil: [],
+                arrayProfesion: [],
+                arrayDptos:[],
+                arrayProv : [],
+                arrayDist: [],
                 vistaDatosPersonaNatural: 1,
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
@@ -2499,7 +2500,12 @@
                     cemail: '',
                     nidpersona: 0
                 },
-                arrayZona: [],
+                arraySegReferenciavehiculo: [],
+                arrayLinea: [],
+                arrayMarca: [],
+                arrayModelo: [],
+                arrayAnioFabricacion: [],
+                arrayAnioModelo: [],
                 // =============================================================
                 // ============== VARIABLES TAB NUEVO SEGUIMIENTO ==============
                 formNuevoSeguimiento:{
@@ -2514,17 +2520,11 @@
                     nidasignacioncontactovendedor: 0,
                     cestadoseguimiento: ''
                 },
-                arrayTipoDocumento: [],
-                arrayLinea: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                arrayAnioFabricacion: [],
-                arrayAnioModelo: [],
-                arrayEstadoCivil: [],
-                arrayProfesion: [],
-                arrayDptos:[],
-                arrayProv : [],
-                arrayDist: [],
+                arraySeguimiento: [],
+                arrayZona: [],
+                arrayEstadoSeguimiento: [],
+                arrayTipoSeguimiento: [],
+                arrayFormaPago: [],
                 // =============================================================
                 // ============== VARIABLES TAB LEADS ==============
                 arrayLeads: [],
