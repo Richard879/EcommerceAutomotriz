@@ -424,6 +424,8 @@
                                                                                         <th>Modelo</th>
                                                                                         <th>Año Fab</th>
                                                                                         <th>Año Modelo</th>
+                                                                                        <th>Fecha Inicio</th>
+                                                                                        <th>Fecha Fin</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -449,6 +451,8 @@
                                                                                         <td v-text="r.cModeloNombre"></td>
                                                                                         <td v-text="r.nAnioFabricacion"></td>
                                                                                         <td v-text="r.nAnioModelo"></td>
+                                                                                        <td v-text="r.dFechaInicioAsignacionContacto"></td>
+                                                                                        <td v-text="r.dFechaFinAsignacionContacto"></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
