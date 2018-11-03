@@ -378,7 +378,7 @@ class CotizacionController extends Controller
         return ['arrayCotizacionesPendientes'=>$arrayCotizacionesPendientes];
     }
 
-    public function GetLstCotizacionPendienteADV(Request $request)
+    /*public function GetLstCotizacionPendienteADV(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -407,7 +407,7 @@ class CotizacionController extends Controller
 
         $arrayMisCotizacionesPendientes = ParametroController::arrayPaginator($arrayMisCotizacionesPendientes, $request);
         return ['arrayMisCotizacionesPendientes'=>$arrayMisCotizacionesPendientes];
-    }
+    }*/
 
     public function GetDistribucionByElementoVenta(Request $request)
     {

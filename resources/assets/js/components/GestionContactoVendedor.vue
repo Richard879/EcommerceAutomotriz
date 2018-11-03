@@ -1578,35 +1578,7 @@
         data(){
             return {
                 cempresa: 'SAISAC',
-                csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                arrayTipoDocumento: [],
-                arrayLinea: [],
-                arrayMarca: [],
-                arrayModelo: [],
-                arrayAnioFabricacion: [],
-                arrayAnioModelo: [],
-                arrayEstadoCivil: [],
-                arrayProfesion: [],
-                
-                arrayReferenciaVehiculo: [],
-                arraySegReferenciavehiculo: [],
-                arrayContacto: [],
-                arrayContactoCarteraMes: [],
-                arrayDptos:[],
-                arrayProv : [],
-                arrayDist: [],
-                arrayTipoPersona: [
-                    { value: '1', text: 'NATURAL'},
-                    { value: '2', text: 'JURIDICA'}
-                ],
-                arrayZona: [],
-                arrayEstadoSeguimiento: [],
-                arrayTipoSeguimiento: [],
-                arrayFormaPago: [],
-                arraySeguimiento: [],
-                arrayTipoDocumentoNaturales: [],
+                csucursal: sessionStorage.getItem("cNombreSucursal"),             
                 // ============================================================
                 // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
@@ -1620,6 +1592,14 @@
                     cnrodocumento: '',
                     cfiltrodescripcion: ''
                 },
+                arrayTipoPersona: [
+                    { value: '1', text: 'NATURAL'},
+                    { value: '2', text: 'JURIDICA'}
+                ],   
+                arrayContacto: [],
+                // ============================================================
+                // =========== VARIABLES CARTERA MES ============
+                arrayContactoCarteraMes: [],
                 // =============================================================
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
@@ -1661,6 +1641,15 @@
                     cmailprincipal: '',
                     ncelular : ''
                 },
+                arrayTipoDocumentoNaturales: [],
+                arrayReferenciaVehiculo: [],
+                arrayTipoDocumento: [],
+                arrayEstadoCivil: [],
+                arrayProfesion: [],
+                arrayDptos:[],
+                arrayProv : [],
+                arrayDist: [],
+                vistaDatosPersonaNatural: 1,
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
@@ -1672,6 +1661,12 @@
                     cemail: '',
                     nidpersona: 0
                 },
+                arraySegReferenciavehiculo: [],
+                arrayLinea: [],
+                arrayMarca: [],
+                arrayModelo: [],
+                arrayAnioFabricacion: [],
+                arrayAnioModelo: [],
                 // =============================================================
                 // ============== VARIABLES TAB NUEVO SEGUIMIENTO ==============
                 formNuevoSeguimiento:{
@@ -1686,6 +1681,11 @@
                     nidasignacioncontactovendedor: 0,
                     cestadoseguimiento: ''
                 },
+                arraySeguimiento: [],
+                arrayZona: [],
+                arrayEstadoSeguimiento: [],
+                arrayTipoSeguimiento: [],
+                arrayFormaPago: [],
                 // =============================================================
                 pagination: {
                     'total': 0,
@@ -1712,8 +1712,7 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                vistaModal: 0,
-                vistaDatosPersonaNatural: 1
+                vistaModal: 0
             }
         },
         computed:{
@@ -1885,16 +1884,6 @@
                 this.TabSegDatosContacto();
                 this.cargarTabSegDatosContacto(nTipoPersona);
             },
-            TabSegDatosContacto(){
-                $('#Tab111').addClass('nav-link active');
-                $('#Tab222').removeClass('nav-link active');
-                $('#Tab222').addClass("nav-link disabled");
-                $('#Tab333').removeClass('nav-link active');
-                $('#Tab333').addClass('nav-link disabled');
-                $('#TabSegDatosContacto').addClass('in active show');
-                $('#TabSegReferenciaVehiculo').removeClass('in active show');
-                $('#TabSegSeguimiento').removeClass('in active show');
-            },
             cargarTabSegDatosContacto(nTipoPersona){
                 if(nTipoPersona == "1")
                 {
@@ -1936,6 +1925,16 @@
                         console.log(error);
                     });
                 }
+            },
+            TabSegDatosContacto(){
+                $('#Tab111').addClass('nav-link active');
+                $('#Tab222').removeClass('nav-link active');
+                $('#Tab222').addClass("nav-link disabled");
+                $('#Tab333').removeClass('nav-link active');
+                $('#Tab333').addClass('nav-link disabled');
+                $('#TabSegDatosContacto').addClass('in active show');
+                $('#TabSegReferenciaVehiculo').removeClass('in active show');
+                $('#TabSegSeguimiento').removeClass('in active show');
             },
             activarTab222(){
                 if(this.validarTab222()){
