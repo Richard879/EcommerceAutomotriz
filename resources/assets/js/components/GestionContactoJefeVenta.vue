@@ -1085,11 +1085,13 @@
                                                                                                     <th>Modelo</th>
                                                                                                     <th>Año Fab</th>
                                                                                                     <th>Año Modelo</th>
+                                                                                                    <th>Fecha Inicio</th>
+                                                                                                    <th>Fecha Fin</th>
                                                                                                     <th>Acciones</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                <tr v-for="r in arraySegReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
+                                                                                                <tr v-for="r in arraySegReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto" :style="r.cAsignacionVehiculoEstado=='I' ? 'color:red' : ''">
                                                                                                     <td v-text="r.nIdReferenciaVehiculoContacto"></td>
                                                                                                     <td v-text="r.cProveedorNombre"></td>
                                                                                                     <td v-text="r.cLineaNombre"></td>
@@ -1097,6 +1099,8 @@
                                                                                                     <td v-text="r.cModeloNombre"></td>
                                                                                                     <td v-text="r.nAnioFabricacion"></td>
                                                                                                     <td v-text="r.nAnioModelo"></td>
+                                                                                                    <td v-text="r.dFechaInicioAsignacionContacto"></td>
+                                                                                                    <td v-text="r.dFechaFinAsignacionContacto"></td>
                                                                                                     <td>
                                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                             <div slot="content">Nuevo Seguimiento {{ r.cMarcaNombre + ' ' + r.cModeloNombre }}</div>
