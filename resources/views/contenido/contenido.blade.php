@@ -4,7 +4,7 @@
         <dashBoard></dashBoard>
     </template>
     <template v-if="menu==1300298">
-        <permisos :ruta="ruta"></permisos>
+        <permisos :ruta="ruta" @cabecera="reiniciaMenu"></permisos>
     </template>
     <template v-if="menu==1300261">
         <elementoventa :ruta="ruta"></elementoventa>
