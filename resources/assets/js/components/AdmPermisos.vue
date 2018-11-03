@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">Administración de Permisos</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Administración de Permisos</h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">
@@ -30,12 +30,12 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Sucursal</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillPuga.nidsucursal" filterable clearable placeholder="SELECCIONE" >
+                                                        <el-select v-model="fillPuga.nidsucursal" filterable clearable placeholder="SELECCIONE UNA SUCURSAL" >
                                                             <el-option
-                                                            v-for="item in arraySucursal"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
+                                                                v-for="item in arraySucursal"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -47,7 +47,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Apellidos</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="fillPuga.cdescripcion" @keyup.enter="listarUsuarios(1)" class="form-control form-control-sm" placeholder="">
+                                                        <input type="text" v-model="fillPuga.cdescripcion" @keyup.enter="listarUsuarios(1)" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,7 +152,8 @@
                                         <div class="col-lg-6"  style="max-height: 515px; overflow-x: auto;">
                                             <div id="lsttreegrupo">
                                                 <ul v-for="(permiso, index1) in arrayPermisos" :key="permiso.nIdPar">
-                                                    <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }} <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
+                                                    <li>{{ permiso.cParJerarquia + ' ' +  permiso.cParNombre }}
+                                                        <input type="checkbox" v-model="arrayCheckPermisos[index1]" class="checkbox-template">
                                                         <ul v-for="(subpermiso, index2) in arraySubPermisos" :key="subpermiso.nIdPar">
                                                             <li v-if="subpermiso.nCanJerarquia==permiso.cParJerarquia">
                                                                 {{ subpermiso.cParJerarquia + ' ' + subpermiso.cParNombre }}
@@ -204,104 +205,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" v-if="accionmodal==2" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <form v-on:submit.prevent class="form-horizontal">
-                                <div class="container-fluid">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores();">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr/>
-                                            <template v-if="arrayProveedor.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                        <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                        <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                    </el-tooltip>
-                                                                </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </template>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </transition>
 </template>
@@ -326,8 +229,8 @@
                     nidusuario: 0
                 },
                 arrayTemproralPermisos: [],
-                arrayPermisos: [],
                 arrayTemporalSubPermisos: [],
+                arrayPermisos: [],
                 arraySubPermisos: [],
                 arrayCheckPermisos: [],
                 arrayCheckSubPermisos: [],
@@ -433,11 +336,17 @@
                 });
             },
             listarUsuarios(page){
+                if(this.validarBuscarUsuario()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
                 var url = this.ruta + '/puga/GetLstUsuarios';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': this.fillPuga.nidempresa,
                         'nidsucursal': this.fillPuga.nidsucursal,
                         'cdescripcion': this.fillPuga.cdescripcion,
                         'page' : page
@@ -445,11 +354,11 @@
                 }).then(response => {
                     this.arrayUsuarios = response.data.arrayUsuarios.data;
                     this.pagination.current_page =  response.data.arrayUsuarios.current_page;
-                    this.pagination.total = response.data.arrayUsuarios.total;
+                    this.pagination.total       = response.data.arrayUsuarios.total;
                     this.pagination.per_page    = response.data.arrayUsuarios.per_page;
                     this.pagination.last_page   = response.data.arrayUsuarios.last_page;
                     this.pagination.from        = response.data.arrayUsuarios.from;
-                    this.pagination.to           = response.data.arrayUsuarios.to;
+                    this.pagination.to          = response.data.arrayUsuarios.to;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -463,12 +372,25 @@
                 this.pagination.current_page=page;
                 this.listarUsuarios(page);
             },
+            validarBuscarUsuario(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.fillPuga.nidsucursal){
+                    this.mensajeError.push('Debe Seleccionar una Sucursal, es un campo Obligatorio');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             listarPermisos(nlenjerarquia){
                 this.mostrarProgressBar();
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': this.fillPuga.nidempresa,
                         'nidsucursal': this.fillPuga.nidsucursal,
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
@@ -489,7 +411,7 @@
                 var url = this.ruta + '/puga/GetListPermisosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': this.fillPuga.nidempresa,
                         'nidsucursal': this.fillPuga.nidsucursal,
                         'nidusuario': this.formPuga.nidusuario,
                         'nlenjerarquia': nlenjerarquia
@@ -526,8 +448,8 @@
                 me.arrayTemproralPermisos = [];
 
                 me.arrayPermisos.map(function(value, key) {
-                    if(me.arrayCheckPermisos[key] == true)
-                    {
+                    //Recorre los Permisos que esten activos
+                    if(me.arrayCheckPermisos[key] == true) {
                         me.arrayTemproralPermisos.push({
                                 nIdMenu: value.nIdPar
                         });
@@ -535,8 +457,8 @@
                 });
 
                 me.arraySubPermisos.map(function(value, key) {
-                    if(me.arrayCheckSubPermisos[key] == true)
-                    {
+                    //Recorre los SubPermisos que esten activos
+                    if(me.arrayCheckSubPermisos[key] == true) {
                         me.arrayTemproralPermisos.push({
                                 nIdMenu: value.nIdPar
                         });
@@ -547,7 +469,7 @@
             eliminarPermisos(){
                 var url = this.ruta + '/puga/DeletePermisosByUsuario';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
+                    'nIdEmpresa': this.fillPuga.nidempresa,
                     'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario
@@ -571,14 +493,18 @@
                 this.mostrarProgressBar();
                 var url = this.ruta + '/puga/SetPermisosByUsuario';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
+                    'nIdEmpresa': this.fillPuga.nidempresa,
                     'nIdSucursal': this.fillPuga.nidsucursal,
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario,
                     'arrayData':   this.arrayTemproralPermisos
                 }).then(response => {
                     swal('Permisos Registrados');
-                    this.$emit('cabecera', sessionStorage.getItem("nIdSucursal"));
+                    // Para emitir eventos fuera del Componente primero
+                    // El debe pasar como puente en el Componente
+                    // De Igual Manera para recibir eventos hacia el Componente
+                    // Primero debe pasar por el Componente
+                    // this.$emit('cabecera', sessionStorage.getItem("nIdSucursal"));
                     this.$bus.$emit('event', this.fillPuga);
                     $("#myBar").hide();
                 }).catch(error => {
@@ -605,22 +531,6 @@
                 this.modal = 0
                 this.error = 0,
                 this.mensajeError = ''
-            },
-            abrirModal(modelo, accion, data =[]){
-                switch(modelo){
-                    case 'proveedor':
-                    {
-                        switch(accion){
-                            case 'buscar':
-                            {
-                                this.accionmodal=2;
-                                this.modal = 1;
-                                this.listarProveedores(1);
-                                break;
-                            }
-                        }
-                    }
-                }
             },
             abrirFormulario(modelo, accion, data =[]){
                 switch(modelo){

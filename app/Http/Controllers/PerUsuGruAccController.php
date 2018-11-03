@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Auth;
 class PerUsuGruAccController extends Controller
 {
     public function GetListMenuByUsuario(Request $request)
-    { 
+    {
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdUsuario = $request->nidusuario;
         $nLenJerarquia = $request->nlenjerarquia;
 
-        $data = DB::select('exec [usp_Puga_GetListMenuByUsuario] ?, ?, ?, ?', 
+        $data = DB::select('exec [usp_Puga_GetListMenuByUsuario] ?, ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $nIdUsuario,
@@ -26,13 +26,13 @@ class PerUsuGruAccController extends Controller
     }
 
     public function GetLstUsuarios(Request $request)
-    { 
+    {
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $cDescripcion = $request->cdescripcion;
         $cDescripcion = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
 
-        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios] ?, ?, ?', 
+        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios] ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $cDescripcion
@@ -43,13 +43,13 @@ class PerUsuGruAccController extends Controller
     }
 
     public function GetListPermisosByUsuario(Request $request)
-    { 
+    {
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdUsuario = $request->nidusuario;
         $nLenJeraquia = $request->nlenjerarquia;
 
-        $data = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?, ?, ?', 
+        $data = DB::select('exec [usp_Puga_GetListPermisosByUsuario] ?, ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $nIdUsuario,
@@ -61,15 +61,15 @@ class PerUsuGruAccController extends Controller
     public function DeletePermisosByUsuario(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
-        $element = DB::select('exec [usp_Puga_DeletePermisosByUsuario] ?, ?, ? ,? ,?', 
+
+        $element = DB::select('exec [usp_Puga_DeletePermisosByUsuario] ?, ?, ? ,? ,?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdPerfil,
                                                                 $request->nIdUsuario,
                                                                 Auth::user()->id
                                                             ]);
-        return response()->json($element); 
+        return response()->json($element);
     }
 
     public function SetPermisosByUsuario(Request $request)
