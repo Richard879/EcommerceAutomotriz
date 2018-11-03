@@ -481,11 +481,14 @@
                                                                                     <th>Modelo</th>
                                                                                     <th>Año Fab</th>
                                                                                     <th>Año Modelo</th>
+                                                                                    <th>Fecha Inicio</th>
+                                                                                    <th>Fecha Fin</th>
                                                                                     <th>Acciones</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="referencia in arrayReasignarReferencia" :key="referencia.nIdReferenciaVehiculoContacto">
+                                                                                <tr v-for="referencia in arrayReasignarReferencia" :key="referencia.nIdReferenciaVehiculoContacto" 
+                                                                                        :style="referencia.cAsignacionVehiculoEstado=='I' ? 'color:red' : ''">
                                                                                     <td v-text="referencia.nIdReferenciaVehiculoContacto"></td>
                                                                                     <td v-text="referencia.cProveedorNombre"></td>
                                                                                     <td v-text="referencia.cLineaNombre"></td>
@@ -493,6 +496,8 @@
                                                                                     <td v-text="referencia.cModeloNombre"></td>
                                                                                     <td v-text="referencia.nAnioFabricacion"></td>
                                                                                     <td v-text="referencia.nAnioModelo"></td>
+                                                                                    <td v-text="referencia.dFechaInicioAsignacionContacto"></td>
+                                                                                    <td v-text="referencia.dFechaFinAsignacionContacto"></td>
                                                                                     <td>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Reasignar Referencia {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
