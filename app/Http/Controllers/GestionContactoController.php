@@ -298,9 +298,9 @@ class GestionContactoController extends Controller
 
         $nIdContacto = $request->nidcontacto;
 
-        $arrayReferenciaLibre = DB::select('exec usp_Contacto_GetListReferenciaVehiculoLibre ?',
-                                                                        array(  $nIdContacto
-                                                                                ));
+        $arrayReferenciaLibre = DB::select('exec [usp_Contacto_GetListReferenciaVehiculoLibre] ?',
+                                                                    [  $nIdContacto
+                                                                    ]);
 
         $arrayReferenciaLibre = ParametroController::arrayPaginator($arrayReferenciaLibre, $request);
         return ['arrayReferenciaLibre'=>$arrayReferenciaLibre];
@@ -310,14 +310,14 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayRefLibre = DB::select('exec usp_Contacto_SetAsignaReferenciaLibre ?, ?, ?, ?, ?, ?',
-                                                            array(  $request->nIdReferenciaVehiculoContacto,
-                                                                    $request->nIdEmpresa,
-                                                                    $request->nIdSucursal,
-                                                                    $request->nIdCronograma,
-                                                                    $request->nIdVendedor,
-                                                                    Auth::user()->id
-                                                                    ));
+        $arrayRefLibre = DB::select('exec [usp_Contacto_SetAsignaReferenciaLibre] ?, ?, ?, ?, ?, ?',
+                                                    [   $request->nIdReferenciaVehiculoContacto,
+                                                        $request->nIdEmpresa,
+                                                        $request->nIdSucursal,
+                                                        $request->nIdCronograma,
+                                                        $request->nIdVendedor,
+                                                        Auth::user()->id
+                                                    ]);
 
         return response()->json($arrayRefLibre);
     }
