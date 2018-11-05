@@ -346,14 +346,15 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayReasignarRef = DB::select('exec usp_Contacto_UpdReasignarReferenciaVehiculo ?, ?, ?, ?, ?, ?',
-                                                            array(  $request->nIdReferenciaVehiculoContacto,
+        $arrayReasignarRef = DB::select('exec [usp_Contacto_UpdReasignarReferenciaVehiculo] ?, ?, ?, ?, ?, ?, ?',
+                                                            [       $request->nIdAsignacionContactoVendedor,
+                                                                    $request->nIdReferenciaVehiculoContacto,
                                                                     $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->nIdCronograma,
                                                                     $request->nIdVendedor,
                                                                     Auth::user()->id
-                                                                    ));
+                                                            ]);
 
         return response()->json($arrayReasignarRef);
     }

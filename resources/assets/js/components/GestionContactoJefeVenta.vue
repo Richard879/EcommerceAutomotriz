@@ -511,7 +511,7 @@
                                                                                         </el-tooltip>&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Reasignar Referencia {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
-                                                                                            <i @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" :style="'color:blue'" class="fa-md fa fa-car"></i>
+                                                                                            <i @click="reasignarReferenciaVehiculo(referencia)" :style="'color:blue'" class="fa-md fa fa-car"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
@@ -2899,7 +2899,7 @@
                 this.pagination.current_page=page;
                 this.listarReferenciaVehiculoPorReasignar(page);
             },
-            reasignarReferenciaVehiculo(nIdReferenciaVehiculoContacto){
+            reasignarReferenciaVehiculo(referencia){
                 if(this.validaReasignarReferenciaVehiculo()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -2918,16 +2918,20 @@
                         if (result.value) {
                             var url = this.ruta + '/gescontacto/UpdReasignarReferenciaVehiculo';
                             axios.post(url, {
-                                nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
+                                nIdAsignacionContactoVendedor: parseInt(referencia.nIdAsignacionContactoVendedor),
+                                nIdReferenciaVehiculoContacto: parseInt(referencia.nIdReferenciaVehiculoContacto),
                                 nIdEmpresa: 1300011,
                                 nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
                             }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue Reasignado.'
-                                );
+                                if(response.data[0].nFlagMsje == 1)
+                                {
+                                    swal('Reasignación Registrada');
+                                }
+                                else{
+                                    swal('Referencia de Vehiculo ya se encuentra Activa');
+                                }
                                 this.listarReferenciaVehiculoPorReasignar(1);
                             })
                             .catch(function (error) {
