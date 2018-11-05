@@ -219,12 +219,15 @@ class GestionContactoController extends Controller
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $nIdContacto = $request->nidcontacto;
+        $nIdVendedor = $request->nidvendedor;
 
-        $arraySegReferenciavehiculo = DB::select('exec usp_Contacto_GetRefVehiculoByContacto ?, ?, ?, ?',
+        $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
+
+        $arraySegReferenciavehiculo = DB::select('exec [usp_Contacto_GetRefVehiculoByContacto] ?, ?, ?, ?',
                                                                         array(  $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $nIdContacto,
-                                                                                Auth::user()->id
+                                                                                $nIdVendedor
                                                                                 ));
 
         $arraySegReferenciavehiculo = ParametroController::arrayPaginator($arraySegReferenciavehiculo, $request);
@@ -319,7 +322,7 @@ class GestionContactoController extends Controller
         return response()->json($arrayRefLibre);
     }
 
-    public function GetRefVehiculoByContactoPorReasignar(Request $request)
+    /*public function GetRefVehiculoByContactoPorReasignar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -329,15 +332,15 @@ class GestionContactoController extends Controller
         $nIdVendedor = $request->nidvendedor;
 
         $arrayReasignarReferencia = DB::select('exec usp_Contacto_GetRefVehiculoByContacto ?, ?, ?, ?',
-                                                                        array(  $nIdEmpresa,
+                                                                            [   $nIdEmpresa,
                                                                                 $nIdSucursal,
                                                                                 $nIdContacto,
                                                                                 $nIdVendedor
-                                                                                ));
+                                                                            ]);
 
         $arrayReasignarReferencia = ParametroController::arrayPaginator($arrayReasignarReferencia, $request);
         return ['arrayReasignarReferencia'=>$arrayReasignarReferencia];
-    }
+    }*/
 
     public function UpdReasignarReferenciaVehiculo(Request $request)
     {
@@ -529,5 +532,21 @@ class GestionContactoController extends Controller
                                                         Auth::user()->id
                                                     ]);
         return response()->json($objSeguimiento);
+    }
+
+    public function SetAmpliacionFechaVenceAsignacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $objAsignacion = DB::select('exec [usp_Contacto_SetAmpliacionFechaVenceAsignacion] ?, ?, ?, ?, ?, ?',
+                                                        [   $request->nIdAsignacionContactoVendedor,
+                                                            $request->nIdReferenciaVehiculoContacto,
+                                                            $request->nIdEmpresa,
+                                                            $request->nIdSucursal,
+                                                            $request->nNroDias,
+                                                            Auth::user()->id
+                                                        ]);
+
+        return response()->json($objAsignacion);
     }
 }

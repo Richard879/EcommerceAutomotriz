@@ -242,7 +242,6 @@
                                                                                 <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
-                                                                                        <!--<input type="hidden" v-model="formVendedor.nidvendedor">-->
                                                                                         <input type="text" v-model="formVendedor.cvendedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                         <div class="input-group-prepend">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
@@ -322,7 +321,7 @@
                                                                                         <td>
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Reasignar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
-                                                                                                <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre, c.cVendedor)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                                <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cPerApellidos + ' ' +c.cNombre, c.cVendedor, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
                                                                                             </el-tooltip>
                                                                                         </td>
                                                                                     </tr>
@@ -353,7 +352,7 @@
                                                                                         <td>
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Reasignar Contacto {{ c.cRazonSocial }}</div>
-                                                                                                <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cRazonSocial, c.cVendedor)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
+                                                                                                <i @click="mostrarVistaContactoPorVendedor(c.nIdContacto, c.cRazonSocial, c.cVendedor, 0)" :style="'color:blue'" class="fa-md fa fa-street-view"></i>
                                                                                             </el-tooltip>
                                                                                         </td>
                                                                                     </tr>
@@ -459,6 +458,13 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="mostrarVistaContactoPorVendedor('', '', '', 1)">
+                                                                                <i class="fa fa-close"></i> Regresar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -499,6 +505,10 @@
                                                                                     <td v-text="referencia.dFechaInicioAsignacionContacto"></td>
                                                                                     <td v-text="referencia.dFechaFinAsignacionContacto"></td>
                                                                                     <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Ampliar Fecha  {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
+                                                                                            <i @click="abrirModal('referencia', 'ampliar', referencia)" :style="'color:#796AEE'" class="fa-md fa fa-clock-o"></i>
+                                                                                        </el-tooltip>&nbsp;
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Reasignar Referencia {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
                                                                                             <i @click="reasignarReferenciaVehiculo(referencia.nIdReferenciaVehiculoContacto)" :style="'color:blue'" class="fa-md fa fa-car"></i>
@@ -2184,6 +2194,7 @@
                 </div>
             </div>
 
+             <!-- Modal Vendedores -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -2285,6 +2296,7 @@
                 </div>
             </div>
 
+             <!-- Modal Mostrar Nuevo Vendedores-->
             <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -2386,6 +2398,90 @@
                 </div>
             </div>
 
+            <!-- Modal Ampliar Fecha Referencia -->
+            <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">AMPLIAR PLAZO PARA COTIZAR</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Cliente</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" v-model="formReasignarContacto.ccontacto" class="form-control form-control-sm" disabled >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Vehículo</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" v-model="formAmpliarAsignacion.cvehiculo" class="form-control form-control-sm" disabled >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Fecha Vencimiento</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" v-model="formAmpliarAsignacion.dfechavence" class="form-control form-control-sm" disabled >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Nro de días</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" v-model="formAmpliarAsignacion.nrodias" @keyup="changeNuevaFechaVence()" class="form-control form-control-sm" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 form-control-label">Nueva Fecha Vencimiento</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" v-model="formAmpliarAsignacion.dnuevafechavence" class="form-control form-control-sm" disabled >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarAmpliacion()">
+                                                        <i class="fa fa-save"></i> Registrar
+                                                    </button>
+                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cerrarModal()">
+                                                        <i class="fa fa-close"></i> Cerrar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -2464,6 +2560,16 @@
                     creasignavendedornombre: ''
                 },
                 arrayReasignarReferencia: [],
+                // ============== VARIABLES AMPLIAR ASIGNACION =================
+                formAmpliarAsignacion: {
+                    nidasignacioncontactovendedor: 0,
+                    nidreferenciavehiculoontacto: 0,
+                    dfechavence: '',
+                    cvehiculo: '',
+                    nrodias: 0,
+                    dnuevafechavence: '',
+                    dfechafindate: ''
+                },
                 // =============================================================
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
@@ -2753,32 +2859,38 @@
             cambiarTipoPersonaContactosPorVendedor(){
                 this.arrayContactosPorVendedor = []
             },
-            mostrarVistaContactoPorVendedor(nIdContacto, cNombre, cVendedor){
-                this.vistaContactoPorVendedor = 0;
-                this.formReasignarContacto.nidcontacto = parseInt(nIdContacto);
-                this.formReasignarContacto.ccontacto = cNombre;
-                this.formReasignarContacto.cvendedornombre = cVendedor;
-                this.listarReferenciaVehiculoPorReasignar(1);
+            mostrarVistaContactoPorVendedor(nIdContacto, cNombre, cVendedor, nVistaValor){
+                if(nVistaValor == 0){
+                    this.vistaContactoPorVendedor = 0;
+                    this.formReasignarContacto.nidcontacto = parseInt(nIdContacto);
+                    this.formReasignarContacto.ccontacto = cNombre;
+                    this.formReasignarContacto.cvendedornombre = cVendedor;
+                    this.listarReferenciaVehiculoPorReasignar(1);
+                }
+                else{
+                    this.vistaContactoPorVendedor = 1;
+                    this.listarContactosPorVendedor(1);
+                }
             },
             listarReferenciaVehiculoPorReasignar(page){
-                var url = this.ruta + '/gescontacto/GetRefVehiculoByContactoPorReasignar';
+                var url = this.ruta + '/gescontacto/GetRefVehiculoByContacto';
 
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.formReasignarContacto.nidcontacto,
-                        'nidvendedor' : this.formReasignarContacto.nreasignaidvendedor,
+                        'nidvendedor' : this.formVendedor.nidvendedor,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayReasignarReferencia = response.data.arrayReasignarReferencia.data;
-                    this.pagination.current_page =  response.data.arrayReasignarReferencia.current_page;
-                    this.pagination.total = response.data.arrayReasignarReferencia.total;
-                    this.pagination.per_page    = response.data.arrayReasignarReferencia.per_page;
-                    this.pagination.last_page   = response.data.arrayReasignarReferencia.last_page;
-                    this.pagination.from        = response.data.arrayReasignarReferencia.from;
-                    this.pagination.to           = response.data.arrayReasignarReferencia.to;
+                    this.arrayReasignarReferencia = response.data.arraySegReferenciavehiculo.data;
+                    this.pagination.current_page =  response.data.arraySegReferenciavehiculo.current_page;
+                    this.pagination.total = response.data.arraySegReferenciavehiculo.total;
+                    this.pagination.per_page    = response.data.arraySegReferenciavehiculo.per_page;
+                    this.pagination.last_page   = response.data.arraySegReferenciavehiculo.last_page;
+                    this.pagination.from        = response.data.arraySegReferenciavehiculo.from;
+                    this.pagination.to           = response.data.arraySegReferenciavehiculo.to;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2838,6 +2950,38 @@
                     this.error = 1;
                 }
                 return this.error;
+            },
+            //=============  AMPLIACION FECHA ===============
+            changeNuevaFechaVence(){
+                var fecha = moment(this.formAmpliarAsignacion.dfechafindate).add(parseInt(this.formAmpliarAsignacion.nrodias), 'days').format('DD/MM/YYYY');
+                this.formAmpliarAsignacion.dnuevafechavence = fecha;
+            },
+            registrarAmpliacion(){
+                /*if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }*/
+
+                var url = this.ruta + '/gescontacto/SetAmpliacionFechaVenceAsignacion';
+                axios.post(url, {
+                    nIdAsignacionContactoVendedor: parseInt(this.formAmpliarAsignacion.nidasignacioncontactovendedor),
+                    nIdReferenciaVehiculoContacto: parseInt(this.formAmpliarAsignacion.nidreferenciavehiculoontacto),
+                    nIdEmpresa: 1300011,
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
+                    nNroDias: parseInt(this.formAmpliarAsignacion.nrodias)
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal('Ampliación registrada');
+                    }
+                    else{
+                        swal('Referencia de Vehiculo ya se encuentra registrada');
+                    }
+                    this.listarReferenciaVehiculoPorReasignar(1);
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // =========================================================
             // =============  TAB CONTACTOS LIBRES =====================
@@ -4275,6 +4419,25 @@
                         }
                     }
                     break;
+                    case "referencia":
+                    {
+                        switch(accion){
+                            case 'ampliar':
+                            {
+                                this.accionmodal=5;
+                                this.modal = 1;
+                                this.formAmpliarAsignacion.nrodias = 0;
+                                this.formAmpliarAsignacion.nidasignacioncontactovendedor = data['nIdAsignacionContactoVendedor'];
+                                this.formAmpliarAsignacion.nidreferenciavehiculoontacto = data['nIdReferenciaVehiculoContacto'];
+                                this.formAmpliarAsignacion.cvehiculo = data['cLineaNombre'] + ' ' + data['cMarcaNombre'] + ' ' + data['cModeloNombre'] + ' ' + data['nAnioFabricacion'] + ' ' + data['nAnioModelo'];
+                                this.formAmpliarAsignacion.dfechavence = data['dFechaFinAsignacionContacto'];
+                                this.formAmpliarAsignacion.dfechafindate = data['dFechaFinAmpliacion'];
+                                this.changeNuevaFechaVence();
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
             },
             // ===========================================================
@@ -4373,24 +4536,24 @@
     }
 </script>
 <style>
-        .mostrar{
-            display: list-item !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            background-color: #3c29297a !important;
-            overflow-y: scroll;
-        }
-        .modal-content{
-            width: 100% !important;
-            position: absolute !important;
-        }
-        .error{
-            display: flex;
-            justify-content: center;
-        }
-        .text-center{
-            color: red;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
+    .mostrar{
+        display: list-item !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        background-color: #3c29297a !important;
+        overflow-y: scroll;
+    }
+    .modal-content{
+        width: 100% !important;
+        position: absolute !important;
+    }
+    .error{
+        display: flex;
+        justify-content: center;
+    }
+    .text-center{
+        color: red;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
 </style>
