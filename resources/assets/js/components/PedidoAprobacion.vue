@@ -21,7 +21,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -29,7 +29,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillBusquedaPedido.csucursal" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,7 +235,8 @@
                     </div>
                 </div>
             </div>
-
+            
+            <!-- Detalle Pedido -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -246,27 +247,26 @@
                                         <h3 class="h4">DETALLE PEDIDO</h3>
                                     </div>
                                     <div class="card-body">
-                                        <!--<form class="form-horizontal">
+                                        <form class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nro Cotización</label>
+                                                        <label class="col-sm-4 form-control-label">* Nro Pedido</label>
                                                         <div class="col-sm-8">
-                                                            <input type="hidden" v-model="formDocRef.nidcompra">
-                                                            <label v-text="formDocRef.cnrocotizacion" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <label v-text="fillDetallePedido.cnumeropedido" class="form-control-label-readonly"></label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre Comercial</label>
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.cnombrecomercial" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <label v-text="fillDetallePedido.cnumerocotizacion" class="form-control-label-readonly"></label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <!--<div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Año Fabricación</label>
@@ -401,8 +401,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>-->
+                                            </div>-->
+                                        </form>
                                         <br/>
                                         <template v-if="arrayPedidoDoumento.length">
                                             <div class="table-responsive">
@@ -459,6 +459,8 @@
         props:['ruta'],
         data(){
             return {
+                cempresa: 'SAISAC',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillProveedor:{
                     nidproveedor: 0,
                     cproveedornombre: ''
@@ -468,10 +470,6 @@
                 arrayMarca: [],
                 arrayModelo: [],
                 fillBusquedaPedido:{
-                    nidempresa: 1300011,
-                    cempresa: 'SAISAC',
-                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                    csucursal: sessionStorage.getItem("cNombreSucursal"),
                     dfechainicio: '',
                     dfechafin: '',
                     cnumeropedido: '',
@@ -480,9 +478,30 @@
                     nidmodelo: ''
                 },
                 arrayPedidos: [],
-                 // =============================================================
+                // =============================================================
                 // VER DETALLE DOCUMENTO PEDIDO
                 arrayPedidoDoumento: [],
+                // =============================================================
+                // MODAL DETALLE PEDIDO
+                fillDetallePedido:{
+                    cnumeropedido: '',
+                    cnumerocotizacion: '',
+                    cdocumentocliente: '',
+                    cnombrecliente: '',
+                    nidversionvehiculo: 0,
+                    cvehiculo: '',
+                    cnumerovin: '',
+                    cnombreproveedor: '',
+                    dfechapedido: '',
+                    nordencompra: '',
+                    cnombrevendedor: '',
+                    fpreciocierrefinalcliente: 0,
+                    fflete: 0,
+                    fpreciocierrelistaprecio: 0,
+                    fpreciocierresistema: 0,
+                    fsobreprecio: 0,
+                    fdscto: 0
+                },
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -605,15 +624,15 @@
                 var url = this.ruta + '/pedido/GetLstPedidosPendienteAprobacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillBusquedaPedido.nidempresa,
-                        'nidsucursal' : this.fillBusquedaPedido.nidsucursal,
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillBusquedaPedido.dfechainicio,
                         'dfechafin': this.fillBusquedaPedido.dfechafin,
                         'cnumeropedido': this.fillBusquedaPedido.cnumeropedido,
                         'cnumerovin': this.fillBusquedaPedido.cnumerovin,
                         'nidmarca' : this.fillBusquedaPedido.nidmarca,
-                        'nidmodelo' : this.fillBusquedaPedido.nidmodelo,
-                        'page' : page
+                        'nidmodelo': this.fillBusquedaPedido.nidmodelo,
+                        'page': page
                     }
                 }).then(response => {
                     this.arrayPedidos = response.data.arrayPedido.data;
@@ -691,11 +710,32 @@
             verPedido(pedido){
                 this.mostrarProgressBar();
 
+
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillBusquedaPedido.nidempresa,
-                        'nidsucursal': this.fillBusquedaPedido.nidsucursal,
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
+                    $("#myBar").hide();
+                    this.verDocumentosPedido();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            verDocumentosPedido(){
+                this.mostrarProgressBar();
+
+                
+                var url = this.ruta + '/pedido/GetDocumentosById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido,
                         'opcion': 1
                     }

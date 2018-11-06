@@ -53,7 +53,6 @@ class FleteController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $dFechaInicio = $request->dfechainicio;
         $dFechaFin = $request->dfechafin;
-        $nOrdenCompra = $request->nordencompra;
         $cNumeroVin = $request->cnumerovin;
         $nIdMarca   = $request->nidmarca;
         $nIdModelo  = $request->nidmodelo;
@@ -66,19 +65,18 @@ class FleteController extends Controller
 
 
 
-        $arrayCompra = DB::select('exec [usp_Compra_GetCompra] ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayFlete = DB::select('exec [usp_Flete_GetListFlete] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $dFechaInicio,
                                                                 $dFechaFin,
-                                                                $nOrdenCompra,
                                                                 $cNumeroVin,
                                                                 $nIdMarca,
                                                                 $nIdModelo
                                                             ]);
 
-        $arrayCompra = Parametro::arrayPaginator($arrayCompra, $request);
-        return ['arrayCompra'=>$arrayCompra];
+        $arrayFlete = Parametro::arrayPaginator($arrayFlete, $request);
+        return ['arrayFlete'=>$arrayFlete];
     }
 
     public function SetFlete(Request $request)
