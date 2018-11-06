@@ -163,12 +163,16 @@ class PedidoDepositoController extends Controller
         $nIdDepositoPedido   =   $request->nIdDepositoPedido;
         $nIdCabeceraPedido   =   $request->nIdCabeceraPedido;
         $cFlagEstadoDeposito =   $request->cFlagEstadoDeposito;
+        $nIdMonedaOrigen     =   $request->nIdMonedaOrigen;
+        $fTipoCambio         =   $request->fTipoCambio;
 
-        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?',
+        $arrayDepositosPorPedido = DB::select('exec usp_Deposito_SetCambiarEstadoDeposito ?, ?, ?, ?, ?, ?',
                                     [
                                         $nIdDepositoPedido,
                                         $nIdCabeceraPedido,
                                         $cFlagEstadoDeposito,
+                                        $nIdMonedaOrigen,
+                                        $fTipoCambio,
                                         Auth::user()->id
                                     ]);
 
