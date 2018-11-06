@@ -119,4 +119,7 @@
     <template v-if="menu==1300358">
         <exhibiciones :ruta="ruta"></exhibiciones>
     </template>
+    <template v-if="menu==1300360">
+        <flete :ruta="ruta"></flete>
+    </template>
 @endsection

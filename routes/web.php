@@ -275,4 +275,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cronograma/GetCronogramaVentaActivo','CronogramaController@GetCronogramaVentaActivo');
     Route::get('/cronograma/GetCronogramaCompraActivo','CronogramaController@GetCronogramaCompraActivo');
+
+    Route::post('/flete/SetFlete', 'FleteController@SetFlete');
+    Route::get('/flete/GetListFlete', 'FleteController@GetListFlete');
+
 });
