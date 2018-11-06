@@ -68,7 +68,7 @@ Vue.component('flete', require('./components/Flete.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-        menu: 0,
+        menu: 1300362,
         ruta: 'http://localhost:8080/saisacsys/public'
     },
     methods: {
