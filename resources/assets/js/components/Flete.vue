@@ -276,6 +276,24 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Ruc</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formmFlete.cnumeroruc" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Numero Comprobante</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formmFlete.cnumerodocumento" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -718,8 +736,10 @@
                     nidmarca: '',
                     nidmodelo: ''
                 },
-                
-                
+                formmFlete:{
+                    cnumeroruc: '',
+                    cnumerodocumento: ''
+                },
                 // ============================================================
                 // =========== TAB ASIGNAR FLETE ============
                 arrayMarca: [],
@@ -887,7 +907,7 @@
             listarCompras(page){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/compra/GetCompra';
+                var url = this.ruta + '/flete/GetComprasForFlete';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -999,6 +1019,12 @@
             registrarFlete(){
                 let me = this;
 
+                if(me.validarRegistroFlete()){
+                    me.accionmodal=1;
+                    me.modal = 1;
+                    return;
+                }
+
                 me.arrayFlete = [];
 
                 me.arrayTempFlete.map(function(value, key){
@@ -1006,23 +1032,43 @@
                         me.arrayFlete.push({
                             'nIdCompra': value.nIdCompra,
                             'cNumeroVin': value.cNumeroVin,
-                            'fValorMonto': me.arrayIndexFleteMonto[key]
+                            'nIdMoneda': 1300028,
+                            'fImporteFlete': me.arrayIndexFleteMonto[key]
                         });
                     }
                 });
 
                 var url = this.ruta + '/flete/SetFlete';
                 axios.post(url, {
-                    'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    //'nIdCronograma'         :   this.nidcronograma,
-                    'arrayData'             :   this.arrayFlete
+                    'nIdEmpresa': 1300011,
+                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'cNumeroRuc': this.formmFlete.cnumeroruc,
+                    'cNumeroDocumento': this.formmFlete.cnumerodocumento,
+                    'data': this.arrayFlete
                 }).then(response => {
                     swal('Flete registrado exitosamente');
-                    //this.limpiarTabCompra();
+                    this.limpiarFormulario();
                 }).catch(error => {
                     this.errors = error
                 });
+            },
+            validarRegistroFlete(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayTempFlete == []){
+                    this.mensajeError.push('No hay Datos a Registrar');
+                };
+                if(!this.formmFlete.cnumeroruc){
+                    this.mensajeError.push('Debe Ingresar Numero Ruc');
+                };
+                if(!this.formmFlete.cnumerodocumento){
+                    this.mensajeError.push('Debe Ingresar Numero de Comprobante');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             // =============================================
             // =============  MODAL ========================
@@ -1063,12 +1109,10 @@
             },
             // ===========================================================
             limpiarFormulario(){
-                this.fillCompra.nordencompra= '',
-                this.fillCompra.cnumerovin=  '',
-                this.formCompra.nidtipolista= '',
-                this.arrayExcel = [],
-                this.form = new FormData,
-                $("#file-upload").val("")
+               this.arrayTempFlete = [];
+               this.arrayIndexFleteMonto = [];
+               this.formmFlete.cnumeroruc = '';
+               this.formmFlete.cnumerodocumento = '';
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
