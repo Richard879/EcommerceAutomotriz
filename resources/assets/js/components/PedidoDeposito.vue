@@ -19,7 +19,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link disabled" id="Tab2" href="#TabGeneraDeposito" @click="tabGenerarDeposito" role="tab" data-toggle="tab">
+                                        <a class="nav-link disabled" id="Tab2" href="#TabGeneraDeposito" role="tab" data-toggle="tab">
                                             <i class="fa fa-usd"></i> REALIZAR DEPÓSITOS
                                         </a>
                                     </li>
@@ -188,7 +188,7 @@
                                                                         <tbody>
                                                                             <tr v-for="pedido in arrayPedido" :key="pedido.nIdCabeceraPedido">
                                                                                 <td>
-                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
+                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Seleccionar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="activarTabDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
@@ -258,96 +258,79 @@
                                     <div role="tabpanel" class="tab-pane fade" id="TabGeneraDeposito">
                                         <section class="forms">
                                             <div class="container-fluid">
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <vs-divider border-style="solid" color="dark"></vs-divider>
-                                                        <el-row :gutter="10">
-                                                            <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE</div></el-col>
-                                                            <el-col :span="6">
-                                                                <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
-                                                                </div>
-                                                            </el-col>
-                                                            <el-col :span="6"><div class="grid-content bg-purple">IMPORET RECHAZADO</div></el-col>
-                                                            <el-col :span="6">
-                                                                <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
-                                                                </div>
-                                                            </el-col>
-                                                        </el-row>
-                                                        <el-row :gutter="10">
-                                                            <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
-                                                            <el-col :span="6">
-                                                                <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
-                                                                </div>
-                                                            </el-col>
-                                                            <el-col :span="6"><div class="grid-content bg-purple">MONTO PEDIDO</div></el-col>
-                                                            <el-col :span="6">
-                                                                <div class="grid-content bg-purple">
-                                                                    USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
-                                                                </div>
-                                                            </el-col>
-                                                        </el-row>
-                                                        <vs-divider border-style="solid" color="dark">
-                                                        </vs-divider>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="h4">NUEVO DEPOSITO</h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="formDeposito.nidtipomovimiento"
-                                                                                        filterable
-                                                                                        clearable
-                                                                                        placeholder="SELECCIONE TIPO MOVIMIENTO"
-                                                                                        @change="ocultarFormularioDeposito">
-                                                                                    <el-option
-                                                                                        v-for="item in arrayTipoMovimiento"
-                                                                                        :key="item.nIdPar"
-                                                                                        :label="item.cParNombre"
-                                                                                        :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
+                                                <template v-if="formDeposito.flagMontoTotalCancelarPendiente <= 0">
+                                                    <el-alert
+                                                        title="Este deposito ya encuentra cancelado!!"
+                                                        type="warning"
+                                                        :closable="false"
+                                                        show-icon>
+                                                    </el-alert>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <vs-divider border-style="solid" color="dark">
+                                                                {{ formDeposito.cnombrecontacto }} - {{ formDeposito.cNumeroPedido }}
+                                                            </vs-divider>
+                                                            <el-row :gutter="10">
+                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE</div></el-col>
+                                                                <el-col :span="6">
+                                                                    <div class="grid-content bg-purple">
+                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormularioDeposito">
-                                                                            <i class="fa fa-list-alt"></i> Nuevo
-                                                                        </button>
+                                                                </el-col>
+                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORET RECHAZADO</div></el-col>
+                                                                <el-col :span="6">
+                                                                    <div class="grid-content bg-purple">
+                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
                                                                     </div>
-                                                                </div>
-                                                            </form>
+                                                                </el-col>
+                                                            </el-row>
+                                                            <el-row :gutter="10">
+                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
+                                                                <el-col :span="6">
+                                                                    <div class="grid-content bg-purple">
+                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
+                                                                    </div>
+                                                                </el-col>
+                                                                <el-col :span="6"><div class="grid-content bg-purple">MONTO PEDIDO</div></el-col>
+                                                                <el-col :span="6">
+                                                                    <div class="grid-content bg-purple">
+                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
+                                                                    </div>
+                                                                </el-col>
+                                                            </el-row>
+                                                            <el-row :gutter="10">
+                                                                <el-col :span="6"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
+                                                                <el-col :span="6">
+                                                                    <div class="grid-content bg-purple">
+                                                                        USD/. {{ formDeposito.flagMontoTotalCancelarPendiente }}
+                                                                    </div>
+                                                                </el-col>
+                                                            </el-row>
+                                                            <vs-divider border-style="solid" color="dark">
+                                                            </vs-divider>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <template v-if="arrayTipoMovimientoPermisos.includes('1')">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
                                                             <div class="card-header">
-                                                                <h3 class="h4">BANCO ORIGEN</h3>
+                                                                <h3 class="h4">NUEVO DEPOSITO</h3>
                                                             </div>
                                                             <div class="card-body">
-                                                                <div class="container-fluid">
+                                                                <form class="form-horizontal">
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Banco</label>
+                                                                                <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable clearable placeholder="SELECCIONE" >
+                                                                                    <el-select v-model="formDeposito.nidtipomovimiento"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            placeholder="SELECCIONE TIPO MOVIMIENTO"
+                                                                                            @change="ocultarFormularioDeposito">
                                                                                         <el-option
-                                                                                            v-for="item in arrayBanco_Origen"
+                                                                                            v-for="item in arrayTipoMovimiento"
                                                                                             :key="item.nIdPar"
                                                                                             :label="item.cParNombre"
                                                                                             :value="item.nIdPar">
@@ -356,345 +339,382 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Moneda</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable clearable placeholder="SELECCIONE" >
-                                                                                        <el-option
-                                                                                        v-for="item in arrayMoneda_Origen"
-                                                                                        :key="item.nIdPar"
-                                                                                        :label="item.cParNombre"
-                                                                                        :value="item.nIdPar">
-                                                                                        </el-option>
-                                                                                    </el-select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Cuenta</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text" v-model="formNuevoDeposito.cnumerocuenta_origen" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Girado por</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label v-text="formNuevoDeposito.cnombrecontacto" class="form-control-label-readonly"></label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Fecha Depósito</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-date-picker
-                                                                                        v-model="formNuevoDeposito.dfechadeposito"
-                                                                                        type="date"
-                                                                                        value-format="yyyy-MM-dd"
-                                                                                        format="dd-MM-yyyy"
-                                                                                        placeholder="dd/mm/aaaa">
-                                                                                    </el-date-picker>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Nro Operación</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text" v-model="formNuevoDeposito.nnumerooperacion" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="number" v-model="formNuevoDeposito.ftipocambiovoucher" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Cambio Comercial</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label v-text="formNuevoDeposito.ftipocambiocomercial" class="form-control-label-readonly"></label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Monto</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="number" v-model="formNuevoDeposito.fmonto" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Voucher</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Observación</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <textarea v-model="formNuevoDeposito.cglosa" class="form-control form-control-sm" cols="30" rows="6"></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
-                                                                                <div class="col-sm-5 widthFull">
-                                                                                    <el-switch
-                                                                                        v-model="formNuevoDeposito.cflagtce"
-                                                                                        active-color="#13ce66"
-                                                                                        inactive-color="#ff4949">
-                                                                                    </el-switch>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-header">
-                                                                <h3 class="h4">BANCO DESTINO</h3>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <div class="container-fluid">
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Banco</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeBanco_Destino()">
-                                                                                        <el-option
-                                                                                        v-for="item in arrayBanco_Destino"
-                                                                                        :key="item.nIdPar"
-                                                                                        :label="item.cParNombre"
-                                                                                        :value="item.nIdPar">
-                                                                                        </el-option>
-                                                                                    </el-select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Moneda</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
-                                                                                        <el-option
-                                                                                        v-for="item in arrayMoneda_Destino"
-                                                                                        :key="item.nIdPar"
-                                                                                        :label="item.cParNombre"
-                                                                                        :value="item.nIdPar">
-                                                                                        </el-option>
-                                                                                    </el-select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Cuenta</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="SELECCIONE" >
-                                                                                        <el-option
-                                                                                        v-for="item in arrayCuenta_Destino"
-                                                                                        :key="item.nIdCuenta"
-                                                                                        :label="item.cNumeroCuenta"
-                                                                                        :value="item.nIdCuenta">
-                                                                                        </el-option>
-                                                                                    </el-select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarOtroTipoDeposito">
-                                                                                <i class="fa fa-save"></i> Registrar
+                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormularioDeposito">
+                                                                                <i class="fa fa-list-alt"></i> Nuevo
                                                                             </button>
                                                                         </div>
                                                                     </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <template v-if="arrayTipoMovimientoPermisos.includes('1')">
+                                                                <div class="card-header">
+                                                                    <h3 class="h4">BANCO ORIGEN</h3>
                                                                 </div>
-                                                            </div>
-                                                        </template>
-                                                        <template v-if="arrayTipoMovimientoPermisos.includes('2')">
-                                                            <div class="card-header">
-                                                                <h3 class="h4">DETALLE DEPÓSITO</h3>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <div class="container-fluid">
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Banco</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" @change="onchangeBanco_Destino()">
-                                                                                        <el-option
+                                                                <div class="card-body">
+                                                                    <div class="container-fluid">
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Banco</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidbanco_origen" filterable clearable placeholder="SELECCIONE" >
+                                                                                            <el-option
+                                                                                                v-for="item in arrayBanco_Origen"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Moneda</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable clearable placeholder="SELECCIONE" >
+                                                                                            <el-option
+                                                                                            v-for="item in arrayMoneda_Origen"
+                                                                                            :key="item.nIdPar"
+                                                                                            :label="item.cParNombre"
+                                                                                            :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Cuenta</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="text" v-model="formNuevoDeposito.cnumerocuenta_origen" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">Girado por</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <label v-text="formNuevoDeposito.cnombrecontacto" class="form-control-label-readonly"></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Fecha Depósito</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-date-picker
+                                                                                            v-model="formNuevoDeposito.dfechadeposito"
+                                                                                            type="date"
+                                                                                            value-format="yyyy-MM-dd"
+                                                                                            format="dd-MM-yyyy"
+                                                                                            placeholder="dd/mm/aaaa">
+                                                                                        </el-date-picker>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Nro Operación</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="text" v-model="formNuevoDeposito.nnumerooperacion" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiovoucher" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio Comercial</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <label v-text="formNuevoDeposito.ftipocambiocomercial" class="form-control-label-readonly"></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Monto</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="number" v-model="formNuevoDeposito.fmonto" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Voucher</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">Observación</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <textarea v-model="formNuevoDeposito.cglosa" class="form-control form-control-sm" cols="30" rows="6"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
+                                                                                    <div class="col-sm-5 widthFull">
+                                                                                        <el-switch
+                                                                                            v-model="formNuevoDeposito.cflagtce"
+                                                                                            active-color="#13ce66"
+                                                                                            inactive-color="#ff4949">
+                                                                                        </el-switch>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-header">
+                                                                    <h3 class="h4">BANCO DESTINO</h3>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="container-fluid">
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Banco</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeBanco_Destino()">
+                                                                                            <el-option
                                                                                             v-for="item in arrayBanco_Destino"
                                                                                             :key="item.nIdPar"
                                                                                             :label="item.cParNombre"
                                                                                             :value="item.nIdPar">
-                                                                                        </el-option>
-                                                                                    </el-select>
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Moneda</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable clearable placeholder="SELECCIONE" @change="onchangeMoneda_Destino()">
-                                                                                        <el-option
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Moneda</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
+                                                                                            <el-option
                                                                                             v-for="item in arrayMoneda_Destino"
                                                                                             :key="item.nIdPar"
                                                                                             :label="item.cParNombre"
                                                                                             :value="item.nIdPar">
-                                                                                        </el-option>
-                                                                                    </el-select>
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Cuenta</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable clearable placeholder="SELECCIONE" >
-                                                                                        <el-option
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Cuenta</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable placeholder="SELECCIONE" >
+                                                                                            <el-option
                                                                                             v-for="item in arrayCuenta_Destino"
                                                                                             :key="item.nIdCuenta"
                                                                                             :label="item.cNumeroCuenta"
                                                                                             :value="item.nIdCuenta">
-                                                                                        </el-option>
-                                                                                    </el-select>
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Girado por</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label v-text="formNuevoDeposito.cnombrecontacto" class="form-control-label-readonly"></label>
-                                                                                </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-9 offset-sm-5">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarOtroTipoDeposito">
+                                                                                    <i class="fa fa-save"></i> Registrar
+                                                                                </button>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Fecha Depósito</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <el-date-picker
-                                                                                        v-model="formNuevoDeposito.dfechadeposito"
-                                                                                        type="date"
-                                                                                        value-format="yyyy-MM-dd"
-                                                                                        format="dd-MM-yyyy"
-                                                                                        placeholder="dd/mm/aaaa">
-                                                                                    </el-date-picker>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Nro Operación</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text" v-model="formNuevoDeposito.nnumerooperacion" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="number" v-model="formNuevoDeposito.ftipocambiovoucher" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Tipo Cambio Comercial</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <label v-text="formNuevoDeposito.ftipocambiocomercial" class="form-control-label-readonly"></label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Monto</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="number" v-model="formNuevoDeposito.fmonto" class="form-control form-control-sm">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">* Voucher</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Observación</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <textarea v-model="formNuevoDeposito.cglosa" class="form-control form-control-sm" cols="30" rows="6"></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="row">
-                                                                                <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
-                                                                                <div class="col-sm-5 widthFull">
-                                                                                    <el-switch
-                                                                                        v-model="formNuevoDeposito.cflagtce"
-                                                                                        active-color="#13ce66"
-                                                                                        inactive-color="#ff4949">
-                                                                                    </el-switch>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-5">
-                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarDeposito">
-                                                                                <i class="fa fa-save"></i> Registrar
-                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </template>
+                                                            </template>
+                                                            <template v-if="arrayTipoMovimientoPermisos.includes('2')">
+                                                                <div class="card-header">
+                                                                    <h3 class="h4">DETALLE DEPÓSITO</h3>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="container-fluid">
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Banco</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidbanco_destino" filterable placeholder="SELECCIONE" @change="onchangeBanco_Destino()">
+                                                                                            <el-option
+                                                                                                v-for="item in arrayBanco_Destino"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Moneda</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable clearable placeholder="SELECCIONE" @change="onchangeMoneda_Destino()">
+                                                                                            <el-option
+                                                                                                v-for="item in arrayMoneda_Destino"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Cuenta</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-select v-model="formNuevoDeposito.nidnumerocuenta_destino" filterable clearable placeholder="SELECCIONE" >
+                                                                                            <el-option
+                                                                                                v-for="item in arrayCuenta_Destino"
+                                                                                                :key="item.nIdCuenta"
+                                                                                                :label="item.cNumeroCuenta"
+                                                                                                :value="item.nIdCuenta">
+                                                                                            </el-option>
+                                                                                        </el-select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">Girado por</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <label v-text="formNuevoDeposito.cnombrecontacto" class="form-control-label-readonly"></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Fecha Depósito</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <el-date-picker
+                                                                                            v-model="formNuevoDeposito.dfechadeposito"
+                                                                                            type="date"
+                                                                                            value-format="yyyy-MM-dd"
+                                                                                            format="dd-MM-yyyy"
+                                                                                            placeholder="dd/mm/aaaa">
+                                                                                        </el-date-picker>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Nro Operación</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="text" v-model="formNuevoDeposito.nnumerooperacion" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio Voucher</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="number" v-model="formNuevoDeposito.ftipocambiovoucher" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Cambio Comercial</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <label v-text="formNuevoDeposito.ftipocambiocomercial" class="form-control-label-readonly"></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Monto</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="number" v-model="formNuevoDeposito.fmonto" class="form-control form-control-sm">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Voucher</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">Observación</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <textarea v-model="formNuevoDeposito.cglosa" class="form-control form-control-sm" cols="30" rows="6"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
+                                                                                    <div class="col-sm-5 widthFull">
+                                                                                        <el-switch
+                                                                                            v-model="formNuevoDeposito.cflagtce"
+                                                                                            active-color="#13ce66"
+                                                                                            inactive-color="#ff4949">
+                                                                                        </el-switch>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-9 offset-sm-5">
+                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarDeposito">
+                                                                                    <i class="fa fa-save"></i> Registrar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </template>
                                             </div>
                                         </section>
                                     </div>
@@ -859,15 +879,16 @@
                 formDeposito:{
                     nidtipomovimiento: '',
                     nidcabecerapedido: 0,
+                    cnombrecontacto: '',
+                    cNumeroPedido: '',
                     flagMontoTotalDepositosPendiente: 0,
                     flagMontoTotalDepositosRechazados: 0,
                     flagMontoTotalDepositosAprobados: 0,
                     flagMontoTotalCotizacion: 0,
+                    flagMontoTotalCancelarPendiente: 0
                 },
                 arrayTipoMovimiento: [],
                 arrayTipoMovimientoPermisos: [],
-                // =============================================================
-                // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formNuevoDeposito:{
                     nidbanco_origen: '',
                     nidmoneda_origen: '',
@@ -1099,7 +1120,10 @@
                 this.formNuevoDeposito.cnombrecontacto = '';
                 this.formDeposito.nidcabecerapedido = '';
                 this.formDeposito.nidtipomovimiento = '';
+                this.formDeposito.cNumeroPedido = '';
+                this.formDeposito.cnombrecontacto = '';
                 this.formDeposito.flagMontoTotalCotizacion = 0;
+                this.formDeposito.flagMontoTotalCancelarPendiente = 0;
                 this.formDeposito.flagMontoTotalDepositosPendiente = 0;
                 this.formDeposito.flagMontoTotalDepositosAprobados = 0;
                 this.formDeposito.flagMontoTotalDepositosRechazados = 0;
@@ -1117,6 +1141,8 @@
                         'cFlagEstadoAprobacion': 'A'
                     }
                 }).then(response => {
+                    this.formDeposito.cNumeroPedido = pedido.cNumeroPedido;
+                    this.formDeposito.cnombrecontacto = pedido.cContacto;
                     this.formDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
                     this.formDeposito.flagMontoTotalDepositosAprobados  = response.data[0].fMontoTotalDepositos;
                     this.cargarMontoDepositoPendiente(pedido);
@@ -1161,6 +1187,13 @@
                     }
                 }).then(response => {
                     this.formDeposito.flagMontoTotalDepositosRechazados = response.data[0].fMontoTotalDepositos;
+
+                    // Resto el Total a pagar - El Total Pagado
+                    var flagMontoTotalCotizacion = Number(parseFloat(this.formDeposito.flagMontoTotalCotizacion).toFixed(4))
+                    var flagMontoTotalDepositosAprobados = Number(parseFloat(this.formDeposito.flagMontoTotalDepositosAprobados).toFixed(4))
+                    var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
+                    this.formDeposito.flagMontoTotalCancelarPendiente = resultadoMontoCancelar;
+                    (this.formDeposito.flagMontoTotalCancelarPendiente < 0 ) ? this.formDeposito.flagMontoTotalCancelarPendiente = 0 : this.formDeposito.flagMontoTotalCancelarPendiente;
                     this.activarTabGenerarDeposito(pedido);
                 }).catch(error => {
                     console.log(error);

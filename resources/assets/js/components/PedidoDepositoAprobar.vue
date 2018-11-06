@@ -194,7 +194,7 @@
                                                                                             <i @click="distribuirDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </template>
-                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A'">
+                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Desaprobar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="desaprobarPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
@@ -263,6 +263,42 @@
                                                         <vs-divider border-style="solid" color="dark">
                                                             {{ formDistribuirDeposito.cnombrecontacto }} - {{ formDistribuirDeposito.cNumeroPedido }}
                                                         </vs-divider>
+                                                        <el-row :gutter="10">
+                                                            <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE</div></el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
+                                                                </div>
+                                                            </el-col>
+                                                            <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RECHAZADO</div></el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
+                                                                </div>
+                                                            </el-col>
+                                                        </el-row>
+                                                        <el-row :gutter="10">
+                                                            <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
+                                                                </div>
+                                                            </el-col>
+                                                            <el-col :span="6"><div class="grid-content bg-purple">MONTO PEDIDO</div></el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalCotizacion)).toFixed(2)) }}
+                                                                </div>
+                                                            </el-col>
+                                                        </el-row>
+                                                        <el-row :gutter="10">
+                                                            <el-col :span="6"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    USD/. {{ formDistribuirDeposito.flagMontoTotalCancelarPendiente }}
+                                                                </div>
+                                                            </el-col>
+                                                        </el-row>
                                                         <vs-divider border-style="solid" color="dark"/>
                                                     </div>
                                                 </div>
@@ -300,7 +336,7 @@
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
                                                                             </template>
-                                                                            <template v-if="deposito.cFlagTipoCambioEspecial == 'SI'">
+                                                                            <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Tipo Cambio Especial {{ deposito.cNumeroPedido }}</div>
                                                                                     <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
@@ -314,7 +350,7 @@
                                                                         <td v-text="deposito.fTipoCambioComercial"></td>
                                                                         <td v-text="Number((parseFloat(deposito.fMontoSoles)).toFixed(2))"></td>
                                                                         <td v-text="Number((parseFloat(deposito.fMontoDolares)).toFixed(2))"></td>
-                                                                        <td v-text="deposito.cFlagTipoCambioEspecial"></td>
+                                                                        <td v-text="deposito.fTipoCambio"></td>
                                                                         <td v-text="deposito.cFlagExcedente"></td>
                                                                         <td v-text="deposito.cEstadoDeposito"></td>
                                                                     </tr>
@@ -482,7 +518,12 @@
                 formDistribuirDeposito: {
                     nidcabecerapedido: 0,
                     cNumeroPedido: '',
-                    cnombrecontacto: ''
+                    cnombrecontacto: '',
+                    flagMontoTotalDepositosPendiente: 0,
+                    flagMontoTotalDepositosRechazados: 0,
+                    flagMontoTotalDepositosAprobados: 0,
+                    flagMontoTotalCotizacion: 0,
+                    flagMontoTotalCancelarPendiente: 0
                 },
                 arrayDepositosPorPedido: [],
                 // =============================================================
@@ -712,6 +753,11 @@
                 this.formDistribuirDeposito.nidcabecerapedido = 0;
                 this.formDistribuirDeposito.cNumeroPedido = '';
                 this.formDistribuirDeposito.cnombrecontacto = '';
+                this.formDistribuirDeposito.flagMontoTotalCotizacion = 0;
+                this.formDistribuirDeposito.flagMontoTotalCancelarPendiente = 0;
+                this.formDistribuirDeposito.flagMontoTotalDepositosPendiente = 0;
+                this.formDistribuirDeposito.flagMontoTotalDepositosAprobados = 0;
+                this.formDistribuirDeposito.flagMontoTotalDepositosRechazados = 0;
                 this.arrayDepositosPorPedido = [];
             },
             llenarDepositos(pedido){
@@ -720,6 +766,7 @@
                 this.formDistribuirDeposito.nidcabecerapedido = pedido.nIdCabeceraPedido;
                 this.formDistribuirDeposito.cNumeroPedido = pedido.cNumeroPedido;
                 this.formDistribuirDeposito.cnombrecontacto = pedido.cContacto;
+                this.formDistribuirDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
 
                 var url = this.ruta + '/deposito/GetListDepositosPorPedido';
                 axios.get(url, {
@@ -728,7 +775,77 @@
                     }
                 }).then(response => {
                     this.arrayDepositosPorPedido  = response.data;
+                    this.cargarMontoDepositoAprobados(pedido);
                     $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarMontoDepositoAprobados(pedido){
+                var url = this.ruta + '/deposito/GetMontoTotalDepositos';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.nidempresa,
+                        'nidsucursal' : this.nidsucursal,
+                        'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
+                        'cFlagEstadoAprobacion': 'A'
+                    }
+                }).then(response => {
+                    this.formDistribuirDeposito.flagMontoTotalDepositosAprobados  = response.data[0].fMontoTotalDepositos;
+                    this.cargarMontoDepositoPendiente(pedido);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarMontoDepositoPendiente(pedido){
+                var url = this.ruta + '/deposito/GetMontoTotalDepositos';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.nidempresa,
+                        'nidsucursal' : this.nidsucursal,
+                        'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
+                        'cFlagEstadoAprobacion': 'P'
+                    }
+                }).then(response => {
+                    this.formDistribuirDeposito.flagMontoTotalDepositosPendiente = response.data[0].fMontoTotalDepositos;
+                    this.cargarMontoDepositoRechazado(pedido);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cargarMontoDepositoRechazado(pedido){
+                var url = this.ruta + '/deposito/GetMontoTotalDepositos';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.nidempresa,
+                        'nidsucursal' : this.nidsucursal,
+                        'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
+                        'cFlagEstadoAprobacion': 'D'
+                    }
+                }).then(response => {
+                    this.formDistribuirDeposito.flagMontoTotalDepositosRechazados = response.data[0].fMontoTotalDepositos;
+
+                    // Resto el Total a pagar - El Total Pagado
+                    var flagMontoTotalCotizacion = Number(parseFloat(this.formDistribuirDeposito.flagMontoTotalCotizacion).toFixed(4))
+                    var flagMontoTotalDepositosAprobados = Number(parseFloat(this.formDistribuirDeposito.flagMontoTotalDepositosAprobados).toFixed(4))
+                    var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
+                    this.formDistribuirDeposito.flagMontoTotalCancelarPendiente = resultadoMontoCancelar;
+                    (this.formDistribuirDeposito.flagMontoTotalCancelarPendiente < 0 ) ? this.formDistribuirDeposito.flagMontoTotalCancelarPendiente = 0 : this.formDistribuirDeposito.flagMontoTotalCancelarPendiente;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -753,8 +870,11 @@
                         axios.put(url , {
                             nIdDepositoPedido : deposito.nIdDepositoPedido,
                             nIdCabeceraPedido : deposito.nIdCabeceraPedido,
+                            nIdMonedaOrigen : deposito.nIdMonedaOrigen,
+                            fTipoCambio : deposito.fTipoCambio,
                             cFlagEstadoDeposito : 'A'
                         }).then(response => {
+                            console.log(response);
                             swal(
                                 'Aprobado!',
                                 'El registro fue aprobado exitosamente.'
@@ -788,6 +908,8 @@
                         axios.put(url , {
                             nIdDepositoPedido : deposito.nIdDepositoPedido,
                             nIdCabeceraPedido : deposito.nIdCabeceraPedido,
+                            nIdMonedaOrigen : deposito.nIdMonedaOrigen,
+                            fTipoCambio : deposito.fTipoCambio,
                             cFlagEstadoDeposito : 'D'
                         }).then(response => {
                             swal(
@@ -810,12 +932,12 @@
             },
             desaprobarPedido(pedido){
                 swal({
-                    title: 'Estas seguro de desaprobar el Pedido ' + pedido.cNumeroPedido,
+                    title: 'Estas seguro de anular el Pedido ' + pedido.cNumeroPedido,
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Desaprobar!',
+                    confirmButtonText: 'Si, Anular!',
                     cancelButtonText: 'No, Cerrar!'
                 }).then((result) => {
                     if (result.value) {
