@@ -997,6 +997,22 @@
                 this.$delete(this.arrayTempFlete, index);
             },
             registrarFlete(){
+
+
+                var url = this.ruta + '/flete/SetFlete';
+                axios.post(url, {
+                    'nIdEmpresa'            :   1300011,
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    //'nIdCronograma'         :   this.nidcronograma,
+                    'arrayData'             :   this.arrayFlete
+                }).then(response => {
+                    swal('Flete registrado exitosamente');
+                    //this.limpiarTabCompra();
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            registrarFleteDetalle(){
                 let me = this;
 
                 me.arrayFlete = [];
@@ -1011,7 +1027,7 @@
                     }
                 });
 
-                var url = this.ruta + '/flete/SetFlete';
+                var url = this.ruta + '/flete/SetFleteDetalle';
                 axios.post(url, {
                     'nIdEmpresa'            :   1300011,
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),

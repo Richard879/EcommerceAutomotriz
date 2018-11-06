@@ -47,6 +47,11 @@ class FleteController extends Controller
 
     public function SetFlete(Request $request)
     {
+
+    }
+
+    public function SetFleteDetalle(Request $request)
+    {
         if (!$request->ajax()) return redirect('/');
 
         try{
