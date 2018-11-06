@@ -14,7 +14,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaCompra" @click="tabBuscarCompra()" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" href="#TabBuscaFlete" @click="tabBuscarFlete()" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR FLETE
                                         </a>
                                     </li>
@@ -26,7 +26,7 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div class="tab-pane fade in active show" id="TabBuscaCompra">
+                                    <div class="tab-pane fade in active show" id="TabBuscaFlete">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -60,7 +60,7 @@
                                                                             <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
-                                                                                    v-model="fillCompra.dfechainicio"
+                                                                                    v-model="fillFlete.dfechainicio"
                                                                                     type="date"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
@@ -74,7 +74,7 @@
                                                                             <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
-                                                                                    v-model="fillCompra.dfechafin"
+                                                                                    v-model="fillFlete.dfechafin"
                                                                                     type="date"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
@@ -87,27 +87,9 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nº Orden Flete</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillCompra.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillFlete.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -122,7 +104,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Modelo</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                                <el-select v-model="fillFlete.nidmodelo" filterable clearable placeholder="SELECCIONE">
                                                                                     <el-option
                                                                                     v-for="item in arrayModelo"
                                                                                     :key="item.nIdPar"
@@ -135,8 +117,18 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillFlete.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarCompras();">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarFleteDetalle(1);">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -151,58 +143,38 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <template v-if="arrayCompra.length">
+                                                            <template v-if="arrayFlete.length">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Código</th>
-                                                                                <th>Periodo</th>
-                                                                                <th>OC</th>
-                                                                                <th>Línea</th>
-                                                                                <th>Almacén<nav></nav></th>
-                                                                                <th>Nro Reserva</th>
                                                                                 <th>Nro Vin</th>
-                                                                                <th>Forma Pago</th>
                                                                                 <th>Nombre Comercial</th>
                                                                                 <th>Año Fab</th>
                                                                                 <th>Año Mod</th>
                                                                                 <th>Moneda</th>
-                                                                                <th>Total</th>
-                                                                                <th>Nro Factura</th>
-                                                                                <th>Fecha Facturado</th>
-                                                                                <th>Fecha Flete</th>
+                                                                                <th>Monto Flete</th>
+                                                                                <th>Fecha Reg</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
+                                                                            <tr v-for="flete in arrayFlete" :key="flete.nIdFleteDetalle">
                                                                                 <td>
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
-                                                                                        <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </el-tooltip>&nbsp;
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
-                                                                                        <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>
+                                                                                    <!--<el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Anular O/C  {{ flete.nOrdenCompra }}</div>
+                                                                                        <i @click="desactivar(flete.nIdFleteDetalle)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                    </el-tooltip>&nbsp;-->
                                                                                 </td>
-                                                                                <td v-text="compra.nIdCompra"></td>
-                                                                                <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
-                                                                                <td v-text="compra.nOrdenCompra"></td>
-                                                                                <td v-text="compra.cNombreLinea"></td>
-                                                                                <td v-text="compra.cNombreAlmacen"></td>
-                                                                                <td v-text="compra.nNumeroReserva"></td>
-                                                                                <td v-text="compra.cNumeroVin"></td>
-                                                                                <td v-text="compra.cFormaPago"></td>
-                                                                                <td v-text="compra.cNombreComercial"></td>
-                                                                                <td v-text="compra.nAnioFabricacion"></td>
-                                                                                <td v-text="compra.nAnioVersion"></td>
-                                                                                <td v-text="compra.cSimboloMoneda"></td>
-                                                                                <td v-text="compra.fTotalCompra"></td>
-                                                                                <td v-text="compra.cNumeroFactura"></td>
-                                                                                <td v-text="compra.dFechaFacturado"></td>
-                                                                                <td v-text="compra.dFechaCompra"></td>
+                                                                                <td v-text="flete.nIdFleteDetalle"></td>
+                                                                                <td v-text="flete.cNumeroVin"></td>
+                                                                                <td v-text="flete.cNombreComercial"></td>
+                                                                                <td v-text="flete.nAnioFabricacion"></td>
+                                                                                <td v-text="flete.nAnioVersion"></td>
+                                                                                <td v-text="flete.cMonedaNombre"></td>
+                                                                                <td v-text="flete.fImporteFleteSinIgv"></td>
+                                                                                <td v-text="flete.dFechaRegistro"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -516,7 +488,7 @@
                 </div>
             </div>
             
-            <!-- MODAL LINEA DE CREDITO -->
+            <!-- MODAL COMPRAS -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -563,7 +535,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Nº Orden Compra</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" v-model="fillCompra.nordencompra" @keyup.enter="listarCompraNoLineaCredito(1)" class="form-control form-control-sm">
+                                                            <input type="text" v-model="fillCompra.cnumerofactura" @keyup.enter="listarCompraNoLineaCredito(1)" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -728,10 +700,10 @@
                 nidcronograma: 0,
                 // ============================================
                 // ============ BUSCAR FLETE =================
-                fillCompra:{
+                fillFlete:{
                     dfechainicio: '',
                     dfechafin: '',
-                    nordencompra: '',
+                    cnumerofactura: '',
                     cnumerovin: '',
                     nidmarca: '',
                     nidmodelo: ''
@@ -739,6 +711,15 @@
                 formmFlete:{
                     cnumeroruc: '',
                     cnumerodocumento: ''
+                },
+                fillCompra:{
+                    dfechainicio: '',
+                    dfechafin: '',
+                    nordencompra: '',
+                    cnumerofactura: '',
+                    cnumerovin: '',
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 // ============================================================
                 // =========== TAB ASIGNAR FLETE ============
@@ -779,9 +760,7 @@
                 accionmodal: 0,
                 error: 0,
                 errors: [],
-                mensajeError: [],
-                attachment: null,
-                form: new FormData
+                mensajeError: []
             }
         },
         computed:{
@@ -837,30 +816,33 @@
             }
         },
         methods:{
-            tabBuscarCompra(){
+            tabBuscarFlete(){
+                this.limpiarFormulario();
             },
-            buscaProveedores(){
-                this.listarProveedores(1);
-            },
-            listarProveedores(page){
-                var url = this.ruta + '/parametro/GetLstProveedor';
+            listarFleteDetalle(page){
+                this.mostrarProgressBar();
 
+                var url = this.ruta + '/flete/GetListFlete';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
-                        'nidgrupopar' : 110023,
-                        'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
-                        'opcion' : 0,
-                        'page' : page
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'dfechainicio': this.fillFlete.dfechainicio,
+                        'dfechafin': this.fillFlete.dfechafin,
+                        'cnumerovin': this.fillFlete.cnumerovin,
+                        'nidmarca': this.fillFlete.nidmarca,
+                        'nidmodelo': this.fillFlete.nidmodelo,
+                        'page': page
                     }
                 }).then(response => {
-                    this.arrayProveedor = response.data.arrayProveedor.data;
-                    this.paginationModal.current_page =  response.data.arrayProveedor.current_page;
-                    this.paginationModal.total = response.data.arrayProveedor.total;
-                    this.paginationModal.per_page    = response.data.arrayProveedor.per_page;
-                    this.paginationModal.last_page   = response.data.arrayProveedor.last_page;
-                    this.paginationModal.from        = response.data.arrayProveedor.from;
-                    this.paginationModal.to           = response.data.arrayProveedor.to;
+                    this.arrayFlete = response.data.arrayFlete.data;
+                    this.pagination.current_page =  response.data.arrayFlete.current_page;
+                    this.pagination.total = response.data.arrayFlete.total;
+                    this.pagination.per_page    = response.data.arrayFlete.per_page;
+                    this.pagination.last_page   = response.data.arrayFlete.last_page;
+                    this.pagination.from        = response.data.arrayFlete.from;
+                    this.pagination.to           = response.data.arrayFlete.to;
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -870,39 +852,16 @@
                     }
                 });
             },
-            cambiarPaginaProveedor(page){
-                this.paginationModal.current_page=page;
-                this.listarProveedores(page);
-            },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formCompra.nidproveedor = nProveedorId;
-                this.formCompra.cproveedornombre = cProveedorNombre;
-                this.cerrarModal();
-            },
-            listarTipoLista(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110044
-                    }
-                }).then(response => {
-                    this.arrayTipoLista = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
+            cambiarPaginaFlete(page){
+                this.pagination.current_page=page;
+                this.listarFleteDetalle(page);
             },
             // ====================================================
             // =============  TAB ASIGNAR FLETE ======================
             tabGeneraFlete(){
                 this.arrayLineaCredito = [];
-                this.fillCompra.nidmarca = '';
-                this.fillCompra.nidmodelo = '';
+                this.fillFlete.nidmarca = '';
+                this.fillFlete.nidmodelo = '';
             },
             listarCompras(page){
                 this.mostrarProgressBar();
@@ -965,11 +924,11 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.fillCompra.nidmarca
+                        'nidmarca' : this.fillFlete.nidmarca
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillCompra.nidmodelo = '';
+                    this.fillFlete.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1032,7 +991,7 @@
                         me.arrayFlete.push({
                             'nIdCompra': value.nIdCompra,
                             'cNumeroVin': value.cNumeroVin,
-                            'nIdMoneda': 1300028,
+                            'nIdMoneda': 1300027,
                             'fImporteFlete': me.arrayIndexFleteMonto[key]
                         });
                     }
@@ -1109,10 +1068,15 @@
             },
             // ===========================================================
             limpiarFormulario(){
-               this.arrayTempFlete = [];
-               this.arrayIndexFleteMonto = [];
-               this.formmFlete.cnumeroruc = '';
-               this.formmFlete.cnumerodocumento = '';
+                this.fillFlete.nidmarca = '';
+                this.fillFlete.nidmodelo = '';
+                this.fillFlete.dfechainicio = '';
+                this.fillFlete.dfechafin = '';
+                this.arrayFlete = [];
+                this.arrayTempFlete = [];
+                this.arrayIndexFleteMonto = [];
+                this.formmFlete.cnumeroruc = '';
+                this.formmFlete.cnumerodocumento = '';
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
