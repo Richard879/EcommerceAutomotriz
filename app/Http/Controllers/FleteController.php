@@ -47,16 +47,28 @@ class FleteController extends Controller
 
     public function SetFlete(Request $request)
     {
-
-    }
-
-    public function SetFleteDetalle(Request $request)
-    {
         if (!$request->ajax()) return redirect('/');
 
         try{
             DB::beginTransaction();
             $detalles = $request->data;
+
+            $eventocampania = DB::select('exec [usp_EC_SetEventoCampania] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdProveedor,
+                                                                    $request->cNombreEventoCampania,
+                                                                    $request->nIdTipoEvento, 
+                                                                    $request->dFechaInicio,
+                                                                    $request->dFechaFin,
+                                                                    $request->nIdTipoCambio,
+                                                                    $request->fTipoCambio,
+                                                                    $request->fMontoPresupuestoDolar,
+                                                                    $request->fMontoPresupuestoSol,
+                                                                    $request->cFlagDetalleEvento,
+                                                                    Auth::user()->id
+                                                                ]);
+            return response()->json($eventocampania);         
 
             /*$arrayVinExiste = [];
             $arrayPrecioLista = [];
