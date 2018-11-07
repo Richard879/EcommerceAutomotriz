@@ -3727,6 +3727,7 @@
                     'cNumeroCotizacion' :   'COT-001',
                     'nIdEmpresa'        :   1300011,
                     'nIdSucursal'       :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdContacto'       :   this.fillAsignarContacto.nidcontacto,
                     'nIdReferencia'     :   1300129,
                     'dFechaCotizacion'  :   moment().format('YYYY-MM-DD'),
                     'dFechaVencimientoCotizacion'   :   moment().add(7, 'days').format('YYYY-MM-DD'),
