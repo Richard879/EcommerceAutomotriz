@@ -61,11 +61,12 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdAsignacionContactoVendedor,
                                                                     $request->cNumeroCotizacion,
                                                                     $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
+                                                                    $request->nIdContacto,
                                                                     $request->nIdReferencia,
                                                                     $request->dFechaCotizacion,
                                                                     $request->dFechaVencimientoCotizacion,
@@ -415,7 +416,7 @@ class CotizacionController extends Controller
 
         $nIdCabeceraCotizacion    =   $request->nIdCabeceraCotizacion;
 
-        $arrayDistribucionEVPorRegalar = DB::select('exec usp_Cotizacion_GetDistribucionByElementoVenta ?, ?',
+        $arrayDistribucionEVPorRegalar = DB::select('exec [usp_Cotizacion_GetDistribucionByElementoVenta] ?, ?',
                                     [
                                         $nIdCabeceraCotizacion,
                                         Auth::user()->id

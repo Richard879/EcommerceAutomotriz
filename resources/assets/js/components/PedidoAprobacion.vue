@@ -710,8 +710,7 @@
             verPedido(pedido){
                 this.mostrarProgressBar();
 
-
-                var url = this.ruta + '/pedido/GetDocumentosById';
+                /*var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -722,26 +721,22 @@
                 }).then(response => {
                     this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
                     $("#myBar").hide();
-                    this.verDocumentosPedido();
+                    this.verDocumentosPedido(pedido.nIdCabeceraPedido);
                 }).catch(error => {
                     console.log(error);
-                });
+                });*/
             },
-            verDocumentosPedido(){
-                this.mostrarProgressBar();
-
-                
+            verDocumentosPedido(nIdCabeceraPedido){
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
+                        'nidcabecerapedido': nIdCabeceraPedido,
                         'opcion': 1
                     }
                 }).then(response => {
                     this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
-                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                 });

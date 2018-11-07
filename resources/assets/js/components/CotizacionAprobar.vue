@@ -25,7 +25,7 @@
                                                             <div class="row">
                                                                 <label class="col-sm-4 form-control-label">Empresa</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" v-model="fillCotizacionesPendiente.cempresa" class="form-control form-control-sm" readonly>
+                                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -33,7 +33,7 @@
                                                             <div class="row">
                                                                 <label class="col-sm-4 form-control-label">Sucursal</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" v-model="fillCotizacionesPendiente.csucursal" class="form-control form-control-sm" readonly>
+                                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -348,6 +348,7 @@
                                                                 <th>Tipo Elemento</th>
                                                                 <th>Nombre Elemento</th>
                                                                 <th>Precio de Venta</th>
+                                                                <th>Cantidad</th>
                                                                 <th>SubTotal</th>
                                                                 <th>Proveedor</th>
                                                                 <th>% Distribución</th>
@@ -360,12 +361,13 @@
                                                                 <td v-text="elemento.cTipoElemenNombre"></td>
                                                                 <td v-text="elemento.cElemenNombre"></td>
                                                                 <td v-text="elemento.fElemenValorVenta"></td>
+                                                                <td v-text="elemento.nCantidad"></td>
                                                                 <td v-text="elemento.fSubTotal"></td>
                                                                 <td>
                                                                     <div class="input-group">
                                                                         <el-select v-model="elemento.nIdProveedor"
                                                                                 filterable clearable
-                                                                                placeholder="SELECCIONE PROVEEDOR" >
+                                                                                placeholder="SELECCIONE" >
                                                                             <el-option
                                                                                 v-for="item in arrayProveedor"
                                                                                 :key="item.nIdPar"
@@ -422,6 +424,8 @@
         props:['ruta', 'usuario'],
         data(){
             return {
+                cempresa: 'SAISAC',
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillProveedor:{
                     nidproveedor: 0,
                     cproveedornombre: ''
@@ -431,10 +435,6 @@
                 arrayMarca: [],
                 arrayModelo: [],
                 fillCotizacionesPendiente:{
-                    nidempresa: 1300011,
-                    cempresa: 'SAISAC',
-                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                    csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidlinea: '',
                     nidmarca: '',
                     nidmodelo: 0,
@@ -600,8 +600,8 @@
                 var url = this.ruta + '/getcotizacion/GetLstCotizacionPendientes';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillCotizacionesPendiente.nidempresa,
-                        'nidsucursal' : this.fillCotizacionesPendiente.nidsucursal,
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidmarca' : this.fillCotizacionesPendiente.nidmarca,
                         'nidmodelo' : this.fillCotizacionesPendiente.nidmodelo,
                         'dfechainicio': this.fillCotizacionesPendiente.dfechainicio,
@@ -774,6 +774,7 @@
                             cTipoElemenNombre   :   ec.cTipoElemenNombre,
                             cElemenNombre       :   ec.cElemenNombre,
                             fElemenValorVenta   :   ec.fElemenValorVenta,
+                            nCantidad           :   ec.nCantidad,
                             fSubTotal           :   ec.fSubTotal,
                             nIdProveedor        :   '',
                             fDistribucion       :   0
@@ -786,10 +787,10 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillCotizacionesPendiente.nidempresa,
+                        'nidempresa': 1300011,
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : '',
-                        'opcion' : 0,
+                        'opcion' : 1,
                         'page' : page
                     }
                 }).then(response => {

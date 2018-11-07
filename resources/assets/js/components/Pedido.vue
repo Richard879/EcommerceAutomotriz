@@ -1447,9 +1447,10 @@
                 return me.error;
             },
             subirArchivos(nIdCabeceraPedido){
-                this.mostrarProgressBar();
                 let me = this;
                 
+                me.mostrarProgressBar();
+
                 me.attachment.map(function(value, i) {
                     if(me.attachment[i]){
                         me.form.append('file[]', value.archivo);
@@ -1469,13 +1470,12 @@
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
 
-                var url = this.ruta + '/pedido/subirArchivo';
+                var url = me.ruta + '/pedido/subirArchivo';
 
-                axios.post(url, this.form, config).then(response=>{
+                axios.post(url, me.form, config).then(response=>{
                     swal('Pedido registrado exitosamente');
-                    this.vistaFormularioPedido = 1;
-                    this.limpiarFormulario();
-                }).then(function (response) {
+                    me.vistaFormularioPedido = 1;
+                    me.limpiarFormulario();
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
