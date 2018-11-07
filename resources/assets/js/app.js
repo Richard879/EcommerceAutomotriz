@@ -64,6 +64,7 @@ Vue.component('cotizacionaprobar', require('./components/CotizacionAprobar.vue')
 Vue.component('pedidodepositoaprobar', require('./components/PedidoDepositoAprobar.vue'));
 Vue.component('exhibiciones', require('./components/Exhibiciones.vue'));
 Vue.component('flete', require('./components/Flete.vue'));
+Vue.component('reportecotizacion', require('./components/ReporteCotizacion.vue'));
 
 const app = new Vue({
     el: '#app',

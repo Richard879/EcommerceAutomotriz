@@ -279,4 +279,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/flete/SetFlete', 'FleteController@SetFlete');
     Route::get('/flete/GetListFlete', 'FleteController@GetListFlete');
     Route::get('/flete/GetComprasForFlete', 'FleteController@GetComprasForFlete');
+
+    Route::get('/reporte/GetListSubReportesByReporte','ReporteController@GetListSubReportesByReporte');
+    Route::post('/reporte/GetGenerarReporte01','ReporteController@GetGenerarReporte01');
 });

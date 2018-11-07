@@ -824,7 +824,7 @@
                                                     <el-col :span="6" :offset="12"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            USD. {{ fillDetalleDeposito.flagMontoCancelar = (fillDetalleDeposito.flagMontoTotalCotizacion - fillDetalleDeposito.flagMontoTotalDepositos) }}
+                                                            USD. {{ fillDetalleDeposito.flagMontoCancelar  }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
@@ -1640,6 +1640,13 @@
                     this.fillDetalleDeposito.cnombrecontacto   = pedido.cContacto;
                     this.fillDetalleDeposito.flagMontoTotalCotizacion = pedido.fMontoTotalCotizacion;
                     this.fillDetalleDeposito.flagMontoTotalDepositos  = response.data[0].fMontoTotalDepositos;
+
+                    // Resto el Total a pagar - El Total Pagado
+                    var flagMontoTotalCotizacion = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalCotizacion).toFixed(4))
+                    var flagMontoTotalDepositosAprobados = Number(parseFloat(this.fillDetalleDeposito.flagMontoTotalDepositos).toFixed(4))
+                    var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
+                    this.fillDetalleDeposito.flagMontoCancelar = resultadoMontoCancelar;
+                    (this.fillDetalleDeposito.flagMontoCancelar < 0 ) ? this.fillDetalleDeposito.flagMontoCancelar = 0 : this.fillDetalleDeposito.flagMontoCancelar;
                     this.listarDetalleDepositosPorPedido(pedido);
                 }).catch(error => {
                     console.log(error);

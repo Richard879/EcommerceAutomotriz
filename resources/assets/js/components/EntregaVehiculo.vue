@@ -1023,7 +1023,7 @@
                 axios.post(url, this.form, config).
                 then(response => {
                     this.tabMisInspecciones();
-                    toastr.success('Se generò la entrega del vehìculo!', 'Success');
+                    toastr.success('Se generó la entrega del vehículo!', 'Success');
                     this.attachments = [];
                     this.form = new FormData;
                 }).catch(error => {
