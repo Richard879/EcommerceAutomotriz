@@ -710,7 +710,7 @@
             verPedido(pedido){
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/pedido/GetDocumentosById';
+                /*var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -724,7 +724,7 @@
                     this.verDocumentosPedido(pedido.nIdCabeceraPedido);
                 }).catch(error => {
                     console.log(error);
-                });
+                });*/
             },
             verDocumentosPedido(nIdCabeceraPedido){
                 var url = this.ruta + '/pedido/GetDocumentosById';

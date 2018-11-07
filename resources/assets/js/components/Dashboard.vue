@@ -1,5 +1,5 @@
 <template>
-    <transition tag="ul" name="bounce" mode="out-in" appear>
+    <!--<transition tag="ul" name="bounce" mode="out-in" appear>-->
         <main>
             <!-- Page Header-->
             <header class="page-header">
@@ -466,7 +466,7 @@
                 </div>
             </section>
         </main>
-    </transition>
+    <!--</transition>-->
 </template>
 
 <script>

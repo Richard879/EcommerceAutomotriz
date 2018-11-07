@@ -416,7 +416,7 @@ class CotizacionController extends Controller
 
         $nIdCabeceraCotizacion    =   $request->nIdCabeceraCotizacion;
 
-        $arrayDistribucionEVPorRegalar = DB::select('exec usp_Cotizacion_GetDistribucionByElementoVenta ?, ?',
+        $arrayDistribucionEVPorRegalar = DB::select('exec [usp_Cotizacion_GetDistribucionByElementoVenta] ?, ?',
                                     [
                                         $nIdCabeceraCotizacion,
                                         Auth::user()->id
