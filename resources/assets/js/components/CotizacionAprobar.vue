@@ -774,6 +774,7 @@
                             cTipoElemenNombre   :   ec.cTipoElemenNombre,
                             cElemenNombre       :   ec.cElemenNombre,
                             fElemenValorVenta   :   ec.fElemenValorVenta,
+                            nCantidad           :   ec.nCantidad,
                             fSubTotal           :   ec.fSubTotal,
                             nIdProveedor        :   '',
                             fDistribucion       :   0
