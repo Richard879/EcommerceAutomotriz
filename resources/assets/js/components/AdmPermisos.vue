@@ -208,6 +208,7 @@
         </main>
     </transition>
 </template>
+
 <script>
     export default {
         props:['ruta'],
