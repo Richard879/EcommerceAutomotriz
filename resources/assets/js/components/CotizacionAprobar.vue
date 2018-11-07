@@ -147,21 +147,21 @@
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
                                                                         <!-- Opcion del ADV -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-usd"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
                                                                         <!-- Opción de Jefe de Ventas y ADV -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
 
                                                                         <!-- Opción de Gerencia -->
@@ -169,11 +169,11 @@
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
                                                                     </td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
