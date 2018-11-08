@@ -1288,7 +1288,7 @@
                     this.formDocRef.fdescuentolista = response.data[0].fDescuento;
                     this.formDocRef.fbono = response.data[0].fBono;
                     this.formDocRef.fbonoespecial = response.data[0].fBonoEspecial;
-                    this.formDocRef.fpreciofinal = response.data[0].fSubTotal;
+                    this.formDocRef.fpreciofinal = response.data[0].fSubTotalDolares;
                     this.formDocRef.fsobreprecio = response.data[0].fSobrePrecio;
                     $("#myBar").hide();
                 }).catch(error => {
