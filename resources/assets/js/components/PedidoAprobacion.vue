@@ -618,7 +618,7 @@
             },
             aprobarPedido(nIdPedido){
                 swal({
-                    title: '¿Esta seguro de aprobar el pedido N°' + nIdPedido + '?',
+                    title: '¿Esta seguro de APROBAR el pedido N°' + nIdPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -646,7 +646,7 @@
             },
             anularPedido(pedido){
                 swal({
-                    title: '¿Esta seguro de aprobar el pedido N°' + pedido.nIdCabeceraPedido + '?',
+                    title: '¿Esta seguro de ANULAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -662,7 +662,7 @@
                         }).then(function (response) {
                             me.listarPedidos(1);
                             swal(
-                                'Aprobado!',
+                                'Anulado!',
                                 'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
                                 'success'
                             )
