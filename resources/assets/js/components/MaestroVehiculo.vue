@@ -169,8 +169,45 @@
                                                         <form class="form-horizontal">
                                                             <div class="col-lg-12">
                                                                 <template v-if="arrayVehiculoBuscar.length">
-                                                                    <div class="table-responsive barraLateral">
-                                                                        <el-table v-loading="loading" :data="arrayVehiculoBuscar" style="width: 100%">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Acciones</th>
+                                                                                    <th>Placa</th>
+                                                                                    <th>Año Fabricación</th>
+                                                                                    <th>Marca</th>
+                                                                                    <th>Marca</th>
+                                                                                    <th>Serie</th>
+                                                                                    <th>Tarjeta</th>
+                                                                                    <th>Propietario</th>
+                                                                                    <th>D.Identificación</th>
+                                                                                    <th>Celular</th>
+                                                                                    <th>SOAT</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="vehiculo in arrayVehiculoBuscar" :key="vehiculo.nIdVehiculoPlaca">
+                                                                                    <td>
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Editar</div>
+                                                                                            <i @click="tabNuevoVehiculo(vehiculo, 2)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>&nbsp;
+                                                                                    </td>
+                                                                                    <td v-text="vehiculo.cPlaca"></td>
+                                                                                    <td v-text="vehiculo.cAnioFab"></td>
+                                                                                    <td v-text="vehiculo.cMarca"></td>
+                                                                                    <td v-text="vehiculo.cModelo"></td>
+                                                                                    <td v-text="vehiculo.cNroSerie"></td>
+                                                                                    <td v-text="vehiculo.cNroTarjeta"></td>
+                                                                                    <td v-text="vehiculo.cPropietario"></td>
+                                                                                    <td v-text="vehiculo.cNroIdentificacion"></td>
+                                                                                    <td v-text="vehiculo.cNroCelular"></td>
+                                                                                    <td v-text="vehiculo.cEstado"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <!--<el-table v-loading="loading" :data="arrayVehiculoBuscar" style="width: 100%">
                                                                             <el-table-column  property="cPlaca"   label="Placa"   width="100"></el-table-column>
                                                                             <el-table-column  property="cAnioFab"   label="Año Fabricación"   width="100"></el-table-column>
                                                                             <el-table-column  property="cMarca"   label="Marca"   width="120"></el-table-column>
@@ -191,7 +228,7 @@
                                                                                     </el-tooltip>
                                                                                 </template>
                                                                             </el-table-column>
-                                                                        </el-table>
+                                                                        </el-table>-->
                                                                         <div class="col-lg-12">
                                                                             <div class="row">
                                                                                 <div class="col-lg-7">
