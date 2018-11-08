@@ -61,7 +61,7 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCabeceraCotizacion = DB::select('exec [usp_Cotizacion_SetCabeceraCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $request->nIdAsignacionContactoVendedor,
                                                                     $request->cNumeroCotizacion,
                                                                     $request->nIdEmpresa,
@@ -72,6 +72,7 @@ class CotizacionController extends Controller
                                                                     $request->dFechaVencimientoCotizacion,
                                                                     $request->fTipoCambioVenta,
                                                                     $request->fTipoCambioCompra,
+                                                                    $request->fTipoCambioComercial,
                                                                     $request->fTotalCotizacionVehiculoDolar,
                                                                     $request->fTotalCotizacionVehiculoSol,
                                                                     $request->fTotalElementoVentaDolar,
@@ -95,8 +96,9 @@ class CotizacionController extends Controller
                 $fDy = $request->fDy;
                 $fDy = ($fDy == NULL) ? ($fDy = 0) : $fDy;
 
-                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $arrayDetalleCoti =  DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
+                                                                        $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
                                                                         $det['codigo'],
                                                                         0,
@@ -121,8 +123,9 @@ class CotizacionController extends Controller
                 $arrayevporregalar = $request->arrayevporregalar;
                 foreach($arrayevporregalar as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
+                                                                        $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
                                                                         0,
                                                                         0,
@@ -148,8 +151,9 @@ class CotizacionController extends Controller
                 $arrayelemventa = $request->arrayelemventa;
                 foreach($arrayelemventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
+                                                                        $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
                                                                         0,
                                                                         0,
@@ -176,8 +180,9 @@ class CotizacionController extends Controller
                 //Itera todas las referencias de vehiculos
                 foreach($arrayeventoeleventa as $ep=>$det)
                 {
-                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
+                                                                        $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
                                                                         0,
                                                                         0,

@@ -3733,6 +3733,7 @@
                     'dFechaVencimientoCotizacion'   :   moment().add(7, 'days').format('YYYY-MM-DD'),
                     'fTipoCambioVenta'  :   this.fValorTipoCambioVenta,
                     'fTipoCambioCompra' :   this.fValorTipoCambioCompra,
+                    'fTipoCambioComercial' : this.fValorTipocambioComercial,
                     'fTotalCotizacionVehiculoDolar' :   this.montoTotalConfiCotiVehiculo,
                     'fTotalCotizacionVehiculoSol'   :   this.montoTotalConfiCotiVehiculoSoles,
                     'fTotalElementoVentaDolar'      :   this.montoTotalConfiCotiEleVenta,
@@ -3758,6 +3759,7 @@
                     var url = this.ruta + '/gescotizacion/SetDetalleCotizacion';
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
+                        fTipoCambioComercial: this.fValorTipocambioComercial,
                         fDy: this.fDy,
                         arrayevporregalar: this.arrayConfiCotiEleVentaPorRegalar,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
