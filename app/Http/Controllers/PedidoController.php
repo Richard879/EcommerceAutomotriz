@@ -317,4 +317,17 @@ class PedidoController extends Controller
         }
         return ['arrayPedidoDoumento'=>$arrayPedidoDoumento];
     }
+
+    public function SetAnularPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraPedido  =  $request->nidcabecerapedido;
+
+        $objPedido = DB::select('exec [usp_Pedido_SetAnularPedido] ?, ?',
+                                                    [   $nIdCabeceraPedido,
+                                                        Auth::user()->id
+                                                    ]);
+        return response()->json($objPedido);
+    }
 }

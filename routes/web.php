@@ -131,6 +131,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/pedido/SetAprobarPedido', 'PedidoController@SetAprobarPedido');
     Route::get('/pedido/GetDocumentoByFormaPago', 'PedidoController@GetDocumentoByFormaPago');
     Route::get('/pedido/GetDocumentosById', 'PedidoController@GetDocumentosById');
+    Route::put('/pedido/SetAnularPedido', 'PedidoController@SetAnularPedido');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');

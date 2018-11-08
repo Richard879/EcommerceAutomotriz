@@ -1421,6 +1421,11 @@
                         if(this.attachment.length){
                             this.subirArchivos(response.data[0].nIdCabeceraPedido);
                         }
+                        else{
+                            swal('Pedido registrado exitosamente');
+                            this.vistaFormularioPedido = 1;
+                            this.limpiarFormulario();
+                        }
                     }
                     else{
                         swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');

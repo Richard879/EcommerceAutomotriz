@@ -159,6 +159,10 @@
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                         </el-tooltip>&nbsp;
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                        </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
                                                     <td v-text="pedido.cContacto"></td>
@@ -631,7 +635,35 @@
                             me.listarPedidos(1);
                             swal(
                                 'Aprobado!',
-                                'El pedido ' + nIdPedido +' ha sido aprobado con éxito.',
+                                'El pedido ' + nIdPedido +' ha sido APROBADO con éxito.',
+                                'success'
+                            )
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            anularPedido(pedido){
+                swal({
+                    title: '¿Esta seguro de aprobar el pedido N°' + pedido.nIdCabeceraPedido + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Aprobar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        var url = me.ruta + '/pedido/SetAnularPedido';
+                        axios.put(url,{
+                            nidcabecerapedido: pedido.nIdCabeceraPedido
+                        }).then(function (response) {
+                            me.listarPedidos(1);
+                            swal(
+                                'Aprobado!',
+                                'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
                                 'success'
                             )
                         }).catch(function (error) {
