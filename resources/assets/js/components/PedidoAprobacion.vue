@@ -686,21 +686,36 @@
                 this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
                 this.fillDetallePedido.cnombrevendedor = pedido.Vendedor,
                 this.fillDetallePedido.dfechapedido = pedido.dFechaPedido,
-                this.verDocumentosPedido(pedido.nIdCabeceraPedido);
+                this.verDetallePedido(pedido);
+                this.verDocumentosPedido(pedido);
             },
-            verDocumentosPedido(nIdCabeceraPedido){
+            verDetallePedido(pedido){
                 this.mostrarProgressBar();
+                var url = this.ruta + '/pedido/GetLstDetallePedido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': pedido.nIdCabeceraPedido
+                    }
+                }).then(response => {
+                    $("#myBar").hide();
+                    //this.arrayDetallePedido = response.data.arrayDetallePedido;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            verDocumentosPedido(pedido){
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': nIdCabeceraPedido,
+                        'nidcabecerapedido': pedido.nIdCabeceraPedido,
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
-                    $("#myBar").hide();
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;           
                 }).catch(error => {
                     console.log(error);
                 });
