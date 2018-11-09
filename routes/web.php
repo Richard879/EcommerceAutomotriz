@@ -281,5 +281,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/flete/GetComprasForFlete', 'FleteController@GetComprasForFlete');
 
     Route::get('/reporte/GetListSubReportesByReporte','ReporteController@GetListSubReportesByReporte');
-    Route::post('/reporte/GetGenerarReporte01','ReporteController@GetGenerarReporte01');
+    Route::post('/reporte/GetCotizacionGenerarReporte01','ReporteController@GetCotizacionGenerarReporte01');
+    Route::post('/reporte/GetPedidoGenerarReporte04','ReporteController@GetPedidoGenerarReporte04');
 });

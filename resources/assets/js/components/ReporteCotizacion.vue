@@ -45,10 +45,10 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-5">
                                                                             <div class="block">
-                                                                                <el-radio-group v-model="fillBsqReporte01.nIdOp" @change="verificarTipoBsq">
+                                                                                <el-radio-group v-model="fillBsqReporte01.nIdOp" @change="verificarTipoBsq01">
                                                                                     <el-radio v-for="(item, index) in arrayFlagReporte01" :label="item.value" :key="index"> {{ item.text }} </el-radio>
                                                                                 </el-radio-group>
-                                                                                <el-checkbox v-model="fillBsqReporte01.porVendedor" @change="verificarPorVendedor">Por Vendedor</el-checkbox>
+                                                                                <el-checkbox v-model="fillBsqReporte01.porVendedor" @change="verificarPorVendedor01">Por Vendedor</el-checkbox>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-7">
@@ -80,8 +80,46 @@
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6 offset-sm-5">
-                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="generarReporte01">
-                                                                                <i class="fa fa-file-pdf-o"></i> GENERAR REPORETE
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="cotizacionGenerarReporte01">
+                                                                                <i class="fa fa-file-pdf-o"></i> GENERAR REPORTE
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </template>
+                                        <template v-if="vistaFormulario == 1300368">
+                                            <section class="forms">
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="h4">BUSCAR </h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form @submit.prevent="cotizacionGenerarReporte04" class="form-horizontal">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-5">
+                                                                            <div class="block">
+                                                                                <el-checkbox v-model="fillBsqReporte04.porVendedor" @change="verificarPorVendedor04">Por Vendedor</el-checkbox>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-7">
+                                                                            <!-- Input Bsq Nombre Usuario -->
+                                                                            <el-input placeholder="Nombre..."
+                                                                                        v-if="fillBsqReporte04.porVendedor == true"
+                                                                                        v-model="fillBsqReporte04.cNombreUsuario">
+                                                                            </el-input>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-6 offset-sm-5">
+                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="cotizacionGenerarReporte04">
+                                                                                <i class="fa fa-file-pdf-o"></i> GENERAR REPORTE
                                                                             </button>
                                                                         </div>
                                                                     </div>
@@ -143,6 +181,10 @@
                     nIdOp: '',
                     dFechaPeriodo: '',
                     dFechaExacta : '',
+                    porVendedor: false,
+                    cNombreUsuario: ''
+                },
+                fillBsqReporte04: {
                     porVendedor: false,
                     cNombreUsuario: ''
                 },
@@ -248,25 +290,27 @@
                     }
                 });
             },
-            verificarTipoBsq(){
+            // =================================================================
+            // REPORTE 01
+            // =================================================================
+            verificarTipoBsq01(){
                 this.fillBsqReporte01.dFechaPeriodo = '';
                 this.fillBsqReporte01.dFechaExacta = '';
             },
-            verificarPorVendedor(){
+            verificarPorVendedor01(){
                 this.fillBsqReporte01.cNombreUsuario = '';
             },
-            generarReporte01(){
+            cotizacionGenerarReporte01(){
                 //======= Valido informacion correcta ==========
-                if(this.validarGenerarReporte01()){
+                if(this.validarCotizacionGenerarReporte01()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-
                 var config = {
                     responseType: 'blob'
                 };
-                var url = this.ruta + '/reporte/GetGenerarReporte01';
+                var url = this.ruta + '/reporte/GetCotizacionGenerarReporte01';
                 axios.post(url, {
                     'nIdEmpresa'      :   1300011,
                     'nIdSucursal'     :   sessionStorage.getItem("nIdSucursal"),
@@ -277,9 +321,7 @@
                     //Create a Blob from the PDF Stream
                     const file = new Blob(
                         [response.data],
-                        {
-                            type: 'application/pdf'
-                        }
+                        {type: 'application/pdf'}
                     );
                     //Construye la URL del Archivo
                     const fileURL = URL.createObjectURL(file);
@@ -295,7 +337,7 @@
                     }
                 });
             },
-            validarGenerarReporte01(){
+            validarCotizacionGenerarReporte01(){
                 let me = this;
 
                 me.error = 0;
@@ -317,6 +359,10 @@
                     }
                 }
 
+                if(me.fillBsqReporte01.porVendedor == true && !me.fillBsqReporte01.cNombreUsuario){
+                    me.mensajeError.push('Debe ingresar un Nombre');
+                }
+
                 if(me.mensajeError.length){
                     me.error = 1;
                 }
@@ -329,6 +375,68 @@
                 this.fillBsqReporte01.cNombreUsuario = '';
                 this.fillBsqReporte01.porVendedor = false;
             },
+
+            // =================================================================
+            // REPORTE 04
+            // =================================================================
+            verificarPorVendedor04(){
+                this.fillBsqReporte04.cNombreUsuario = '';
+            },
+            cotizacionGenerarReporte04(){
+                //======= Valido informacion correcta ==========
+                if(this.validarCotizacionGenerarReporte04()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/reporte/GetPedidoGenerarReporte04';
+                axios.post(url, {
+                    'nIdEmpresa'      :   1300011,
+                    'nIdSucursal'     :   sessionStorage.getItem("nIdSucursal"),
+                    'cNombreUsuario'  :   this.fillBsqReporte04.cNombreUsuario
+                }, config).then(response => {
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                    this.limpiarFormulario04();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarCotizacionGenerarReporte04(){
+                let me = this;
+
+                me.error = 0;
+                me.mensajeError =[];
+
+                if(me.fillBsqReporte04.porVendedor == true && !me.fillBsqReporte04.cNombreUsuario){
+                    me.mensajeError.push('Debe ingresar un Nombre');
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            limpiarFormulario04(){
+                this.fillBsqReporte04.cNombreUsuario = '';
+                this.fillBsqReporte04.porVendedor = false;
+            },
+
             // =================================================================
             // METODOS GENERICOS
             // =================================================================
