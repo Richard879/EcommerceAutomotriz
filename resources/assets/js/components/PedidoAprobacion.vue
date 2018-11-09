@@ -342,9 +342,148 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Pedido Soles</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetallePedido.ftotalpedidosoles" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Pedido Dolares</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetallePedido.ftotalpedidodolares" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                         <br/>
+                                        <!-- DETALLE VEHICULO -->
+                                        <template v-if="arrayDetallePedido.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Vehículo
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Vehiculo</th>
+                                                            <th>NombreComercial</th>
+                                                            <th>Sobre Precio</th>
+                                                            <th>Dscto</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" v-if="vehiculo.cFlagTipoItem=='V'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.fSobrePrecio"></td>
+                                                            <td v-text="vehiculo.fDescuento"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
+                                        <template v-if="arrayDetallePedido.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Elementos Venta Vendidos
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
+                                        <template v-if="arrayDetallePedido.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Regalos
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
+                                        <template v-if="arrayDetallePedido.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Campaña
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE DOCUMENTOS -->
                                         <template v-if="arrayPedidoDoumento.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Documentos Asociados
+                                            </vs-divider>
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
@@ -379,6 +518,13 @@
                                                 </tbody>
                                             </table>
                                         </template>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="aprobarPedidoModal()">
+                                                    <i class="fa fa-save"></i> Aprobar
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -420,10 +566,12 @@
                 arrayPedidos: [],
                 // =============================================================
                 // VER DETALLE DOCUMENTO PEDIDO
+                arrayDetallePedido: [],
                 arrayPedidoDoumento: [],
                 // =============================================================
                 // MODAL DETALLE PEDIDO
                 fillDetallePedido:{
+                    nidcabecerapedido: 0,
                     cnumeropedido: '',
                     cnumerocotizacion: '',
                     cdocumentocliente: '',
@@ -440,7 +588,9 @@
                     fpreciocierrelistaprecio: 0,
                     fpreciocierresistema: 0,
                     fsobreprecio: 0,
-                    fdscto: 0
+                    fdscto: 0,
+                    ftotalpedidosoles: 0,
+                    ftotalpedidodolares: 0
                 },
                 // =============================================================
                 // VARIABLES GENÉRICAS
@@ -616,9 +766,9 @@
                 this.paginationModal.current_page=page;
                 this.listarPedidos(page);
             },
-            aprobarPedido(nIdPedido){
+            aprobarPedido(nIdCabeceraPedido){
                 swal({
-                    title: '¿Esta seguro de APROBAR el pedido N°' + nIdPedido + '?',
+                    title: '¿Esta seguro de APROBAR el pedido N°' + nIdCabeceraPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -630,14 +780,26 @@
                         let me = this;
                         var url = me.ruta + '/pedido/SetAprobarPedido';
                         axios.put(url,{
-                            nidpedido: nIdPedido
+                            'nidempresa': 1300011,
+                            'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                            'nidcabecerapedido': parseInt(nIdCabeceraPedido)
                         }).then(function (response) {
+                            if(response.data[0].nFlagMsje == 1)
+                            {
+                                swal(
+                                    'Aprobado!',
+                                    'El pedido ' + nIdCabeceraPedido +' ha sido APROBADO con éxito.',
+                                    'success'
+                                )
+                            }
+                            else
+                            {
+                                swal(
+                                    'ERROR!',
+                                    response.data[0].cMensaje
+                                )
+                            }
                             me.listarPedidos(1);
-                            swal(
-                                'Aprobado!',
-                                'El pedido ' + nIdPedido +' ha sido APROBADO con éxito.',
-                                'success'
-                            )
                         }).catch(function (error) {
                             console.log(error);
                         });
@@ -658,14 +820,26 @@
                         let me = this;
                         var url = me.ruta + '/pedido/SetAnularPedido';
                         axios.put(url,{
-                            nidcabecerapedido: pedido.nIdCabeceraPedido
+                            'nidempresa': 1300011,
+                            'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                            'nidcabecerapedido': parseInt(pedido.nIdCabeceraPedido)
                         }).then(function (response) {
+                            if(response.data[0].nFlagMsje == 1)
+                            {
+                                swal(
+                                    'Aprobado!',
+                                    'El pedido ' + nIdCabeceraPedido +' ha sido ANULADO con éxito.',
+                                    'success'
+                                )
+                            }
+                            else
+                            {
+                                swal(
+                                    'ERROR!',
+                                    response.data[0].cMensaje
+                                )
+                            }
                             me.listarPedidos(1);
-                            swal(
-                                'Anulado!',
-                                'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
-                                'success'
-                            )
                         }).catch(function (error) {
                             console.log(error);
                         });
@@ -676,6 +850,7 @@
             // VER DETALLE PEDIDO
             // =================================================================
             verPedido(pedido){
+                this.fillDetallePedido.nidcabecerapedido = pedido.nIdCabeceraPedido,
                 this.fillDetallePedido.cnumeropedido = pedido.cNumeroPedido,
                 this.fillDetallePedido.cnumerocotizacion = pedido.cNumeroCotizacion,
                 this.fillDetallePedido.cdocumentocliente = pedido.cPerDocumento,
@@ -686,6 +861,8 @@
                 this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
                 this.fillDetallePedido.cnombrevendedor = pedido.Vendedor,
                 this.fillDetallePedido.dfechapedido = pedido.dFechaPedido,
+                this.fillDetallePedido.ftotalpedidosoles = pedido.fTotalPedidoSoles,
+                this.fillDetallePedido.ftotalpedidodolares = pedido.fTotalPedidoDolares,
                 this.verDetallePedido(pedido);
                 this.verDocumentosPedido(pedido);
             },
@@ -699,8 +876,8 @@
                         'nidcabecerapedido': pedido.nIdCabeceraPedido
                     }
                 }).then(response => {
+                    this.arrayDetallePedido = response.data.arrayDetallePedido.data;
                     $("#myBar").hide();
-                    //this.arrayDetallePedido = response.data.arrayDetallePedido;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -719,6 +896,9 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            aprobarPedidoModal(){
+                this.aprobarPedido(parseInt(this.fillDetallePedido.nidcabecerapedido));
             },
             // =================================================================
             // MODAL

@@ -955,6 +955,7 @@
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
+                                                                            <!-- DETALLE VEHICULO -->
                                                                             <template v-if="arrayConfiCotiVehiculo.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Vehículo
@@ -1004,60 +1005,10 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-
-                                                                            <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
-                                                                                <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta por Regalar
-                                                                                </vs-divider>
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th colspan="3">Elemento Venta</th>
-                                                                                                <th>Cantidad</th>
-                                                                                                <th>Moneda</th>
-                                                                                                <th>Precio Final</th>
-                                                                                                <th>SubTotal</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
-                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
-                                                                                                <td v-text="cotieleventa.cantidad"></td>
-                                                                                                <td v-text="cotieleventa.monedanombre"></td>
-                                                                                                <td v-text="cotieleventa.preciofinal"></td>
-                                                                                                <td v-text="cotieleventa.subtotal"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row flex-rigth-margin">
-                                                                                        <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <vs-divider border-style="solid" color="dark"/>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <table>
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </template>
-
+                                                                            <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
                                                                             <template v-if="arrayConfiCotiEleVenta.length">
                                                                                 <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta
+                                                                                    Elementos de Venta Vendidos
                                                                                 </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1104,10 +1055,60 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-
+                                                                            <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
+                                                                            <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Regalos
+                                                                                </vs-divider>
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-sm">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th colspan="3">Elemento Venta</th>
+                                                                                                <th>Cantidad</th>
+                                                                                                <th>Moneda</th>
+                                                                                                <th>Precio Final</th>
+                                                                                                <th>SubTotal</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
+                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                                <td v-text="cotieleventa.cantidad"></td>
+                                                                                                <td v-text="cotieleventa.monedanombre"></td>
+                                                                                                <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                <td v-text="cotieleventa.subtotal"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="row flex-rigth-margin">
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
+                                                                            </template>
+                                                                            <template v-else>
+                                                                                <table>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </template>
+                                                                            <!-- DETALLE ELEMENTOS DE VENTA CAMAPAÑAS -->
                                                                             <template v-if="arrayConfiCotiEventoEleVenta.length">
                                                                                 <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta de la Campaña
+                                                                                    Campañas
                                                                                 </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1154,7 +1155,6 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-
                                                                             <hr/>
                                                                             <div class="col-lg-12">
                                                                                 <div class="row flex-rigth-margin">

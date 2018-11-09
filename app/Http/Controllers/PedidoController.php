@@ -121,10 +121,14 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidpedido  =  $request->nidpedido;
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdCabeceraPedido  =  $request->nidcabecerapedido;
 
-        $arrayPedido = DB::select('exec usp_Pedido_SetAprobarPedido ?, ?',
-                                                    [   $nidpedido,
+        $arrayPedido = DB::select('exec [usp_Pedido_SetAprobarPedido] ?, ?, ?, ?',
+                                                    [   $nIdEmpresa,
+                                                        $nIdSucursal,
+                                                        $nIdCabeceraPedido,
                                                         Auth::user()->id
                                                     ]);
         return response()->json($arrayPedido);
@@ -322,10 +326,14 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
         $nIdCabeceraPedido  =  $request->nidcabecerapedido;
 
-        $objPedido = DB::select('exec [usp_Pedido_SetAnularPedido] ?, ?',
-                                                    [   $nIdCabeceraPedido,
+        $objPedido = DB::select('exec [usp_Pedido_SetAnularPedido] ?, ?, ?, ?',
+                                                    [   $nIdEmpresa,
+                                                        $nIdSucursal,
+                                                        $nIdCabeceraPedido,
                                                         Auth::user()->id
                                                     ]);
         return response()->json($objPedido);
