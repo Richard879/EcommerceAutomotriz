@@ -159,6 +159,10 @@
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                         </el-tooltip>&nbsp;
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                        </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
                                                     <td v-text="pedido.cContacto"></td>
@@ -253,7 +257,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nro Pedido</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="fillDetallePedido.cnumeropedido" class="form-control-label-readonly"></label>
+                                                            <input v-model="fillDetallePedido.cnumeropedido" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -261,25 +265,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nro Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="fillDetallePedido.cnumerocotizacion" class="form-control-label-readonly"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--<div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.naniofabricacion" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Año Modelo</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.naniomodelo" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cnumerocotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -287,17 +273,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nro VIN</label>
+                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.cnrovin" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cdocumentocliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">O/C</label>
+                                                        <label class="col-sm-4 form-control-label">* Cliente</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.nordencompra" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cnombrecliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -305,17 +291,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Color</label>
+                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.ccolor" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.nidversionvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Motor</label>
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.cmotor" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -323,17 +309,17 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Precio Lista</label>
+                                                        <label class="col-sm-4 form-control-label">* VIN</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fpreciolista" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cnumerovin" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Precio Sistema</label>
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fprecioventap" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -341,67 +327,21 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Descuento</label>
+                                                        <label class="col-sm-4 form-control-label">* Fecha Pedido</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fdescuentolista" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.dfechapedido" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Precio Cliente</label>
+                                                        <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                         <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fpreciofinal" class="form-control-label-readonly" style="text-align:right;"></label>
+                                                            <input v-model="fillDetallePedido.cnombrevendedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Bono</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fbono" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Sobre Precio</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fsobreprecio" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Bono Especial</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fbonoespecial" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Descuento</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.fdescuento" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Fecha Pedido</label>
-                                                        <div class="col-sm-8">
-                                                            <label v-text="formDocRef.dfechapedido" class="form-control-label-readonly" style="text-align:right;"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>-->
                                         </form>
                                         <br/>
                                         <template v-if="arrayPedidoDoumento.length">
@@ -415,7 +355,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar">
+                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar" v-if="documento.nValida==1">
                                                             <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
                                                             <td v-text="documento.cArchivo"></td>
                                                             <td>
@@ -678,7 +618,7 @@
             },
             aprobarPedido(nIdPedido){
                 swal({
-                    title: '¿Esta seguro de aprobar el pedido N°' + nIdPedido + '?',
+                    title: '¿Esta seguro de APROBAR el pedido N°' + nIdPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -695,7 +635,35 @@
                             me.listarPedidos(1);
                             swal(
                                 'Aprobado!',
-                                'El pedido ' + nIdPedido +' ha sido aprobado con éxito.',
+                                'El pedido ' + nIdPedido +' ha sido APROBADO con éxito.',
+                                'success'
+                            )
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    } else if (result.dismiss === swal.DismissReason.cancel) {}
+                })
+            },
+            anularPedido(pedido){
+                swal({
+                    title: '¿Esta seguro de ANULAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Aprobar!',
+                    cancelButtonText: 'No, cancelar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        var url = me.ruta + '/pedido/SetAnularPedido';
+                        axios.put(url,{
+                            nidcabecerapedido: pedido.nIdCabeceraPedido
+                        }).then(function (response) {
+                            me.listarPedidos(1);
+                            swal(
+                                'Anulado!',
+                                'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
                                 'success'
                             )
                         }).catch(function (error) {
@@ -708,9 +676,37 @@
             // VER DETALLE PEDIDO
             // =================================================================
             verPedido(pedido){
+                this.fillDetallePedido.cnumeropedido = pedido.cNumeroPedido,
+                this.fillDetallePedido.cnumerocotizacion = pedido.cNumeroCotizacion,
+                this.fillDetallePedido.cdocumentocliente = pedido.cPerDocumento,
+                this.fillDetallePedido.cnombrecliente = pedido.cContacto,
+                this.fillDetallePedido.nidversionvehiculo = pedido.nIdVersionVeh,
+                this.fillDetallePedido.cvehiculo = pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo,
+                this.fillDetallePedido.cnumerovin = pedido.cNumeroVin,
+                this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
+                this.fillDetallePedido.cnombrevendedor = pedido.Vendedor,
+                this.fillDetallePedido.dfechapedido = pedido.dFechaPedido,
+                this.verDetallePedido(pedido);
+                this.verDocumentosPedido(pedido);
+            },
+            verDetallePedido(pedido){
                 this.mostrarProgressBar();
-
-                /*var url = this.ruta + '/pedido/GetDocumentosById';
+                var url = this.ruta + '/pedido/GetLstDetallePedido';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': pedido.nIdCabeceraPedido
+                    }
+                }).then(response => {
+                    $("#myBar").hide();
+                    //this.arrayDetallePedido = response.data.arrayDetallePedido;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            verDocumentosPedido(pedido){
+                var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -719,24 +715,7 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
-                    $("#myBar").hide();
-                    this.verDocumentosPedido(pedido.nIdCabeceraPedido);
-                }).catch(error => {
-                    console.log(error);
-                });*/
-            },
-            verDocumentosPedido(nIdCabeceraPedido){
-                var url = this.ruta + '/pedido/GetDocumentosById';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': nIdCabeceraPedido,
-                        'opcion': 1
-                    }
-                }).then(response => {
-                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;           
                 }).catch(error => {
                     console.log(error);
                 });

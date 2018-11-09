@@ -317,4 +317,39 @@ class PedidoController extends Controller
         }
         return ['arrayPedidoDoumento'=>$arrayPedidoDoumento];
     }
+
+    public function SetAnularPedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraPedido  =  $request->nidcabecerapedido;
+
+        $objPedido = DB::select('exec [usp_Pedido_SetAnularPedido] ?, ?',
+                                                    [   $nIdCabeceraPedido,
+                                                        Auth::user()->id
+                                                    ]);
+        return response()->json($objPedido);
+    }
+
+    public function GetLstDetallePedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdCabeceraPedido  = $request->nidcabecerapedido;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetLstDetallePedido] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido
+                                    ]);
+        if($variable == "0"){
+            $arrayDetallePedido = ParametroController::arrayPaginator($arrayDetallePedido, $request);
+        }
+        return ['arrayDetallePedido'=>$arrayDetallePedido]; 
+    }
 }

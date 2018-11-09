@@ -147,21 +147,21 @@
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
                                                                         <!-- Opcion del ADV -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-usd"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
                                                                         <!-- Opción de Jefe de Ventas y ADV -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
 
                                                                         <!-- Opción de Gerencia -->
@@ -169,11 +169,11 @@
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
                                                                                 <i @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
-                                                                            </el-tooltip>
+                                                                            </el-tooltip>&nbsp;
                                                                         </template>
                                                                     </td>
                                                                     <td v-text="cotizacionpendiente.cNumeroCotizacion"></td>
@@ -289,7 +289,8 @@
                                                                 <th>Código</th>
                                                                 <th>Proveedor</th>
                                                                 <th>Nombre Comercial</th>
-                                                                <th>Precio de Venta</th>
+                                                                <th>Precio de Venta Soles</th>
+                                                                <th>Precio de Venta Dolares</th>
                                                                 <th>Descuento</th>
                                                                 <th>Supera Dscto</th>
                                                                 <th>Proveedor</th>
@@ -301,7 +302,8 @@
                                                                 <td v-text="descuento.nIdCabeceraCotizacion"></td>
                                                                 <td v-text="descuento.cProveedorNombre"></td>
                                                                 <td v-text="descuento.cNombreComercial"></td>
-                                                                <td v-text="descuento.fSubTotal"></td>
+                                                                <td v-text="descuento.fSubTotalSoles"></td>
+                                                                <td v-text="descuento.fSubTotalDolares"></td>
                                                                 <td v-text="descuento.fDescuento"></td>
                                                                 <td v-text="descuento.fSuperaDescuento"></td>
                                                                 <td>
@@ -347,9 +349,11 @@
                                                                 <th>Proveedor</th>
                                                                 <th>Tipo Elemento</th>
                                                                 <th>Nombre Elemento</th>
+                                                                <th>Moneda</th>
                                                                 <th>Precio de Venta</th>
                                                                 <th>Cantidad</th>
-                                                                <th>SubTotal</th>
+                                                                <th>SubTotalSoles</th>
+                                                                <th>SubTotalDolares</th>
                                                                 <th>Proveedor</th>
                                                                 <th>% Distribución</th>
                                                             </tr>
@@ -360,9 +364,11 @@
                                                                 <td v-text="elemento.cProveedorNombre"></td>
                                                                 <td v-text="elemento.cTipoElemenNombre"></td>
                                                                 <td v-text="elemento.cElemenNombre"></td>
+                                                                <td v-text="elemento.cNombreMoneda"></td>
                                                                 <td v-text="elemento.fElemenValorVenta"></td>
                                                                 <td v-text="elemento.nCantidad"></td>
-                                                                <td v-text="elemento.fSubTotal"></td>
+                                                                <td v-text="elemento.fSubTotalSoles"></td>
+                                                                <td v-text="elemento.fSubTotalDolares"></td>
                                                                 <td>
                                                                     <div class="input-group">
                                                                         <el-select v-model="elemento.nIdProveedor"
@@ -733,7 +739,8 @@
                             nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
                             cFlagSuperaDescuento    :   ec.cFlagSuperaDescuento,
                             cNombreComercial        :   ec.cNombreComercial,
-                            fSubTotal               :   ec.fSubTotal,
+                            fSubTotalSoles          :   ec.fSubTotalSoles,
+                            fSubTotalDolares        :   ec.fSubTotalDolares,
                             fDescuento              :   ec.fDescuento,
                             fSuperaDescuento        :   ec.fSuperaDescuento,
                             nIdProveedor            :   '',
@@ -775,7 +782,8 @@
                             cElemenNombre       :   ec.cElemenNombre,
                             fElemenValorVenta   :   ec.fElemenValorVenta,
                             nCantidad           :   ec.nCantidad,
-                            fSubTotal           :   ec.fSubTotal,
+                            fSubTotalSoles      :   ec.fSubTotalSoles,
+                            fSubTotalDolares    :   ec.fSubTotalDolares,
                             nIdProveedor        :   '',
                             fDistribucion       :   0
                         });
