@@ -564,11 +564,6 @@
                     nidmodelo: ''
                 },
                 arrayPedidos: [],
-                // =============================================================
-                // VER DETALLE DOCUMENTO PEDIDO
-                arrayDetallePedido: [],
-                arrayPedidoDoumento: [],
-                // =============================================================
                 // MODAL DETALLE PEDIDO
                 fillDetallePedido:{
                     nidcabecerapedido: 0,
@@ -592,6 +587,8 @@
                     ftotalpedidosoles: 0,
                     ftotalpedidodolares: 0
                 },
+                arrayDetallePedido: [],
+                arrayPedidoDoumento: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
