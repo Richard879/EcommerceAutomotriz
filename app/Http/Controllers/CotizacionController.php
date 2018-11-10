@@ -496,4 +496,26 @@ class CotizacionController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetLstDetalleCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdCabeceraCotizacion  = $request->nidcabeceracotizacion;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetLstDetalleCotizacion] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraCotizacion
+                                    ]);
+        if($variable == "0"){
+            $arrayDetalleCotizacion = ParametroController::arrayPaginator($arrayDetalleCotizacion, $request);
+        }
+        return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion]; 
+    }
 }
