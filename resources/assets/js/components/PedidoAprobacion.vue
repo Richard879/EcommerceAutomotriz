@@ -828,15 +828,15 @@
                             {
                                 swal(
                                     'Aprobado!',
-                                    'El pedido ' + nIdCabeceraPedido +' ha sido ANULADO con éxito.',
+                                    'El pedido ' + pedido.nIdCabeceraPedido +' ha sido APROBADO con éxito.',
                                     'success'
                                 )
                             }
                             else
                             {
                                 swal(
-                                    'ERROR!',
-                                    response.data[0].cMensaje
+                                    'Anulado!',
+                                    'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
                                 )
                             }
                             me.listarPedidos(1);
