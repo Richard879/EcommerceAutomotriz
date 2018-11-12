@@ -372,7 +372,7 @@ class CotizacionController extends Controller
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
         $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
 
-        $arrayCotizacionesPendientes = DB::select('exec usp_Cotizacion_GetLstCotizacionPendiente ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizacionesPendientes = DB::select('exec [usp_Cotizacion_GetLstCotizacionPendiente] ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nidempresa,
                                         $nidsucursal,
