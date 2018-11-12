@@ -1164,7 +1164,7 @@
         data(){
 
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // ============================================
                 // ============ BUSQUEDA PDI =================

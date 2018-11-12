@@ -477,7 +477,7 @@
                 //==========================================================
                 //===================== LISTAR USUARIOS ====================
                 fillPuga:{
-                    cempresa: 'SAISAC',
+                    cempresa: sessionStorage.getItem("cNombreEmpresa"),
                     nidempresa: 1300011,
                     nidsucursal: '',
                     cdescripcion: ''

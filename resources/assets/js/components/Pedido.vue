@@ -1158,15 +1158,6 @@
                                                 </table>
                                             </div>
                                         </template>
-                                        <template v-else>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td colspan="10">No existen registros!</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -1418,7 +1409,7 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 canio: '2018',
                 cmes: 'MAYO',

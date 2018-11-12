@@ -693,7 +693,7 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 canio: '',
                 cmes: '',

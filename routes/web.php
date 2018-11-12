@@ -10,6 +10,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+    Route::get('/perrelacion/GetLstEmpresaByUsuario', 'PerRelacionController@GetLstEmpresaByUsuario');
+    Route::get('/perrelacion/GetLstSucursalByEmpresa', 'PerRelacionController@GetLstSucursalByEmpresa');
+
     Route::get('/parametro/GetParametroByGrupo', 'ParametroController@GetParametroByGrupo');
     Route::get('/parametro/GetLstProveedor', 'ParametroController@GetLstProveedor');
     Route::get('/parametro/GetLineasByProveedor', 'ParametroController@GetLineasByProveedor');

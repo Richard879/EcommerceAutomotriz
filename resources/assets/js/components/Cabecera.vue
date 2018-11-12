@@ -1,6 +1,18 @@
 <template>
     <transition name="slide-fade" appear>
         <li class="nav-item d-flex align-items-center">
+            <el-select v-model="formCabecera.nidempresa"
+                       filterable
+                       clearable
+                       placeholder="SELECCIONE"
+                       @change="listarSucursalByEmpresa">
+                <el-option
+                    v-for="item in arrayEmpresa"
+                    :key="item.nIdPar"
+                    :label="item.cParAbreviatura"
+                    :value="item.nIdPar">
+                </el-option>
+            </el-select>
             <el-select v-model="formCabecera.nidsucursal"
                        filterable
                        clearable
@@ -23,24 +35,46 @@
         data(){
             return {
                 formCabecera:{
-                    nidempresa: 1300011,
+                    nidempresa: '',
                     nidsucursal: ''
                 },
+                arrayEmpresa:[],
                 arraySucursal:[]
             }
         },
         mounted(){
-            this.listarSucursal();
+            this.listarEmpresaByUsuario();
+            //this.listarSucursalByEmpresa();
         },
         methods:{
-            listarSucursal(){
-                var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
+            listarEmpresaByUsuario(){
+                var url = this.ruta + '/perrelacion/GetLstEmpresaByUsuario';
                 axios.get(url, {
                     params: {
+                        'nidusuario': this.usuario.id
+                    }
+                }).then(response => {
+                    this.arrayEmpresa = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarSucursalByEmpresa(){
+                var url = this.ruta + '/perrelacion/GetLstSucursalByEmpresa';
+                axios.get(url, {
+                    params: {
+                        'nidusuario': this.usuario.id,
                         'nidempresa': this.formCabecera.nidempresa
                     }
                 }).then(response => {
                     this.arraySucursal = response.data;
+                    this.formCabecera.nidsucursal = '';
+                    this.changeSucursal();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -52,6 +86,13 @@
             },
             changeSucursal(){
                 let me = this;
+                sessionStorage.setItem("nIdEmpresa", me.formCabecera.nidempresa);
+                me.arrayEmpresa.map(function(value, key) {
+                    if(value.nIdPar == me.formCabecera.nidempresa){
+                        //CAPTURO NUEVA SESIÓN DEL cNombreEmpresa SELECCIONADO
+                        sessionStorage.setItem("cNombreEmpresa", value.cParAbreviatura);
+                    }
+                });
                 //CAPTURO NUEVA SESIÓN nIdSucursal DE LA SUCURSAL SELECCIONADA
                 sessionStorage.setItem("nIdSucursal", me.formCabecera.nidsucursal);
                 me.arraySucursal.map(function(value, key) {
