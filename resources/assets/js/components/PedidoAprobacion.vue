@@ -172,7 +172,7 @@
                                                     <td v-text="pedido.dFechaPedido"></td>
                                                     <td v-text="pedido.cEstadoAprobacion"></td>
                                                     <td v-text="pedido.cEstadoPedido"></td>
-                                                    <td v-text="pedido.Vendedor"></td>
+                                                    <td v-text="pedido.cNombreVendedor"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -856,7 +856,7 @@
                 this.fillDetallePedido.cvehiculo = pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo,
                 this.fillDetallePedido.cnumerovin = pedido.cNumeroVin,
                 this.fillDetallePedido.cnombreproveedor = pedido.cNombreProveedor,
-                this.fillDetallePedido.cnombrevendedor = pedido.Vendedor,
+                this.fillDetallePedido.cnombrevendedor = pedido.cNombreVendedor,
                 this.fillDetallePedido.dfechapedido = pedido.dFechaPedido,
                 this.fillDetallePedido.ftotalpedidosoles = pedido.fTotalPedidoSoles,
                 this.fillDetallePedido.ftotalpedidodolares = pedido.fTotalPedidoDolares,

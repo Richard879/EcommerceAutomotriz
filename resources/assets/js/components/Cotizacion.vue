@@ -129,6 +129,14 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Cotización</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillMisCotizaciones.cnumerocotizacion" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado Cotizacion</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillMisCotizaciones.nidestadocotizacion" filterable clearable placeholder="SELECCIONE">
@@ -197,7 +205,7 @@
                                                                                 <td v-text="cotizacion.dFechaVencimientoCotizacion"></td>
                                                                                 <td v-text="cotizacion.cEstadoAprobacion"></td>
                                                                                 <td v-text="cotizacion.cEstadoCotizacion"></td>
-                                                                                <td v-text="cotizacion.cVendedorNombre"></td>
+                                                                                <td v-text="cotizacion.cNombreVendedor"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -2029,21 +2037,21 @@
                                         <h3 class="h4">DETALLE COTIZACIÓN</h3>
                                     </div>
                                     <div class="card-body">
-                                        <!--<form class="form-horizontal">
+                                        <form class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nro Pedido</label>
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnumeropedido" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2053,7 +2061,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Nro Documento</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2061,7 +2069,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cliente</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2071,7 +2079,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2079,7 +2087,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vehículo</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cvehiculo" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2087,27 +2095,9 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* VIN</label>
+                                                        <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnumerovin" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombreproveedor" class="form-control form-control-sm" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Fecha Pedido</label>
-                                                        <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.dfechapedido" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2115,7 +2105,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Vendedor</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2123,22 +2113,22 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Total Pedido Soles</label>
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.ftotalpedidosoles" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Total Pedido Dolares</label>
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
                                                         <div class="col-sm-8">
-                                                            <input v-model="fillDetallePedido.ftotalpedidodolares" class="form-control form-control-sm" readonly>
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>-->
+                                        </form>
                                         <br/>
                                         <!-- DETALLE VEHICULO -->
                                         <template v-if="arrayDetalleCotizacion.length">
@@ -2267,6 +2257,7 @@
                     </div>
                 </div>
             </div>
+            
         </main>
     </transition>
 </template>
@@ -2286,10 +2277,31 @@
                     fechaFin: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    nidestadocotizacion: ''
+                    nidestadocotizacion: '',
+                    cnumerocotizacion: ''
                 },
                 arrayCotizaciones: [],
                 arrayEstadoCotizacion: [],
+                // =============================================================
+                // MODAL DETALLE COTIZACION
+                fillDetalleCotizacion:{
+                    cnumerocotizacion: '',
+                    cdocumentocliente: '',
+                    cnombrecliente: '',
+                    nidversionvehiculo: 0,
+                    cvehiculo: '',
+                    cnombreproveedor: '',
+                    dfechacotizacion: '',
+                    cnombrevendedor: '',
+                    fpreciocierrefinalcliente: 0,
+                    fflete: 0,
+                    fpreciocierrelistaprecio: 0,
+                    fpreciocierresistema: 0,
+                    fsobreprecio: 0,
+                    fdscto: 0,
+                    ftotalcotizacionsoles: 0,
+                    ftotalcotizaciondolares: 0
+                },
                 arrayDetalleCotizacion: [],
                 // =============================================================
                 // VARIABLES TAB COTIZACIÓN
@@ -2775,6 +2787,7 @@
                         'dfechafin': this.fillMisCotizaciones.dfechafin,
                         'nidmarca': this.fillMisCotizaciones.nidmarca,
                         'nidmodelo': this.fillMisCotizaciones.nidmodelo,
+                        'cnumerocotizacion': this.fillMisCotizaciones.cnumerocotizacion,
                         'nidestadocotizacion': this.fillMisCotizaciones.nidestadocotizacion,
                         'page' : page
                     }
@@ -2801,6 +2814,16 @@
                 this.listarMisCotizaciones(page);
             },
             verCotizacion(cotizacion){
+                this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles = cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
                 this.verDetalleCotizacion(cotizacion);
             },
             verDetalleCotizacion(cotizacion){
