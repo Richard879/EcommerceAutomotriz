@@ -716,7 +716,7 @@
                 cempresa: 'SAISAC',
                 csucursal: 'CHICLAYO',
                 // ============================================================
-                // =========== VARIABLES MODAL PROVEEDOR ============         
+                // =========== VARIABLES MODAL PROVEEDOR ============
                 fillProveedor:{
                     cnombreproveedor: ''
                 },
@@ -813,7 +813,7 @@
                     nidasignacioncontactovendedor: 0,
                     cestadoseguimiento: ''
                 },
-                arraySeguimiento: [], 
+                arraySeguimiento: [],
                 arrayZona: [],
                 arrayEstadoSeguimiento: [],
                 arrayTipoSeguimiento: [],
