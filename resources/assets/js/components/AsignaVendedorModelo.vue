@@ -568,7 +568,7 @@
                 var url = this.ruta + '/parametro/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor': this.formAsignaModelo.nidproveedor,
                         'clineanombre': '',
                         'page' : page
@@ -662,7 +662,7 @@
                     var url = this.ruta + '/asignavendedormodelo/GetLstVendedorModelo';
                     axios.get(url, {
                         params: {
-                            'nidempresa': 1300011,
+                            'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                             'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                             'nidproveedor': this.formAsignaModelo.nidproveedor,
                             'nidlinea': this.fillVendedor.nidlinea,
@@ -745,7 +745,7 @@
 
                 var url = this.ruta + '/asignavendedormodelo/SetAsignaModelo';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdProveedor: parseInt(this.formAsignaModelo.nidproveedor),
                     nIdVendedor: nIdMiVendedor,
@@ -802,7 +802,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,

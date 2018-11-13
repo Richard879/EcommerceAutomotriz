@@ -21,7 +21,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillAsigVendedorCuota.cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -29,7 +29,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillAsigVendedorCuota.csucursal" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -322,11 +322,9 @@
     export default {
         props:['ruta', 'usuario'],
         data:()=>({
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillAsigVendedorCuota:{
-                    nidempresa: 1300011,
-                    cempresa: sessionStorage.getItem("cNombreEmpresa"),
-                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                    csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidcronograma: '',
                     canio: '',
                     cmes: '',
@@ -471,7 +469,7 @@
                 var url = this.ruta + '/parametro/GetLstProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillAsigVendedorCuota.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 0,
@@ -508,7 +506,7 @@
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidproveedor' : this.fillProveedor.nidproveedor
                     }
                 }).then(response => {
@@ -532,8 +530,9 @@
                 var url = this.ruta + '/asignavendedorcuota/GetLstVendedorCuota';
                 axios.get(url, {
                     params: {
-                        'nidempresa'    : this.fillAsigVendedorCuota.nidempresa,
-                        'nidsucursal'   : this.fillAsigVendedorCuota.nidsucursal,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' : this.fillAsigVendedorCuota.nidcronograma,
                         'nidproveedor'  : this.fillProveedor.nidproveedor,
                         'nidlinea'      : this.fillAsigVendedorCuota.nidlinea,
                         'nidjefeventas' : this.fillAsigVendedorCuota.nidjefeventa,
@@ -598,8 +597,8 @@
 
                 var url = this.ruta + '/asignavendedorcuota/SetRegistraAsignacionCuota';
                 axios.post(url, {
-                    'nidempresa'             : this.fillAsigVendedorCuota.nidempresa,
-                    'nidsucursal'             : this.fillAsigVendedorCuota.nidsucursal,
+                    'nidempresa'             : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal'             : parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nidcronograma'             : this.fillAsigVendedorCuota.nidcronograma,
                     'arrayFlagVendedoresByIdJV' :   this.arrayFlagVendedoresByIdJV
                 }).then(response => {

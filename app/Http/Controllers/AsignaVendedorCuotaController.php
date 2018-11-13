@@ -16,14 +16,16 @@ class AsignaVendedorCuotaController extends Controller
 
         $nIdEmpresa     = $request->nidempresa;
         $nIdSucursal    = $request->nidsucursal;
+        $nIdCronograma  = $request->nidcronograma;
         $nIdProveedor   = $request->nidproveedor;
         $nIdLinea       = $request->nidlinea;
         $nIdJefeVentas  = $request->nidjefeventas;
 
-        $arrayVendedorCuota = DB::select('exec usp_AsigVendedorCuota_GetListVendedoresCuota ?, ?, ?, ?, ?',
+        $arrayVendedorCuota = DB::select('exec [usp_AsigVendedorCuota_GetListVendedoresCuota] ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
                                                                 $nIdSucursal,
+                                                                $nIdCronograma,
                                                                 $nIdProveedor,
                                                                 $nIdLinea,
                                                                 $nIdJefeVentas

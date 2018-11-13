@@ -2781,7 +2781,7 @@
                 var url = this.ruta + '/gescotizacion/GetListCotizacionesByIdVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidsucursal': sessionStorage.getItem("nIdSucursal"),
                         'dfechainicio': this.fillMisCotizaciones.dfechainicio,
                         'dfechafin': this.fillMisCotizaciones.dfechafin,
@@ -2831,7 +2831,7 @@
                 var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion': cotizacion.nIdCabeceraCotizacion
                     }
@@ -2945,7 +2945,7 @@
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : sessionStorage.getItem("nIdEmpresa"),
                         'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillBusqContacto.ntipopersona,
@@ -3016,7 +3016,7 @@
                 var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : sessionStorage.getItem("nIdEmpresa"),
                         'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
                         'nidcontacto' : this.fillAsignarContacto.nidcontacto
                     }
@@ -3148,7 +3148,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 0,
@@ -3485,7 +3485,7 @@
                 var url = this.ruta + '/gescotizacion/GetElementoByTipo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidtipoelemen' : this.fillBusqTipoElementoPorRegalar.ntpoelemen,
                         'celementonombre': this.fillBusqTipoElementoPorRegalar.celementonombre,
                         'page' : page
@@ -3598,7 +3598,7 @@
                 var url = this.ruta + '/gescotizacion/GetElementoByTipo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidtipoelemen' : this.fillBusqTipoElemento.ntpoelemen,
                         'celementonombre': this.fillBusqTipoElemento.celementonombre,
                         'page' : page
@@ -4016,7 +4016,7 @@
                 axios.post(url, {
                     'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
                     'cNumeroCotizacion' :   'COT-001',
-                    'nIdEmpresa'        :   1300011,
+                    'nIdEmpresa'        :   sessionStorage.getItem("nIdEmpresa"),
                     'nIdSucursal'       :   sessionStorage.getItem("nIdSucursal"),
                     'nIdContacto'       :   this.fillAsignarContacto.nidcontacto,
                     'nIdReferencia'     :   1300129,
