@@ -3216,12 +3216,10 @@
                 });
             },
             llenarComboLinea(){
-                this.nidempresa = 130011;
-
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.fillProveedor.nidproveedor
                     }
                 }).then(response => {
