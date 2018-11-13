@@ -1688,7 +1688,7 @@
                     params: {
                         'ngrupoparid': 110089,
                         'cparnombre': this.fillAccesorio.cnombre,
-                        'opcion' : 1
+                        'opcion' : 0
                     }
                 }).then(response => {
                     let me = this;
