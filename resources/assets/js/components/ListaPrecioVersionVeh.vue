@@ -1164,9 +1164,11 @@
                     dFechaInicio: this.formListaPrecioVh.dfechainicio,
                     nIdTipoLista: this.formListaPrecioVh.nidtipolista
                 }).then(response => {
-                    swal('Lista de Precio registrada');
-                    this.limpiarFormulario();
-                    this.listarListaPrecioVh(1);
+                    swal('Lista de Precio registrada'),
+                    this.limpiarFormulario(),
+                    this.formListaPrecioVh.dfechainicio = '',
+                    this.formListaPrecioVh.dfechafin = '',
+                    this.listarListaPrecioVh(1),
                     this.vistaFormTab1 = 1;
                 }).catch(error => {
                     console.log(error);
