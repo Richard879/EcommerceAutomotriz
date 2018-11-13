@@ -21,7 +21,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Empresa</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillAsigVendedorCuota.cempresa" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -29,7 +29,7 @@
                                             <div class="row">
                                                 <label class="col-sm-4 form-control-label">* Sucursal</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" v-model="fillAsigVendedorCuota.csucursal" class="form-control form-control-sm" readonly>
+                                                    <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -37,7 +37,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Año</label>
+                                                <label class="col-sm-4 form-control-label">* Año</label>
                                                 <div class="col-sm-8">
                                                     <label v-text="fillAsigVendedorCuota.canio" class="form-control-label-readonly"></label>
                                                 </div>
@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <label class="col-sm-4 form-control-label">Mes</label>
+                                                <label class="col-sm-4 form-control-label">* Mes</label>
                                                 <div class="col-sm-8">
                                                     <label v-text="fillAsigVendedorCuota.cmes" class="form-control-label-readonly"></label>
                                                 </div>
@@ -85,12 +85,44 @@
                                                 <div class="col-sm-8">
                                                     <el-select v-model="fillAsigVendedorCuota.nidlinea"
                                                                         filterable
-                                                                        placeholder="SELECCIONE">
+                                                                        placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                         <el-option
                                                             v-for="item in arrayLinea"
                                                             :key="item.nIdPar"
                                                             :label="item.cParNombre"
                                                             :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">Marca</label>
+                                                <div class="col-md-8">
+                                                    <el-select v-model="fillAsigVendedorCuota.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                        <el-option
+                                                        v-for="item in arrayMarca"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-md-4 form-control-label">Modelo</label>
+                                                <div class="col-md-8">
+                                                    <el-select v-model="fillAsigVendedorCuota.nidmodelo" filterable clearable placeholder="SELECCIONE" >
+                                                        <el-option
+                                                        v-for="item in arrayModelo"
+                                                        :key="item.nIdPar"
+                                                        :label="item.cParNombre"
+                                                        :value="item.nIdPar">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -322,17 +354,17 @@
     export default {
         props:['ruta', 'usuario'],
         data:()=>({
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
+                csucursal: sessionStorage.getItem("cNombreSucursal"),
                 fillAsigVendedorCuota:{
-                    nidempresa: 1300011,
-                    cempresa: 'SAISAC',
-                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                    csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidcronograma: '',
                     canio: '',
                     cmes: '',
                     nidjefeventa: 0,
                     cnombrejefeventa: 'NO ES JEFE DE VENTAS',
-                    nidlinea: ''
+                    nidlinea: '',
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayProveedor: [],
                 fillProveedor:{
@@ -340,6 +372,8 @@
                     cproveedornombre: ''
                 },
                 arrayLinea: [],
+                arrayMarca: [],
+                arrayModelo: [],
                 arrayVendedoresByIdJV: [],
                 arrayFlagVendedoresByIdJV: [],
                 // =============================================================
@@ -471,7 +505,7 @@
                 var url = this.ruta + '/parametro/GetLstProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillAsigVendedorCuota.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 0,
@@ -508,12 +542,51 @@
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': sessionStorage.getItem("nIdEmpresa"),
                         'nidproveedor' : this.fillProveedor.nidproveedor
                     }
                 }).then(response => {
                     this.arrayLinea = response.data;
                     this.fillAsigVendedorCuota.nidlinea = '';
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboMarca(){
+                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea': this.fillAsigVendedorCuota.nidlinea
+                    }
+                }).then(response => {
+                    this.arrayMarca = response.data;
+                    this.fillAsigVendedorCuota.nidmarca = this.fillAsigVendedorCuota.nidmarca;
+                    this.arrayModelo = [];
+                    this.llenarComboModelo();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboModelo(){
+                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+                axios.get(url, {
+                    params: {
+                        'nidmarca': this.fillAsigVendedorCuota.nidmarca
+                    }
+                }).then(response => {
+                    this.arrayModelo = response.data;
+                    this.fillAsigVendedorCuota.nidmodelo = this.fillAsigVendedorCuota.nidmodelo;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -532,8 +605,9 @@
                 var url = this.ruta + '/asignavendedorcuota/GetLstVendedorCuota';
                 axios.get(url, {
                     params: {
-                        'nidempresa'    : this.fillAsigVendedorCuota.nidempresa,
-                        'nidsucursal'   : this.fillAsigVendedorCuota.nidsucursal,
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcronograma' : this.fillAsigVendedorCuota.nidcronograma,
                         'nidproveedor'  : this.fillProveedor.nidproveedor,
                         'nidlinea'      : this.fillAsigVendedorCuota.nidlinea,
                         'nidjefeventas' : this.fillAsigVendedorCuota.nidjefeventa,
@@ -598,8 +672,8 @@
 
                 var url = this.ruta + '/asignavendedorcuota/SetRegistraAsignacionCuota';
                 axios.post(url, {
-                    'nidempresa'             : this.fillAsigVendedorCuota.nidempresa,
-                    'nidsucursal'             : this.fillAsigVendedorCuota.nidsucursal,
+                    'nidempresa'             : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal'             : parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nidcronograma'             : this.fillAsigVendedorCuota.nidcronograma,
                     'arrayFlagVendedoresByIdJV' :   this.arrayFlagVendedoresByIdJV
                 }).then(response => {

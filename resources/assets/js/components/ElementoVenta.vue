@@ -417,7 +417,7 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 arrayTipoElemento: [],
                 arrayElementoVenta: [],
                 arrayTipoMoneda: [],

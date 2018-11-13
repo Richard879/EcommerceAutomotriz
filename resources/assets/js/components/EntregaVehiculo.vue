@@ -645,7 +645,7 @@
                 // =============================================================
                 fillBusquedaVehiculo: {
                     nidempresa: 1300011,
-                    cempresa: 'SAISAC',
+                    cempresa: sessionStorage.getItem("cNombreEmpresa"),
                     nidsucursal: sessionStorage.getItem("nIdSucursal"),
                     csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidvehiculo: '',

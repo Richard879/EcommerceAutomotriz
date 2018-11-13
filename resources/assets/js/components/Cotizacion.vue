@@ -129,6 +129,14 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">Nro Cotización</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="fillMisCotizaciones.cnumerocotizacion" @keyup.enter="listarMisCotizaciones(1)" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Estado Cotizacion</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillMisCotizaciones.nidestadocotizacion" filterable clearable placeholder="SELECCIONE">
@@ -182,12 +190,10 @@
                                                                         <tbody>
                                                                             <tr v-for="cotizacion in arrayCotizaciones" :key="cotizacion.nIdCabeceraCotizacion">
                                                                                 <td>
-                                                                                    <!--<template v-if="cotizacion.cSituacionRegistro =='A'">
-                                                                                        <a href="#" @click="desactivar(cotizacion.nIdCabeceraCotizacion)" data-toggle="tooltip" data-placement="top"
-                                                                                        :title="'Desactivar ' +cotizacion.nIdCabeceraCotizacion">
-                                                                                            <i class="fa-md fa fa-check-square"></i>
-                                                                                        </a>
-                                                                                    </template>-->
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Ver Detalle Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
+                                                                                        <i @click="abrirModal('cotizacion', 'detalle', cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="cotizacion.cNumeroCotizacion"></td>
                                                                                 <td v-text="cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo"></td>
@@ -199,7 +205,7 @@
                                                                                 <td v-text="cotizacion.dFechaVencimientoCotizacion"></td>
                                                                                 <td v-text="cotizacion.cEstadoAprobacion"></td>
                                                                                 <td v-text="cotizacion.cEstadoCotizacion"></td>
-                                                                                <td v-text="cotizacion.cVendedorNombre"></td>
+                                                                                <td v-text="cotizacion.cNombreVendedor"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -955,6 +961,7 @@
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
                                                                         <form class="form-horizontal">
+                                                                            <!-- DETALLE VEHICULO -->
                                                                             <template v-if="arrayConfiCotiVehiculo.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Vehículo
@@ -1004,60 +1011,10 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-
-                                                                            <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
-                                                                                <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta por Regalar
-                                                                                </vs-divider>
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-striped table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th colspan="3">Elemento Venta</th>
-                                                                                                <th>Cantidad</th>
-                                                                                                <th>Moneda</th>
-                                                                                                <th>Precio Final</th>
-                                                                                                <th>SubTotal</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
-                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
-                                                                                                <td v-text="cotieleventa.cantidad"></td>
-                                                                                                <td v-text="cotieleventa.monedanombre"></td>
-                                                                                                <td v-text="cotieleventa.preciofinal"></td>
-                                                                                                <td v-text="cotieleventa.subtotal"></td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                                <div class="col-lg-12">
-                                                                                    <div class="row flex-rigth-margin">
-                                                                                        <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <vs-divider border-style="solid" color="dark"/>
-                                                                            </template>
-                                                                            <template v-else>
-                                                                                <table>
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </template>
-
+                                                                            <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
                                                                             <template v-if="arrayConfiCotiEleVenta.length">
                                                                                 <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta
+                                                                                    Elementos de Venta Vendidos
                                                                                 </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1104,10 +1061,60 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-
+                                                                            <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
+                                                                            <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
+                                                                                <vs-divider border-style="solid" color="dark">
+                                                                                    Regalos
+                                                                                </vs-divider>
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-sm">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th colspan="3">Elemento Venta</th>
+                                                                                                <th>Cantidad</th>
+                                                                                                <th>Moneda</th>
+                                                                                                <th>Precio Final</th>
+                                                                                                <th>SubTotal</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
+                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                                <td v-text="cotieleventa.cantidad"></td>
+                                                                                                <td v-text="cotieleventa.monedanombre"></td>
+                                                                                                <td v-text="cotieleventa.preciofinal"></td>
+                                                                                                <td v-text="cotieleventa.subtotal"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="row flex-rigth-margin">
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <vs-divider border-style="solid" color="dark"/>
+                                                                            </template>
+                                                                            <template v-else>
+                                                                                <table>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </template>
+                                                                            <!-- DETALLE ELEMENTOS DE VENTA CAMAPAÑAS -->
                                                                             <template v-if="arrayConfiCotiEventoEleVenta.length">
                                                                                 <vs-divider border-style="solid" color="dark">
-                                                                                    Elementos de Venta de la Campaña
+                                                                                    Campañas
                                                                                 </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1154,7 +1161,6 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </template>
-
                                                                             <hr/>
                                                                             <div class="col-lg-12">
                                                                                 <div class="row flex-rigth-margin">
@@ -2019,6 +2025,239 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Detalle Cotizacion -->
+            <div class="modal fade" v-if="accionmodal==8" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE COTIZACIÓN</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnumerocotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombreproveedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Nro Documento</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cdocumentocliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cliente</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrecliente" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Cod. Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.nidversionvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cvehiculo" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Fecha Cotización</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.dfechacotizacion" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Vendedor</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.cnombrevendedor" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Soles</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizacionsoles" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Total Cotización Dolares</label>
+                                                        <div class="col-sm-8">
+                                                            <input v-model="fillDetalleCotizacion.ftotalcotizaciondolares" class="form-control form-control-sm" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <!-- DETALLE VEHICULO -->
+                                        <template v-if="arrayDetalleCotizacion.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Vehículo
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Vehiculo</th>
+                                                            <th>NombreComercial</th>
+                                                            <th>Sobre Precio</th>
+                                                            <th>Dscto</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" v-if="vehiculo.cFlagTipoItem=='V'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.fSobrePrecio"></td>
+                                                            <td v-text="vehiculo.fDescuento"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
+                                        <template v-if="arrayDetalleCotizacion.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Elementos Venta Vendidos
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
+                                        <template v-if="arrayDetalleCotizacion.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Regalos
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
+                                        <template v-if="arrayDetalleCotizacion.length">
+                                            <vs-divider border-style="solid" color="dark">
+                                                Detalle Campaña
+                                            </vs-divider>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cod. Elemento</th>
+                                                            <th>Nombre Elemento</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Total Soles</th>
+                                                            <th>Total Dolares</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            <td v-text="vehiculo.nIdCodigoArticulo"></td>
+                                                            <td v-text="vehiculo.cNombreArticulo"></td>
+                                                            <td v-text="vehiculo.nCantidad"></td>
+                                                            <td v-text="vehiculo.fSubTotalSoles"></td>
+                                                            <td v-text="vehiculo.fSubTotalDolares"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </main>
     </transition>
 </template>
@@ -2028,7 +2267,7 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // =============================================================
                 // VARIABLES TAB MIS COTIZACIONES
@@ -2038,10 +2277,32 @@
                     fechaFin: '',
                     nidmarca: '',
                     nidmodelo: '',
-                    nidestadocotizacion: ''
+                    nidestadocotizacion: '',
+                    cnumerocotizacion: ''
                 },
                 arrayCotizaciones: [],
                 arrayEstadoCotizacion: [],
+                // =============================================================
+                // MODAL DETALLE COTIZACION
+                fillDetalleCotizacion:{
+                    cnumerocotizacion: '',
+                    cdocumentocliente: '',
+                    cnombrecliente: '',
+                    nidversionvehiculo: 0,
+                    cvehiculo: '',
+                    cnombreproveedor: '',
+                    dfechacotizacion: '',
+                    cnombrevendedor: '',
+                    fpreciocierrefinalcliente: 0,
+                    fflete: 0,
+                    fpreciocierrelistaprecio: 0,
+                    fpreciocierresistema: 0,
+                    fsobreprecio: 0,
+                    fdscto: 0,
+                    ftotalcotizacionsoles: 0,
+                    ftotalcotizaciondolares: 0
+                },
+                arrayDetalleCotizacion: [],
                 // =============================================================
                 // VARIABLES TAB COTIZACIÓN
                 // =============================================================
@@ -2520,12 +2781,13 @@
                 var url = this.ruta + '/gescotizacion/GetListCotizacionesByIdVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillMisCotizaciones.dfechainicio,
                         'dfechafin': this.fillMisCotizaciones.dfechafin,
                         'nidmarca': this.fillMisCotizaciones.nidmarca,
                         'nidmodelo': this.fillMisCotizaciones.nidmodelo,
+                        'cnumerocotizacion': this.fillMisCotizaciones.cnumerocotizacion,
                         'nidestadocotizacion': this.fillMisCotizaciones.nidestadocotizacion,
                         'page' : page
                     }
@@ -2550,6 +2812,35 @@
             cambiarPaginaCotizacion(page){
                 this.pagination.current_page=page;
                 this.listarMisCotizaciones(page);
+            },
+            verCotizacion(cotizacion){
+                this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles = cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
+                this.verDetalleCotizacion(cotizacion);
+            },
+            verDetalleCotizacion(cotizacion){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabeceracotizacion': cotizacion.nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    this.arrayDetalleCotizacion = response.data.arrayDetalleCotizacion.data;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             // =================================================================
             // TAB COTIZACIÓN
@@ -2654,8 +2945,8 @@
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillBusqContacto.ntipopersona,
                         'cnrodocumento' : String(this.fillBusqContacto.ccontactodocumento.toString()),
@@ -2725,8 +3016,8 @@
                 var url = this.ruta + '/gescotizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.fillAsignarContacto.nidcontacto
                     }
                 }).then(response => {
@@ -2857,7 +3148,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 0,
@@ -3194,7 +3485,7 @@
                 var url = this.ruta + '/gescotizacion/GetElementoByTipo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoelemen' : this.fillBusqTipoElementoPorRegalar.ntpoelemen,
                         'celementonombre': this.fillBusqTipoElementoPorRegalar.celementonombre,
                         'page' : page
@@ -3307,7 +3598,7 @@
                 var url = this.ruta + '/gescotizacion/GetElementoByTipo';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoelemen' : this.fillBusqTipoElemento.ntpoelemen,
                         'celementonombre': this.fillBusqTipoElemento.celementonombre,
                         'page' : page
@@ -3725,8 +4016,8 @@
                 axios.post(url, {
                     'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
                     'cNumeroCotizacion' :   'COT-001',
-                    'nIdEmpresa'        :   1300011,
-                    'nIdSucursal'       :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdContacto'       :   this.fillAsignarContacto.nidcontacto,
                     'nIdReferencia'     :   1300129,
                     'dFechaCotizacion'  :   moment().format('YYYY-MM-DD'),
@@ -4015,6 +4306,19 @@
                                 this.fillEventoCampania.nIdEventoCampania = data['nIdEventoCampania'];
                                 this.accionmodal=6;
                                 this.modal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'cotizacion':
+                    {
+                        switch(accion){
+                            case 'detalle':
+                            {
+                                this.accionmodal=8;
+                                this.modal = 1;
+                                this.verCotizacion(data);
                                 break;
                             }
                         }

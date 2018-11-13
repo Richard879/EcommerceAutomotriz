@@ -274,21 +274,24 @@ class CotizacionController extends Controller
         $dFechaFin = $request->dfechafin;
         $nIdMarca = $request->nidmarca;
         $nIdModelo = $request->nidmodelo;
+        $cNumeroCotizacion = $request->cnumerocotizacion;
         $nIdEstadoCotizacion = $request->nidestadocotizacion;
 
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $cNumeroCotizacion = ($cNumeroCotizacion == NULL) ? ($cNumeroCotizacion = '') : $cNumeroCotizacion;
         $nIdEstadoCotizacion = ($nIdEstadoCotizacion == NULL) ? ($nIdEstadoCotizacion = 0) : $nIdEstadoCotizacion;
 
-        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizaciones = DB::select('exec [usp_Cotizacion_GetListCotizacionesByIdVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                 [   $nIdEmpresa,
                                                                     $nIdSucursal,
                                                                     $dFechaInicio,
                                                                     $dFechaFin,
                                                                     $nIdMarca,
                                                                     $nIdModelo,
+                                                                    $cNumeroCotizacion,
                                                                     $nIdEstadoCotizacion,
                                                                     Auth::user()->id
                                                                 ]);
@@ -369,7 +372,7 @@ class CotizacionController extends Controller
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
         $dfechafin = ($dfechafin == NULL) ? ($dfechafin = '') : $dfechafin;
 
-        $arrayCotizacionesPendientes = DB::select('exec usp_Cotizacion_GetLstCotizacionPendiente ?, ?, ?, ?, ?, ?, ?',
+        $arrayCotizacionesPendientes = DB::select('exec [usp_Cotizacion_GetLstCotizacionPendiente] ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $nidempresa,
                                         $nidsucursal,
@@ -495,5 +498,27 @@ class CotizacionController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function GetLstDetalleCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdCabeceraCotizacion  = $request->nidcabeceracotizacion;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetLstDetalleCotizacion] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraCotizacion
+                                    ]);
+        if($variable == "0"){
+            $arrayDetalleCotizacion = ParametroController::arrayPaginator($arrayDetalleCotizacion, $request);
+        }
+        return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion]; 
     }
 }
