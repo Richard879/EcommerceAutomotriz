@@ -149,7 +149,8 @@
                                                                                     <th>Nombre Campaña</th>
                                                                                     <th>Fecha Inicio.</th>
                                                                                     <th>Fecha Fin</th>
-                                                                                    <th>Presupuesto</th>
+                                                                                    <th>Total Soles</th>
+                                                                                    <th>Total Dolares</th>
                                                                                     <th>Nivel Detalle</th>
                                                                                     <th>Acciones</th>
                                                                                 </tr>
@@ -162,7 +163,8 @@
                                                                                     <td v-text="ec.cNombreEventoCampania"></td>
                                                                                     <td v-text="ec.dFechaInicio"></td>
                                                                                     <td v-text="ec.dFechaFin"></td>
-                                                                                    <td v-text="ec.fValorPresupuesto"></td>
+                                                                                    <td v-text="ec.fMontoPresupuestoSol"></td>
+                                                                                    <td v-text="ec.fMontoPresupuestoDolar"></td>
                                                                                     <td v-text="ec.cFlagDetalleEvento"></td>
                                                                                     <td>
                                                                                         <template v-if="ec.cEventoCampaniaEstado=='A'">
