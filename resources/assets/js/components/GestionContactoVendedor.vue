@@ -1461,6 +1461,197 @@
                                                                 </div>
                                                             </section>
                                                         </div>
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabOtrosIntereses">
+                                                            <section class="forms">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-lg-12">
+                                                                        <form class="form-horizontal">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="hidden" v-model="formNuevoContacto.nidproveedor">
+                                                                                                <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                                                        </button>
+                                                                                                    </el-tooltip>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Linea Vehiculo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
+                                                                                                <el-option
+                                                                                                v-for="item in arrayLinea"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                                <el-option
+                                                                                                v-for="item in arrayMarca"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayModelo"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Año Fabricación</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.naniofabricacion" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayAnioFabricacion"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Año Modelo</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-select v-model="formNuevoContacto.naniomodelo" filterable clearable placeholder="SELECCIONE" >
+                                                                                                <el-option
+                                                                                                v-for="item in arrayAnioModelo"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                                </el-option>
+                                                                                            </el-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-4 form-control-label">Fecha Referencia Compra</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <el-date-picker
+                                                                                                v-model="formNuevoContacto.dfechareferenciacompra"
+                                                                                                type="date"
+                                                                                                value-format="yyyy-MM-dd"
+                                                                                                format="dd/MM/yyyy"
+                                                                                                placeholder="dd/mm/aaaa">
+                                                                                            </el-date-picker>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-9 offset-sm-5">
+                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarReferenciaVehiculo()">
+                                                                                        <i class="fa fa-arrow-down"></i> Asignar
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">LISTADO</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <template v-if="arrayReferenciaVehiculo.length">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-sm">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Acciones</th>
+                                                                                                    <th>Proveedor</th>
+                                                                                                    <th>Línea</th>
+                                                                                                    <th>Marca</th>
+                                                                                                    <th>Modelo</th>
+                                                                                                    <th>Año Fab</th>
+                                                                                                    <th>Año Modelo</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr v-for="(referencia, index) in arrayReferenciaVehiculo" :key="referencia.nIdModelo">
+                                                                                                    <td>
+                                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                            <div slot="content">Eliminar Referencia  {{ referencia.cMarcaNombre + ' ' + referencia.cModeloNombre }}</div>
+                                                                                                            <i @click="eliminarItemReferenciaVehiculo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                        </el-tooltip>
+                                                                                                    </td>
+                                                                                                    <td v-text="referencia.cProveedorNombre"></td>
+                                                                                                    <td v-text="referencia.cLineaNombre"></td>
+                                                                                                    <td v-text="referencia.cMarcaNombre"></td>
+                                                                                                    <td v-text="referencia.cModeloNombre"></td>
+                                                                                                    <td v-text="referencia.nAnioFabricacion"></td>
+                                                                                                    <td v-text="referencia.nAnioModelo"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarNuevoContacto()">
+                                                                                                <i class="fa fa-save"></i> Registrar
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    <table>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td colspan="10">No existen registros!</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </template>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
