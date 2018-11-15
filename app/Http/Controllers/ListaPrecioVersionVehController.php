@@ -91,6 +91,26 @@ class ListaPrecioVersionVehController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
+                $det['nIdVersionVeh'] = ($det['nIdVersionVeh'] == NULL) ? ($det['nIdVersionVeh']= 0) : $det['nIdVersionVeh'];
+                $det['cNombreComercial'] = ($det['cNombreComercial'] == NULL) ? ($det['cNombreComercial']= '') : $det['cNombreComercial'];
+                $det['nAnioFabricacion'] = ($det['nAnioFabricacion'] == NULL) ? ($det['nAnioFabricacion']= 0) : $det['nAnioFabricacion'];
+                $det['nAnioModelo'] = ($det['nAnioModelo'] == NULL) ? ($det['nAnioModelo']= 0) : $det['nAnioModelo'];
+                $det['cUnidadMedida'] = ($det['cUnidadMedida'] == NULL) ? ($det['cUnidadMedida']= '') : $det['cUnidadMedida'];
+                $det['cMoneda'] = ($det['cMoneda'] == NULL) ? ($det['cMoneda']= '') : $det['cMoneda'];
+                $det['fPrecioBase'] = ($det['fPrecioBase'] == NULL) ? ($det['fPrecioBase']= 0) : $det['fPrecioBase'];
+                $det['fDescuento'] = ($det['fDescuento'] == NULL) ? ($det['fDescuento']= 0) : $det['fDescuento'];
+                $det['fPrecioCierre'] = ($det['fPrecioCierre'] == NULL) ? ($det['fPrecioCierre']= 0) : $det['fPrecioCierre'];
+                $det['fPlaca'] = ($det['fPlaca'] == NULL) ? ($det['fPlaca']= 0) : $det['fPlaca'];
+                $det['fMargen'] = ($det['fMargen'] == NULL) ? ($det['fMargen']= 0) : $det['fMargen'];
+                $det['fCostoDealer'] = ($det['fCostoDealer'] == NULL) ? ($det['fCostoDealer']= 0) : $det['fCostoDealer'];
+                $det['fBono'] = ($det['fBono'] == NULL) ? ($det['fBono']= 0) : $det['fBono'];
+                $det['fPrecioCierre2'] = ($det['fPrecioCierre2'] == NULL) ? ($det['fPrecioCierre2']= 0) : $det['fPrecioCierre2'];
+                $det['fFlete'] = ($det['fFlete'] == NULL) ? ($det['fFlete']= 0) : $det['fFlete'];
+                $det['fTYP'] = ($det['fTYP'] == NULL) ? ($det['fTYP']= 0) : $det['fTYP'];
+                $det['fPrecioVentaP'] = ($det['fPrecioVentaP'] == NULL) ? ($det['fPrecioVentaP']= 0) : $det['fPrecioVentaP'];
+                $det['fPrecioBonoDealer'] = ($det['fPrecioBonoDealer'] == NULL) ? ($det['fPrecioBonoDealer']= 0) : $det['fPrecioBonoDealer'];
+                $det['fBonoEspecial'] = ($det['fBonoEspecial'] == NULL) ? ($det['fBonoEspecial']= 0) : $det['fBonoEspecial'];
+
                 $objLista = DB::select('exec [usp_ListaPrecioVh_SetDetalle] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                             [   $request->nIdListaPrecioVersionVeh,
                                                                 $det['nIdVersionVeh'],

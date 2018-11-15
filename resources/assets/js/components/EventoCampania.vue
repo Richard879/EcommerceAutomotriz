@@ -149,7 +149,8 @@
                                                                                     <th>Nombre Campaña</th>
                                                                                     <th>Fecha Inicio.</th>
                                                                                     <th>Fecha Fin</th>
-                                                                                    <th>Presupuesto</th>
+                                                                                    <th>Total Soles</th>
+                                                                                    <th>Total Dolares</th>
                                                                                     <th>Nivel Detalle</th>
                                                                                     <th>Acciones</th>
                                                                                 </tr>
@@ -162,7 +163,8 @@
                                                                                     <td v-text="ec.cNombreEventoCampania"></td>
                                                                                     <td v-text="ec.dFechaInicio"></td>
                                                                                     <td v-text="ec.dFechaFin"></td>
-                                                                                    <td v-text="ec.fValorPresupuesto"></td>
+                                                                                    <td v-text="ec.fMontoPresupuestoSol"></td>
+                                                                                    <td v-text="ec.fMontoPresupuestoDolar"></td>
                                                                                     <td v-text="ec.cFlagDetalleEvento"></td>
                                                                                     <td>
                                                                                         <template v-if="ec.cEventoCampaniaEstado=='A'">
@@ -555,8 +557,9 @@
                                                                                                     <th>Acciones</th>
                                                                                                     <th>Nombre Proveedor</th>
                                                                                                     <th>Nombre Elemento</th>
-                                                                                                    <th>Moneda</th>
                                                                                                     <th>Cantidad</th>
+                                                                                                    <th>Moneda</th>
+                                                                                                    <th>Total Estimado</th>
                                                                                                     <th>Valor Venta</th>
                                                                                                     <th>SubTotal</th>
                                                                                                 </tr>
@@ -571,10 +574,11 @@
                                                                                                     </td>
                                                                                                     <td v-text="tempelemento.cProveedorNombre"></td>
                                                                                                     <td v-text="tempelemento.cElemenNombre"></td>
-                                                                                                    <td v-text="tempelemento.cMonedaNombre"></td>
                                                                                                     <td><input type="number" min="1" class="form-control form-control-sm" v-model="tempelemento.nCantidad"/></td>
+                                                                                                    <td v-text="tempelemento.cMonedaNombre"></td>
+                                                                                                    <td><input type="number" min="1" class="form-control form-control-sm" v-model="tempelemento.nTotalEstimado"/></td>
                                                                                                     <td v-text="tempelemento.fElemenValorVenta"></td>
-                                                                                                    <td> {{ tempelemento.fSubTotal = tempelemento.nCantidad * parseFloat(tempelemento.fElemenValorVenta) }} </td>
+                                                                                                    <td> {{ tempelemento.fSubTotal = tempelemento.nTotalEstimado * parseFloat(tempelemento.fElemenValorVenta) }} </td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -728,7 +732,7 @@
                                                                                                                     <td v-text="eledist.cMonedaNombre"></td>
                                                                                                                     <td v-text="eledist.fValorVenta"></td>
                                                                                                                     <td v-text="eledist.fValorCosto"></td>
-                                                                                                                    <td v-text="eledist.nCantidad"></td>
+                                                                                                                    <td v-text="eledist.nTotalEstimado"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoSol"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
@@ -1978,6 +1982,7 @@
                             })
                 }
                 else{
+                    this.arrayTemporalLinea = [];
                     this.arrayTemporalLinea.push({
                                 nIdLinea: data['nIdLinea'],
                                 cLineaNombre: data['cLineaNombre'],
@@ -1987,6 +1992,7 @@
                     this.arrayTemporalMarca = [];
                     this.arrayTemporalModelo = [];
                     toastr.success('Se Agregó Línea');
+                    this.cerrarModal();
                 }
             },
             encuentraLineas(nIdLinea){
@@ -2036,6 +2042,7 @@
                             })
                 }
                 else{
+                    this.arrayTemporalMarca = [];
                     this.arrayTemporalMarca.push({
                                 nIdMarca: data['nIdMarca'],
                                 cMarcaNombre: data['cMarcaNombre'],
@@ -2045,6 +2052,7 @@
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalModelo = [];
                     toastr.success('Se Agregó Marca');
+                    this.cerrarModal();
                 }
             },
             encuentraMarcas(nIdMarca){
@@ -2094,6 +2102,7 @@
                             })
                 }
                 else{
+                    this.arrayTemporalModelo = [];
                     this.arrayTemporalModelo.push({
                                 nIdModelo: data['nIdModelo'],
                                 cModeloNombre: data['cModeloNombre'],
@@ -2103,6 +2112,7 @@
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
                     toastr.success('Se Agregó Modelo ' + data['cModeloNombre']);
+                    this.cerrarModal();
                 }
             },
             encuentraModelos(nIdModelo){
@@ -2203,6 +2213,7 @@
                                 nIdProveedor        : data['nIdProveedor'],
                                 cProveedorNombre    : data['cProveedorNombre'],
                                 nCantidad           : 1,
+                                nTotalEstimado      : 1,
                                 nIdMoneda           : data['nIdMoneda'],
                                 fElemenValorVenta   : data['fElemenValorVenta'],
                                 cMonedaNombre       : data['cMonedaNombre'],

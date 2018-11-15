@@ -549,7 +549,7 @@
                     params: {
                         'ngrupoparid': 110082,
                         'cparnombre': this.fillItem.citemnombre,
-                        'opcion': 1,
+                        'opcion': 0,
                         'page': page
                     }
                 }).then(response => {

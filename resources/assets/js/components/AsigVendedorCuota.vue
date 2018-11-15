@@ -66,8 +66,7 @@
                                                 <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="hidden" v-model="fillProveedor.nidproveedor">
-                                                        <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                        <input type="text" v-model="fillAsigVendedorCuota.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                         <div class="input-group-prepend">
                                                             <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
                                                                 <i class="fa-lg fa fa-search"></i>
@@ -364,7 +363,9 @@
                     cnombrejefeventa: 'NO ES JEFE DE VENTAS',
                     nidlinea: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    nidproveedor: '',
+                    cproveedornombre: ''
                 },
                 arrayProveedor: [],
                 fillProveedor:{
@@ -533,8 +534,8 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
-                this.fillProveedor.nidproveedor = nProveedorId;
-                this.fillProveedor.cproveedornombre = cProveedorNombre;
+                this.fillAsigVendedorCuota.nidproveedor = nProveedorId;
+                this.fillAsigVendedorCuota.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
                 this.llenarComboLinea();
             },
@@ -543,11 +544,12 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': sessionStorage.getItem("nIdEmpresa"),
-                        'nidproveedor' : this.fillProveedor.nidproveedor
+                        'nidproveedor' : this.fillAsigVendedorCuota.nidproveedor
                     }
                 }).then(response => {
                     this.arrayLinea = response.data;
                     this.fillAsigVendedorCuota.nidlinea = '';
+                    this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -566,7 +568,7 @@
                     }
                 }).then(response => {
                     this.arrayMarca = response.data;
-                    this.fillAsigVendedorCuota.nidmarca = this.fillAsigVendedorCuota.nidmarca;
+                    this.fillAsigVendedorCuota.nidmarca = '';
                     this.arrayModelo = [];
                     this.llenarComboModelo();
                 }).catch(error => {
@@ -586,7 +588,7 @@
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
-                    this.fillAsigVendedorCuota.nidmodelo = this.fillAsigVendedorCuota.nidmodelo;
+                    this.fillAsigVendedorCuota.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -608,8 +610,10 @@
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : this.fillAsigVendedorCuota.nidcronograma,
-                        'nidproveedor'  : this.fillProveedor.nidproveedor,
+                        'nidproveedor'  : this.fillAsigVendedorCuota.nidproveedor,
                         'nidlinea'      : this.fillAsigVendedorCuota.nidlinea,
+                        'nidmarca'      : this.fillAsigVendedorCuota.nidmarca,
+                        'nidmodelo'     : this.fillAsigVendedorCuota.nidmodelo,
                         'nidjefeventas' : this.fillAsigVendedorCuota.nidjefeventa,
                         'page' : page
                     }
@@ -634,7 +638,7 @@
                 if(this.fillAsigVendedorCuota.nidjefeventa == 0){
                     this.mensajeError.push('Debe ser Jefe de Ventas para realizar la busqueda');
                 }
-                if(this.fillProveedor.nidproveedor == 0 && !this.fillProveedor.cproveedornombre){
+                if(this.fillAsigVendedorCuota.nidproveedor == 0 && !this.fillAsigVendedorCuota.cproveedornombre){
                     this.mensajeError.push('Debe seleccionar un proveedor');
                 }
                 if(this.fillAsigVendedorCuota.nidlinea == ''){

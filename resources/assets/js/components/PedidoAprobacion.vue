@@ -896,6 +896,7 @@
             },
             aprobarPedidoModal(){
                 this.aprobarPedido(parseInt(this.fillDetallePedido.nidcabecerapedido));
+                this.cerrarModal();
             },
             // =================================================================
             // MODAL

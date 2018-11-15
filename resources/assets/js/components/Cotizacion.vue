@@ -525,158 +525,154 @@
                                                                             </div>
                                                                             <div class="card-body">
                                                                                 <form class="form-horizontal">
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Proveedor</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <div class="input-group">
-                                                                                                            <input type="hidden" v-model="fillProveedor.nidproveedor">
-                                                                                                            <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
-                                                                                                            <div class="input-group-prepend">
-                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                    <div slot="content">Buscar Proveedor </div>
-                                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
-                                                                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                                                                    </button>
-                                                                                                                </el-tooltip>
-                                                                                                            </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* Proveedor</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <div class="input-group">
+                                                                                                        <input type="hidden" v-model="fillProveedor.nidproveedor">
+                                                                                                        <input type="text" v-model="fillProveedor.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                                        <div class="input-group-prepend">
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Buscar Proveedor </div>
+                                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                                </button>
+                                                                                                            </el-tooltip>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Vehículo</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <div class="input-group-prepend">
-                                                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('vehiculo','buscar')">
-                                                                                                                <i class="fa fa-search"></i> Buscar
-                                                                                                            </button>
-                                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">* Vehículo</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <div class="input-group-prepend">
+                                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('vehiculo','buscar')">
+                                                                                                            <i class="fa fa-search"></i> Buscar
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr/>
-                                                                                    <div class="col-lg-12">
-                                                                                        <template v-if="arrayVehiculo.length">
-                                                                                            <div class="table-responsive">
-                                                                                                <table class="table table-striped table-sm">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>Acción</th>
-                                                                                                            <th>Vehículo</th>
-                                                                                                            <th>Cantidad</th>
-                                                                                                            <th>Precio Base</th>
-                                                                                                            <th>Sobre Precio</th>
-                                                                                                            <th>Dscto</th>
-                                                                                                            <th>Precio Cierre + Flete</th>
-                                                                                                            <th>Limite de PVP</th>
-                                                                                                            <th>Precio Cierre a Cliente</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody>
-                                                                                                        <tr v-for="(vehiculo, index) in arrayVehiculo" :key="vehiculo.nIdContacto">
-                                                                                                            <td>
-                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                    <div slot="content">Eliminar Vehiculo  {{ vehiculo.NombreComercial }}</div>
-                                                                                                                    <i @click="removerVehiculoLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                                </el-tooltip>
-                                                                                                            </td>
-                                                                                                            <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
-                                                                                                            <td v-html="vehiculo.cantidad"></td>
-                                                                                                            <td v-text="vehiculo.PrecioBase"></td>
-                                                                                                            <td>
-                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio" @keyup="changeSobrePrecio(vehiculo.sobrePrecio)" min="0"/>
-                                                                                                            </td>
-                                                                                                            <td>
-                                                                                                                <input type="number" class="form-control form-control-sm" v-model="vehiculo.descuento" @keyup="changeDscto(vehiculo.descuento)" min="0"/>
-                                                                                                            </td>
-                                                                                                            <td v-text="vehiculo.PrecioCierre"></td>
-                                                                                                            <td v-text="vehiculo.PrecioVenta"></td>
-                                                                                                            <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                            <div class="col-lg-12">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-lg-6">
-                                                                                                        <div class="form-group row">
-                                                                                                            <div class="col-sm-12" :class="[(fSobrePecio >= 0) ? '' : 'datos']">
-                                                                                                                <label class="col-sm-2 form-control-label">SP: </label>
-                                                                                                                <label class="form-control-label"><strong> {{ fSobrePecio = calcularSobrePrecio[0] }} </strong></label>
-                                                                                                            </div>
-                                                                                                            <div class="col-sm-12" :class="[(fDy > 0) ? '' : 'datos']">
-                                                                                                                <label class="col-sm-2 form-control-label">Dy: </label>
-                                                                                                                <label class="form-control-label"><strong>{{ fDy = Math.abs(calcularDy[0]) }} </strong></label>
-                                                                                                            </div>
-                                                                                                            <div class="col-sm-12">
-                                                                                                                <label class="col-sm-2 form-control-label">Dx: </label>
-                                                                                                                <label class="form-control-label"><strong>{{ fDx = calcularDx[0] }} </strong></label>
-                                                                                                            </div>
+                                                                                    <template v-if="arrayVehiculo.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Acción</th>
+                                                                                                        <th>Vehículo</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Precio Base</th>
+                                                                                                        <th>Sobre Precio</th>
+                                                                                                        <th>Dscto</th>
+                                                                                                        <th>Precio Cierre + Flete</th>
+                                                                                                        <th>Limite de PVP</th>
+                                                                                                        <th>Precio Cierre a Cliente</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(vehiculo, index) in arrayVehiculo" :key="vehiculo.nIdContacto">
+                                                                                                        <td>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Eliminar Vehiculo  {{ vehiculo.NombreComercial }}</div>
+                                                                                                                <i @click="removerVehiculoLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                            </el-tooltip>
+                                                                                                        </td>
+                                                                                                        <td v-text="vehiculo.NombreComercial + ' ' + vehiculo.AnioFabricacion + '-' + vehiculo.AnioModelo"></td>
+                                                                                                        <td v-html="vehiculo.cantidad"></td>
+                                                                                                        <td v-text="vehiculo.PrecioBase"></td>
+                                                                                                        <td>
+                                                                                                            <input type="number" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio" @keyup="changeSobrePrecio(vehiculo.sobrePrecio)" min="0"/>
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            <input type="number" class="form-control form-control-sm" v-model="vehiculo.descuento" @keyup="changeDscto(vehiculo.descuento)" min="0"/>
+                                                                                                        </td>
+                                                                                                        <td v-text="vehiculo.PrecioCierre"></td>
+                                                                                                        <td v-text="vehiculo.PrecioVenta"></td>
+                                                                                                        <td> {{ vehiculo.subtotal = (parseFloat(vehiculo.PrecioBase) - parseFloat(vehiculo.descuento) + parseFloat(vehiculo.sobrePrecio)) }} </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <div class="row">
+                                                                                                <div class="col-lg-6">
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-sm-12" :class="[(fSobrePecio >= 0) ? '' : 'datos']">
+                                                                                                            <label class="col-sm-2 form-control-label">SP: </label>
+                                                                                                            <label class="form-control-label"><strong> {{ fSobrePecio = calcularSobrePrecio[0] }} </strong></label>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-12" :class="[(fDy > 0) ? '' : 'datos']">
+                                                                                                            <label class="col-sm-2 form-control-label">Dy: </label>
+                                                                                                            <label class="form-control-label"><strong>{{ fDy = Math.abs(calcularDy[0]) }} </strong></label>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-12">
+                                                                                                            <label class="col-sm-2 form-control-label">Dx: </label>
+                                                                                                            <label class="form-control-label"><strong>{{ fDx = calcularDx[0] }} </strong></label>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="col-lg-6 direction-money">
-                                                                                                        <div class="form-group row">
-                                                                                                            <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                                            <label class="form-control-label"><strong>{{ montoTotalVehiculoDolar = totalVehiculo }}</strong></label>
-                                                                                                        </div>
-                                                                                                        <div class="form-group row">
-                                                                                                            <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                                            <label class="form-control-label"><strong>{{ montoTotalVehiculoSoles = totalVehiculoSoles }}</strong></label>
-                                                                                                        </div>
+                                                                                                </div>
+                                                                                                <div class="col-lg-6 direction-money">
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label"><strong>{{ montoTotalVehiculoDolar = totalVehiculo }}</strong></label>
                                                                                                     </div>
-                                                                                                    <div class="col-lg-12" :class="[(fDy > 0) ? '' : 'datos']">
-                                                                                                        <div class="form-group row">
-                                                                                                            <div class="col-md-12">
-                                                                                                                <div class="row">
-                                                                                                                    <label class="col-md-2 form-control-label">OBSERVACIÓN</label>
-                                                                                                                    <div class="col-md-10">
-                                                                                                                        <el-input
-                                                                                                                            type="textarea"
-                                                                                                                            autosize
-                                                                                                                            placeholder="Registre Observación del Descuento"
-                                                                                                                            v-model="observacionDscto">
-                                                                                                                        </el-input>
-                                                                                                                    </div>
+                                                                                                    <div class="form-group row">
+                                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                        <label class="form-control-label"><strong>{{ montoTotalVehiculoSoles = totalVehiculoSoles }}</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-lg-12" :class="[(fDy > 0) ? '' : 'datos']">
+                                                                                                    <div class="form-group row">
+                                                                                                        <div class="col-md-12">
+                                                                                                            <div class="row">
+                                                                                                                <label class="col-md-2 form-control-label">OBSERVACIÓN</label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                    <el-input
+                                                                                                                        type="textarea"
+                                                                                                                        autosize
+                                                                                                                        placeholder="Registre Observación del Descuento"
+                                                                                                                        v-model="observacionDscto">
+                                                                                                                    </el-input>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="form-group row" :class="[(arrayVehiculo[0].sobrePrecio != '' ||
-                                                                                                                                  arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
-                                                                                                                                  arrayVehiculo[0].descuento != '') ? '' : 'datos']" >
-                                                                                                <div class="col-sm-9 offset-sm-4">
-                                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVentaPorRegalar">
-                                                                                                        <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                                    </button>
-                                                                                                    <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
-                                                                                                        <i class="fa fa-arrow-right"></i> Ir a Elemento Venta
-                                                                                                    </button>
-                                                                                                    <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                                        <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                                                    </button>-->
-                                                                                                </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row" :class="[(arrayVehiculo[0].sobrePrecio != '' ||
+                                                                                                                                arrayVehiculo[0].sobrePrecio <= flagLimiteSobrePrecio ||
+                                                                                                                                arrayVehiculo[0].descuento != '') ? '' : 'datos']" >
+                                                                                            <div class="col-sm-9 offset-sm-4">
+                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVentaPorRegalar">
+                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                                </button>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Elemento Venta
+                                                                                                </button>
+                                                                                                <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                                </button>-->
                                                                                             </div>
-                                                                                        </template>
-                                                                                        <template v-else>
-                                                                                            <table>
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td colspan="10">No existen registros!</td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </template>
-                                                                                    </div>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -1534,7 +1530,7 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Linea</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidlinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
+                                                            <el-select v-model="fillBusqVehiculo.nidlinea" filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboMarca()">
                                                                 <el-option
                                                                 v-for="item in arrayLinea"
                                                                 :key="item.nIdPar"
@@ -1549,7 +1545,7 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Marca</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                            <el-select v-model="fillBusqVehiculo.nidmarca" filterable disabled="disabled" clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
                                                                 <el-option
                                                                 v-for="item in arrayMarca"
                                                                 :key="item.nIdPar"
@@ -1566,7 +1562,7 @@
                                                     <div class="row">
                                                         <label class="col-md-4 form-control-label">Modelo</label>
                                                         <div class="col-md-8">
-                                                            <el-select v-model="fillBusqVehiculo.nidmodelo" filterable clearable placeholder="SELECCIONE" >
+                                                            <el-select v-model="fillBusqVehiculo.nidmodelo" filterable disabled="disabled" clearable placeholder="SELECCIONE" >
                                                                 <el-option
                                                                 v-for="item in arrayModelo"
                                                                 :key="item.nIdPar"
@@ -3216,12 +3212,10 @@
                 });
             },
             llenarComboLinea(){
-                this.nidempresa = 130011;
-
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.fillProveedor.nidproveedor
                     }
                 }).then(response => {

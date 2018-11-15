@@ -33,13 +33,13 @@ class VersionVehiculoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa = $request->nidempresa;
-        $nIdProveedor = $request->nidproveedor;
-        $nIdClase = $request->nidclase;
-        $nIdSubClase = $request->nidsubclase;
-        $nIdLinea = $request->nidlinea;
-        $nIdMarca = $request->nidmarca;
-        $nIdModelo = $request->nidmodelo;
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdProveedor   = $request->nidproveedor;
+        $nIdClase       = $request->nidclase;
+        $nIdSubClase    = $request->nidsubclase;
+        $nIdLinea       = $request->nidlinea;
+        $nIdMarca       = $request->nidmarca;
+        $nIdModelo      = $request->nidmodelo;
         $cNombreComercial = $request->cnombrecomercial;
         
         $nIdClase = ($nIdClase == NULL) ? ($nIdClase = 0) : $nIdClase;

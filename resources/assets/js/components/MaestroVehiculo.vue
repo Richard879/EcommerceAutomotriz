@@ -1842,7 +1842,7 @@
                     if(!this.fillPropietario.cnombre){
                         this.mensajeError.push('Debes Ingresar Nombres');
                     }
-                    if(!this.fillPropietario.dfecnacimiento){
+                    /*if(!this.fillPropietario.dfecnacimiento){
                         this.mensajeError.push('Debes Ingresar una Fecha de Nacimiento');
                     }
 
@@ -1852,7 +1852,7 @@
                         if(fecha_actual.diff(fecha_nacimiento, 'days') < 0){
                             this.mensajeError.push('La Fecha de Nacimiento debe ser menor a la fecha de Actual');
                         }
-                    }
+                    }*/
                 }
                 if(this.fillPropietario.ntipopersona == 2) {
                     if(nrodocumento.length != 11) {

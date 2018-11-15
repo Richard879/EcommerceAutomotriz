@@ -124,10 +124,11 @@ class EventoCampaniaController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?, ?, ?, ?, ?, ?', 
+                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                     [   $request->nIdEventoCampania,
-                                                        $det['nIdElemento'],
                                                         $det['nCantidad'],
+                                                        $det['nIdElemento'],
+                                                        $det['nTotalEstimado'],
                                                         $det['nIdMoneda'],
                                                         $det['fSubTotal'],
                                                         $request->nIdTipoCambio,
