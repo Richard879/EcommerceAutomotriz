@@ -2175,7 +2175,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -2204,7 +2204,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -2233,7 +2233,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -2255,7 +2255,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </main>
     </transition>
 </template>
@@ -3402,7 +3402,7 @@
                     if(value == ''){
                         this.arrayVehiculo[0].descuento = 0;
                     }
-                    if(parseInt(this.arrayVehiculo[0].subtotal) < parseInt(this.arrayVehiculo[0].PrecioVenta) ) {
+                    if(parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta) ) {
                         this.$message.error(`El descuento no puede superar el limite del PVP`);
                         this.arrayVehiculo[0].descuento = 0;
                         this.$forceUpdate();
