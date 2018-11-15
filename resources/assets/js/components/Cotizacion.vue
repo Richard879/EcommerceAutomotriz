@@ -495,7 +495,7 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="tab0402" href="#TabDCElementoVentaPorRegalar" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-gift"></i> E.V POR REGALAR
+                                                                <i class="fa fa-gift"></i> OBSEQUIOS
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -505,7 +505,7 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="tab0404" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-check-square"></i> VERIFICAR CAMPAÑA
+                                                                <i class="fa fa-check-square"></i> CAMPAÑAS
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -1060,7 +1060,7 @@
                                                                             <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
                                                                             <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
                                                                                 <vs-divider border-style="solid" color="dark">
-                                                                                    Regalos
+                                                                                    Obsequios
                                                                                 </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1102,7 +1102,7 @@
                                                                                 <table>
                                                                                     <tbody>
                                                                                         <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
+                                                                                            <td colspan="10">No existen regalos!</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1152,7 +1152,7 @@
                                                                                 <table>
                                                                                     <tbody>
                                                                                         <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas en campañas!</td>
+                                                                                            <td colspan="10">No existen campañas!</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1844,8 +1844,9 @@
                                                         <tr>
                                                             <th>Acciones</th>
                                                             <th>Elemento Venta</th>
-                                                            <th>Moneda</th>
-                                                            <th>Valor</th>
+                                                            <!--<th>Moneda</th>
+                                                            <th>Valor</th>-->
+                                                            <th>Cantidad a Regalar</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1858,8 +1859,9 @@
                                                                     </el-tooltip>
                                                                 </td>
                                                                 <td v-text="eleventa.cNombre"></td>
-                                                                <td v-text="eleventa.cMonedaNombre"></td>
-                                                                <td v-text="eleventa.fValorVenta"></td>
+                                                                <!--<td v-text="eleventa.cMonedaNombre"></td>
+                                                                <td v-text="eleventa.fValorVenta"></td>-->
+                                                                <td v-text="eleventa.cantidad"></td>
                                                             </template>
                                                         </tr>
                                                     </tbody>
@@ -3889,7 +3891,7 @@
                                 cMonedaNombre           : eev.cMonedaNombre,
                                 nIdEventoElementoVenta  : eev.nIdEventoElementoVenta,
                                 fValorVenta             : eev.fValorVenta,
-                                cantidad                : 1
+                                cantidad                : eev.nCantidad
                             });
                         });
                     }

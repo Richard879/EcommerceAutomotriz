@@ -380,7 +380,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link " id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
@@ -714,10 +714,10 @@
                                                                                                                     <th>Proveedor</th>
                                                                                                                     <th>Tipo Elemento</th>
                                                                                                                     <th>Nombre Elemento</th>
+                                                                                                                    <th>Cantidad</th>
                                                                                                                     <th>Moneda</th>
                                                                                                                     <th>Precio Venta</th>
-                                                                                                                    <th>Valor Costo</th>
-                                                                                                                    <th>Cantidad</th>
+                                                                                                                    <th>Total Estimado</th>
                                                                                                                     <th>SubTotal Soles</th>
                                                                                                                     <th>SubTotal Dolares</th>
                                                                                                                     <th>% Distribución</th>
@@ -729,16 +729,19 @@
                                                                                                                     <td v-text="eledist.cProveedorNombre"></td>
                                                                                                                     <td v-text="eledist.cTipoElemenNombre"></td>
                                                                                                                     <td v-text="eledist.cElemenNombre"></td>
+                                                                                                                    <td v-text="eledist.nCantidad"></td>
                                                                                                                     <td v-text="eledist.cMonedaNombre"></td>
                                                                                                                     <td v-text="eledist.fValorVenta"></td>
-                                                                                                                    <td v-text="eledist.fValorCosto"></td>
                                                                                                                     <td v-text="eledist.nTotalEstimado"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoSol"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
                                                                                                                         <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
                                                                                                                             <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                                                        </el-tooltip>&nbsp;
+                                                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                                                        <el-tooltip class="item" :content="'Añadir Distribución ' + eledist.nCantidad" effect="dark" placement="top-start">
+                                                                                                                            <i @click="abrirModal('asignacantidad','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
+                                                                                                                        </el-tooltip>
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                             </tbody>
@@ -1511,6 +1514,105 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL DISTRIBUCION CANTIDAD DE ELEMENTO VENTA-->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -2385,7 +2487,8 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
+                        //'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
+                        'nideventocampania' : 8000011
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2785,6 +2888,19 @@
                             }break;
                         }
                     }
+                    break;
+                    case 'asignacantidad':
+                    {
+                        switch(accion){
+                            case 'elemento':
+                            {
+                                this.accionmodal=7;
+                                this.modal = 1;
+                            }
+                            break;
+                        }
+                    }
+                    break;
                 }
             },
             // ===========================================================
