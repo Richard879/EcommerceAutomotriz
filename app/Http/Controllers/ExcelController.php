@@ -86,6 +86,7 @@ class ExcelController extends Controller
         $data = [];
         foreach ($sheetData as $key => $value) {
             if($value[1]!='' || $value[1]!=null){
+                //$value[15] = ($value[15] == NULL) ? ($value[15]= 0) : $value[15];
                 $data[$key+1] =[
                     'nIdVersionVeh'   => $value[0],
                     'cNombreComercial' => $value[1],
