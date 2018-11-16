@@ -72,8 +72,8 @@ class EventoCampaniaController extends Controller
                                                                 [   $request->nIdEventoCampania,
                                                                     $request->cFlagDetalleEvento,
                                                                     $det['nIdLinea'],
-                                                                    $request->nTotalRegistros,
-                                                                    $request->fValorPresupuesto,
+                                                                    0,
+                                                                    0,
                                                                     Auth::user()->id
                                                                 ]);
                 }  
@@ -87,8 +87,8 @@ class EventoCampaniaController extends Controller
                                                                 [   $request->nIdEventoCampania,
                                                                     $request->cFlagDetalleEvento,
                                                                     $det['nIdMarca'],
-                                                                    $request->nTotalRegistros,
-                                                                    $request->fValorPresupuesto,
+                                                                    0,
+                                                                    0,
                                                                     Auth::user()->id
                                                                 ]);
                 }  
@@ -102,8 +102,8 @@ class EventoCampaniaController extends Controller
                                                                 [   $request->nIdEventoCampania,
                                                                     $request->cFlagDetalleEvento,
                                                                     $det['nIdModelo'],
-                                                                    $request->nTotalRegistros,
-                                                                    $request->fValorPresupuesto,
+                                                                    $det['nAnioFabricacion'],
+                                                                    $det['nAnioModelo'],
                                                                     Auth::user()->id
                                                                 ]);
                 }  

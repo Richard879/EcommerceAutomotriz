@@ -328,9 +328,9 @@
                                                                                 <el-select v-model="formEventoCamp.nidtipocambio" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeTipoCambio()">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoCambio"
-                                                                                    :key="item.nIdPar"
+                                                                                    :key="item.nIdTipoCambio"
                                                                                     :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                    :value="item.nIdTipoCambio">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -340,7 +340,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Valor Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="formEventoCamp.fvalortipocambio" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="formEventoCamp.fvalortipocambio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -380,7 +380,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link " id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
@@ -451,6 +451,13 @@
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </template>
                                                                                 <template v-if="arrayTemporalMarca.length">
                                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
@@ -481,6 +488,13 @@
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </template>
                                                                                 <template v-if="arrayTemporalModelo.length">
                                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
@@ -488,10 +502,10 @@
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th>Acciones</th>
-                                                                                                    <th>Código Proveedor</th>
                                                                                                     <th>Nombre Proveedor</th>
-                                                                                                    <th>Código Modelo</th>
                                                                                                     <th>Nombre Modelo</th>
+                                                                                                    <th>Año Fab.</th>
+                                                                                                    <th>Año Modelo</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
@@ -502,23 +516,23 @@
                                                                                                             <i @click="eliminarItemModelo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                                         </el-tooltip>
                                                                                                     </td>
-                                                                                                    <td v-text="tempmodelo.nIdProveedor"></td>
                                                                                                     <td v-text="tempmodelo.cProveedorNombre"></td>
-                                                                                                    <td v-text="tempmodelo.nIdModelo"></td>
                                                                                                     <td v-text="tempmodelo.cModeloNombre"></td>
+                                                                                                    <td v-text="tempmodelo.nAnioFabricacion"></td>
+                                                                                                    <td v-text="tempmodelo.nAnioModelo"></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
-                                                                                </template>
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
-                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                        </button>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                </template>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1106,6 +1120,15 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Nombre Modelo</label>
@@ -1130,18 +1153,40 @@
                                                                     <th>Seleccione</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Modelo</th>
+                                                                    <th>Año Fab.</th>
+                                                                    <th>Año Modelo</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="modelo in arrayModelo" :key="modelo.nIdModelo">
+                                                                <tr v-for="(modelo, index) in arrayModelo" :key="modelo.nIdModelo">
                                                                     <td>
                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                             <div slot="content">Agregar {{ modelo.cModeloNombre }}</div>
-                                                                            <i @click="asignarModelos(modelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            <i @click="asignarModelos(modelo, index)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                         </el-tooltip>
                                                                     </td>
                                                                     <td v-text="modelo.cProveedorNombre"></td>
                                                                     <td v-text="modelo.cModeloNombre"></td>
+                                                                    <td>
+                                                                        <el-select v-model="arrayAnioFabricacionEC[index]" filterable clearable placeholder="SELECCIONE" >
+                                                                            <el-option
+                                                                            v-for="item in arrayAnioFabricacion"
+                                                                            :key="item.cParNombre"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.cParNombre">
+                                                                            </el-option>
+                                                                        </el-select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <el-select v-model="arrayAnioModeloEC[index]" filterable clearable placeholder="SELECCIONE" >
+                                                                            <el-option
+                                                                            v-for="item in arrayAnioModelo"
+                                                                            :key="item.cParNombre"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.cParNombre">
+                                                                            </el-option>
+                                                                        </el-select>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1676,6 +1721,10 @@
                 arrayTemporalMarca: [],
                 arrayTemporalModelo: [],
                 arrayRegistraDetalle:[],
+                arrayAnioFabricacion:[],
+                arrayAnioModelo:[],
+                arrayAnioFabricacionEC:[],
+                arrayAnioModeloEC:[],
                 // =========== VARIABLES MODAL LINEA, MARCA, MODELO ===========
                 fillModal:{
                     clineanombre: '',
@@ -1976,10 +2025,10 @@
                 });
             },
             llenarComboTipoCambio(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                var url = this.ruta + '/tipocambio/GetTipoCambioById';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110059
+                        'nidtipotransaccion': 1300137
                     }
                 }).then(response => {
                     this.arrayTipoCambio = response.data;
@@ -1991,8 +2040,9 @@
                 this.getTipoCambioById();
             },
             getTipoCambioById(){
-                if(this.formEventoCamp.nidtipocambio != 0){
-                    this.mostrarProgressBar();
+                let me = this;
+                if(me.formEventoCamp.nidtipocambio != 0){
+                    /*this.mostrarProgressBar();
                     var url = this.ruta + '/tipocambio/GetTipoCambioById';
                     axios.get(url, {
                         params: {
@@ -2000,23 +2050,64 @@
                         }
                     }).then(response => {
                         this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
-                        //PARA ENVIAR EN LA TRANSACCION
+                        
                         this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
                         this.nIdTipoCambio = response.data[0].nIdTipoCambio;
-                    }).then(function (response) {
                         $("#myBar").hide();
                     }).catch(error => {
                         console.log(error);
+                    });*/
+                    $.each(me.arrayTipoCambio, function (index, value) {
+                        if(value.nIdTipoCambio == me.formEventoCamp.nidtipocambio){
+                            me.formEventoCamp.fvalortipocambio = value.fValorTipoCambio;
+                            //PARA ENVIAR EN LA TRANSACCION
+                            me.fValorTipoCambioTransaccion = value.fValorTipoCambio;
+                            me.nIdTipoCambio = value.nIdTipoCambio;
+                        }
                     });
                 }
-                else if(this.formEventoCamp.nidtipocambio == 0){
-                    this.formEventoCamp.fvalortipocambio = 0;
-                    this.fValorTipoCambioTransaccion = 0;
+                else if(me.formEventoCamp.nidtipocambio == 0){
+                    me.formEventoCamp.fvalortipocambio = 0;
+                    me.fValorTipoCambioTransaccion = 0;
                 }
             },
             // =============  TAB ASIGNA DETALLE ========================
             cargarTabAsignaDetalle(){
                 this.llenarComboDetalleEC();
+            },
+            llenarComboAnioFabricacion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110034
+                    }
+                }).then(response => {
+                    this.arrayAnioFabricacion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboAnioModelo(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110035
+                    }
+                }).then(response => {
+                    this.arrayAnioModelo = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             llenarComboDetalleEC(){
                 var url = this.ruta + '/grupopar/GetGrupoParametroEventoCampania';
@@ -2195,8 +2286,12 @@
                 this.paginationModal.current_page=page;
                 this.listarModelosByProveedor(page);
             },
-            asignarModelos(data =[]){
-                if(this.encuentraModelos(data['nIdModelo'])){
+            asignarModelos(modelo, index){
+                if(this.validaAsignaModelo(modelo, index)){
+                    return;
+                }
+
+                if(this.encuentraModelos(modelo.nIdModelo)){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -2205,17 +2300,35 @@
                 }
                 else{
                     this.arrayTemporalModelo = [];
+                    
                     this.arrayTemporalModelo.push({
-                                nIdModelo: data['nIdModelo'],
-                                cModeloNombre: data['cModeloNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre']
+                        nIdModelo: modelo.nIdModelo,
+                        cModeloNombre: modelo.cModeloNombre,
+                        nIdProveedor: modelo.nIdProveedor,
+                        cProveedorNombre: modelo.cProveedorNombre,
+                        'nAnioFabricacion' : this.arrayAnioFabricacionEC[index],
+                        'nAnioModelo'      : this.arrayAnioModeloEC[index]
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
-                    toastr.success('Se Agregó Modelo ' + data['cModeloNombre']);
+                    toastr.success('Se Agregó Modelo ' + modelo.cModeloNombre);
                     this.cerrarModal();
                 }
+            },
+            validaAsignaModelo(modelo, index){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayAnioFabricacionEC[index] == 0 || !this.arrayAnioFabricacionEC[index]){
+                    this.mensajeError.push('Debes seleccionar Año Fabricación');
+                };
+                if(this.arrayAnioModeloEC[index] == 0 || !this.arrayAnioModeloEC[index]){
+                    this.mensajeError.push('Debes seleccionar Año Modelo');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error; 
             },
             encuentraModelos(nIdModelo){
                 var sw=0;
@@ -2404,7 +2517,7 @@
                     this.mensajeError.push('Debes Seleccionar Tipo Cambio');
                 };
                 if(this.formEventoCamp.fvalortipocambio == 0){
-                    this.mensajeError.push('Debes Enviar valor Tipo de Cambio');
+                    this.mensajeError.push('Debes Enviar Valor Tipo de Cambio > 0');
                 };
                 if(!this.formEventoCamp.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
@@ -2419,26 +2532,26 @@
                 return this.error;
             },
             registrarAsignaDetalle(nIdEventoCampania){
-                if(this.arrayTemporalLinea.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalLinea;
+                let me = this;
+
+                if(me.arrayTemporalLinea.length > 0){
+                    me.arrayRegistraDetalle = me.arrayTemporalLinea;
                 };
-                if(this.arrayTemporalMarca.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalMarca;
+                if(me.arrayTemporalMarca.length > 0){
+                    me.arrayRegistraDetalle = me.arrayTemporalMarca;
                 };
-                if(this.arrayTemporalModelo.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalModelo;
+                if(me.arrayTemporalModelo.length > 0){
+                    me.arrayRegistraDetalle = me.arrayTemporalModelo;
                 };
 
-                if (this.arrayRegistraDetalle.length > 0)
+                if (me.arrayRegistraDetalle.length > 0)
                 {
-                    var url = this.ruta + '/ec/SetDetalleEventoCampania';
+                    var url = me.ruta + '/ec/SetDetalleEventoCampania';
 
                     axios.post(url, {
                         nIdEventoCampania: nIdEventoCampania,
-                        cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
-                        data: this.arrayRegistraDetalle,
-                        nTotalRegistros: this.arrayRegistraDetalle.length,
-                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto
+                        cFlagDetalleEvento: me.formEventoCamp.cflagdetalleevento,
+                        data: me.arrayRegistraDetalle
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2487,8 +2600,7 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        //'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
-                        'nideventocampania' : 8000011
+                        'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2851,6 +2963,8 @@
                                     this.accionmodal=3;
                                     this.modal = 1;
                                     this.buscarModelosByProveedor();
+                                    this.llenarComboAnioFabricacion();
+                                    this.llenarComboAnioModelo();
                                 }
 
 
