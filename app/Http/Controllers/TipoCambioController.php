@@ -11,8 +11,8 @@ class TipoCambioController extends Controller
     {
         $nIdTipoTransaccion = $request->nidtipotransaccion;
 
-        $tipocambio = DB::select('exec usp_TipoCambio_GetTipoCambioById ?', [$nIdTipoTransaccion]);
+        $objTipoCambio = DB::select('exec [usp_TipoCambio_GetTipoCambioById] ?', [$nIdTipoTransaccion]);
 
-        return response()->json($tipocambio);
+        return response()->json($objTipoCambio);
     }
 }

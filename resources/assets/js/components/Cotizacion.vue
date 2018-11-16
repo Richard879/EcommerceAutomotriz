@@ -495,7 +495,7 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="tab0402" href="#TabDCElementoVentaPorRegalar" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-gift"></i> E.V POR REGALAR
+                                                                <i class="fa fa-gift"></i> OBSEQUIOS
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -505,7 +505,7 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link disabled" id="tab0404" href="#TabDCVerificarCampana" role="tab" data-toggle="tab">
-                                                                <i class="fa fa-check-square"></i> VERIFICAR CAMPAÑA
+                                                                <i class="fa fa-check-square"></i> CAMPAÑAS
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -690,86 +690,82 @@
                                                                             </div>
                                                                             <div class="card-body">
                                                                                 <form class="form-horizontal">
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventaPorRegalar','buscar')">
-                                                                                                            <i class="fa fa-search"></i> Buscar
-                                                                                                        </button>
-                                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventaPorRegalar','buscar')">
+                                                                                                        <i class="fa fa-search"></i> Buscar
+                                                                                                    </button>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr/>
-                                                                                    <div class="col-lg-12">
-                                                                                        <template v-if="arrayElementoVentaPorRegalar.length">
-                                                                                            <div class="table-responsive">
-                                                                                                <table class="table table-striped table-sm">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>Acción</th>
-                                                                                                            <th>Elemento Venta</th>
-                                                                                                            <th>Moneda</th>
-                                                                                                            <th>Cantidad</th>
-                                                                                                            <th>Precio</th>
-                                                                                                            <th>SubTotal</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody>
-                                                                                                        <tr v-for="(elementoventa, index) in arrayElementoVentaPorRegalar" :key="elementoventa.nIdContacto">
-                                                                                                            <td>
-                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                    <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
-                                                                                                                    <i @click="removerElementoVentaListaPorRegalar(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                                </el-tooltip>
-                                                                                                            </td>
-                                                                                                            <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                            <td v-text="elementoventa.cMonedaNombre"></td>
-                                                                                                            <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
-                                                                                                            <td v-text="elementoventa.fElemenValorVenta"></td>
-                                                                                                            <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                            <div class="col-lg-12">
-                                                                                                <div class="row flex-rigth-margin">
-                                                                                                    <div class="form-group row">
-                                                                                                        <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
-                                                                                                        <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                                        <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </template>
-                                                                                        <template v-else>
-                                                                                            <table>
-                                                                                                <tbody>
+                                                                                    <template v-if="arrayElementoVentaPorRegalar.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
                                                                                                     <tr>
-                                                                                                        <td colspan="10">No existen registros!</td>
+                                                                                                        <th>Acción</th>
+                                                                                                        <th>Elemento Venta</th>
+                                                                                                        <th>Moneda</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Precio</th>
+                                                                                                        <th>SubTotal</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(elementoventa, index) in arrayElementoVentaPorRegalar" :key="elementoventa.nIdContacto">
+                                                                                                        <td>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
+                                                                                                                <i @click="removerElementoVentaListaPorRegalar(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                            </el-tooltip>
+                                                                                                        </td>
+                                                                                                        <td v-text="elementoventa.cElemenNombre"></td>
+                                                                                                        <td v-text="elementoventa.cMonedaNombre"></td>
+                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
+                                                                                                        <td v-text="elementoventa.fElemenValorVenta"></td>
+                                                                                                        <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
-                                                                                        </template>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-4">
-                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
-                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                                </button>
-                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Campaña
-                                                                                                </button>
-                                                                                                <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                                                </button>-->
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <div class="row flex-rigth-margin">
+                                                                                                <div class="form-group row">
+                                                                                                    <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
+                                                                                                </div>
+                                                                                                <div class="form-group row">
+                                                                                                    <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
+                                                                                                </div>
                                                                                             </div>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Campaña
+                                                                                            </button>
+                                                                                            <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                            </button>-->
                                                                                         </div>
                                                                                     </div>
                                                                                 </form>
@@ -789,86 +785,82 @@
                                                                             </div>
                                                                             <div class="card-body">
                                                                                 <form class="form-horizontal">
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-6">
-                                                                                                <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
-                                                                                                    <div class="col-sm-8">
-                                                                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventa','buscar')">
-                                                                                                            <i class="fa fa-search"></i> Buscar
-                                                                                                        </button>
-                                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <div class="row">
+                                                                                                <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
+                                                                                                <div class="col-sm-8">
+                                                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventa','buscar')">
+                                                                                                        <i class="fa fa-search"></i> Buscar
+                                                                                                    </button>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <hr/>
-                                                                                    <div class="col-lg-12">
-                                                                                        <template v-if="arrayElementoVenta.length">
-                                                                                            <div class="table-responsive">
-                                                                                                <table class="table table-striped table-sm">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>Acción</th>
-                                                                                                            <th>Elemento Venta</th>
-                                                                                                            <th>Moneda</th>
-                                                                                                            <th>Cantidad</th>
-                                                                                                            <th>Precio</th>
-                                                                                                            <th>SubTotal</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody>
-                                                                                                        <tr v-for="(elementoventa, index) in arrayElementoVenta" :key="elementoventa.nIdContacto">
-                                                                                                            <td>
-                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                    <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
-                                                                                                                    <i @click="removerElementoVentaLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                                </el-tooltip>
-                                                                                                            </td>
-                                                                                                            <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                            <td v-text="elementoventa.cMonedaNombre"></td>
-                                                                                                            <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
-                                                                                                            <td v-text="elementoventa.fElemenValorVenta"></td>
-                                                                                                            <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                            <div class="col-lg-12">
-                                                                                                <div class="row flex-rigth-margin">
-                                                                                                    <div class="form-group row">
-                                                                                                        <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
-                                                                                                        <label class="form-control-label"><strong>{{ montoTotalElementoVenta = totalElementoVenta }}</strong></label>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                                        <label class="form-control-label"><strong>{{ montoTotalElementoVentaSoles = totalElementoVentaSoles }}</strong></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </template>
-                                                                                        <template v-else>
-                                                                                            <table>
-                                                                                                <tbody>
+                                                                                    <template v-if="arrayElementoVenta.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
                                                                                                     <tr>
-                                                                                                        <td colspan="10">No existen registros!</td>
+                                                                                                        <th>Acción</th>
+                                                                                                        <th>Elemento Venta</th>
+                                                                                                        <th>Moneda</th>
+                                                                                                        <th>Cantidad</th>
+                                                                                                        <th>Precio</th>
+                                                                                                        <th>SubTotal</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(elementoventa, index) in arrayElementoVenta" :key="elementoventa.nIdContacto">
+                                                                                                        <td>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
+                                                                                                                <i @click="removerElementoVentaLista(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                                            </el-tooltip>
+                                                                                                        </td>
+                                                                                                        <td v-text="elementoventa.cElemenNombre"></td>
+                                                                                                        <td v-text="elementoventa.cMonedaNombre"></td>
+                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
+                                                                                                        <td v-text="elementoventa.fElemenValorVenta"></td>
+                                                                                                        <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
-                                                                                        </template>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-4">
-                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                                </button>
-                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
-                                                                                                </button>
-                                                                                                <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                                    <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                                                </button>-->
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <div class="row flex-rigth-margin">
+                                                                                                <div class="form-group row">
+                                                                                                    <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVenta = totalElementoVenta }}</strong></label>
+                                                                                                </div>
+                                                                                                <div class="form-group row">
+                                                                                                    <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVentaSoles = totalElementoVentaSoles }}</strong></label>
+                                                                                                </div>
                                                                                             </div>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Verificar Campaña
+                                                                                            </button>
+                                                                                            <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
+                                                                                            </button>-->
                                                                                         </div>
                                                                                     </div>
                                                                                 </form>
@@ -888,49 +880,47 @@
                                                                             </div>
                                                                             <div class="card-body">
                                                                                 <form class="form-horizontal">
-                                                                                    <div class="col-lg-12">
-                                                                                        <template v-if="arrayEventoCampania.length">
-                                                                                            <div class="table-responsive">
-                                                                                                <table class="table table-striped table-sm">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>Código</th>
-                                                                                                            <th>Nombre</th>
-                                                                                                            <th>Tipo</th>
-                                                                                                            <th>Acción</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody>
-                                                                                                        <tr v-for="(evento, index) in arrayEventoCampania" :key="index">
-                                                                                                            <td v-text="index+1"></td>
-                                                                                                            <td v-text="evento.cNombreEventoCampania"></td>
-                                                                                                            <td v-text="evento.TipoEvento"></td>
-                                                                                                            <td>
-                                                                                                                <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                    <div slot="content">Ver Detalle {{ evento.cNombreEventoCampania }}</div>
-                                                                                                                    <i @click="abrirModal('campaña', 'detalle', evento)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                                                                                </el-tooltip>
-                                                                                                            </td>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        </template>
-                                                                                        <template v-else>
-                                                                                            <table>
-                                                                                                <tbody>
+                                                                                    <template v-if="arrayEventoCampania.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
                                                                                                     <tr>
-                                                                                                        <td colspan="10">No existen registros!</td>
+                                                                                                        <th>Código</th>
+                                                                                                        <th>Nombre</th>
+                                                                                                        <th>Tipo</th>
+                                                                                                        <th>Acción</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(evento, index) in arrayEventoCampania" :key="index">
+                                                                                                        <td v-text="index+1"></td>
+                                                                                                        <td v-text="evento.cNombreEventoCampania"></td>
+                                                                                                        <td v-text="evento.TipoEvento"></td>
+                                                                                                        <td>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Ver Detalle {{ evento.cNombreEventoCampania }}</div>
+                                                                                                                <i @click="abrirModal('campaña', 'detalle', evento)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                                            </el-tooltip>
+                                                                                                        </td>
                                                                                                     </tr>
                                                                                                 </tbody>
                                                                                             </table>
-                                                                                        </template>
-                                                                                        <div class="form-group row">
-                                                                                            <div class="col-sm-9 offset-sm-5">
-                                                                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                                    <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                                </button>
-                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-lg-12">
@@ -1060,7 +1050,7 @@
                                                                             <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
                                                                             <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
                                                                                 <vs-divider border-style="solid" color="dark">
-                                                                                    Regalos
+                                                                                    Obsequios
                                                                                 </vs-divider>
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-striped table-sm">
@@ -1102,7 +1092,7 @@
                                                                                 <table>
                                                                                     <tbody>
                                                                                         <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas por regalar!</td>
+                                                                                            <td colspan="10">No existen regalos!</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1152,7 +1142,7 @@
                                                                                 <table>
                                                                                     <tbody>
                                                                                         <tr>
-                                                                                            <td colspan="10">No existen elementos de ventas en campañas!</td>
+                                                                                            <td colspan="10">No existen campañas!</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1844,8 +1834,9 @@
                                                         <tr>
                                                             <th>Acciones</th>
                                                             <th>Elemento Venta</th>
-                                                            <th>Moneda</th>
-                                                            <th>Valor</th>
+                                                            <!--<th>Moneda</th>
+                                                            <th>Valor</th>-->
+                                                            <th>Cantidad a Regalar</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1858,8 +1849,9 @@
                                                                     </el-tooltip>
                                                                 </td>
                                                                 <td v-text="eleventa.cNombre"></td>
-                                                                <td v-text="eleventa.cMonedaNombre"></td>
-                                                                <td v-text="eleventa.fValorVenta"></td>
+                                                                <!--<td v-text="eleventa.cMonedaNombre"></td>
+                                                                <td v-text="eleventa.fValorVenta"></td>-->
+                                                                <td v-text="eleventa.cantidad"></td>
                                                             </template>
                                                         </tr>
                                                     </tbody>
@@ -3889,7 +3881,7 @@
                                 cMonedaNombre           : eev.cMonedaNombre,
                                 nIdEventoElementoVenta  : eev.nIdEventoElementoVenta,
                                 fValorVenta             : eev.fValorVenta,
-                                cantidad                : 1
+                                cantidad                : eev.nCantidad
                             });
                         });
                     }

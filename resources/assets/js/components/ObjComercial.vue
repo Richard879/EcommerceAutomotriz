@@ -832,7 +832,7 @@
                             nIdFlagTipoValor      : me.arrayIndexFlagTipoValorId[key],
                             fValorBeneficio     : me.arrayIndexValorBeneficio[key]
                         });
-                        console.log(me.arrayIndexFlagTipoValorId[key]);
+                        //console.log(me.arrayIndexFlagTipoValorId[key]);
                     }
                 });
                 //console.log(me.arrayTempDetalleVehiculo.length);

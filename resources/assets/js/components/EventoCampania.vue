@@ -328,9 +328,9 @@
                                                                                 <el-select v-model="formEventoCamp.nidtipocambio" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeTipoCambio()">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoCambio"
-                                                                                    :key="item.nIdPar"
+                                                                                    :key="item.nIdTipoCambio"
                                                                                     :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                    :value="item.nIdTipoCambio">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -340,7 +340,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Valor Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="formEventoCamp.fvalortipocambio" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="formEventoCamp.fvalortipocambio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -451,6 +451,13 @@
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </template>
                                                                                 <template v-if="arrayTemporalMarca.length">
                                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
@@ -481,6 +488,13 @@
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </template>
                                                                                 <template v-if="arrayTemporalModelo.length">
                                                                                     <div class="table-responsive border" style="max-height: 300px; max-width:1200px; overflow-y: auto; overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
@@ -488,10 +502,10 @@
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th>Acciones</th>
-                                                                                                    <th>Código Proveedor</th>
                                                                                                     <th>Nombre Proveedor</th>
-                                                                                                    <th>Código Modelo</th>
                                                                                                     <th>Nombre Modelo</th>
+                                                                                                    <th>Año Fab.</th>
+                                                                                                    <th>Año Modelo</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
@@ -502,23 +516,23 @@
                                                                                                             <i @click="eliminarItemModelo(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                                         </el-tooltip>
                                                                                                     </td>
-                                                                                                    <td v-text="tempmodelo.nIdProveedor"></td>
                                                                                                     <td v-text="tempmodelo.cProveedorNombre"></td>
-                                                                                                    <td v-text="tempmodelo.nIdModelo"></td>
                                                                                                     <td v-text="tempmodelo.cModeloNombre"></td>
+                                                                                                    <td v-text="tempmodelo.nAnioFabricacion"></td>
+                                                                                                    <td v-text="tempmodelo.nAnioModelo"></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
                                                                                     <br>
-                                                                                </template>
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-9 offset-sm-5">
-                                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
-                                                                                            <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                        </button>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-5">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab2()">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                </template>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -714,10 +728,10 @@
                                                                                                                     <th>Proveedor</th>
                                                                                                                     <th>Tipo Elemento</th>
                                                                                                                     <th>Nombre Elemento</th>
+                                                                                                                    <th>Cantidad</th>
                                                                                                                     <th>Moneda</th>
                                                                                                                     <th>Precio Venta</th>
-                                                                                                                    <th>Valor Costo</th>
-                                                                                                                    <th>Cantidad</th>
+                                                                                                                    <th>Total Estimado</th>
                                                                                                                     <th>SubTotal Soles</th>
                                                                                                                     <th>SubTotal Dolares</th>
                                                                                                                     <th>% Distribución</th>
@@ -729,16 +743,19 @@
                                                                                                                     <td v-text="eledist.cProveedorNombre"></td>
                                                                                                                     <td v-text="eledist.cTipoElemenNombre"></td>
                                                                                                                     <td v-text="eledist.cElemenNombre"></td>
+                                                                                                                    <td v-text="eledist.nCantidad"></td>
                                                                                                                     <td v-text="eledist.cMonedaNombre"></td>
                                                                                                                     <td v-text="eledist.fValorVenta"></td>
-                                                                                                                    <td v-text="eledist.fValorCosto"></td>
                                                                                                                     <td v-text="eledist.nTotalEstimado"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoSol"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
                                                                                                                         <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
                                                                                                                             <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                                                        </el-tooltip>&nbsp;
+                                                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                                                        <el-tooltip class="item" :content="'Añadir Distribución ' + eledist.nCantidad" effect="dark" placement="top-start">
+                                                                                                                            <i @click="abrirModal('asignacantidad','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
+                                                                                                                        </el-tooltip>
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                             </tbody>
@@ -1103,6 +1120,15 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="text-center">
+                                                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <div class="row">
                                                             <label class="col-sm-4 form-control-label">Nombre Modelo</label>
@@ -1127,18 +1153,40 @@
                                                                     <th>Seleccione</th>
                                                                     <th>Proveedor</th>
                                                                     <th>Modelo</th>
+                                                                    <th>Año Fab.</th>
+                                                                    <th>Año Modelo</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="modelo in arrayModelo" :key="modelo.nIdModelo">
+                                                                <tr v-for="(modelo, index) in arrayModelo" :key="modelo.nIdModelo">
                                                                     <td>
                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                             <div slot="content">Agregar {{ modelo.cModeloNombre }}</div>
-                                                                            <i @click="asignarModelos(modelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                            <i @click="asignarModelos(modelo, index)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                         </el-tooltip>
                                                                     </td>
                                                                     <td v-text="modelo.cProveedorNombre"></td>
                                                                     <td v-text="modelo.cModeloNombre"></td>
+                                                                    <td>
+                                                                        <el-select v-model="arrayAnioFabricacionEC[index]" filterable clearable placeholder="SELECCIONE" >
+                                                                            <el-option
+                                                                            v-for="item in arrayAnioFabricacion"
+                                                                            :key="item.cParNombre"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.cParNombre">
+                                                                            </el-option>
+                                                                        </el-select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <el-select v-model="arrayAnioModeloEC[index]" filterable clearable placeholder="SELECCIONE" >
+                                                                            <el-option
+                                                                            v-for="item in arrayAnioModelo"
+                                                                            :key="item.cParNombre"
+                                                                            :label="item.cParNombre"
+                                                                            :value="item.cParNombre">
+                                                                            </el-option>
+                                                                        </el-select>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1511,6 +1559,105 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MODAL DISTRIBUCION CANTIDAD DE ELEMENTO VENTA-->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form v-on:submit.prevent class="form-horizontal">
+                                <div class="container-fluid">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="h4">LISTADO</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
+                                                                        <i class="fa-lg fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <template v-if="arrayProveedor.length">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Seleccione</th>
+                                                                <th>Nombre Proveedor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                                <td>
+                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
+                                                                        <i class='fa-md fa fa-check-circle'></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td v-text="proveedor.cParNombre"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <nav>
+                                                                <ul class="pagination">
+                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                    </li>
+                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                    :class="[page==isActivedModal?'active':'']">
+                                                                        <a class="page-link"
+                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
+                                                                        v-text="page"></a>
+                                                                    </li>
+                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="10">No existen registros!</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1574,6 +1721,10 @@
                 arrayTemporalMarca: [],
                 arrayTemporalModelo: [],
                 arrayRegistraDetalle:[],
+                arrayAnioFabricacion:[],
+                arrayAnioModelo:[],
+                arrayAnioFabricacionEC:[],
+                arrayAnioModeloEC:[],
                 // =========== VARIABLES MODAL LINEA, MARCA, MODELO ===========
                 fillModal:{
                     clineanombre: '',
@@ -1874,10 +2025,10 @@
                 });
             },
             llenarComboTipoCambio(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                var url = this.ruta + '/tipocambio/GetTipoCambioById';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110059
+                        'nidtipotransaccion': 1300137
                     }
                 }).then(response => {
                     this.arrayTipoCambio = response.data;
@@ -1889,8 +2040,9 @@
                 this.getTipoCambioById();
             },
             getTipoCambioById(){
-                if(this.formEventoCamp.nidtipocambio != 0){
-                    this.mostrarProgressBar();
+                let me = this;
+                if(me.formEventoCamp.nidtipocambio != 0){
+                    /*this.mostrarProgressBar();
                     var url = this.ruta + '/tipocambio/GetTipoCambioById';
                     axios.get(url, {
                         params: {
@@ -1898,23 +2050,64 @@
                         }
                     }).then(response => {
                         this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
-                        //PARA ENVIAR EN LA TRANSACCION
+                        
                         this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
                         this.nIdTipoCambio = response.data[0].nIdTipoCambio;
-                    }).then(function (response) {
                         $("#myBar").hide();
                     }).catch(error => {
                         console.log(error);
+                    });*/
+                    $.each(me.arrayTipoCambio, function (index, value) {
+                        if(value.nIdTipoCambio == me.formEventoCamp.nidtipocambio){
+                            me.formEventoCamp.fvalortipocambio = value.fValorTipoCambio;
+                            //PARA ENVIAR EN LA TRANSACCION
+                            me.fValorTipoCambioTransaccion = value.fValorTipoCambio;
+                            me.nIdTipoCambio = value.nIdTipoCambio;
+                        }
                     });
                 }
-                else if(this.formEventoCamp.nidtipocambio == 0){
-                    this.formEventoCamp.fvalortipocambio = 0;
-                    this.fValorTipoCambioTransaccion = 0;
+                else if(me.formEventoCamp.nidtipocambio == 0){
+                    me.formEventoCamp.fvalortipocambio = 0;
+                    me.fValorTipoCambioTransaccion = 0;
                 }
             },
             // =============  TAB ASIGNA DETALLE ========================
             cargarTabAsignaDetalle(){
                 this.llenarComboDetalleEC();
+            },
+            llenarComboAnioFabricacion(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110034
+                    }
+                }).then(response => {
+                    this.arrayAnioFabricacion = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarComboAnioModelo(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110035
+                    }
+                }).then(response => {
+                    this.arrayAnioModelo = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             llenarComboDetalleEC(){
                 var url = this.ruta + '/grupopar/GetGrupoParametroEventoCampania';
@@ -2093,8 +2286,12 @@
                 this.paginationModal.current_page=page;
                 this.listarModelosByProveedor(page);
             },
-            asignarModelos(data =[]){
-                if(this.encuentraModelos(data['nIdModelo'])){
+            asignarModelos(modelo, index){
+                if(this.validaAsignaModelo(modelo, index)){
+                    return;
+                }
+
+                if(this.encuentraModelos(modelo.nIdModelo)){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -2103,17 +2300,35 @@
                 }
                 else{
                     this.arrayTemporalModelo = [];
+                    
                     this.arrayTemporalModelo.push({
-                                nIdModelo: data['nIdModelo'],
-                                cModeloNombre: data['cModeloNombre'],
-                                nIdProveedor: data['nIdProveedor'],
-                                cProveedorNombre: data['cProveedorNombre']
+                        nIdModelo: modelo.nIdModelo,
+                        cModeloNombre: modelo.cModeloNombre,
+                        nIdProveedor: modelo.nIdProveedor,
+                        cProveedorNombre: modelo.cProveedorNombre,
+                        'nAnioFabricacion' : this.arrayAnioFabricacionEC[index],
+                        'nAnioModelo'      : this.arrayAnioModeloEC[index]
                     });
                     this.arrayTemporalLinea = [];
                     this.arrayTemporalMarca = [];
-                    toastr.success('Se Agregó Modelo ' + data['cModeloNombre']);
+                    toastr.success('Se Agregó Modelo ' + modelo.cModeloNombre);
                     this.cerrarModal();
                 }
+            },
+            validaAsignaModelo(modelo, index){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.arrayAnioFabricacionEC[index] == 0 || !this.arrayAnioFabricacionEC[index]){
+                    this.mensajeError.push('Debes seleccionar Año Fabricación');
+                };
+                if(this.arrayAnioModeloEC[index] == 0 || !this.arrayAnioModeloEC[index]){
+                    this.mensajeError.push('Debes seleccionar Año Modelo');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error; 
             },
             encuentraModelos(nIdModelo){
                 var sw=0;
@@ -2302,7 +2517,7 @@
                     this.mensajeError.push('Debes Seleccionar Tipo Cambio');
                 };
                 if(this.formEventoCamp.fvalortipocambio == 0){
-                    this.mensajeError.push('Debes Enviar valor Tipo de Cambio');
+                    this.mensajeError.push('Debes Enviar Valor Tipo de Cambio > 0');
                 };
                 if(!this.formEventoCamp.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
@@ -2317,26 +2532,26 @@
                 return this.error;
             },
             registrarAsignaDetalle(nIdEventoCampania){
-                if(this.arrayTemporalLinea.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalLinea;
+                let me = this;
+
+                if(me.arrayTemporalLinea.length > 0){
+                    me.arrayRegistraDetalle = me.arrayTemporalLinea;
                 };
-                if(this.arrayTemporalMarca.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalMarca;
+                if(me.arrayTemporalMarca.length > 0){
+                    me.arrayRegistraDetalle = me.arrayTemporalMarca;
                 };
-                if(this.arrayTemporalModelo.length > 0){
-                    this.arrayRegistraDetalle = this.arrayTemporalModelo;
+                if(me.arrayTemporalModelo.length > 0){
+                    me.arrayRegistraDetalle = me.arrayTemporalModelo;
                 };
 
-                if (this.arrayRegistraDetalle.length > 0)
+                if (me.arrayRegistraDetalle.length > 0)
                 {
-                    var url = this.ruta + '/ec/SetDetalleEventoCampania';
+                    var url = me.ruta + '/ec/SetDetalleEventoCampania';
 
                     axios.post(url, {
                         nIdEventoCampania: nIdEventoCampania,
-                        cFlagDetalleEvento: this.formEventoCamp.cflagdetalleevento,
-                        data: this.arrayRegistraDetalle,
-                        nTotalRegistros: this.arrayRegistraDetalle.length,
-                        fValorPresupuesto: this.formEventoCamp.fvalorpresupuesto
+                        cFlagDetalleEvento: me.formEventoCamp.cflagdetalleevento,
+                        data: me.arrayRegistraDetalle
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
@@ -2748,6 +2963,8 @@
                                     this.accionmodal=3;
                                     this.modal = 1;
                                     this.buscarModelosByProveedor();
+                                    this.llenarComboAnioFabricacion();
+                                    this.llenarComboAnioModelo();
                                 }
 
 
@@ -2785,6 +3002,19 @@
                             }break;
                         }
                     }
+                    break;
+                    case 'asignacantidad':
+                    {
+                        switch(accion){
+                            case 'elemento':
+                            {
+                                this.accionmodal=7;
+                                this.modal = 1;
+                            }
+                            break;
+                        }
+                    }
+                    break;
                 }
             },
             // ===========================================================
