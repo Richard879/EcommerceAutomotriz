@@ -1643,8 +1643,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
                 nidempresa: 0,
                 nidsucursal: 0,
                 // ============================================================
@@ -1891,8 +1889,8 @@
                 var url = this.ruta + '/ec/GetEventoCampania';
                 axios.get(url, {
                     params: {
-                        'nidempresa'    : 1300011,
-                        'nidsucursal'   : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio'  : this.formEventoCamp.dfechainicio,
                         'dfechafin'     : this.formEventoCamp.dfechafin,
                         'nidproveedor'  : this.formEventoCamp.nidproveedor,
@@ -2120,7 +2118,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
                         'clineanombre': this.fillModal.clineanombre.toString(),
                         'page' : page
@@ -2180,7 +2178,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : parseInt(this.formEventoCamp.nidproveedor),
                         'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
                         'page' : page
@@ -2240,7 +2238,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
                         'cmodelonombre': this.fillModal.cmodelonombre.toString(),
                         'page' : page
@@ -2366,7 +2364,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoelemen': this.formEle.ntpoelemen,
                         'celementonombre': this.formEle.celementonombre,
                         'page' : page
@@ -2437,8 +2435,8 @@
 
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
                     cNombreEventoCampania: this.formEventoCamp.descripcion,
                     nIdTipoEvento: parseInt(this.formEventoCamp.ntipo),
@@ -2588,7 +2586,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'cnombreproveedor': '',
                         'opcion': 1
                     }
@@ -2672,7 +2670,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -2709,7 +2707,7 @@
             },
             asignaEmpresaCabecera(){
                 if(this.formDistribucion.ntipoproveedor == 2){
-                    if(this.encuentraProveedorCabecera(1300011)){
+                    if(this.encuentraProveedorCabecera(parseInt(sessionStorage.getItem("nIdEmpresa")))){
                             swal({
                                 type: 'error',
                                 title: 'Error...',
@@ -2718,7 +2716,7 @@
                     }
                     else{
                         this.arrayProveedorPorEC.push({
-                                    nIdEntidad: 1300011,
+                                    nIdEntidad: parseInt(sessionStorage.getItem("nIdEmpresa")),
                                     cFlagEntidad: 'E',
                                     cProveedorNombre: 'AUTOMOTORES INKA'
                         });
@@ -2863,7 +2861,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
