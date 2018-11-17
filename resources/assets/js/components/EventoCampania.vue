@@ -1434,7 +1434,7 @@
                                                                 </td>
                                                                 <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreProveedor"></td>
                                                                 <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
-                                                                    <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
+                                                                    <input type="number" min="1" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1513,9 +1513,9 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-sm-12">
                                                     <div class="row">
-                                                        <div class="col-lg-7">
+                                                        <div class="col-sm-7">
                                                             <nav>
                                                                 <ul class="pagination">
                                                                     <li v-if="paginationModal.current_page > 1" class="page-item">
@@ -1533,7 +1533,7 @@
                                                                 </ul>
                                                             </nav>
                                                         </div>
-                                                        <div class="col-lg-5">
+                                                        <div class="col-sm-5">
                                                             <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                         </div>
                                                     </div>
@@ -1561,7 +1561,7 @@
             </div>
 
             <!-- MODAL DISTRIBUCION CANTIDAD DE ELEMENTO VENTA-->
-            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -1610,31 +1610,6 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </template>
                                             <template v-else>
@@ -2600,7 +2575,7 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
+                        'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2627,13 +2602,17 @@
                 let me = this;
                 var cNombreProveedor = "";
 
+                if(me.validaAsignaDistribucionElementoVenta()){
+                     return;
+                }
+                
                 $.each(me.arrayProveedor, function (index, value) {
                     if(value.nIdPar == me.fillProveedor.nidproveedor){
                         me.cNombreProveedor = value.cParNombre;
                     }
                 });
 
-                if(this.encuentraDistribucionElementoVenta()){
+                if(me.encuentraDistribucionElementoVenta()){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -2647,6 +2626,19 @@
                         cNombreProveedor: me.cNombreProveedor
                     });
                 }
+            },
+            validaAsignaDistribucionElementoVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillProveedor.nidproveedor == 0 || !this.fillProveedor.nidproveedor){
+                    this.mensajeError.push('Seleccione una Entidad');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
             },
             encuentraDistribucionElementoVenta(){
                 var sw=0;
