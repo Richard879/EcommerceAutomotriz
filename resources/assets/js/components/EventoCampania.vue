@@ -571,7 +571,7 @@
                                                                                                     <th>Acciones</th>
                                                                                                     <th>Nombre Proveedor</th>
                                                                                                     <th>Nombre Elemento</th>
-                                                                                                    <th>Cantidad</th>
+                                                                                                    <th>Cantidad por Vehiculo</th>
                                                                                                     <th>Moneda</th>
                                                                                                     <th>Total Estimado</th>
                                                                                                     <th>Valor Venta</th>
@@ -728,13 +728,13 @@
                                                                                                                     <th>Proveedor</th>
                                                                                                                     <th>Tipo Elemento</th>
                                                                                                                     <th>Nombre Elemento</th>
-                                                                                                                    <th>Cantidad</th>
+                                                                                                                    <th>Cantidad Por Vehiculo</th>
                                                                                                                     <th>Moneda</th>
                                                                                                                     <th>Precio Venta</th>
                                                                                                                     <th>Total Estimado</th>
                                                                                                                     <th>SubTotal Soles</th>
                                                                                                                     <th>SubTotal Dolares</th>
-                                                                                                                    <th>% Distribución</th>
+                                                                                                                    <th>Acciones</th>
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
@@ -750,10 +750,10 @@
                                                                                                                     <td v-text="eledist.fSubTotalElementoSol"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
-                                                                                                                        <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
+                                                                                                                        <el-tooltip class="item" :content="'Asignar Distribución ' + eledist.cElemenNombre" effect="dark" placement="top-start">
                                                                                                                             <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                                                        <el-tooltip class="item" :content="'Añadir Distribución ' + eledist.nCantidad" effect="dark" placement="top-start">
+                                                                                                                        <el-tooltip class="item" :content="'Distribuir Cantidad ' + eledist.nCantidad" effect="dark" placement="top-start">
                                                                                                                             <i @click="abrirModal('asignacantidad','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
                                                                                                                         </el-tooltip>
                                                                                                                     </td>
@@ -2795,6 +2795,7 @@
 
                         var url = me.ruta + '/ec/SetDistribucionEventoByElemento';
                         axios.post(url, {
+                            nIdEventoCampania: parseInt(me.formDistribucion.nideventocampania),
                             data: list
                         }).then(response => {
                             swal('Distribución registrada');

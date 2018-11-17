@@ -124,12 +124,13 @@ class EventoCampaniaController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?, ?, ?, ?, ?, ?, ?', 
+                DB::select('exec [usp_EC_SetEventoElementoVenta] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', 
                                                     [   $request->nIdEventoCampania,
-                                                        $det['nCantidad'],
                                                         $det['nIdElemento'],
-                                                        $det['nTotalEstimado'],
+                                                        $det['nCantidad'],
                                                         $det['nIdMoneda'],
+                                                        $det['fElemenValorVenta'],
+                                                        $det['nTotalEstimado'],
                                                         $det['fSubTotal'],
                                                         $request->nIdTipoCambio,
                                                         $request->fTipoCambio,
@@ -179,8 +180,9 @@ class EventoCampaniaController extends Controller
 
             foreach($detalles as $ep=>$det)
             {
-                DB::select('exec [usp_EC_SetDistribucionEventoByElemento] ?, ?, ?, ?, ?', 
-                                                    [   $det['nIdEventoElementoVenta'],
+                DB::select('exec [usp_EC_SetDistribucionEventoByElemento] ?, ?, ?, ?, ?, ?', 
+                                                    [   $request->nIdEventoCampania,
+                                                        $det['nIdEventoElementoVenta'],
                                                         $det['cFlagEntidad'],
                                                         $det['nIdEntidad'],
                                                         $det['fValorPorcentual'],
