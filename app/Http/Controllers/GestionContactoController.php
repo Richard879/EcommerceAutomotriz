@@ -64,15 +64,54 @@ class GestionContactoController extends Controller
         return response()->json($arrayContacto);
     }
 
+    public function GetLineasByUsuario(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     = $request->nidempresa;
+        $nIdProveedor   = $request->nidproveedor;
+        $nIdUsuario     = Auth::user()->id;
+
+        $arrayLinea = DB::select('exec usp_Contacto_GetLineasByUsuario ?, ?, ?',
+                                            [$nIdEmpresa, $nIdProveedor, $nIdUsuario]);
+
+        return response()->json($arrayLinea);
+    }
+
+    public function GetMarcaByLinea(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdLinea     = $request->nidlinea;
+        $nIdUsuario   = Auth::user()->id;
+
+        $arrayMarca = DB::select('exec usp_Contacto_GetMarcasByLinea ?, ?',
+                                            [$nIdLinea, $nIdUsuario]);
+
+        return response()->json($arrayMarca);
+    }
+
+    public function GetModeloByMarca(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdMarca     = $request->nidmarca;
+        $nIdUsuario   = Auth::user()->id;
+
+        $arrayModelo = DB::select('exec usp_Contacto_GetModelosByMarca ?, ?',
+                                            [$nIdMarca, $nIdUsuario]);
+
+        return response()->json($arrayModelo);
+    }
+
     public function SetContactoRefVehiculo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
         try{
             DB::beginTransaction();
-            $detalles = $request->data;
-            foreach($detalles as $ep=>$det)
-            {
+            $referencia = $request->referencia;
+            foreach($referencia as $ep=>$det) {
                 DB::select('exec [usp_Contacto_SetReferenciaVehiculo] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
@@ -86,6 +125,26 @@ class GestionContactoController extends Controller
                                                                 $det['nAnioModelo'],
                                                                 Auth::user()->id
                                                             ]);
+            }
+
+            $otrosintreses = $request->otrosintreses;
+            $otrosintresesLength = sizeof($otrosintreses);
+            if($otrosintresesLength > 0) {
+                foreach($otrosintreses as $ep=>$det) {
+                    DB::select('exec [usp_Contacto_SetReferenciaVehiculo] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                [   $request->nIdEmpresa,
+                                                                    $request->nIdSucursal,
+                                                                    $request->nIdCronograma,
+                                                                    $request->nIdContacto,
+                                                                    $det['nIdProveedor'],
+                                                                    $det['nIdLinea'],
+                                                                    $det['nIdMarca'],
+                                                                    $det['nIdModelo'],
+                                                                    $det['nAnioFabricacion'],
+                                                                    $det['nAnioModelo'],
+                                                                    Auth::user()->id
+                                                                ]);
+                }
             }
             DB::commit();
         } catch (Exception $e){

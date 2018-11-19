@@ -94,6 +94,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
     Route::get('/ubigeo/GetDistritosByProv', 'UbigeoController@GetDistritosByProv');
 
+    Route::get('/gescontacto/GetLineasByUsuario', 'GestionContactoController@GetLineasByUsuario');
+    Route::get('/gescontacto/GetMarcaByLinea', 'GestionContactoController@GetMarcaByLinea');
+    Route::get('/gescontacto/GetModeloByMarca', 'GestionContactoController@GetModeloByMarca');
     Route::post('/gescontacto/SetContactoPerNatural', 'GestionContactoController@SetContactoPerNatural');
     Route::post('/gescontacto/SetContactoPerJuridica', 'GestionContactoController@SetContactoPerJuridica');
     Route::post('/gescontacto/SetContactoRefVehiculo', 'GestionContactoController@SetContactoRefVehiculo');
