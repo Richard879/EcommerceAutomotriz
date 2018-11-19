@@ -2718,13 +2718,16 @@
                 });
 
                 if(me.encuentraEntregaElementoVenta()){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Esta Modalidad ya se encuentra agregada!',
-                            })
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Esta Modalidad ya se encuentra agregada!',
+                    })
                 }
                 else{
+                    if(me.validaEntregaCantidadElementoVenta(me.formModalEntrega.ncantidad)){
+                        return;
+                    }
                     me.arrayEntregaElementoVenta.push({
                         nIdEventoElementoVenta: me.formModalEntrega.nindex,
                         nIdModalidad: me.formModalEntrega.nidmodalidad,
@@ -2743,6 +2746,31 @@
 
                 if(this.formModalEntrega.ncantidad <= 0){
                     this.mensajeError.push('El valor de Cantidad debe ser mayor a 0');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaEntregaCantidadElementoVenta(cantidad){
+                this.error = 0;
+                this.mensajeError =[];
+                var valorCantidad = 0;
+
+                for(var i=0;i<this.arrayEntregaElementoVenta.length;i++){
+                    if(this.arrayEntregaElementoVenta[i].nIdEventoElementoVenta==this.formModalEntrega.nindex)
+                    {
+                        valorCantidad = valorCantidad + parseInt(this.arrayEntregaElementoVenta[i].nCantidad);
+                    }
+                }
+
+                valorCantidad = valorCantidad + parseInt(cantidad);
+
+                alert(valorCantidad);
+
+                if(valorCantidad > this.formModalEntrega.ntotalcantidad){
+                    this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad);
                 };
 
                 if(this.mensajeError.length){
