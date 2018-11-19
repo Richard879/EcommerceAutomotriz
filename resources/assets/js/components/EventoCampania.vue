@@ -380,7 +380,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link " id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
@@ -1419,7 +1419,7 @@
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Opciones</th>
+                                                                <th>Acciones</th>
                                                                 <th>Nombre Proveedor</th>
                                                                 <th>%Distribución</th>
                                                             </tr>
@@ -1573,53 +1573,81 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-12">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Total A Distribuir</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalEntrega.ntotalcantidad"  class="form-control form-control-sm" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Modalidad Entrega</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="formModalEntrega.nidmodalidad" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayModalidadEntrega"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Cantidad</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="formModalEntrega.ncantidad" class="form-control form-control-sm" min="1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignaEntregaElementoVenta()">
+                                                        <i class="fa fa-save"></i> Asignar
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <hr/>
-                                            <template v-if="arrayProveedor.length">
+                                            <template v-if="arrayEntregaElementoVenta.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
+                                                                <th>Acciones</th>
+                                                                <th>Modalidad</th>
+                                                                <th>Cantidad</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
+                                                            <tr v-for="(modalidad, index) in arrayEntregaElementoVenta" :key="modalidad.nIdEventoElementoVenta + '-'  + modalidad.nIdModalidad">
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Eliminar Item</div>
+                                                                        <i @click="eliminarEntregaElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                    </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta" v-text="modalidad.cNombreModalidad"></td>
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta" v-text="modalidad.nCantidad"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
                                             </template>
                                         </div>
                                     </div>
@@ -1739,6 +1767,15 @@
                 arrayProveedorPorEC: [],
                 arrayIndexEntidadValor: [],
                 arrayElementoDistribucionEnvia: [],
+                // ======== VARIABLES MODALIDAD ENTREGA ===========
+                formModalEntrega:{
+                    nidmodalidad: '',
+                    nindex: 0,
+                    ncantidad: 1,
+                    ntotalcantidad: 0
+                },
+                arrayModalidadEntrega: [],
+                arrayEntregaElementoVenta: [],
                 // ==============================================
                 pagination: {
                     'total': 0,
@@ -2573,7 +2610,8 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
+                        //'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
+                        'nideventocampania': 8000011
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2651,6 +2689,80 @@
             },
             eliminarDistribucionElementoVenta(index){
                 this.$delete(this.arrayElementoDistribucionEnvia, index);
+            },
+            //======= Modal entrega vehiculo
+            llenarModalidadEntrega(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110097
+                    }
+                }).then(response => {
+                    this.arrayModalidadEntrega = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            asignaEntregaElementoVenta(){
+                let me = this;
+                var cNombreModalidad = "";
+
+                if(me.validaAsignaEntregaElementoVenta()){
+                     return;
+                }
+                
+                $.each(me.arrayModalidadEntrega, function (index, value) {
+                    if(value.nIdPar == me.formModalEntrega.nidmodalidad){
+                        me.cNombreModalidad = value.cParNombre;
+                    }
+                });
+
+                if(me.encuentraEntregaElementoVenta()){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Esta Modalidad ya se encuentra agregada!',
+                            })
+                }
+                else{
+                    me.arrayEntregaElementoVenta.push({
+                        nIdEventoElementoVenta: me.formModalEntrega.nindex,
+                        nIdModalidad: me.formModalEntrega.nidmodalidad,
+                        cNombreModalidad: me.cNombreModalidad,
+                        nCantidad: me.formModalEntrega.ncantidad
+                    });
+                }
+            },
+            validaAsignaEntregaElementoVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formModalEntrega.nidmodalidad == 0 || !this.formModalEntrega.nidmodalidad){
+                    this.mensajeError.push('Seleccione una Modalidad');
+                };
+
+                if(this.formModalEntrega.ncantidad <= 0){
+                    this.mensajeError.push('El valor de Cantidad debe ser mayor a 0');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            encuentraEntregaElementoVenta(){
+                var sw=0;
+                for(var i=0;i<this.arrayEntregaElementoVenta.length;i++){
+                    if(this.arrayEntregaElementoVenta[i].nIdEventoElementoVenta==this.formModalEntrega.nindex &&
+                        this.arrayEntregaElementoVenta[i].nIdModalidad==this.formModalEntrega.nidmodalidad)
+                    {
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            eliminarEntregaElementoVenta(index){
+                this.$delete(this.arrayEntregaElementoVenta, index);
             },
             //======= Distribucion por Cabecera
             validaBuscaProveedorCabecera(){
@@ -2985,10 +3097,10 @@
                         switch(accion){
                             case 'elemento':
                             {
-                                this.accionmodal=5;
-                                this.modal = 1;
-                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'];
-                                this.listarProveedorElementoVenta(1);
+                                this.accionmodal=5,
+                                this.modal = 1,
+                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'],
+                                this.listarProveedorElementoVenta(1),
                                 this.fillProveedor.nidproveedor = '';
                             }break;
                         }
@@ -2999,8 +3111,13 @@
                         switch(accion){
                             case 'elemento':
                             {
-                                this.accionmodal=7;
-                                this.modal = 1;
+                                this.accionmodal=7,
+                                this.modal = 1,
+                                this.formModalEntrega.ntotalcantidad = data['nTotalEstimado'],
+                                this.formModalEntrega.nindex = data['nIdEventoElementoVenta'],
+                                this.llenarModalidadEntrega(),
+                                this.formModalEntrega.nidmodalidad = '',
+                                this.formModalEntrega.ncantidad = 1;
                             }
                             break;
                         }
@@ -3046,7 +3163,6 @@
         }
     }
 </script>
-
 <style>
     .mostrar{
         display: list-item !important;
@@ -3067,6 +3183,8 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+        text-align: center;
+        margin: auto;
     }
     .direction-money{
         display: flex;
