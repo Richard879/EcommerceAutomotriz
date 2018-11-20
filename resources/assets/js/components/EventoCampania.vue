@@ -2529,10 +2529,7 @@
                 if(this.formEventoCamp.ntipo == 0){
                     this.mensajeError.push('Debes Seleccionar un Tipo Evento');
                 };
-                /*if(!this.formEventoCamp.fvalorpresupuesto){
-                    this.mensajeError.push('Debes Ingresar Valor Presupuesto');
-                };
-                if(this.formEventoCamp.nidmoneda == 0){
+                /*if(this.formEventoCamp.nidmoneda == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Moneda');
                 };*/
                 if(this.formEventoCamp.nidtipocambio == 0){
@@ -2622,8 +2619,7 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        //'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
-                        'nideventocampania': 8000011
+                        'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -3227,18 +3223,19 @@
                 this.formEventoCamp.dfechafin = '',
                 this.formEventoCamp.nidproveedor = 0,
                 this.formEventoCamp.cproveedornombre= '',
-                this.formEventoCamp.fvalorpresupuesto = '',
                 this.formEventoCamp.descripcion = '',
                 this.formEventoCamp.ntipo = '',
-                this.formDistribucion.nideventocampania = 0,
+                this.formEventoCamp.ndetalle = '',
+                //Variables Detalle
                 this.arrayTemporalLinea = [],
                 this.arrayTemporalMarca = [],
                 this.arrayTemporalModelo = [],
                 this.arrayTemporalElemento = [],
+                //Variables Distribucion
+                this.formDistribucion.nideventocampania = 0,
+                this.formDistribucionEv.nidproveedor = '',
                 this.arrayElementoDistribucion = [],
                 this.arrayProveedorPorEC = [],
-                this.formEventoCamp.ndetalle = '',
-                this.fillProveedor.nidproveedor = '',
                 this.arrayElementoDistribucionEnvia = []
             },
             limpiarPaginacion(){
