@@ -665,7 +665,7 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Asignar Presupuesto</label>
+                                                                                                    <label class="col-sm-4 form-control-label">* Entidad</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <div class="input-group">
                                                                                                             <div class="input-group-prepend">
@@ -1386,7 +1386,7 @@
                                 <div class="container-fluid">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
+                                            <h3 class="h4">DISTRIBUCIÓN</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group row">
@@ -1394,7 +1394,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">* Entidad</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillProveedor.nidproveedor" filterable clearable placeholder="SELECCIONE" >
+                                                            <el-select v-model="formDistribucionEv.nidentidad" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
                                                                 v-for="item in arrayProveedor"
                                                                 :key="item.nIdPar"
@@ -1402,6 +1402,14 @@
                                                                 :value="item.nIdPar">
                                                                 </el-option>
                                                             </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Cantidad</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="formDistribucionEv.fvalorporcentual" class="form-control form-control-sm" min="1">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1420,22 +1428,20 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Acciones</th>
-                                                                <th>Nombre Proveedor</th>
+                                                                <th>Nombre Entidad</th>
                                                                 <th>%Distribución</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="(distribucion, index) in arrayElementoDistribucionEnvia" :key="distribucion.nIdEventoElementoVenta + '-'  + distribucion.nIdProveedor">
-                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
+                                                            <tr v-for="(distribucion, index) in arrayElementoDistribucionEnvia" :key="distribucion.nIdEventoElementoVenta + '-'  + distribucion.nIdEntidad">
+                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdEventoElementoVenta">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Eliminar Item</div>
                                                                         <i @click="eliminarDistribucionElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                     </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreProveedor"></td>
-                                                                <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
-                                                                    <input type="number" min="1" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
-                                                                </td>
+                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreEntidad"></td>
+                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.fValorPorcentual"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1502,13 +1508,13 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <tr v-for="entidad in arrayProveedor" :key="entidad.nIdPar">
                                                                 <td>
-                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
+                                                                    <a href="#" @click="asignarProveedorCabecera(entidad);">
                                                                         <i class='fa-md fa fa-check-circle'></i>
                                                                     </a>
                                                                 </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
+                                                                <td v-text="entidad.cParNombre"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1569,19 +1575,18 @@
                                 <div class="container-fluid">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="h4">LISTADO</h3>
+                                            <h3 class="h4">MODALIDAD DE ENTREGA</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group row">
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-6">
                                                     <div class="row">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalEntrega.cdescripcion"  class="form-control form-control-sm" readonly="readonly">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Total A Distribuir</label>
@@ -1767,11 +1772,18 @@
                 arrayProveedorPorEC: [],
                 arrayIndexEntidadValor: [],
                 arrayElementoDistribucionEnvia: [],
-                // ======== VARIABLES MODALIDAD ENTREGA ===========
+                // ======== VARIABLES MODAL DISTRIBUCION ELEMENTO VENTA ===========
+                formDistribucionEv:{
+                    nidentidad: '',
+                    nindex: 0,
+                    fvalorporcentual: 1
+                },
+                // ======== VARIABLES MODAL MODALIDAD ENTREGA ===========
                 formModalEntrega:{
                     nidmodalidad: '',
                     nindex: 0,
                     ncantidad: 1,
+                    cdescripcion: '',
                     ntotalcantidad: 0
                 },
                 arrayModalidadEntrega: [],
@@ -2517,10 +2529,7 @@
                 if(this.formEventoCamp.ntipo == 0){
                     this.mensajeError.push('Debes Seleccionar un Tipo Evento');
                 };
-                /*if(!this.formEventoCamp.fvalorpresupuesto){
-                    this.mensajeError.push('Debes Ingresar Valor Presupuesto');
-                };
-                if(this.formEventoCamp.nidmoneda == 0){
+                /*if(this.formEventoCamp.nidmoneda == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Moneda');
                 };*/
                 if(this.formEventoCamp.nidtipocambio == 0){
@@ -2610,8 +2619,7 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        //'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
-                        'nideventocampania': 8000011
+                        'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2619,7 +2627,7 @@
                     console.log(error);
                 });
             },
-            listarProveedorElementoVenta(page){
+            listarProveedorElementoVenta(){
                 var url = this.ruta + '/parametro/GetLstProveedorTodos';
 
                 axios.get(url, {
@@ -2636,39 +2644,78 @@
             },
             asignarDistribucionElementoVenta(){
                 let me = this;
-                var cNombreProveedor = "";
+                var cnombreentidad = "";
 
-                if(me.validaAsignaDistribucionElementoVenta()){
-                     return;
+                if(me.validaDistribucionElementoVenta()){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Debe Seleccionar Entidad!',
+                        })
+                    return;
                 }
                 
                 $.each(me.arrayProveedor, function (index, value) {
-                    if(value.nIdPar == me.fillProveedor.nidproveedor){
-                        me.cNombreProveedor = value.cParNombre;
+                    if(value.nIdPar == me.formDistribucionEv.nidentidad){
+                        me.cnombreentidad = value.cParNombre;
                     }
                 });
 
                 if(me.encuentraDistribucionElementoVenta()){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Esa Distribución ya se encuentra agregada!',
+                        })
+                }
+                else{
+                    if(me.validaDistribucionCantidadElementoVenta(me.formDistribucionEv.fvalorporcentual)){
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Esa Distribución ya se encuentra agregada!',
+                            text: 'La suma de los valores de porcentaje NO debe ser mayor de 100!',
                             })
-                }
-                else{
+                        return;
+                    }
+
                     me.arrayElementoDistribucionEnvia.push({
-                        nIdEventoElementoVenta: me.formDistribucion.nindex,
-                        nIdProveedor: me.fillProveedor.nidproveedor,
-                        cNombreProveedor: me.cNombreProveedor
+                        nIdEventoElementoVenta: me.formDistribucionEv.nindex,
+                        cFlagEntidad: (me.formDistribucionEv.nidentidad == parseInt(sessionStorage.getItem("nIdEmpresa"))) ? 'E' : 'P',
+                        nIdEntidad: me.formDistribucionEv.nidentidad,
+                        cNombreEntidad: me.cnombreentidad,
+                        fValorPorcentual: me.formDistribucionEv.fvalorporcentual
                     });
                 }
             },
-            validaAsignaDistribucionElementoVenta(){
+            validaDistribucionElementoVenta(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.fillProveedor.nidproveedor == 0 || !this.fillProveedor.nidproveedor){
+                if(this.formDistribucionEv.nidentidad == 0 || !this.formDistribucionEv.nidentidad){
                     this.mensajeError.push('Seleccione una Entidad');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaDistribucionCantidadElementoVenta(cantidad){
+                this.error = 0;
+                this.mensajeError =[];
+                var valorCantidad = 0;
+
+                for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
+                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucionEv.nindex)
+                    {
+                        valorCantidad = valorCantidad + parseInt(this.arrayElementoDistribucionEnvia[i].fValorPorcentual);
+                    }
+                }
+
+                valorCantidad = valorCantidad + parseInt(cantidad);
+
+                if(valorCantidad > 100){
+                    this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mayor de 100');
                 };
 
                 if(this.mensajeError.length){
@@ -2679,8 +2726,8 @@
             encuentraDistribucionElementoVenta(){
                 var sw=0;
                 for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
-                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucion.nindex &&
-                        this.arrayElementoDistribucionEnvia[i].nIdProveedor==this.fillProveedor.nidproveedor)
+                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucionEv.nindex &&
+                        this.arrayElementoDistribucionEnvia[i].nIdEntidad==this.formDistribucionEv.nidentidad)
                     {
                         sw=true;
                     }
@@ -2708,6 +2755,11 @@
                 var cNombreModalidad = "";
 
                 if(me.validaAsignaEntregaElementoVenta()){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Debe seleccionar Modalidad!',
+                        })
                      return;
                 }
                 
@@ -2726,6 +2778,11 @@
                 }
                 else{
                     if(me.validaEntregaCantidadElementoVenta(me.formModalEntrega.ncantidad)){
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'La suma de los valores de porcentaje NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad,
+                        })
                         return;
                     }
                     me.arrayEntregaElementoVenta.push({
@@ -2766,8 +2823,6 @@
                 }
 
                 valorCantidad = valorCantidad + parseInt(cantidad);
-
-                alert(valorCantidad);
 
                 if(valorCantidad > this.formModalEntrega.ntotalcantidad){
                     this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad);
@@ -2828,21 +2883,21 @@
                     console.log(error);
                 });
             },
-            asignarProveedorCabecera(data =[]){
+            asignarProveedorCabecera(entidad){
                 if(this.encuentraProveedorCabecera(data['nIdPar'])){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Ese Proveedor ya se encuentra agregado!',
-                            })
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Ese Proveedor ya se encuentra agregado!',
+                        })
                 }
                 else{
                     this.arrayProveedorPorEC.push({
-                                nIdEntidad: data['nIdPar'],
-                                cFlagEntidad: 'P',
-                                cProveedorNombre: data['cParNombre']
+                                nIdEntidad: entidad.nIdPar,
+                                cFlagEntidad: (entidad.nIdPar == parseInt(sessionStorage.getItem("nIdEmpresa"))) ? 'E' : 'P',
+                                cProveedorNombre: entidad.cParNombre
                     });
-                    toastr.success('Se Agregó Proveedor');
+                    toastr.success('Se Agregó Entidad');
                 }
             },
             asignaEmpresaCabecera(){
@@ -2922,30 +2977,37 @@
                 //Registro por Elemento Venta
                 else{
                     if(me.arrayElementoDistribucionEnvia.length > 0){
-                        var list=[];
-
-                        me.arrayElementoDistribucionEnvia.map(function(value, key) {
-                            list.push({
-                                nIdEventoElementoVenta: value.nIdEventoElementoVenta,
-                                cFlagEntidad: 'P',
-                                nIdEntidad: value.nIdProveedor,
-                                fValorPorcentual: me.arrayIndexProvValor[key]
-                            });
-                        });
-
                         var url = me.ruta + '/ec/SetDistribucionEventoByElemento';
                         axios.post(url, {
                             nIdEventoCampania: parseInt(me.formDistribucion.nideventocampania),
-                            data: list
+                            data: me.arrayElementoDistribucionEnvia
                         }).then(response => {
-                            swal('Distribución registrada');
-                            me.limpiarFormulario();
-                            me.inicio();
+                              if(me.arrayEntregaElementoVenta.length > 0){
+                                  me.registrarEntregaDistribucion();
+                              }
+                              else{
+                                swal('Distribución registrada');
+                                me.limpiarFormulario();
+                                me.inicio();
+                              }
                         }).catch(error => {
                             console.log(error);
                         });
                     }
                 }
+            },
+            registrarEntregaDistribucion(){
+                var url = this.ruta + '/ec/SetEntregaEventoElementoVenta';
+                axios.post(url, {
+                    nIdEventoCampania: parseInt(this.formDistribucion.nideventocampania),
+                    data: this.arrayEntregaElementoVenta
+                }).then(response => {
+                    swal('Distribución registrada');
+                    this.limpiarFormulario();
+                    this.inicio();
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             validarDistribucion(){
                 this.error = 0;
@@ -3127,9 +3189,10 @@
                             {
                                 this.accionmodal=5,
                                 this.modal = 1,
-                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'],
-                                this.listarProveedorElementoVenta(1),
-                                this.fillProveedor.nidproveedor = '';
+                                this.formDistribucionEv.nindex = data['nIdEventoElementoVenta'],
+                                this.listarProveedorElementoVenta(),
+                                this.formDistribucionEv.nidentidad = '',
+                                this.formDistribucionEv.fvalorporcentual = 1;
                             }break;
                         }
                     }
@@ -3141,7 +3204,8 @@
                             {
                                 this.accionmodal=7,
                                 this.modal = 1,
-                                this.formModalEntrega.ntotalcantidad = data['nTotalEstimado'],
+                                this.formModalEntrega.cdescripcion = data['cElemenNombre'],
+                                this.formModalEntrega.ntotalcantidad = data['nCantidad'],
                                 this.formModalEntrega.nindex = data['nIdEventoElementoVenta'],
                                 this.llenarModalidadEntrega(),
                                 this.formModalEntrega.nidmodalidad = '',
@@ -3159,18 +3223,19 @@
                 this.formEventoCamp.dfechafin = '',
                 this.formEventoCamp.nidproveedor = 0,
                 this.formEventoCamp.cproveedornombre= '',
-                this.formEventoCamp.fvalorpresupuesto = '',
                 this.formEventoCamp.descripcion = '',
                 this.formEventoCamp.ntipo = '',
-                this.formDistribucion.nideventocampania = 0,
+                this.formEventoCamp.ndetalle = '',
+                //Variables Detalle
                 this.arrayTemporalLinea = [],
                 this.arrayTemporalMarca = [],
                 this.arrayTemporalModelo = [],
                 this.arrayTemporalElemento = [],
+                //Variables Distribucion
+                this.formDistribucion.nideventocampania = 0,
+                this.formDistribucionEv.nidproveedor = '',
                 this.arrayElementoDistribucion = [],
                 this.arrayProveedorPorEC = [],
-                this.formEventoCamp.ndetalle = '',
-                this.fillProveedor.nidproveedor = '',
                 this.arrayElementoDistribucionEnvia = []
             },
             limpiarPaginacion(){

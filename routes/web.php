@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/ec/GetDistribucionByElementoVenta', 'EventoCampaniaController@GetDistribucionByElementoVenta');
     Route::put('/ec/desactivar', 'EventoCampaniaController@desactivar');
     Route::put('/ec/activar', 'EventoCampaniaController@activar');
+    Route::post('/ec/SetEntregaEventoElementoVenta', 'EventoCampaniaController@SetEntregaEventoElementoVenta');
 
     Route::get('/ubigeo/GetDptos', 'UbigeoController@GetDptos');
     Route::get('/ubigeo/GetProvinciasByDpto', 'UbigeoController@GetProvinciasByDpto');
