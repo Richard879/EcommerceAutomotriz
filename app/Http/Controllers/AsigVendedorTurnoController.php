@@ -23,11 +23,16 @@ class AsigVendedorTurnoController extends Controller
     {
         $nidpar = $request->nidpar;
         $nidgrupar = $request->nidgrupar;
+        $opcionPaginate = $request->opcionPaginate;
 
         $arrayVendedoresByIdJV = DB::select('exec usp_Par_GetParametroByParParent ?,?',  [$nidpar, $nidgrupar]);
 
-        $arrayVendedoresByIdJV = ParametroController::arrayPaginator($arrayVendedoresByIdJV, $request);
-        return ['arrayVendedoresByIdJV'=>$arrayVendedoresByIdJV];
+        if($opcionPaginate == 1) {
+            $arrayVendedoresByIdJV = ParametroController::arrayPaginator($arrayVendedoresByIdJV, $request);
+            return ['arrayVendedoresByIdJV'=>$arrayVendedoresByIdJV];
+        } else {
+            return response()->json($arrayVendedoresByIdJV);
+        }
     }
 
     public function GeLstDetalleTurno(Request $request)

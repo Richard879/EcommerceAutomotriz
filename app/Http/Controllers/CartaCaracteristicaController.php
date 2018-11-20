@@ -69,7 +69,7 @@ class CartaCaracteristicaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $data = DB::select('exec usp_CartaCaracteristica_SetRegistrarSCC ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec usp_CartaCaracteristica_SetRegistrarSCC ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->cNumeroCarta,
                                         $request->cAtencion,
@@ -82,6 +82,7 @@ class CartaCaracteristicaController extends Controller
                                         $request->fCuotaInicial,
                                         $request->fMontoDesembolsado,
                                         $request->nIdBanco,
+                                        $request->nIdSucursal,
                                         $request->nIdEstadoCarta,
                                         $request->FlagEstadoApro,
                                         Auth::user()->id
