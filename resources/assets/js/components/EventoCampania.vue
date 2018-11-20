@@ -665,7 +665,7 @@
                                                                                         <div class="form-group row">
                                                                                             <div class="col-sm-6">
                                                                                                 <div class="row">
-                                                                                                    <label class="col-sm-4 form-control-label">* Asignar Presupuesto</label>
+                                                                                                    <label class="col-sm-4 form-control-label">* Entidad</label>
                                                                                                     <div class="col-sm-8">
                                                                                                         <div class="input-group">
                                                                                                             <div class="input-group-prepend">
@@ -1508,13 +1508,13 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
+                                                            <tr v-for="entidad in arrayProveedor" :key="entidad.nIdPar">
                                                                 <td>
-                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
+                                                                    <a href="#" @click="asignarProveedorCabecera(entidad);">
                                                                         <i class='fa-md fa fa-check-circle'></i>
                                                                     </a>
                                                                 </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
+                                                                <td v-text="entidad.cParNombre"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -2887,21 +2887,21 @@
                     console.log(error);
                 });
             },
-            asignarProveedorCabecera(data =[]){
+            asignarProveedorCabecera(entidad){
                 if(this.encuentraProveedorCabecera(data['nIdPar'])){
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Ese Proveedor ya se encuentra agregado!',
-                            })
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Ese Proveedor ya se encuentra agregado!',
+                        })
                 }
                 else{
                     this.arrayProveedorPorEC.push({
-                                nIdEntidad: data['nIdPar'],
-                                cFlagEntidad: 'P',
-                                cProveedorNombre: data['cParNombre']
+                                nIdEntidad: entidad.nIdPar,
+                                cFlagEntidad: (entidad.nIdPar == parseInt(sessionStorage.getItem("nIdEmpresa"))) ? 'E' : 'P',
+                                cProveedorNombre: entidad.cParNombre
                     });
-                    toastr.success('Se Agregó Proveedor');
+                    toastr.success('Se Agregó Entidad');
                 }
             },
             asignaEmpresaCabecera(){
@@ -2986,14 +2986,32 @@
                             nIdEventoCampania: parseInt(me.formDistribucion.nideventocampania),
                             data: me.arrayElementoDistribucionEnvia
                         }).then(response => {
-                            swal('Distribución registrada');
-                            me.limpiarFormulario();
-                            me.inicio();
+                              if(me.arrayEntregaElementoVenta.length > 0){
+                                  me.registrarEntregaDistribucion();
+                              }
+                              else{
+                                swal('Distribución registrada');
+                                me.limpiarFormulario();
+                                me.inicio();
+                              }
                         }).catch(error => {
                             console.log(error);
                         });
                     }
                 }
+            },
+            registrarEntregaDistribucion(){
+                var url = this.ruta + '/ec/SetEntregaEventoElementoVenta';
+                axios.post(url, {
+                    nIdEventoCampania: parseInt(this.formDistribucion.nideventocampania),
+                    data: this.arrayEntregaElementoVenta
+                }).then(response => {
+                    swal('Distribución registrada');
+                    this.limpiarFormulario();
+                    this.inicio();
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             validarDistribucion(){
                 this.error = 0;

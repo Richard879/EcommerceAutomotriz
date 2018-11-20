@@ -234,4 +234,30 @@ class EventoCampaniaController extends Controller
                                             ]);
         return response()->json($nIdEventoCampania);   
     }
+
+    public function SetEntregaEventoElementoVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+ 
+        try{
+            DB::beginTransaction();
+        
+            $detalles = $request->data;
+
+            foreach($detalles as $ep=>$det)
+            {
+                DB::select('exec [usp_EC_SetEntregaByEventoElementoVenta] ?, ?, ?, ?, ?', 
+                                                    [   $request->nIdEventoCampania,
+                                                        $det['nIdEventoElementoVenta'],
+                                                        $det['nIdModalidad'],
+                                                        $det['nCantidad'],
+                                                        Auth::user()->id
+                                                    ]);
+            }  
+
+            DB::commit(); 
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
