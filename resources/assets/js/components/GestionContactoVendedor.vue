@@ -1301,10 +1301,10 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" @change="llenarComboMarca()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayLinea"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                    v-for="item in arrayLinea"
+                                                                                                    :key="item.nIdLinea"
+                                                                                                    :label="item.cLineaNombre"
+                                                                                                    :value="item.nIdLinea">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1319,9 +1319,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayMarca"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                :key="item.nIdMarca"
+                                                                                                :label="item.cMarcaNombre"
+                                                                                                :value="item.nIdMarca">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1334,9 +1334,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayModelo"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                :key="item.nIdModelo"
+                                                                                                :label="item.cModeloNombre"
+                                                                                                :value="item.nIdModelo">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1495,7 +1495,7 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidlinea2" filterable clearable placeholder="SELECCIONE" @change="llenarComboMarca()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayLinea"
+                                                                                                v-for="item in arrayLinea2"
                                                                                                 :key="item.nIdPar"
                                                                                                 :label="item.cParNombre"
                                                                                                 :value="item.nIdPar">
@@ -1512,7 +1512,7 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmarca2" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                                                 <el-option
-                                                                                                v-for="item in arrayMarca"
+                                                                                                v-for="item in arrayMarca2"
                                                                                                 :key="item.nIdPar"
                                                                                                 :label="item.cParNombre"
                                                                                                 :value="item.nIdPar">
@@ -1527,7 +1527,7 @@
                                                                                         <div class="col-sm-8">
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo2" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
-                                                                                                v-for="item in arrayModelo"
+                                                                                                v-for="item in arrayModelo2"
                                                                                                 :key="item.nIdPar"
                                                                                                 :label="item.cParNombre"
                                                                                                 :value="item.nIdPar">
@@ -1590,8 +1590,8 @@
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarOtrosIntereses()">
                                                                                         <i class="fa fa-arrow-down"></i> Asignar
                                                                                     </button>
-                                                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="regresarOtrosIntereses()">
-                                                                                        <i class="fa fa-arrow-down"></i> Regresar
+                                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click="regresarOtrosIntereses()">
+                                                                                        <i class="fa fa-arrow-left"></i> Regresar
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
@@ -1906,6 +1906,10 @@
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
+
+                arrayLinea2: [],
+                arrayMarca2: [],
+                arrayModelo2: [],
                 arrayAnioFabricacion: [],
                 arrayAnioModelo: [],
                 // =============================================================
@@ -2937,7 +2941,9 @@
                 this.llenarComboLinea();
             },
             llenarComboLinea(){
-                var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
+                var url;
+
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetLineasByUsuario') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
 
                 axios.get(url, {
                     params: {
@@ -2945,8 +2951,9 @@
                         'nidproveedor': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidproveedor : this.formNuevoContacto.nidproveedor2
                     }
                 }).then(response => {
-                    this.arrayLinea = response.data;
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayLinea = response.data) : (this.arrayLinea2 = response.data);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea = '' : this.formNuevoContacto.nidlinea2 = '';
+
                     this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
@@ -2958,15 +2965,20 @@
                 });
             },
             llenarComboMarca(){
-                var url = this.ruta + '/versionvehiculo/GetMarcaByLinea';
+                var url;
+
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
+
                 axios.get(url, {
                     params: {
                         'nidlinea': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea : this.formNuevoContacto.nidlinea2
                     }
                 }).then(response => {
-                    this.arrayMarca = response.data;
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayMarca = response.data) : (this.arrayMarca2 = response.data);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmarca = '' : this.formNuevoContacto.nidmarca2 = '';
+
                     this.arrayModelo = [];
+                    this.arrayModelo2 = [];
                     this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
@@ -2978,13 +2990,16 @@
                 });
             },
             llenarComboModelo(){
-                var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
+                var url;
+
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
+
                 axios.get(url, {
                     params: {
                         'nidmarca': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmarca : this.formNuevoContacto.nidmarca2
                     }
                 }).then(response => {
-                    this.arrayModelo = response.data;
+                    (this.cFlagReferenciaInteres == 1) ? (this.arrayModelo = response.data) : (this.arrayModelo2 = response.data);
                     (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmodelo = '' : this.formNuevoContacto.nidmodelo2 = '';
                 }).catch(error => {
                     console.log(error);
@@ -3048,18 +3063,18 @@
                 var nAnioModeloRef = "";
 
                 $.each(this.arrayLinea, function (index, value) {
-                    if(value.nIdPar == nidlinea){
-                        cLineaNombreRef = value.cParNombre;
+                    if(value.nIdLinea == nidlinea){
+                        cLineaNombreRef = value.cLineaNombre;
                     }
                 });
                 $.each(this.arrayMarca, function (index, value) {
-                    if(value.nIdPar == nidmarca){
-                        cMarcaNombreRef = value.cParNombre;
+                    if(value.nIdMarca == nidmarca){
+                        cMarcaNombreRef = value.cMarcaNombre;
                     }
                 });
                 $.each(this.arrayModelo, function (index, value) {
-                    if(value.nIdPar == nidmodelo){
-                        cModeloNombreRef = value.cParNombre;
+                    if(value.nIdModelo == nidmodelo){
+                        cModeloNombreRef = value.cModeloNombre;
                     }
                 });
                 $.each(this.arrayAnioFabricacion, function (index, value) {
@@ -3213,6 +3228,13 @@
                 this.formNuevoContacto.naniofabricacion2 = '';
                 this.formNuevoContacto.naniomodelo2 = '';
                 this.formNuevoContacto.dfechareferenciacompra2 = 0;
+
+                this.arrayLinea = [];
+                this.arrayMarca = [];
+                this.arrayModelo = [];
+                this.arrayLinea2 = [];
+                this.arrayMarca2 = [];
+                this.arrayModelo2 = [];
             },
             asignarOtrosIntereses(){
                 if(this.validaAsignarOtrasReferencias()){
@@ -3232,17 +3254,17 @@
                 var nAnioFabricacionRef = "";
                 var nAnioModeloRef = "";
 
-                $.each(this.arrayLinea, function (index, value) {
+                $.each(this.arrayLinea2, function (index, value) {
                     if(value.nIdPar == nidlinea){
                         cLineaNombreRef = value.cParNombre;
                     }
                 });
-                $.each(this.arrayMarca, function (index, value) {
+                $.each(this.arrayMarca2, function (index, value) {
                     if(value.nIdPar == nidmarca){
                         cMarcaNombreRef = value.cParNombre;
                     }
                 });
-                $.each(this.arrayModelo, function (index, value) {
+                $.each(this.arrayModelo2, function (index, value) {
                     if(value.nIdPar == nidmodelo){
                         cModeloNombreRef = value.cParNombre;
                     }
@@ -3436,7 +3458,8 @@
                         nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                         nIdCronograma: 220016,
                         nIdContacto: nIdContacto,
-                        data: this.arrayReferenciaVehiculo
+                        referencia: this.arrayReferenciaVehiculo,
+                        otrosintreses: this.arrayOtrosIntereses
                     }).then(response => {
                         swal('Contacto registrado');
                         this.limpiarNuevoContacto();
@@ -3584,6 +3607,7 @@
                 this.formNuevoContacto.naniomodelo = ''
                 //Referencia
                 this.arrayReferenciaVehiculo = []
+                this.arrayOtrosIntereses = []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
