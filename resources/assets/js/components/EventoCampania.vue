@@ -380,7 +380,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link " id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
@@ -571,7 +571,7 @@
                                                                                                     <th>Acciones</th>
                                                                                                     <th>Nombre Proveedor</th>
                                                                                                     <th>Nombre Elemento</th>
-                                                                                                    <th>Cantidad</th>
+                                                                                                    <th>Cantidad por Vehiculo</th>
                                                                                                     <th>Moneda</th>
                                                                                                     <th>Total Estimado</th>
                                                                                                     <th>Valor Venta</th>
@@ -728,13 +728,13 @@
                                                                                                                     <th>Proveedor</th>
                                                                                                                     <th>Tipo Elemento</th>
                                                                                                                     <th>Nombre Elemento</th>
-                                                                                                                    <th>Cantidad</th>
+                                                                                                                    <th>Cantidad Por Vehiculo</th>
                                                                                                                     <th>Moneda</th>
                                                                                                                     <th>Precio Venta</th>
                                                                                                                     <th>Total Estimado</th>
                                                                                                                     <th>SubTotal Soles</th>
                                                                                                                     <th>SubTotal Dolares</th>
-                                                                                                                    <th>% Distribución</th>
+                                                                                                                    <th>Acciones</th>
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
@@ -750,10 +750,10 @@
                                                                                                                     <td v-text="eledist.fSubTotalElementoSol"></td>
                                                                                                                     <td v-text="eledist.fSubTotalElementoDolar"></td>
                                                                                                                     <td>
-                                                                                                                        <el-tooltip class="item" :content="'Editar ' + eledist.cElemenNombre" effect="dark" placement="top-start">
+                                                                                                                        <el-tooltip class="item" :content="'Asignar Distribución ' + eledist.cElemenNombre" effect="dark" placement="top-start">
                                                                                                                             <i @click="abrirModal('asignadistribucion','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                                                                                         </el-tooltip>&nbsp;&nbsp;
-                                                                                                                        <el-tooltip class="item" :content="'Añadir Distribución ' + eledist.nCantidad" effect="dark" placement="top-start">
+                                                                                                                        <el-tooltip class="item" :content="'Distribuir Cantidad ' + eledist.nCantidad" effect="dark" placement="top-start">
                                                                                                                             <i @click="abrirModal('asignacantidad','elemento', eledist)" :style="'color:#796AEE'" class="fa-md fa fa-cog"></i>
                                                                                                                         </el-tooltip>
                                                                                                                     </td>
@@ -1419,7 +1419,7 @@
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Opciones</th>
+                                                                <th>Acciones</th>
                                                                 <th>Nombre Proveedor</th>
                                                                 <th>%Distribución</th>
                                                             </tr>
@@ -1434,7 +1434,7 @@
                                                                 </td>
                                                                 <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreProveedor"></td>
                                                                 <td v-if="formDistribucion.nindex==distribucion.nIdEventoElementoVenta">
-                                                                    <input type="number" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
+                                                                    <input type="number" min="1" v-model="arrayIndexProvValor[index]" class="form-control form-control-sm">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1513,9 +1513,9 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-sm-12">
                                                     <div class="row">
-                                                        <div class="col-lg-7">
+                                                        <div class="col-sm-7">
                                                             <nav>
                                                                 <ul class="pagination">
                                                                     <li v-if="paginationModal.current_page > 1" class="page-item">
@@ -1533,7 +1533,7 @@
                                                                 </ul>
                                                             </nav>
                                                         </div>
-                                                        <div class="col-lg-5">
+                                                        <div class="col-sm-5">
                                                             <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                         </div>
                                                     </div>
@@ -1561,7 +1561,7 @@
             </div>
 
             <!-- MODAL DISTRIBUCION CANTIDAD DE ELEMENTO VENTA-->
-            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal fade" v-if="accionmodal==7" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -1573,78 +1573,81 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-12">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">Nombre</label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores()" class="form-control form-control-sm">
-                                                                <div class="input-group-prepend">
-                                                                    <button type="button" title="Buscar Proveedores" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores()">
-                                                                        <i class="fa-lg fa fa-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
+                                                        <div class="text-center">
+                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Total A Distribuir</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="formModalEntrega.ntotalcantidad"  class="form-control form-control-sm" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Modalidad Entrega</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="formModalEntrega.nidmodalidad" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayModalidadEntrega"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Cantidad</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" v-model="formModalEntrega.ncantidad" class="form-control form-control-sm" min="1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignaEntregaElementoVenta()">
+                                                        <i class="fa fa-save"></i> Asignar
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <hr/>
-                                            <template v-if="arrayProveedor.length">
+                                            <template v-if="arrayEntregaElementoVenta.length">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
-                                                                <th>Seleccione</th>
-                                                                <th>Nombre Proveedor</th>
+                                                                <th>Acciones</th>
+                                                                <th>Modalidad</th>
+                                                                <th>Cantidad</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="proveedor in arrayProveedor" :key="proveedor.nIdPar">
-                                                                <td>
-                                                                    <a href="#" @click="asignarProveedorCabecera(proveedor);">
-                                                                        <i class='fa-md fa fa-check-circle'></i>
-                                                                    </a>
+                                                            <tr v-for="(modalidad, index) in arrayEntregaElementoVenta" :key="modalidad.nIdEventoElementoVenta + '-'  + modalidad.nIdModalidad">
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Eliminar Item</div>
+                                                                        <i @click="eliminarEntregaElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                    </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-text="proveedor.cParNombre"></td>
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta" v-text="modalidad.cNombreModalidad"></td>
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta" v-text="modalidad.nCantidad"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <nav>
-                                                                <ul class="pagination">
-                                                                    <li v-if="paginationModal.current_page > 1" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                    </li>
-                                                                    <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
-                                                                    :class="[page==isActivedModal?'active':'']">
-                                                                        <a class="page-link"
-                                                                        href="#" @click.prevent="cambiarPaginaProveedor(page)"
-                                                                        v-text="page"></a>
-                                                                    </li>
-                                                                    <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
-                                                                        <a @click.prevent="cambiarPaginaProveedor(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
                                             </template>
                                         </div>
                                     </div>
@@ -1668,8 +1671,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
                 nidempresa: 0,
                 nidsucursal: 0,
                 // ============================================================
@@ -1766,6 +1767,15 @@
                 arrayProveedorPorEC: [],
                 arrayIndexEntidadValor: [],
                 arrayElementoDistribucionEnvia: [],
+                // ======== VARIABLES MODALIDAD ENTREGA ===========
+                formModalEntrega:{
+                    nidmodalidad: '',
+                    nindex: 0,
+                    ncantidad: 1,
+                    ntotalcantidad: 0
+                },
+                arrayModalidadEntrega: [],
+                arrayEntregaElementoVenta: [],
                 // ==============================================
                 pagination: {
                     'total': 0,
@@ -1916,8 +1926,8 @@
                 var url = this.ruta + '/ec/GetEventoCampania';
                 axios.get(url, {
                     params: {
-                        'nidempresa'    : 1300011,
-                        'nidsucursal'   : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio'  : this.formEventoCamp.dfechainicio,
                         'dfechafin'     : this.formEventoCamp.dfechafin,
                         'nidproveedor'  : this.formEventoCamp.nidproveedor,
@@ -2145,7 +2155,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
                         'clineanombre': this.fillModal.clineanombre.toString(),
                         'page' : page
@@ -2205,7 +2215,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : parseInt(this.formEventoCamp.nidproveedor),
                         'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
                         'page' : page
@@ -2265,7 +2275,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
                         'cmodelonombre': this.fillModal.cmodelonombre.toString(),
                         'page' : page
@@ -2391,7 +2401,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoelemen': this.formEle.ntpoelemen,
                         'celementonombre': this.formEle.celementonombre,
                         'page' : page
@@ -2462,8 +2472,8 @@
 
                 var url = this.ruta + '/ec/SetEventoCampania';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
                     cNombreEventoCampania: this.formEventoCamp.descripcion,
                     nIdTipoEvento: parseInt(this.formEventoCamp.ntipo),
@@ -2600,7 +2610,8 @@
                 var url = this.ruta + '/ec/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
-                        'nideventocampania' : parseInt(this.formDistribucion.nideventocampania)
+                        //'nideventocampania': parseInt(this.formDistribucion.nideventocampania)
+                        'nideventocampania': 8000011
                     }
                 }).then(response => {
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
@@ -2613,7 +2624,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'cnombreproveedor': '',
                         'opcion': 1
                     }
@@ -2627,13 +2638,17 @@
                 let me = this;
                 var cNombreProveedor = "";
 
+                if(me.validaAsignaDistribucionElementoVenta()){
+                     return;
+                }
+                
                 $.each(me.arrayProveedor, function (index, value) {
                     if(value.nIdPar == me.fillProveedor.nidproveedor){
                         me.cNombreProveedor = value.cParNombre;
                     }
                 });
 
-                if(this.encuentraDistribucionElementoVenta()){
+                if(me.encuentraDistribucionElementoVenta()){
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -2648,6 +2663,19 @@
                     });
                 }
             },
+            validaAsignaDistribucionElementoVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.fillProveedor.nidproveedor == 0 || !this.fillProveedor.nidproveedor){
+                    this.mensajeError.push('Seleccione una Entidad');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             encuentraDistribucionElementoVenta(){
                 var sw=0;
                 for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
@@ -2661,6 +2689,108 @@
             },
             eliminarDistribucionElementoVenta(index){
                 this.$delete(this.arrayElementoDistribucionEnvia, index);
+            },
+            //======= Modal entrega vehiculo
+            llenarModalidadEntrega(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : 110097
+                    }
+                }).then(response => {
+                    this.arrayModalidadEntrega = response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            asignaEntregaElementoVenta(){
+                let me = this;
+                var cNombreModalidad = "";
+
+                if(me.validaAsignaEntregaElementoVenta()){
+                     return;
+                }
+                
+                $.each(me.arrayModalidadEntrega, function (index, value) {
+                    if(value.nIdPar == me.formModalEntrega.nidmodalidad){
+                        me.cNombreModalidad = value.cParNombre;
+                    }
+                });
+
+                if(me.encuentraEntregaElementoVenta()){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Esta Modalidad ya se encuentra agregada!',
+                    })
+                }
+                else{
+                    if(me.validaEntregaCantidadElementoVenta(me.formModalEntrega.ncantidad)){
+                        return;
+                    }
+                    me.arrayEntregaElementoVenta.push({
+                        nIdEventoElementoVenta: me.formModalEntrega.nindex,
+                        nIdModalidad: me.formModalEntrega.nidmodalidad,
+                        cNombreModalidad: me.cNombreModalidad,
+                        nCantidad: me.formModalEntrega.ncantidad
+                    });
+                }
+            },
+            validaAsignaEntregaElementoVenta(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(this.formModalEntrega.nidmodalidad == 0 || !this.formModalEntrega.nidmodalidad){
+                    this.mensajeError.push('Seleccione una Modalidad');
+                };
+
+                if(this.formModalEntrega.ncantidad <= 0){
+                    this.mensajeError.push('El valor de Cantidad debe ser mayor a 0');
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            validaEntregaCantidadElementoVenta(cantidad){
+                this.error = 0;
+                this.mensajeError =[];
+                var valorCantidad = 0;
+
+                for(var i=0;i<this.arrayEntregaElementoVenta.length;i++){
+                    if(this.arrayEntregaElementoVenta[i].nIdEventoElementoVenta==this.formModalEntrega.nindex)
+                    {
+                        valorCantidad = valorCantidad + parseInt(this.arrayEntregaElementoVenta[i].nCantidad);
+                    }
+                }
+
+                valorCantidad = valorCantidad + parseInt(cantidad);
+
+                alert(valorCantidad);
+
+                if(valorCantidad > this.formModalEntrega.ntotalcantidad){
+                    this.mensajeError.push('La suma de los valores de porcentaje NO debe ser mayor de ' + this.formModalEntrega.ntotalcantidad);
+                };
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            encuentraEntregaElementoVenta(){
+                var sw=0;
+                for(var i=0;i<this.arrayEntregaElementoVenta.length;i++){
+                    if(this.arrayEntregaElementoVenta[i].nIdEventoElementoVenta==this.formModalEntrega.nindex &&
+                        this.arrayEntregaElementoVenta[i].nIdModalidad==this.formModalEntrega.nidmodalidad)
+                    {
+                        sw=true;
+                    }
+                }
+                return sw;
+            },
+            eliminarEntregaElementoVenta(index){
+                this.$delete(this.arrayEntregaElementoVenta, index);
             },
             //======= Distribucion por Cabecera
             validaBuscaProveedorCabecera(){
@@ -2680,7 +2810,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -2717,7 +2847,7 @@
             },
             asignaEmpresaCabecera(){
                 if(this.formDistribucion.ntipoproveedor == 2){
-                    if(this.encuentraProveedorCabecera(1300011)){
+                    if(this.encuentraProveedorCabecera(parseInt(sessionStorage.getItem("nIdEmpresa")))){
                             swal({
                                 type: 'error',
                                 title: 'Error...',
@@ -2726,7 +2856,7 @@
                     }
                     else{
                         this.arrayProveedorPorEC.push({
-                                    nIdEntidad: 1300011,
+                                    nIdEntidad: parseInt(sessionStorage.getItem("nIdEmpresa")),
                                     cFlagEntidad: 'E',
                                     cProveedorNombre: 'AUTOMOTORES INKA'
                         });
@@ -2805,6 +2935,7 @@
 
                         var url = me.ruta + '/ec/SetDistribucionEventoByElemento';
                         axios.post(url, {
+                            nIdEventoCampania: parseInt(me.formDistribucion.nideventocampania),
                             data: list
                         }).then(response => {
                             swal('Distribución registrada');
@@ -2871,7 +3002,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -2994,10 +3125,10 @@
                         switch(accion){
                             case 'elemento':
                             {
-                                this.accionmodal=5;
-                                this.modal = 1;
-                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'];
-                                this.listarProveedorElementoVenta(1);
+                                this.accionmodal=5,
+                                this.modal = 1,
+                                this.formDistribucion.nindex = data['nIdEventoElementoVenta'],
+                                this.listarProveedorElementoVenta(1),
                                 this.fillProveedor.nidproveedor = '';
                             }break;
                         }
@@ -3008,8 +3139,13 @@
                         switch(accion){
                             case 'elemento':
                             {
-                                this.accionmodal=7;
-                                this.modal = 1;
+                                this.accionmodal=7,
+                                this.modal = 1,
+                                this.formModalEntrega.ntotalcantidad = data['nTotalEstimado'],
+                                this.formModalEntrega.nindex = data['nIdEventoElementoVenta'],
+                                this.llenarModalidadEntrega(),
+                                this.formModalEntrega.nidmodalidad = '',
+                                this.formModalEntrega.ncantidad = 1;
                             }
                             break;
                         }
@@ -3055,7 +3191,6 @@
         }
     }
 </script>
-
 <style>
     .mostrar{
         display: list-item !important;
@@ -3076,6 +3211,8 @@
         color: red;
         font-weight: bold;
         font-size: 0.75rem;
+        text-align: center;
+        margin: auto;
     }
     .direction-money{
         display: flex;
