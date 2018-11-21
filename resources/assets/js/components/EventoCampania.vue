@@ -145,7 +145,7 @@
                                                                                 <tr>
                                                                                     <th>Código</th>
                                                                                     <th>Proveedor</th>
-                                                                                    <th>Tipo Evento</th>
+                                                                                    <th>Tipo Campaña</th>
                                                                                     <th>Nombre Campaña</th>
                                                                                     <th>Fecha Inicio.</th>
                                                                                     <th>Fecha Fin</th>
@@ -380,7 +380,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link " id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>

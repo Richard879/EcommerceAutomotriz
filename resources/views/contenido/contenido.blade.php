@@ -122,6 +122,9 @@
     <template v-if="menu==1300360">
         <flete :ruta="ruta"></flete>
     </template>
+    <template v-if="menu==1300448">
+        <obsequio :ruta="ruta"></obsequio>
+    </template>
 
     <template v-if="menu==1300364">
         <reportecotizacion :ruta="ruta"></reportecotizacion>
