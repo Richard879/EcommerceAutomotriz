@@ -617,6 +617,7 @@
                     params: {
                         'nidpar' : this.fillFormularioGeneral.nidusuario,
                         'nidgrupar' : 110026,
+                        'opcionPaginate': 1,
                         'page' : page
                     }
                 }).then(response => {
