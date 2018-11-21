@@ -199,7 +199,7 @@ class ObsequioController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdObsequio = $request->nideventocampania;
+        $nIdObsequio = $request->nidobsequio;
         $variable   = $request->opcion;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
         

@@ -14,19 +14,19 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#TabBuscaobsequio" @click="tabBuscarObsequio()" role="tab" data-toggle="tab">
+                                        <a class="nav-link active" href="#TabBuscaObsequio" @click="tabBuscarObsequio()" role="tab" data-toggle="tab">
                                             <i class="fa fa-search"></i> BUSCAR OBSEQUIOS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#TabNuevoEventoCamp" @click="tabNuevoObsequio()" role="tab" data-toggle="tab">
+                                        <a class="nav-link" href="#TabNuevoObsequio" @click="tabNuevoObsequio()" role="tab" data-toggle="tab">
                                             <i class="fa fa-bullhorn"></i> NUEVO OBSEQUIO
                                         </a>
                                     </li>
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div class="tab-pane fade in active show" id="TabBuscaobsequio">
+                                    <div class="tab-pane fade in active show" id="TabBuscaObsequio">
                                         <template v-if="vistaFormularioTabBuscar">
                                             <section class="forms">
                                                 <div class="container-fluid">
@@ -61,7 +61,7 @@
                                                                                 <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                                 <div class="col-sm-8">
                                                                                     <el-date-picker
-                                                                                        v-model="formEventoCamp.dfechainicio"
+                                                                                        v-model="formObsequio.dfechainicio"
                                                                                         type="date"
                                                                                         value-format="yyyy-MM-dd"
                                                                                         format="dd/MM/yyyy"
@@ -75,7 +75,7 @@
                                                                                 <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                                 <div class="col-sm-8">
                                                                                     <el-date-picker
-                                                                                        v-model="formEventoCamp.dfechafin"
+                                                                                        v-model="formObsequio.dfechafin"
                                                                                         type="date"
                                                                                         value-format="yyyy-MM-dd"
                                                                                         format="dd/MM/yyyy"
@@ -91,8 +91,8 @@
                                                                                 <label class="col-sm-4 form-control-label">Proveedor</label>
                                                                                 <div class="col-sm-8">
                                                                                     <div class="input-group">
-                                                                                        <input type="hidden" v-model="formEventoCamp.nidproveedor">
-                                                                                        <input type="text" v-model="formEventoCamp.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                        <input type="hidden" v-model="formObsequio.nidproveedor">
+                                                                                        <input type="text" v-model="formObsequio.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                         <div class="input-group-prepend">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Buscar Proveedor </div>
@@ -109,7 +109,7 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Tipo Evento</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
+                                                                                    <el-select v-model="formObsequio.ntipo" filterable clearable placeholder="SELECCIONE">
                                                                                         <el-option
                                                                                         v-for="item in arrayTipoEC"
                                                                                         :key="item.nIdPar"
@@ -165,7 +165,7 @@
                                                                                     <td v-text="obsequio.fMontoPresupuestoDolar"></td>
                                                                                     <td v-text="obsequio.cFlagDetalleObsequio"></td>
                                                                                     <td>
-                                                                                        <template v-if="obsequio.cobsequioEstado=='A'">
+                                                                                        <template v-if="obsequio.cObsequioEstado=='A'">
                                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                                 <div slot="content">Desactivar {{ obsequio.cNombreObsequio }}</div>
                                                                                                 <i @click="desactivar(obsequio.nIdObsequio)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
@@ -224,7 +224,7 @@
                                             </section>
                                         </template>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="TabNuevoEventoCamp">
+                                    <div role="tabpanel" class="tab-pane fade" id="TabNuevoObsequio">
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
@@ -258,7 +258,7 @@
                                                                             <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
-                                                                                    v-model="formEventoCamp.dfechainicio"
+                                                                                    v-model="formObsequio.dfechainicio"
                                                                                     type="date"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
@@ -272,7 +272,7 @@
                                                                             <label class="col-sm-4 form-control-label">* Fecha Fin</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-date-picker
-                                                                                    v-model="formEventoCamp.dfechafin"
+                                                                                    v-model="formObsequio.dfechafin"
                                                                                     type="date"
                                                                                     value-format="yyyy-MM-dd"
                                                                                     format="dd/MM/yyyy"
@@ -288,8 +288,8 @@
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="hidden" v-model="formEventoCamp.nidproveedor">
-                                                                                    <input type="text" v-model="formEventoCamp.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                                                    <input type="hidden" v-model="formObsequio.nidproveedor">
+                                                                                    <input type="text" v-model="formObsequio.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                     <div class="input-group-prepend">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Buscar Proveedor </div>
@@ -304,16 +304,9 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Campaña</label>
+                                                                            <label class="col-sm-4 form-control-label">* Descripción</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.ntipo" filterable clearable placeholder="SELECCIONE">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayTipoEC"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
+                                                                                <input type="text" v-model="formObsequio.descripcion" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -323,7 +316,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formEventoCamp.nidtipocambio" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeTipoCambio()">
+                                                                                <el-select v-model="formObsequio.nidtipocambio" filterable clearable placeholder="SELECCIONE" v-on:change="onchangeTipoCambio()">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoCambio"
                                                                                     :key="item.nIdTipoCambio"
@@ -338,28 +331,10 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Valor Tipo Cambio</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="formEventoCamp.fvalortipocambio" class="form-control form-control-sm" readonly>
+                                                                                <input type="text" v-model="formObsequio.fvalortipocambio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Descripción</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formEventoCamp.descripcion" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--<div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Documento</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="formEventoCamp.filedocumento" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>-->
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -368,24 +343,24 @@
                                                 <div class="col-lg-12">
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="Tab1" href="#TabECAsignaDetalle" @click="desactivarTabs();" role="tab" data-toggle="tab">
+                                                            <a class="nav-link" id="Tab1" href="#TabObsAsignaDetalle" @click="desactivarTabs();" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-list"></i> ASIGNA DETALLE
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link disabled" id="Tab2" href="#TabECAsignaElemento" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab2" href="#TabObsAsignaElemento" role="tab" data-toggle="tab">
                                                                 <i class="fa fa fa-sign-out"></i> ASIGNA ELEMENTO VENTA
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link " id="Tab3" href="#TabECAsignaDistribucion" role="tab" data-toggle="tab">
+                                                            <a class="nav-link disabled" id="Tab3" href="#TabObsAsignaDistribucion" role="tab" data-toggle="tab">
                                                                 <i class="fa fa-usd"></i> DISTRIBUCIÓN
                                                             </a>
                                                         </li>
                                                     </ul>
 
                                                     <div class="tab-content">
-                                                        <div class="tab-pane fade in active show" id="TabECAsignaDetalle">
+                                                        <div class="tab-pane fade in active show" id="TabObsAsignaDetalle">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
@@ -400,7 +375,7 @@
                                                                                         <div class="form-group">
                                                                                             <div class="input-group">
                                                                                                 <div class="input-group-prepend">
-                                                                                                    <el-select v-model="formEventoCamp.ndetalle" filterable clearable placeholder="SELECCIONE" >
+                                                                                                    <el-select v-model="formObsequio.ndetalle" filterable clearable placeholder="SELECCIONE" >
                                                                                                         <el-option
                                                                                                         v-for="item in arrayDetalleEC"
                                                                                                         :key="item.nIdGrupoPar"
@@ -537,7 +512,7 @@
                                                                 </div>
                                                             </section>
                                                         </div>
-                                                        <div role="tabpanel" class="tab-pane fade" id="TabECAsignaElemento">
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabObsAsignaElemento">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
@@ -631,7 +606,7 @@
                                                                 </div>
                                                             </section>
                                                         </div>
-                                                        <div role="tabpanel" class="tab-pane fade" id="TabECAsignaDistribucion">
+                                                        <div role="tabpanel" class="tab-pane fade" id="TabObsAsignaDistribucion">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
                                                                     <div class="col-lg-12">
@@ -736,8 +711,8 @@
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
-                                                                                                                <tr v-for="eledist in arrayElementoDistribucion" :key="eledist.nIdEventoElementoVenta">
-                                                                                                                    <td v-text="eledist.nIdEventoElementoVenta"></td>
+                                                                                                                <tr v-for="eledist in arrayElementoDistribucion" :key="eledist.nIdObsequioElementoVenta">
+                                                                                                                    <td v-text="eledist.nIdObsequioElementoVenta"></td>
                                                                                                                     <td v-text="eledist.cProveedorNombre"></td>
                                                                                                                     <td v-text="eledist.cTipoElemenNombre"></td>
                                                                                                                     <td v-text="eledist.cElemenNombre"></td>
@@ -1431,15 +1406,15 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="(distribucion, index) in arrayElementoDistribucionEnvia" :key="distribucion.nIdEventoElementoVenta + '-'  + distribucion.nIdEntidad">
-                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdEventoElementoVenta">
+                                                            <tr v-for="(distribucion, index) in arrayElementoDistribucionEnvia" :key="distribucion.nIdObsequioElementoVenta + '-'  + distribucion.nIdEntidad">
+                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdObsequioElementoVenta">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Eliminar Item</div>
                                                                         <i @click="eliminarDistribucionElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                     </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.cNombreEntidad"></td>
-                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdEventoElementoVenta" v-text="distribucion.fValorPorcentual"></td>
+                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdObsequioElementoVenta" v-text="distribucion.cNombreEntidad"></td>
+                                                                <td v-if="formDistribucionEv.nindex==distribucion.nIdObsequioElementoVenta" v-text="distribucion.fValorPorcentual"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1638,15 +1613,15 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="(modalidad, index) in arrayEntregaElementoVenta" :key="modalidad.nIdEventoElementoVenta + '-'  + modalidad.nIdModalidad">
-                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta">
+                                                            <tr v-for="(modalidad, index) in arrayEntregaElementoVenta" :key="modalidad.nIdObsequioElementoVenta + '-'  + modalidad.nIdModalidad">
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdObsequioElementoVenta">
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Eliminar Item</div>
                                                                         <i @click="eliminarEntregaElementoVenta(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                     </el-tooltip>&nbsp;
                                                                 </td>
-                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta" v-text="modalidad.cNombreModalidad"></td>
-                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdEventoElementoVenta" v-text="modalidad.nCantidad"></td>
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdObsequioElementoVenta" v-text="modalidad.cNombreModalidad"></td>
+                                                                <td v-if="formModalEntrega.nindex==modalidad.nIdObsequioElementoVenta" v-text="modalidad.nCantidad"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -1696,7 +1671,7 @@
                 arrayElementoVenta: [],
                 // ============================================================
                 // =========== VARIABLES TAB NUEVO EVENTO/CAMPANIA ===========
-                formEventoCamp:{
+                formObsequio:{
                     dfechainicio: '',
                     dfechafin: '',
                     nidproveedor: 0,
@@ -1924,9 +1899,9 @@
                     params: {
                         'nidempresa'    : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal'   : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'dfechainicio'  : this.formEventoCamp.dfechainicio,
-                        'dfechafin'     : this.formEventoCamp.dfechafin,
-                        'nidproveedor'  : this.formEventoCamp.nidproveedor,
+                        'dfechainicio'  : this.formObsequio.dfechainicio,
+                        'dfechafin'     : this.formObsequio.dfechafin,
+                        'nidproveedor'  : this.formObsequio.nidproveedor,
                         'page'          : page
                     }
                 }).then(response => {
@@ -2046,18 +2021,18 @@
             },
             getTipoCambioById(){
                 let me = this;
-                if(me.formEventoCamp.nidtipocambio != 0){
+                if(me.formObsequio.nidtipocambio != 0){
                     $.each(me.arrayTipoCambio, function (index, value) {
-                        if(value.nIdTipoCambio == me.formEventoCamp.nidtipocambio){
-                            me.formEventoCamp.fvalortipocambio = value.fValorTipoCambio;
+                        if(value.nIdTipoCambio == me.formObsequio.nidtipocambio){
+                            me.formObsequio.fvalortipocambio = value.fValorTipoCambio;
                             //PARA ENVIAR EN LA TRANSACCION
                             me.fValorTipoCambioTransaccion = value.fValorTipoCambio;
                             me.nIdTipoCambio = value.nIdTipoCambio;
                         }
                     });
                 }
-                else if(me.formEventoCamp.nidtipocambio == 0){
-                    me.formEventoCamp.fvalortipocambio = 0;
+                else if(me.formObsequio.nidtipocambio == 0){
+                    me.formObsequio.fvalortipocambio = 0;
                     me.fValorTipoCambioTransaccion = 0;
                 }
             },
@@ -2115,10 +2090,10 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formEventoCamp.nidproveedor == 0){
+                if(this.formObsequio.nidproveedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Proveedor');
                 };
-                if(this.formEventoCamp.ndetalle == 0){
+                if(this.formObsequio.ndetalle == 0){
                     this.mensajeError.push('Debes Seleccionar Detalle Evento Campaña');
                 };
 
@@ -2136,7 +2111,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
+                        'nidproveedor': parseInt(this.formObsequio.nidproveedor),
                         'clineanombre': this.fillModal.clineanombre.toString(),
                         'page' : page
                     }
@@ -2196,7 +2171,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor' : parseInt(this.formEventoCamp.nidproveedor),
+                        'nidproveedor' : parseInt(this.formObsequio.nidproveedor),
                         'cmarcanombre' : this.fillModal.cmarcanombre.toString(),
                         'page' : page
                     }
@@ -2256,7 +2231,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor': parseInt(this.formEventoCamp.nidproveedor),
+                        'nidproveedor': parseInt(this.formObsequio.nidproveedor),
                         'cmodelonombre': this.fillModal.cmodelonombre.toString(),
                         'page' : page
                     }
@@ -2352,8 +2327,8 @@
                 $('#Tab1').addClass("nav-link");
                 $('#Tab2').removeClass('nav-link disabled');
                 $('#Tab2').addClass("nav-link active");
-                $('#TabECAsignaDetalle').removeClass('in active show');
-                $('#TabECAsignaElemento').addClass('in active show');
+                $('#TabObsAsignaDetalle').removeClass('in active show');
+                $('#TabObsAsignaElemento').addClass('in active show');
             },
             cargarTabAsignaElemento(){
                 this.llenarComboTpoElemento();
@@ -2362,10 +2337,10 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formEventoCamp.nidtipocambio == 0 || !this.formEventoCamp.nidtipocambio){
+                if(this.formObsequio.nidtipocambio == 0 || !this.formObsequio.nidtipocambio){
                     this.mensajeError.push('Debes seleccionar Tipo Cambio');
                 };
-                if(this.formEventoCamp.fvalortipocambio == 0){
+                if(this.formObsequio.fvalortipocambio == 0){
                     this.mensajeError.push('El Tipo Cambio debe ser mayor a 0');
                 };
                 if(this.mensajeError.length){
@@ -2454,15 +2429,15 @@
                 axios.post(url, {
                     nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor: parseInt(this.formEventoCamp.nidproveedor),
-                    cNombreObsequio: this.formEventoCamp.descripcion,
-                    dFechaInicio: this.formEventoCamp.dfechainicio,
-                    dFechaFin: this.formEventoCamp.dfechafin,
+                    nIdProveedor: parseInt(this.formObsequio.nidproveedor),
+                    cNombreObsequio: this.formObsequio.descripcion,
+                    dFechaInicio: this.formObsequio.dfechainicio,
+                    dFechaFin: this.formObsequio.dfechafin,
                     nIdTipoCambio: parseInt(this.nIdTipoCambio),
-                    fTipoCambio: this.formEventoCamp.fvalortipocambio,
+                    fTipoCambio: this.formObsequio.fvalortipocambio,
                     fMontoPresupuestoDolar: this.montoTotalElementoVentaDolar,
                     fMontoPresupuestoSol:  this.montoTotalElementoVentaSol,
-                    cFlagDetalleObsequio: this.formEventoCamp.cflagdetalleobsequio
+                    cFlagDetalleObsequio: this.formObsequio.cflagdetalleobsequio
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -2484,25 +2459,25 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formEventoCamp.dfechainicio == ''){
+                if(this.formObsequio.dfechainicio == ''){
                     this.mensajeError.push('Debes Ingresar Fecha Inicio');
                 };
-                if(this.formEventoCamp.dfechafin == ''){
+                if(this.formObsequio.dfechafin == ''){
                     this.mensajeError.push('Debes Ingresar Fecha Fin');
                 };
-                if(this.formEventoCamp.nidproveedor == 0){
+                if(this.formObsequio.nidproveedor == 0){
                     this.mensajeError.push('Debes Seleccionar un Proveedor');
                 };
-                if(this.formEventoCamp.nidtipocambio == 0){
+                if(this.formObsequio.nidtipocambio == 0){
                     this.mensajeError.push('Debes Seleccionar Tipo Cambio');
                 };
-                if(this.formEventoCamp.fvalortipocambio == 0){
+                if(this.formObsequio.fvalortipocambio == 0){
                     this.mensajeError.push('Debes Enviar Valor Tipo de Cambio > 0');
                 };
-                if(!this.formEventoCamp.descripcion){
+                if(!this.formObsequio.descripcion){
                     this.mensajeError.push('Debes Ingresar Descripción');
                 };
-                if(this.formEventoCamp.dfechainicio > this.formEventoCamp.dfechafin){
+                if(this.formObsequio.dfechainicio > this.formObsequio.dfechafin){
                     this.mensajeError.push('La Fecha Inicio debe ser menor a la Fecha Fin.');
                 };
 
@@ -2530,7 +2505,7 @@
 
                     axios.post(url, {
                         nIdObsequio: nIdObsequio,
-                        cFlagDetalleObsequio: me.formEventoCamp.cflagdetalleobsequio,
+                        cFlagDetalleObsequio: me.formObsequio.cflagdetalleobsequio,
                         data: me.arrayRegistraDetalle
                     }).then(response => {
                         //this.registrarAsignaDetalle(response.data);
@@ -2563,8 +2538,8 @@
                 $('#Tab2').addClass("nav-link disabled");
                 $('#Tab3').removeClass('nav-link disabled');
                 $('#Tab3').addClass("nav-link active");
-                $('#TabECAsignaElemento').removeClass('in active show');
-                $('#TabECAsignaDistribucion').addClass('in active show');
+                $('#TabObsAsignaElemento').removeClass('in active show');
+                $('#TabObsAsignaDistribucion').addClass('in active show');
             },
             cambiarVistaDistribucion(){
                 if(this.formDistribucion.ntipodistribucion==1){
@@ -2640,7 +2615,7 @@
                     }
 
                     me.arrayElementoDistribucionEnvia.push({
-                        nIdEventoElementoVenta: me.formDistribucionEv.nindex,
+                        nIdObsequioElementoVenta: me.formDistribucionEv.nindex,
                         cFlagEntidad: (me.formDistribucionEv.nidentidad == parseInt(sessionStorage.getItem("nIdEmpresa"))) ? 'E' : 'P',
                         nIdEntidad: me.formDistribucionEv.nidentidad,
                         cNombreEntidad: me.cnombreentidad,
@@ -2667,7 +2642,7 @@
                 var valorCantidad = 0;
 
                 for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
-                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucionEv.nindex)
+                    if(this.arrayElementoDistribucionEnvia[i].nIdObsequioElementoVenta==this.formDistribucionEv.nindex)
                     {
                         valorCantidad = valorCantidad + parseInt(this.arrayElementoDistribucionEnvia[i].fValorPorcentual);
                     }
@@ -2687,7 +2662,7 @@
             encuentraDistribucionElementoVenta(){
                 var sw=0;
                 for(var i=0;i<this.arrayElementoDistribucionEnvia.length;i++){
-                    if(this.arrayElementoDistribucionEnvia[i].nIdEventoElementoVenta==this.formDistribucionEv.nindex &&
+                    if(this.arrayElementoDistribucionEnvia[i].nIdObsequioElementoVenta==this.formDistribucionEv.nindex &&
                         this.arrayElementoDistribucionEnvia[i].nIdEntidad==this.formDistribucionEv.nidentidad)
                     {
                         sw=true;
@@ -2747,7 +2722,7 @@
                         return;
                     }
                     me.arrayEntregaElementoVenta.push({
-                        nIdEventoElementoVenta: me.formModalEntrega.nindex,
+                        nIdObsequioElementoVenta: me.formModalEntrega.nindex,
                         nIdModalidad: me.formModalEntrega.nidmodalidad,
                         cNombreModalidad: me.cNombreModalidad,
                         nCantidad: me.formModalEntrega.ncantidad
@@ -2777,7 +2752,7 @@
                 var valorCantidad = 0;
 
                 for(var i=0;i<this.arrayEntregaElementoVenta.length;i++){
-                    if(this.arrayEntregaElementoVenta[i].nIdEventoElementoVenta==this.formModalEntrega.nindex)
+                    if(this.arrayEntregaElementoVenta[i].nIdObsequioElementoVenta==this.formModalEntrega.nindex)
                     {
                         valorCantidad = valorCantidad + parseInt(this.arrayEntregaElementoVenta[i].nCantidad);
                     }
@@ -2797,7 +2772,7 @@
             encuentraEntregaElementoVenta(){
                 var sw=0;
                 for(var i=0;i<this.arrayEntregaElementoVenta.length;i++){
-                    if(this.arrayEntregaElementoVenta[i].nIdEventoElementoVenta==this.formModalEntrega.nindex &&
+                    if(this.arrayEntregaElementoVenta[i].nIdObsequioElementoVenta==this.formModalEntrega.nindex &&
                         this.arrayEntregaElementoVenta[i].nIdModalidad==this.formModalEntrega.nidmodalidad)
                     {
                         sw=true;
@@ -2922,7 +2897,7 @@
                             return;
                         }
 
-                        var url = me.ruta + '/obsequio/SetDistribucionEventoByEC';
+                        var url = me.ruta + '/obsequio/SetDistribucionObsequioByObsequio';
                         axios.post(url, {
                             nIdObsequio: parseInt(me.formDistribucion.nidobsequio),
                             data: list
@@ -2938,7 +2913,7 @@
                 //Registro por Elemento Venta
                 else{
                     if(me.arrayElementoDistribucionEnvia.length > 0){
-                        var url = me.ruta + '/obsequio/SetDistribucionEventoByElemento';
+                        var url = me.ruta + '/obsequio/SetDistribucionObsequioByElemento';
                         axios.post(url, {
                             nIdObsequio: parseInt(me.formDistribucion.nidobsequio),
                             data: me.arrayElementoDistribucionEnvia
@@ -2958,7 +2933,7 @@
                 }
             },
             registrarEntregaDistribucion(){
-                var url = this.ruta + '/obsequio/SetEntregaEventoElementoVenta';
+                var url = this.ruta + '/obsequio/SetEntregaObsequioElementoVenta';
                 axios.post(url, {
                     nIdObsequio: parseInt(this.formDistribucion.nidobsequio),
                     data: this.arrayEntregaElementoVenta
@@ -3011,9 +2986,9 @@
                 $('#Tab2').addClass("nav-link disabled");
                 $('#Tab3').removeClass('nav-link active');
                 $('#Tab3').addClass("nav-link disabled");
-                $('#TabECAsignaDetalle').addClass('in active show');
-                $('#TabECAsignaElemento').removeClass('in active show');
-                $('#TabECAsignaDistribucion').removeClass('in active show');
+                $('#TabObsAsignaDetalle').addClass('in active show');
+                $('#TabObsAsignaElemento').removeClass('in active show');
+                $('#TabObsAsignaDistribucion').removeClass('in active show');
             },
             // =========================================================
             // =============  MODAL PROVEEDORES ========================
@@ -3048,8 +3023,8 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formEventoCamp.nidproveedor = nProveedorId;
-                this.formEventoCamp.cproveedornombre = cProveedorNombre;
+                this.formObsequio.nidproveedor = nProveedorId;
+                this.formObsequio.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
             },
             // =============================================
@@ -3095,24 +3070,24 @@
                                     return;
                                 }
 
-                                if(this.formEventoCamp.ndetalle == 110031){
-                                    this.formEventoCamp.cflagdetalleobsequio = "LI";
+                                if(this.formObsequio.ndetalle == 110031){
+                                    this.formObsequio.cflagdetalleobsequio = "LI";
                                     this.vistaModal = 0;
                                     this.accionmodal=3;
                                     this.modal = 1;
                                     this.buscarLineasByProveedor();
                                 }
 
-                                if(this.formEventoCamp.ndetalle == 110032){
-                                    this.formEventoCamp.cflagdetalleobsequio = "MA";
+                                if(this.formObsequio.ndetalle == 110032){
+                                    this.formObsequio.cflagdetalleobsequio = "MA";
                                     this.vistaModal = 1;
                                     this.accionmodal=3;
                                     this.modal = 1;
                                     this.buscarMarcasByProveedor();
                                 }
 
-                                if(this.formEventoCamp.ndetalle == 110033){
-                                    this.formEventoCamp.cflagdetalleobsequio = "MO";
+                                if(this.formObsequio.ndetalle == 110033){
+                                    this.formObsequio.cflagdetalleobsequio = "MO";
                                     this.vistaModal = 2;
                                     this.accionmodal=3;
                                     this.modal = 1;
@@ -3150,7 +3125,7 @@
                             {
                                 this.accionmodal=5,
                                 this.modal = 1,
-                                this.formDistribucionEv.nindex = data['nIdEventoElementoVenta'],
+                                this.formDistribucionEv.nindex = data['nIdObsequioElementoVenta'],
                                 this.listarProveedorElementoVenta(),
                                 this.formDistribucionEv.nidentidad = '',
                                 this.formDistribucionEv.fvalorporcentual = 1;
@@ -3167,7 +3142,7 @@
                                 this.modal = 1,
                                 this.formModalEntrega.cdescripcion = data['cElemenNombre'],
                                 this.formModalEntrega.ntotalcantidad = data['nCantidad'],
-                                this.formModalEntrega.nindex = data['nIdEventoElementoVenta'],
+                                this.formModalEntrega.nindex = data['nIdObsequioElementoVenta'],
                                 this.llenarModalidadEntrega(),
                                 this.formModalEntrega.nidmodalidad = '',
                                 this.formModalEntrega.ncantidad = 1;
@@ -3180,13 +3155,13 @@
             },
             // ===========================================================
             limpiarFormulario(){
-                this.formEventoCamp.dfechainicio = '',
-                this.formEventoCamp.dfechafin = '',
-                this.formEventoCamp.nidproveedor = 0,
-                this.formEventoCamp.cproveedornombre= '',
-                this.formEventoCamp.descripcion = '',
-                this.formEventoCamp.ntipo = '',
-                this.formEventoCamp.ndetalle = '',
+                this.formObsequio.dfechainicio = '',
+                this.formObsequio.dfechafin = '',
+                this.formObsequio.nidproveedor = 0,
+                this.formObsequio.cproveedornombre= '',
+                this.formObsequio.descripcion = '',
+                this.formObsequio.ntipo = '',
+                this.formObsequio.ndetalle = '',
                 //Variables Detalle
                 this.arrayTemporalLinea = [],
                 this.arrayTemporalMarca = [],

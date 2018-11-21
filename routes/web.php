@@ -301,7 +301,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/obsequio/GetDistribucionByElementoVenta', 'ObsequioController@GetDistribucionByElementoVenta');
     Route::put('/obsequio/desactivar', 'ObsequioController@desactivar');
     Route::put('/obsequio/activar', 'ObsequioController@activar');
-    Route::post('/obsequio/SetDistribucionEventoByEC', 'ObsequioController@SetDistribucionEventoByEC');
-    Route::post('/obsequio/SetDistribucionEventoByElemento', 'ObsequioController@SetDistribucionEventoByElemento');
-    Route::post('/obsequio/SetEntregaEventoElementoVenta', 'ObsequioController@SetEntregaEventoElementoVenta');
+    Route::post('/obsequio/SetDistribucionObsequioByObsequio', 'ObsequioController@SetDistribucionObsequioByObsequio');
+    Route::post('/obsequio/SetDistribucionObsequioByElemento', 'ObsequioController@SetDistribucionObsequioByElemento');
+    Route::post('/obsequio/SetEntregaObsequioElementoVenta', 'ObsequioController@SetEntregaObsequioElementoVenta');
 });
