@@ -1039,7 +1039,7 @@
                     });
                 }
             },
-            listarDistribucionEVPorRegalar(nIdCabeceraCotizacion){
+            /*listarDistribucionEVPorRegalar(nIdCabeceraCotizacion){
                 var url = this.ruta + '/getcotizacion/GetDistribucionByElementoVenta';
                 axios.get(url, {
                     params: {
@@ -1079,7 +1079,7 @@
                         });
                     });
                 }
-            },
+            },*/
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
 

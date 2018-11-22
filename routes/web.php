@@ -304,4 +304,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/obsequio/SetDistribucionObsequioByObsequio', 'ObsequioController@SetDistribucionObsequioByObsequio');
     Route::post('/obsequio/SetDistribucionObsequioByElemento', 'ObsequioController@SetDistribucionObsequioByElemento');
     Route::post('/obsequio/SetEntregaObsequioElementoVenta', 'ObsequioController@SetEntregaObsequioElementoVenta');
+    Route::get('/gescotizacion/GetListObsequiosByVehiculo', 'CotizacionController@GetListObsequiosByVehiculo');
+    Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
 });

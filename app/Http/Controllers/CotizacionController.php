@@ -236,16 +236,23 @@ class CotizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nidproveedor   = $request->nidproveedor;
-        $fecha          = $request->fecha;
-        $nidcodigo      = $request->nidcodigo;
-        $tipo           = $request->tipo;
+        $nIdProveedor       = $request->nidproveedor;
+        $dFecha             = $request->fecha;
+        $nIdCodigo          = $request->nidcodigo;
+        $nAnioFabricacion   = $request->naniofabricacion;
+        $nAnioModelo        = $request->naniomodelo;
+        $nTipo              = $request->tipo;
 
-        $arrayEventoCampania = DB::select('exec [usp_Cotizacion_GetListCampañasByVehiculo] ?, ?, ?, ?',
-                                                                        [   $nidproveedor,
-                                                                            $fecha,
-                                                                            $nidcodigo,
-                                                                            $tipo
+        $nAnioFabricacion = ($nAnioFabricacion == NULL) ? ($nAnioFabricacion = 0) : $nAnioFabricacion;
+        $nAnioModelo = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+
+        $arrayEventoCampania = DB::select('exec [usp_Cotizacion_GetListCampañasByVehiculo] ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdProveedor,
+                                                                            $dFecha,
+                                                                            $nIdCodigo,
+                                                                            $nAnioFabricacion,
+                                                                            $nAnioModelo,
+                                                                            $nTipo
                                                                         ]);
 
         return response()->json($arrayEventoCampania);
@@ -520,5 +527,43 @@ class CotizacionController extends Controller
             $arrayDetalleCotizacion = ParametroController::arrayPaginator($arrayDetalleCotizacion, $request);
         }
         return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion]; 
+    }
+
+    public function GetListObsequiosByVehiculo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdProveedor       = $request->nidproveedor;
+        $dFecha             = $request->fecha;
+        $nIdCodigo          = $request->nidcodigo;
+        $nAnioFabricacion   = $request->naniofabricacion;
+        $nAnioModelo        = $request->naniomodelo;
+        $nTipo              = $request->tipo;
+
+        $nAnioFabricacion = ($nAnioFabricacion == NULL) ? ($nAnioFabricacion = 0) : $nAnioFabricacion;
+        $nAnioModelo = ($nAnioModelo == NULL) ? ($nAnioModelo = 0) : $nAnioModelo;
+
+        $arrayEventoCampania = DB::select('exec [usp_Cotizacion_GetListObsequiosByVehiculo] ?, ?, ?, ?, ?, ?',
+                                                                        [   $nIdProveedor,
+                                                                            $dFecha,
+                                                                            $nIdCodigo,
+                                                                            $nAnioFabricacion,
+                                                                            $nAnioModelo,
+                                                                            $nTipo
+                                                                        ]);
+
+        return response()->json($arrayEventoCampania);
+    }
+
+    public function GetListObsequioElementoVenta(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $nIdObsequio  = $request->nidobsequio;
+
+        $arrayObsequioEleVenta = DB::select('exec [usp_Cotizacion_GetListObsequioElementoVenta] ?',
+                                                                        [   $nIdObsequio
+                                                                        ]);
+
+        return response()->json($arrayObsequioEleVenta);
     }
 }
