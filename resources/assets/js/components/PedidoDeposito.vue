@@ -362,12 +362,12 @@
                                                                             <div class="row">
                                                                                 <label class="col-sm-4 form-control-label">Forma Pago 2</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formParametrizacionDeposito.nidtipopago2"
+                                                                                    <el-select v-model="formParametrizacionDeposito.nidformapago2"
                                                                                             filterable
                                                                                             clearable
                                                                                             placeholder="SELECCIONE FORMA DE PAGO 2">
                                                                                         <el-option
-                                                                                            v-for="item in arrayTipoPago2"
+                                                                                            v-for="item in arrayFormaPago2"
                                                                                             :key="item.nParDstCodigo"
                                                                                             :label="item.cParNombreDestino"
                                                                                             :value="item.nParDstCodigo">
@@ -981,11 +981,11 @@
                     nidtipopago: '',
                     cnombretipopago: '',
                     nidformapago: '',
-                    nidtipopago2: '',
+                    nidformapago2: '',
                 },
                 arrayTipoPago: [],
                 arrayFormaPago: [],
-                arrayTipoPago2: [],
+                arrayFormaPago2: [],
                 arrayTipoMovimiento: [],
                 arrayTipoMovimientoPermisos: [],
                 formNuevoDeposito:{
@@ -1338,7 +1338,7 @@
                 this.formParametrizacionDeposito.nidtipopago = tipopago.nIdPar;
                 this.formParametrizacionDeposito.cnombretipopago = tipopago.cParNombre;
                 this.cerrarModal();
-                this.arrayTipoPago2 = [];//Setar forma de pago de la forma seleccionada
+                this.arrayFormaPago2 = [];//Setar forma de pago de la forma seleccionada
                 this.cargarFormasPago();
             },
             cargarFormasPago(){
@@ -1367,7 +1367,7 @@
                     }
                 }).then(response => {
                     this.formParametrizacionDeposito.nidformapago2 = "";
-                    this.arrayTipoPago2 = response.data;
+                    this.arrayFormaPago2 = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1522,7 +1522,7 @@
                     criterio = this.formParametrizacionDeposito.nidformapago;
                 }
                 if(this.formParametrizacionDeposito.nidtipopago == 1300456) {
-                    criterio = this.formParametrizacionDeposito.nidtipopago2;
+                    criterio = this.formParametrizacionDeposito.nidformapago2;
                 }
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
                 axios.get(url, {
@@ -1566,13 +1566,13 @@
                 // Y la forma de pago no se seleccionó
                 if(this.formParametrizacionDeposito.nidtipopago == 1300456 &&
                    !this.formParametrizacionDeposito.nidformapago){
-                    if(!this.formParametrizacionDeposito.nidtipopago2){
+                    if(!this.formParametrizacionDeposito.nidformapago2){
                         this.mensajeError.push('Debe seleccionar un Tipo Pago de la Forma de Pago');
                     }
                 }
                 if(this.formParametrizacionDeposito.nidtipopago == 1300456 &&
                    this.formParametrizacionDeposito.nidformapago){
-                    if(!this.formParametrizacionDeposito.nidtipopago2){
+                    if(!this.formParametrizacionDeposito.nidformapago2){
                         this.mensajeError.push('Debe seleccionar un Tipo Pago de la Forma de Pago');
                     }
                 }
@@ -1725,7 +1725,9 @@
                     'nIdEmpresa': this.nidempresa,
                     'nIdSucursal': this.nidsucursal,
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
-                    'nIdTipoMovimiento': this.formDeposito.nidtipomovimiento,
+                    'nIdTipoPago': this.formDeposito.nidtipopago,
+                    'nIdFormaPago': this.formDeposito.nidformapago,
+                    'nIdFormaPago2': this.formDeposito.nidformapago2,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,
                     'nIdBancoOrigen': this.formNuevoDeposito.nidbanco_origen,
                     'nIdMonedaOrigen': this.formNuevoDeposito.nidmoneda_origen,

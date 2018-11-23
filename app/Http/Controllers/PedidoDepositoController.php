@@ -64,12 +64,18 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $nIdTipoPago = ($nIdTipoPago == NULL) ? ($nIdTipoPago = 0) : $nIdTipoPago;
+        $nIdFormaPago = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
+        $nIdFormaPago2 = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
+
+        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
                                         $request->nIdCabeceraPedido,
-                                        $request->nIdTipoMovimiento,
+                                        $request->nIdTipoPago,
+                                        $request->nIdFormaPago,
+                                        $request->nIdFormaPago2,
                                         $request->nIdDocumentoAdjuntoVoucher,
                                         $request->nIdBancoOrigen,
                                         $request->nIdMonedaOrigen,
