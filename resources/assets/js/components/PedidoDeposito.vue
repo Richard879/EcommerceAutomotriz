@@ -273,13 +273,13 @@
                                                                 {{ formDeposito.cnombrecontacto }} - {{ formDeposito.cNumeroPedido }}
                                                             </vs-divider>
                                                             <el-row :gutter="10">
-                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE</div></el-col>
+                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE PENDIENTE APROBAR</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
                                                                         USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosPendiente)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
-                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORET RECHAZADO</div></el-col>
+                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE RECHAZADO</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
                                                                         USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosRechazados)).toFixed(2)) }}
@@ -287,7 +287,7 @@
                                                                 </el-col>
                                                             </el-row>
                                                             <el-row :gutter="10">
-                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO</div></el-col>
+                                                                <el-col :span="6"><div class="grid-content bg-purple">IMPORTE CANCELADO (APROBADO)</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
                                                                         USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalDepositosAprobados)).toFixed(2)) }}
@@ -301,7 +301,7 @@
                                                                 </el-col>
                                                             </el-row>
                                                             <el-row :gutter="10">
-                                                                <el-col :span="6"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
+                                                                <el-col :span="6"><div class="grid-content bg-purple"> SALDO A CANCELAR</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
                                                                         USD/. {{ formDeposito.flagMontoTotalCancelarPendiente }}
@@ -322,18 +322,55 @@
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-6">
                                                                             <div class="row">
-                                                                                <label class="col-sm-4 form-control-label">Tipo Movimiento</label>
+                                                                                <label class="col-sm-4 form-control-label">Tipo Pago</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <el-select v-model="formDeposito.nidtipomovimiento"
+                                                                                    <div class="input-group">
+                                                                                        <input type="text" v-model="formParametrizacionDeposito.cnombretipopago" disabled="disabled" class="form-control form-control-sm">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                <div slot="content">Tipo Pago</div>
+                                                                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('formapago','buscar')">
+                                                                                                    <i class="fa-lg fa fa-search"></i>
+                                                                                                </button>
+                                                                                            </el-tooltip>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Forma Pago</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select v-model="formParametrizacionDeposito.nidformapago"
                                                                                             filterable
                                                                                             clearable
-                                                                                            placeholder="SELECCIONE TIPO MOVIMIENTO"
-                                                                                            @change="ocultarFormularioDeposito">
+                                                                                            placeholder="SELECCIONE FORMA DE PAGO"
+                                                                                            @change="seleccionarFormaPago">
                                                                                         <el-option
-                                                                                            v-for="item in arrayTipoMovimiento"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
+                                                                                            v-for="item in arrayFormaPago"
+                                                                                            :key="item.nParDstCodigo"
+                                                                                            :label="item.cParNombreDestino"
+                                                                                            :value="item.nParDstCodigo">
+                                                                                        </el-option>
+                                                                                    </el-select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- Codigo 1300456 es cuando se seleccino tipo pago financiado -->
+                                                                        <div class="col-sm-6" v-if="formParametrizacionDeposito.nidtipopago == 1300456 && formParametrizacionDeposito.nidformapago">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-4 form-control-label">Forma Pago 2</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <el-select v-model="formParametrizacionDeposito.nidtipopago2"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            placeholder="SELECCIONE FORMA DE PAGO 2">
+                                                                                        <el-option
+                                                                                            v-for="item in arrayTipoPago2"
+                                                                                            :key="item.nParDstCodigo"
+                                                                                            :label="item.cParNombreDestino"
+                                                                                            :value="item.nParDstCodigo">
                                                                                         </el-option>
                                                                                     </el-select>
                                                                                 </div>
@@ -840,6 +877,60 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Buscar Compras -->
+            <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO TIPO DE PAGO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayTipoPago.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Forma de Pago</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(tipopago, index) in arrayTipoPago" :key="index">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ tipopago.cParNombre }}</div>
+                                                                    <i @click="asignarTipoPago(tipopago)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td v-text="tipopago.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -877,7 +968,6 @@
                 // =============================================================
                 // ================ VARIABLES TAB GENERAR PEDIDO ===============
                 formDeposito:{
-                    nidtipomovimiento: '',
                     nidcabecerapedido: 0,
                     cnombrecontacto: '',
                     cNumeroPedido: '',
@@ -887,6 +977,15 @@
                     flagMontoTotalCotizacion: 0,
                     flagMontoTotalCancelarPendiente: 0
                 },
+                formParametrizacionDeposito: {
+                    nidtipopago: '',
+                    cnombretipopago: '',
+                    nidformapago: '',
+                    nidtipopago2: '',
+                },
+                arrayTipoPago: [],
+                arrayFormaPago: [],
+                arrayTipoPago2: [],
                 arrayTipoMovimiento: [],
                 arrayTipoMovimientoPermisos: [],
                 formNuevoDeposito:{
@@ -1218,15 +1317,57 @@
                 this.arrayTipoMovimientoPermisos = [];//Seteo los permisos para no visualizar formularios
             },
             llenarComboTipoMovimiento(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                var url = this.ruta + '/getComision/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid': 110070,
+                        'ngrupoparid': 110099,
                         'opcion': 0
                     }
                 }).then(response => {
-                    this.arrayTipoMovimiento = response.data;
-                    this.$delete(this.arrayTipoMovimiento, 0);
+                    this.arrayTipoPago = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            asignarTipoPago(tipopago){
+                this.formParametrizacionDeposito.nidtipopago = tipopago.nIdPar;
+                this.formParametrizacionDeposito.cnombretipopago = tipopago.cParNombre;
+                this.cerrarModal();
+                this.arrayTipoPago2 = [];//Setar forma de pago de la forma seleccionada
+                this.cargarFormasPago();
+            },
+            cargarFormasPago(){
+                var url = this.ruta + '/deposito/GetParDsctByParSrc';
+                axios.get(url, {
+                    params: {
+                        'nidtipopago': this.formParametrizacionDeposito.nidtipopago
+                    }
+                }).then(response => {
+                    this.formParametrizacionDeposito.nidformapago = "";
+                    this.arrayFormaPago = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            seleccionarFormaPago(){
+                var url = this.ruta + '/deposito/GetParDsctByParSrc';
+                axios.get(url, {
+                    params: {
+                        'nidtipopago': this.formParametrizacionDeposito.nidformapago
+                    }
+                }).then(response => {
+                    this.formParametrizacionDeposito.nidformapago2 = "";
+                    this.arrayTipoPago2 = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1370,49 +1511,71 @@
             },
             abrirFormularioDeposito(){
                 //SI NO ESTA SELECCIONADO
-                if(this.formDeposito.nidtipomovimiento == ''){
-                    if(this.validaMostrarFormularioDeposito()){
-                        this.accionmodal=1;
-                        this.modal = 1;
-                        return;
+                if(this.validaMostrarFormularioDeposito()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                let criterio;
+                if(this.formParametrizacionDeposito.nidtipopago == 1300450) {
+                    criterio = this.formParametrizacionDeposito.nidformapago;
+                }
+                if(this.formParametrizacionDeposito.nidtipopago == 1300456) {
+                    criterio = this.formParametrizacionDeposito.nidtipopago2;
+                }
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : criterio,
+                        'ctipoparametro' : 'N',
+                        'nidtipopar': 0
                     }
-                } else {
-                    var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
-                    axios.get(url, {
-                        params: {
-                            'nidpar' : this.formDeposito.nidtipomovimiento,
-                            'ctipoparametro' : 'N',
-                            'nidtipopar': 0
-                        }
-                    }).then(response => {
-                        let datos = response.data;
-                        let me = this;
-                        me.limpiarFormularioDesposito();//Limpiar Formulario
-                        me.arrayTipoMovimientoPermisos = [];//Seteo los permisos para visualizar formularios
-                        datos.map(function(x, y){
-                            //comprobar si un determinado elemento no existe dentro de un array
-                            if (!me.arrayTipoMovimientoPermisos.includes(x.nDatoParNumerico)) {
-                                me.arrayTipoMovimientoPermisos.push(x.nDatoParNumerico);
-                            }
-                        });
-                        (this.arrayTipoMovimientoPermisos[0] == '1') ? this.mostrarFormularioOtroDeposito() : this.mostrarFormularioDeposito();
-                    }).catch(error => {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                location.reload('0');
-                            }
+                }).then(response => {
+                    let datos = response.data;
+                    let me = this;
+                    me.limpiarFormularioDesposito();//Limpiar Formulario
+                    me.arrayTipoMovimientoPermisos = [];//Seteo los permisos para visualizar formularios
+                    datos.map(function(x, y){
+                        //comprobar si un determinado elemento no existe dentro de un array
+                        if (!me.arrayTipoMovimientoPermisos.includes(x.nDatoParNumerico)) {
+                            me.arrayTipoMovimientoPermisos.push(x.nDatoParNumerico);
                         }
                     });
-                }
+                    (this.arrayTipoMovimientoPermisos[0] == '1') ? this.mostrarFormularioOtroDeposito() : this.mostrarFormularioDeposito();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             validaMostrarFormularioDeposito(){
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formDeposito.nidtipomovimiento == ''){
-                    this.mensajeError.push('Debes seleccionar Tipo Movimiento');
-                };
+                if(this.formParametrizacionDeposito.nidformapago == ''){
+                    this.mensajeError.push('Debe seleccionar un Tipo Pago');
+                }
+                if(this.formParametrizacionDeposito.nidformapago == ''){
+                    this.mensajeError.push('Debe seleccionar una Forma de Pago');
+                }
+                // Codigo 1300456 es cuando se seleccino tipo pago financiado
+                // Y la forma de pago no se seleccionó
+                if(this.formParametrizacionDeposito.nidtipopago == 1300456 &&
+                   !this.formParametrizacionDeposito.nidformapago){
+                    if(!this.formParametrizacionDeposito.nidtipopago2){
+                        this.mensajeError.push('Debe seleccionar un Tipo Pago de la Forma de Pago');
+                    }
+                }
+                if(this.formParametrizacionDeposito.nidtipopago == 1300456 &&
+                   this.formParametrizacionDeposito.nidformapago){
+                    if(!this.formParametrizacionDeposito.nidtipopago2){
+                        this.mensajeError.push('Debe seleccionar un Tipo Pago de la Forma de Pago');
+                    }
+                }
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1710,6 +1873,18 @@
                                 this.accionmodal=2;
                                 this.modal = 1;
                                 this.cargarDatosDetalleDeposito(data);
+                            }
+                        }
+                    }
+                    break;
+                    case 'formapago':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=3;
+                                this.modal = 1;
+                                this.llenarComboTipoMovimiento();
                             }
                         }
                     }

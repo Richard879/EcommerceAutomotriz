@@ -34,6 +34,16 @@ class PedidoDepositoController extends Controller
         return response()->json($data);
     }
 
+    public function GetParDsctByParSrc(Request $request)
+    {
+        $nidtipopago = $request->nidtipopago;
+
+        $parparametro = DB::select('exec [usp_ParParametro_GetParDsctByParSrc] ?',
+                                                                        [   $nidtipopago
+                                                                        ]);
+        return response()->json($parparametro);
+    }
+
     public function subirArchivo(Request $request)
     {
         $file = $request->file;
