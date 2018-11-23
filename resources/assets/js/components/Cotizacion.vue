@@ -683,92 +683,6 @@
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDCElementoVentaPorRegalar">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
-                                                                    <!--<div class="col-lg-12">
-                                                                        <div class="card">
-                                                                            <div class="card-header">
-                                                                                <h3 class="h4">ELEMENTO VENTA POR REGALAR</h3>
-                                                                            </div>
-                                                                            <div class="card-body">
-                                                                                <form class="form-horizontal">
-                                                                                    <div class="form-group row">
-                                                                                        <div class="col-sm-6">
-                                                                                            <div class="row">
-                                                                                                <label class="col-sm-4 form-control-label">ELEMENTO VENTA</label>
-                                                                                                <div class="col-sm-8">
-                                                                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="abrirModal('elementoventaPorRegalar','buscar')">
-                                                                                                        <i class="fa fa-search"></i> Buscar
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr/>
-                                                                                    <template v-if="arrayElementoVentaPorRegalar.length">
-                                                                                        <div class="table-responsive">
-                                                                                            <table class="table table-striped table-sm">
-                                                                                                <thead>
-                                                                                                    <tr>
-                                                                                                        <th>Acción</th>
-                                                                                                        <th>Elemento Venta</th>
-                                                                                                        <th>Moneda</th>
-                                                                                                        <th>Cantidad</th>
-                                                                                                        <th>Precio</th>
-                                                                                                        <th>SubTotal</th>
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-                                                                                                    <tr v-for="(elementoventa, index) in arrayElementoVentaPorRegalar" :key="elementoventa.nIdContacto">
-                                                                                                        <td>
-                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                                                <div slot="content">Eliminar {{ elementoventa.cElemenNombre }}</div>
-                                                                                                                <i @click="removerElementoVentaListaPorRegalar(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                                            </el-tooltip>
-                                                                                                        </td>
-                                                                                                        <td v-text="elementoventa.cElemenNombre"></td>
-                                                                                                        <td v-text="elementoventa.cMonedaNombre"></td>
-                                                                                                        <td><input type="number" min="1" class="form-control form-control-sm" v-model="elementoventa.cantidad"/></td>
-                                                                                                        <td v-text="elementoventa.fElemenValorVenta"></td>
-                                                                                                        <td> {{ elementoventa.subtotal = elementoventa.cantidad*elementoventa.fElemenValorVenta }} </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                        <div class="col-lg-12">
-                                                                                            <div class="row flex-rigth-margin">
-                                                                                                <div class="form-group row">
-                                                                                                    <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
-                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
-                                                                                                </div>
-                                                                                                <div class="form-group row">
-                                                                                                    <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                                    <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </template>
-                                                                                    <template v-else>
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td colspan="10">No existen registros!</td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </template>
-                                                                                    <div class="form-group row">
-                                                                                        <div class="col-sm-9 offset-sm-4">
-                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
-                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
-                                                                                            </button>
-                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
-                                                                                                <i class="fa fa-arrow-right"></i> Ir a Campaña
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>-->
                                                                     <div class="col-lg-12">
                                                                         <div class="card">
                                                                             <div class="card-header">
@@ -820,18 +734,18 @@
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <!--<div class="col-lg-12">
+                                                                                    <div class="col-lg-12">
                                                                                         <div class="row flex-rigth-margin">
                                                                                             <div class="form-group row">
-                                                                                                <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                                <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalEventoEleVentaModal}}</strong></label>
+                                                                                                <label class="form-control-label">TOTAL USD: &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
                                                                                             </div>
                                                                                             <div class="form-group row">
                                                                                                 <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                                <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVentaSoles=totalEventoEleVentaModalSoles}}</strong></label>
+                                                                                                <label class="form-control-label"><strong>{{ montoTotalElementoVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>-->
+                                                                                    </div>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -1120,20 +1034,20 @@
                                                                                     <table class="table table-striped table-sm">
                                                                                         <thead>
                                                                                             <tr>
-                                                                                                <th colspan="3">Elemento Venta</th>
+                                                                                                <th colspan="3">Obsequio</th>
+                                                                                                <th>Elemento Venta</th>
                                                                                                 <th>Cantidad</th>
                                                                                                 <th>Moneda</th>
                                                                                                 <th>Precio Final</th>
-                                                                                                <th>SubTotal</th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
-                                                                                                <td colspan="3"> {{ cotieleventa.detalle }} </td>
+                                                                                                <td colspan="3" v-text=" cotieleventa.nombreOBS"></td>
+                                                                                                <td v-text=" cotieleventa.nombreEV"></td>
                                                                                                 <td v-text="cotieleventa.cantidad"></td>
                                                                                                 <td v-text="cotieleventa.monedanombre"></td>
                                                                                                 <td v-text="cotieleventa.preciofinal"></td>
-                                                                                                <td v-text="cotieleventa.subtotal"></td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
@@ -1898,8 +1812,8 @@
                                                         <tr>
                                                             <th>Acciones</th>
                                                             <th>Elemento Venta</th>
-                                                            <!--<th>Moneda</th>
-                                                            <th>Valor</th>-->
+                                                            <th>Moneda</th>
+                                                            <th>Valor</th>
                                                             <th>Cantidad a Regalar</th>
                                                         </tr>
                                                     </thead>
@@ -1913,8 +1827,8 @@
                                                                     </el-tooltip>
                                                                 </td>
                                                                 <td v-text="eleventa.cNombre"></td>
-                                                                <!--<td v-text="eleventa.cMonedaNombre"></td>
-                                                                <td v-text="eleventa.fValorVenta"></td>-->
+                                                                <td v-text="eleventa.cMonedaNombre"></td>
+                                                                <td v-text="eleventa.fValorVenta"></td>
                                                                 <td v-text="eleventa.cantidad"></td>
                                                             </template>
                                                         </tr>
@@ -2327,8 +2241,6 @@
                                                     <div class="row">
                                                         <div>
                                                             <h3 v-text="fillObsequio.cNombreObsequio"></h3>
-                                                            <!--<input type="hidden" v-text="montoTotalEventoElementoVenta = totalEventoEleVentaModal">
-                                                            <input type="hidden" v-text="montoTotalEventoElementoVentaSoles = totalEventoEleVentaModalSoles">-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2342,8 +2254,8 @@
                                                         <tr>
                                                             <th>Acciones</th>
                                                             <th>Obsequio</th>
-                                                            <!--<th>Moneda</th>
-                                                            <th>Valor</th>-->
+                                                            <th>Moneda</th>
+                                                            <th>Valor</th>
                                                             <th>Cantidad a Regalar</th>
                                                         </tr>
                                                     </thead>
@@ -2357,8 +2269,8 @@
                                                                     </el-tooltip>
                                                                 </td>
                                                                 <td v-text="obsequio.cNombre"></td>
-                                                                <!--<td v-text="obsequio.cMonedaNombre"></td>
-                                                                <td v-text="obsequio.fValorVenta"></td>-->
+                                                                <td v-text="obsequio.cMonedaNombre"></td>
+                                                                <td v-text="obsequio.fValorVenta"></td>
                                                                 <td v-text="obsequio.cantidad"></td>
                                                             </template>
                                                         </tr>
@@ -2730,12 +2642,12 @@
             totalElementoVentaPorRegalar: function(){
                 let me = this;
                 let sumaElementoRegaloDolares;
-                return me.arrayElementoVentaPorRegalar.reduce(function(valorAnterior, valorActual){
+                return me.arrayObsequioEleVentaModal.reduce(function(valorAnterior, valorActual){
                     //Si moneda es soles
                     if(valorActual.nIdMoneda == 1300027){
-                        sumaElementoRegaloDolares = valorAnterior + (parseFloat(valorActual.subtotal) / me.fValorTipocambioComercial);
+                        sumaElementoRegaloDolares = valorAnterior + (parseFloat(valorActual.fValorVenta) / me.fValorTipocambioComercial);
                     }else{
-                        sumaElementoRegaloDolares = valorAnterior + parseFloat(valorActual.subtotal);
+                        sumaElementoRegaloDolares = valorAnterior + parseFloat(valorActual.fValorVenta);
                     }
                     return Number((sumaElementoRegaloDolares).toFixed(2));
                 }, 0);
@@ -2743,12 +2655,12 @@
             totalElementoVentaPorRegalarSoles: function(){
                 let me = this;
                 let sumaElementoRegaloSoles;
-                return me.arrayElementoVentaPorRegalar.reduce(function(valorAnterior, valorActual){
+                return me.arrayObsequioEleVentaModal.reduce(function(valorAnterior, valorActual){
                     //Si moneda es dolares
                     if(valorActual.nIdMoneda == 1300028){
-                        sumaElementoRegaloSoles = valorAnterior + (parseFloat(valorActual.subtotal) * me.fValorTipocambioComercial);
+                        sumaElementoRegaloSoles = valorAnterior + (parseFloat(valorActual.fValorVenta) * me.fValorTipocambioComercial);
                     }else{
-                        sumaElementoRegaloSoles = valorAnterior + parseFloat(valorActual.subtotal);
+                        sumaElementoRegaloSoles = valorAnterior + parseFloat(valorActual.fValorVenta);
                     }
                     return Number((sumaElementoRegaloSoles).toFixed(2));
                 }, 0);
@@ -3618,75 +3530,6 @@
             // ================================
             // SUBTAB ELEMENTO VENTA POR REGALAR
             // ================================
-            /*buscarElementoVentaPorRegalar(page){
-                var url = this.ruta + '/gescotizacion/GetElementoByTipo';
-                axios.get(url, {
-                    params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidtipoelemen' : this.fillBusqTipoElementoPorRegalar.ntpoelemen,
-                        'celementonombre': this.fillBusqTipoElementoPorRegalar.celementonombre,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayElementoVentaModalPorRegalar  =   response.data.arrayElementoVenta.data;
-                    this.paginationModal.current_page       =   response.data.arrayElementoVenta.current_page;
-                    this.paginationModal.total              =   response.data.arrayElementoVenta.total;
-                    this.paginationModal.per_page           =   response.data.arrayElementoVenta.per_page;
-                    this.paginationModal.last_page          =   response.data.arrayElementoVenta.last_page;
-                    this.paginationModal.from               =   response.data.arrayElementoVenta.from;
-                    this.paginationModal.to                 =   response.data.arrayElementoVenta.to;
-                }).catch(error => {
-                    this.errors = error
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            cambiarPaginaTipoElementoVentaPorRegalar(page){
-                this.pagination.current_page=page;
-                this.buscarElementoVentaPorRegalar(page);
-            },
-            agregarElementoVentaListaPorRegalar(elemento){
-                if(this.encontrarElementoVentaPorRegalar(elemento.cElemenNombre)){
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'El elemento de venta ha regalar ya se encuentra agregado!',
-                    })
-                } else {
-                    this.arrayElementoVentaPorRegalar.push({
-                        cCodigoERP              : elemento.cCodigoERP,
-                        cElemenNombre           : elemento.cElemenNombre,
-                        cMonedaNombre           : elemento.cMonedaNombre,
-                        cProveedorNombre        : elemento.cProveedorNombre,
-                        cTipoElemenNombre       : elemento.cTipoElemenNombre,
-                        fElemenValorMinimoVenta : elemento.fElemenValorMinimoVenta,
-                        fElemenValorVenta       : elemento.fElemenValorVenta,
-                        nIdElemento             : elemento.nIdElemento,
-                        nIdMoneda               : elemento.nIdMoneda,
-                        nIdProveedor            : elemento.nIdProveedor,
-                        nIdTipoElemento         : elemento.nIdTipoElemento,
-                        cantidad                : 1,
-                        subtotal                : 0
-                    });
-
-                    toastr.success('Se Agregó "'+ elemento.cElemenNombre +'" ');
-                }
-            },
-            encontrarElementoVentaPorRegalar(elemento){
-                var sw=0;
-                this.arrayElementoVentaPorRegalar.map(function (x) {
-                    if(x.cElemenNombre == elemento){
-                        sw = true;
-                    }
-                });
-                return sw;
-            },
-            removerElementoVentaListaPorRegalar(index){
-                this.$delete(this.arrayElementoVentaPorRegalar, index);
-            },*/
             llenarObsequiosPorModelo(){
                 var url = this.ruta + '/gescotizacion/GetListObsequiosByVehiculo';
                 axios.get(url, {
@@ -4121,15 +3964,17 @@
                 // ====================================
                 // DETALLE ELEMENTO VENTA POR REGALAR
                 // ====================================
-                if(me.arrayElementoVentaPorRegalar.length > 0){
-                    me.arrayElementoVentaPorRegalar.map(function(ev){
+                if(me.arrayObsequioEleVentaModal.length > 0){
+                    me.arrayObsequioEleVentaModal.map(function(ev){
                         me.arrayConfiCotiEleVentaPorRegalar.push({
-                            codigo       : ev.nIdElemento,
-                            detalle      : ev.cElemenNombre,
+                            codigoEV     : ev.nIdElementoVenta,
+                            codigoOBS     : ev.nIdObsequio,
+                            codigoOEV    : ev.nIdObsequioElementoVenta,
+                            nombreEV     : ev.cNombre,
+                            nombreOBS    : ev.cNombreObsequio,
                             cantidad     : ev.cantidad,
                             dscto        : 0,
-                            preciofinal  : ev.fElemenValorVenta,
-                            subtotal     : ev.subtotal,
+                            preciofinal  : ev.fValorVenta,
                             flagTipoItem : 'E',
                             flagactivaregalo : 'S',
                             nidmoneda    : ev.nIdMoneda,
@@ -4323,7 +4168,7 @@
                 this.fillBusqVehiculo.nidtipolista = '';
 
                 this.arrayVehiculo = [];
-                this.arrayElementoVentaPorRegalar = [];
+                this.arrayObsequio = [];
                 this.arrayElementoVenta = [];
                 this.arrayEventoEleVenta= [];
                 this.arrayEventoEleVentaModal= [];
