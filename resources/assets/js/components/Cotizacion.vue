@@ -683,7 +683,7 @@
                                                         <div role="tabpanel" class="tab-pane fade" id="TabDCElementoVentaPorRegalar">
                                                             <section class="forms">
                                                                 <div class="container-fluid">
-                                                                    <div class="col-lg-12">
+                                                                    <!--<div class="col-lg-12">
                                                                         <div class="card">
                                                                             <div class="card-header">
                                                                                 <h3 class="h4">ELEMENTO VENTA POR REGALAR</h3>
@@ -763,11 +763,75 @@
                                                                                             <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
                                                                                                 <i class="fa fa-arrow-right"></i> Ir a Campaña
                                                                                             </button>
-                                                                                            <!--<button type="button" class="btn btn-warning btn-corner btn-sm" @click.prevent="siguienteTabDConfirmarcotizacion">
-                                                                                                <i class="fa fa-arrow-right"></i> Ir a Confirmar Cotización
-                                                                                            </button>-->
                                                                                         </div>
                                                                                     </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>-->
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <h3 class="h4">OBSEQUIOS</h3>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <form class="form-horizontal">
+                                                                                    <template v-if="arrayObsequio.length">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-sm">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th>Código</th>
+                                                                                                        <th>Nombre</th>
+                                                                                                        <th>Acción</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr v-for="(obsequio, index) in arrayObsequio" :key="index">
+                                                                                                        <td v-text="index+1"></td>
+                                                                                                        <td v-text="obsequio.cNombreObsequio"></td>
+                                                                                                        <td>
+                                                                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                                                <div slot="content">Ver Detalle {{ obsequio.cNombreObsequio }}</div>
+                                                                                                                <i @click="abrirModal('obsequio', 'detalle', obsequio)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                                            </el-tooltip>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td colspan="10">No existen registros!</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </template>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="siguienteTabDCElementoVenta">
+                                                                                                <i class="fa fa-arrow-right"></i> Siguiente
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click.prevent="siguienteTabDCVerificarCampania">
+                                                                                                <i class="fa fa-arrow-right"></i> Ir a Campaña
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!--<div class="col-lg-12">
+                                                                                        <div class="row flex-rigth-margin">
+                                                                                            <div class="form-group row">
+                                                                                                <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVenta=totalEventoEleVentaModal}}</strong></label>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
+                                                                                                <label class="form-control-label"><strong>{{montoTotalConfiCotiEventoEleVentaSoles=totalEventoEleVentaModalSoles}}</strong></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>-->
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -2246,6 +2310,82 @@
                 </div>
             </div>
 
+            <!-- Modal Buscar Detalle Obsequios-->
+            <div class="modal fade" v-if="accionmodal==9" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE OBSEQUIOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div>
+                                                            <h3 v-text="fillObsequio.cNombreObsequio"></h3>
+                                                            <!--<input type="hidden" v-text="montoTotalEventoElementoVenta = totalEventoEleVentaModal">
+                                                            <input type="hidden" v-text="montoTotalEventoElementoVentaSoles = totalEventoEleVentaModalSoles">-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayObsequioEleVentaModal.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Obsequio</th>
+                                                            <!--<th>Moneda</th>
+                                                            <th>Valor</th>-->
+                                                            <th>Cantidad a Regalar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(obsequio, index) in arrayObsequioEleVentaModal" :key="obsequio.nIdContacto">
+                                                            <template v-if="obsequio.nIdObsequio == fillObsequio.nIdObsequio">
+                                                                <td>
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Eliminar {{ obsequio.cNombre }}</div>
+                                                                        <i @click="removerElementoVentaCampania(index)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                    </el-tooltip>
+                                                                </td>
+                                                                <td v-text="obsequio.cNombre"></td>
+                                                                <!--<td v-text="obsequio.cMonedaNombre"></td>
+                                                                <td v-text="obsequio.fValorVenta"></td>-->
+                                                                <td v-text="obsequio.cantidad"></td>
+                                                            </template>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -2361,14 +2501,22 @@
                 fValorTipocambioComercial: 0,
                 montoTotalVehiculoSoles: 0,
                 // ================= SUBTAB Elemento Venta POR REGALAR=================
-                fillBusqTipoElementoPorRegalar: {
+                /*fillBusqTipoElementoPorRegalar: {
                     ntpoelemen: '',
                     celementonombre: ''
                 },
                 arrayElementoVentaModalPorRegalar: [],
                 arrayElementoVentaPorRegalar: [],
                 montoTotalElementoVentaPorRegalar: 0,
-                montoTotalElementoVentaPorRegalarSoles: 0,
+                montoTotalElementoVentaPorRegalarSoles: 0,*/
+                arrayObsequiosByModelo: [],
+                arrayObsequio: [],
+                fillObsequio: {
+                    nIdObsequio: 0,
+                    cNombreObsequio: ''
+                },
+                arrayObsequioEleVenta: [],
+                arrayObsequioEleVentaModal: [],
                 // ================= SUBTAB Elemento Venta =================
                 fillBusqTipoElemento: {
                     ntpoelemen: '',
@@ -2381,8 +2529,8 @@
                 montoTotalElementoVentaSoles: 0,
                 /// ================= SUBTAB EVENTO CAMPAÑA =================
                 arrayCampaniasByModelo: [],
-                arrayCampaniasByMarca: [],
-                arrayCampaniasByLinea: [],
+                /*arrayCampaniasByMarca: [],
+                arrayCampaniasByLinea: [],*/
                 arrayEventoCampania: [],
                 fillEventoCampania: {
                     nIdEventoCampania: 0,
@@ -3435,6 +3583,9 @@
                 $('#TabDCElementoVenta').removeClass('in active show');
                 $('#TabDCVerificarCampana').removeClass('in active show');
                 $('#TabDCConfirmarCotizacion').removeClass('in active show');
+                this.$nextTick(function () {
+                    this.llenarObsequiosPorModelo();
+                })
             },
             validarTabDCElementoVentaPorRegalar(){
                 this.error = 0;
@@ -3467,7 +3618,7 @@
             // ================================
             // SUBTAB ELEMENTO VENTA POR REGALAR
             // ================================
-            buscarElementoVentaPorRegalar(page){
+            /*buscarElementoVentaPorRegalar(page){
                 var url = this.ruta + '/gescotizacion/GetElementoByTipo';
                 axios.get(url, {
                     params: {
@@ -3535,6 +3686,91 @@
             },
             removerElementoVentaListaPorRegalar(index){
                 this.$delete(this.arrayElementoVentaPorRegalar, index);
+            },*/
+            llenarObsequiosPorModelo(){
+                var url = this.ruta + '/gescotizacion/GetListObsequiosByVehiculo';
+                axios.get(url, {
+                    params: {
+                        'nidproveedor'      : this.fillProveedor.nidproveedor,
+                        'fecha'             : moment().format('YYYY-MM-DD'),
+                        'nidcodigo'         : this.arrayVehiculo[0].nIdModelo,
+                        'naniofabricacion'  : this.arrayVehiculo[0].AnioFabricacion,
+                        'naniomodelo'       : this.arrayVehiculo[0].AnioModelo,
+                        'tipo'              : 3
+                    }
+                }).then(response => {
+                    this.arrayObsequiosByModelo  =  response.data;
+                    this.$nextTick(function () {
+                        this.llenarObsequio();
+                    })
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarObsequio(){
+                let me = this;
+                let url = me.ruta + '/gescotizacion/GetListObsequioElementoVenta';
+
+                this.arrayObsequio = []; //Setea array de campañas
+                this.arrayObsequioEleVentaModal = [];//Setea array de elementos de venta del modal
+
+                this.$nextTick(function () {
+                    let me = this;
+                    if(this.arrayObsequiosByModelo.length > 0){
+                        this.arrayObsequiosByModelo.map(function(ec){
+                            me.arrayObsequio.push({
+                                nIdObsequio         : ec.nIdObsequio,
+                                cNombreObsequio     : ec.cNombreObsequio,
+                                dFechaInicio        : ec.dFechaInicio,
+                                dFechaFin           : ec.dFechaFin,
+                                fValorPresupuesto   : ec.fValorPresupuesto
+                            });
+
+                            axios.get(url, {
+                                params: {
+                                    'nidobsequio'  : ec.nIdObsequio
+                                }
+                            }).then(response => {
+                                me.arrayObsequioEleVenta  =  response.data;
+                                me.$nextTick(function () {
+                                    me.llenarObsequioEleVenta();
+                                })
+                            }).catch(error => {
+                                me.errors = error
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        });
+                    }
+                })
+            },
+            llenarObsequioEleVenta(){
+                this.$nextTick(function () {
+                    let me = this;
+                    if(this.arrayObsequioEleVenta.length > 0){
+                        this.arrayObsequioEleVenta.map(function(eev){
+                            me.arrayObsequioEleVentaModal.push({
+                                nIdObsequio             : eev.nIdObsequio,
+                                cNombreObsequio         : eev.cNombreObsequio,
+                                nIdElementoVenta        : eev.nIdElementoVenta,
+                                cNombre                 : eev.cNombre,
+                                nIdMoneda               : eev.nIdMoneda,
+                                cMonedaNombre           : eev.cMonedaNombre,
+                                nIdObsequioElementoVenta  : eev.nIdObsequioElementoVenta,
+                                fValorVenta             : eev.fValorVenta,
+                                cantidad                : eev.nCantidad
+                            });
+                        });
+                    }
+                })
             },
             siguienteTabDCElementoVenta(){
                 if(this.validarTabDCElementoVentaPorRegalar()){
@@ -3695,60 +3931,17 @@
                 var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
                 axios.get(url, {
                     params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'fecha'       : moment().format('YYYY-MM-DD'),
-                        'nidcodigo'   : this.arrayVehiculo[0].nIdModelo,
-                        'tipo'        : 3
+                        'nidproveedor'      : this.fillProveedor.nidproveedor,
+                        'fecha'             : moment().format('YYYY-MM-DD'),
+                        'nidcodigo'         : this.arrayVehiculo[0].nIdModelo,
+                        'naniofabricacion'  : this.arrayVehiculo[0].AnioFabricacion,
+                        'naniomodelo'       : this.arrayVehiculo[0].AnioModelo,
+                        'tipo'              : 3
                     }
                 }).then(response => {
                     this.arrayCampaniasByModelo  =  response.data;
                     this.$nextTick(function () {
-                        this.llenarCamapaniasPorMarcaVehiculo();
-                    })
-                }).catch(error => {
-                    this.errors = error
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarCamapaniasPorMarcaVehiculo(){
-                var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
-                axios.get(url, {
-                    params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'fecha'       : moment().format('YYYY-MM-DD'),
-                        'nidcodigo'   : this.arrayVehiculo[0].nIdMarca,
-                        'tipo'        : 2
-                    }
-                }).then(response => {
-                    this.arrayCampaniasByMarca  =  response.data;
-                    this.$nextTick(function () {
-                        this.llenarCamapaniasPorLineaVehiculo();
-                    })
-                }).catch(error => {
-                    this.errors = error
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            llenarCamapaniasPorLineaVehiculo(){
-                var url = this.ruta + '/gescotizacion/GetListCampañasByVehiculo';
-                axios.get(url, {
-                    params: {
-                        'nidproveedor': this.fillProveedor.nidproveedor,
-                        'fecha'       : moment().format('YYYY-MM-DD'),
-                        'nidcodigo'   : this.arrayVehiculo[0].nIdLinea,
-                        'tipo'        : 1
-                    }
-                }).then(response => {
-                    this.arrayCampaniasByLinea  =  response.data;
-                    this.$nextTick(function () {
+                        //this.llenarCamapaniasPorMarcaVehiculo();
                         this.llenarEventoCampania();
                     })
                 }).catch(error => {
@@ -3801,7 +3994,7 @@
                             });
                         });
                     }
-                    if(this.arrayCampaniasByMarca.length > 0){
+                    /*if(this.arrayCampaniasByMarca.length > 0){
                         this.arrayCampaniasByMarca.map(function(ec){
                             me.arrayEventoCampania.push({
                                 nIdEventoCampania       : ec.nIdEventoCampania,
@@ -3864,7 +4057,7 @@
                                 }
                             });
                         });
-                    }
+                    }*/
                 })
             },
             llenarEventoEleVenta(){
@@ -4305,6 +4498,20 @@
                                 this.accionmodal=8;
                                 this.modal = 1;
                                 this.verCotizacion(data);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                    case 'obsequio':
+                    {
+                        switch(accion){
+                            case 'detalle':
+                            {
+                                this.fillObsequio.cNombreObsequio = data['cNombreObsequio'];
+                                this.fillObsequio.nIdObsequio = data['nIdObsequio'];
+                                this.accionmodal=9;
+                                this.modal = 1;
                                 break;
                             }
                         }

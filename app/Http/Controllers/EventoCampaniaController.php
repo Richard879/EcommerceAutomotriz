@@ -213,7 +213,7 @@ class EventoCampaniaController extends Controller
         return ['arrayElementoDistribucion'=>$arrayElementoDistribucion];
     }
 
-    public function desactivar (Request $request)
+    public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 
@@ -224,7 +224,7 @@ class EventoCampaniaController extends Controller
         return response()->json($nIdEventoCampania);   
     }
 
-    public function activar (Request $request)
+    public function activar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
 

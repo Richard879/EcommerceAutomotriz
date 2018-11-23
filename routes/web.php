@@ -294,4 +294,17 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/reporte/GetListSubReportesByReporte','ReporteController@GetListSubReportesByReporte');
     Route::post('/reporte/GetCotizacionGenerarReporte01','ReporteController@GetCotizacionGenerarReporte01');
     Route::post('/reporte/GetPedidoGenerarReporte04','ReporteController@GetPedidoGenerarReporte04');
+
+    Route::get('/obsequio/GetObsequio', 'ObsequioController@GetObsequio');
+    Route::post('/obsequio/SetObsequio', 'ObsequioController@SetObsequio');
+    Route::post('/obsequio/SetDetalleObsequio', 'ObsequioController@SetDetalleObsequio');
+    Route::post('/obsequio/SetObsequioElementoVenta', 'ObsequioController@SetObsequioElementoVenta');
+    Route::get('/obsequio/GetDistribucionByElementoVenta', 'ObsequioController@GetDistribucionByElementoVenta');
+    Route::put('/obsequio/desactivar', 'ObsequioController@desactivar');
+    Route::put('/obsequio/activar', 'ObsequioController@activar');
+    Route::post('/obsequio/SetDistribucionObsequioByObsequio', 'ObsequioController@SetDistribucionObsequioByObsequio');
+    Route::post('/obsequio/SetDistribucionObsequioByElemento', 'ObsequioController@SetDistribucionObsequioByElemento');
+    Route::post('/obsequio/SetEntregaObsequioElementoVenta', 'ObsequioController@SetEntregaObsequioElementoVenta');
+    Route::get('/gescotizacion/GetListObsequiosByVehiculo', 'CotizacionController@GetListObsequiosByVehiculo');
+    Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
 });
