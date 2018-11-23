@@ -142,6 +142,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetLstDetallePedido', 'PedidoController@GetLstDetallePedido');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
+    Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
     Route::post('/deposito/subirArchivo', 'PedidoDepositoController@subirArchivo');
     Route::post('/deposito/SetDepositoPedido', 'PedidoDepositoController@SetDepositoPedido');
     Route::get('/deposito/GetMontoTotalDepositos', 'PedidoDepositoController@GetMontoTotalDepositos');
