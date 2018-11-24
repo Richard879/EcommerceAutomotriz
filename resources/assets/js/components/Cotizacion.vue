@@ -4082,8 +4082,8 @@
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
                         //CAPTURO EL SUPERA DSCTO Y SI HAY E.V POR REGALAR
-                        if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N' &&
-                            response.data.cFlagActivaEVPorRegalar == 0) {
+                        if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N'){
+                             /*&& response.data.cFlagActivaEVPorRegalar == 0*/ 
                             //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
                             this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
                             swal('Cotización generada y aprobada exitosamente');
