@@ -90,6 +90,8 @@ class CotizacionController extends Controller
 
         try{
             DB::beginTransaction();
+
+            //================ VEHICULO =======================
             $arrayvehiculos = $request->arrayvehiculos;
             foreach($arrayvehiculos as $ep=>$det)
             {
@@ -100,12 +102,12 @@ class CotizacionController extends Controller
                                                                     [   $request->nIdCabeCoti,
                                                                         $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
-                                                                        $det['codigo'],
-                                                                        0,
-                                                                        0,
-                                                                        'N',
-                                                                        $det['flagactivaregalo'],
-                                                                        0,
+                                                                        $det['codigo'],         //ListaPrecio
+                                                                        0,                      //ElementoVenta
+                                                                        0,                      //EventoElementoVenta
+                                                                        'N',                    //FlagElementoVenta
+                                                                        0,                      //ObsequioElementoVenta
+                                                                        'N',                    //FlagActivaObsequio
                                                                         ($fDy > 0) ? 'S' : 'N' ,//SI DY ES MAYOR 0 ENTONCES "S" SINO "N"
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
@@ -118,6 +120,7 @@ class CotizacionController extends Controller
                                                                     ]);
             }
 
+            //================ OBSEQUIOS =======================
             $arrayevporregalarlength = sizeof($request->arrayevporregalar);
             if($arrayevporregalarlength > 0){
                 $arrayevporregalar = $request->arrayevporregalar;
@@ -127,25 +130,26 @@ class CotizacionController extends Controller
                                                                     [   $request->nIdCabeCoti,
                                                                         $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
-                                                                        0,
-                                                                        0,
-                                                                        $det['codigo'],
-                                                                        'N',
-                                                                        $det['flagactivaregalo'],
-                                                                        0,
-                                                                        'N',
+                                                                        0,                          //ListaPrecio
+                                                                        $det['codigoEV'],           //ElementoVenta
+                                                                        0,                          //EventoElementoVenta
+                                                                        'N',                        //FlagElementoVenta
+                                                                        $det['codigoOEV'],          //ObsequioElementoVenta
+                                                                        'S',                        //FlagActivaObsequio
+                                                                        'N',                        //SuperaDescuento
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
                                                                         0,
                                                                         $det['dscto'],
                                                                         0,
-                                                                        $det['subtotal'],
+                                                                        $det['preciofinal'],
                                                                         Auth::user()->id
                                                                     ]);
                 }
             }
 
+            //================ ELEMENTOS DE VENTA =======================
             $arrayelemventalength = sizeof($request->arrayelemventa);
             if($arrayelemventalength > 0){
                 $arrayelemventa = $request->arrayelemventa;
@@ -155,13 +159,13 @@ class CotizacionController extends Controller
                                                                     [   $request->nIdCabeCoti,
                                                                         $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
-                                                                        0,
-                                                                        0,
-                                                                        $det['codigo'],
-                                                                        'N',
-                                                                        $det['flagactivaregalo'],
-                                                                        0,
-                                                                        'N',
+                                                                        0,                          //ListaPrecio
+                                                                        $det['codigo'],             //ElementoVenta
+                                                                        0,                          //EventoElementoVenta
+                                                                        'N',                        //FlagElementoVenta
+                                                                        0,                          //ObsequioElementoVenta
+                                                                        'N',                        //FlagActivaObsequio
+                                                                        'N',                        //SuperaDescuento
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
@@ -174,6 +178,7 @@ class CotizacionController extends Controller
                 }
             }
 
+            //================ CAMPAÑAS =======================
             $arrayeventoelemventalength = sizeof($request->arrayeventoeleventa);
             if($arrayeventoelemventalength > 0){
                 $arrayeventoeleventa = $request->arrayeventoeleventa;
@@ -184,13 +189,13 @@ class CotizacionController extends Controller
                                                                     [   $request->nIdCabeCoti,
                                                                         $request->fTipoCambioComercial,
                                                                         $det['flagTipoItem'],
-                                                                        0,
-                                                                        0,
-                                                                        $det['codigoEV'],
-                                                                        'S',
-                                                                        $det['flagactivaregalo'],
-                                                                        $det['codigoEEV'],
-                                                                        'N',
+                                                                        0,                  //ListaPrecio
+                                                                        $det['codigoEV'],   //ElementoVenta
+                                                                        $det['codigoEEV'],  //EventoElementoVenta
+                                                                        'S',                //FlagElementoVenta
+                                                                        0,                  //ObsequioElementoVenta
+                                                                        'N',                //FlagActivaObsequio
+                                                                        'N',                //SuperaDescuento
                                                                         $det['nidmoneda'],
                                                                         $det['cantidad'],
                                                                         $det['preciofinal'],
@@ -209,20 +214,8 @@ class CotizacionController extends Controller
             //Obtengo datos del Supera Dscto para validar si se Aprueba o No el Pedido Automaticamente
             $arrayDatosCotizacion = DB::select('exec usp_Cotizacion_GetDatosCotizacion ? ', [ $nIdCabeceraCotizacion ]);
 
-            //Flags para verificar si existen elemento venta por regalar
-            $cFlagActivaEVPorRegalar = 0;
-            $cont = 0;
-            //recorro todo el detalle de cotización verificando si existen EV Por Regalar
-            foreach($arrayDatosCotizacion as $cotizacion) {
-                if($cotizacion->cFlagActivaEVPorRegalar == 'S') {
-                    $cont ++;
-                    $cFlagActivaEVPorRegalar = $cont;
-                }
-            }
-
             $data = [
-                'arrayDatosCotizacion' => $arrayDatosCotizacion,
-                'cFlagActivaEVPorRegalar' => $cFlagActivaEVPorRegalar
+                'arrayDatosCotizacion' => $arrayDatosCotizacion
             ];
 
             DB::commit();

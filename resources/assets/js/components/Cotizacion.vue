@@ -4083,7 +4083,6 @@
                     }).then(response => {
                         //CAPTURO EL SUPERA DSCTO Y SI HAY E.V POR REGALAR
                         if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N'){
-                             /*&& response.data.cFlagActivaEVPorRegalar == 0*/ 
                             //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
                             this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
                             swal('Cotización generada y aprobada exitosamente');
@@ -4102,13 +4101,10 @@
                 }
             },
             cambiarEstadoCotizacion(nIdCabeceraCotizacion, op){
-                // console.log(nIdCabeceraCotizacion, op);
                 var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';
                 axios.put(url, {
                     nIdCabeceraCotizacion: nIdCabeceraCotizacion,
                     opcion: op,
-                    // nIdEstadoCotizacion: (op == 1) ? 1300346 : 1300132,
-                    // cFlagEstadoCotizacion: (op == 1) ? 'A' : 'P'
                 }).then(response => {
                     console.log(response);
                     this.limpiarProcesoCotizacion();
