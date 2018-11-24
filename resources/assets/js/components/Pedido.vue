@@ -1321,7 +1321,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1350,7 +1350,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1379,7 +1379,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
