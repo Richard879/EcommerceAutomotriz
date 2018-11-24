@@ -212,7 +212,7 @@ class CotizacionController extends Controller
             $nIdCabeceraCotizacion =  $arrayDetalleCoti[0]->nIdCabeceraCotizacion;
 
             //Obtengo datos del Supera Dscto para validar si se Aprueba o No el Pedido Automaticamente
-            $arrayDatosCotizacion = DB::select('exec usp_Cotizacion_GetDatosCotizacion ? ', [ $nIdCabeceraCotizacion ]);
+            $arrayDatosCotizacion = DB::select('exec [usp_Cotizacion_GetDatosCotizacion] ? ', [ $nIdCabeceraCotizacion ]);
 
             $data = [
                 'arrayDatosCotizacion' => $arrayDatosCotizacion
