@@ -29,7 +29,7 @@ class ComprasController extends Controller
             'base_uri' => 'https://jsonplaceholder.typicode.com',
         ]);
 
-        // Enviar una solicitud del verbo GET a
+        // Enviar una solicitud del verbo GET a https://jsonplaceholder.typicode.com/posts
         $response = $client->request('GET', "/posts");
 
         // Solo si la rpta es JSON se debe ingresar al contenido del cuerpo y decodificar
