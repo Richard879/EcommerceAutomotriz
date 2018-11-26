@@ -557,10 +557,10 @@
                                                                                     <div class="col-sm-8">
                                                                                         <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
                                                                                             <el-option
-                                                                                            v-for="item in arrayMoneda_Destino"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
+                                                                                                v-for="item in arrayMoneda_Destino"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
                                                                                             </el-option>
                                                                                         </el-select>
                                                                                     </div>
@@ -1340,6 +1340,7 @@
                 this.cerrarModal();
                 this.arrayFormaPago2 = [];//Setar forma de pago de la forma seleccionada
                 this.cargarFormasPago();
+                this.ocultarFormularioDeposito();
             },
             cargarFormasPago(){
                 var url = this.ruta + '/deposito/GetParDsctByParSrc';
@@ -1556,7 +1557,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formParametrizacionDeposito.nidformapago == ''){
+                if(this.formParametrizacionDeposito.nidtipopago == ''){
                     this.mensajeError.push('Debe seleccionar un Tipo Pago');
                 }
                 if(this.formParametrizacionDeposito.nidformapago == ''){
@@ -1617,10 +1618,13 @@
                     'nIdEmpresa': this.nidempresa,
                     'nIdSucursal': this.nidsucursal,
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
-                    'nIdTipoMovimiento': this.formDeposito.nidtipomovimiento,
+                    'nIdTipoPago': this.formParametrizacionDeposito.nidtipopago,
+                    'nIdFormaPago': this.formParametrizacionDeposito.nidformapago,
+                    'nIdFormaPago2': this.formParametrizacionDeposito.nidformapago2,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,
                     'nIdBancoOrigen': 0,
-                    'nIdMonedaOrigen': 0,
+                    //'nIdMonedaOrigen': 0,
+                    'nIdMonedaOrigen': this.formNuevoDeposito.nidmoneda_destino,
                     'cNumeroCuentaOrigen': 0,
                     'nIdCuentaBancariaEmpresa': this.formNuevoDeposito.nidnumerocuenta_destino,
                     'dFechaDeposito': this.formNuevoDeposito.dfechadeposito,
@@ -1634,6 +1638,7 @@
                     if(response.data[0].nFlagMsje == 1){
                         swal('Deposito Registrado');
                         this.tabBuscarPedido();
+                        this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
                     }else{
                         swal('El pedido ha sido Anulado o ya está Cancelado');
@@ -1725,9 +1730,9 @@
                     'nIdEmpresa': this.nidempresa,
                     'nIdSucursal': this.nidsucursal,
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
-                    'nIdTipoPago': this.formDeposito.nidtipopago,
-                    'nIdFormaPago': this.formDeposito.nidformapago,
-                    'nIdFormaPago2': this.formDeposito.nidformapago2,
+                    'nIdTipoPago': this.formParametrizacionDeposito.nidtipopago,
+                    'nIdFormaPago': this.formParametrizacionDeposito.nidformapago,
+                    'nIdFormaPago2': this.formParametrizacionDeposito.nidformapago2,
                     'nIdDocumentoAdjuntoVoucher': nIdDocumentoAdjunto,
                     'nIdBancoOrigen': this.formNuevoDeposito.nidbanco_origen,
                     'nIdMonedaOrigen': this.formNuevoDeposito.nidmoneda_origen,
@@ -1743,6 +1748,7 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1) {
                         this.tabBuscarPedido();
+                        this.limpiarBsqGeneracionDeposito();
                         this.limpiarFormularioDesposito();
                         swal('Deposito Registrado');
                     } else {
@@ -1916,9 +1922,16 @@
                 this.formNuevoDeposito.dfechadeposito = '',
                 this.formNuevoDeposito.nnumerooperacion = '',
                 this.formNuevoDeposito.ftipocambiovoucher = '',
+                this.attachment = '';
                 //this.formNuevoDeposito.ftipocambiocomercial = '',
                 this.formNuevoDeposito.cflagtce = false;
                 this.formNuevoDeposito.cglosa = ''
+            },
+            limpiarBsqGeneracionDeposito(){
+                this.formParametrizacionDeposito.nidtipopago = '',
+                this.formParametrizacionDeposito.cnombretipopago = '',
+                this.formParametrizacionDeposito.nidformapago = '',
+                this.formParametrizacionDeposito.nidformapago2 = ''
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
