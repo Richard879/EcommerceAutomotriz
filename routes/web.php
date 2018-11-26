@@ -312,5 +312,3 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\ComprasController@GetListComprasByIdAPI');
-    //Prueba con api que retorna JSON
-    Route::get('/getComprasApi/getPost', 'Api\ComprasController@getPost');
