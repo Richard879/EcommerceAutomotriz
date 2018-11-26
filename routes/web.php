@@ -308,7 +308,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetListObsequiosByVehiculo', 'CotizacionController@GetListObsequiosByVehiculo');
     Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
 
-    Route::get('/getComprasApi/GetListCompraByVin', 'Api\ComprasController@GetListCompraByVin');
-    //Prueba con api que retorna JSON
-    Route::get('getComprasApi/GetPosts/{id}', 'Api\ComprasController@GetPosts');
+
 });
+
+Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\ComprasController@GetListComprasByIdAPI');
