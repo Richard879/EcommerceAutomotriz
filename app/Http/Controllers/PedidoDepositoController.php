@@ -64,6 +64,10 @@ class PedidoDepositoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
+        $nIdTipoPago = $request->nIdTipoPago;
+        $nIdFormaPago = $request->nIdFormaPago;
+        $nIdFormaPago2 = $request->nIdFormaPago2;
+
         $nIdTipoPago = ($nIdTipoPago == NULL) ? ($nIdTipoPago = 0) : $nIdTipoPago;
         $nIdFormaPago = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
         $nIdFormaPago2 = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
@@ -73,9 +77,9 @@ class PedidoDepositoController extends Controller
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
                                         $request->nIdCabeceraPedido,
-                                        $request->nIdTipoPago,
-                                        $request->nIdFormaPago,
-                                        $request->nIdFormaPago2,
+                                        $nIdTipoPago,
+                                        $nIdFormaPago,
+                                        $nIdFormaPago2,
                                         $request->nIdDocumentoAdjuntoVoucher,
                                         $request->nIdBancoOrigen,
                                         $request->nIdMonedaOrigen,
