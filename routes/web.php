@@ -312,3 +312,4 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\ComprasController@GetListComprasByIdAPI');
+Route::post('/cliente/SetCliente', 'Api\ComprasController@SetCliente');

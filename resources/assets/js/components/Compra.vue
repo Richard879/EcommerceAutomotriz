@@ -48,6 +48,12 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR COMPRA</h3>
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapSetCliente();">
+                                                                <i class="fa fa-search"></i> Crear Cliente
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapGetCompras();">
+                                                                <i class="fa fa-search"></i> Listar Compras
+                                                            </button>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -2202,6 +2208,26 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            SapSetCliente(){
+                var url = this.ruta + '/cliente/SetCliente';
+                axios.post(url, {
+                }).then(response => {
+                    console.log(response);
+                    swal('CREADO SAP');
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            SapGetCompras(){
+                var url = this.ruta + '/getComprasApi/GetListComprasByIdAPI';
+                axios.get(url, {
+                }).then(response => {
+                    console.log(response);
+                    swal('LISTADO');
+                }).catch(error => {
+                    console.log(error);
+                });
             }
         },
         mounted(){
