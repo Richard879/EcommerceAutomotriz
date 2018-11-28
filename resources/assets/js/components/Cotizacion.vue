@@ -43,6 +43,9 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">MIS COTIZACIONES</h3>
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="generarCotizacionPDF('7300003')">
+                                                                <i class="fa fa-pdf"></i> GENERAR REPORTE
+                                                            </button>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -2862,16 +2865,16 @@
                 this.listarMisCotizaciones(page);
             },
             verCotizacion(cotizacion){
-                this.fillDetalleCotizacion.cnumerocotizacion = cotizacion.cNumeroCotizacion,
-                this.fillDetalleCotizacion.cdocumentocliente = cotizacion.cPerDocumento,
-                this.fillDetalleCotizacion.cnombrecliente = cotizacion.cContacto,
-                this.fillDetalleCotizacion.nidversionvehiculo = cotizacion.nIdVersionVeh,
-                this.fillDetalleCotizacion.cvehiculo = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
-                this.fillDetalleCotizacion.cnombreproveedor = cotizacion.cNombreProveedor,
-                this.fillDetalleCotizacion.cnombrevendedor = cotizacion.cNombreVendedor,
-                this.fillDetalleCotizacion.dfechacotizacion = cotizacion.dFechaCotizacion,
-                this.fillDetalleCotizacion.ftotalcotizacionsoles = cotizacion.fTotalCotizacionSoles,
-                this.fillDetalleCotizacion.ftotalcotizaciondolares = cotizacion.fTotalCotizacionDolares,
+                this.fillDetalleCotizacion.cnumerocotizacion        = cotizacion.cNumeroCotizacion,
+                this.fillDetalleCotizacion.cdocumentocliente        = cotizacion.cPerDocumento,
+                this.fillDetalleCotizacion.cnombrecliente           = cotizacion.cContacto,
+                this.fillDetalleCotizacion.nidversionvehiculo       = cotizacion.nIdVersionVeh,
+                this.fillDetalleCotizacion.cvehiculo                = cotizacion.cNombreComercial + ' ' + cotizacion.nAnioFabricacion + '-' + cotizacion.nAnioModelo,
+                this.fillDetalleCotizacion.cnombreproveedor         = cotizacion.cNombreProveedor,
+                this.fillDetalleCotizacion.cnombrevendedor          = cotizacion.cNombreVendedor,
+                this.fillDetalleCotizacion.dfechacotizacion         = cotizacion.dFechaCotizacion,
+                this.fillDetalleCotizacion.ftotalcotizacionsoles    = cotizacion.fTotalCotizacionSoles,
+                this.fillDetalleCotizacion.ftotalcotizaciondolares  = cotizacion.fTotalCotizacionDolares,
                 this.verDetalleCotizacion(cotizacion);
             },
             verDetalleCotizacion(cotizacion){
@@ -4090,25 +4093,29 @@
                         // GERENCIA cuando existen solo dscto
                         if (response.data.contGerencia > 0){
                             this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
+                            this.generarCotizacionPDF(nIdCabeCoti);
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
                         } else {
                             if (response.data.contADV > 0) {
                                 this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
+                                this.generarCotizacionPDF(nIdCabeCoti)
                                 swal('Cotización generada exitosamente, pendiente de Aprobación');
                             } else {
                                 this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 1);
+                                this.generarCotizacionPDF(nIdCabeCoti)
                                 swal('Cotización generada y aprobada exitosamente');
                             }
                         }
-
-                        // if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N'){
-                        //     //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
-                        //     this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
-                        //     swal('Cotización generada y aprobada exitosamente');
-                        // } else {
-                        //     this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
-                        //     swal('Cotización generada exitosamente, pendiente de Aprobación');
-                        // }
+                        /*
+                            if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N'){
+                                //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
+                                this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
+                                swal('Cotización generada y aprobada exitosamente');
+                            } else {
+                                this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
+                                swal('Cotización generada exitosamente, pendiente de Aprobación');
+                            }
+                        */
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -4118,6 +4125,34 @@
                         }
                     });
                 }
+            },
+            generarCotizacionPDF(nIdCabeCoti){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/getcotizacion/GetDetalleCotizacion';
+                axios.post(url, {
+                    'nIdEmpresa'            :   1300011,
+                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdCabeceraCotizacion' :   "7300003"
+                }, config).then(response => {
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             cambiarEstadoCotizacion(nIdCabeceraCotizacion, op){
                 var url = this.ruta + '/setcotizacion/SetCambiarEstadoCotizacion';

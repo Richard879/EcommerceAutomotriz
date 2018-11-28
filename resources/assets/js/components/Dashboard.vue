@@ -112,7 +112,7 @@
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                                 <div class="project-title d-flex align-items-center">
-                                    <div class="image has-shadow"><img src="img/project-1.jpg" alt="..." class="img-fluid"></div>
+                                    <div class="image has-shadow"><img src="img/prueba.png" alt="..." class="img-fluid"></div>
                                     <div class="text">
                                         <h3 class="h4">Project Title</h3><small>Lorem Ipsum Dolor</small>
                                     </div>
@@ -135,7 +135,7 @@
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                                 <div class="project-title d-flex align-items-center">
-                                    <div class="image has-shadow"><img src="img/project-2.jpg" alt="..." class="img-fluid"></div>
+                                    <div class="image has-shadow"><img src="img/prueba.png" alt="..." class="img-fluid"></div>
                                     <div class="text">
                                         <h3 class="h4">Project Title</h3><small>Lorem Ipsum Dolor</small>
                                     </div>
@@ -158,7 +158,7 @@
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                                 <div class="project-title d-flex align-items-center">
-                                    <div class="image has-shadow"><img src="img/project-3.jpg" alt="..." class="img-fluid"></div>
+                                    <div class="image has-shadow"><img src="img/prueba.png" alt="..." class="img-fluid"></div>
                                     <div class="text">
                                         <h3 class="h4">Project Title</h3><small>Lorem Ipsum Dolor</small>
                                     </div>
@@ -181,7 +181,7 @@
                         <div class="row bg-white has-shadow">
                             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                                 <div class="project-title d-flex align-items-center">
-                                    <div class="image has-shadow"><img src="img/project-4.jpg" alt="..." class="img-fluid"></div>
+                                    <div class="image has-shadow"><img src="img/prueba.png" alt="..." class="img-fluid"></div>
                                     <div class="text">
                                         <h3 class="h4">Project Title</h3><small>Lorem Ipsum Dolor</small>
                                     </div>
@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="card-body text-center">
                                     <div class="client-avatar">
-                                        <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle">
+                                        <img src="img/prueba.png" alt="..." class="img-fluid rounded-circle">
                                         <div class="status bg-green"></div>
                                     </div>
                                     <div class="client-title">
@@ -320,7 +320,7 @@
                                 <div class="card-body no-padding">
                                     <div class="item d-flex align-items-center">
                                         <div class="image">
-                                            <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle">
+                                            <img src="img/prueba.png" alt="..." class="img-fluid rounded-circle">
                                         </div>
                                         <div class="text">
                                             <a href="#"><h3 class="h5">Lorem Ipsum Dolor</h3></a>
@@ -417,7 +417,7 @@
                                     <div class="item">
                                         <div class="feed d-flex justify-content-between">
                                             <div class="feed-body d-flex justify-content-between">
-                                                <a href="#" class="feed-profile"><img src="img/avatar-5.jpg" alt="person" class="img-fluid rounded-circle"></a>
+                                                <a href="#" class="feed-profile"><img src="img/prueba.png" alt="person" class="img-fluid rounded-circle"></a>
                                                 <div class="content">
                                                     <h5>Aria Smith</h5><span>Posted a new blog </span>
                                                     <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>

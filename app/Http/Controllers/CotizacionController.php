@@ -588,6 +588,32 @@ class CotizacionController extends Controller
         return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion];
     }
 
+    public function GetDetalleCotizacion(Request $request)
+    {
+        // if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa             =   $request->nidempresa;
+        $nIdSucursal            =   $request->nidsucursal;
+        $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
+
+        $bootstrap = public_path('css/bootstrap.css');//CAPTURO LA RUTA DEL ARCHIVO BOOTSTRAP
+        $imagen   = public_path('img/logo.png');//CAPTURO LA RUTA DEL ARCHIVO BOOTSTRAP
+
+        $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetLstDetalleCotizacion] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraCotizacion
+                                    ]);
+
+        $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
+                                                            'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
+                                                            'bootstrap' => $bootstrap,
+                                                            'imagen' => $imagen
+                                                            ]);
+        return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');
+    }
+
     public function GetListObsequiosByVehiculo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
