@@ -486,12 +486,11 @@
                                                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                                         <div class="col-sm-8">
                                                                                             <div class="input-group">
-                                                                                                <input type="hidden" v-model="formNuevoContacto.nidproveedor">
                                                                                                 <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                                 <div class="input-group-prepend">
                                                                                                     <el-tooltip class="item" effect="dark" >
                                                                                                         <div slot="content">Buscar Proveedor </div>
-                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
+                                                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar', 1)">
                                                                                                             <i class="fa-lg fa fa-search"></i>
                                                                                                         </button>
                                                                                                     </el-tooltip>
@@ -508,9 +507,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidlinea" filterable clearable placeholder="SELECCIONE" @change="llenarComboMarca()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayLinea"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                :key="item.nIdLinea"
+                                                                                                :label="item.cLineaNombre"
+                                                                                                :value="item.nIdLinea">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -525,9 +524,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                                                 <el-option
                                                                                                 v-for="item in arrayMarca"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                :key="item.nIdMarca"
+                                                                                                :label="item.cMarcaNombre"
+                                                                                                :value="item.nIdMarca">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -540,9 +539,9 @@
                                                                                             <el-select v-model="formNuevoContacto.nidmodelo" filterable clearable placeholder="SELECCIONE" >
                                                                                                 <el-option
                                                                                                 v-for="item in arrayModelo"
-                                                                                                :key="item.nIdPar"
-                                                                                                :label="item.cParNombre"
-                                                                                                :value="item.nIdPar">
+                                                                                                :key="item.nIdModelo"
+                                                                                                :label="item.cModeloNombre"
+                                                                                                :value="item.nIdModelo">
                                                                                                 </el-option>
                                                                                             </el-select>
                                                                                         </div>
@@ -1009,7 +1008,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-9 offset-sm-4">
+                                                                                <div class="col-sm-9 offset-sm-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
                                                                                     </button>
@@ -1261,7 +1260,7 @@
                                                                         </div>
                                                                     </template>
                                                                     <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                        <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
                                                                                 <i class="fa fa-arrow-right"></i> Siguiente
                                                                             </button>
@@ -1281,7 +1280,6 @@
                                                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                                         <div class="col-sm-8">
                                                                                             <div class="input-group">
-                                                                                                <input type="hidden" v-model="formNuevoContacto.nidproveedor">
                                                                                                 <input type="text" v-model="formNuevoContacto.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                                 <div class="input-group-prepend">
                                                                                                     <el-tooltip class="item" effect="dark" >
@@ -1475,7 +1473,6 @@
                                                                                         <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                                         <div class="col-sm-8">
                                                                                             <div class="input-group">
-                                                                                                <input type="hidden" v-model="formNuevoContacto.nidproveedor2">
                                                                                                 <input type="text" v-model="formNuevoContacto.cproveedornombre2" disabled="disabled" class="form-control form-control-sm">
                                                                                                 <div class="input-group-prepend">
                                                                                                     <el-tooltip class="item" effect="dark" >
@@ -1590,9 +1587,9 @@
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarOtrosIntereses()">
                                                                                         <i class="fa fa-arrow-down"></i> Asignar
                                                                                     </button>
-                                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click="regresarOtrosIntereses()">
+                                                                                    <!--<button type="button" class="btn btn-default btn-corner btn-sm" @click="regresarOtrosIntereses()">
                                                                                         <i class="fa fa-arrow-left"></i> Regresar
-                                                                                    </button>
+                                                                                    </button>-->
                                                                                 </div>
                                                                             </div>
                                                                         </form>
@@ -2821,17 +2818,11 @@
                 }
 
                 $('#Tab11').removeClass('nav-link active');
-                $('#Tab11').addClass('nav-link disabled');
-                $('#Tab22').removeClass('nav-link active');
+                $('#Tab11').addClass('nav-link');
+                $('#Tab22').removeClass('nav-link disabled');
                 $('#Tab22').addClass("nav-link active");
-                $('#Tab33').removeClass('nav-link active');
-                $('#Tab33').addClass('nav-link disabled');
-                $('#Tab44').removeClass('nav-link active');
-                $('#Tab44').addClass('nav-link disabled');
                 $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').addClass('in active show');
-                $('#TabReferenciaVehiculo').removeClass('in active show');
-                $('#TabOtrosIntereses').removeClass('in active show');
             },
             validarTab33(){
                 this.error = 0;
@@ -2926,18 +2917,12 @@
                     return;
                 }
 
-                $('#Tab11').removeClass('nav-link active');
-                $('#Tab11').addClass('nav-link disabled');
                 $('#Tab22').removeClass('nav-link active');
-                $('#Tab22').addClass("nav-link disabled");
+                $('#Tab22').addClass("nav-link");
                 $('#Tab33').removeClass('nav-link disabled');
                 $('#Tab33').addClass('nav-link active');
-                $('#Tab44').removeClass('nav-link active');
-                $('#Tab44').addClass('nav-link disabled');
-                $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').addClass('in active show');
-                $('#TabOtrosIntereses').removeClass('in active show');
                 this.llenarComboLinea();
             },
             llenarComboLinea(){
@@ -3182,22 +3167,16 @@
                     return;
                 }
 
-                $('#Tab11').removeClass('nav-link active');
-                $('#Tab11').addClass('nav-link disabled');
-                $('#Tab22').removeClass('nav-link active');
-                $('#Tab22').addClass("nav-link disabled");
                 $('#Tab33').removeClass('nav-link active');
-                $('#Tab33').addClass('nav-link disabled');
+                $('#Tab33').addClass('nav-link');
                 $('#Tab44').removeClass('nav-link disabled');
                 $('#Tab44').addClass('nav-link active');
-                $('#TabDatosPersonales').removeClass('in active show');
-                $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').removeClass('in active show');
                 $('#TabOtrosIntereses').addClass('in active show');
                 this.llenarComboLinea();
             },
             regresarOtrosIntereses(){
-                $('#Tab11').removeClass('nav-link active');
+                /*$('#Tab11').removeClass('nav-link active');
                 $('#Tab11').addClass('nav-link disabled');
                 $('#Tab22').removeClass('nav-link active');
                 $('#Tab22').addClass("nav-link disabled");
@@ -3208,7 +3187,7 @@
                 $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').addClass('in active show');
-                $('#TabOtrosIntereses').removeClass('in active show');
+                $('#TabOtrosIntereses').removeClass('in active show');*/
             },
             limpiarAsignacion(){
                 //Variables Asignación Referencia Vehiculo
@@ -3356,6 +3335,18 @@
             },
             // =============  REGISTRAR CONTACTO ======================
             registrarNuevoContacto(){
+                if(this.validarTab22()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
+                if(this.validarTab33()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
                 if(this.validarRegistroNuevoContacto()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -3513,6 +3504,7 @@
                 this.listarProveedores(page);
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
+                //SI cFlagReferenciaInteres == 1 TabReferencia
                 if(this.cFlagReferenciaInteres == 1){
                     this.formNuevoContacto.nidproveedor = nProveedorId;
                     this.formNuevoContacto.cproveedornombre = cProveedorNombre;
