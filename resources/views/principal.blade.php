@@ -104,7 +104,7 @@
                                 <li>
                                     <a rel="nofollow" href="#" class="dropdown-item d-flex">
                                         <div class="msg-profile">
-                                            <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle">
+                                            <img src="img/prueba.png" alt="..." class="img-fluid rounded-circle">
                                         </div>
                                         <div class="msg-body">
                                             <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
@@ -114,7 +114,7 @@
                                 <li>
                                     <a rel="nofollow" href="#" class="dropdown-item d-flex">
                                         <div class="msg-profile">
-                                            <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle">
+                                            <img src="img/prueba.png" alt="..." class="img-fluid rounded-circle">
                                         </div>
                                         <div class="msg-body">
                                             <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
@@ -124,7 +124,7 @@
                                 <li>
                                     <a rel="nofollow" href="#" class="dropdown-item d-flex">
                                         <div class="msg-profile">
-                                            <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle">
+                                            <img src="img/prueba.png" alt="..." class="img-fluid rounded-circle">
                                         </div>
                                         <div class="msg-body">
                                             <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
@@ -152,7 +152,7 @@
                         </li>-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="img/avatar-1.jpg" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" alt="admin@bootstrapmaster.com">
+                                <img src="img/prueba.png" class="img-avatar" style="height: 35px; border-radius: 50em; margin: 0 10px;" alt="admin@bootstrapmaster.com">
                                 <span class="d-md-down-none">{{ Auth::user()->usuario }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">

@@ -212,6 +212,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/setcotizacion/SetDistribucionCotizacion', 'CotizacionController@SetDistribucionCotizacion');
     Route::get('/getcotizacion/GetLstDetalleCotizacion', 'CotizacionController@GetLstDetalleCotizacion');
     Route::get('/getcotizacion/GetDatosCotizacion', 'CotizacionController@GetDatosCotizacion');
+    Route::post('/getcotizacion/GetDetalleCotizacion', 'CotizacionController@GetDetalleCotizacion');
 
     Route::get('/getComision/GetLineasByProveedor', 'ComisionController@GetLineasByProveedor');
     Route::get('/getComision/GetParametroByGrupo', 'ComisionController@GetParametroByGrupo');
