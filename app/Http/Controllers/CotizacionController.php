@@ -596,8 +596,8 @@ class CotizacionController extends Controller
         $nIdSucursal            =   $request->nidsucursal;
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
 
-        $bootstrap = public_path('css/bootstrap.css');//CAPTURO LA RUTA DEL ARCHIVO BOOTSTRAP
-        $imagen   = public_path('img/logo.png');//CAPTURO LA RUTA DEL ARCHIVO BOOTSTRAP
+        $logo       = public_path('img/logo.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai    = public_path('img/hyundai.jpg');//CAPTURO LA RUTA DE HYUNDAI
 
         $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetLstDetalleCotizacion] ?, ?, ?',
                                     [
@@ -608,8 +608,8 @@ class CotizacionController extends Controller
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                             'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
-                                                            'bootstrap' => $bootstrap,
-                                                            'imagen' => $imagen
+                                                            'logo' => $logo,
+                                                            'hyundai' => $hyundai
                                                             ]);
         return $pdf->download('Cotización -'.$nIdCabeceraCotizacion.'.pdf');
     }
