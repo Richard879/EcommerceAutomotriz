@@ -1217,6 +1217,7 @@
                 var url = this.ruta + '/versionvehiculo/GetModeloByMarca';
                 axios.get(url, {
                     params: {
+                        'nidlinea': this.formNuevoContacto.nidlinea,
                         'nidmarca': this.formNuevoContacto.nidmarca
                     }
                 }).then(response => {

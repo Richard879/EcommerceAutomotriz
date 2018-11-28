@@ -95,11 +95,18 @@ class GestionContactoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdMarca     = $request->nidmarca;
+        $nIdLinea = $request->nidlinea;
+        $nIdMarca = $request->nidmarca;
         $nIdUsuario   = Auth::user()->id;
 
-        $arrayModelo = DB::select('exec usp_Contacto_GetModelosByMarca ?, ?',
-                                            [$nIdMarca, $nIdUsuario]);
+        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;    
+
+        $arrayModelo = DB::select('exec usp_Contacto_GetModelosByMarca ?, ?, ?',
+                                            [   $nIdLinea,
+                                                $nIdMarca,
+                                                $nIdUsuario
+                                            ]);
 
         return response()->json($arrayModelo);
     }

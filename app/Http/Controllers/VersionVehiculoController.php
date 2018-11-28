@@ -125,10 +125,15 @@ class VersionVehiculoController extends Controller
 
     public function GetModeloByMarca(Request $request)
     {
+        $nIdLinea = $request->nidlinea;
         $nIdMarca = $request->nidmarca;
 
-        $arrayModelo = DB::select('exec [usp_Par_GetModeloByMarca] ?',
-                                                    [   $nIdMarca
+        $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+
+        $arrayModelo = DB::select('exec [usp_Par_GetModeloByMarca] ?, ?',
+                                                    [   $nIdLinea,
+                                                        $nIdMarca
                                                     ]);
 
         $data = [];

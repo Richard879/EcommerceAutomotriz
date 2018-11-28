@@ -639,7 +639,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidmarca' : this.fillVendedor.nidmarca
+                        'nidlinea': this.fillVendedor.nidlinea,
+                        'nidmarca': this.fillVendedor.nidmarca
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
