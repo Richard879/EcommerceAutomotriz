@@ -535,7 +535,7 @@
                     nidsubclase: '',
                     nidlinea: '',
                     nidmarca: '',
-                    nidmodelo: 0,
+                    nidmodelo: '',
                     nidversionveh: 0,
                     cnombrecomercial:''
                 },
@@ -677,7 +677,7 @@
                         this.formVersion.nidmarca = '';
                     }
                     this.arrayModelo = [];
-                    this.llenarComboModelo();
+                    //this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
                 });
@@ -687,7 +687,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidmarca' : this.formVersion.nidmarca
+                        'nidlinea': this.formVersion.nidlinea,
+                        'nidmarca': this.formVersion.nidmarca
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;

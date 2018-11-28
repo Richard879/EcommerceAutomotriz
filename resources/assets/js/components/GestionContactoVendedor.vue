@@ -2996,6 +2996,7 @@
 
                 axios.get(url, {
                     params: {
+                        'nidlinea': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidlinea : this.formNuevoContacto.nidlinea2,
                         'nidmarca': (this.cFlagReferenciaInteres == 1) ? this.formNuevoContacto.nidmarca : this.formNuevoContacto.nidmarca2
                     }
                 }).then(response => {
