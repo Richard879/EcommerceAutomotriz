@@ -1008,7 +1008,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <div class="col-sm-9 offset-sm-4">
+                                                                                <div class="col-sm-9 offset-sm-5">
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab22();">
                                                                                         <i class="fa fa-arrow-right"></i> Siguiente
                                                                                     </button>
@@ -1260,7 +1260,7 @@
                                                                         </div>
                                                                     </template>
                                                                     <div class="form-group row">
-                                                                        <div class="col-sm-9 offset-sm-4">
+                                                                        <div class="col-sm-9 offset-sm-5">
                                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarTab33();">
                                                                                 <i class="fa fa-arrow-right"></i> Siguiente
                                                                             </button>
@@ -1587,9 +1587,9 @@
                                                                                     <button type="button" class="btn btn-success btn-corner btn-sm" @click="asignarOtrosIntereses()">
                                                                                         <i class="fa fa-arrow-down"></i> Asignar
                                                                                     </button>
-                                                                                    <button type="button" class="btn btn-default btn-corner btn-sm" @click="regresarOtrosIntereses()">
+                                                                                    <!--<button type="button" class="btn btn-default btn-corner btn-sm" @click="regresarOtrosIntereses()">
                                                                                         <i class="fa fa-arrow-left"></i> Regresar
-                                                                                    </button>
+                                                                                    </button>-->
                                                                                 </div>
                                                                             </div>
                                                                         </form>
@@ -3176,7 +3176,7 @@
                 this.llenarComboLinea();
             },
             regresarOtrosIntereses(){
-                $('#Tab11').removeClass('nav-link active');
+                /*$('#Tab11').removeClass('nav-link active');
                 $('#Tab11').addClass('nav-link disabled');
                 $('#Tab22').removeClass('nav-link active');
                 $('#Tab22').addClass("nav-link disabled");
@@ -3187,7 +3187,7 @@
                 $('#TabDatosPersonales').removeClass('in active show');
                 $('#TabDatosContacto').removeClass('in active show');
                 $('#TabReferenciaVehiculo').addClass('in active show');
-                $('#TabOtrosIntereses').removeClass('in active show');
+                $('#TabOtrosIntereses').removeClass('in active show');*/
             },
             limpiarAsignacion(){
                 //Variables Asignación Referencia Vehiculo
