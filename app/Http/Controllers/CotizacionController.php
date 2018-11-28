@@ -592,14 +592,14 @@ class CotizacionController extends Controller
     {
         // if (!$request->ajax()) return redirect('/');
 
-        $nIdEmpresa             =   $request->nidempresa;
-        $nIdSucursal            =   $request->nidsucursal;
+        $nIdEmpresa             =   $request->nIdEmpresa;
+        $nIdSucursal            =   $request->nIdSucursal;
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
 
         $logo       = public_path('img/logo.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai    = public_path('img/hyundai.jpg');//CAPTURO LA RUTA DE HYUNDAI
 
-        $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetLstDetalleCotizacion] ?, ?, ?',
+        $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetDetalleCotizacion] ?, ?, ?',
                                     [
                                         $nIdEmpresa,
                                         $nIdSucursal,

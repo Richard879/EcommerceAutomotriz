@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cotización</title>
+    <title>Cotización {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }} </title>
     <style type="text/css">
         @page {
             margin: 0px;
@@ -81,12 +81,12 @@
             </tr>
             <tr>
                 <td valign="top">
-                    <h3>Chiclayo - Av. Mariscal Nieto #480 CC Boulevard</h3>
+                    <h3>{{ $arrayDetalleCotizacion[0]->cSucursal }} - {{ $arrayDetalleCotizacion[0]->cDireccionSucursal }}</h3>
                 </td>
                 <td align="right">
-                    <h3>Chiclayo Jueves, 15 de Noviembre de 2018</h3>
+                    <h3>{{ $arrayDetalleCotizacion[0]->cFechaCotizacion }}</h3>
                     <pre>
-                        N°: 22018-052079
+                        {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }}
                     </pre>
                 </td>
             </tr>
@@ -96,15 +96,15 @@
     <div class="padding">
         <table width="100%">
             <tr>
-                <td>Nombre/Razón Social: <strong>LINARES ACUNA GRICERIO</strong></td>
+                <td>Nombre/Razón Social: <strong>{{ $arrayDetalleCotizacion[0]->cContacto }}</strong></td>
             </tr>
             <tr>
-                <td>Dirección: <strong>CALLE 28 DE JULIO 170 POSOPE CENTRO:</strong></td>
+                <td>Dirección: <strong>{{ $arrayDetalleCotizacion[0]->cDireccion }}</strong></td>
             </tr>
             <tr>
-                <td>DNI/RUC: <strong>40438902</strong></td>
-                <td>Telf. Fijo: <strong>948224267</strong></td>
-                <td>Telf. Fijo: <strong></strong></td>
+                <td>DNI/RUC: <strong>{{ $arrayDetalleCotizacion[0]->cNumeroDocumento }}</strong></td>
+                <td>Telf. Fijo: <strong>{{ $arrayDetalleCotizacion[0]->cTelefonoFijo }}</strong></td>
+                <td>Telf. Celular: <strong>{{ $arrayDetalleCotizacion[0]->cTelefonoMovil }}</strong></td>
             </tr>
             <br/>
             <tr>
