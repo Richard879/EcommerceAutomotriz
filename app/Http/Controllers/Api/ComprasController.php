@@ -25,9 +25,9 @@ class ComprasController extends Controller
         ]);
 
         $response = $client->request('POST', "/Sap/api/Compra/PostCliente");
-            
+
         $posts = json_decode($response->getBody()->getContents());
         return $posts;
-       // return 1;   
+       // return 1;
     }
 }
