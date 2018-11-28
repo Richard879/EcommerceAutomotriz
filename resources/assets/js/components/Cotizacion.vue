@@ -1026,7 +1026,7 @@
                                                                                 </table>
                                                                             </template>
                                                                             <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
-                                                                            <template v-if="arrayConfiCotiEleVentaPorRegalar.length">
+                                                                            <template v-if="arrayConfiCotiObsequios.length">
                                                                                 <vs-divider border-style="solid" color="dark">
                                                                                     Obsequios
                                                                                 </vs-divider>
@@ -1042,7 +1042,7 @@
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                            <tr v-for="cotieleventa in arrayConfiCotiEleVentaPorRegalar" :key="cotieleventa.nIdContacto">
+                                                                                            <tr v-for="cotieleventa in arrayConfiCotiObsequios" :key="cotieleventa.nIdContacto">
                                                                                                 <td colspan="3" v-text=" cotieleventa.nombreOBS"></td>
                                                                                                 <td v-text=" cotieleventa.nombreEV"></td>
                                                                                                 <td v-text="cotieleventa.cantidad"></td>
@@ -1056,11 +1056,11 @@
                                                                                     <div class="row flex-rigth-margin">
                                                                                         <div class="form-group row">
                                                                                             <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalar = totalElementoVentaPorRegalar }}</strong></label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiObsequios = totalElementoVentaPorRegalar }}</strong></label>
                                                                                         </div>
                                                                                         <div class="form-group row">
                                                                                             <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiEleVentaPorRegalarSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
+                                                                                            <label class="form-control-label"><strong>{{ montoTotalConfiCotiObsequiosSoles = totalElementoVentaPorRegalarSoles }}</strong></label>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -2458,10 +2458,10 @@
                 arrayConfiCotiVehiculo: [],
                 montoTotalConfiCotiVehiculo: 0,
                 montoTotalConfiCotiVehiculoSoles: 0,
-                //Ele Venta Por Regalar
-                arrayConfiCotiEleVentaPorRegalar: [],
-                montoTotalConfiCotiEleVentaPorRegalar: 0,
-                montoTotalConfiCotiEleVentaPorRegalarSoles: 0,
+                //Obsequios
+                arrayConfiCotiObsequios: [],
+                montoTotalConfiCotiObsequios: 0,
+                montoTotalConfiCotiObsequiosSoles: 0,
                 //Ele Venta
                 arrayConfiCotiEleVenta: [],
                 montoTotalConfiCotiEleVenta: 0,
@@ -2708,13 +2708,13 @@
             //Calcula SubTotales y Total del TAB Cotización - Elemento Venta Por Regalar
             /*totalConfiCotiEleVentaPorRegalar: function(){
                 let me = this;
-                return me.arrayConfiCotiEleVentaPorRegalar.reduce(function(valorAnterior, valorActual){
+                return me.arrayConfiCotiObsequios.reduce(function(valorAnterior, valorActual){
                     return valorAnterior + parseFloat(valorActual.subtotal);
                 }, 0);
             },
             totalConfiCotiEleVentaPorRegalarSoles: function(){
                 let me = this;
-                let montoconvertido = me.montoTotalConfiCotiEleVentaPorRegalar * me.fValorTipocambioComercial;
+                let montoconvertido = me.montoTotalConfiCotiObsequios * me.fValorTipocambioComercial;
                 montoconvertido = Number((montoconvertido).toFixed(2));
                 return montoconvertido;
             },*/
@@ -3939,7 +3939,7 @@
 
                 //Setear arrays vacío
                 me.arrayConfiCotiVehiculo = [];//Seteo array detalle de vehiculos
-                me.arrayConfiCotiEleVentaPorRegalar = []//Seteo array de ele venta por regalar
+                me.arrayConfiCotiObsequios = []//Seteo array de ele venta por regalar
                 me.arrayConfiCotiEleVenta = [];//Seteo array detalle de ele venta
                 me.arrayConfiCotiEventoEleVenta = [];//Seteo array detalle ele venta de campaña
                 me.arrayMontosCotizacion = [];//Seteo array de totales calculados
@@ -3971,7 +3971,7 @@
                 // ====================================
                 if(me.arrayObsequioEleVentaModal.length > 0){
                     me.arrayObsequioEleVentaModal.map(function(ev){
-                        me.arrayConfiCotiEleVentaPorRegalar.push({
+                        me.arrayConfiCotiObsequios.push({
                             codigoEV     : ev.nIdElementoVenta,
                             codigoOBS     : ev.nIdObsequio,
                             codigoOEV    : ev.nIdObsequioElementoVenta,
@@ -4043,22 +4043,22 @@
 
                 var url = this.ruta + '/gescotizacion/SetCabeceraCotizacion';
                 axios.post(url, {
-                    'nIdAsignacionContactoVendedor': parseInt(this.fillAsignarContacto.nidasignarcontacto),
-                    'cNumeroCotizacion' :   'COT-001',
-                    'nIdEmpresa'        :   parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nIdSucursal'       :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nIdContacto'       :   this.fillAsignarContacto.nidcontacto,
-                    'nIdReferencia'     :   1300129,
-                    'dFechaCotizacion'  :   moment().format('YYYY-MM-DD'),
+                    'nIdAsignacionContactoVendedor' :   parseInt(this.fillAsignarContacto.nidasignarcontacto),
+                    'cNumeroCotizacion'             :   'COT-001',
+                    'nIdEmpresa'                    :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'                   :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdContacto'                   :   this.fillAsignarContacto.nidcontacto,
+                    'nIdReferencia'                 :   1300129,
+                    'dFechaCotizacion'              :   moment().format('YYYY-MM-DD'),
                     'dFechaVencimientoCotizacion'   :   moment().add(7, 'days').format('YYYY-MM-DD'),
-                    'fTipoCambioVenta'  :   this.fValorTipoCambioVenta,
-                    'fTipoCambioCompra' :   this.fValorTipoCambioCompra,
-                    'fTipoCambioComercial' : this.fValorTipocambioComercial,
+                    'fTipoCambioVenta'              :   this.fValorTipoCambioVenta,
+                    'fTipoCambioCompra'             :   this.fValorTipoCambioCompra,
+                    'fTipoCambioComercial'          :   this.fValorTipocambioComercial,
                     'fTotalCotizacionVehiculoDolar' :   this.montoTotalConfiCotiVehiculo,
                     'fTotalCotizacionVehiculoSol'   :   this.montoTotalConfiCotiVehiculoSoles,
                     'fTotalElementoVentaDolar'      :   this.montoTotalConfiCotiEleVenta,
                     'fTotalElementoVentaSol'        :   this.montoTotalConfiCotiEleVentaSoles,
-                    'cGlosa'    :   this.observacionDscto
+                    'cGlosa'                        :   this.observacionDscto
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
@@ -4081,20 +4081,34 @@
                         nIdCabeCoti: nIdCabeCoti,
                         fTipoCambioComercial: this.fValorTipocambioComercial,
                         fDy: this.fDy,
-                        arrayevporregalar: this.arrayConfiCotiEleVentaPorRegalar,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
+                        arrayobsequios: this.arrayConfiCotiObsequios,
                         arrayelemventa: this.arrayConfiCotiEleVenta,
                         arrayeventoeleventa: this.arrayConfiCotiEventoEleVenta
                     }).then(response => {
-                        //CAPTURO EL SUPERA DSCTO Y SI HAY E.V POR REGALAR
-                        if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N'){
-                            //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
-                            this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
-                            swal('Cotización generada y aprobada exitosamente');
-                        } else {
-                            this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
+                        // ADV cuando existen solo promociones y/o obsequios
+                        // GERENCIA cuando existen solo dscto
+                        if (response.data.contGerencia > 0){
+                            this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
+                        } else {
+                            if (response.data.contADV > 0) {
+                                this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
+                                swal('Cotización generada exitosamente, pendiente de Aprobación');
+                            } else {
+                                this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 1);
+                                swal('Cotización generada y aprobada exitosamente');
+                            }
                         }
+
+                        // if (response.data.arrayDatosCotizacion[0].cFlagSuperaDescuento == 'N'){
+                        //     //GENERAR LA APROBACION DE LA COTIZACIÓN DE MANERA AUTOMATICA
+                        //     this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 1);
+                        //     swal('Cotización generada y aprobada exitosamente');
+                        // } else {
+                        //     this.cambiarEstadoCotizacion(response.data.arrayDatosCotizacion[0].nIdCabeceraCotizacion, 2);
+                        //     swal('Cotización generada exitosamente, pendiente de Aprobación');
+                        // }
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
@@ -4176,7 +4190,7 @@
 
                 this.arrayMontosCotizacion = [];
                 this.arrayConfiCotiVehiculo = [];
-                this.arrayConfiCotiEleVentaPorRegalar = [];
+                this.arrayConfiCotiObsequios = [];
                 this.arrayConfiCotiEleVenta = [];
                 this.arrayConfiCotiEventoEleVenta = [];
 
@@ -4191,8 +4205,8 @@
 
                 this.montoTotalConfiCotiVehiculo = 0;
                 this.montoTotalConfiCotiVehiculoSoles = 0;
-                this.montoTotalConfiCotiEleVentaPorRegalar = 0;
-                this.montoTotalConfiCotiEleVentaPorRegalarSoles = 0;
+                this.montoTotalConfiCotiObsequios = 0;
+                this.montoTotalConfiCotiObsequiosSoles = 0;
                 this.montoTotalConfiCotiEleVenta = 0;
                 this.montoTotalConfiCotiEleVentaSoles = 0;
                 this.montoTotalCotizacion = 0;
