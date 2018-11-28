@@ -18,4 +18,16 @@ class ComprasController extends Controller
         $posts = json_decode($response->getBody()->getContents());
         return $posts;
     }
+
+    public function SetCliente(){
+        $client = new Client([
+            'base_uri' => 'http://172.20.6.62/',// URI Ejem: https://jsonplaceholder.typicode.com
+        ]);
+
+        $response = $client->request('POST', "/Sap/api/Compra/PostCliente");
+            
+        $posts = json_decode($response->getBody()->getContents());
+        return $posts;
+       // return 1;   
+    }
 }
