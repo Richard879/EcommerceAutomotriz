@@ -4002,6 +4002,18 @@
             },
             // =============  REGISTRAR CONTACTO ======================
             registrarNuevoContacto(){
+                if(this.validarTab22()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
+                if(this.validarTab33()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+                
                 if(this.validarRegistroNuevoContacto()){
                     this.accionmodal=1;
                     this.modal = 1;
