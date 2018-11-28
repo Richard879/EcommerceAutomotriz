@@ -459,7 +459,7 @@
                                                         <ul class="nav nav-tabs">
                                                             <li class="nav-item">
                                                                 <a class="nav-link active" id="Tab1" href="#TabAsignarCompra" @click="tabAsignarCompra()" role="tab" data-toggle="tab">
-                                                                    <i class="fa fa fa-bus"></i> ASIGNAR COMPRA
+                                                                    <i class="fa fa fa-bus"></i> ASIGNAR VEHÍCULO
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item">
@@ -481,7 +481,7 @@
                                                                         <div class="col-lg-12">
                                                                             <div class="card">
                                                                                 <div class="card-header">
-                                                                                    <h3 class="h4">ASIGNAR COMPRA</h3>
+                                                                                    <h3 class="h4">ASIGNAR VEHÍCULO</h3>
                                                                                 </div>
                                                                                 <div class="card-body">
                                                                                     <form class="form-horizontal">
@@ -516,7 +516,7 @@
                                                                         <div class="col-lg-12">
                                                                             <div class="card">
                                                                                 <div class="card-header">
-                                                                                    <h3 class="h4">LISTADO COMPRAS</h3>
+                                                                                    <h3 class="h4">LISTADO UNIDADES</h3>
                                                                                 </div>
                                                                                 <div class="card-body">
                                                                                     <template v-if="arrayCompra.length">
@@ -1058,7 +1058,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1087,7 +1087,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1116,7 +1116,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1320,7 +1320,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1349,7 +1349,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1378,7 +1378,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -1711,7 +1711,7 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;           
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -2025,7 +2025,7 @@
                 let selectFile = e.target.files;
                 this.arrayValidaAttachment.length = this.arrayTablaDocumento.length;
                 this.arrayValidaAttachment[index] = selectFile;
-                
+
 
                 for(let i= 0; i < selectFile.length; i++){
                     this.attachment.push({
@@ -2091,7 +2091,7 @@
             },
             subirArchivos(nIdCabeceraPedido){
                 let me = this;
-                
+
                 me.mostrarProgressBar();
 
                 me.attachment.map(function(value, i) {
@@ -2099,7 +2099,7 @@
                         me.form.append('file[]', value.archivo);
                     }
                 });
-                
+
                 me.arrayTablaDocumento.map(function(info, key) {
                     me.attachment.map(function(value, i) {
                         if(me.attachment[i] && info.nIdPar == value.nIdTabla){
@@ -2108,7 +2108,7 @@
                             me.form.append('data['+i+']["cParArchivoNombre"]', value.nameFile);
                             me.form.append('data['+i+']["nIdCabeceraPedido"]', nIdCabeceraPedido);
                         }
-                    });                    
+                    });
                 });
 
                 const config = { headers: { 'Content-Type': 'multipart/form-data'  } };

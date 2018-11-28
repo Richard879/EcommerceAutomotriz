@@ -17,6 +17,5 @@ class ComprasController extends Controller
 
         $posts = json_decode($response->getBody()->getContents());
         return $posts;
-        //dd($posts);
     }
 }

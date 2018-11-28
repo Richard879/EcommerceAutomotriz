@@ -144,27 +144,35 @@
                                                                     <td>
                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                             <div slot="content">Ver Detalle Cotizacion {{ cotizacionpendiente.nIdCabeceraCotizacion }}</div>
-                                                                            <i @click="abrirModal('cotizacion', 'detalle', cotizacionpendiente)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                            <i  @click="abrirModal('cotizacion', 'detalle', cotizacionpendiente)"
+                                                                                :style="'color:#796AEE'"
+                                                                                class="fa-md fa fa-eye"></i>
                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                         <!-- Opcion del Jefe de Ventas -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Conformidad de Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                <i  @click="conformeNoConformeCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-check-circle"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                         </template>
                                                                         <!-- Opcion del ADV -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Distribuir Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-usd"></i>
+                                                                                <i  @click="abrirModal('distribucion', 'abrir', cotizacionpendiente.nIdCabeceraCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-usd"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                         </template>
                                                                         <!-- Opción de Jefe de Ventas y ADV -->
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110025 || cotizacionpendiente.cTipoRol == 110083">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                <i  @click="conformeNoConformeCotizacion(3, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:red'"
+                                                                                    class="fa-md fa fa-trash"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                         </template>
 
@@ -172,11 +180,15 @@
                                                                         <template v-if="cotizacionpendiente.cTipoRol == 110096">
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Aprobar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                                <i  @click="aprobarNoaprobarCotizacion(1, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:#796AEE'"
+                                                                                    class="fa-md fa fa-check-circle"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                 <div slot="content">Rechazar Cotización {{ cotizacionpendiente.cNumeroCotizacion }}</div>
-                                                                                <i @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)" :style="'color:red'" class="fa-md fa fa-trash"></i>
+                                                                                <i  @click="aprobarNoaprobarCotizacion(2, cotizacionpendiente.nIdCabeceraCotizacion, cotizacionpendiente.cNumeroCotizacion)"
+                                                                                    :style="'color:red'"
+                                                                                    class="fa-md fa fa-trash"></i>
                                                                             </el-tooltip>&nbsp;&nbsp;
                                                                         </template>
                                                                     </td>
@@ -282,138 +294,149 @@
                                                 </div>
                                                 <br>
                                             </div>
-                                            <template v-if="listDistribucionDescuento.length">
-                                                <vs-divider border-style="solid" color="dark">
-                                                    Distribución del Descuento Superado
-                                                </vs-divider>
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Código</th>
-                                                                <th>Proveedor</th>
-                                                                <th>Nombre Comercial</th>
-                                                                <th>Precio de Venta Soles</th>
-                                                                <th>Precio de Venta Dolares</th>
-                                                                <th>Descuento</th>
-                                                                <th>Supera Dscto</th>
-                                                                <th>Proveedor</th>
-                                                                <th>% Distribución</th>
-                                                            </tr>
-                                                        </thead>
+                                            <template v-if="cflagVerificaDistribucionAprobacion">
+                                                <template v-if="listDistribucionDescuento.length">
+                                                    <vs-divider border-style="solid" color="dark">
+                                                        Distribución del Descuento Superado
+                                                    </vs-divider>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Nombre Comercial</th>
+                                                                    <th>Precio de Venta Soles</th>
+                                                                    <th>Precio de Venta Dolares</th>
+                                                                    <th>Descuento</th>
+                                                                    <th>Supera Dscto</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>% Distribución</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
+                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                    <td v-text="descuento.cProveedorNombre"></td>
+                                                                    <td v-text="descuento.cNombreComercial"></td>
+                                                                    <td v-text="descuento.fSubTotalSoles"></td>
+                                                                    <td v-text="descuento.fSubTotalDolares"></td>
+                                                                    <td v-text="descuento.fDescuento"></td>
+                                                                    <td v-text="descuento.fSuperaDescuento"></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <el-select v-model="descuento.nIdProveedor"
+                                                                                    filterable clearable
+                                                                                    placeholder="SELECCIONE PROVEEDOR" >
+                                                                                <el-option
+                                                                                    v-for="item in arrayProveedor"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
                                                         <tbody>
-                                                            <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
-                                                                <td v-text="descuento.nIdCabeceraCotizacion"></td>
-                                                                <td v-text="descuento.cProveedorNombre"></td>
-                                                                <td v-text="descuento.cNombreComercial"></td>
-                                                                <td v-text="descuento.fSubTotalSoles"></td>
-                                                                <td v-text="descuento.fSubTotalDolares"></td>
-                                                                <td v-text="descuento.fDescuento"></td>
-                                                                <td v-text="descuento.fSuperaDescuento"></td>
-                                                                <td>
-                                                                    <div class="input-group">
-                                                                        <el-select v-model="descuento.nIdProveedor"
-                                                                                filterable clearable
-                                                                                placeholder="SELECCIONE PROVEEDOR" >
-                                                                            <el-option
-                                                                                v-for="item in arrayProveedor"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                            </el-option>
-                                                                        </el-select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
-                                                                </td>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </template>
-                                            <template v-if="listDistribucionEVPorRegalar.length">
-                                                <vs-divider border-style="solid" color="dark">
-                                                    Distribución de Elementos de Venta por Regalar
-                                                </vs-divider>
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Código</th>
-                                                                <th>Proveedor</th>
-                                                                <th>Tipo Elemento</th>
-                                                                <th>Nombre Elemento</th>
-                                                                <th>Moneda</th>
-                                                                <th>Precio de Venta</th>
-                                                                <th>Cantidad</th>
-                                                                <th>SubTotalSoles</th>
-                                                                <th>SubTotalDolares</th>
-                                                                <th>Proveedor</th>
-                                                                <th>% Distribución</th>
-                                                            </tr>
-                                                        </thead>
+                                                </template>
+                                                <!-- <template v-if="listDistribucionEVPorRegalar.length">
+                                                    <vs-divider border-style="solid" color="dark">
+                                                        Distribución de Elementos de Venta por Regalar
+                                                    </vs-divider>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Tipo Elemento</th>
+                                                                    <th>Nombre Elemento</th>
+                                                                    <th>Moneda</th>
+                                                                    <th>Precio de Venta</th>
+                                                                    <th>Cantidad</th>
+                                                                    <th>SubTotalSoles</th>
+                                                                    <th>SubTotalDolares</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>% Distribución</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="elemento in listDistribucionEVPorRegalar" :key="elemento.nIdElementoVenta">
+                                                                    <td v-text="elemento.nIdElementoVenta"></td>
+                                                                    <td v-text="elemento.cProveedorNombre"></td>
+                                                                    <td v-text="elemento.cTipoElemenNombre"></td>
+                                                                    <td v-text="elemento.cElemenNombre"></td>
+                                                                    <td v-text="elemento.cNombreMoneda"></td>
+                                                                    <td v-text="elemento.fElemenValorVenta"></td>
+                                                                    <td v-text="elemento.nCantidad"></td>
+                                                                    <td v-text="elemento.fSubTotalSoles"></td>
+                                                                    <td v-text="elemento.fSubTotalDolares"></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <el-select v-model="elemento.nIdProveedor"
+                                                                                    filterable clearable
+                                                                                    placeholder="SELECCIONE" >
+                                                                                <el-option
+                                                                                    v-for="item in arrayProveedor"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" v-model="elemento.fDistribucion" @keyup="validarDistribucionEV" min="0" max="100" maxlength="3" class="form-control form-control-sm">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
                                                         <tbody>
-                                                            <tr v-for="elemento in listDistribucionEVPorRegalar" :key="elemento.nIdElementoVenta">
-                                                                <td v-text="elemento.nIdElementoVenta"></td>
-                                                                <td v-text="elemento.cProveedorNombre"></td>
-                                                                <td v-text="elemento.cTipoElemenNombre"></td>
-                                                                <td v-text="elemento.cElemenNombre"></td>
-                                                                <td v-text="elemento.cNombreMoneda"></td>
-                                                                <td v-text="elemento.fElemenValorVenta"></td>
-                                                                <td v-text="elemento.nCantidad"></td>
-                                                                <td v-text="elemento.fSubTotalSoles"></td>
-                                                                <td v-text="elemento.fSubTotalDolares"></td>
-                                                                <td>
-                                                                    <div class="input-group">
-                                                                        <el-select v-model="elemento.nIdProveedor"
-                                                                                filterable clearable
-                                                                                placeholder="SELECCIONE" >
-                                                                            <el-option
-                                                                                v-for="item in arrayProveedor"
-                                                                                :key="item.nIdPar"
-                                                                                :label="item.cParNombre"
-                                                                                :value="item.nIdPar">
-                                                                            </el-option>
-                                                                        </el-select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" v-model="elemento.fDistribucion" @keyup="validarDistribucionEV" min="0" max="100" maxlength="3" class="form-control form-control-sm">
-                                                                </td>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                </template> -->
+                                                <div class="form-group row">
+                                                    <div class="col-sm-9 offset-sm-4">
+                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
+                                                            <i class="fa fa-save"></i> DISTRIBUIR
+                                                        </button>
+                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
+                                                            <i class="fa fa-recycle"></i> LIMPIAR
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </template>
                                             <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </template>
-                                            <div class="form-group row">
-                                                <div class="col-sm-9 offset-sm-4">
-                                                    <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
-                                                        <i class="fa fa-save"></i> DISTRIBUIR
-                                                    </button>
-                                                    <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
-                                                        <i class="fa fa-recycle"></i> LIMPIAR
-                                                    </button>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-8 offset-sm-4">
+                                                        <button type="button" class="btn btn-success btn-corne" @click.prevent="cambiarEstadoCotizacion(nIdCabeceraCotizacion, 1)">
+                                                            <i class="fa-md fa fa-check-circle"></i> APROBAR
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </template>
                                         </form>
                                     </div>
                                 </div>
@@ -577,7 +600,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -606,7 +629,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -635,7 +658,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaEVPorRegalar=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -690,7 +713,9 @@
                 arrayDistribucionDescuento: [],
                 listDistribucionDescuento: [],
                 arrayDistribucionEVPorRegalar: [],
-                listDistribucionEVPorRegalar: [],
+                // listDistribucionEVPorRegalar: [],
+                cflagVerificaDistribucionAprobacion: true,
+                nIdCabeceraCotizacion: '',
                 // =============================================================
                 // MODAL DETALLE COTIZACION
                 fillDetalleCotizacion:{
@@ -995,8 +1020,30 @@
                 this.$forceUpdate();
             },
             /**
-             * MODAL DISTRIBUCIÓN ELEMENTO VENTAS Y SUPERA DSCTO
+             * MODAL DISTRIBUCIÓN SUPERA DSCTO
              */
+            verificarDatosCotizacion(nIdCabeceraCotizacion){
+                var url = this.ruta + '/getcotizacion/GetDatosCotizacion';
+                axios.get(url, {
+                    params: {
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                    }
+                }).then(response => {
+                    if (response.data.contGerencia > 0){
+                        this.cflagVerificaDistribucionAprobacion = true;
+                    } else {
+                        this.cflagVerificaDistribucionAprobacion = false;
+                        this.nIdCabeceraCotizacion = nIdCabeceraCotizacion;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             listarDistribucionDescuento(nIdCabeceraCotizacion){
                 var url = this.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
                 axios.get(url, {
@@ -1082,7 +1129,6 @@
             },*/
             listarProveedores(page){
                 var url = this.ruta + '/parametro/GetLstProveedor';
-
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -1118,6 +1164,7 @@
                     me.$forceUpdate();
                 });
             },
+            /*
             validarDistribucionEV(){
                 let me = this;
                 this.listDistribucionEVPorRegalar.map(function (x, y) {
@@ -1133,7 +1180,7 @@
                     }
                     me.$forceUpdate();
                 });
-            },
+            },*/
             registrarDistribucion(){
                 if(this.validarRegistrarDistribucion()){
                     return;
@@ -1141,8 +1188,8 @@
 
                 var url = this.ruta + '/setcotizacion/SetDistribucionCotizacion';
                 axios.post(url, {
-                    listDistribucionDescuento: this.listDistribucionDescuento,
-                    listDistribucionEVPorRegalar: this.listDistribucionEVPorRegalar
+                    listDistribucionDescuento: this.listDistribucionDescuento
+                    // listDistribucionEVPorRegalar: this.listDistribucionEVPorRegalar
                 }).then(response => {
                     if (this.nIdGrupoUsuario == '110083') {
                         //GENERAR LA CONFORMIDAD HACIA EL GERENTE
@@ -1172,6 +1219,8 @@
                     this.cerrarModal();
                     this.limpiarModalDistribucion();
                     this.buscarCotizacionesPendientes(1);
+                    this.cflagVerificaDistribucionAprobacion = true;
+                    this.nIdCabeceraCotizacion = '';
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1187,30 +1236,31 @@
                 let me = this;
 
                 //VALIDAR SECCIÓN DE DISTRIBUCIÓN DE SUPERA DESCUENTO
-                let flagIdProveedorDscto = 0;
-                this.listDistribucionDescuento.map(function (x) {
-                    if(x.nIdProveedor == ''){
-                        flagIdProveedorDscto = true;
+                if(this.listDistribucionDescuento.length > 0) {
+                    let flagIdProveedorDscto = 0;
+                    this.listDistribucionDescuento.map(function (x) {
+                        if(x.nIdProveedor == ''){
+                            flagIdProveedorDscto = true;
+                        }
+                    });
+                    if (flagIdProveedorDscto == true) {
+                        this.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
                     }
-                });
-                if (flagIdProveedorDscto == true) {
-                    this.mensajeError.push('Debe seleccionar un proveedor en la sección Supera Descuento');
+
+                    let flagDistribucionDscto = 0;
+                    this.listDistribucionDescuento.map(function (x) {
+                        if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
+                            flagDistribucionDscto = true;
+                            x.fDistribucion = 0;//Seteado a 0
+                        }
+                        me.$forceUpdate();
+                    });
+                    if (flagDistribucionDscto == true) {
+                        this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
+                    }
                 }
 
-                let flagDistribucionDscto = 0;
-                this.listDistribucionDescuento.map(function (x) {
-                    if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
-                        flagDistribucionDscto = true;
-                        x.fDistribucion = 0;//Seteado a 0
-                    }
-                    me.$forceUpdate();
-                });
-                if (flagDistribucionDscto == true) {
-                    this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
-                }
-
-
-                //VALIDAR SECCIÓN DE DISTRIBUCIÓN DE EV POR REGALAR
+                /*VALIDAR SECCIÓN DE DISTRIBUCIÓN DE EV POR REGALAR
                 let flagIdProveedorEV = 0;
                 this.listDistribucionEVPorRegalar.map(function (x) {
                     if(x.nIdProveedor == ''){
@@ -1231,7 +1281,7 @@
                 });
                 if (flagDistribucionEV == true) {
                     this.mensajeError.push('No puede superar los margenes del 0 - 100 en la Sección Ev Por Regalar');
-                }
+                }*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1240,19 +1290,19 @@
             },
             limpiarModalDistribucion(){
                 this.arrayDistribucionDescuento = [];
-                this.arrayDistribucionEVPorRegalar = [];
+                // this.arrayDistribucionEVPorRegalar = [];
                 this.listDistribucionDescuento = [];
-                this.listDistribucionEVPorRegalar = [];
+                // this.listDistribucionEVPorRegalar = [];
             },
             limpiarDistribucion(){
                 this.listDistribucionDescuento.map(function (x) {
                     x.nIdProveedor = '';
                     x.fDistribucion = 0;
                 });
-                this.listDistribucionEVPorRegalar.map(function (x) {
-                    x.nIdProveedor = '';
-                    x.fDistribucion = 0;
-                });
+                // this.listDistribucionEVPorRegalar.map(function (x) {
+                //     x.nIdProveedor = '';
+                //     x.fDistribucion = 0;
+                // });
             },
             /**
              * Aprobación Gerencia
@@ -1303,11 +1353,12 @@
                         switch(accion){
                             case 'abrir':
                             {
-                                this.accionmodal=2;
-                                this.modal = 1;
+                                this.verificarDatosCotizacion(data);
                                 this.listarProveedores(1);
                                 this.listarDistribucionDescuento(data);
-                                this.listarDistribucionEVPorRegalar(data);
+                                // this.listarDistribucionEVPorRegalar(data);
+                                this.accionmodal=2;
+                                this.modal = 1;
                                 break;
                             }
                         }

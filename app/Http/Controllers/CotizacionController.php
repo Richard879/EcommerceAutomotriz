@@ -121,10 +121,10 @@ class CotizacionController extends Controller
             }
 
             //================ OBSEQUIOS =======================
-            $arrayevporregalarlength = sizeof($request->arrayevporregalar);
+            $arrayevporregalarlength = sizeof($request->arrayobsequios);
             if($arrayevporregalarlength > 0){
-                $arrayevporregalar = $request->arrayevporregalar;
-                foreach($arrayevporregalar as $ep=>$det)
+                $arrayobsequios = $request->arrayobsequios;
+                foreach($arrayobsequios as $ep=>$det)
                 {
                     DB::select('exec [usp_Cotizacion_SetDetalleCotizacion] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                     [   $request->nIdCabeCoti,
@@ -214,9 +214,37 @@ class CotizacionController extends Controller
             //Obtengo datos del Supera Dscto para validar si se Aprueba o No el Pedido Automaticamente
             $arrayDatosCotizacion = DB::select('exec [usp_Cotizacion_GetDatosCotizacion] ? ', [ $nIdCabeceraCotizacion ]);
 
+            $contGerencia = 0;
+            $contADV = 0;
+
+            //Recorrer todos los detalles de la Cotización
+            foreach ($arrayDatosCotizacion as $value) {
+                //Si el detalle es un Vehiculo
+                if ($value->cFlagTipoItem == 'V') {
+                    //Verifica si supera dscto
+                    if ($value->cFlagSuperaDescuento == 'S' ) {
+                        //Si supera aumenta el cont de Gerencia
+                        $contGerencia++;
+                    }
+                } else {
+                    //Si el detalle es EV, Obs o Campaña
+                    //Verifica si es una camapaña o obsequio
+                    if ($value->cFlagActivaEventoCampania == 'S' || $value->cFlagActivaObsequio == 'S' ) {
+                        //Si es evento y/o obsequio, aumenta el cont de ADV
+                        $contADV++;
+                    }
+                }
+            }
+
             $data = [
-                'arrayDatosCotizacion' => $arrayDatosCotizacion
+                'nIdCabeceraCotizacion' => $nIdCabeceraCotizacion,
+                'contGerencia'          => $contGerencia,
+                'contADV'               => $contADV
             ];
+
+            // $data = [
+            //     'arrayDatosCotizacion' => $arrayDatosCotizacion
+            // ];
 
             DB::commit();
             return response()->json($data);
@@ -448,6 +476,44 @@ class CotizacionController extends Controller
         return response()->json($arrayDistribucionDescuento);
     }
 
+    public function GetDatosCotizacion(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdCabeceraCotizacion  = $request->nIdCabeceraCotizacion;
+
+        $arrayDatosCotizacion = DB::select('exec [usp_Cotizacion_GetDatosCotizacion] ? ', [ $nIdCabeceraCotizacion ]);
+
+        $contGerencia = 0;
+        $contADV = 0;
+
+        //Recorrer todos los detalles de la Cotización
+        foreach ($arrayDatosCotizacion as $value) {
+            //Si el detalle es un Vehiculo
+            if ($value->cFlagTipoItem == 'V') {
+                //Verifica si supera dscto
+                if ($value->cFlagSuperaDescuento == 'S' ) {
+                    //Si supera aumenta el cont de Gerencia
+                    $contGerencia++;
+                }
+            } else {
+                //Si el detalle es EV, Obs o Campaña
+                //Verifica si es una camapaña o obsequio
+                if ($value->cFlagActivaEventoCampania == 'S' || $value->cFlagActivaObsequio == 'S' ) {
+                    //Si es evento y/o obsequio, aumenta el cont de ADV
+                    $contADV++;
+                }
+            }
+        }
+
+        $data = [
+            'nIdCabeceraCotizacion' => $nIdCabeceraCotizacion,
+            'contGerencia'          => $contGerencia,
+            'contADV'               => $contADV
+        ];
+        return response()->json($data);
+    }
+
     public function SetDistribucionCotizacion(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -470,20 +536,20 @@ class CotizacionController extends Controller
                 }
             }
 
-            $listDistribucionEVPorRegalarlength = sizeof($request->listDistribucionEVPorRegalar);
-            if($listDistribucionEVPorRegalarlength > 0){
-                $listDistribucionEVPorRegalar = $request->listDistribucionEVPorRegalar;
-                foreach($listDistribucionEVPorRegalar as $ep=>$det)
-                {
-                    $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?',
-                                                                    [   $det['nIdCabeceraCotizacion'],
-                                                                        $det['nIdDetalleCotizacion'],
-                                                                        $det['nIdProveedor'],
-                                                                        $det['fDistribucion'],
-                                                                        Auth::user()->id
-                                                                    ]);
-                }
-            }
+            // $listDistribucionEVPorRegalarlength = sizeof($request->listDistribucionEVPorRegalar);
+            // if($listDistribucionEVPorRegalarlength > 0){
+            //     $listDistribucionEVPorRegalar = $request->listDistribucionEVPorRegalar;
+            //     foreach($listDistribucionEVPorRegalar as $ep=>$det)
+            //     {
+            //         $arrayDetalleCoti = DB::select('exec [usp_Cotizacion_SetDistribucionCotizacion] ?, ?, ?, ?, ?',
+            //                                                         [   $det['nIdCabeceraCotizacion'],
+            //                                                             $det['nIdDetalleCotizacion'],
+            //                                                             $det['nIdProveedor'],
+            //                                                             $det['fDistribucion'],
+            //                                                             Auth::user()->id
+            //                                                         ]);
+            //     }
+            // }
 
             if($listDistribucionDescuentolength > 0) {
                 //Capturo el nIdCabeceraCotizacion
@@ -519,7 +585,7 @@ class CotizacionController extends Controller
         if($variable == "0"){
             $arrayDetalleCotizacion = ParametroController::arrayPaginator($arrayDetalleCotizacion, $request);
         }
-        return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion]; 
+        return ['arrayDetalleCotizacion'=>$arrayDetalleCotizacion];
     }
 
     public function GetListObsequiosByVehiculo(Request $request)
