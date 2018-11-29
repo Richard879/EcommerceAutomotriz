@@ -1039,7 +1039,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- MODAL LINEA DE CREDITO -->
             <div class="modal fade" v-if="accionmodal==5" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -1682,7 +1682,7 @@
                     data: this.arrayExcel
                 }).then(response => {
                     let me = this;
-                    
+
                     me.arrayTempVinExiste = [];
                     me.arrayTempVinListaPrecio = [];
                     me.arrayTempVinNombreComercial = [];
@@ -2038,11 +2038,11 @@
                         this.modal = 1;
                         return;
                     }*/
-                    
+
                     this.$delete(response.data, 0);
                     this.arrayForum = response.data;
                     this.contadorArrayForum = this.arrayForum.length;
-                    $("#myBar").hide();  
+                    $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2055,7 +2055,7 @@
             validarReadFileForum(){
                 this.error = 0;
                 this.mensajeError =[];
-                
+
                 if(!this.attachment || this.attachment==[] || this.attachment==''){
                     this.mensajeError.push('No hay Archivos Seleccionados');
                 };

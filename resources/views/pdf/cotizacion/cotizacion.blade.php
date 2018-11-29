@@ -252,20 +252,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Sociedad de Automotores Inka sac</td>
-                        <td>Bcp (cta recaudadora, con código DNI vendedor) </td>
-                        <td>Soles</td>
-                        <td>305-1804427-0-42</td>
-                        <td>002-305-001804427042-11 </td>
-                    </tr>
-                    <tr>
-                        <td>Sociedad de Automotores Inka sac</td>
-                        <td>Bcp (cta recaudadora, con código DNI vendedor) </td>
-                        <td>Dolares</td>
-                        <td>305-1841523-1-59 </td>
-                        <td>002-305-001841523159-18 </td>
-                    </tr>
+
+                    @foreach ($arrayDatosBanco as $banco)
+                        <tr>
+                            <td> {{ $banco->cNombreEmpresa }} </td>
+                            <td> {{ $banco->cNombreBanco }} </td>
+                            <td> {{ $banco->cNombreMoneda }} </td>
+                            <td> {{ $banco->cNumeroCuenta }} </td>
+                            <td> {{ $banco->cNumeroCuentaIn }} </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             <table width="100%">
@@ -471,11 +467,11 @@
         <table width="100%">
             <tr>
                 <td align="left" style="width: 50%;">
-                    Esta cotización vencerá en 5 días Nro Cotización: 22018-052079.<br>
+                    Esta cotización vencerá en {{ $arrayDetalleCotizacion[0]->cNumeroDiasCotizacion }} días Nro Cotización: {{ $arrayDetalleCotizacion[0]->cNumeroCotizacion }}.<br>
                     &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
                 </td>
                 <td align="right" style="width: 50%;">
-                    Sociedad de Automotores Inka sac
+                    {{ $arrayDetalleCotizacion[0]->cEmpresa }}
                 </td>
             </tr>
         </table>

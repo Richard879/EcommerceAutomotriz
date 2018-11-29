@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
+// use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,12 +23,12 @@ class ComprasController extends Controller
     public function SetCliente(){
         $client = new Client([
             'base_uri' => 'http://172.20.6.62/',// URI Ejem: https://jsonplaceholder.typicode.com
+            'cookies' => true
         ]);
 
         $response = $client->request('POST', "/Sap/api/Compra/PostCliente");
 
         $posts = json_decode($response->getBody()->getContents());
         return $posts;
-       // return 1;
     }
 }

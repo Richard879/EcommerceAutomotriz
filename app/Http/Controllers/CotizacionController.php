@@ -606,10 +606,11 @@ class CotizacionController extends Controller
                                         $nIdCabeceraCotizacion
                                     ]);
 
-        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]',
+        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                             'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
+                                                            'arrayDatosBanco' => $arrayDatosBanco,
                                                             'logo' => $logo,
                                                             'hyundai' => $hyundai
                                                             ]);
