@@ -597,7 +597,7 @@ class CotizacionController extends Controller
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
 
         $logo       = public_path('img/logo.png');//CAPTURO LA RUTA DEL LOGO
-        $hyundai    = public_path('img/hyundai.jpg');//CAPTURO LA RUTA DE HYUNDAI
+        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
         $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetDetalleCotizacion] ?, ?, ?',
                                     [
@@ -605,6 +605,8 @@ class CotizacionController extends Controller
                                         $nIdSucursal,
                                         $nIdCabeceraCotizacion
                                     ]);
+
+        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]',
 
         $pdf = \PDF::loadView('pdf.cotizacion.cotizacion', [
                                                             'arrayDetalleCotizacion' => $arrayDetalleCotizacion,
