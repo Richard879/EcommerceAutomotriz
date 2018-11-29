@@ -117,13 +117,13 @@
         <br/>
 
         <div class="invoice">
-            <h3>GRAND I10 - GRAND I10 1.0 GL PLUS MT + ML E4 2018-2018</h3>
+            <h3>{{ $arrayDetalleCotizacion[0]->cNombreVehiculo }}</h3>
 
             <div class="center">
                 <table width="80%">
                     <tr>
-                        <td><h4>PRECIO DE LISTA:</h4> <strong> <h4> USD. 14090.00 </h4></strong></td>
-                        <td><h3>PRECIO ESPECIAL:</h3> <strong> <h3> USD. 12790.00 </h3></strong></td>
+                        <td><h4>PRECIO DE LISTA:</h4> <strong> <h4> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioLista }} </h4></strong></td>
+                        <td><h3>PRECIO ESPECIAL:</h3> <strong> <h3> {{ $arrayDetalleCotizacion[0]->cMonedaLista }}. {{ $arrayDetalleCotizacion[0]->fPrecioEspecial }} </h3></strong></td>
                     </tr>
                 </table>
                 <table width="90%" border="2">
