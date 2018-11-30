@@ -46,6 +46,9 @@
                                                             <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="generarCotizacionPDF('7300003')">
                                                                 <i class="fa fa-pdf"></i> GENERAR REPORTE
                                                             </button>
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
+                                                                <i class="fa fa-user"></i> Login
+                                                            </button>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -2507,7 +2510,12 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                data: {
+                    CompanyDB: "SBO_INKA_PROD",
+                    UserName: "janton",
+                    Password: "1234"
+                }
             }
         },
         mounted() {
@@ -4474,6 +4482,29 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            SapLogin(){
+
+                let sendData = '[{' + '"CompanyDB":'+'"SBO_INKA_PROD",'+ '"UserName":' + '"janton",' + '"Password":' + '"1234"'+ '}]';
+
+                const data = {
+                    'CompanyDB': 'SBO_INKA_PROD',
+                    'UserName': 'janton',
+                    'Password': '1234'
+                }
+                //JSON.stringify(this.data)
+
+                var url = this.ruta + '/cliente/login';
+                axios.post(url, sendData, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    console.log(response);
+                    swal('INICIO SESIÓN CORRECTAMENTE');
+                }).catch(error => {
+                    console.log(error);
+                });
             }
         }
     }
