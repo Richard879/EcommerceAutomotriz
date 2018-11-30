@@ -48,11 +48,14 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR COMPRA</h3>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapSetCliente();">
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapSetCliente">
                                                                 <i class="fa fa-search"></i> Crear Cliente
                                                             </button>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapGetCompras();">
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapGetCompras">
                                                                 <i class="fa fa-search"></i> Listar Compras
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
+                                                                <i class="fa fa-user"></i> Login
                                                             </button>
                                                         </div>
                                                         <div class="card-body">
@@ -2225,6 +2228,25 @@
                 }).then(response => {
                     console.log(response);
                     swal('LISTADO');
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            SapLogin(){
+                let sendData = [
+                                {
+                                    "CompanyDB":"SBO_INKA_PROD",
+                                    "UserName":"manager",
+                                    "Password":"Start1234"
+                                }
+                              ];
+
+                var url = this.ruta + '/cliente/login';
+                axios.post(url, {
+                    data : sendData
+                }).then(response => {
+                    console.log(response);
+                    swal('INICIO SESIÓN CORRECTAMENTE');
                 }).catch(error => {
                     console.log(error);
                 });
