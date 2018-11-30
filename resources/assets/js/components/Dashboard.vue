@@ -6,6 +6,9 @@
                 <div class="container-fluid">
                 <h2 class="no-margin-bottom">Dashboard</h2>
                 </div>
+                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
+                    <i class="fa fa-user"></i> Login
+                </button>
             </header>
             <!-- Dashboard Counts Section-->
             <section class="dashboard-counts no-padding-bottom">
@@ -475,17 +478,6 @@
         data(){
             return {
                 //==========================================================
-                //===================== LISTAR USUARIOS ====================
-                fillPuga:{
-                    cempresa: sessionStorage.getItem("cNombreEmpresa"),
-                    nidempresa: 1300011,
-                    nidsucursal: '',
-                    cdescripcion: ''
-                },
-                //==========================================================
-                //================== REGISTRO PERMISOS =====================
-
-                //==========================================================
                 pagination: {
                     'total': 0,
                     'current_page': 0,
@@ -510,8 +502,37 @@
                 error: 0,
                 errors: [],
                 mensajeError: [],
-                vistaFormulario: 1
+                vistaFormulario: 1,
+                data: {
+                    CompanyDB: "SBO_INKA_PROD",
+                    UserName: "janton",
+                    Password: "1234"
+                },
             }
         },
+        methods:{
+            SapLogin(){
+                // let sendData = '[{"CompanyDB":"SBO_INKA_PROD","UserName":"janton","Password":"1234"}]';
+                //JSON.stringify(this.data)
+                var url = this.ruta + '/cliente/login';
+                axios.post(url, JSON.stringify(this.data), {
+                    // headers: {
+                    //     // 'accept': 'application/json'
+                    //     // // 'accept-language': 'en_US',
+                    //     'content-type': 'application/json'
+                    // },
+                    // body: {
+                    //     'CompanyDB':'SBO_INKA_PROD',
+                    //     'UserName': 'janton',
+                    //     'Password': '1234'
+                    // }
+                }).then(response => {
+                    console.log(response);
+                    swal('INICIO SESIÓN CORRECTAMENTE');
+                }).catch(error => {
+                    console.log(error);
+                });
+            }
+        }
     }
 </script>

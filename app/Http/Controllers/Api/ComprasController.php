@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
-
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -54,21 +56,27 @@ class ComprasController extends Controller
 
     public function login(Request $data)
     {
-        // $data = [
-        //     "CompanyDB" => 'SBO_INKA_PROD',
-        //     "UserName" => 'janton',
-        //     "Password" => '1234'
-        // ];
-        return $data;
-
+        // return $data;
+        // $data = "{" .$data."}";
         $client = new Client([
-            'base_uri' => 'https://172.20.0.11:50000/b1s/v1/',//BaseUri
-            'cookies' => true//Activo las Cookies
+            'curl'              => array(
+                                    CURLOPT_SSL_VERIFYPEER => 0,
+                                    CURLOPT_SSL_VERIFYHOST => 0
+                                  ),
+            'verify'            => false,
+            'base_uri'          => 'https://172.20.0.11:50000/b1s/v1/',//BaseUri
+            'cookies'           => true//Activo las Cookies
         ]);
 
         $response = $client->request('POST', "Login",  [
-            'verify' => false,//Certificado False
-            'json' => $data//Envio JSON
+            'headers' => [
+                'accept-language'   => 'en_US',
+                'Accept'            => 'application/json',
+                'Content-Type'      => 'raw'
+                // 'Content-Type'   => 'application/json'
+                // 'Content-Type'   => 'application/x-www-form-urlencoded'
+            ],
+            'body' => $data
         ]);
 
         $posts = json_decode($response->getBody()->getContents());
