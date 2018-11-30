@@ -56,30 +56,43 @@ class ComprasController extends Controller
 
     public function login(Request $data)
     {
-        // return $data;
-        // $data = "{" .$data."}";
+        // Convierte un Objeto de PHP en JSON
+        // $data = json_encode($data);
+
+        $options = [
+            'json' => [
+                "CompanyDB" => "SBO_INKA_PROD",
+                "UserName" => "janton",
+                "Password" => "1234"
+               ]
+           ];
+
         $client = new Client([
-            'curl'              => array(
-                                    CURLOPT_SSL_VERIFYPEER => 0,
-                                    CURLOPT_SSL_VERIFYHOST => 0
-                                  ),
-            'verify'            => false,
-            'base_uri'          => 'https://172.20.0.11:50000/b1s/v1/',//BaseUri
-            'cookies'           => true//Activo las Cookies
+            // 'curl'      => array(
+            //                 CURLOPT_SSL_VERIFYPEER => false,
+            //                 CURLOPT_SSL_VERIFYHOST => false
+            //                 ),
+            'verify'    => false,//SSL certificate
+            'base_uri'  => 'https://172.20.0.11:50000/b1s/v1/',//BaseUri
+            'cookies'   => true//Activo las Cookies
+            // 'headers'   => [
+            //     'Accept' => 'application/json',
+            //     'Content-Type' => 'application/json'
+            // ],
         ]);
 
-        $response = $client->request('POST', "Login",  [
-            'headers' => [
-                'accept-language'   => 'en_US',
-                'Accept'            => 'application/json',
-                'Content-Type'      => 'raw'
-                // 'Content-Type'   => 'application/json'
-                // 'Content-Type'   => 'application/x-www-form-urlencoded'
-            ],
-            'body' => $data
-        ]);
+        // $response = $client->request('POST', "Login",  [
+        //     'headers'   => ['Content-Type' => 'application/json'],
+        //     'body'      => json_encode([
+        //                         $data
+        //                     ])
+        //     // 'body' => $data
+        // ]);
 
-        $posts = json_decode($response->getBody()->getContents());
-        return $posts;
+        $response = $client->post("Login", $options);
+
+        return $response->getBody();
+        // $posts = json_decode($response->getBody()->getContents());
+        // return $posts;
     }
 }

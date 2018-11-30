@@ -512,20 +512,9 @@
         },
         methods:{
             SapLogin(){
-                // let sendData = '[{"CompanyDB":"SBO_INKA_PROD","UserName":"janton","Password":"1234"}]';
                 //JSON.stringify(this.data)
                 var url = this.ruta + '/cliente/login';
-                axios.post(url, JSON.stringify(this.data), {
-                    // headers: {
-                    //     // 'accept': 'application/json'
-                    //     // // 'accept-language': 'en_US',
-                    //     'content-type': 'application/json'
-                    // },
-                    // body: {
-                    //     'CompanyDB':'SBO_INKA_PROD',
-                    //     'UserName': 'janton',
-                    //     'Password': '1234'
-                    // }
+                axios.post(url, this.data, {
                 }).then(response => {
                     console.log(response);
                     swal('INICIO SESIÓN CORRECTAMENTE');
