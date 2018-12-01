@@ -9,6 +9,9 @@
                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
                     <i class="fa fa-user"></i> Login
                 </button>
+                <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapLogout">
+                    <i class="fa fa-out"></i> Logout
+                </button>
             </header>
             <!-- Dashboard Counts Section-->
             <section class="dashboard-counts no-padding-bottom">
@@ -508,16 +511,29 @@
                     UserName: "janton",
                     Password: "1234"
                 },
+                SessionId: 0
             }
         },
         methods:{
             SapLogin(){
                 //JSON.stringify(this.data)
-                var url = this.ruta + '/cliente/login';
+                var url = this.ruta + '/SAPLoginController/login';
                 axios.post(url, this.data, {
                 }).then(response => {
-                    console.log(response);
+                    console.log(response.data.SessionId);
+                    this.SessionId = response.data.SessionId;
                     swal('INICIO SESIÓN CORRECTAMENTE');
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            SapLogout(){
+                //JSON.stringify(this.data)
+                var url = this.ruta + '/SAPLoginController/logout';
+                axios.post(url,  this.SessionId, {
+                }).then(response => {
+                    console.log(response.data);
+                    swal('CERRÓ SESIÓN CORRECTAMENTE');
                 }).catch(error => {
                     console.log(error);
                 });

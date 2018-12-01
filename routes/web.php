@@ -309,10 +309,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/obsequio/SetEntregaObsequioElementoVenta', 'ObsequioController@SetEntregaObsequioElementoVenta');
     Route::get('/gescotizacion/GetListObsequiosByVehiculo', 'CotizacionController@GetListObsequiosByVehiculo');
     Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
-
-
 });
 
-Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\ComprasController@GetListComprasByIdAPI');
-Route::post('/cliente/SetCliente', 'Api\ComprasController@SetCliente');
-Route::post('/cliente/login', 'Api\ComprasController@login');
+Route::get('/getCompras/GetListComprasByIdAPI', 'Api\SAPComprasController@GetListComprasByIdAPI');
+Route::post('/setCliente/SetCliente', 'Api\SAPComprasController@SetCliente');
+Route::post('/SAPLoginController/login', 'Api\SAPLoginController@login');
+Route::post('/SAPLoginController/logout', 'Api\SAPLoginController@logout');
