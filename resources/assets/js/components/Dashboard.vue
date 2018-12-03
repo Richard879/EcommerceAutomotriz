@@ -12,6 +12,9 @@
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapLogout">
                     <i class="fa fa-out"></i> Logout
                 </button>
+                <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapMetaData">
+                    <i class="fa fa-out"></i> MetaData
+                </button>
             </header>
             <!-- Dashboard Counts Section-->
             <section class="dashboard-counts no-padding-bottom">
@@ -528,12 +531,21 @@
                 });
             },
             SapLogout(){
-                //JSON.stringify(this.data)
                 var url = this.ruta + '/SAPLoginController/logout';
-                axios.post(url,  this.SessionId, {
+                axios.post(url,  {
+                    "B1SESSION" : this.SessionId
                 }).then(response => {
                     console.log(response.data);
                     swal('CERRÓ SESIÓN CORRECTAMENTE');
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            SapMetaData(){
+                var url = this.ruta + '/SAPLoginController/MetaData';
+                axios.get(url).then(response => {
+                    console.log(response.data);
+                    swal('METADATA');
                 }).catch(error => {
                     console.log(error);
                 });

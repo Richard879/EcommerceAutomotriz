@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\CookieJar;
+// use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,11 +33,21 @@ class SAPLoginController extends Controller
     {
         $uri = "https://172.20.0.11:50000/b1s/v1/";
 
-        $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
-            [
-                'B1SESSION' => $request,
-            ],
-            $uri
+        // $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
+        //     [
+        //         'B1SESSION' => $request->B1SESSION,
+        //     ],
+        //     $uri
+        // );
+
+        $jar = new \GuzzleHttp\Cookie\CookieJar();
+        $jar->setCookie(
+            new \GuzzleHttp\Cookie\SetCookie([
+                    'Domain' =>  "https://172.20.0.11:50000/",
+                    'Name'   =>  'B1SESSION',
+                    'Value'  =>  $request->B1SESSION,
+                    "Path"   =>  "/b1s/v1/Logout/"
+                ])
         );
 
         $client = new Client([
@@ -45,13 +55,28 @@ class SAPLoginController extends Controller
             'base_uri'  => $uri,//BaseUri
             'cookies'   => $jar,//Activo las Cookies
             'headers'   => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json;odata=minimalmetadata;charset=utf-8',
-                'Cache-Control' => 'no-cache'
+                'Accept' => '*/*',
+                'Cache-Control' => 'no-cache',
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept-Language' => 'en-US,en;q=0.8,hi;q=0.6,und;q=0.4'
             ]
         ]);
 
+        // return dd($client);
+
         $response = $client->request('POST', "Logout");
+        return $response;
+    }
+
+    public function MetaData(Request $request)
+    {
+        $client = new Client([
+            'verify'    => false,//SSL certificate
+            'base_uri'  => 'https://172.20.0.11:50000/b1s/v1/',//BaseUri
+            'cookies'   => true//Activo las Cookies
+        ]);
+
+        $response = $client->request('GET', '$metadata');
         return $response->getBody();
     }
 

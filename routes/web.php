@@ -315,3 +315,4 @@ Route::get('/getCompras/GetListComprasByIdAPI', 'Api\SAPComprasController@GetLis
 Route::post('/setCliente/SetCliente', 'Api\SAPComprasController@SetCliente');
 Route::post('/SAPLoginController/login', 'Api\SAPLoginController@login');
 Route::post('/SAPLoginController/logout', 'Api\SAPLoginController@logout');
+Route::get('/SAPLoginController/MetaData', 'Api\SAPLoginController@MetaData');
