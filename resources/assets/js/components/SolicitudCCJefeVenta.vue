@@ -900,13 +900,14 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Banco</label>
+                                                                            <label class="col-sm-4 form-control-label">*Banco</label>
                                                                             <div class="col-sm-8">
                                                                                 <el-select v-model="fillCartaCaracteristica.nidbanco"
                                                                                         filterable
                                                                                         clearable
                                                                                         loading-text
-                                                                                        placeholder="SELECCIONE">
+                                                                                        placeholder="SELECCIONE BANCO"
+                                                                                        @change="llenarSucursalesByBanco()">
                                                                                     <el-option
                                                                                         v-for="banco in arrayBanco"
                                                                                         :key="banco.nIdPar"
@@ -919,14 +920,33 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">*Sucursal</label>
+                                                                            <div class="col-sm-8">
+                                                                                <el-select v-model="fillCartaCaracteristica.nidsucursal"
+                                                                                        filterable
+                                                                                        clearable
+                                                                                        loading-text
+                                                                                        placeholder="SELECCIONE SUCURSAL">
+                                                                                    <el-option
+                                                                                        v-for="sucursal in arraySucursalBanco"
+                                                                                        :key="sucursal.nIdPar"
+                                                                                        :label="sucursal.cParNombre"
+                                                                                        :value="sucursal.nIdPar">
+                                                                                    </el-option>
+                                                                                </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Precio Final Dolar</label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="number" min="1" v-model="fillCartaCaracteristica.fpreciodolar" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Cuota Inicial</label>
@@ -935,6 +955,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Monto a Desembolsar</label>
@@ -1713,6 +1735,7 @@
                     fcuotainicial: 1,
                     fmontodesembolar: 1,
                     nidbanco: '',
+                    nidsucursal: '',
                     nidestado: '',
                     nidmotivo: '',
                     cdescripcion: '',
@@ -1734,6 +1757,7 @@
                 ],
                 arrayContacto: [],
                 arrayBanco: [],
+                arraySucursalBanco: [],
                 // =============================================================
                 // VARIABLES CARTA VENDEDORES
                 // =============================================================
@@ -1902,6 +1926,25 @@
                     console.log(error);
                 });
             },
+            llenarSucursalesByBanco(){
+                var url = this.ruta + '/asigVendedorTurno/GetParametroByParParent';
+                axios.get(url, {
+                    params: {
+                        'nidpar' : this.fillCartaCaracteristica.nidbanco,
+                        'nidgrupar' : 110098,
+                        'opcionPaginate': 0
+                    }
+                }).then(response => {
+                    this.arraySucursalBanco = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             llenarReferencias(){
                 var url = this.ruta + '/getComision/GetParametroByGrupo';
                 axios.get(url, {
@@ -2037,6 +2080,7 @@
                     'fCuotaInicial'         :   this.fillCartaCaracteristica.fcuotainicial,
                     'fMontoDesembolsado'    :   this.fillCartaCaracteristica.fmontodesembolar,
                     'nIdBanco'              :   this.fillCartaCaracteristica.nidbanco,
+                    'nIdSucursal'           :   this.fillCartaCaracteristica.nidsucursal,
                     'nIdEstadoCarta'        :   1300195,
                     'FlagEstadoApro'        :   'CO'
                 }).then(response => {
@@ -2093,6 +2137,9 @@
                 if(this.fillCartaCaracteristica.nidbanco == 0 || !this.fillCartaCaracteristica.nidbanco){
                     this.mensajeError.push('Debe seleccionar un Banco');
                 }
+                if(this.fillCartaCaracteristica.nidsucursal == 0 || !this.fillCartaCaracteristica.nidsucursal){
+                    this.mensajeError.push('Debe seleccionar unas Sucursal');
+                }
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -2113,6 +2160,7 @@
                 this.fillCartaCaracteristica.fcuotainicial = 1;
                 this.fillCartaCaracteristica.fmontodesembolar = 1;
                 this.fillCartaCaracteristica.nidbanco = '';
+                this.fillCartaCaracteristica.nidsucursal = '';
                 this.fillCartaCaracteristica.nidvendedor = '';
             },
             getDetalleSolicitud(nIdSCartaC){

@@ -196,7 +196,14 @@ class CartaCaracteristicaController extends Controller
         $nombrePDFOriginal  = $request->nombre . '.pdf';//NOMBRE ORIGINAL DEL ARCHIVO
         $nombrePDFToken     = $bandera .'_'. $nombrePDFOriginal;//NOMBRE ORIGINAL DEL ARCHIVO + TOKEN
         $path = storage_path("app/public/CartaCaracteristica/conformeNOconforme/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
-        $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.detallesolicitud', ['CartaDetalleSolicitud' => $lstSCC])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
+        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+
+        $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.detallesolicitud', [
+                                                                                    'CartaDetalleSolicitud' => $lstSCC,
+                                                                                    'logo' => $logo,
+                                                                                    'hyundai' => $hyundai
+                                                                                ])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
 
         //REGISTRO EN LA DB LA RUTA, NOMBRE Y USUARIO
         $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',
@@ -239,7 +246,15 @@ class CartaCaracteristicaController extends Controller
         $nombrePDFOriginal  = $request->nombre . '.pdf';//NOMBRE ORIGINAL DEL ARCHIVO
         $nombrePDFToken     = $bandera .'_'. $nombrePDFOriginal;//NOMBRE ORIGINAL DEL ARCHIVO + TOKEN
         $pathPDF = storage_path("app/public/CartaCaracteristica/aprobadoNOaprobado/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
-        $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.aprobacionsolicitud', ['CartaDetalleSolicitud' => $lstSCC, 'imagen' => $basePath])->save($pathPDF);//ALMACENO EL PDF EN EL SERVIDOR
+        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+
+        $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.aprobacionsolicitud', [
+                                                                                        'CartaDetalleSolicitud' => $lstSCC,
+                                                                                        'logo' => $logo,
+                                                                                        'hyundai' => $hyundai,
+                                                                                        'imagen' => $basePath
+                                                                                    ])->save($pathPDF);//ALMACENO EL PDF EN EL SERVIDOR
 
 
         //REGISTRO EN LA DB LA RUTA, NOMBRE Y USUARIO

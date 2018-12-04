@@ -1614,6 +1614,7 @@
                 this.fillCartaCaracteristica.fcuotainicial = 1;
                 this.fillCartaCaracteristica.fmontodesembolar = 1;
                 this.fillCartaCaracteristica.nidbanco = '';
+                this.fillCartaCaracteristica.nidsucursal = '';
             },
             // ======================
             // TAB MIS CARTAS

@@ -33,22 +33,23 @@ class SAPLoginController extends Controller
     {
         $uri = "https://172.20.0.11:50000/b1s/v1/";
 
-        // $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
-        //     [
-        //         'B1SESSION' => $request->B1SESSION,
-        //     ],
-        //     $uri
-        // );
-
-        $jar = new \GuzzleHttp\Cookie\CookieJar();
-        $jar->setCookie(
-            new \GuzzleHttp\Cookie\SetCookie([
-                    'Domain' =>  "https://172.20.0.11:50000/",
-                    'Name'   =>  'B1SESSION',
-                    'Value'  =>  $request->B1SESSION,
-                    "Path"   =>  "/b1s/v1/Logout/"
-                ])
+        $jar = \GuzzleHttp\Cookie\CookieJar::fromArray(
+            [
+                'B1SESSION' => $request->B1SESSION,
+                'ROUTEID'   => $request->B1SESSION
+            ],
+            $uri
         );
+
+        // $jar = new \GuzzleHttp\Cookie\CookieJar();
+        // $jar->setCookie(
+        //     new \GuzzleHttp\Cookie\SetCookie([
+        //             'Domain' =>  "https://172.20.0.11:50000/",
+        //             'Name'   =>  'B1SESSION',
+        //             'Value'  =>  $request->B1SESSION,
+        //             "Path"   =>  "/b1s/v1/Logout/"
+        //         ])
+        // );
 
         $client = new Client([
             'verify'    => false,//SSL certificate
