@@ -48,15 +48,6 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR COMPRA</h3>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapSetCliente">
-                                                                <i class="fa fa-search"></i> Crear Cliente
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapGetCompras">
-                                                                <i class="fa fa-search"></i> Listar Compras
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
-                                                                <i class="fa fa-user"></i> Login
-                                                            </button>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -2229,45 +2220,6 @@
                 $("#myBar").show();
                 progress();
             },
-            SapSetCliente(){
-                var url = this.ruta + '/cliente/SetCliente';
-                axios.post(url, {
-                }).then(response => {
-                    console.log(response);
-                    swal('CREADO SAP');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapGetCompras(){
-                var url = this.ruta + '/getComprasApi/GetListComprasByIdAPI';
-                axios.get(url, {
-                }).then(response => {
-                    console.log(response);
-                    swal('LISTADO');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapLogin(){
-                let sendData = [
-                                {
-                                    "CompanyDB":"SBO_INKA_PROD",
-                                    "UserName":"manager",
-                                    "Password":"Start1234"
-                                }
-                              ];
-
-                var url = this.ruta + '/cliente/login';
-                axios.post(url, {
-                    data : sendData
-                }).then(response => {
-                    console.log(response);
-                    swal('INICIO SESIÓN CORRECTAMENTE');
-                }).catch(error => {
-                    console.log(error);
-                });
-            }
         },
         mounted(){
             this.llenarComboMarca();
