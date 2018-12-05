@@ -1710,7 +1710,6 @@
                         });
                     }
 
-                    $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
                     if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
@@ -1719,18 +1718,13 @@
                     }else{
                         var sapUrl = this.ruta + '/compra/SapSetCompra';
                         axios.post(sapUrl, {
-                            CardCode: 'C1300021',
-                            DocDate: '2018-11-30',
-                            DocDueDate: '2018-12-04',
-                            ItemCode: 'ITEM001',
-                            Quantity: '20',
-                            TaxCode: 'IGV',
-                            UnitPrice: '2'
+                            data: this.arrayExcel
                         }).then(response => {
+                            $("#myBar").hide();
                             console.log(response.data);
-                            // var respuesta  = JSON.parse(response.data)
-                            // console.log(respuesta);
-                            // console.log(respuesta.DocEntry);
+                            var respuesta  = JSON.parse(response.data)
+                            console.log(respuesta);
+                            console.log(respuesta.DocEntry);
                             swal('Compra registrada correctamente');
                             me.attachment = [],
                             me.limpiarFormulario();

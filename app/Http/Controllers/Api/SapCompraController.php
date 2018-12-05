@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SapCompraController extends Controller
 {
@@ -30,30 +31,49 @@ class SapCompraController extends Controller
         $client = new Client([
             'base_uri'  => 'http://172.20.6.54/'
         ]);
+        
+        $User = Auth::user()->id;
+        $CardCode = 'C'.$User;
+        $data = $request->data;
 
+        foreach ($data as $key => $value) {
+            $dataArray = [ "ItemCode" => 'ITEM001',
+                    'Quantity' => '20',
+                    'TaxCode' => 'IGV',
+                    'UnitPrice' => '2'
+                ];
+
+            foreach ($dataArray as $keyArray => $valueArray) {
+                    $arrayResult[$keyArray] = $valueArray;
+                }
+        }
+
+        /*
         $data = [
             "ItemCode" => $request->ItemCode,
             "Quantity" => $request->Quantity,
             "TaxCode" => $request->TaxCode,
             "UnitPrice" => $request->UnitPrice
         ];
+        */
 
-        $arrayResult= [];
+        /*$arrayResult= [];
         foreach ($data as $key => $value) {
             $arrayResult[$key] = $value;
-        }
+        }*/
 
         $json = [
             'json' => [
-                "CardCode" => $request->CardCode,
-                "DocDate" => $request->DocDate,
-                "DocDueDate" => $request->DocDueDate,
+                "CardCode" => $CardCode,
+                "DocDate" => "2018-11-30",
+                "DocDueDate" => "2018-12-04",
                 "DocumentLines" => [
                         $arrayResult
                     ]
                 ]
            ];
 
+        //return $json;
         $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
         return $response->getBody();
     }
