@@ -252,7 +252,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach ($arrayDatosBanco as $banco)
                         <tr>
                             <td> {{ $banco->cNombreEmpresa }} </td>
@@ -420,8 +419,8 @@
             <table width="100%">
                 <tr>
                     <td align="left" style="width: 40%;">
-                        <span>_____________________________</span>
-                        <h3>JOSE FERNANDO ANDALUZ SCHAUS</h3>
+                        <h3>_____________________________</h3>
+                        <h3>{{ $arrayDetalleCotizacion[0]->cNombreAsesorComercial }}</h3>
                         <pre>
                             ASESOR COMERCIAL
                             Telf : (051)(074)271036
@@ -429,12 +428,10 @@
                             Email : jose.andaluz@gpsinka.com
                         </pre>
                     </td>
-                    <td align="center">
-
-                    </td>
+                    <td align="center"></td>
                     <td align="right" style="width: 40%;">
-                        <span>____________________________________</span>
-                        <h3>FRANCISCO ALBERTO GUZMAN VALERA</h3>
+                        <h3>_____________________________</h3>
+                        <h3>{{ $arrayDetalleCotizacion[0]->cJefeVentas }}</h3>
                         <pre>
                             Jefe de Ventas
                         </pre>
@@ -446,11 +443,10 @@
 
             <table width="100%">
                 <tr>
-                    <td align="left" style="width: 40%;">
-                    </td>
+                    <td align="left" style="width: 40%;"></td>
                     <td align="center" style="width: 40%;">
-                        <span>____________________________________</span>
-                        <h3>CLIENTE : LINARES ACUNA GRICERIO</h3>
+                        <h3>_____________________________</h3>
+                        <h3>CLIENTE : {{ $arrayDetalleCotizacion[0]->cContacto }}</h3>
                         <pre>
                             DOC IDEN: 40438902
                         </pre>

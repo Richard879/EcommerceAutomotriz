@@ -590,13 +590,13 @@ class CotizacionController extends Controller
 
     public function GetDetalleCotizacion(Request $request)
     {
-        // if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         $nIdEmpresa             =   $request->nIdEmpresa;
         $nIdSucursal            =   $request->nIdSucursal;
         $nIdCabeceraCotizacion  =   $request->nIdCabeceraCotizacion;
 
-        $logo       = public_path('img/logo.png');//CAPTURO LA RUTA DEL LOGO
+        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
         $arrayDetalleCotizacion = DB::select('exec [usp_Cotizacion_GetDetalleCotizacion] ?, ?, ?',
