@@ -1306,6 +1306,7 @@
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
+                arrayDocEntry: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1722,9 +1723,10 @@
                         }).then(response => {
                             $("#myBar").hide();
                             console.log(response.data);
-                            var respuesta  = JSON.parse(response.data)
-                            console.log(respuesta);
-                            console.log(respuesta.DocEntry);
+                            this.arrayDocEntry = response.data;
+                            this.arrayDocEntry.map(function(x){
+                                console.log(JSON.parse(x));
+                            });
                             swal('Compra registrada correctamente');
                             me.attachment = [],
                             me.limpiarFormulario();

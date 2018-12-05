@@ -31,7 +31,7 @@ class SapContactoController extends Controller
                ]
            ];
 
-        $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 

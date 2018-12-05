@@ -22,6 +22,9 @@ class SapCompraController extends Controller
         return $posts;
     }
 
+    //'base_uri' => 'http://localhost:49454/'
+    //$response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+
     /// ============================================================
     /// METODOS SERVICES LAYER
     /// ============================================================
@@ -29,52 +32,44 @@ class SapCompraController extends Controller
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.54/'
+            'base_uri'  => 'http://172.20.6.55/'
         ]);
+
+        $array_rpta = [];
+        $DocEntry = [];
         
         $User = Auth::user()->id;
         $CardCode = 'C'.$User;
-        $data = $request->data;
 
+        $data = $request->data;
         foreach ($data as $key => $value) {
-            $dataArray = [ "ItemCode" => 'ITEM001',
-                    'Quantity' => '20',
+            $dataArray = [ 
+                    'ItemCode' => 'ITEM001',
+                    'Quantity' => '1',
                     'TaxCode' => 'IGV',
-                    'UnitPrice' => '2'
+                    'UnitPrice' => '100'
                 ];
 
-            foreach ($dataArray as $keyArray => $valueArray) {
+            /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
-                }
-        }
-
-        /*
-        $data = [
-            "ItemCode" => $request->ItemCode,
-            "Quantity" => $request->Quantity,
-            "TaxCode" => $request->TaxCode,
-            "UnitPrice" => $request->UnitPrice
-        ];
-        */
-
-        /*$arrayResult= [];
-        foreach ($data as $key => $value) {
-            $arrayResult[$key] = $value;
-        }*/
-
-        $json = [
-            'json' => [
-                "CardCode" => $CardCode,
-                "DocDate" => "2018-11-30",
-                "DocDueDate" => "2018-12-04",
-                "DocumentLines" => [
-                        $arrayResult
+                }*/
+            
+            $json = [
+                'json' => [
+                    "CardCode" => $CardCode,
+                    "DocDate" => "2018-11-30",
+                    "DocDueDate" => "2018-12-04",
+                    "DocumentLines" => [
+                            $dataArray
+                        ]
                     ]
-                ]
-           ];
+                ];
 
-        //return $json;
-        $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
-        return $response->getBody();
+            $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
+            $DocEntry = json_decode($response->getBody());
+            array_push($array_rpta, $DocEntry);
+        }
+        return $array_rpta;
     }
+
 }
