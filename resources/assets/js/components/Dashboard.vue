@@ -570,6 +570,10 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
             }
         }
     }
