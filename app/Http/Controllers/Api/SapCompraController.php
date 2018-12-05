@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SapCompraController extends Controller
 {
-    public function GetListComprasByIdAPI()
+    /*public function GetListComprasByIdAPI()
     {
         $client = new Client([
             'base_uri' => 'http://172.20.6.54/',// URI Ejem: https://jsonplaceholder.typicode.com
@@ -20,8 +20,15 @@ class SapCompraController extends Controller
 
         $posts = json_decode($response->getBody()->getContents());
         return $posts;
-    }
+    }*/
 
+    ////=================== SERVER PUBLISH =====================
+    //'base_uri' => 'http://172.20.0.10/'
+    //$response = $client->request('POST', "/api/Compra/SapSetCompra", $json);
+    ////=================== LOCAL SERVER =====================
+    //'base_uri' => 'http://172.20.6.55/'
+    //$response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
+    ////=================== LOCAL DEBUG =====================
     //'base_uri' => 'http://localhost:49454/'
     //$response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
 

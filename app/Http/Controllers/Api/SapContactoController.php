@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class SapContactoController extends Controller
 {
+    ////=================== SERVER PUBLISH =====================
+    //'base_uri' => 'http://172.20.0.10/'
+    //$response = $client->request('GET', "/api/Contacto/SapGetValidarContacto", $json);
+    ////=================== LOCAL SERVER =====================
+    //'base_uri' => 'http://172.20.6.55/'
+    //$response = $client->request('GET', "/Sap/api/Contacto/SapGetValidarContacto/", $json);
+    ////=================== LOCAL DEBUG =====================
+    //'base_uri' => 'http://localhost:49454/'
+    //$response = $client->request('GET', "/api/Contacto/SapGetValidarContacto/", $json);
+
     /// ============================================================
     /// METODOS SERVICES LAYER
     /// ============================================================
