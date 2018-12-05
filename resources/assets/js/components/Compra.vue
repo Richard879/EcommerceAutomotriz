@@ -1726,9 +1726,26 @@
                         me.modal = 1;
                         me.attachment = [];
                     }else{
-                        swal('Compra registrada correctamente');
-                        me.attachment = [],
-                        me.limpiarFormulario();
+                        var sapUrl = this.ruta + '/compra/SapSetCompra';
+                        axios.post(sapUrl, {
+                            CardCode: 'C1300021',
+                            DocDate: '2018-11-30',
+                            DocDueDate: '2018-12-04',
+                            ItemCode: 'ITEM001',
+                            Quantity: '20',
+                            TaxCode: 'IGV',
+                            UnitPrice: '2'
+                        }).then(response => {
+                            console.log(response.data);
+                            // var respuesta  = JSON.parse(response.data)
+                            // console.log(respuesta);
+                            // console.log(respuesta.DocEntry);
+                            swal('Compra registrada correctamente');
+                            me.attachment = [],
+                            me.limpiarFormulario();
+                        }).catch(error => {
+                            console.log(error);
+                        });
                     }
                 }).catch(error => {
                     console.log(error);
