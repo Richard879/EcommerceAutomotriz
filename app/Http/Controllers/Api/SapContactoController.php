@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SapContactoController extends Controller
 {
@@ -28,23 +31,26 @@ class SapContactoController extends Controller
                ]
            ];
 
-        $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto", $json);
+        $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 
-    public function SapGetValidarContacto()
+    public function SapGetValidarContacto(Request $request)
     {
         $client = new Client([
             'base_uri'  => 'http://172.20.6.54/'
         ]);
         
+        $User = Auth::user()->id;
+        $CardCode = 'C'.$User;
+
         $json = [
             'json' => [
-                "CardCode" => "C1300021"
+                "CardCode" => $CardCode
                ]
            ];
 
-        $response = $client->request('POST', "/Sap/api/Contacto/SapGetValidarContacto", $json);
+        $response = $client->request('POST', "/Sap/api/Contacto/SapGetValidarContacto/", $json);
         return $response->getBody();
     }
 }

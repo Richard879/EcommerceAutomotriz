@@ -309,11 +309,16 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/obsequio/SetEntregaObsequioElementoVenta', 'ObsequioController@SetEntregaObsequioElementoVenta');
     Route::get('/gescotizacion/GetListObsequiosByVehiculo', 'CotizacionController@GetListObsequiosByVehiculo');
     Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
-});
 
-Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\SapCompraController@GetListComprasByIdAPI');
-Route::post('/SAPLoginController/login', 'Api\SAPLoginController@login');
-Route::post('/SAPLoginController/logout', 'Api\SAPLoginController@logout');
-Route::get('/SAPLoginController/MetaData', 'Api\SAPLoginController@MetaData');
-Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
-Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
+    ///========================================
+    /////=================  ROUTES SAP 
+    //
+    Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\SapCompraController@GetListComprasByIdAPI');
+    Route::post('/SAPLoginController/login', 'Api\SAPLoginController@login');
+    Route::post('/SAPLoginController/logout', 'Api\SAPLoginController@logout');
+    Route::get('/SAPLoginController/MetaData', 'Api\SAPLoginController@MetaData');
+    Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
+    Route::post('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
+    Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
+
+});

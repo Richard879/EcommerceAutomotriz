@@ -15,6 +15,9 @@
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapMetaData">
                     <i class="fa fa-out"></i> MetaData
                 </button>
+                <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapGetValidarContacto">
+                    <i class="fa fa-out"></i> Verificar Usuario
+                </button>
             </header>
             <!-- Dashboard Counts Section-->
             <section class="dashboard-counts no-padding-bottom">
@@ -546,6 +549,21 @@
                 axios.get(url).then(response => {
                     console.log(response.data);
                     swal('METADATA');
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            SapGetValidarContacto(){
+                var url = this.ruta + '/gescontacto/SapGetValidarContacto';
+                axios.post(url,  {
+
+                }).then(response => {
+                    console.log(response.data);
+                    if(response.data == true){
+                        swal("EXISTE");
+                    }else{
+                        swal("NO EXISTE");
+                    }
                 }).catch(error => {
                     console.log(error);
                 });

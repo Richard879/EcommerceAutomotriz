@@ -54,7 +54,7 @@ class SapCompraController extends Controller
                 ]
            ];
 
-        $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+        $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
         return $response->getBody();
     }
 }
