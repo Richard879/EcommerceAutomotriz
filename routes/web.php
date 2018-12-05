@@ -311,7 +311,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
 
     ///========================================
-    /////=================  ROUTES SAP 
+    /////=================  ROUTES SAP
     //
     /// ============================================================
     /// CONECCION HANNAH - LARAVEL
@@ -327,7 +327,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
     Route::post('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
-    
+
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

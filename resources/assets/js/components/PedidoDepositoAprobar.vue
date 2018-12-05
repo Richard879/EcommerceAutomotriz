@@ -416,6 +416,21 @@
                                     <div class="card-body">
                                         <form class="form-horizontal">
                                             <div class="col-lg-12">
+                                                <vs-divider border-style="solid" color="dark">ESTADO CUENTA</vs-divider>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6"><div class="grid-content bg-purple">SALDO CANCELAR</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            S/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoTotal)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                    <el-col :span="6"><div class="grid-content bg-purple">SALDO RESTANTE</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            USD/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoFaltante)).toFixed(2)) }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
                                                 <vs-divider border-style="solid" color="dark">IMPORTE ACTUAL</vs-divider>
                                                 <el-row :gutter="10">
                                                     <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN SOLES</div></el-col>
@@ -443,6 +458,12 @@
                                                                 placeholder="Ingrese Tipo de Cambio Especial"
                                                                 v-model="fillDepositoTCEspecial.flagfTipoCambioEspecial"
                                                                 @keyup="actualizarMontoSolesNuevo(fillDepositoTCEspecial.flagfTipoCambioEspecial)"/>
+                                                        </div>
+                                                    </el-col>
+                                                    <el-col :span="6"><div class="grid-content bg-purple">TIPO CAMBIO ESPERADO</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            {{ Number((parseFloat(fillDepositoTCEspecial.fTipoCambioEsperado)).toFixed(4)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
@@ -534,6 +555,9 @@
                     nIdMonedaOrigen: 0,
                     flagfTipoCambioEspecial : 0,
                     fTipoCambioEspecial: 0,
+                    fTipoCambioEsperado: 0,
+                    fMontoTotal: 0,
+                    fMontoFaltante: 0,
                     fMontoOrigenDolares: 0,
                     fMontoOrigenSoles: 0,
                     fMontoResultanteDolares: 0,
@@ -980,27 +1004,25 @@
                     this.fillDepositoTCEspecial.deposito = data;
                     this.fillDepositoTCEspecial.nIdDepositoPedido           =   data.nIdDepositoPedido;//Id del Deposito
                     this.fillDepositoTCEspecial.nIdMonedaOrigen             =   data.nIdMonedaOrigen;//Tipo de Moneda
+                    this.fillDepositoTCEspecial.fMontoTotal                 =   (parseFloat(this.formDistribuirDeposito.flagMontoTotalCancelarPendiente)).toFixed(2);//Monto Total
                     this.fillDepositoTCEspecial.fMontoOrigenDolares         =   ((parseFloat(data.fMontoDolares)).toFixed(2));//Monto Actual en $
                     this.fillDepositoTCEspecial.fMontoOrigenSoles           =   ((parseFloat(data.fMontoSoles)).toFixed(2));//Monto Actual en S/
+                    this.fillDepositoTCEspecial.fMontoFaltante              =   this.fillDepositoTCEspecial.fMontoTotal - this.fillDepositoTCEspecial.fMontoOrigenDolares
                     this.fillDepositoTCEspecial.flagfTipoCambioEspecial     =   response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
                     this.fillDepositoTCEspecial.fTipoCambioEspecial         =   response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
 
                     //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
                     if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {//Soles
-                        console.log("Soles")
                         this.fillDepositoTCEspecial.fMontoResultanteSoles   = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenDolares) * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
                         // this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoOrigenDolares;
-                        this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / (this.fillDepositoTCEspecial.deposito.fTipoCambioComercial);
-
-                        console.log(this.fillDepositoTCEspecial.fMontoResultanteSoles, this.fillDepositoTCEspecial.fMontoResultanteDolares)
-                    } else {//Dolares
-                        console.log("Dolares")
                         this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
-                        // this.fillDepositoTCEspecial.fMontoResultanteSoles   = this.fillDepositoTCEspecial.fMontoOrigenSoles;
-                        this.fillDepositoTCEspecial.fMontoResultanteSoles   = this.fillDepositoTCEspecial.fMontoResultanteDolares * (this.fillDepositoTCEspecial.deposito.fTipoCambioComercial);
-
-                        console.log(this.fillDepositoTCEspecial.fMontoResultanteDolares, this.fillDepositoTCEspecial.fMontoResultanteSoles)
+                    } else {//Dolares
+                        // this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        // // this.fillDepositoTCEspecial.fMontoResultanteSoles   = this.fillDepositoTCEspecial.fMontoOrigenSoles;
+                        // this.fillDepositoTCEspecial.fMontoResultanteSoles   = this.fillDepositoTCEspecial.fMontoResultanteDolares * (this.fillDepositoTCEspecial.deposito.fTipoCambioComercial);
                     }
+
+                    this.fillDepositoTCEspecial.fTipoCambioEsperado = this.fillDepositoTCEspecial.fMontoOrigenSoles / this.fillDepositoTCEspecial.fMontoTotal;//Calcula TCE esperado
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1018,18 +1040,19 @@
 
                     //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
                     if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {
-                        this.fillDepositoTCEspecial.fMontoResultanteSoles = this.fillDepositoTCEspecial.fMontoOrigenDolares * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        this.fillDepositoTCEspecial.fMontoResultanteSoles   = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenDolares) * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
                     } else {
-                        this.fillDepositoTCEspecial.fMontoOrigenDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        // this.fillDepositoTCEspecial.fMontoOrigenDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
                     }
                     me.$forceUpdate();
                 }
                 //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
                 if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {
-                    this.fillDepositoTCEspecial.fMontoResultanteSoles = this.fillDepositoTCEspecial.fMontoOrigenDolares * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
-
+                    this.fillDepositoTCEspecial.fMontoResultanteSoles   = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenDolares) * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                    this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
                 } else {
-                    this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                    // this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
                 }
                 me.$forceUpdate();
             },
