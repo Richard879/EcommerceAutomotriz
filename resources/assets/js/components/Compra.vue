@@ -48,15 +48,6 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">BUSCAR COMPRA</h3>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapSetCliente">
-                                                                <i class="fa fa-search"></i> Crear Cliente
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapGetCompras">
-                                                                <i class="fa fa-search"></i> Listar Compras
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
-                                                                <i class="fa fa-user"></i> Login
-                                                            </button>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -1315,6 +1306,7 @@
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
+                arrayDocEntry: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1719,16 +1711,28 @@
                         });
                     }
 
-                    $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
                     if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
                         me.attachment = [];
                     }else{
-                        swal('Compra registrada correctamente');
-                        me.attachment = [],
-                        me.limpiarFormulario();
+                        var sapUrl = this.ruta + '/compra/SapSetCompra';
+                        axios.post(sapUrl, {
+                            data: this.arrayExcel
+                        }).then(response => {
+                            $("#myBar").hide();
+                            console.log(response.data);
+                            this.arrayDocEntry = response.data;
+                            this.arrayDocEntry.map(function(x){
+                                console.log(JSON.parse(x));
+                            });
+                            swal('Compra registrada correctamente');
+                            me.attachment = [],
+                            me.limpiarFormulario();
+                        }).catch(error => {
+                            console.log(error);
+                        });
                     }
                 }).catch(error => {
                     console.log(error);
@@ -2212,45 +2216,6 @@
                 $("#myBar").show();
                 progress();
             },
-            SapSetCliente(){
-                var url = this.ruta + '/cliente/SetCliente';
-                axios.post(url, {
-                }).then(response => {
-                    console.log(response);
-                    swal('CREADO SAP');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapGetCompras(){
-                var url = this.ruta + '/getComprasApi/GetListComprasByIdAPI';
-                axios.get(url, {
-                }).then(response => {
-                    console.log(response);
-                    swal('LISTADO');
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            SapLogin(){
-                let sendData = [
-                                {
-                                    "CompanyDB":"SBO_INKA_PROD",
-                                    "UserName":"manager",
-                                    "Password":"Start1234"
-                                }
-                              ];
-
-                var url = this.ruta + '/cliente/login';
-                axios.post(url, {
-                    data : sendData
-                }).then(response => {
-                    console.log(response);
-                    swal('INICIO SESIÓN CORRECTAMENTE');
-                }).catch(error => {
-                    console.log(error);
-                });
-            }
         },
         mounted(){
             this.llenarComboMarca();
