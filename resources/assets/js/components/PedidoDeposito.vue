@@ -304,7 +304,7 @@
                                                                 <el-col :span="6"><div class="grid-content bg-purple"> SALDO A CANCELAR</div></el-col>
                                                                 <el-col :span="6">
                                                                     <div class="grid-content bg-purple">
-                                                                        USD/. {{ formDeposito.flagMontoTotalCancelarPendiente }}
+                                                                        USD/. {{ Number((parseFloat(formDeposito.flagMontoTotalCancelarPendiente)).toFixed(2)) }}
                                                                     </div>
                                                                 </el-col>
                                                             </el-row>
@@ -416,12 +416,16 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_origen" filterable clearable placeholder="SELECCIONE" >
+                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_origen"
+                                                                                                   filterable
+                                                                                                   clearable
+                                                                                                   placeholder="SELECCIONE"
+                                                                                                   @change="onchangeMoneda_Destino(1)">
                                                                                             <el-option
-                                                                                            v-for="item in arrayMoneda_Origen"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
+                                                                                                v-for="item in arrayMoneda_Origen"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
                                                                                             </el-option>
                                                                                         </el-select>
                                                                                     </div>
@@ -515,18 +519,22 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
-                                                                                    <div class="col-sm-5 widthFull">
-                                                                                        <el-switch
-                                                                                            v-model="formNuevoDeposito.cflagtce"
-                                                                                            active-color="#13ce66"
-                                                                                            inactive-color="#ff4949">
-                                                                                        </el-switch>
+                                                                            <template v-if="formNuevoDeposito.verificarMonedaTCE">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-6 form-control-label"
+                                                                                            v-text="formNuevoDeposito.cflagtce ?
+                                                                                                            'Tipo Cambio Especial Activado' :
+                                                                                                            'Tipo Cambio Especial Desactivado'">
+                                                                                        </label>
+                                                                                        <div class="col-sm-5 widthFull">
+                                                                                            <el-switch
+                                                                                                v-model="formNuevoDeposito.cflagtce">
+                                                                                            </el-switch>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </template>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -555,7 +563,11 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable placeholder="SELECCIONE" v-on:change="onchangeMoneda_Destino()">
+                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_destino"
+                                                                                                   filterable
+                                                                                                   clearable
+                                                                                                   placeholder="SELECCIONE"
+                                                                                                   @change="onchangeMoneda_Destino(2)">
                                                                                             <el-option
                                                                                                 v-for="item in arrayMoneda_Destino"
                                                                                                 :key="item.nIdPar"
@@ -620,7 +632,11 @@
                                                                                 <div class="row">
                                                                                     <label class="col-sm-4 form-control-label">* Moneda</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_destino" filterable clearable placeholder="SELECCIONE" @change="onchangeMoneda_Destino()">
+                                                                                        <el-select v-model="formNuevoDeposito.nidmoneda_destino"
+                                                                                                   filterable
+                                                                                                   clearable
+                                                                                                   placeholder="SELECCIONE"
+                                                                                                   @change="onchangeMoneda_Destino(3)">
                                                                                             <el-option
                                                                                                 v-for="item in arrayMoneda_Destino"
                                                                                                 :key="item.nIdPar"
@@ -726,18 +742,22 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="row">
-                                                                                    <label class="col-sm-6 form-control-label" v-text="formNuevoDeposito.cflagtce ? 'Tipo Cambio Especial Activado' : 'Tipo Cambio Especial Desactivado'"></label>
-                                                                                    <div class="col-sm-5 widthFull">
-                                                                                        <el-switch
-                                                                                            v-model="formNuevoDeposito.cflagtce"
-                                                                                            active-color="#13ce66"
-                                                                                            inactive-color="#ff4949">
-                                                                                        </el-switch>
+                                                                            <template v-if="formNuevoDeposito.verificarMonedaTCE">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <label class="col-sm-6 form-control-label"
+                                                                                            v-text="formNuevoDeposito.cflagtce ?
+                                                                                                            'Tipo Cambio Especial Activado' :
+                                                                                                            'Tipo Cambio Especial Desactivado'">
+                                                                                        </label>
+                                                                                        <div class="col-sm-5 widthFull">
+                                                                                            <el-switch
+                                                                                                v-model="formNuevoDeposito.cflagtce">
+                                                                                            </el-switch>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </template>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <div class="col-sm-9 offset-sm-5">
@@ -1002,7 +1022,8 @@
                     ftipocambiovoucher: '',
                     ftipocambiocomercial: '',
                     cglosa: '',
-                    cflagtce: false
+                    cflagtce: false,
+                    verificarMonedaTCE: false
                 },
                 arrayBanco_Destino: [],
                 arrayMoneda_Destino: [],
@@ -1292,7 +1313,7 @@
                     var flagMontoTotalDepositosAprobados = Number(parseFloat(this.formDeposito.flagMontoTotalDepositosAprobados).toFixed(4))
                     var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
                     this.formDeposito.flagMontoTotalCancelarPendiente = resultadoMontoCancelar;
-                    (this.formDeposito.flagMontoTotalCancelarPendiente < 0 ) ? this.formDeposito.flagMontoTotalCancelarPendiente = 0 : this.formDeposito.flagMontoTotalCancelarPendiente;
+                    // (this.formDeposito.flagMontoTotalCancelarPendiente < 0 ) ? this.formDeposito.flagMontoTotalCancelarPendiente = 0 : this.formDeposito.flagMontoTotalCancelarPendiente;
                     this.activarTabGenerarDeposito(pedido);
                 }).catch(error => {
                     console.log(error);
@@ -1449,8 +1470,27 @@
                 this.formNuevoDeposito.nidmoneda_destino = '';
                 this.llenarComboCuenta_Destino();
             },
-            onchangeMoneda_Destino(){
-                this.llenarComboCuenta_Destino();
+            onchangeMoneda_Destino(op){
+                if(op == 1) {
+                    if(this.formNuevoDeposito.nidmoneda_origen == 1300027){//Soles
+                        this.formNuevoDeposito.verificarMonedaTCE = true;
+                    } else {//Dolares
+                        this.formNuevoDeposito.verificarMonedaTCE = false;
+                    }
+                    this.formNuevoDeposito.cflagtce = false;
+                }
+                if(op == 2){
+                    this.llenarComboCuenta_Destino();
+                }
+                if(op == 3){
+                    if(this.formNuevoDeposito.nidmoneda_destino == 1300027){//Soles
+                        this.formNuevoDeposito.verificarMonedaTCE = true;
+                    } else {//Dolares
+                        this.formNuevoDeposito.verificarMonedaTCE = false;
+                    }
+                    this.formNuevoDeposito.cflagtce = false;
+                    this.llenarComboCuenta_Destino();
+                }
             },
             llenarComboCuenta_Destino(){
                 var url = this.ruta + '/deposito/GetNumeroCuentaByBancoAndMoneda';
@@ -1900,6 +1940,10 @@
             },
             // ===========================================================
             limpiarFormulario(){
+                this.formParametrizacionDeposito.nidtipopago = '';
+                this.formParametrizacionDeposito.cnombretipopago = '';
+                this.formParametrizacionDeposito.nidformapago = '';
+                this.formParametrizacionDeposito.nidformapago2 = '';
                 this.fillPedido.dfechainicio = '';
                 this.fillPedido.dfechafin = '';
                 this.fillPedido.cnumeropedido = '';
@@ -1924,6 +1968,7 @@
                 this.formNuevoDeposito.ftipocambiovoucher = '',
                 this.attachment = '';
                 //this.formNuevoDeposito.ftipocambiocomercial = '',
+                this.formNuevoDeposito.verificarMonedaTCE = false;
                 this.formNuevoDeposito.cflagtce = false;
                 this.formNuevoDeposito.cglosa = ''
             },

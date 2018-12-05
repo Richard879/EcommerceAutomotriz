@@ -295,7 +295,7 @@
                                                             <el-col :span="6"><div class="grid-content bg-purple"> SALDO CANCELAR</div></el-col>
                                                             <el-col :span="6">
                                                                 <div class="grid-content bg-purple">
-                                                                    USD/. {{ formDistribuirDeposito.flagMontoTotalCancelarPendiente }}
+                                                                    USD/. {{ Number((parseFloat(formDistribuirDeposito.flagMontoTotalCancelarPendiente)).toFixed(2)) }}
                                                                 </div>
                                                             </el-col>
                                                         </el-row>
@@ -336,7 +336,7 @@
                                                                                     <i @click="rechazarDeposito(deposito)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                 </el-tooltip>
                                                                             </template>
-                                                                            <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO'">
+                                                                            <template v-if="deposito.cFlagTipoCambioEspecial == 'SI' && deposito.cFlagTipoCambioEspecialCheck == 'NO' && deposito.cFlagEstadoAprobacion == 'P'">
                                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                     <div slot="content">Tipo Cambio Especial {{ deposito.cNumeroPedido }}</div>
                                                                                     <i @click="abrirModal('TipoCambioEspecial','abrir',deposito)" :style="'color:grey'" class="fa-md fa fa-cog"></i>
@@ -465,7 +465,7 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="form-group row">
-                                                    <div class="col-sm-9 offset-sm-5">
+                                                    <div class="col-sm-9 offset-sm-3">
                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="actualizarDepositoPorTCE">
                                                             <i class="fa fa-save"></i> REALIZAR CAMBIO
                                                         </button>
@@ -639,6 +639,7 @@
                 $('#TabBuscaPedido').addClass('in active show');
                 $('#TabDistribucionDeposito').removeClass('in active show');
                 this.limpiarFormulario();
+                this.tabDistribucionDeposito();
             },
             llenarEstadoPedido(){
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
@@ -845,7 +846,7 @@
                     var flagMontoTotalDepositosAprobados = Number(parseFloat(this.formDistribuirDeposito.flagMontoTotalDepositosAprobados).toFixed(4))
                     var resultadoMontoCancelar = flagMontoTotalCotizacion - flagMontoTotalDepositosAprobados
                     this.formDistribuirDeposito.flagMontoTotalCancelarPendiente = resultadoMontoCancelar;
-                    (this.formDistribuirDeposito.flagMontoTotalCancelarPendiente < 0 ) ? this.formDistribuirDeposito.flagMontoTotalCancelarPendiente = 0 : this.formDistribuirDeposito.flagMontoTotalCancelarPendiente;
+                    // (this.formDistribuirDeposito.flagMontoTotalCancelarPendiente < 0 ) ? this.formDistribuirDeposito.flagMontoTotalCancelarPendiente = 0 : this.formDistribuirDeposito.flagMontoTotalCancelarPendiente;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -879,7 +880,7 @@
                                 'Aprobado!',
                                 'El registro fue aprobado exitosamente.'
                             );
-                            this.distribuirDeposito(deposito);
+                            this.tabBuscarPedido();
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
@@ -916,7 +917,7 @@
                                 'Rechazado!',
                                 'El registro fue rechazado exitosamente.'
                             );
-                            this.distribuirDeposito(deposito);
+                            this.tabBuscarPedido();
                         }).catch(function (error) {
                             console.log(error);
                             if (error.response) {
@@ -977,20 +978,28 @@
                     }
                 }).then(response => {
                     this.fillDepositoTCEspecial.deposito = data;
-                    this.fillDepositoTCEspecial.nIdDepositoPedido  = data.nIdDepositoPedido;//Id del Deposito
-                    this.fillDepositoTCEspecial.nIdMonedaOrigen  = data.nIdMonedaOrigen;//Tipo de Moneda
-                    this.fillDepositoTCEspecial.fMontoOrigenDolares  = ((parseFloat(data.fMontoDolares)).toFixed(2));//Monto Actual en $
-                    this.fillDepositoTCEspecial.fMontoOrigenSoles    = ((parseFloat(data.fMontoSoles)).toFixed(2));//Monto Actual en S/
-                    this.fillDepositoTCEspecial.flagfTipoCambioEspecial  = response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
-                    this.fillDepositoTCEspecial.fTipoCambioEspecial  = response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
+                    this.fillDepositoTCEspecial.nIdDepositoPedido           =   data.nIdDepositoPedido;//Id del Deposito
+                    this.fillDepositoTCEspecial.nIdMonedaOrigen             =   data.nIdMonedaOrigen;//Tipo de Moneda
+                    this.fillDepositoTCEspecial.fMontoOrigenDolares         =   ((parseFloat(data.fMontoDolares)).toFixed(2));//Monto Actual en $
+                    this.fillDepositoTCEspecial.fMontoOrigenSoles           =   ((parseFloat(data.fMontoSoles)).toFixed(2));//Monto Actual en S/
+                    this.fillDepositoTCEspecial.flagfTipoCambioEspecial     =   response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
+                    this.fillDepositoTCEspecial.fTipoCambioEspecial         =   response.data[0].fDatoParPorcentual;//Tipo Cambio Especial
 
                     //Realizar el calculo del monto en dolares o soles dependiendo el tipo moneda por el tipo cambio especial
-                    if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {
-                        this.fillDepositoTCEspecial.fMontoResultanteSoles = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenDolares) * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
-                        this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoOrigenDolares;
-                    } else {
-                        this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoResultanteSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
-                        this.fillDepositoTCEspecial.fMontoResultanteSoles = this.fillDepositoTCEspecial.fMontoOrigenSoles;
+                    if (this.fillDepositoTCEspecial.nIdMonedaOrigen == 1300027) {//Soles
+                        console.log("Soles")
+                        this.fillDepositoTCEspecial.fMontoResultanteSoles   = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenDolares) * this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        // this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoOrigenDolares;
+                        this.fillDepositoTCEspecial.fMontoResultanteDolares = this.fillDepositoTCEspecial.fMontoResultanteSoles / (this.fillDepositoTCEspecial.deposito.fTipoCambioComercial);
+
+                        console.log(this.fillDepositoTCEspecial.fMontoResultanteSoles, this.fillDepositoTCEspecial.fMontoResultanteDolares)
+                    } else {//Dolares
+                        console.log("Dolares")
+                        this.fillDepositoTCEspecial.fMontoResultanteDolares = parseFloat(this.fillDepositoTCEspecial.fMontoOrigenSoles) / this.fillDepositoTCEspecial.flagfTipoCambioEspecial;
+                        // this.fillDepositoTCEspecial.fMontoResultanteSoles   = this.fillDepositoTCEspecial.fMontoOrigenSoles;
+                        this.fillDepositoTCEspecial.fMontoResultanteSoles   = this.fillDepositoTCEspecial.fMontoResultanteDolares * (this.fillDepositoTCEspecial.deposito.fTipoCambioComercial);
+
+                        console.log(this.fillDepositoTCEspecial.fMontoResultanteDolares, this.fillDepositoTCEspecial.fMontoResultanteSoles)
                     }
                     $("#myBar").hide();
                 }).catch(error => {
@@ -1035,7 +1044,7 @@
                         swal('Monto del Deposito Actualizado');
                         this.cerrarModalSinPaginacion();
                         this.limpiarDepositoTCEspecial();
-                        this.distribuirDeposito(this.fillDepositoTCEspecial.deposito);
+                        this.tabBuscarPedido();
                     }else{
                         swal('Ocurrio un error al actualizar el nuevo monto del Deposito');
                     }
@@ -1069,6 +1078,7 @@
                         switch(accion){
                             case 'abrir':
                             {
+                                this.limpiarDepositoTCEspecial();
                                 this.cargarTipoCambioEspecial(data);
                                 this.accionmodal=2;
                                 this.modal = 1;
