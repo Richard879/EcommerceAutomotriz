@@ -313,12 +313,23 @@ Route::middleware(['auth'])->group(function(){
     ///========================================
     /////=================  ROUTES SAP 
     //
-    Route::get('/getComprasApi/GetListComprasByIdAPI', 'Api\SapCompraController@GetListComprasByIdAPI');
+    /// ============================================================
+    /// CONECCION HANNAH - LARAVEL
+    /// ============================================================
+    ///
     Route::post('/SAPLoginController/login', 'Api\SAPLoginController@login');
     Route::post('/SAPLoginController/logout', 'Api\SAPLoginController@logout');
     Route::get('/SAPLoginController/MetaData', 'Api\SAPLoginController@MetaData');
+    /// ============================================================
+    /// METODOS SERVICES LAYER
+    /// ============================================================
+    ///
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
     Route::post('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
-
+    
+    /// ============================================================
+    /// METODOS ODBC
+    /// ============================================================
+    ///
 });
