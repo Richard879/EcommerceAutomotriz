@@ -463,7 +463,7 @@
                                                     <el-col :span="6"><div class="grid-content bg-purple">TIPO CAMBIO ESPERADO</div></el-col>
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
-                                                            {{ Number((parseFloat(fillDepositoTCEspecial.fTipoCambioEsperado)).toFixed(4)) }}
+                                                            {{ Number((parseFloat(fillDepositoTCEspecial.fTipoCambioEsperado)).toFixed(5)) }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
