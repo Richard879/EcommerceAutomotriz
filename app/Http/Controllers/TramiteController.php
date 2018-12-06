@@ -186,23 +186,21 @@ class TramiteController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdTramiteTarjeta = $request->nIdTramiteTarjeta;
-        $dFechaFinRealTramite = $request->dFechaFinRealTramite;
-        $nIdEstado = $request->nIdEstado;
-        $cNroTarjeta = $request->cNroTarjeta;
-        $cNroPlaca = $request->cNroPlaca;
-        $cObservacion = $request->cObservacion;
+        $nIdTramiteTarjeta      =   $request->nIdTramiteTarjeta;
+        $dFechaFinRealTramite   =   $request->dFechaFinRealTramite;
+        $nIdEstado              =   $request->nIdEstado;
+        $cNroTarjeta            =   $request->cNroTarjeta;
+        $cNroPlaca              =   $request->cNroPlaca;
+        $cObservacion           =   $request->cObservacion;
 
-        $flagRegTramiteByEstado = $request->flagRegTramiteByEstado;
+        $flagRegTramiteByEstado =   $request->flagRegTramiteByEstado;
 
-        $nIdTramiteTarjeta = ($nIdTramiteTarjeta == NULL) ?
-                                    ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
-        $dFechaFinRealTramite = ($dFechaFinRealTramite == NULL) ?
-                                     ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
-        $nIdEstado = ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
-        $cNroTarjeta = ($cNroTarjeta == NULL) ? ($cNroTarjeta = '') : $cNroTarjeta;
-        $cNroPlaca = ($cNroPlaca == NULL) ? ($cNroPlaca = '') : $cNroPlaca;
-        $cObservacion = ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
+        $nIdTramiteTarjeta      =   ($nIdTramiteTarjeta == NULL) ? ($nIdTramiteTarjeta = '') : $nIdTramiteTarjeta;
+        $dFechaFinRealTramite   =   ($dFechaFinRealTramite == NULL) ? ($dFechaFinRealTramite = '') : $dFechaFinRealTramite;
+        $nIdEstado              =   ($nIdEstado == NULL) ? ($nIdEstado = '') : $nIdEstado;
+        $cNroTarjeta            =   ($cNroTarjeta == NULL) ? ($cNroTarjeta = '') : $cNroTarjeta;
+        $cNroPlaca              =   ($cNroPlaca == NULL) ? ($cNroPlaca = '') : $cNroPlaca;
+        $cObservacion           =   ($cObservacion == NULL) ? ($cObservacion = '') : $cObservacion;
 
         $data = DB::select('exec usp_Tramite_SetTramiteObservacionTarjeta ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $nIdTramiteTarjeta,

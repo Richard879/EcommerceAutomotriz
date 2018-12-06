@@ -2,9 +2,9 @@
     <transition name="slide-fade"  appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom"> TRAMITE - TARJETA Y PLACA </h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom"> TRAMITE - TARJETA Y PLACA </h2>
+                </div>
             </header>
 
             <section class="forms">
@@ -107,9 +107,7 @@
                                                                                 <el-table-column property="cEstadoTramite" label="Estado" show-overflow-tooltip>
                                                                                 </el-table-column>
                                                                                 <el-table-column fixed="right" label="Acciones" width="80">
-                                                                                    <template slot-scope="scope">
-
-                                                                                    </template>
+                                                                                    <template slot-scope="scope"></template>
                                                                                 </el-table-column>
                                                                             </el-table>
                                                                         </div>
@@ -219,58 +217,31 @@
                                                                             <el-table
                                                                                 :data="arrayPedidosChecked"
                                                                                 style="width: 100%">
-                                                                                <el-table-column
-                                                                                    label="Fecha Pedido"
-                                                                                    property="dFechaPedido"
-                                                                                    width="100">
+                                                                                <el-table-column label="Fecha Pedido" property="dFechaPedido" width="100">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cNumeroPedido"
-                                                                                    label="Nro Pedido"
-                                                                                    width="120">
+                                                                                <el-table-column property="cNumeroPedido" label="Nro Pedido" width="120">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cNumeroVin"
-                                                                                    label="Nro VIN"
-                                                                                    width="160">
+                                                                                <el-table-column property="cNumeroVin" label="Nro VIN" width="160">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cNombreComercial"
-                                                                                    label="Nombre Comercial"
-                                                                                    width="180">
+                                                                                <el-table-column property="cNombreComercial" label="Nombre Comercial" width="180">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="nAnioFabricacion"
-                                                                                    label="Año Fabricación"
-                                                                                    width="100">
+                                                                                <el-table-column property="nAnioFabricacion" label="Año Fabricación" width="100">
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    property="cEstado"
-                                                                                    label="Estado"
-                                                                                    show-overflow-tooltip>
+                                                                                <el-table-column property="cEstado" label="Estado" show-overflow-tooltip>
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    label="Total. T. Tarjeta"
-                                                                                    width="80">
+                                                                                <el-table-column label="Total. T. Tarjeta" width="80">
                                                                                     <template slot-scope="scope">
-                                                                                        S/.
-                                                                                        <span style="margin-left: 10px">{{ scope.row.fTotalTramiteTarjeta }}</span>
+                                                                                        S/. <span style="margin-left: 10px">{{ scope.row.fTotalTramiteTarjeta }}</span>
                                                                                     </template>
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    label="Total. T. Placa"
-                                                                                    width="80">
+                                                                                <el-table-column label="Total. T. Placa" width="80">
                                                                                     <template slot-scope="scope">
-                                                                                        S/.
-                                                                                        <span style="margin-left: 10px">{{ scope.row.fTotalTramitePlaca }}</span>
+                                                                                        S/. <span style="margin-left: 10px">{{ scope.row.fTotalTramitePlaca }}</span>
                                                                                     </template>
                                                                                 </el-table-column>
-                                                                                <el-table-column
-                                                                                    label="Total. G. Adicional"
-                                                                                    width="80">
+                                                                                <el-table-column label="Total. G. Adicional" width="80">
                                                                                     <template slot-scope="scope">
-                                                                                        S/.
-                                                                                        <span style="margin-left: 10px">{{ scope.row.fTotalGAdicional }}</span>
+                                                                                        S/. <span style="margin-left: 10px">{{ scope.row.fTotalGAdicional }}</span>
                                                                                     </template>
                                                                                 </el-table-column>
                                                                             </el-table>
@@ -416,40 +387,19 @@
                                                                                                     v-loading="loading"
                                                                                                     :data="arraySolicitudesTramites"
                                                                                                     style="width: 100%">
-                                                                                                        <el-table-column
-                                                                                                            property="cNumeroSolicitudTramite"
-                                                                                                            label="N° Solicitud T"
-                                                                                                            width="120">
+                                                                                                        <el-table-column property="cNumeroSolicitudTramite" label="N° Solicitud T" width="120">
                                                                                                         </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="cEstadoTramite"
-                                                                                                            label="Estado Tramite"
-                                                                                                            width="120">
+                                                                                                        <el-table-column property="cEstadoTramite" label="Estado Tramite" width="120">
                                                                                                         </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="nNumeroVehiculos"
-                                                                                                            label="Total Vehiculo"
-                                                                                                            width="120">
+                                                                                                        <el-table-column property="nNumeroVehiculos" label="Total Vehiculo" width="120">
                                                                                                         </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="fTotalTramite"
-                                                                                                            label="Total General"
-                                                                                                            width="120">
+                                                                                                        <el-table-column property="fTotalTramite" label="Total General" width="120">
                                                                                                         </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="nTotalTarjeta"
-                                                                                                            label="Tarjeta"
-                                                                                                            width="120">
+                                                                                                        <el-table-column property="nTotalTarjeta" label="Tarjeta" width="120">
                                                                                                         </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="nTotalPlaca"
-                                                                                                            label="Placa"
-                                                                                                            show-overflow-tooltip>
+                                                                                                        <el-table-column property="nTotalPlaca" label="Placa" show-overflow-tooltip>
                                                                                                         </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            fixed="right"
-                                                                                                            label="Acciones"
-                                                                                                            width="80">
+                                                                                                        <el-table-column fixed="right" label="Acciones" width="80">
                                                                                                             <template slot-scope="scope">
                                                                                                                 <el-tooltip class="item"
                                                                                                                             effect="dark"
@@ -565,67 +515,48 @@
                                                                                 <form class="form-horizontal">
                                                                                     <div class="col-lg-12">
                                                                                         <template v-if="arrayDetalleSolicitudTramite.length">
-                                                                                            <div>
-                                                                                                <el-table
-                                                                                                    v-loading="loading"
-                                                                                                    :data="arrayDetalleSolicitudTramite"
-                                                                                                    style="width: 100%">
-                                                                                                        <el-table-column
-                                                                                                            property="dFechaInicioTramite"
-                                                                                                            label="Fecha Inicio T"
-                                                                                                            width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="dFechaFinTramite"
-                                                                                                            label="Fecha Fin T"
-                                                                                                            width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="dFechaFinRealTramite"
-                                                                                                            label="Fecha Fin Real T"
-                                                                                                            width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="cNumeroVin"
-                                                                                                            label="N° VIN"
-                                                                                                            width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="cEstadoTarjeta"
-                                                                                                            label="Estado Tarjeta"
-                                                                                                            width="120">
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            property="cEstadoPlaca"
-                                                                                                            label="Estado Placa"
-                                                                                                            show-overflow-tooltip>
-                                                                                                        </el-table-column>
-                                                                                                        <el-table-column
-                                                                                                            fixed="right"
-                                                                                                            label="Acciones"
-                                                                                                            width="180">
-                                                                                                            <template slot-scope="scope">
-                                                                                                                <template v-if="scope.row.cEstadoTarjeta != 'RECIBIDA'">
-                                                                                                                    <el-tooltip class="item"
-                                                                                                                                effect="dark"
-                                                                                                                                content="Tarjeta"
-                                                                                                                                placement="top-start">
-                                                                                                                        <el-button @click="abrirModal('tarjeta', 'abrir', scope.row);"><i class="fa fa-address-card"></i></el-button>
-                                                                                                                    </el-tooltip>
-                                                                                                                </template>
-
-                                                                                                                <template v-if="scope.row.cEstadoTarjeta == 'RECIBIDA' && scope.row.cEstadoPlaca != 'RECIBIDA'">
-                                                                                                                    <el-tooltip class="item"
-                                                                                                                                effect="dark"
-                                                                                                                                content="Placa"
-                                                                                                                                placement="top-start">
-                                                                                                                        <el-button @click="abrirModal('placa', 'abrir', scope.row);"><i class="fa fa-car"></i></el-button>
-                                                                                                                    </el-tooltip>
-                                                                                                                </template>
+                                                                                            <el-table
+                                                                                                v-loading="loading"
+                                                                                                :data="arrayDetalleSolicitudTramite"
+                                                                                                style="width: 100%">
+                                                                                                    <el-table-column property="dFechaInicioTramite" label="Fecha Inicio T" width="120">
+                                                                                                    </el-table-column>
+                                                                                                    <el-table-column property="dFechaFinTramite" label="Fecha Fin T" width="120">
+                                                                                                    </el-table-column>
+                                                                                                    <el-table-column property="dFechaFinRealTramite" label="Fecha Fin Real T" width="120">
+                                                                                                    </el-table-column>
+                                                                                                    <el-table-column property="cNumeroVin" label="N° VIN" width="120">
+                                                                                                    </el-table-column>
+                                                                                                    <el-table-column property="cEstadoTarjeta" label="Estado Tarjeta" width="120">
+                                                                                                    </el-table-column>
+                                                                                                    <el-table-column property="cEstadoPlaca" label="Estado Placa" show-overflow-tooltip>
+                                                                                                    </el-table-column>
+                                                                                                    <el-table-column fixed="right" label="Acciones" width="180">
+                                                                                                        <template slot-scope="scope">
+                                                                                                            <template v-if="scope.row.cEstadoTarjeta != 'RECIBIDA'">
+                                                                                                                <el-tooltip class="item"
+                                                                                                                            effect="dark"
+                                                                                                                            content="Tarjeta"
+                                                                                                                            placement="top-start">
+                                                                                                                    <el-button @click="abrirModal('tarjeta', 'abrir', scope.row);">
+                                                                                                                        <i class="fa fa-address-card"></i>
+                                                                                                                    </el-button>
+                                                                                                                </el-tooltip>
                                                                                                             </template>
-                                                                                                        </el-table-column>
-                                                                                                </el-table>
-                                                                                            </div>
+
+                                                                                                            <template v-if="scope.row.cEstadoTarjeta == 'RECIBIDA' && scope.row.cEstadoPlaca != 'RECIBIDA'">
+                                                                                                                <el-tooltip class="item"
+                                                                                                                            effect="dark"
+                                                                                                                            content="Placa"
+                                                                                                                            placement="top-start">
+                                                                                                                    <el-button @click="abrirModal('placa', 'abrir', scope.row);">
+                                                                                                                        <i class="fa fa-car"></i>
+                                                                                                                    </el-button>
+                                                                                                                </el-tooltip>
+                                                                                                            </template>
+                                                                                                        </template>
+                                                                                                    </el-table-column>
+                                                                                            </el-table>
                                                                                         </template>
                                                                                     </div>
                                                                                     <div class="col-lg-12">
@@ -1216,6 +1147,11 @@
                     this.arrayEstadoTramite = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             limpiarBuscarPedidos(){
@@ -1349,6 +1285,11 @@
                     this.fillBusquedaPedidosSeleccionados.fechaFinRealTramite = fecha;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             obtenerNroVehiculos(){
@@ -1375,9 +1316,15 @@
                     'nIdEstadoTramite'      :   1300304,
                     'cFlagEstadoAprobacion' :   'P',
                 }).then(response => {
+                    console.log(response.data);
                     this.setTramiteTarjeta(response.data);
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistrarTramite(){
@@ -1428,6 +1375,11 @@
                         this.tabBandejaSolicitudes();
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
             },
@@ -1490,10 +1442,10 @@
                     this.pagination.to           = info.to;
                     this.loading = false;
                 }).catch(error => {
+                    console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
-                            // window.open(this.ruta);
-                            location.reload(true);
+                            location.reload('0');
                         }
                     }
                 });
@@ -1528,9 +1480,10 @@
                     this.fillDetalleSolTramite.fechaFinRealTramite = this.arrayDetalleSolicitudTramite[0].FechaFinRealTramite;
                     this.tabBandejaDetalleSolicitudTramite()
                 }).catch(error => {
+                    console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
-                            location.reload(true);
+                            location.reload('0');
                         }
                     }
                 });
@@ -1570,6 +1523,11 @@
                     this.$delete(this.arrayEstadoTramiteTarjetaPlaca, 0);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             buscarMisObservaciones(page){
@@ -1606,16 +1564,22 @@
             },
             cambiarEstadoModal(){
                 if(this.fillModalTarjetaPlaca.nIdEstado == '') {
-                   this.vistaEstado = 2;//Si es RECIBIDO
-                   this.fillModalTarjetaPlaca.flagRegTramiteByEstado = '';//RECIBIDO
+                    this.vistaEstado = 2;//Si no se selecciono
+                    this.fillModalTarjetaPlaca.flagRegTramiteByEstado = '';//NINGUNO
+                    this.fillModalTarjetaPlaca.cObservacion = '';
+                    this.fillModalTarjetaPlaca.cNroTarjeta = '';
+                    this.fillModalTarjetaPlaca.cNroPlaca = '';
                 }
                 if(this.fillModalTarjetaPlaca.nIdEstado == 1300329) {
                     this.vistaEstado = 1;//Si es RECIBIDO
                     this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 1;//RECIBIDO
+                    this.fillModalTarjetaPlaca.cObservacion = '';
                 }
                 if(this.fillModalTarjetaPlaca.nIdEstado == 1300330) {
                     this.vistaEstado = 0;//Si es OBSERVADA
                     this.fillModalTarjetaPlaca.flagRegTramiteByEstado = 0;//OBSERVADA
+                    this.fillModalTarjetaPlaca.cNroTarjeta = '';
+                    this.fillModalTarjetaPlaca.cNroPlaca = '';
                 }
             },
             registrarTramiteTarjeta(){
@@ -1625,19 +1589,24 @@
 
                 var url = this.ruta + '/tramite/SetEstadoTramiteTarjeta';
                 axios.post(url, {
-                    'nIdTramiteTarjeta': this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
-                    'dFechaFinRealTramite': moment().format('DD/MM/YYYY'),
-                    'nIdEstado': this.fillModalTarjetaPlaca.nIdEstado,
-                    'cNroTarjeta' : this.fillModalTarjetaPlaca.cNroTarjeta,
-                    'cNroPlaca': this.fillModalTarjetaPlaca.cNroPlaca,
-                    'cObservacion' : this.fillModalTarjetaPlaca.cObservacion,
-                    'flagRegTramiteByEstado': this.fillModalTarjetaPlaca.flagRegTramiteByEstado
+                    'nIdTramiteTarjeta'     :   this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
+                    'dFechaFinRealTramite'  :   moment().format('DD/MM/YYYY'),
+                    'nIdEstado'             :   this.fillModalTarjetaPlaca.nIdEstado,
+                    'cNroTarjeta'           :   this.fillModalTarjetaPlaca.cNroTarjeta,
+                    'cNroPlaca'             :   this.fillModalTarjetaPlaca.cNroPlaca,
+                    'cObservacion'          :   this.fillModalTarjetaPlaca.cObservacion,
+                    'flagRegTramiteByEstado':   this.fillModalTarjetaPlaca.flagRegTramiteByEstado
                 }).then(response => {
-                    console.log(response);
+                    // console.log(response.data);
                     this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
                     this.cerrarModalTramiteTarjetaPlaca();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarTramiteTarjeta(){
@@ -1672,24 +1641,29 @@
                 if(this.validarTramitePlaca()){
                     return;
                 }
-
                 var url = this.ruta + '/tramite/SetEstadoTramitePlaca';
                 axios.post(url, {
-                    'nIdTramitePlaca': this.fillModalTarjetaPlaca.nIdTramitePlaca,
-                    'nIdCabeceraTramite': this.fillModalTarjetaPlaca.nIdCabeceraTramite,
-                    'nIdTramiteTarjeta': this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
-                    'dFechaInicioTramite': this.fillModalTarjetaPlaca.dFechaInicioTramite,
-                    'dFechaFinTramite': this.fillModalTarjetaPlaca.dFechaFinTramite,
-                    'nIdEstado': this.fillModalTarjetaPlaca.nIdEstado,
-                    'dFechaFinRealTramite': moment().format('DD/MM/YYYY'),
-                    'cObservacion' : this.fillModalTarjetaPlaca.cObservacion,
+                    'nIdTramitePlaca'       : this.fillModalTarjetaPlaca.nIdTramitePlaca,
+                    'nIdCabeceraTramite'    : this.fillModalTarjetaPlaca.nIdCabeceraTramite,
+                    'nIdTramiteTarjeta'     : this.fillModalTarjetaPlaca.nIdTramiteTarjeta,
+                    'dFechaInicioTramite'   : this.fillModalTarjetaPlaca.dFechaInicioTramite,
+                    'dFechaFinTramite'      : this.fillModalTarjetaPlaca.dFechaFinTramite,
+                    'nIdEstado'             : this.fillModalTarjetaPlaca.nIdEstado,
+                    'dFechaFinRealTramite'  : moment().format('DD/MM/YYYY'),
+                    'cObservacion'          : this.fillModalTarjetaPlaca.cObservacion,
                     'flagRegTramiteByEstado': this.fillModalTarjetaPlaca.flagRegTramiteByEstado
                 }).then(response => {
-                    console.log(response);
-                    this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
+                    // console.log(response.data);
+                    // this.cargarDetalleSolicitudTramite(1, this.fillModalTarjetaPlaca);
+                    this.tabBandejaSolicitudes();
                     this.cerrarModalTramiteTarjetaPlaca();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarTramitePlaca(){
@@ -1735,7 +1709,7 @@
                                 this.modal = 1;
                                 this.vistaEstado = 2;//Inputs Ocultos
                                 this.arrayListadoEstadosTarjetaPlaca = [];//Setear Listado de Estados Observados
-                                this.fillModalTarjetaPlaca.flagOpcion = 1;//Flag para bucar Listado de Tarjetas
+                                this.fillModalTarjetaPlaca.flagOpcion = 1;//Flag para bucar Listado de Observaciones de Tarjetas
                                 this.fillModalTarjetaPlaca.nIdTramiteTarjeta = data['nIdTramiteTarjeta'];
                                 this.fillModalTarjetaPlaca.nIdCabeceraTramite = data['nIdCabeceraTramite'];
                                 this.llenarEstadosTramiteTarjetaPlaca();
@@ -1754,7 +1728,7 @@
                                 this.modal = 1;
                                 this.vistaEstado = 2;//Inputs Ocultos
                                 this.arrayListadoEstadosTarjetaPlaca = [];//Setear Listado de Estados Observados
-                                this.fillModalTarjetaPlaca.flagOpcion = 2;//Flag para bucar Listado de Placas
+                                this.fillModalTarjetaPlaca.flagOpcion = 2;//Flag para bucar Listado de Observaciones de Placas
                                 this.fillModalTarjetaPlaca.nIdTramiteTarjeta = data['nIdTramiteTarjeta'];
                                 this.fillModalTarjetaPlaca.nIdTramitePlaca = data['nIdTramitePlaca'];
                                 this.fillModalTarjetaPlaca.nIdCabeceraTramite = data['nIdCabeceraTramite'];
