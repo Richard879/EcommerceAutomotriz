@@ -214,32 +214,32 @@ class CotizacionController extends Controller
             //Obtengo datos del Supera Dscto para validar si se Aprueba o No el Pedido Automaticamente
             $arrayDatosCotizacion = DB::select('exec [usp_Cotizacion_GetDatosCotizacion] ? ', [ $nIdCabeceraCotizacion ]);
 
-            $contGerencia = 0;
-            $contADV = 0;
+            $contAprobacionGerencia = 0;
+            $contAprobacionADV = 0;
 
             //Recorrer todos los detalles de la Cotización
             foreach ($arrayDatosCotizacion as $value) {
-                //Si el detalle es un Vehiculo
+                //Si el detalle de cotización es de tipo Vehiculo
                 if ($value->cFlagTipoItem == 'V') {
-                    //Verifica si supera dscto
+                    //Verificar si supera dscto
                     if ($value->cFlagSuperaDescuento == 'S' ) {
-                        //Si supera aumenta el cont de Gerencia
-                        $contGerencia++;
+                        //Si supera dscto, aumenta el cont de Gerencia
+                        $contAprobacionGerencia++;
                     }
                 } else {
-                    //Si el detalle es EV, Obs o Campaña
-                    //Verifica si es una camapaña o obsequio
+                    //Si el detalle de cotización es de tipo => EV, Obs o Campaña
+                    //Verificar si es una camapaña o obsequio
                     if ($value->cFlagActivaEventoCampania == 'S' || $value->cFlagActivaObsequio == 'S' ) {
                         //Si es evento y/o obsequio, aumenta el cont de ADV
-                        $contADV++;
+                        $contAprobacionADV++;
                     }
                 }
             }
 
             $data = [
-                'nIdCabeceraCotizacion' => $nIdCabeceraCotizacion,
-                'contGerencia'          => $contGerencia,
-                'contADV'               => $contADV
+                'nIdCabeceraCotizacion'     => $nIdCabeceraCotizacion,
+                'contAprobacionGerencia'    => $contAprobacionGerencia,
+                'contAprobacionADV'         => $contAprobacionADV
             ];
 
             // $data = [
