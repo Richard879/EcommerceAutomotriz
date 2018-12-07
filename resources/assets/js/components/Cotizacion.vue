@@ -43,9 +43,6 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">MIS COTIZACIONES</h3>
-                                                            <!-- <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="generarCotizacionPDF('7300003')">
-                                                                <i class="fa fa-pdf"></i> GENERAR REPORTE
-                                                            </button> -->
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -196,6 +193,10 @@
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Ver Detalle Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
                                                                                         <i @click="abrirModal('cotizacion', 'detalle', cotizacion)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Reporte Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
+                                                                                        <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="cotizacion.cNumeroCotizacion"></td>
@@ -4148,7 +4149,7 @@
                 axios.post(url, {
                     'nIdEmpresa'            :   1300011,
                     'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
-                    'nIdCabeceraCotizacion' :   "7300003"
+                    'nIdCabeceraCotizacion' :   nIdCabeCoti
                 }, config).then(response => {
                     //Create a Blob from the PDF Stream
                     const file = new Blob(
