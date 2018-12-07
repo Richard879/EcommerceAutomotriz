@@ -43,9 +43,9 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="h4">MIS COTIZACIONES</h3>
-                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="generarCotizacionPDF('7300003')">
+                                                            <!-- <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="generarCotizacionPDF('7300003')">
                                                                 <i class="fa fa-pdf"></i> GENERAR REPORTE
-                                                            </button>
+                                                            </button> -->
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -592,10 +592,18 @@
                                                                                                         <td v-html="vehiculo.cantidad"></td>
                                                                                                         <td v-text="vehiculo.PrecioBase"></td>
                                                                                                         <td>
-                                                                                                            <input type="number" class="form-control form-control-sm" v-model="vehiculo.sobrePrecio" @keyup="changeSobrePrecio(vehiculo.sobrePrecio)" min="0"/>
+                                                                                                            <input type="number"
+                                                                                                                   class="form-control form-control-sm"
+                                                                                                                   v-model="vehiculo.sobrePrecio"
+                                                                                                                   @keyup="changeSobrePrecio(vehiculo.sobrePrecio)"
+                                                                                                                   min="0"/>
                                                                                                         </td>
                                                                                                         <td>
-                                                                                                            <input type="number" class="form-control form-control-sm" v-model="vehiculo.descuento" @keyup="changeDscto(vehiculo.descuento)" min="0"/>
+                                                                                                            <input type="number"
+                                                                                                                   class="form-control form-control-sm"
+                                                                                                                   v-model="vehiculo.descuento"
+                                                                                                                   @keyup="changeDscto(vehiculo.descuento)"
+                                                                                                                   min="0"/>
                                                                                                         </td>
                                                                                                         <td v-text="vehiculo.PrecioCierre"></td>
                                                                                                         <td v-text="vehiculo.PrecioVenta"></td>
@@ -625,11 +633,15 @@
                                                                                                 <div class="col-lg-6 direction-money">
                                                                                                     <div class="form-group row">
                                                                                                         <label class="form-control-label">TOTAL USD &nbsp; &nbsp;</label>
-                                                                                                        <label class="form-control-label"><strong>{{ montoTotalVehiculoDolar = totalVehiculo }}</strong></label>
+                                                                                                        <label class="form-control-label">
+                                                                                                            <strong>{{ montoTotalVehiculoDolar = totalVehiculo }}</strong>
+                                                                                                        </label>
                                                                                                     </div>
                                                                                                     <div class="form-group row">
                                                                                                         <label class="form-control-label">TOTAL S/. &nbsp; &nbsp;</label>
-                                                                                                        <label class="form-control-label"><strong>{{ montoTotalVehiculoSoles = totalVehiculoSoles }}</strong></label>
+                                                                                                        <label class="form-control-label">
+                                                                                                            <strong>{{ montoTotalVehiculoSoles = totalVehiculoSoles }}</strong>
+                                                                                                        </label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="col-lg-12" :class="[(fDy > 0) ? '' : 'datos']">
@@ -2516,6 +2528,7 @@
             //this.configuracionInicial();
         },
         computed:{
+            //Paginación
             isActived: function(){
                 return this.pagination.current_page;
             },
@@ -4092,12 +4105,12 @@
                     }).then(response => {
                         // ADV cuando existen solo promociones y/o obsequios
                         // GERENCIA cuando existen solo dscto
-                        if (response.data.contGerencia > 0){
+                        if (response.data.contAprobacionGerencia > 0){
                             this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
                             this.generarCotizacionPDF(nIdCabeCoti);
                             swal('Cotización generada exitosamente, pendiente de Aprobación');
                         } else {
-                            if (response.data.contADV > 0) {
+                            if (response.data.contAprobacionADV > 0) {
                                 this.cambiarEstadoCotizacion(response.data.nIdCabeceraCotizacion, 2);
                                 this.generarCotizacionPDF(nIdCabeCoti)
                                 swal('Cotización generada exitosamente, pendiente de Aprobación');
