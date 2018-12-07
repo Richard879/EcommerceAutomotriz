@@ -32,7 +32,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">BUSCAR VEHÍCULOS.</h3>
+                                                            <h3 class="h4">BUSCAR VEHÍCULOS</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -105,67 +105,83 @@
                                                             <h3 class="h4">LISTADO</h3>
                                                         </div>
                                                         <div class="card-body">
-                                                            <form class="form-horizontal">
-                                                                <div class="col-lg-12">
-                                                                    <template v-if="arrayInspeccionesAprobadas.length">
-                                                                        <div class="table-responsive barraLateral">
-                                                                            <el-table v-loading="loading" :data="arrayInspeccionesAprobadas" style="width: 100%">
-                                                                                <el-table-column  property="dFechaInspeccion" label="Fecha Inpsección"   width="100"></el-table-column>
-                                                                                <el-table-column  property="cHoraInspeccion" label="Hora Inspección"   width="95"></el-table-column>
-                                                                                <el-table-column  property="cPlaca" label="Placa" width="95"></el-table-column>
-                                                                                <el-table-column  property="encargado" label="Encargado" width="150"></el-table-column>
-                                                                                <el-table-column  property="cNumeroSolicitud" label="Ref.Solicitud Entrega" width="130"></el-table-column>
-                                                                                <el-table-column  property="dFechaEntregaVehiculo" label="Fecha Entrega" width="100"></el-table-column>
-                                                                                <el-table-column  property="cHoraEntregaVehiculo" label="Hora de Entrega" show-overflow-tooltip></el-table-column>
-                                                                                <el-table-column  fixed="right" label="Acciones"   width="150">
-                                                                                    <template slot-scope="scope">
-                                                                                        <template v-if="scope.row.dFechaEntregaVehiculo != null">
-                                                                                            <el-tooltip class="item" effect="dark" :content="'Ver Archivos Adjuntos : ' + scope.row.cPlaca " placement="top-start">
-                                                                                                <el-button @click="abrirModal('entregavehiculo', 'mostrar', scope.row)"><i class="fa fa-file"></i></el-button>
-                                                                                            </el-tooltip>
-                                                                                        </template>
-                                                                                        <template v-if="scope.row.cFlagEntregado == null">
-                                                                                            <el-tooltip class="item" effect="dark" content="Editar" placement="top-start">
-                                                                                                <el-button @click="tabEntregaVehiculo(scope.row)"><i class="fa fa-edit"></i></el-button>
-                                                                                            </el-tooltip>
-                                                                                        </template>
+                                                            <template v-if="arrayInspeccionesAprobadas.length">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Fecha Inpsección</th>
+                                                                                <th>Hora Inspección</th>
+                                                                                <th>Placa</th>
+                                                                                <th>Encargado</th>
+                                                                                <th>Ref.Solicitud Entrega</th>
+                                                                                <th>Fecha Entrega</th>
+                                                                                <th>Hora de Entrega</th>
+                                                                                <th>Acciones</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="entrega in arrayInspeccionesAprobadas" :key="entrega.nIdCabeceraInspeccion">
+                                                                                <td v-text="entrega.dFechaInspeccion"></td>
+                                                                                <td v-text="entrega.cHoraInspeccion"></td>
+                                                                                <td v-text="entrega.cPlaca"></td>
+                                                                                <td v-text="entrega.encargado"></td>
+                                                                                <td v-text="entrega.cNumeroSolicitud"></td>
+                                                                                <td v-text="entrega.dFechaEntregaVehiculo"></td>
+                                                                                <td v-text="entrega.cHoraEntregaVehiculo"></td>
+                                                                                <td>
+                                                                                    <template v-if="entrega.dFechaEntregaVehiculo != null">
+                                                                                        <el-tooltip class="item" effect="dark" :content="'Ver Archivos Adjuntos : ' + entrega.cPlaca " placement="top-start">
+                                                                                            <el-button @click="abrirModal('entregavehiculo', 'mostrar', entrega)">
+                                                                                                <i :style="'color:#796AEE'" class="fa fa-file"></i>
+                                                                                            </el-button>
+                                                                                        </el-tooltip>
                                                                                     </template>
-                                                                                </el-table-column>
-                                                                            </el-table>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-7">
-                                                                                        <nav>
-                                                                                            <ul class="pagination">
-                                                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaMisInspecciones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                                                                </li>
-                                                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                                                                :class="[page==isActived?'active':'']">
-                                                                                                    <a class="page-link"
-                                                                                                    href="#" @click.prevent="cambiarPaginaMisInspecciones(page)"
-                                                                                                    v-text="page"></a>
-                                                                                                </li>
-                                                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                                    <a @click.prevent="cambiarPaginaMisInspecciones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
-                                                                    <template v-else>
-                                                                        <tr>
-                                                                            <td>No existen registros</td>
-                                                                        </tr>
-                                                                    </template>
+                                                                                    <template v-if="entrega.cFlagEntregado == null">
+                                                                                        <el-tooltip class="item" :content="'Editar'" effect="dark" placement="top-start">
+                                                                                            <i @click="tabEntregaVehiculo(entrega)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
-                                                            </form>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-7">
+                                                                            <nav>
+                                                                                <ul class="pagination">
+                                                                                    <li v-if="pagination.current_page > 1" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaMisInspecciones(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                    </li>
+                                                                                    <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                                    :class="[page==isActived?'active':'']">
+                                                                                        <a class="page-link"
+                                                                                        href="#" @click.prevent="cambiarPaginaMisInspecciones(page)"
+                                                                                        v-text="page"></a>
+                                                                                    </li>
+                                                                                    <li v-if="pagination.current_page < pagination.last_page" class="page-item">
+                                                                                        <a @click.prevent="cambiarPaginaMisInspecciones(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                            <template v-else>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="10">No existen registros!</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -178,7 +194,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <h3 class="h4">ENTREGAR VEHÍCULO.</h3>
+                                                            <h3 class="h4">ENTREGAR VEHÍCULO</h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
@@ -275,7 +291,7 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 offset-md-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarEntregaVehiculo">
+                                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarEntregaVehiculo">
                                                                             <i class="fa fa-save"></i> Registrar
                                                                         </button>
                                                                         <button type="button" class="btn btn-default btn-corner btn-sm" @click.prevent="limpiarEntregaVehiculo">
@@ -593,31 +609,27 @@
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        <div class="text-center">
-                                                            <div v-for="e in mensajeError" :key="e" v-text="e"></div>
-                                                        </div>
-                                                    </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <div class="text-center">
+                                                    <div v-for="e in mensajeError" :key="e" v-text="e"></div>
                                                 </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        <div v-for="archivos in arrayArchivosAdjuntos" :key="archivos.nIdDocumentoAdjunto">
-                                                            <a :href="archivos.cRutaDocumento" target="_blank" class="listaArchivosAdjuntos">
-                                                                <el-alert
-                                                                    :title="archivos.cArchivo"
-                                                                    type="success"
-                                                                    :closable="false"
-                                                                    show-icon>
-                                                                </el-alert>
-                                                            </a>
-                                                            <br>
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <div v-for="archivos in arrayArchivosAdjuntos" :key="archivos.nIdDocumentoAdjunto">
+                                                    <a :href="archivos.cRutaDocumento" target="_blank" class="listaArchivosAdjuntos">
+                                                        <el-alert
+                                                            :title="archivos.cArchivo"
+                                                            type="success"
+                                                            :closable="false"
+                                                            show-icon>
+                                                        </el-alert>
+                                                    </a>
+                                                    <br>
                                                 </div>
                                             </div>
                                         </div>
@@ -720,7 +732,7 @@
             }
         },
         mounted() {
-            this.tabMisInspecciones();
+            this.llenarEstados();
         },
         computed:{
             isActived: function(){
@@ -786,7 +798,7 @@
 
                 this.limpiarMisMisInspecciones();
                 this.limpiarEntregaVehiculo();
-                this.llenarEstados();
+                //this.llenarEstados();
                 this.buscarMisInspecciones(1);
             },
             llenarEstados(){
