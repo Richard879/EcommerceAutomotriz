@@ -397,6 +397,17 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label"><span v-text="formPdi.nidconformidad ? 'Conforme' : 'NO Conforme'"></span></label>
+                                                    <div class="col-sm-8">
+                                                        <el-switch v-model="formPdi.nidconformidad">
+                                                        </el-switch>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <label class="col-sm-2 form-control-label">Observación</label>
@@ -1216,6 +1227,7 @@
                     cflagconformidaddescripcion: '',
                     cFlagVinPlaca: '',
                     cobservacion: '',
+                    nidconformidad: 0
                 },
                 arraySolicitud: [],
                 arrayPuntoInspeccion: [],
@@ -1743,6 +1755,7 @@
                     cFlagVinPlaca: this.formPdi.nidcompra == 0 ? 'P' : 'V',
                     cNumeroMovimientoAlmacen: '',
                     dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
+                    cFlagEstadoAprobacion: this.formPdi.nidconformidad == 1 ? 'C' : 'N',
                     cObservacion: this.formPdi.cobservacion
                 }).then(response => {
                     /*if(response.data[0].nFlagMsje == 1)
@@ -1881,6 +1894,7 @@
                     cHoraInspeccion: this.formPdi.chorainspeccion,
                     cNumeroMovimientoAlmacen: '',
                     dFechaMovimientoAlmacen: this.formPdi.dfechamovimientoalmacen,
+                    cFlagEstadoAprobacion: this.formPdi.nidconformidad == 1 ? 'C' : 'N',
                     cObservacion: this.formPdi.cobservacion
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)

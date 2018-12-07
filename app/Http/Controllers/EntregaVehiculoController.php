@@ -36,7 +36,7 @@ class EntregaVehiculoController extends Controller
         $dFechaSolicitud  = ($dFechaSolicitud == NULL) ? ($dFechaSolicitud = '') : $dFechaSolicitud;
         $cFlagEstado  = ($cFlagEstado == NULL) ? ($cFlagEstado = '') : $cFlagEstado;
 
-        $arrayInspeccionesAprobadas = DB::select('exec usp_EntregaVehiculo_GetLstInspecciones ?, ?, ?, ?, ?, ?',
+        $arrayInspeccionesAprobadas = DB::select('exec [usp_EntregaVehiculo_GetLstInspecciones] ?, ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdEmpresa,
                                                                 $nIdSucursal,
