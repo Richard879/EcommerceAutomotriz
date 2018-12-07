@@ -215,13 +215,13 @@ class AutorizacionController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $nIdSolicitudAutorizacion = $request->nIdSolicitudAutorizacion;
+        $nIdSolicitudAutorizacion       = $request->nIdSolicitudAutorizacion;
         $nIdEstadoSolicitudAutorizacion = $request->nIdEstadoSolicitudAutorizacion;
         $cFlagEstadoAutorizacionControl = $request->cFlagEstadoAutorizacionControl;
-        $cNombreSupervisorInmediato = $request->cNombreSupervisorInmediato;
-        $nIdSupervisorInmediato = Auth::user()->id;
+        $cNombreSupervisorInmediato     = $request->cNombreSupervisorInmediato;
+        $nIdSupervisorInmediato         = Auth::user()->id;
         $objDetalleSolicitudAutorizacion = $request->objDetalleSolicitudAutorizacion;
-        $modalidadRecibirData = $request->modalidadRecibirData;
+        $modalidadRecibirData           = $request->modalidadRecibirData;
 
         $data = DB::select('exec usp_Autorizacion_SetCambiarEstado ?, ?, ?, ?, ?, ?',
                                                 [
@@ -233,12 +233,19 @@ class AutorizacionController extends Controller
                                                     $modalidadRecibirData
                                                 ]);
 
-        $ruta = Storage::makeDirectory('public/SolicitudAutorizacion/conformeNOconforme');//CONSTRUYO EL DIRECTORIO DINAMICAMENTE
-        $bandera = str_random(10);//RANDOM 10 ALPHA NÚMERICO
+        $ruta               = Storage::makeDirectory('public/SolicitudAutorizacion/conformeNOconforme');//CONSTRUYO EL DIRECTORIO DINAMICAMENTE
+        $bandera            = str_random(10);//RANDOM 10 ALPHA NÚMERICO
         $nombrePDFOriginal  = $request->cNombreSolicitudAutorizacion . '.pdf';//NOMBRE ORIGINAL DEL ARCHIVO
         $nombrePDFToken     = $bandera .'_'. $nombrePDFOriginal;//NOMBRE ORIGINAL DEL ARCHIVO + TOKEN
-        $path = storage_path("app/public/SolicitudAutorizacion/conformeNOconforme/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
-        $pdf = \PDF::loadView('pdf.solicitudautorizacion.detallesolicitud', ['objDetalleSolicitudAutorizacion'   =>  $objDetalleSolicitudAutorizacion])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
+        $path               = storage_path("app/public/SolicitudAutorizacion/conformeNOconforme/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
+        $logo               = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai            = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+
+        $pdf = \PDF::loadView('pdf.solicitudautorizacion.detallesolicitud', [
+                                                                                'objDetalleSolicitudAutorizacion'   =>  $objDetalleSolicitudAutorizacion,
+                                                                                'logo'      =>  $logo,
+                                                                                'hyundai'   =>  $hyundai,
+                                                                            ])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
 
         //REGISTRO EN LA DB LA RUTA, NOMBRE Y USUARIO
         $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',

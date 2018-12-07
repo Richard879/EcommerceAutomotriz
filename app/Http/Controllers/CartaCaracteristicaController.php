@@ -191,18 +191,18 @@ class CartaCaracteristicaController extends Controller
 
         $lstSCC = DB::select('exec usp_CartaCaracteristica_GetDetalleSolicitud ?', [$nIdScartaC]);
 
-        $ruta = Storage::makeDirectory('public/CartaCaracteristica/conformeNOconforme');//CONSTRUYO EL DIRECTORIO DINAMICAMENTE
-        $bandera = str_random(10);//RANDOM 10 ALPHA NÚMERICO
+        $ruta               = Storage::makeDirectory('public/CartaCaracteristica/conformeNOconforme');//CONSTRUYO EL DIRECTORIO DINAMICAMENTE
+        $bandera            = str_random(10);//RANDOM 10 ALPHA NÚMERICO
         $nombrePDFOriginal  = $request->nombre . '.pdf';//NOMBRE ORIGINAL DEL ARCHIVO
         $nombrePDFToken     = $bandera .'_'. $nombrePDFOriginal;//NOMBRE ORIGINAL DEL ARCHIVO + TOKEN
-        $path = storage_path("app/public/CartaCaracteristica/conformeNOconforme/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
-        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
-        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+        $path               = storage_path("app/public/CartaCaracteristica/conformeNOconforme/{$nombrePDFToken}");//CAPTURO LA RUTA DEL DIRECTORIO + NOMBRE DEL ARCHIVO
+        $logo               = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai            = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
         $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.detallesolicitud', [
                                                                                     'CartaDetalleSolicitud' => $lstSCC,
-                                                                                    'logo' => $logo,
-                                                                                    'hyundai' => $hyundai
+                                                                                    'logo'                  => $logo,
+                                                                                    'hyundai'               => $hyundai
                                                                                 ])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
 
         //REGISTRO EN LA DB LA RUTA, NOMBRE Y USUARIO
