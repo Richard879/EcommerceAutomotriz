@@ -26,10 +26,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parametro/GetListParametroByNombre', 'ParametroController@GetListParametroByNombre');
     Route::get('/parametro/GetParametroByNombre', 'ParametroController@GetParametroByNombre');
     Route::get('/parametro/GetLstProveedorTodos', 'ParametroController@GetLstProveedorTodos');
+    Route::post('/parametro/SetParametro', 'ParametroController@SetParametro');
+    Route::post('/parametro/UpdParametroById', 'ParametroController@UpdParametroById');
 
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
+    Route::get('/grupopar/GetListGrupoParametro', 'GrupoParametroController@GetListGrupoParametro');
 
     Route::get('/elemento/GetElementoByTipo', 'ElementoController@GetElementoByTipo');
     Route::post('/elemento/SetElemento', 'ElementoController@store');
@@ -327,6 +330,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
     Route::post('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
+    Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
 
     /// ============================================================
     /// METODOS ODBC

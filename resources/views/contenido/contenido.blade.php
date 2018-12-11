@@ -18,6 +18,9 @@
     <template v-if="menu==1300264">
         <pdiplantilla :ruta="ruta"></pdiplantilla>
     </template>
+    <template v-if="menu==1300460">
+        <parametro :ruta="ruta"></parametro>
+    </template>
 
     <template v-if="menu==1300266">
         <turnoventa :ruta="ruta"></turnoventa>

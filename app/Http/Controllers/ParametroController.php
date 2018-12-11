@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\Parametro;
 
 class ParametroController extends Controller
@@ -268,5 +269,51 @@ class ParametroController extends Controller
             $parametro = $this->arrayPaginator($parametro, $request);
         }
         return ['arrayProveedor'=>$parametro];
+    }
+
+    public function GetListParametroByGrupo(Request $request)
+    {
+        $nIdGrupoPar = $request->ngrupoparid;
+        $variable   = $request->opcion;
+        $nIdGrupoPar = ($nIdGrupoPar == NULL) ? ($nIdGrupoPar = 0) : $nIdGrupoPar;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayParametro = DB::select('exec [usp_Par_GetParametroByGrupo] ?',
+                                            [   $nIdGrupoPar
+                                            ]);
+
+        if($variable == "0"){
+            $arrayParametro = $this->arrayPaginator($arrayParametro, $request);
+        }
+        return ['arrayParametro'=>$arrayParametro];
+    }
+
+    public function SetParametro(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $parametro = DB::select('exec [usp_Par_SetParametro] ?, ?, ?, ?, ?',
+                                                                [   $request->nIdGrupoPar,
+                                                                    $request->cParJerarquia,
+                                                                    $request->cParAbreviatura,
+                                                                    $request->cParNombre,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($parametro);
+    }
+
+    public function UpdParametroById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $parametro = DB::select('exec [usp_Par_UpdParametroById] ?, ?, ?, ?, ?, ?',
+                                                                [   $request->nIdPar,
+                                                                    $request->nIdGrupoPar,
+                                                                    $request->cParJerarquia,
+                                                                    $request->cParAbreviatura,
+                                                                    $request->cParNombre,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($parametro);
     }
 }

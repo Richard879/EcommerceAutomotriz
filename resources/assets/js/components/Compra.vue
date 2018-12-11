@@ -1306,7 +1306,11 @@
                     cnombreproveedor: ''
                 },
                 arrayProveedor: [],
-                arrayDocEntry: [],
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapRpta: [],
+                arraySapJson: '',
+                arraySapCompra: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1685,11 +1689,17 @@
                     me.arrayCompraPrecioLista = [];
                     me.arrayCompraNombreComercial = [];
 
+                    //ARRAY PARA DEPURAR
+                    me.arrayVinDepura = [];
+
                     if(response.data.arrayVinExiste.length)
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
                         me.arrayTempVinExiste.map(function(value, key) {
                             me.arrayCompraExisteVin.push({
+                                cNumeroVin: me.arrayTempVinExiste[key]
+                            });
+                            me.arrayVinDepura.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
                             });
                         });
@@ -1700,12 +1710,18 @@
                             me.arrayCompraPrecioLista.push({
                                 cNumeroVin: me.arrayTempVinListaPrecio[key]
                             });
+                            me.arrayVinDepura.push({
+                                cNumeroVin: me.arrayTempVinListaPrecio[key]
+                            });
                         });
                     }
                     if(response.data.arrayNombreComercial.length){
                         me.arrayTempVinNombreComercial = response.data.arrayNombreComercial;
                         me.arrayTempVinNombreComercial.map(function(value, key) {
                             me.arrayCompraNombreComercial.push({
+                                cNumeroVin: me.arrayTempVinNombreComercial[key]
+                            });
+                            me.arrayVinDepura.push({
                                 cNumeroVin: me.arrayTempVinNombreComercial[key]
                             });
                         });
@@ -1716,24 +1732,11 @@
                         me.accionmodal=3;
                         me.modal = 1;
                         me.attachment = [];
+                        me.registroSap(); 
                     }else{
-                        var sapUrl = this.ruta + '/compra/SapSetCompra';
-                        axios.post(sapUrl, {
-                            data: this.arrayExcel
-                        }).then(response => {
-                            $("#myBar").hide();
-                            console.log(response.data);
-                            this.arrayDocEntry = response.data;
-                            this.arrayDocEntry.map(function(x){
-                                console.log(JSON.parse(x));
-                            });
-                            swal('Compra registrada correctamente');
-                            me.attachment = [],
-                            me.limpiarFormulario();
-                        }).catch(error => {
-                            console.log(error);
-                        });
-                    }
+                        $("#myBar").hide();
+                        me.registroSap(); 
+                    }  
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1741,6 +1744,34 @@
                             location.reload('0');
                         }
                     }
+                });
+            },
+            registroSap(){
+                let me = this;
+                me.arrayExcel.map(function(x, y){
+                    //comprobar si un determinado elemento no existe dentro de un array
+                    if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
+                        me.arraySapCompra.push(x);
+                    }
+                });
+
+                var sapUrl = this.ruta + '/articulo/SapSetArticulo';
+                axios.post(sapUrl, {
+                    data: this.arraySapCompra
+                }).then(response => {
+                    $("#myBar").hide();
+                    let me = this;
+                    this.arraySapRpta = response.data;
+                    this.arraySapRpta.map(function(x){
+                        me.arraySapJson= JSON.parse(x);
+                        //console.log(me.arraySapJson);
+                        //console.log(me.arraySapJson.DocEntry);
+                    });
+                    swal('Compra registrada correctamente');
+                    me.attachment = [],
+                    me.limpiarFormulario();
+                }).catch(error => {
+                    console.log(error);
                 });
             },
             validarRegistro(){
