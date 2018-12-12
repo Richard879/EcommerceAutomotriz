@@ -320,6 +320,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/asignavendedorsublinea/SetAsignaSubLinea','AsignaVendedorSubLineaController@SetAsignaSubLinea');
     Route::post('/asignavendedorsublinea/SetDesasignaSubLinea','AsignaVendedorSubLineaController@SetDesasignaSubLinea');
 
+    Route::get('/asignacuota/GetLstVendedorSubLineaCuota','AsignaVendedorCuotaSubLineaController@GetLstVendedorSubLineaCuota');
+    Route::post('/asignacuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaSubLineaController@SetRegistraAsignacionCuota');
+
+
     ///========================================
     /////=================  ROUTES SAP
     //
