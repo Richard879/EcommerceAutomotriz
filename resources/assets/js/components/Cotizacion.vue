@@ -617,16 +617,20 @@
                                                                                             <div class="row">
                                                                                                 <div class="col-lg-6">
                                                                                                     <div class="form-group row">
-                                                                                                        <div class="col-sm-12" :class="[(fSobrePecio >= 0) ? '' : 'datos']">
-                                                                                                            <label class="col-sm-2 form-control-label">SP: </label>
-                                                                                                            <label class="form-control-label"><strong> {{ fSobrePecio = calcularSobrePrecio[0] }} </strong></label>
+                                                                                                        <div class="col-sm-12" :class="[(fdscto01 >= 0) ? '' : 'datos']">
+                                                                                                            <label class="col-sm-4 form-control-label">Dscto #01: </label>
+                                                                                                            <label class="form-control-label"><strong> {{ fdscto01 = calcularDscto01[0] }} </strong></label>
                                                                                                         </div>
-                                                                                                        <div class="col-sm-12" :class="[(fDy > 0) ? '' : 'datos']">
-                                                                                                            <label class="col-sm-2 form-control-label">Dy: </label>
-                                                                                                            <label class="form-control-label"><strong>{{ fDy = Math.abs(calcularDy[0]) }} </strong></label>
+                                                                                                        <div class="col-sm-12" :class="[(fdscto02 > 0) ? '' : 'datos']">
+                                                                                                            <label class="col-sm-4 form-control-label">Dscto #02: </label>
+                                                                                                            <label class="form-control-label"><strong>{{ fdscto02 = Math.abs(calcularDscto02[0]) }} </strong></label>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-12" :class="[(fdscto03 > 0) ? '' : 'datos']">
+                                                                                                            <label class="col-sm-4 form-control-label">Dscto #03: </label>
+                                                                                                            <label class="form-control-label"><strong>{{ fdscto03 = Math.abs(calcularDscto03[0]) }} </strong></label>
                                                                                                         </div>
                                                                                                         <div class="col-sm-12">
-                                                                                                            <label class="col-sm-2 form-control-label">Dx: </label>
+                                                                                                            <label class="col-sm-4 form-control-label">Dx: </label>
                                                                                                             <label class="form-control-label"><strong>{{ fDx = calcularDx[0] }} </strong></label>
                                                                                                         </div>
                                                                                                     </div>
@@ -645,7 +649,7 @@
                                                                                                         </label>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-lg-12" :class="[(fDy > 0) ? '' : 'datos']">
+                                                                                                <div class="col-lg-12" :class="[((fdscto02 > 0) || (fdscto03 > 0)) ? '' : 'datos']">
                                                                                                     <div class="form-group row">
                                                                                                         <div class="col-md-12">
                                                                                                             <div class="row">
@@ -2419,9 +2423,10 @@
                 // ================= SUB TAB VEHICULO =================
                 arrayVehiculo: [],
                 flagLimiteSobrePrecio: 0,
-                fSobrePecio: 0,
+                fdscto01: 0,
+                fdscto02: 0,
+                fdscto03: 0,
                 fDx: 0,
-                fDy: 0,
                 observacionDscto: '',
                 montoTotalVehiculoDolar: 0,
                 fValorTipoCambioCompra: 0,
@@ -2580,27 +2585,49 @@
                 }
                 return pagesArray;
             },
-            //Calcula el Sobre Precio
-            calcularSobrePrecio: function(){
+            //Calcula el Dscto 01
+            calcularDscto01: function(){
                 let me = this;
                 if(me.arrayVehiculo){
                     return me.arrayVehiculo.map(function(x){
-                        if((x.PrecioBase - x.PrecioCierre - x.descuento) >= 0) {
+                        if((x.subtotal - x.PrecioVenta) >= 0) {
+                        // if((x.PrecioBase - x.PrecioCierre - x.descuento) >= 0) {
                             me.observacionDscto = '';
-                            return x.PrecioBase - x.PrecioCierre - x.descuento;
+                            // return x.PrecioBase - x.PrecioCierre - x.descuento;
+                            return x.subtotal - x.PrecioVenta;
                         } else {
                             return 0;
                         }
                     });
                 }
             },
-            //Calcula el Dy
-            calcularDy: function(){
+            //Calcula el Dscto 01
+            calcularDscto02: function(){
                 let me = this;
                 if(me.arrayVehiculo){
                     return me.arrayVehiculo.map(function(x){
-                        if((x.PrecioBase - x.PrecioCierre - x.descuento) < 0) {
-                            return x.PrecioBase - x.PrecioCierre - x.descuento;
+                        if((x.subtotal - x.PrecioVenta) < 0) {
+                        // if((x.PrecioBase - x.PrecioCierre - x.descuento) < 0) {
+                            // return x.PrecioBase - x.PrecioCierre - x.descuento;
+                            // console.log(me.fdscto03);
+                            // console.log(Math.abs(x.subtotal - x.PrecioVenta));
+                            let residuo = Math.abs(x.subtotal - x.PrecioVenta);
+                            return residuo - me.fdscto03;
+                        } else {
+                            return 0;
+                        }
+                    });
+                }
+            },
+            //Calcula el Dscto 01
+            calcularDscto03: function(){
+                let me = this;
+                if(me.arrayVehiculo){
+                    return me.arrayVehiculo.map(function(x){
+                        if((x.subtotal - x.PrecioCierre) < 0) {
+                        // if((x.PrecioBase - x.PrecioCierre - x.descuento) < 0) {
+                            // return x.PrecioBase - x.PrecioCierre - x.descuento;
+                            return x.subtotal - x.PrecioCierre;
                         } else {
                             return 0;
                         }
@@ -3472,12 +3499,29 @@
                     this.arrayVehiculo[0].descuento = 0;
                     this.$forceUpdate();
                 } else {
-                    if(value == ''){
+                    if(value == '' || value < 0){
                         this.arrayVehiculo[0].descuento = 0;
                     }
-                    if(parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta) ) {
-                        this.$message.error(`El descuento no puede superar el limite del PVP`);
-                        this.arrayVehiculo[0].descuento = 0;
+                    // //Si el SubTotal es menor que el Precio de Venta (PVP)
+                    // if(parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta) ) {
+                    //     // this.$message.error(`El descuento no puede superar el limite del PVP`);
+                    //     // this.arrayVehiculo[0].descuento = 0;
+                    //     // this.$forceUpdate();
+                    //     this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del PVP ${this.arrayVehiculo[0].PrecioVenta}`);
+                    //     this.$forceUpdate();
+                    // }
+
+                    if((parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioVenta)) && (parseFloat(this.arrayVehiculo[0].subtotal) > (parseFloat(this.arrayVehiculo[0].PrecioCierre)))) {
+                        // this.$message.error(`El descuento no puede superar el limite del PVP`);
+                        // this.arrayVehiculo[0].descuento = 0;
+                        // this.$forceUpdate();
+                        this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del PVP ${this.arrayVehiculo[0].PrecioVenta}`);
+                        this.$forceUpdate();
+                    }
+
+                    //Si el SubTotal es menor que el Precio de Cierre (Precio Real Vehiculo)
+                    if(parseFloat(this.arrayVehiculo[0].subtotal) < parseFloat(this.arrayVehiculo[0].PrecioCierre) ) {
+                        this.$message.warning(`El descuento ${this.arrayVehiculo[0].subtotal} súperó el limite del Precio de Cierre ${this.arrayVehiculo[0].PrecioCierre}`);
                         this.$forceUpdate();
                     }
                     this.$forceUpdate();
@@ -3496,9 +3540,9 @@
             removerVehiculoLista(index){
                 this.$delete(this.arrayVehiculo, index);
                 this.flagLimiteSobrePrecio = 0;
-                this.fSobrePecio = 0;
+                this.fdscto01 = 0;
                 this.fDx = 0;
-                this.fDy = 0;
+                this.fdscto02 = 0;
                 this.observacionDscto = '';
             },
             siguienteTabDCElementoVentaPorRegalar(){
@@ -3539,7 +3583,7 @@
                     this.arrayVehiculo[0].descuento = 0;
                 }
 
-                if(this.fDy > 0){
+                if(this.fdscto02 > 0){
                     if(!this.observacionDscto) {
                         this.mensajeError.push('Debe registrar una Observación de Dscto');
                     }
@@ -4098,7 +4142,8 @@
                     axios.post(url, {
                         nIdCabeCoti: nIdCabeCoti,
                         fTipoCambioComercial: this.fValorTipocambioComercial,
-                        fDy: this.fDy,
+                        fdscto02: this.fdscto02,
+                        fdscto03: this.fdscto03,
                         arrayvehiculos: this.arrayConfiCotiVehiculo,
                         arrayobsequios: this.arrayConfiCotiObsequios,
                         arrayelemventa: this.arrayConfiCotiEleVenta,
@@ -4194,7 +4239,7 @@
                     this.mensajeError.push('Debe haber un vehiculo agregado');
                 }
 
-                if(this.fDy > 0){
+                if(this.fdscto02 > 0){
                     if(!this.observacionDscto) {
                         this.mensajeError.push('Debe registrar una Observación de Dscto');
                     }
@@ -4497,6 +4542,7 @@
 <style>
     .datos{
         opacity: 0 !important;
+        display: none;
     }
     .mostrar{
         display: list-item !important;

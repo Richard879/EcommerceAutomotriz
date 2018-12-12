@@ -297,7 +297,7 @@
                                             <template v-if="cflagVerificaDistribucionAprobacion">
                                                 <template v-if="listDistribucionDescuento.length">
                                                     <vs-divider border-style="solid" color="dark">
-                                                        Distribución del Descuento Superado
+                                                        Distribución del Descuento Inferior al Precio Cierre
                                                     </vs-divider>
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-sm">
@@ -312,6 +312,7 @@
                                                                     <th>Supera Dscto</th>
                                                                     <th>Proveedor</th>
                                                                     <th>% Distribución</th>
+                                                                    <th>Proveedor Cancelar</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -340,9 +341,20 @@
                                                                     <td>
                                                                         <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
                                                                     </td>
+                                                                    <td> <strong> {{ descuento.fMontoDesembolsar = (descuento.fSubTotalDolares * (descuento.fDistribucion / 100)) }} </strong> </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-4">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
+                                                                <i class="fa fa-save"></i> DISTRIBUIR
+                                                            </button>
+                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
+                                                                <i class="fa fa-recycle"></i> LIMPIAR
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </template>
                                                 <template v-else>
@@ -417,25 +429,79 @@
                                                         </tbody>
                                                     </table>
                                                 </template> -->
-                                                <div class="form-group row">
-                                                    <div class="col-sm-9 offset-sm-4">
-                                                        <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
-                                                            <i class="fa fa-save"></i> DISTRIBUIR
-                                                        </button>
-                                                        <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
-                                                            <i class="fa fa-recycle"></i> LIMPIAR
-                                                        </button>
-                                                    </div>
-                                                </div>
                                             </template>
                                             <template v-else>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-8 offset-sm-4">
-                                                        <button type="button" class="btn btn-success btn-corne" @click.prevent="cambiarEstadoCotizacion(nIdCabeceraCotizacion, 1)">
-                                                            <i class="fa-md fa fa-check-circle"></i> APROBAR
-                                                        </button>
+                                                <template v-if="listDistribucionDescuento.length">
+                                                    <vs-divider border-style="solid" color="dark">
+                                                        Distribución del Descuento Inferior al PVP
+                                                    </vs-divider>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>Nombre Comercial</th>
+                                                                    <th>Precio de Venta Soles</th>
+                                                                    <th>Precio de Venta Dolares</th>
+                                                                    <th>Descuento</th>
+                                                                    <th>Supera Dscto</th>
+                                                                    <th>Proveedor</th>
+                                                                    <th>% Distribución</th>
+                                                                    <th>Proveedor Cancelar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="descuento in listDistribucionDescuento" :key="descuento.nIdDetalleCotizacion">
+                                                                    <td v-text="descuento.nIdCabeceraCotizacion"></td>
+                                                                    <td v-text="descuento.cProveedorNombre"></td>
+                                                                    <td v-text="descuento.cNombreComercial"></td>
+                                                                    <td v-text="descuento.fSubTotalSoles"></td>
+                                                                    <td v-text="descuento.fSubTotalDolares"></td>
+                                                                    <td v-text="descuento.fDescuento"></td>
+                                                                    <td v-text="descuento.fSuperaDescuento"></td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <el-select v-model="descuento.nIdProveedor"
+                                                                                    filterable clearable
+                                                                                    placeholder="SELECCIONE PROVEEDOR" >
+                                                                                <el-option
+                                                                                    v-for="item in arrayProveedor"
+                                                                                    :key="item.nIdPar"
+                                                                                    :label="item.cParNombre"
+                                                                                    :value="item.nIdPar">
+                                                                                </el-option>
+                                                                            </el-select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" v-model="descuento.fDistribucion" @keyup="validarDistribucionDscto" min="0" max="100" maxlength="3" class="form-control form-control-sm">
+                                                                    </td>
+                                                                    <td> <strong> {{ descuento.fMontoDesembolsar = (descuento.fSubTotalDolares * (descuento.fDistribucion / 100)) }} </strong> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-4">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="registrarDistribucion">
+                                                                <i class="fa fa-save"></i> DISTRIBUIR
+                                                            </button>
+                                                            <button type="button" class="btn btn-secundary btn-corner btn-sm" @click.prevent="limpiarDistribucion">
+                                                                <i class="fa fa-recycle"></i> LIMPIAR
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="10">No existen registros!</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
                                             </template>
                                         </form>
                                     </div>
@@ -1039,9 +1105,12 @@
                         'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
                     }
                 }).then(response => {
+                    //Si existen registros que van a generencia
                     if (response.data.contGerencia > 0){
+                        //Muestro un formulario
                         this.cflagVerificaDistribucionAprobacion = true;
                     } else {
+                        //Sino muestro otro formulario
                         this.cflagVerificaDistribucionAprobacion = false;
                         this.nIdCabeceraCotizacion = nIdCabeceraCotizacion;
                     }
@@ -1055,14 +1124,21 @@
                 });
             },
             listarDistribucionDescuento(nIdCabeceraCotizacion){
-                var url = this.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
+                //Verifica si es Gerencia o ADV para listar los Dscto Correspondientes
+                let op = 1;
+                let me = this;
+                (this.cflagVerificaDistribucionAprobacion) ? (op = 1) : (op = 0);
+                this.$forceUpdate();
+
+                var url = me.ruta + '/getcotizacion/GetDistribucionBySuperaDscto';
                 axios.get(url, {
                     params: {
-                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion
+                        'nIdCabeceraCotizacion' : nIdCabeceraCotizacion,
+                        'cflagVerificaDistribucion': op
                     }
                 }).then(response => {
-                    this.arrayDistribucionDescuento = response.data;
-                    this.cargarDistribucionSuperaDscto();
+                    me.arrayDistribucionDescuento = response.data;
+                    me.cargarDistribucionSuperaDscto();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1076,20 +1152,20 @@
                 let me = this;
                 me.listDistribucionDescuento = [];
 
+                this.cflagVerificaDistribucionAprobacion
                 if(me.arrayDistribucionDescuento.length > 0){
                     me.arrayDistribucionDescuento.map(function(ec){
                         me.listDistribucionDescuento.push({
                             nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
                             nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
                             cProveedorNombre        :   ec.cProveedorNombre,
-                            nIdCabeceraCotizacion   :   ec.nIdCabeceraCotizacion,
-                            nIdDetalleCotizacion    :   ec.nIdDetalleCotizacion,
                             cFlagSuperaDescuento    :   ec.cFlagSuperaDescuento,
                             cNombreComercial        :   ec.cNombreComercial,
                             fSubTotalSoles          :   ec.fSubTotalSoles,
                             fSubTotalDolares        :   ec.fSubTotalDolares,
                             fDescuento              :   ec.fDescuento,
                             fSuperaDescuento        :   ec.fSuperaDescuento,
+                            fMontoDesembolsar       :   ec.fMontoDesembolsar,
                             nIdProveedor            :   '',
                             fDistribucion           :   0
                         });
@@ -1161,7 +1237,7 @@
             validarDistribucionDscto(){
                 let me = this;
                 this.listDistribucionDescuento.map(function (x, y) {
-                    console.log(x.fDistribucion, y);
+                    // console.log(x.fDistribucion, y);
                     if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
                         me.$message.error(`No puede superar los margenes del 0 - 100`);
                         me.listDistribucionDescuento[y].fDistribucion = 0;//Seteado a 0.
@@ -1201,14 +1277,23 @@
                     listDistribucionDescuento: this.listDistribucionDescuento
                     // listDistribucionEVPorRegalar: this.listDistribucionEVPorRegalar
                 }).then(response => {
-                    if (this.nIdGrupoUsuario == '110083') {
-                        //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                    // if (this.nIdGrupoUsuario == '110083') {
+                    //     //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                    //     this.cambiarEstadoCotizacion(response.data, 4);
+                    // } else {
+                    //     //GENERAR LA CONFORMIDAD HACIA EL GERENTE
+                    //     this.cambiarEstadoCotizacion(response.data, 4);
+                    // }
+                    if (this.cflagVerificaDistribucionAprobacion) {
+                        // GENERAR LA CONFORMIDAD HACIA EL GERENTE
                         this.cambiarEstadoCotizacion(response.data, 4);
+                        swal('Cotización distribuida y pendiente de aprobación por Gerencia');
                     } else {
-                        //GENERAR LA CONFORMIDAD HACIA EL GERENTE
-                        this.cambiarEstadoCotizacion(response.data, 4);
-                    }
-                    swal('Cotización distribuida y pendiente de aprobación por Gerencia');
+                        // GENERAR LA APROVACIÓN DEL ADV
+                        this.cambiarEstadoCotizacion(response.data, 1);
+                        swal('Cotización Aprobada para Pedido');
+                    };
+                    this.$forceUpdate();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1269,29 +1354,6 @@
                         this.mensajeError.push('No puede superar los margenes del 0 - 100 en la sección Supera Descuento');
                     }
                 }
-
-                /*VALIDAR SECCIÓN DE DISTRIBUCIÓN DE EV POR REGALAR
-                let flagIdProveedorEV = 0;
-                this.listDistribucionEVPorRegalar.map(function (x) {
-                    if(x.nIdProveedor == ''){
-                        flagIdProveedorEV = true;
-                    }
-                });
-                if (flagIdProveedorEV == true) {
-                    this.mensajeError.push('Debe seleccionar un proveedor en la Sección Ev Por Regalar');
-                }
-
-                let flagDistribucionEV = 0;
-                this.listDistribucionEVPorRegalar.map(function (x) {
-                    if(parseInt(x.fDistribucion) < 0 || parseInt(x.fDistribucion) > 100){
-                        flagDistribucionEV = true;
-                        x.fDistribucion = 0;//Seteado a 0
-                    }
-                    me.$forceUpdate();
-                });
-                if (flagDistribucionEV == true) {
-                    this.mensajeError.push('No puede superar los margenes del 0 - 100 en la Sección Ev Por Regalar');
-                }*/
 
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1363,9 +1425,13 @@
                         switch(accion){
                             case 'abrir':
                             {
+                                let me = this;
                                 this.verificarDatosCotizacion(data);
                                 this.listarProveedores(1);
-                                this.listarDistribucionDescuento(data);
+                                setTimeout(function() {
+                                    me.listarDistribucionDescuento(data);
+                                }, 2800);
+
                                 // this.listarDistribucionEVPorRegalar(data);
                                 this.accionmodal=2;
                                 this.modal = 1;
