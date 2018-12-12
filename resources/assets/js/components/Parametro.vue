@@ -501,9 +501,9 @@
                     console.log(error);
                 });
             },
-            activar(nIdVersionVeh){
+            activar(parametro){
                 swal({
-                    title: 'Estas seguro de activar este vehículo?',
+                    title: 'Estas seguro de activar este Parámetro?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -512,15 +512,15 @@
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
                         if (result.value) {
-                            var url = this.ruta + '/versionvehiculo/activar';
+                            var url = this.ruta + '/parametro/activar';
                             axios.put(url, {
-                                nIdVersionVeh: parseInt(nIdVersionVeh)
+                                nIdPar: parseInt(parametro.nIdPar)
                             }).then(response => {
                                 swal(
                                 'Activado!',
                                 'El registro fue activado.'
                                 );
-                                this.listarVersionVehiculo(1);
+                                this.listarParametroByGrupo(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -530,9 +530,9 @@
                         }
                     })
             },
-            desactivar(nIdVersionVeh){
+            desactivar(parametro){
                 swal({
-                    title: 'Estas seguro de desactivar este vehículo?',
+                    title: 'Estas seguro de desactivar este Parámetro?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -541,15 +541,15 @@
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
                         if (result.value) {
-                            var url = this.ruta + '/versionvehiculo/desactivar';
+                            var url = this.ruta + '/parametro/desactivar';
                             axios.put(url, {
-                                nIdVersionVeh: parseInt(nIdVersionVeh)
+                                nIdPar: parseInt(parametro.nIdPar)
                             }).then(response => {
                                 swal(
                                 'Desactivado!',
                                 'El registro fue desactivado.'
                                 );
-                                this.listarVersionVehiculo(1);
+                                this.listarParametroByGrupo(1);
                             })
                             .catch(function (error) {
                                 console.log(error);

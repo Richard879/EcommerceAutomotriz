@@ -278,7 +278,7 @@ class ParametroController extends Controller
         $nIdGrupoPar = ($nIdGrupoPar == NULL) ? ($nIdGrupoPar = 0) : $nIdGrupoPar;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayParametro = DB::select('exec [usp_Par_GetParametroByGrupo] ?',
+        $arrayParametro = DB::select('exec [usp_Par_GetListParametroByGrupo] ?',
                                             [   $nIdGrupoPar
                                             ]);
 
@@ -314,6 +314,28 @@ class ParametroController extends Controller
                                                                     $request->cParNombre,
                                                                     Auth::user()->id
                                                                 ]);
+        return response()->json($parametro);
+    }
+
+    public function desactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $parametro = DB::select('exec [usp_Par_DesactivaById] ?, ?',
+                                                        [   $request->nIdPar,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($parametro);
+    }
+
+    public function activar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $parametro = DB::select('exec [usp_Par_ActivaById] ?, ?',
+                                                        [   $request->nIdPar,
+                                                            Auth::user()->id
+                                                        ]);
         return response()->json($parametro);
     }
 }
