@@ -69,6 +69,7 @@ Vue.component('obsequio', require('./components/Obsequio.vue'));
 Vue.component('parametro', require('./components/Parametro.vue'));
 Vue.component('asigvendedorsublinea', require('./components/AsignaVendedorSubLinea.vue'));
 Vue.component('asigvendedorcuotasublinea', require('./components/AsignaVendedorCuotaSubLinea.vue'));
+Vue.component('parparametro', require('./components/ParParametro.vue'));
 
 const app = new Vue({
     el: '#app',

@@ -21,6 +21,9 @@
     <template v-if="menu==1300460">
         <parametro :ruta="ruta"></parametro>
     </template>
+    <template v-if="menu==1300467">
+        <parparametro :ruta="ruta"></parparametro>
+    </template>
 
 
     <template v-if="menu==1300266">
