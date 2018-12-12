@@ -39,7 +39,7 @@ class SapCompraController extends Controller
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.55/'
+            'base_uri'  => 'http://172.20.6.59/'
         ]);
 
         $array_rpta = [];

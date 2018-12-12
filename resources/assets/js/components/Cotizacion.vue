@@ -294,7 +294,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Tipo Cambio Venta </label>
+                                                                            <label class="col-sm-4 form-control-label">* Tipo Cambio Comercial </label>
                                                                             <div class="col-sm-8">
                                                                                 <input type="text" v-model="fillConfigBasica.tipoCambioVenta" class="form-control form-control-sm" readonly>
                                                                             </div>
@@ -2992,7 +2992,7 @@
                     this.fValorTipoCambioVenta = response.data[0].fValorTipoCambioVenta;
                     this.fValorTipocambioComercial = response.data[0].fValorTipoCambioComercial;
 
-                    this.fillConfigBasica.tipoCambioVenta = response.data[0].fValorTipoCambioVenta;
+                    this.fillConfigBasica.tipoCambioVenta = response.data[0].fValorTipoCambioComercial;
                     this.fillConfigBasica.tipoCambioCompra = response.data[0].fValorTipoCambioCompra;
                 }).then(function (response) {
                     $("#myBar").hide();

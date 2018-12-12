@@ -18,6 +18,10 @@
     <template v-if="menu==1300264">
         <pdiplantilla :ruta="ruta"></pdiplantilla>
     </template>
+    <template v-if="menu==1300460">
+        <parametro :ruta="ruta"></parametro>
+    </template>
+
 
     <template v-if="menu==1300266">
         <turnoventa :ruta="ruta"></turnoventa>
@@ -37,7 +41,14 @@
     <template v-if="menu==1300338">
         <asigvendedorcuota :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorcuota>
     </template>
+    <template v-if="menu==1300465">
+        <asigvendedorsublinea :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorsublinea>
+    </template>
+    <template v-if="menu==1300466">
+        <asigvendedorcuotasublinea :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorcuotasublinea>
+    </template>
 
+    
     <template v-if="menu==1300284">
         <listapreciovh :ruta="ruta"></listapreciovh>
     </template>

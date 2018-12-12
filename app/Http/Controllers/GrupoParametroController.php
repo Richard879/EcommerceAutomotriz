@@ -31,4 +31,16 @@ class GrupoParametroController extends Controller
         return response()->json($data);
     }
 
+    public function GetListGrupoParametro(Request $request)
+    {
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayGrupoParametro = DB::select('exec [usp_GrupoPar_GetListGrupoParametro]');
+
+        if($variable == "0"){
+            $arrayGrupoParametro = ParametroController::arrayPaginator($arrayGrupoParametro, $request);
+        }
+        return ['arrayGrupoParametro'=>$arrayGrupoParametro];
+    }
 }
