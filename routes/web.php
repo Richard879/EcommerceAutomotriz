@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/versionvehiculo/GetLineasByProveedor', 'VersionVehiculoController@GetLineasByProveedor');
     Route::get('/versionvehiculo/GetMarcaByLinea', 'VersionVehiculoController@GetMarcaByLinea');
     Route::get('/versionvehiculo/GetModeloByMarca', 'VersionVehiculoController@GetModeloByMarca');
+    Route::get('/versionvehiculo/GetSubLineaByLinea', 'VersionVehiculoController@GetSubLineaByLinea');
 
     Route::post('/compra/importFileCompra', 'ExcelController@importFileCompra');
     Route::post('/compra/readFileCompra', 'ExcelController@readFileCompra');
