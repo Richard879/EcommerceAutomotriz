@@ -35,13 +35,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">* Jefe de ventas</label>
                                                     <div class="col-sm-8">
-                                                        <label v-text="formAsignaModelo.cJefeVentaNombre" class="form-control-label-readonly"></label>
+                                                        <label v-text="formAsignaSubLinea.cJefeVentaNombre" class="form-control-label-readonly"></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,7 +49,7 @@
                                                     <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                     <div class="col-sm-8">
                                                         <div class="input-group">
-                                                            <input type="text" v-model="formAsignaModelo.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
+                                                            <input type="text" v-model="formAsignaSubLinea.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                             <div class="input-group-prepend">
                                                                 <button type="button" title="Buscar Proveedor" class="btn btn-info btn-corner btn-sm" @click="abrirModal('proveedor','buscar')">
                                                                     <i class="fa-lg fa fa-search"></i>
@@ -300,14 +299,14 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-2 form-control-label">Modelo</label>
+                                                <label class="col-sm-2 form-control-label">SubLinea</label>
                                                 <div class="col-sm-4">
                                                     <el-select v-model="fillVendedor.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="listarVendedorSubLinea(1);">
                                                         <el-option
                                                         v-for="sublinea in arraySubLinea"
-                                                        :key="sublinea.nIdSubLinea"
-                                                        :label="sublinea.cSubLineaNombre"
-                                                        :value="sublinea.nIdSubLinea">
+                                                            :key="sublinea.nIdSubLinea"
+                                                            :label="sublinea.cSubLineaNombre"
+                                                            :value="sublinea.nIdSubLinea">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -335,7 +334,7 @@
                                                                 <template v-else>
                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                         <div slot="content">Desasignar {{ vendedor.cNombreMiVendedor }}</div>
-                                                                        <i @click="designar(vendedor.nIdAsignacionVendedorModelo)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                        <i @click="designar(vendedor.nIdAsignacionVendedorSubLinea)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                             </td>
@@ -416,7 +415,7 @@
                     cnombrejefeventas: '',
                     nidsublinea: ''
                 },
-                formAsignaModelo:{
+                formAsignaSubLinea:{
                     nidproveedor: 0,
                     nJefeVentaId: 0,
                     cJefeVentaNombre: 'NO ES JEFE DE VENTAS'
@@ -509,8 +508,8 @@
                         'nidgrupopar': 110025
                     }
                 }).then(response => {
-                    this.formAsignaModelo.nJefeVentaId = response.data[0].nIdPar;
-                    this.formAsignaModelo.cJefeVentaNombre = response.data[0].cParNombre;
+                    this.formAsignaSubLinea.nJefeVentaId = response.data[0].nIdPar;
+                    this.formAsignaSubLinea.cJefeVentaNombre = response.data[0].cParNombre;
                     this.fillVendedor.cnombrejefeventas = response.data[0].cParNombre;
                 }).catch(error => {
                     console.log(error);
@@ -525,7 +524,7 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formAsignaModelo.nJefeVentaId == 0){
+                if(this.formAsignaSubLinea.nJefeVentaId == 0){
                     this.mensajeError.push('Debe ser Jefe de Ventas para realizar la búsqueda');
                 }
 
@@ -555,7 +554,7 @@
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidproveedor': this.formAsignaModelo.nidproveedor,
+                        'nidproveedor': this.formAsignaSubLinea.nidproveedor,
                         'clineanombre': '',
                         'page' : page
                     }
@@ -584,10 +583,10 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.formAsignaModelo.nJefeVentaId == 0 || this.formAsignaModelo.nJefeVentaId == ''){
+                if(this.formAsignaSubLinea.nJefeVentaId == 0 || this.formAsignaSubLinea.nJefeVentaId == ''){
                     this.mensajeError.push('Debe seleccionar Jefe de Ventas para realizar la busqueda');
                 }
-                if(!this.formAsignaModelo.nidproveedor){
+                if(!this.formAsignaSubLinea.nidproveedor){
                     this.mensajeError.push('Debe seleccionar proveedor para realizar la busqueda');
                 }
                 if(this.mensajeError.length){
@@ -602,7 +601,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidlinea': this.fillVendedor.nidlinea
+                        'nidlinea': this.fillVendedor.nidlinea,
+                        'opcion': 1
                     }
                 }).then(response => {
                     this.arraySubLinea = response.data.arraySubLinea;
@@ -622,15 +622,15 @@
                 if(!this.fillVendedor.nidsublinea){
                     this.arrayVendedorSubLinea = []
                 }else{
-                    var url = this.ruta + '/asignavendedormodelo/GetLstVendedorModelo';
+                    var url = this.ruta + '/asignavendedorsublinea/GetLstVendedorSubLinea';
                     axios.get(url, {
                         params: {
                             'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                             'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                            'nidproveedor': this.formAsignaModelo.nidproveedor,
+                            'nidproveedor': this.formAsignaSubLinea.nidproveedor,
                             'nidlinea': this.fillVendedor.nidlinea,
                             'nidsublinea': this.fillVendedor.nidsublinea,
-                            'nidjefeventas': this.formAsignaModelo.nJefeVentaId
+                            'nidjefeventas': this.formAsignaSubLinea.nJefeVentaId
                         }
                     }).then(response => {
                         this.arrayVendedorSubLinea = response.data.arrayVendedorSubLinea.data;
@@ -679,7 +679,7 @@
                             {
                                 this.accionmodal=3;
                                 this.modal = 1;
-                                this.fillVendedor.cnombreproveedor= this.formAsignaModelo.cproveedornombre;
+                                this.fillVendedor.cnombreproveedor= this.formAsignaSubLinea.cproveedornombre;
                                 this.fillVendedor.cnombrelineaventa = data['cLineaNombre'];
                                 this.fillVendedor.nidlinea = data['nIdLinea'];
                                 this.llenarComboSubLinea();
@@ -704,11 +704,11 @@
                     return;
                 }
 
-                var url = this.ruta + '/asignavendedormodelo/SetAsignaModelo';
+                var url = this.ruta + '/asignavendedorsublinea/SetAsignaSubLinea';
                 axios.post(url, {
                     nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                    nIdProveedor: parseInt(this.formAsignaModelo.nidproveedor),
+                    nIdProveedor: parseInt(this.formAsignaSubLinea.nidproveedor),
                     nIdVendedor: nIdMiVendedor,
                     nIdLinea: parseInt(this.fillVendedor.nidlinea),
                     nIdSubLinea: parseInt(this.fillVendedor.nidsublinea)
@@ -727,20 +727,20 @@
                     }
                 });
             },
-            designar(nIdAsignacionVendedorModelo){
+            designar(nIdAsignacionVendedorSubLinea){
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
-                var url = this.ruta + '/asignavendedormodelo/SetDesasignaModelo';
+                var url = this.ruta + '/asignavendedorsublinea/SetDesasignaSubLinea';
                 axios.post(url, {
-                    nIdAsignacion: nIdAsignacionVendedorModelo,
+                    nIdAsignacion: nIdAsignacionVendedorSubLinea,
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Desasignación Vendedor Modelo Realizado Con Exito');
+                        swal('Desasignación Vendedor SubLinea Realizado Con Exito');
                         this.listarVendedorSubLinea();
                     }
                 }).catch(error => {
@@ -786,8 +786,8 @@
                 });
             },
             asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formAsignaModelo.nidproveedor = nProveedorId;
-                this.formAsignaModelo.cproveedornombre = cProveedorNombre;
+                this.formAsignaSubLinea.nidproveedor = nProveedorId;
+                this.formAsignaSubLinea.cproveedornombre = cProveedorNombre;
                 this.cerrarModal();
                 this.arrayMarca = [];
                 this.arraySubLinea = [];
@@ -828,7 +828,7 @@
                 //var opcion_seleccionada = arrayJefeVentas[2].nIdPar=1300020;
                 var nomb='';
                 for(var i=0;i<this.arrayJefeVentas.length;i++){
-                    if(this.arrayJefeVentas[i].nIdPar==this.formAsignaModelo.nJefeVentaId){
+                    if(this.arrayJefeVentas[i].nIdPar==this.formAsignaSubLinea.nJefeVentaId){
                         nomb=this.arrayJefeVentas[i].cParNombre;
                         this.fillVendedor.cnombrejefeventas= nomb;
                         this.arrayProveedorLinea=[];

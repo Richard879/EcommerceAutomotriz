@@ -316,6 +316,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescotizacion/GetListObsequiosByVehiculo', 'CotizacionController@GetListObsequiosByVehiculo');
     Route::get('/gescotizacion/GetListObsequioElementoVenta', 'CotizacionController@GetListObsequioElementoVenta');
 
+    Route::get('/asignavendedorsublinea/GetLstVendedorSubLinea','AsignaVendedorSubLineaController@GetLstVendedorSubLinea');
+    Route::post('/asignavendedorsublinea/SetAsignaSubLinea','AsignaVendedorSubLineaController@SetAsignaSubLinea');
+    Route::post('/asignavendedorsublinea/SetDesasignaSubLinea','AsignaVendedorSubLineaController@SetDesasignaSubLinea');
+
     ///========================================
     /////=================  ROUTES SAP
     //
