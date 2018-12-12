@@ -67,6 +67,8 @@ Vue.component('flete', require('./components/Flete.vue'));
 Vue.component('reportecotizacion', require('./components/ReporteCotizacion.vue'));
 Vue.component('obsequio', require('./components/Obsequio.vue'));
 Vue.component('parametro', require('./components/Parametro.vue'));
+Vue.component('asigvendedorsublinea', require('./components/AsignaVendedorSubLinea.vue'));
+Vue.component('asigvendedorcuotasublinea', require('./components/AsignaVendedorCuotaSubLinea.vue'));
 
 const app = new Vue({
     el: '#app',
