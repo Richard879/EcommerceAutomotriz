@@ -305,9 +305,9 @@
                                                     <el-select v-model="fillVendedor.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="listarVendedorSubLinea(1);">
                                                         <el-option
                                                         v-for="sublinea in arraySubLinea"
-                                                        :key="sublinea.nIdPar"
-                                                        :label="sublinea.cParNombre"
-                                                        :value="sublinea.nIdPar">
+                                                        :key="sublinea.nIdSubLinea"
+                                                        :label="sublinea.cSubLineaNombre"
+                                                        :value="sublinea.nIdSubLinea">
                                                         </el-option>
                                                     </el-select>
                                                 </div>

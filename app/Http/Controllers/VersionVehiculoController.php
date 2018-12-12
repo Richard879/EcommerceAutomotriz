@@ -153,14 +153,16 @@ class VersionVehiculoController extends Controller
     public function GetSubLineaByLinea(Request $request)
     {
         $nIdLinea = $request->nidlinea;
-
+        $variable   = $request->opcion;
+        
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
         $arraySubLinea = DB::select('exec [usp_Par_GetSubLineaByLinea] ?',
                                                     [   $nIdLinea
                                                     ]);
         if($variable == "0"){
-            $arraySubLinea = $this->arrayPaginator($arraySubLinea, $request);
+            $arraySubLinea = ParametroController::arrayPaginator($arraySubLinea, $request);
         }
         return ['arraySubLinea'=>$arraySubLinea];
     }
