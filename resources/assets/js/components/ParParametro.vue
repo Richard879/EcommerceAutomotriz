@@ -454,7 +454,7 @@
                 }
 
                 this.mostrarProgressBar();
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/parametro/GetListParParametroByGrupo';
 
                 axios.get(url, {
                     params: {

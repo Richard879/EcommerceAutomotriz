@@ -315,7 +315,6 @@
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
-                                                                                    <input type="hidden" v-model="formCompra.nidproveedor">
                                                                                     <input type="text" v-model="formCompra.cproveedornombre" disabled="disabled" class="form-control form-control-sm">
                                                                                     <div class="input-group-prepend">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
@@ -330,10 +329,10 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
-                                                                        <div class="row">
+                                                                        <div class="row" v-if="formCompra.nidproveedor>0">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formCompra.nidtipolista" filterable clearable placeholder="SELECCIONE" >
+                                                                                <el-select v-model="formCompra.nidtipolista" filterable clearable placeholder="SELECCIONE" v-on:change="obtenerListaPrecioActiva()">
                                                                                     <el-option
                                                                                     v-for="item in arrayTipoLista"
                                                                                     :key="item.nIdPar"
@@ -341,6 +340,26 @@
                                                                                     :value="item.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row" v-if="formCompra.nidtipolista">
+                                                                            <label class="col-sm-4 form-control-label">* Nro Lista</label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="input-group">
+                                                                                    <input type="text" v-model="formCompra.nnumerolista" class="form-control form-control-sm" readonly>
+                                                                                    <div class="input-group-prepend">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Buscar Lista </div>
+                                                                                            <button type="button" class="btn btn-info btn-corner btn-sm" @click="abrirModal('lista','buscar')">
+                                                                                                <i class="fa-lg fa fa-search"></i>
+                                                                                            </button>
+                                                                                        </el-tooltip>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1231,6 +1250,114 @@
                 </div>
             </div>
 
+            <!-- MODAL LSITA DE PRECIOS -->
+            <div class="modal fade" v-if="accionmodal==6" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTA DE PRECIOS</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--<form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nombre</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="text" v-model="fillProveedor.cnombreproveedor" @keyup.enter="buscaProveedores" class="form-control form-control-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                        <div slot="content">Buscar Proveedor </div>
+                                                                        <button type="button" class="btn btn-info btn-corner btn-sm" @click="buscaProveedores">
+                                                                            <i class="fa-lg fa fa-search"></i>
+                                                                        </button>
+                                                                    </el-tooltip>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>-->
+                                        <br/>
+                                        <template v-if="arrayListaPrecio.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Seleccione</th>
+                                                            <th>Código Lista</th>
+                                                            <th>Nombre Proveedor</th>
+                                                            <th>Nro Lista</th>
+                                                            <th>Periodo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="lista in arrayListaPrecio" :key="lista.nIdListaPrecioVersionVeh">
+                                                            <td>
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Seleccionar {{ lista.nIdListaPrecioVersionVeh }}</div>
+                                                                    <i @click="asignarListaPrecio(lista)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                </el-tooltip>
+                                                            </td>
+                                                            <td>{{lista.nIdListaPrecioVersionVeh}}</td>
+                                                            <td>{{lista.cNombreProveedor}}</td>
+                                                            <td>{{lista.nNroListaPrecio}}</td>
+                                                            <td>{{lista.cCronograma}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaListaPrecio(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumberModal" :key="page"
+                                                                :class="[page==isActivedModal?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaListaPrecio(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaListaPrecio(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </transition>
 </template>
@@ -1263,11 +1390,14 @@
                     nformapago: 0,
                     nidtipolista: '',
                     nidproveedor: 0,
-                    cproveedornombre: ''
+                    cproveedornombre: '',
+                    nnumerolista: '',
+                    nidlistaprecio: 0
                 },
                 arrayExcel: [],
                 contadorArrayExcel: 0,
                 arrayTipoLista: [],
+                arrayListaPrecio: [],
                 // ==========================================================
                 // ============ VARIABLES MODAL ACTUALIZAR COMPRA =================
                 formModalCompra:{
@@ -1448,7 +1578,7 @@
                 var url = this.ruta + '/compra/GetCompra';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillCompra.dfechainicio,
                         'dfechafin': this.fillCompra.dfechafin,
@@ -1480,6 +1610,13 @@
                 this.pagination.current_page=page;
                 this.listarCompras(page);
             },
+            // ====================================================
+            // =============  GENERAR COMPRA ======================
+            tabGenerarCompra(){
+                this.obtenerCronogramaCompraActivo();
+                this.listarTipoLista();
+                this.limpiarFormulario();
+            },
             buscaProveedores(){
                 this.listarProveedores(1);
             },
@@ -1488,7 +1625,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -1538,19 +1675,70 @@
                     }
                 });
             },
-            // ====================================================
-            // =============  GENERAR COMPRA ======================
-            tabGenerarCompra(){
-                this.obtenerCronogramaCompraActivo();
-                this.listarTipoLista();
-                this.limpiarFormulario();
+            obtenerListaPrecioActiva(){
+                var url = this.ruta + '/compra/GetListaPrecioByProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidproveedor': parseInt(this.formCompra.nidproveedor),
+                        'nidtipolista' : parseInt(this.formCompra.nidtipolista),
+                        'nidentificador': 0,
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.formCompra.nidlistaprecio = (!response.data.arrayListaPrecio.length) ? '' : response.data.arrayListaPrecio[0].nIdListaPrecioVersionVeh;
+                    this.formCompra.nnumerolista = (!response.data.arrayListaPrecio.length) ? '' : response.data.arrayListaPrecio[0].nNroListaPrecio;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarListaPrecioVersionVeh(page){
+                var url = this.ruta + '/compra/GetListaPrecioByProveedor';
+
+                axios.get(url, {
+                    params: {
+                        'nidproveedor': parseInt(this.formCompra.nidproveedor),
+                        'nidtipolista' : parseInt(this.formCompra.nidtipolista),
+                        'nidentificador': 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayListaPrecio = response.data.arrayListaPrecio.data;
+                    this.paginationModal.current_page =  response.data.arrayListaPrecio.current_page;
+                    this.paginationModal.total = response.data.arrayListaPrecio.total;
+                    this.paginationModal.per_page    = response.data.arrayListaPrecio.per_page;
+                    this.paginationModal.last_page   = response.data.arrayListaPrecio.last_page;
+                    this.paginationModal.from        = response.data.arrayListaPrecio.from;
+                    this.paginationModal.to           = response.data.arrayListaPrecio.to;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaListaPrecio(page){
+                this.paginationModal.current_page=page;
+                this.listarListaPrecioVersionVeh(page);
+            },
+            asignarListaPrecio(lista){
+                this.formCompra.nidlistaprecio = lista.nIdListaPrecioVersionVeh;
+                this.formCompra.nnumerolista = lista.nNroListaPrecio;
+                this.cerrarModal();
             },
             obtenerCronogramaCompraActivo(){
                 var url = this.ruta + '/cronograma/GetCronogramaCompraActivo';
 
                 axios.get(url,{
                     params: {
-                        'nidempresa': 1300011
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
                     }
                 }).then(response => {
                     this.canio = response.data.arrayCronograma[0].cAnio;
@@ -1673,11 +1861,12 @@
 
                 var url = this.ruta + '/compra/SetCompra';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCronograma: parseInt(this.nidcronograma),
                     nIdProveedor: parseInt(this.formCompra.nidproveedor),
                     nIdTipoLista: parseInt(this.formCompra.nidtipolista),
+                    nIdListaPrecioVeh: parseInt(this.formCompra.nidlistaprecio),
                     data: this.arrayExcel
                 }).then(response => {
                     let me = this;
@@ -1787,6 +1976,9 @@
                 if(this.formCompra.nidtipolista == 0 || !this.formCompra.nidtipolista){
                     this.mensajeError.push('Debes seleccionar un Tipo Lista');
                 };
+                if(this.formCompra.nidlistaprecio == 0){
+                    this.mensajeError.push('Debes seleccionar una Lista');
+                };
                 if(this.nidcronograma == 0){
                     this.mensajeError.push('No existe Periodo Compra Activo');
                 };
@@ -1862,7 +2054,7 @@
 
                 var url = this.ruta + '/compra/UpdCompraById';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCompra: this.formModalCompra.nidcompra,
                     cNumeroVin: this.formModalCompra.cnumerovin,
@@ -1918,7 +2110,7 @@
                 var url = this.ruta + '/compra/GetLstCompraNoLineaCredito';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillCompra.dfechainicio,
                         'dfechafin': this.fillCompra.dfechafin,
@@ -1992,7 +2184,7 @@
 
                 var url = this.ruta + '/compra/UpdCompraLineaCreditoById';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     data: this.arrayTempLineaCredito
                 }).then(response => {
@@ -2026,7 +2218,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar': 110094,
                         'cnombreproveedor': '',
                         'opcion' : 1
@@ -2223,7 +2415,19 @@
                                 break;
                             }
                         }
-                    };
+                    }break;
+                    case 'lista':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=6;
+                                this.modal = 1;
+                                this.listarListaPrecioVersionVeh(1);
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             // ===========================================================

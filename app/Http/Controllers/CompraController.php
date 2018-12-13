@@ -75,12 +75,13 @@ class CompraController extends Controller
                 $fTotalCompra = str_replace(",", "", $fTotalCompra);
                 //echo $fTotalCompra. " ";
 
-                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Compra_SetCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdSucursal,
                                                                 $request->nIdCronograma,
                                                                 $request->nIdProveedor,
                                                                 $request->nIdTipoLista,
+                                                                $request->nIdListaPrecioVeh,
                                                                 $det['nOrdenCompra'],
                                                                 $det['cNombreLinea'],
                                                                 $det['cNombreAlmacen'],
@@ -284,5 +285,27 @@ class CompraController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
+    }
+
+    public function GetListaPrecioByProveedor(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdProveedor = $request->nidproveedor;
+        $nIdTipoLista = $request->nidtipolista;
+        $nIdentificador  = $request->nidentificador;
+        $variable   = $request->opcion;
+
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+        
+        $arrayListaPrecio = DB::select('exec [usp_Compra_GetListaPrecioByProveedor] ?, ?, ?',
+                                                            [   $nIdProveedor,
+                                                                $nIdTipoLista,
+                                                                $nIdentificador
+                                                            ]);
+        if($variable == "0"){
+            $arrayListaPrecio = Parametro::arrayPaginator($arrayListaPrecio, $request);
+        }
+        return ['arrayListaPrecio'=>$arrayListaPrecio];
     }
 }
