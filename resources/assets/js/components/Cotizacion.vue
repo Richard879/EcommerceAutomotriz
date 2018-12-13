@@ -489,8 +489,33 @@
                                         <section class="forms">
                                             <div class="container-fluid">
                                                 <div class="col-lg-12">
-                                                    <h2 class="no-margin-bottom" v-text="fillAsignarContacto.ccontacto"></h2>
-                                                    <hr/>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <!--<label class="col-sm-4 form-control-label">Cliente</label>-->
+                                                                <div class="col-sm-8">
+                                                                    <h2 class="no-margin-bottom" v-text="fillAsignarContacto.ccontacto"></h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <label class="col-sm-4 form-control-label">* SubLinea</label>
+                                                                <div class="col-sm-8">
+                                                                    <el-select v-model="fillAsignarContacto.nidsublinea" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                        <el-option
+                                                                            v-for="sublinea in arraySubLinea"
+                                                                            :key="sublinea.nIdSubLinea"
+                                                                            :label="sublinea.cSubLineaNombre"
+                                                                            :value="sublinea.nIdSubLinea">
+                                                                        </el-option>
+                                                                    </el-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
                                                             <a class="nav-link active" id="tab0401" href="#TabDCVehiculo" @click="tabDCVehiculo" role="tab" data-toggle="tab">
@@ -2394,10 +2419,12 @@
                     nidreferencia: '',
                     nidlinea: '',
                     nidmarca: '',
-                    nidmodelo: ''
+                    nidmodelo: '',
+                    nidsublinea: ''
                 },
                 arrayTipoMedio: [],
                 arrayReferenciavehiculo: [],
+                arraySubLinea: [],
                 // =============================================================
                 // VARIABLES TAB DETALLE COTIZACIÓN
                 // =============================================================
@@ -3149,6 +3176,7 @@
                 this.fillAsignarContacto.nidmarca = nIdMarca;
                 this.fillAsignarContacto.nidmodelo = nIdModelo;
                 this.tabDetalleCotización();
+                this.llenarComboSubLinea();
             },
             tabDetalleCotización(){
                 if(this.validaAsignarCotizacion()){
@@ -3197,6 +3225,25 @@
                 }
                 return this.error;
             },
+            llenarComboSubLinea(){
+                var url = this.ruta + '/versionvehiculo/GetSubLineaByLinea';
+
+                axios.get(url, {
+                    params: {
+                        'nidlinea': this.fillAsignarContacto.nidlinea,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    this.arraySubLinea = response.data.arraySubLinea;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            }, 
             // =================================================================
             // TAB DETALLE COTIZACION
             // =================================================================
@@ -4120,7 +4167,8 @@
                     'fTotalCotizacionVehiculoSol'   :   this.montoTotalConfiCotiVehiculoSoles,
                     'fTotalElementoVentaDolar'      :   this.montoTotalConfiCotiEleVenta,
                     'fTotalElementoVentaSol'        :   this.montoTotalConfiCotiEleVentaSoles,
-                    'cGlosa'                        :   this.observacionDscto
+                    'cGlosa'                        :   this.observacionDscto,
+                    'nIdSubLinea'                   :   this.fillAsignarContacto.nidsublinea
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
                         this.registrarDetalleCotizacion(response.data[0].nIdCabeceraCotizacion);
@@ -4247,6 +4295,9 @@
 
                 if(!this.fillAsignarContacto.nidcontacto){
                     this.mensajeError.push('Debe asignar un contacto');
+                };
+                if(!this.fillAsignarContacto.nidsublinea){
+                    this.mensajeError.push('Debe seleccionar una SubLinea');
                 }
 
                 if(this.mensajeError.length){

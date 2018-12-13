@@ -3,197 +3,211 @@
         <main>
             <header class="page-header">
             <div class="container-fluid">
-                <h2 class="no-margin-bottom">Parámetros</h2>
+                <h2 class="no-margin-bottom">Relacionar Parámetros</h2>
             </div>
             </header>
 
-            <template v-if="vistaFormulario">
-                <section class="forms">
-                    <div class="container-fluid">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="h4">LISTADO</h3>
-                                </div>
-                                <div class="card-body">
-                                    <form class="form-horizontal">
-                                        <div class="form-group row">
-                                            <div class="col-sm-9">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Grupo</label>
-                                                    <div class="col-sm-8">
-                                                        <el-select v-model="fillParametro.nidgrupopar" filterable clearable placeholder="SELECCIONE" >
-                                                            <el-option
-                                                            v-for="item in arrayGrupoParametro"
-                                                            :key="item.nIdGrupoPar"
-                                                            :label="item.cGrupoParNombre"
-                                                            :value="item.nIdGrupoPar">
-                                                            </el-option>
-                                                        </el-select>
+            <section class="forms">
+                <div class="container-fluid">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Grupo</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillParametro.nidgrupopar" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayGrupoParametro"
+                                                                :key="item.nIdGrupoPar"
+                                                                :label="item.cGrupoParNombre"
+                                                                :value="item.nIdGrupoPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-4">
-                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParametroByGrupo(1);">
-                                                    <i class="fa fa-search"></i> Buscar
-                                                </button>
-                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('parametro','registrar')">
-                                                    <i class="fa fa-file-o"></i> Nuevo
-                                                </button>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-4">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParametroByGrupo(1);">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-body">
-                                    <template v-if="arrayParametro.length">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Codigo</th>
-                                                        <th>Grupo</th>
-                                                        <th>Jerarquia</th>
-                                                        <th>Abreviatura</th>
-                                                        <th>Nombre</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
+                                        </form>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayParametro.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Codigo</th>
+                                                            <th>Grupo</th>
+                                                            <th>Nombre</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                            <td v-text="p.nIdPar"></td>
+                                                            <td v-text="p.nIdGrupoPar"></td>
+                                                            <td v-text="p.cParNombre"></td>
+                                                            <td>
+                                                                <template v-if="p.cSituacionRegistro=='A'">
+                                                                    <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
                                                 <tbody>
-                                                    <tr v-for="p in arrayParametro" :key="p.nIdPar">
-                                                        <td v-text="p.nIdPar"></td>
-                                                        <td v-text="p.nIdGrupoPar"></td>
-                                                        <td v-text="p.cParJerarquia"></td>
-                                                        <td v-text="p.cParAbreviatura"></td>
-                                                        <td v-text="p.cParNombre"></td>
-                                                        <td>
-                                                            <el-tooltip class="item" :content="'Editar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                <i @click="abrirFormulario('parametro','actualizar', p)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                            </el-tooltip>&nbsp;
-                                                            <template v-if="p.cSituacionRegistro=='A'">
-                                                                <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                    <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                </el-tooltip>
-                                                            </template>
-                                                            <template v-else>
-                                                                <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                    <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                </el-tooltip>
-                                                            </template>
-                                                        </td>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <nav>
-                                                        <ul class="pagination">
-                                                            <li v-if="pagination.current_page > 1" class="page-item">
-                                                                <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
-                                                            </li>
-                                                            <li  class="page-item" v-for="page in pagesNumber" :key="page"
-                                                            :class="[page==isActived?'active':'']">
-                                                                <a class="page-link"
-                                                                href="#" @click.prevent="cambiarPagina(page)"
-                                                                v-text="page"></a>
-                                                            </li>
-                                                            <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
-                                                            </li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                                <div class="col-sm-5">
-                                                    <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <template v-if="arrayParametro.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Codigo</th>
+                                                            <th>Grupo</th>
+                                                            <th>Nombre</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                            <td v-text="p.nIdPar"></td>
+                                                            <td v-text="p.nIdGrupoPar"></td>
+                                                            <td v-text="p.cParNombre"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">LISTADO</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">* Grupo</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillParametro.nidgrupopar" filterable clearable placeholder="SELECCIONE" >
+                                                                <el-option
+                                                                v-for="item in arrayGrupoParametro"
+                                                                :key="item.nIdGrupoPar"
+                                                                :label="item.cGrupoParNombre"
+                                                                :value="item.nIdGrupoPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="10">No existen registros!</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </template>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-4">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParametroByGrupo(1);">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-body">
+                                        <template v-if="arrayParametro.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Codigo</th>
+                                                            <th>Grupo</th>
+                                                            <th>Nombre</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                            <td v-text="p.nIdPar"></td>
+                                                            <td v-text="p.nIdGrupoPar"></td>
+                                                            <td v-text="p.cParNombre"></td>
+                                                            <td>
+                                                                <template v-if="p.cSituacionRegistro=='A'">
+                                                                    <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-            </template>
-
-            <template v-else>
-                <section class="forms">
-                    <div class="container-fluid">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="h4">LISTA DE PROVEEDORES</h3>
-                                </div>
-                                <div class="card-body">
-                                    <form v-on:submit.prevent class="form-horizontal">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Grupo</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formParametro.nidgrupopar" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Jerarquía</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formParametro.cparjerarquia" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Abreviatura</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formParametro.cparabreviatura" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" v-model="formParametro.cparnombre" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" v-if="accion==1" class="btn btn-success btn-corner btn-sm" @click="registrar()">
-                                                    <i class="fa fa-save"></i> Registrar
-                                                </button>
-                                                <button type="button" v-if="accion==2" class="btn btn-secondary btn-corner btn-sm" @click="actualizar()">
-                                                    <i class="fa fa-save"></i> Actualizar
-                                                </button>
-                                                <button type="button" class="btn btn-secundary btn-corner btn-sm" @click="cambiarVistaFormulario()">
-                                                    <i class="fa fa-close"></i> Cancelar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </template>
+                </div>
+            </section>
 
             <!-- Show Errors -->
             <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
@@ -405,16 +419,11 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : this.fillParametro.nidgrupopar,
+                        'opcion' : 1,
                         'page' : page
                     }
                 }).then(response => {
-                    this.arrayParametro = response.data.arrayParametro.data;
-                    this.pagination.current_page =  response.data.arrayParametro.current_page;
-                    this.pagination.total = response.data.arrayParametro.total;
-                    this.pagination.per_page    = response.data.arrayParametro.per_page;
-                    this.pagination.last_page   = response.data.arrayParametro.last_page;
-                    this.pagination.from        = response.data.arrayParametro.from;
-                    this.pagination.to           = response.data.arrayParametro.to;
+                    this.arrayParametro = response.data.arrayParametro;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
