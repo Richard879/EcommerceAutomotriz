@@ -4551,8 +4551,8 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
-                this.limpiarPaginacion();
-                this.limpiarPaginacionModal();
+                //this.limpiarPaginacion();
+                //this.limpiarPaginacionModal();
                 //SubTab - Modal Vehiculo
                 this.arrayProveedor = [];
                 this.arrayVehiculoModal = [];
