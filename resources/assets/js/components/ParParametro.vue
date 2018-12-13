@@ -62,7 +62,7 @@
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <input type="checkbox" class="checkbox-template">
+                                                                <input type="checkbox" v-model="arrayIndex[p.nIdPar]" class="checkbox-template" v-on:change="selectParametro(p.nIdPar)">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -171,7 +171,7 @@
                                                                 </template>
                                                                 <template v-else>
                                                                     <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                        <i @click="registrar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                             </td>
@@ -240,7 +240,7 @@
                 // =========== VARIABLES PARAMETRO ===========
                 fillParametro:{
                     nidgrupopar: '',
-                    nidsubgrupar: ''
+                    nidsubgrupopar: ''
                 },
                 formParametro:{
                     nidpar: 0,
@@ -253,6 +253,7 @@
                 arraySubGrupoParametro: [],
                 arrayParametro: [],
                 arrayParParametro: [],
+                arrayIndex: [],
                 // =============================================================
                 pagination: {
                     'total' : 0,
@@ -449,7 +450,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidpar' : 1300018, // this.fillParametro.nidpar
+                        'nidpar' : this.formParametro.nidpar,
                         'nidgrupopar': this.fillParametro.nidgrupopar,
                         'nidsubgrupopar' : this.fillParametro.nidsubgrupopar,
                         'opcion' : 1
@@ -465,19 +466,23 @@
                 this.pagination.current_page=page;
                 this.listarParametroByGrupo(page);
             },
-            registrar(){
-                if(this.validar()){
+            selectParametro(nIdPar){
+                this.formParametro.nidpar = nIdPar;
+            },
+            registrar(p){
+                /*if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }
+                }*/
 
-                var url = this.ruta + '/parametro/SetParametro';
+                var url = this.ruta + '/parparametro/SetParParametro';
                 axios.post(url, {
-                    nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
-                    cParJerarquia: this.formParametro.cparjerarquia,
-                    cParAbreviatura: this.formParametro.cparabreviatura,
-                    cParNombre: this.formParametro.cparnombre
+                    nParSrcCodigo: parseInt(this.formParametro.nidpar),
+                    nParSrcGrupoParametro: parseInt(this.fillParametro.nidgrupopar),
+                    nParDstCodigo: parseInt(p.nIdPar),
+                    nParDstGrupoParametro: parseInt(this.fillParametro.nidsubgrupopar),
+                    cValor: ''
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -512,17 +517,15 @@
                 }
                 return this.error;
             },
-            actualizar(){
-                var url = this.ruta + '/parametro/UpdParametroById';
-
-                if(this.validar()){
+            eliminar(parametro){
+                /*if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }
+                }*/
 
+                var url = this.ruta + '/parametro/SetParametro';
                 axios.post(url, {
-                    nIdPar: parseInt(this.formParametro.nidpar),
                     nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
                     cParJerarquia: this.formParametro.cparjerarquia,
                     cParAbreviatura: this.formParametro.cparabreviatura,
@@ -530,7 +533,7 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Parámetro Actualizado');
+                        swal('Parámetro registrado');
                         this.limpiarFormulario();
                         this.listarParametroByGrupo(1);
                         this.vistaFormulario = 1;
@@ -541,64 +544,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            activar(parametro){
-                swal({
-                    title: 'Estas seguro de activar este Parámetro?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Activar!',
-                    cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/parametro/activar';
-                            axios.put(url, {
-                                nIdPar: parseInt(parametro.nIdPar)
-                            }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarParametroByGrupo(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
-            },
-            desactivar(parametro){
-                swal({
-                    title: 'Estas seguro de desactivar este Parámetro?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Desactivar!',
-                    cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/parametro/desactivar';
-                            axios.put(url, {
-                                nIdPar: parseInt(parametro.nIdPar)
-                            }).then(response => {
-                                swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
-                                );
-                                this.listarParametroByGrupo(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
             },
             cerrarModal(){
                 //this.accionmodal==1;

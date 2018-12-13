@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\ParametroController as Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ParParametroController extends Controller
 {
@@ -72,4 +73,20 @@ class ParParametroController extends Controller
         }
         return ['arrayParParametro'=>$arrayParParametro];
     }
+
+    public function SetParParametro(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $parparametro = DB::select('exec [usp_ParParametro_SetParParametro] ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->$nParSrcCodigo, 
+                                                                    $request->$nParSrcGrupoParametro, 
+                                                                    $request->$nParDstCodigo,
+                                                                    $request->$nParDstGrupoParametro,
+                                                                    $request->$cValor,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($parparametro); 
+    }
+
 }

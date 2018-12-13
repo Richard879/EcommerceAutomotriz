@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/parparametro/GetListParParametroByGrupoTodos', 'ParParametroController@GetListParParametroByGrupoTodos');
+    Route::post('/parparametro/SetParParametro', 'ParParametroController@SetParParametro');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
     Route::get('/grupopar/GetListGrupoParametro', 'GrupoParametroController@GetListGrupoParametro');
