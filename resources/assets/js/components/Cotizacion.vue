@@ -1860,6 +1860,7 @@
                                                             <th>Moneda</th>
                                                             <th>Valor</th>
                                                             <th>Cantidad a Regalar</th>
+                                                            <th>En Stock</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1875,6 +1876,7 @@
                                                                 <td v-text="eleventa.cMonedaNombre"></td>
                                                                 <td v-text="eleventa.fValorVenta"></td>
                                                                 <td v-text="eleventa.cantidad"></td>
+                                                                <td v-text="eleventa.nStock"></td>
                                                             </template>
                                                         </tr>
                                                     </tbody>
@@ -4031,7 +4033,8 @@
                                 cMonedaNombre           : eev.cMonedaNombre,
                                 nIdEventoElementoVenta  : eev.nIdEventoElementoVenta,
                                 fValorVenta             : eev.fValorVenta,
-                                cantidad                : eev.nCantidad
+                                cantidad                : eev.nCantidad,
+                                nStock                  : eev.nStock
                             });
                         });
                     }
