@@ -53,4 +53,22 @@ class ParParametroController extends Controller
         return ['arrayParParametro'=>$arrayParParametro];
     }
 
+    public function GetListParParametroByGrupoTodos(Request $request)
+    {
+        $nParSrcCodigo = $request->nparsrccodigo;
+        $nParSrcGrupoParametro = $request->nparsrcgrupoarametro;
+        $nParDstCodigo = $request->npardstcodigo;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayParParametro = DB::select('exec [usp_ParParametro_GetParParametro] ?, ?, ?', 
+                                                                [   $nParSrcCodigo, 
+                                                                    $nParSrcGrupoParametro, 
+                                                                    $nParDstCodigo
+                                                                ]);
+        if($variable == "0"){
+            $arrayParParametro = ParametroController::arrayPaginator($arrayParParametro, $request);
+        }
+        return ['arrayParParametro'=>$arrayParParametro];
+    }
 }

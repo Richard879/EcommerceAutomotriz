@@ -176,16 +176,7 @@
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <template v-if="p.cSituacionRegistro=='A'">
-                                                                    <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                    </el-tooltip>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                    </el-tooltip>
-                                                                </template>
+                                                                <input type="checkbox" class="checkbox-template">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -454,7 +445,7 @@
                 }
 
                 this.mostrarProgressBar();
-                var url = this.ruta + '/parametro/GetListParParametroByGrupo';
+                var url = this.ruta + '/parparametro/GetListParParametroByGrupoTodos';
 
                 axios.get(url, {
                     params: {
