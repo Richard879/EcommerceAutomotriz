@@ -62,16 +62,7 @@
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <template v-if="p.cSituacionRegistro=='A'">
-                                                                    <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                    </el-tooltip>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                    </el-tooltip>
-                                                                </template>
+                                                                <input type="checkbox" class="checkbox-template">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -93,7 +84,7 @@
                             <div class="col-sm-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <template v-if="arrayParametro.length">
+                                        <template v-if="arrayParParametro.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
@@ -104,7 +95,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" v-if="p.nFlagParParametro==1">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
@@ -172,12 +163,21 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="p in arrayParParametro" :key="p.nIdPar">
+                                                            <td>
+                                                                <template v-if="p.nFlagParParametro==1">
+                                                                    <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
+                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                    </el-tooltip>
+                                                                </template>
+                                                            </td>
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
-                                                            <td>
-                                                                <input type="checkbox" class="checkbox-template">
-                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -449,12 +449,13 @@
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : this.fillParametro.nidsubgrupopar,
-                        'opcion' : 1,
-                        'page' : page
+                        'nidpar' : 1300018, // this.fillParametro.nidpar
+                        'nidgrupopar': this.fillParametro.nidgrupopar,
+                        'nidsubgrupopar' : this.fillParametro.nidsubgrupopar,
+                        'opcion' : 1
                     }
                 }).then(response => {
-                    this.arrayParParametro = response.data.arrayParametro;
+                    this.arrayParParametro = response.data.arrayParParametro;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);

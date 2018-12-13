@@ -55,16 +55,17 @@ class ParParametroController extends Controller
 
     public function GetListParParametroByGrupoTodos(Request $request)
     {
-        $nParSrcCodigo = $request->nparsrccodigo;
-        $nParSrcGrupoParametro = $request->nparsrcgrupoarametro;
-        $nParDstCodigo = $request->npardstcodigo;
+        $nIdPar = $request->nidpar;
+        $nIdGrupoPar = $request->nidgrupopar;
+        $nIdSubGrupoPar = $request->nidsubgrupopar;
         $variable   = $request->opcion;
+
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayParParametro = DB::select('exec [usp_ParParametro_GetParParametro] ?, ?, ?', 
-                                                                [   $nParSrcCodigo, 
-                                                                    $nParSrcGrupoParametro, 
-                                                                    $nParDstCodigo
+        $arrayParParametro = DB::select('exec [usp_ParParametro_GetListParametroByGrupoTodos] ?, ?, ?', 
+                                                                [   $nIdPar, 
+                                                                    $nIdGrupoPar,
+                                                                    $nIdSubGrupoPar
                                                                 ]);
         if($variable == "0"){
             $arrayParParametro = ParametroController::arrayPaginator($arrayParParametro, $request);
