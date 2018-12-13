@@ -824,8 +824,8 @@
                             if(response.data[0].nFlagMsje == 1)
                             {
                                 swal(
-                                    'Aprobado!',
-                                    'El pedido ' + pedido.nIdCabeceraPedido +' ha sido APROBADO con éxito.',
+                                    'Anulado!',
+                                    'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
                                     'success'
                                 )
                             }
@@ -833,7 +833,7 @@
                             {
                                 swal(
                                     'Anulado!',
-                                    'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
+                                    'Error en la Anulación.',
                                 )
                             }
                             me.listarPedidos(1);

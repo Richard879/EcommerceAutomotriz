@@ -135,11 +135,11 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-12">
                                                     <div class="row">
-                                                        <label class="col-sm-4 form-control-label">* Grupo</label>
+                                                        <label class="col-sm-4 form-control-label">* Sub Grupo</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillParametro.nidgrupopar" filterable clearable placeholder="SELECCIONE" >
+                                                            <el-select v-model="fillParametro.nidsubgrupopar" filterable clearable placeholder="SELECCIONE" >
                                                                 <el-option
-                                                                v-for="item in arrayGrupoParametro"
+                                                                v-for="item in arraySubGrupoParametro"
                                                                 :key="item.nIdGrupoPar"
                                                                 :label="item.cGrupoParNombre"
                                                                 :value="item.nIdGrupoPar">
@@ -151,7 +151,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-4">
-                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParametroByGrupo(1);">
+                                                    <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParParametro(1);">
                                                         <i class="fa fa-search"></i> Buscar
                                                     </button>
                                                 </div>
@@ -159,7 +159,7 @@
                                         </form>
                                     </div>
                                     <div class="card-body">
-                                        <template v-if="arrayParametro.length">
+                                        <template v-if="arrayParParametro.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
@@ -171,7 +171,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
@@ -248,7 +248,8 @@
                 // =============================================================
                 // =========== VARIABLES PARAMETRO ===========
                 fillParametro:{
-                    nidgrupopar: ''
+                    nidgrupopar: '',
+                    nidsubgrupar: ''
                 },
                 formParametro:{
                     nidpar: 0,
@@ -258,7 +259,9 @@
                     cparnombre: ''
                 },
                 arrayGrupoParametro: [],
+                arraySubGrupoParametro: [],
                 arrayParametro: [],
+                arrayParParametro: [],
                 // =============================================================
                 pagination: {
                     'total' : 0,
@@ -290,6 +293,7 @@
         },
         mounted(){
             this.llenarComboGrupoParametro();
+            this.llenarComboSubGrupoParametro();
         },
         computed:{
             isActived: function(){
@@ -353,6 +357,19 @@
                     }
                 }).then(response => {
                     this.arrayGrupoParametro = response.data.arrayGrupoParametro;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            llenarComboSubGrupoParametro(){
+                var url = this.ruta + '/grupopar/GetListGrupoParametro';
+
+                axios.get(url, {
+                    params: {
+                        'opcion' : 1
+                    }
+                }).then(response => {
+                    this.arraySubGrupoParametro = response.data.arrayGrupoParametro;
                 }).catch(error => {
                     console.log(error);
                 });
@@ -424,6 +441,29 @@
                     }
                 }).then(response => {
                     this.arrayParametro = response.data.arrayParametro;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            listarParParametro(page){
+                if(this.validarBusqueda()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                this.mostrarProgressBar();
+                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid' : this.fillParametro.nidsubgrupopar,
+                        'opcion' : 1,
+                        'page' : page
+                    }
+                }).then(response => {
+                    this.arrayParParametro = response.data.arrayParametro;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
