@@ -77,13 +77,13 @@ class ParParametroController extends Controller
     public function SetParParametro(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        
+
         $parparametro = DB::select('exec [usp_ParParametro_SetParParametro] ?, ?, ?, ?, ?, ?', 
-                                                                [   $request->$nParSrcCodigo, 
-                                                                    $request->$nParSrcGrupoParametro, 
-                                                                    $request->$nParDstCodigo,
-                                                                    $request->$nParDstGrupoParametro,
-                                                                    $request->$cValor,
+                                                                [   $request->nParSrcCodigo, 
+                                                                    $request->nParSrcGrupoParametro, 
+                                                                    $request->nParDstCodigo,
+                                                                    $request->nParDstGrupoParametro,
+                                                                    $request->cValor,
                                                                     Auth::user()->id
                                                                 ]);
         return response()->json($parparametro); 

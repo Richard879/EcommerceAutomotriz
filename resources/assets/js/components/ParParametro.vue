@@ -487,8 +487,8 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Parámetro registrado');
-                        this.limpiarFormulario();
-                        this.listarParametroByGrupo(1);
+                        //this.limpiarFormulario();
+                        this.listarParParametro(1);
                         this.vistaFormulario = 1;
                     }
                     else{
@@ -553,43 +553,6 @@
                 this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
-            },
-            abrirFormulario(modelo, accion, data){
-                switch(modelo){
-                    case 'parametro':
-                    {
-                        switch(accion){
-                            case 'registrar':
-                            {
-                                if(this.validarBusqueda()){
-                                    this.accionmodal=1;
-                                    this.modal = 1;
-                                    return;
-                                }
-
-                                this.vistaFormulario = 0;
-                                this.accion = 1;
-                                this.tituloFormulario = 'NUEVO PARAMETRO';
-                                this.limpiarFormulario();
-                                this.formParametro.nidgrupopar = this.fillParametro.nidgrupopar;
-                                break;
-                            }
-                            case 'actualizar':
-                            {
-                                this.vistaFormulario = 0;
-                                this.accion = 2;
-                                this.limpiarFormulario();
-                                this.formParametro.nidpar = data.nIdPar;
-                                this.formParametro.nidgrupopar = data.nIdGrupoPar;
-                                this.formParametro.cparjerarquia = data.cParJerarquia;
-                                this.formParametro.cparnombre = data.cParNombre;
-                                this.formParametro.cparabreviatura = data.cParAbreviatura;
-                                this.tituloFormulario = 'ACTUALIZAR PARAMETRO';
-                                break;
-                            }
-                        }
-                    }
-                }
             },
             cambiarVistaFormulario(){
                 if(this.accion == 1){
