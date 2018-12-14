@@ -70,4 +70,31 @@ class SapContactoController extends Controller
         $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
+
+    public function SapSetContacto2(Request $request)
+    {
+        $client = new Client([
+            'base_uri'  => 'http://172.20.6.51/'
+        ]);
+
+        $CardCode       =   "C". $request->nIdContacto;
+        $UserName       =   $request->CardName;
+        $FederalTaxID   =   $request->FederalTaxID;
+        $U_SAI_CAMPO3   =   $request->U_SAI_CAMPO3;
+        $EmailAddress   =   $request->EmailAddress;
+
+        $json = [
+            'json' => [
+                "CardCode"      => $CardCode,
+                "CardType"      => "cCustomer",
+                "CardName"      => $UserName,
+                "FederalTaxID"  => $FederalTaxID,
+                "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
+                "EmailAddress"  => $EmailAddress
+               ]
+           ];
+
+        $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto/", $json);
+        return $response->getBody();
+    }
 }

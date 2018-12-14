@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS JEFE DE VENTAS</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">GESTIÓN DE CONTACTOS JEFE DE VENTAS</h2>
+                </div>
             </header>
 
             <section>
@@ -493,7 +493,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="referencia in arrayReasignarReferencia" :key="referencia.nIdReferenciaVehiculoContacto" 
+                                                                                <tr v-for="referencia in arrayReasignarReferencia" :key="referencia.nIdReferenciaVehiculoContacto"
                                                                                         :style="referencia.cAsignacionVehiculoEstado=='I' ? 'color:red' : ''">
                                                                                     <td v-text="referencia.nIdReferenciaVehiculoContacto"></td>
                                                                                     <td v-text="referencia.cProveedorNombre"></td>
@@ -4007,13 +4007,13 @@
                     this.modal = 1;
                     return;
                 }
-                
+
                 if(this.validarTab33()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-                
+
                 if(this.validarRegistroNuevoContacto()){
                     this.accionmodal=1;
                     this.modal = 1;

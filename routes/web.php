@@ -345,6 +345,7 @@ Route::middleware(['auth'])->group(function(){
     //Gestión de Contacto
     Route::get('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
+    Route::post('/gescontacto/SapSetContacto2', 'Api\SapContactoController@SapSetContacto2');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');

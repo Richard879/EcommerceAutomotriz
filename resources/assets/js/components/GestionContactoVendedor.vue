@@ -3401,6 +3401,54 @@
                         swal('Ocurrio un problema al Actualizar el Contacto');
                     }
                     this.listarContactoSinCarteraMes(1);
+                    // this.SAPNuevoContactoJson.CardCode = ''; //Setear el JSON
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            SapRegistrarNuevoContacto2(nIdContacto, contacto){
+                var url = this.ruta + '/gescontacto/SapSetContacto2';
+                axios.post(url, {
+                    'nIdContacto': nIdContacto,
+                    'CardName': (contacto.cnombre + ' ' + contacto.capepaterno + ' ' + contacto.capematerno),
+                    'FederalTaxID': contacto.cnrodocumento,
+                    'U_SAI_CAMPO3': '1',
+                    'EmailAddress': contacto.cmailprincipal
+                }).then(response => {
+                    // console.log(response.data);
+                    swal('Contacto registrado exitosamente');
+                    let data = response.data;
+                    this.SAPNuevoContactoJson  =  JSON.parse(data);
+                    this.actualizarCardCodeContacto2(nIdContacto, this.SAPNuevoContactoJson.CardCode);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarCardCodeContacto2(nIdContacto, CardCode){
+                var url = this.ruta + '/gescontacto/UpdCardCodeContacto';
+                axios.post(url, {
+                    'nIdContacto'   : nIdContacto,
+                    'CardCode'      : CardCode
+                }).then(response => {
+                    $("#myBar").hide();
+                    if(response.data[0].nFlagMsje==1){
+                        swal(response.data[0].cMensaje);
+                    } else {
+                        swal('Ocurrio un problema al Actualizar el Contacto');
+                    }
+                    this.limpiarNuevoContacto();
+                    this.tabDatosPersonales();
+                    // this.SAPNuevoContactoJson.CardCode = ''; //Setear el JSON
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3429,6 +3477,7 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
                 if (this.formNuevoContacto.ntipopersona == "1") {
                     this.registrarPersonaNatural();
                 } else {
@@ -3529,9 +3578,9 @@
                         referencia: this.arrayReferenciaVehiculo,
                         otrosintreses: this.arrayOtrosIntereses
                     }).then(response => {
-                        swal('Contacto registrado');
-                        this.limpiarNuevoContacto();
-                        this.tabDatosPersonales();
+                        this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
+                        // this.limpiarNuevoContacto();
+                        // this.tabDatosPersonales();
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
