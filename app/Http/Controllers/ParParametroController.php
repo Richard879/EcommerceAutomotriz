@@ -89,4 +89,18 @@ class ParParametroController extends Controller
         return response()->json($parparametro); 
     }
 
+    public function ElmParParametro(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $parparametro = DB::select('exec [usp_ParParametro_ElmParParametro] ?, ?, ?, ?, ?, ?', 
+                                                                [   $request->nParSrcCodigo, 
+                                                                    $request->nParSrcGrupoParametro, 
+                                                                    $request->nParDstCodigo,
+                                                                    $request->nParDstGrupoParametro,
+                                                                    $request->cValor,
+                                                                    Auth::user()->id
+                                                                ]);
+        return response()->json($parparametro); 
+    }
 }

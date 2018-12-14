@@ -57,12 +57,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                        <tr v-for="(p, index) in arrayParametro" :key="p.nIdPar">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <input type="checkbox" v-model="arrayIndex[p.nIdPar]" class="checkbox-template" v-on:change="selectParametro(p.nIdPar)">
+                                                                <input type="checkbox" v-model="arrayIndex[index]" class="checkbox-template" v-on:change="selectParametro(index, p.nIdPar)">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -166,7 +166,7 @@
                                                             <td>
                                                                 <template v-if="p.nFlagParParametro==1">
                                                                     <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                        <i @click="eliminar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                                 <template v-else>
@@ -404,17 +404,6 @@
                 this.arrayModelo = [];
                 this.llenarComboLinea();
             },
-            validarBusqueda(){
-                this.error = 0;
-                this.mensajeError =[];
-                if(this.fillParametro.nidgrupopar == 0 || !this.fillParametro.nidgrupopar){
-                    this.mensajeError.push('Debes Seleccionar un Grupo');
-                };
-                if(this.mensajeError.length){
-                    this.error = 1;
-                }
-                return this.error;
-            },
             listarParametroByGrupo(page){
                 if(this.validarBusqueda()){
                     this.accionmodal=1;
@@ -438,8 +427,19 @@
                     console.log(error);
                 });
             },
+            validarBusqueda(){
+                this.error = 0;
+                this.mensajeError =[];
+                if(this.fillParametro.nidgrupopar == 0 || !this.fillParametro.nidgrupopar){
+                    this.mensajeError.push('Debes Seleccionar un Grupo');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             listarParParametro(page){
-                if(this.validarBusqueda()){
+                if(this.validarBusquedaSubParametro()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
@@ -462,19 +462,51 @@
                     console.log(error);
                 });
             },
+            validarBusquedaSubParametro(){
+                this.error = 0;
+                this.mensajeError =[];
+                if(this.fillParametro.nidsubgrupopar == 0 || !this.fillParametro.nidsubgrupopar){
+                    this.mensajeError.push('Debes Seleccionar un Sub Grupo');
+                };
+                if(this.formParametro.nidpar == 0 || !this.formParametro.nidpar){
+                    this.mensajeError.push('Debes Seleccionar un Parámetro de Grupo');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
             cambiarPagina(page){
                 this.pagination.current_page=page;
                 this.listarParametroByGrupo(page);
             },
-            selectParametro(nIdPar){
-                this.formParametro.nidpar = nIdPar;
+            selectParametro(index, nIdPar){
+                let me = this;
+                
+                if(me.arrayIndex[index])
+                {
+                    me.formParametro.nidpar = nIdPar;
+                }
+                else{
+                    me.formParametro.nidpar = '';
+                }
+                
+                me.arrayParametro.map(function(value, key) {
+                    if(me.arrayIndex[key] && key == index) {
+                        console.log("activa");
+                        me.limpiarFormulario();
+                    }
+                    else{
+                        me.arrayIndex[key] = false;
+                    }       
+                });
             },
             registrar(p){
-                /*if(this.validar()){
+                if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }*/
+                }
 
                 var url = this.ruta + '/parparametro/SetParParametro';
                 axios.post(url, {
@@ -502,40 +534,40 @@
                 this.error = 0;
                 this.mensajeError =[];
 
-                if(this.accion == 2 && (this.formParametro.nidpar == 0 || !this.formParametro.nidpar)){
-                    this.mensajeError.push('No ha seleccionado un Parámetro');
-                }
-
-                if(this.formParametro.nidgrupopar == ''){
-                    this.mensajeError.push('Debes Ingresar una Grupo');
+                if(this.fillParametro.nidgrupopar == 0 || !this.fillParametro.nidgrupopar){
+                    this.mensajeError.push('Debes Seleccionar un Grupo');
                 };
-                if(this.formParametro.cparnombre == ''){
-                    this.mensajeError.push('Debes Ingresar una Nombre');
+                if(this.fillParametro.nidsubgrupopar == 0 || !this.fillParametro.nidsubgrupopar){
+                    this.mensajeError.push('Debes Seleccionar un Sub Grupo');
+                };
+                if(this.formParametro.nidpar == 0 || !this.formParametro.nidpar){
+                    this.mensajeError.push('Debes Seleccionar un Parámetro de Grupo');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
                 return this.error;
             },
-            eliminar(parametro){
-                /*if(this.validar()){
+            eliminar(p){
+                if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }*/
+                }
 
-                var url = this.ruta + '/parametro/SetParametro';
+                var url = this.ruta + '/parparametro/ElmParParametro';
                 axios.post(url, {
-                    nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
-                    cParJerarquia: this.formParametro.cparjerarquia,
-                    cParAbreviatura: this.formParametro.cparabreviatura,
-                    cParNombre: this.formParametro.cparnombre
+                    nParSrcCodigo: parseInt(this.formParametro.nidpar),
+                    nParSrcGrupoParametro: parseInt(this.fillParametro.nidgrupopar),
+                    nParDstCodigo: parseInt(p.nIdPar),
+                    nParDstGrupoParametro: parseInt(this.fillParametro.nidsubgrupopar),
+                    cValor: ''
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Parámetro registrado');
-                        this.limpiarFormulario();
-                        this.listarParametroByGrupo(1);
+                        swal('Parámetro eliminado');
+                        //this.limpiarFormulario();
+                        this.listarParParametro(1);
                         this.vistaFormulario = 1;
                     }
                     else{
@@ -565,11 +597,7 @@
 
             },
             limpiarFormulario(){
-                this.formParametro.nidpar = 0,
-                this.formParametro.nidgrupopar = '',
-                this.formParametro.cparjerarquia = '',
-                this.formParametro.cparnombre = '',
-                this.formParametro.cparabreviatura = ''
+                this.arrayParParametro = [];
             },
             mostrarProgressBar(){
                 $("#myBar").show();
