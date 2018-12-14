@@ -557,9 +557,7 @@
                 var url = this.ruta + '/gescontacto/SapGetValidarContacto';
 
                 this.mostrarProgressBar();
-                axios.post(url,  {
-
-                }).then(response => {
+                axios.get(url).then(response => {
                     $("#myBar").hide();
                     console.log(response.data);
                     if(response.data == true){

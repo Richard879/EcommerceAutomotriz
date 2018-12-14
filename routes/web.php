@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/gescontacto/GetEstadoAsignacionSeguimiento', 'GestionContactoController@GetEstadoAsignacionSeguimiento');
     Route::put('/gescontacto/desactivarSeguimiento', 'GestionContactoController@desactivarSeguimiento');
     Route::post('/gescontacto/SetAmpliacionFechaVenceAsignacion', 'GestionContactoController@SetAmpliacionFechaVenceAsignacion');
+    Route::post('/gescontacto/UpdCardCodeContacto', 'GestionContactoController@UpdCardCodeContacto');
 
     Route::get('/pedido/GetLstCotizacionIngresadas', 'PedidoController@GetLstCotizacionIngresadas');
     Route::get('/pedido/GetLstCompraByIdModelo', 'PedidoController@GetLstCompraByIdModelo');
@@ -338,8 +339,10 @@ Route::middleware(['auth'])->group(function(){
     /// METODOS SERVICES LAYER
     /// ============================================================
     ///
+    //Gestión de Contacto
+    Route::get('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
     Route::post('/gescontacto/SapSetContacto', 'Api\SapContactoController@SapSetContacto');
-    Route::post('/gescontacto/SapGetValidarContacto', 'Api\SapContactoController@SapGetValidarContacto');
+    //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
 

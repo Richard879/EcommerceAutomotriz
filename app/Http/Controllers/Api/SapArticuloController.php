@@ -17,29 +17,29 @@ class SapArticuloController extends Controller
         ]);
 
         $array_rpta = [];
-        $DocEntry = [];
-        
-        $User = Auth::user()->id;
-        $CardCode = 'C'.$User;
+        $DocEntry   = [];
+
+        $User       = Auth::user()->id;
+        $CardCode   = 'C'.$User;
 
         $data = $request->data;
         foreach ($data as $key => $value) {
-            $dataArray = [ 
-                    'ItemCode' => 'ITEM001',
-                    'Quantity' => '1',
-                    'TaxCode' => 'IGV',
+            $dataArray = [
+                    'ItemCode'  => 'ITEM001',
+                    'Quantity'  => '1',
+                    'TaxCode'   => 'IGV',
                     'UnitPrice' => '100'
                 ];
 
             /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
-            
+
             $json = [
                 'json' => [
-                    "CardCode" => $CardCode,
-                    "DocDate" => "2018-11-30",
-                    "DocDueDate" => "2018-12-04",
+                    "CardCode"      => $CardCode,
+                    "DocDate"       => "2018-11-30",
+                    "DocDueDate"    => "2018-12-04",
                     "DocumentLines" => [
                             $dataArray
                         ]

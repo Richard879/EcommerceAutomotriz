@@ -23,44 +23,51 @@ class SapContactoController extends Controller
     /// ============================================================
     /// METODOS SERVICES LAYER
     /// ============================================================
-    /// 
+    ///
+    public function SapGetValidarContacto(Request $request)
+    {
+        $client = new Client([
+            'base_uri'  => 'http://172.20.6.51/'
+        ]);
+
+        // $User       = Auth::user()->id;
+        // $CardCode   = 'C'.$User;
+        $CardCode   =   "C". $request->nIdContacto;
+
+        $json = [
+                    'json' => [
+                        "CardCode" => $CardCode
+                    ]
+                ];
+
+        $response = $client->request('POST', "/Sap/api/Contacto/SapGetValidarContacto/", $json);
+        return $response->getBody();
+    }
+
     public function SapSetContacto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.54/'
+            'base_uri'  => 'http://172.20.6.51/'
         ]);
+
+        $CardCode       =   "C". $request->contacto['nIdContacto'];
+        $UserName       =   $request->contacto['cVendedor'];
+        $FederalTaxID   =   $request->contacto['cNumeroDocumento'];
+        $U_SAI_CAMPO3   =   1;
+        $EmailAddress   =   $request->contacto['cEmail'];
 
         $json = [
             'json' => [
-                "CardCode" => $request->CompanyDB,
-                "CardType" => "cCustomer",
-                "CardName" => $request->UserName,
-                "FederalTaxID" => $request->Password,
-                "U_SAI_CAMPO3" => $request->Password,
-                "EmailAddress" => $request->Password
+                "CardCode"      => $CardCode,
+                "CardType"      => "cCustomer",
+                "CardName"      => $UserName,
+                "FederalTaxID"  => $FederalTaxID,
+                "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
+                "EmailAddress"  => $EmailAddress
                ]
            ];
 
         $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto/", $json);
-        return $response->getBody();
-    }
-
-    public function SapGetValidarContacto(Request $request)
-    {
-        $client = new Client([
-            'base_uri'  => 'http://172.20.6.54/'
-        ]);
-        
-        $User = Auth::user()->id;
-        $CardCode = 'C'.$User;
-
-        $json = [
-            'json' => [
-                "CardCode" => $CardCode
-               ]
-           ];
-
-        $response = $client->request('POST', "/Sap/api/Contacto/SapGetValidarContacto/", $json);
         return $response->getBody();
     }
 }

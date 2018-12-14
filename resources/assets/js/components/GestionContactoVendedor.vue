@@ -126,6 +126,10 @@
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                            <div slot="content"> Verificar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:#7123AEE'" class="fa fa-user"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -156,6 +160,10 @@
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Asignar a Cartera  {{ c.cRazonSocial }}</div>
                                                                                             <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
+                                                                                        </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                            <div slot="content"> Verificar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:#7123AEE'" class="fa fa-user"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
@@ -1888,6 +1896,7 @@
                 arrayProv : [],
                 arrayDist: [],
                 vistaDatosPersonaNatural: 1,
+                SAPNuevoContactoJson: '',
                 // =============================================================
                 // ================= VARIABLES TAB SEGUIMIENTO =================
                 formSegDatosContacto:{
@@ -3334,19 +3343,86 @@
                 return this.error;
             },
             // =============  REGISTRAR CONTACTO ======================
+            SapGetValidarContacto(nIdContacto){
+                var url = this.ruta + '/gescontacto/SapGetValidarContacto';
+
+                this.mostrarProgressBar();
+                axios.get(url, {
+                    params: {
+                        'nIdContacto': nIdContacto
+                    }
+                }).then(response => {
+                    $("#myBar").hide();
+                    console.log(response.data);
+                    if(response.data == true){
+                        swal("EXISTE : " + response.data);
+                    }else{
+                        swal("NO EXISTE : " + response.data);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            SapRegistrarNuevoContacto(contacto){
+                this.mostrarProgressBar();
+                var url = this.ruta + '/gescontacto/SapSetContacto';
+                axios.post(url, {
+                    'contacto': contacto
+                }).then(response => {
+                    // $("#myBar").hide();
+                    // console.log(response.data);
+                    let data = response.data;
+                    this.SAPNuevoContactoJson  =  JSON.parse(data);
+                    this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson.CardCode);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            actualizarCardCodeContacto(nIdContacto, CardCode){
+                var url = this.ruta + '/gescontacto/UpdCardCodeContacto';
+                axios.post(url, {
+                    'nIdContacto'   : nIdContacto,
+                    'CardCode'      : CardCode
+                }).then(response => {
+                    $("#myBar").hide();
+                    if(response.data[0].nFlagMsje==1){
+                        swal(response.data[0].cMensaje);
+                    } else {
+                        swal('Ocurrio un problema al Actualizar el Contacto');
+                    }
+                    this.listarContactoSinCarteraMes(1);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             registrarNuevoContacto(){
                 if(this.validarTab22()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-                
+
                 if(this.validarTab33()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
-                
+
                 if(this.validarRegistroNuevoContacto()){
                     this.accionmodal=1;
                     this.modal = 1;

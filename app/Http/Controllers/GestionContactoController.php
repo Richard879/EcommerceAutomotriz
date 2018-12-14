@@ -100,7 +100,7 @@ class GestionContactoController extends Controller
         $nIdUsuario   = Auth::user()->id;
 
         $nIdLinea = ($nIdLinea == NULL) ? ($nIdLinea = 0) : $nIdLinea;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;    
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
 
         $arrayModelo = DB::select('exec usp_Contacto_GetModelosByMarca ?, ?, ?',
                                             [   $nIdLinea,
@@ -615,5 +615,23 @@ class GestionContactoController extends Controller
                                                         ]);
 
         return response()->json($objAsignacion);
+    }
+
+    public function UpdCardCodeContacto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdContacto    =   $request->nIdContacto;
+        $CardCode       =   $request->CardCode;
+        $nIdUsuario     =   Auth::user()->id;
+
+        $data = DB::select('exec usp_Contacto_UpdCardCodeContacto ?, ?, ?',
+                                                            [
+                                                                $nIdContacto,
+                                                                $CardCode,
+                                                                $nIdUsuario
+                                                            ]);
+
+        return response()->json($data);
     }
 }

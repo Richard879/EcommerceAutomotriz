@@ -1732,11 +1732,11 @@
                         me.accionmodal=3;
                         me.modal = 1;
                         me.attachment = [];
-                        me.registroSap(); 
+                        me.registroSap();
                     }else{
                         $("#myBar").hide();
-                        me.registroSap(); 
-                    }  
+                        me.registroSap();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2254,6 +2254,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
