@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/parametro/activar','ParametroController@activar');
 
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
+    Route::get('/parparametro/GetListParParametroByGrupoTodos', 'ParParametroController@GetListParParametroByGrupoTodos');
+    Route::post('/parparametro/SetParParametro', 'ParParametroController@SetParParametro');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
     Route::get('/grupopar/GetListGrupoParametro', 'GrupoParametroController@GetListGrupoParametro');
@@ -65,6 +67,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/UpdCompraById', 'CompraController@UpdCompraById');
     Route::get('/compra/GetLstCompraNoLineaCredito', 'CompraController@GetLstCompraNoLineaCredito');
     Route::post('/compra/UpdCompraLineaCreditoById', 'CompraController@UpdCompraLineaCreditoById');
+    Route::get('/compra/GetListaPrecioByProveedor', 'CompraController@GetListaPrecioByProveedor');
 
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
     Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');

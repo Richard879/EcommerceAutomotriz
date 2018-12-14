@@ -62,16 +62,7 @@
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <template v-if="p.cSituacionRegistro=='A'">
-                                                                    <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
-                                                                    </el-tooltip>
-                                                                </template>
-                                                                <template v-else>
-                                                                    <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                    </el-tooltip>
-                                                                </template>
+                                                                <input type="checkbox" v-model="arrayIndex[p.nIdPar]" class="checkbox-template" v-on:change="selectParametro(p.nIdPar)">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -93,7 +84,7 @@
                             <div class="col-sm-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <template v-if="arrayParametro.length">
+                                        <template v-if="arrayParParametro.length">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-sm">
                                                     <thead>
@@ -104,7 +95,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" v-if="p.nFlagParParametro==1">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
@@ -172,21 +163,21 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="p in arrayParParametro" :key="p.nIdPar">
-                                                            <td v-text="p.nIdPar"></td>
-                                                            <td v-text="p.nIdGrupoPar"></td>
-                                                            <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <template v-if="p.cSituacionRegistro=='A'">
+                                                                <template v-if="p.nFlagParParametro==1">
                                                                     <el-tooltip class="item" :content="'Desactivar ' + p.cParNombre" effect="dark" placement="top-start">
                                                                         <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                                 <template v-else>
                                                                     <el-tooltip class="item" :content="'Activar ' + p.cParNombre" effect="dark" placement="top-start">
-                                                                        <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                        <i @click="registrar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                     </el-tooltip>
                                                                 </template>
                                                             </td>
+                                                            <td v-text="p.nIdPar"></td>
+                                                            <td v-text="p.nIdGrupoPar"></td>
+                                                            <td v-text="p.cParNombre"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -249,7 +240,7 @@
                 // =========== VARIABLES PARAMETRO ===========
                 fillParametro:{
                     nidgrupopar: '',
-                    nidsubgrupar: ''
+                    nidsubgrupopar: ''
                 },
                 formParametro:{
                     nidpar: 0,
@@ -262,6 +253,7 @@
                 arraySubGrupoParametro: [],
                 arrayParametro: [],
                 arrayParParametro: [],
+                arrayIndex: [],
                 // =============================================================
                 pagination: {
                     'total' : 0,
@@ -454,16 +446,17 @@
                 }
 
                 this.mostrarProgressBar();
-                var url = this.ruta + '/parametro/GetListParametroByGrupo';
+                var url = this.ruta + '/parparametro/GetListParParametroByGrupoTodos';
 
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : this.fillParametro.nidsubgrupopar,
-                        'opcion' : 1,
-                        'page' : page
+                        'nidpar' : this.formParametro.nidpar,
+                        'nidgrupopar': this.fillParametro.nidgrupopar,
+                        'nidsubgrupopar' : this.fillParametro.nidsubgrupopar,
+                        'opcion' : 1
                     }
                 }).then(response => {
-                    this.arrayParParametro = response.data.arrayParametro;
+                    this.arrayParParametro = response.data.arrayParParametro;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -473,25 +466,29 @@
                 this.pagination.current_page=page;
                 this.listarParametroByGrupo(page);
             },
-            registrar(){
-                if(this.validar()){
+            selectParametro(nIdPar){
+                this.formParametro.nidpar = nIdPar;
+            },
+            registrar(p){
+                /*if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }
+                }*/
 
-                var url = this.ruta + '/parametro/SetParametro';
+                var url = this.ruta + '/parparametro/SetParParametro';
                 axios.post(url, {
-                    nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
-                    cParJerarquia: this.formParametro.cparjerarquia,
-                    cParAbreviatura: this.formParametro.cparabreviatura,
-                    cParNombre: this.formParametro.cparnombre
+                    nParSrcCodigo: parseInt(this.formParametro.nidpar),
+                    nParSrcGrupoParametro: parseInt(this.fillParametro.nidgrupopar),
+                    nParDstCodigo: parseInt(p.nIdPar),
+                    nParDstGrupoParametro: parseInt(this.fillParametro.nidsubgrupopar),
+                    cValor: ''
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
                         swal('Parámetro registrado');
-                        this.limpiarFormulario();
-                        this.listarParametroByGrupo(1);
+                        //this.limpiarFormulario();
+                        this.listarParParametro(1);
                         this.vistaFormulario = 1;
                     }
                     else{
@@ -520,17 +517,15 @@
                 }
                 return this.error;
             },
-            actualizar(){
-                var url = this.ruta + '/parametro/UpdParametroById';
-
-                if(this.validar()){
+            eliminar(parametro){
+                /*if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
-                }
+                }*/
 
+                var url = this.ruta + '/parametro/SetParametro';
                 axios.post(url, {
-                    nIdPar: parseInt(this.formParametro.nidpar),
                     nIdGrupoPar: parseInt(this.formParametro.nidgrupopar),
                     cParJerarquia: this.formParametro.cparjerarquia,
                     cParAbreviatura: this.formParametro.cparabreviatura,
@@ -538,7 +533,7 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
-                        swal('Parámetro Actualizado');
+                        swal('Parámetro registrado');
                         this.limpiarFormulario();
                         this.listarParametroByGrupo(1);
                         this.vistaFormulario = 1;
@@ -550,64 +545,6 @@
                     console.log(error);
                 });
             },
-            activar(parametro){
-                swal({
-                    title: 'Estas seguro de activar este Parámetro?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Activar!',
-                    cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/parametro/activar';
-                            axios.put(url, {
-                                nIdPar: parseInt(parametro.nIdPar)
-                            }).then(response => {
-                                swal(
-                                'Activado!',
-                                'El registro fue activado.'
-                                );
-                                this.listarParametroByGrupo(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
-            },
-            desactivar(parametro){
-                swal({
-                    title: 'Estas seguro de desactivar este Parámetro?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Desactivar!',
-                    cancelButtonText: 'No, cancelar!'
-                    }).then((result) => {
-                        if (result.value) {
-                            var url = this.ruta + '/parametro/desactivar';
-                            axios.put(url, {
-                                nIdPar: parseInt(parametro.nIdPar)
-                            }).then(response => {
-                                swal(
-                                'Desactivado!',
-                                'El registro fue desactivado.'
-                                );
-                                this.listarParametroByGrupo(1);
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else if (result.dismiss === swal.DismissReason.cancel)
-                        {
-                        }
-                    })
-            },
             cerrarModal(){
                 //this.accionmodal==1;
                 this.modal = 0
@@ -616,43 +553,6 @@
                 this.tituloModal = '',*/
                 this.error = 0,
                 this.mensajeError = ''
-            },
-            abrirFormulario(modelo, accion, data){
-                switch(modelo){
-                    case 'parametro':
-                    {
-                        switch(accion){
-                            case 'registrar':
-                            {
-                                if(this.validarBusqueda()){
-                                    this.accionmodal=1;
-                                    this.modal = 1;
-                                    return;
-                                }
-
-                                this.vistaFormulario = 0;
-                                this.accion = 1;
-                                this.tituloFormulario = 'NUEVO PARAMETRO';
-                                this.limpiarFormulario();
-                                this.formParametro.nidgrupopar = this.fillParametro.nidgrupopar;
-                                break;
-                            }
-                            case 'actualizar':
-                            {
-                                this.vistaFormulario = 0;
-                                this.accion = 2;
-                                this.limpiarFormulario();
-                                this.formParametro.nidpar = data.nIdPar;
-                                this.formParametro.nidgrupopar = data.nIdGrupoPar;
-                                this.formParametro.cparjerarquia = data.cParJerarquia;
-                                this.formParametro.cparnombre = data.cParNombre;
-                                this.formParametro.cparabreviatura = data.cParAbreviatura;
-                                this.tituloFormulario = 'ACTUALIZAR PARAMETRO';
-                                break;
-                            }
-                        }
-                    }
-                }
             },
             cambiarVistaFormulario(){
                 if(this.accion == 1){
