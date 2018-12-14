@@ -57,12 +57,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParametro" :key="p.nIdPar">
+                                                        <tr v-for="(p, index) in arrayParametro" :key="p.nIdPar">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
                                                             <td>
-                                                                <input type="checkbox" v-model="arrayIndex[p.nIdPar]" class="checkbox-template" v-on:change="selectParametro(p.nIdPar)">
+                                                                <input type="checkbox" v-model="arrayIndex[index]" class="checkbox-template" v-on:change="selectParametro(index, p.nIdPar)">
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -480,8 +480,26 @@
                 this.pagination.current_page=page;
                 this.listarParametroByGrupo(page);
             },
-            selectParametro(nIdPar){
-                this.formParametro.nidpar = nIdPar;
+            selectParametro(index, nIdPar){
+                let me = this;
+                
+                if(me.arrayIndex[index])
+                {
+                    me.formParametro.nidpar = nIdPar;
+                }
+                else{
+                    me.formParametro.nidpar = '';
+                }
+                
+                me.arrayParametro.map(function(value, key) {
+                    if(me.arrayIndex[key] && key == index) {
+                        console.log("activa");
+                        me.limpiarFormulario();
+                    }
+                    else{
+                        me.arrayIndex[key] = false;
+                    }       
+                });
             },
             registrar(p){
                 if(this.validar()){
@@ -579,11 +597,7 @@
 
             },
             limpiarFormulario(){
-                this.formParametro.nidpar = 0,
-                this.formParametro.nidgrupopar = '',
-                this.formParametro.cparjerarquia = '',
-                this.formParametro.cparnombre = '',
-                this.formParametro.cparabreviatura = ''
+                this.arrayParParametro = [];
             },
             mostrarProgressBar(){
                 $("#myBar").show();
