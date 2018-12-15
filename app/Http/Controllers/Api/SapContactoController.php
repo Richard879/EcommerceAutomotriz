@@ -50,11 +50,16 @@ class SapContactoController extends Controller
             'base_uri'  => 'http://172.20.6.51/'
         ]);
 
+        // return $request;
+
         $CardCode       =   "C". $request->contacto['nIdContacto'];
-        $UserName       =   $request->contacto['cVendedor'];
+        $UserName       =   $request->contacto['cContacto'];
         $FederalTaxID   =   $request->contacto['cNumeroDocumento'];
         $U_SAI_CAMPO3   =   1;
         $EmailAddress   =   $request->contacto['cEmail'];
+        $Address        =   $request->contacto['cDireccion'];
+        $Cellular       =   $request->contacto['nTelefonoMovil'];
+        $City           =   $request->contacto['cUbigeo'];
 
         $json = [
             'json' => [
@@ -63,7 +68,10 @@ class SapContactoController extends Controller
                 "CardName"      => $UserName,
                 "FederalTaxID"  => $FederalTaxID,
                 "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
-                "EmailAddress"  => $EmailAddress
+                "EmailAddress"  => $EmailAddress,
+                "Address"       => $Address,
+                "Cellular"      => $Cellular,
+                "City"          => $City
                ]
            ];
 
@@ -82,6 +90,9 @@ class SapContactoController extends Controller
         $FederalTaxID   =   $request->FederalTaxID;
         $U_SAI_CAMPO3   =   $request->U_SAI_CAMPO3;
         $EmailAddress   =   $request->EmailAddress;
+        $Address        =   $request->Address;
+        $Cellular       =   $request->Cellular;
+        $City           =   $request->City;
 
         $json = [
             'json' => [
@@ -90,7 +101,10 @@ class SapContactoController extends Controller
                 "CardName"      => $UserName,
                 "FederalTaxID"  => $FederalTaxID,
                 "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
-                "EmailAddress"  => $EmailAddress
+                "EmailAddress"  => $EmailAddress,
+                "Address"       => $Address,
+                "Cellular"      => $Cellular,
+                "City"          => $City
                ]
            ];
 
