@@ -13,7 +13,7 @@ class SapArticuloController extends Controller
     public function SapSetArticulo(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.6.65/'
         ]);
 
         $array_rpta = [];
@@ -32,7 +32,7 @@ class SapArticuloController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Articulo/SapSetArticulo/", $json);
+            $response = $client->request('POST', "/Sap/api/Articulo/SapSetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
