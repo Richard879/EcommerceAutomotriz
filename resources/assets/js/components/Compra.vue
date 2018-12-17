@@ -196,11 +196,17 @@
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
                                                                                         <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </el-tooltip>&nbsp;
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
                                                                                         <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="compra.nDocEntry==0">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
+                                                                                            <i @click="validarSapArticulo(compra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        </el-tooltip>&nbsp;
+                                                                                    </template>
                                                                                 </td>
                                                                                 <td v-text="compra.nIdCompra"></td>
                                                                                 <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
@@ -2105,6 +2111,96 @@
             },
             descargaFormatoCompra(){
                 window.open(this.ruta + '/storage/FormatosDescarga/FormatoCompraExcel.xlsx');
+            },
+            //=================== REGISTRO SAP INDIVIDUAL ==============
+            validarSapArticulo(compra){
+                this.mostrarProgressBar();
+                
+                let me = this;
+                
+                var sapUrl = me.ruta + '/articulo/SapGetValidarArticulo';
+                axios.post(sapUrl, {
+                    cNumeroVin: compra.cNumeroVin
+                }).then(response => {
+                    if(response.data == true){
+                        me.arraySapCompra.push({
+                            cNumeroVin: compra.cNumeroVin,
+                            nIdCompra: compra.nIdCompra,
+                            cCronograma :compra.cNumeroMes + '-' + compra.cAnio,
+                            nOrdenCompra: compra.nOrdenCompra,
+                            cNombreLinea: compra.cNombreLinea,
+                            cNombreAlmacen: compra.cNombreAlmacen,
+                            nNumeroReserva: compra.nNumeroReserva,
+                            cNumeroVin: compra.cNumeroVin,
+                            cFormaPago: compra.cFormaPago,
+                            cNombreComercial: compra.cNombreComercial,
+                            nAnioFabricacion: compra.nAnioFabricacion,
+                            nAnioVersion: compra.nAnioVersion,
+                            cSimboloMoneda: compra.cSimboloMoneda,
+                            fTotalCompra: compra.fTotalCompra,
+                            cNumeroFactura: compra.cNumeroFactura,
+                            dFechaFacturado: compra.dFechaFacturado,
+                            dFechaCompra: compra.dFechaCompra
+                        });
+
+                        setTimeout(function() {
+                            me.generarSapCompra();
+                        }, 3800);
+                    }else{
+                        //me.generarSapCompra();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            generarSapCompra(){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SapSetCompra';
+                axios.post(sapUrl, {
+                    data: me.arraySapCompra
+                }).then(response => {
+                    me.arraySapRptCompra = response.data;
+                    me.arraySapRptCompra.map(function(x){
+                        me.jsonCompra= JSON.parse(x);
+                        me.arraySapUpdCompra.push({
+                            'DocEntry': me.jsonCompra.DocEntry.toString(),
+                            'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                        });
+                        console.log(me.jsonCompra.DocEntry);
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
+
+                //==============================================================
+                //================== ACTUALIZAR DOCENTRY ===============
+                setTimeout(function() {
+                        me.generarActualizarDocEntry();
+                    }, 3800);
+            },
+            generarActualizarDocEntry(){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntry';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdCompra
+                }).then(response => {
+                    $("#myBar").hide();
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        me.limpiarFormulario();
+                        me.listarCompras();
+                        swal('Compra registrada correctamente');
+                    }
+                    else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el Registro!',
+                            })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });                    
             },
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){

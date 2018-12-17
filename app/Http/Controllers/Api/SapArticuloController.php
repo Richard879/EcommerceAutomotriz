@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class SapArticuloController extends Controller
 {
+    public function SapGetValidarArticulo(Request $request)
+    {
+        $client = new Client([
+            'base_uri'  => 'http://localhost:49454/'
+        ]);
+
+        $json = [
+                    'json' => [
+                        "ItemCode"    => $request->cNumeroVin
+                        ]
+                ];
+
+        $response = $client->request('POST', "/api/Articulo/SapGetValidarArticulo/", $json);
+        return $response->getBody();
+    }
+
     public function SapSetArticulo(Request $request)
     {
         $client = new Client([
