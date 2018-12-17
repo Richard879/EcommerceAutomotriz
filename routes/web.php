@@ -349,6 +349,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/SapSetContacto2', 'Api\SapContactoController@SapSetContacto2');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
+    //Articulo
     Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
 
     /// ============================================================

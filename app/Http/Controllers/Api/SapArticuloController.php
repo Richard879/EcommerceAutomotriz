@@ -13,42 +13,28 @@ class SapArticuloController extends Controller
     public function SapSetArticulo(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.59/'
+            'base_uri'  => 'http://localhost:49454/'
         ]);
 
         $array_rpta = [];
-        $DocEntry   = [];
+        $rptaSap   = [];
 
         $User       = Auth::user()->id;
         $CardCode   = 'C'.$User;
 
         $data = $request->data;
         foreach ($data as $key => $value) {
-            $dataArray = [
-                    'ItemCode'  => 'ITEM001',
-                    'Quantity'  => '1',
-                    'TaxCode'   => 'IGV',
-                    'UnitPrice' => '100'
-                ];
-
-            /*foreach ($dataArray as $keyArray => $valueArray) {
-                    $arrayResult[$keyArray] = $valueArray;
-                }*/
-
             $json = [
                 'json' => [
-                    "CardCode"      => $CardCode,
-                    "DocDate"       => "2018-11-30",
-                    "DocDueDate"    => "2018-12-04",
-                    "DocumentLines" => [
-                            $dataArray
-                        ]
+                    "ItemCode"    => $value['cNumeroVin'],
+                    "ItemName"    => $value['cNombreComercial'],
+                    "ItemType"    => "itItems"
                     ]
                 ];
 
-            $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
-            $DocEntry = json_decode($response->getBody());
-            array_push($array_rpta, $DocEntry);
+            $response = $client->request('POST', "/api/Articulo/SapSetArticulo/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
         }
         return $array_rpta;
     }

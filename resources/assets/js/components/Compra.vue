@@ -1438,9 +1438,13 @@
                 arrayProveedor: [],
                 //===========================================================
                 // =============  VARIABLES SAP ========================
-                arraySapRpta: [],
-                arraySapJson: '',
                 arraySapCompra: [],
+                arraySapRptCompra: [],
+                jsonCompra: '',
+                arraySapArticulo : [],
+                arraySapRptArticulo: [],
+                jsonArticulo: '',
+                arraySapItemCode: [],
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1916,8 +1920,9 @@
                         });
                     }
 
-                    //============= RESULTADO PARA MOSTRAR ================
-                    if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                    //============= REGISTRO EN SAP================
+                    me.registroSapArticulo();
+                    /*if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                         me.accionmodal=3;
                         me.modal = 1;
                         me.attachment = [];
@@ -1925,7 +1930,7 @@
                     }else{
                         $("#myBar").hide();
                         me.registroSap();
-                    }
+                    }*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1935,33 +1940,78 @@
                     }
                 });
             },
-            registroSap(){
+            registroSapArticulo(){
                 let me = this;
+
+                //==============================================================
+                //================== REGITRO DE ARTICULO EN SAP ===============
+                //Depurar Array para registrar en SAP
                 me.arrayExcel.map(function(x, y){
                     //comprobar si un determinado elemento no existe dentro de un array
                     if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
+                        me.arraySapArticulo.push(x);
+                    }
+                });
+
+                var sapUrl = me.ruta + '/articulo/SapSetArticulo';
+                axios.post(sapUrl, {
+                    data: me.arraySapArticulo
+                }).then(response => {
+                    me.arraySapRptArticulo = response.data;
+                    me.arraySapRptArticulo.map(function(x){
+                        me.jsonArticulo= JSON.parse(x);
+                        //console.log(me.arraySapJson);
+                        console.log(me.jsonArticulo.ItemCode);
+
+                        me.arraySapItemCode.push({
+                            ItemCode: me.jsonArticulo.ItemCode
+                        });
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
+
+                setTimeout(function() {
+                        me.registroSapCompra();
+                    }, 3800);
+            },
+            registroSapCompra(){
+                let me = this;
+                //Depurar Array para registrar en SAP
+                me.arraySapArticulo.map(function(x, y){
+                    if (!me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapCompra.push(x);
                     }
                 });
 
-                var sapUrl = this.ruta + '/articulo/SapSetArticulo';
+                console.log(me.arraySapCompra.length);
+                //==============================================================
+                //================== REGITRO DE COMPRA EN SAP ===============
+                var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    data: this.arraySapCompra
+                    data: me.arraySapCompra
                 }).then(response => {
                     $("#myBar").hide();
-                    let me = this;
-                    this.arraySapRpta = response.data;
-                    this.arraySapRpta.map(function(x){
-                        me.arraySapJson= JSON.parse(x);
-                        //console.log(me.arraySapJson);
-                        //console.log(me.arraySapJson.DocEntry);
+                    me.arraySapRptCompra = response.data;
+                    me.arraySapRptCompra.map(function(x){
+                        me.jsonCompra= JSON.parse(x);
+                        console.log(me.jsonCompra.DocEntry);
                     });
-                    swal('Compra registrada correctamente');
-                    me.attachment = [],
+                    me.attachment = [];
                     me.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
                 });
+
+                //============= RESULTADO PARA MOSTRAR ================
+                if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
+                    me.accionmodal=3;
+                    me.modal = 1;
+                    me.attachment = [];
+                }else{
+                    $("#myBar").hide();
+                    swal('Compra registrada correctamente');
+                }
             },
             validarRegistro(){
                 this.error = 0;
@@ -2437,7 +2487,15 @@
                 this.formCompra.nidtipolista= '',
                 this.arrayExcel = [],
                 this.form = new FormData,
-                $("#file-upload").val("")
+                $("#file-upload").val(""),
+                //Limpiar Variables SAP
+                this.arraySapCompra=  [],
+                this.arraySapRptCompra= [],
+                this.jsonCompra= '',
+                this.arraySapArticulo= [],
+                this.arraySapRptArticulo= [],
+                this.jsonArticulo= '',
+                this.arraySapItemCode= []
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,

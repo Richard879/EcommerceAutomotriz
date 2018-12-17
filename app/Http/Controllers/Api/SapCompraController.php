@@ -39,11 +39,12 @@ class SapCompraController extends Controller
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.59/'
+            'base_uri'  => 'http://localhost:49454/'
         ]);
 
         $array_rpta = [];
-        $DocEntry   = [];
+        $rptaSap   = [];
+        //$DocEntry   = [];
 
         $User       =   Auth::user()->id;
         $CardCode   =   'C'.$User;
@@ -51,11 +52,11 @@ class SapCompraController extends Controller
         $data = $request->data;
         foreach ($data as $key => $value) {
             $dataArray = [
-                            'ItemCode'  => 'ITEM001',
-                            'Quantity'  => '1',
-                            'TaxCode'   => 'IGV',
-                            'UnitPrice' => '100'
-                        ];
+                    "ItemCode"    => $value['cNumeroVin'],
+                    "Quantity"    => "1",
+                    "TaxCode"     => "IGV",
+                    "UnitPrice"   => (string)$value['fTotalCompra']
+                ];
 
             /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
@@ -72,9 +73,11 @@ class SapCompraController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
-            $DocEntry = json_decode($response->getBody());
-            array_push($array_rpta, $DocEntry);
+            $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+            $rptaSap = json_decode($response->getBody());
+            array_push($array_rpta, $rptaSap);
+            /*$DocEntry = json_decode($response->getBody());
+            array_push($array_rpta, $DocEntry);*/
         }
         return $array_rpta;
     }
