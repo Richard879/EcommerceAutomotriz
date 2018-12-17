@@ -1920,17 +1920,9 @@
                         });
                     }
 
-                    //============= REGISTRO EN SAP================
+                    //==============================================================
+                    //================== REGITRO DE ARTICULO EN SAP ===============
                     me.registroSapArticulo();
-                    /*if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
-                        me.accionmodal=3;
-                        me.modal = 1;
-                        me.attachment = [];
-                        me.registroSap();
-                    }else{
-                        $("#myBar").hide();
-                        me.registroSap();
-                    }*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1943,8 +1935,6 @@
             registroSapArticulo(){
                 let me = this;
 
-                //==============================================================
-                //================== REGITRO DE ARTICULO EN SAP ===============
                 //Depurar Array para registrar en SAP
                 me.arrayExcel.map(function(x, y){
                     //comprobar si un determinado elemento no existe dentro de un array
@@ -1961,8 +1951,7 @@
                     me.arraySapRptArticulo.map(function(x){
                         me.jsonArticulo= JSON.parse(x);
                         //console.log(me.arraySapJson);
-                        console.log(me.jsonArticulo.ItemCode);
-
+                        //console.log(me.jsonArticulo.ItemCode);
                         me.arraySapItemCode.push({
                             ItemCode: me.jsonArticulo.ItemCode
                         });
@@ -1971,6 +1960,8 @@
                     console.log(error);
                 });
 
+                //==============================================================
+                //================== REGITRO DE COMPRA EN SAP ===============
                 setTimeout(function() {
                         me.registroSapCompra();
                     }, 3800);
@@ -1984,9 +1975,7 @@
                     }
                 });
 
-                console.log(me.arraySapCompra.length);
-                //==============================================================
-                //================== REGITRO DE COMPRA EN SAP ===============
+                //console.log(me.arraySapCompra.length);
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
                     data: me.arraySapCompra
