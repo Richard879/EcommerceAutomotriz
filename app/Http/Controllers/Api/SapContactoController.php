@@ -27,7 +27,7 @@ class SapContactoController extends Controller
     public function SapGetValidarContacto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.51/'
+            'base_uri'  => 'http://172.20.6.65/'
         ]);
 
         // $User       = Auth::user()->id;
@@ -47,7 +47,7 @@ class SapContactoController extends Controller
     public function SapSetContacto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.51/'
+            'base_uri'  => 'http://172.20.6.65/'
         ]);
 
         // return $request;
@@ -82,7 +82,7 @@ class SapContactoController extends Controller
     public function SapSetContacto2(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.51/'
+            'base_uri'  => 'http://172.20.6.65/'
         ]);
 
         $CardCode       =   "C". $request->nIdContacto;

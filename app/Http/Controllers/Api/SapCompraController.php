@@ -39,7 +39,7 @@ class SapCompraController extends Controller
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.6.65/'
         ]);
 
         $array_rpta = [];
@@ -73,7 +73,7 @@ class SapCompraController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+            $response = $client->request('POST', "/Sap/api/Compra/SapSetCompra/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
             /*$DocEntry = json_decode($response->getBody());
