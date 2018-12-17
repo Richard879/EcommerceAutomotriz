@@ -127,7 +127,7 @@
                                                                                             <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Verificar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:#7123AEE'" class="fa fa-user"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
@@ -162,7 +162,7 @@
                                                                                             <i @click="asignarCarteraMes(c.nIdContacto)" :style="'color:#796AEE'" class="fa-md fa fa-suitcase"></i>
                                                                                         </el-tooltip>
                                                                                         <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
-                                                                                            <div slot="content"> Verificar Contacto {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i @click="SapRegistrarNuevoContacto(c)" :style="'color:#7123AEE'" class="fa fa-user"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
@@ -3369,6 +3369,7 @@
                 });
             },
             SapRegistrarNuevoContacto(contacto){
+                // console.log(contacto);
                 this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/SapSetContacto';
                 axios.post(url, {
@@ -3418,7 +3419,10 @@
                     'CardName': (contacto.cnombre + ' ' + contacto.capepaterno + ' ' + contacto.capematerno),
                     'FederalTaxID': contacto.cnrodocumento,
                     'U_SAI_CAMPO3': '1',
-                    'EmailAddress': contacto.cmailprincipal
+                    'EmailAddress': contacto.cmailprincipal,
+                    'Address': contacto.cdireccion,
+                    'Cellular': contacto.ncelular,
+                    'City': contacto.niddistrito
                 }).then(response => {
                     // console.log(response.data);
                     swal('Contacto registrado exitosamente');
