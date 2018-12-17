@@ -1441,6 +1441,7 @@
                 arraySapCompra: [],
                 arraySapRptCompra: [],
                 jsonCompra: '',
+                arraySapUpdCompra: [],
                 arraySapArticulo : [],
                 arraySapRptArticulo: [],
                 jsonArticulo: '',
@@ -1980,12 +1981,34 @@
                 axios.post(sapUrl, {
                     data: me.arraySapCompra
                 }).then(response => {
-                    $("#myBar").hide();
                     me.arraySapRptCompra = response.data;
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
-                        console.log(me.jsonCompra.DocEntry);
+                        //console.log(me.jsonCompra.DocEntry.toString());
+                        //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
+                        me.arraySapUpdCompra.push({
+                            'DocEntry': me.jsonCompra.DocEntry.toString(),
+                            'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                        });
                     });
+                }).catch(error => {
+                    console.log(error);
+                });
+
+                //==============================================================
+                //================== ACTUALIZAR DOCENTRY ===============
+                setTimeout(function() {
+                        me.actualizarDocEntryCompra();
+                    }, 3800);
+            },
+            actualizarDocEntryCompra(){
+                let me = this;
+                console.log(me.arraySapUpdCompra.length);
+                var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntry';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdCompra
+                }).then(response => {
+                    $("#myBar").hide();
                     me.attachment = [];
                     me.limpiarFormulario();
                 }).catch(error => {
@@ -2481,6 +2504,7 @@
                 this.arraySapCompra=  [],
                 this.arraySapRptCompra= [],
                 this.jsonCompra= '',
+                this.arraySapUpdCompra= [],
                 this.arraySapArticulo= [],
                 this.arraySapRptArticulo= [],
                 this.jsonArticulo= '',

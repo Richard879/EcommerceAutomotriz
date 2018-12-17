@@ -308,4 +308,26 @@ class CompraController extends Controller
         }
         return ['arrayListaPrecio'=>$arrayListaPrecio];
     }
+
+    public function SapUpdCompraByDocEntry(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec [usp_Compra_SapUpdCompraByDocEntry] ?, ?, ?',
+                                                            [   $det['cNumeroVin'],
+                                                                $det['DocEntry'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objCompra);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }
