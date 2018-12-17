@@ -188,6 +188,7 @@
                                                                                 <th>Nro Factura</th>
                                                                                 <th>Fecha Facturado</th>
                                                                                 <th>Fecha Compra</th>
+                                                                                <th>DocEntry</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -224,6 +225,7 @@
                                                                                 <td v-text="compra.cNumeroFactura"></td>
                                                                                 <td v-text="compra.dFechaFacturado"></td>
                                                                                 <td v-text="compra.dFechaCompra"></td>
+                                                                                <td v-text="compra.nDocEntry"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -2142,10 +2144,9 @@
                             dFechaFacturado: compra.dFechaFacturado,
                             dFechaCompra: compra.dFechaCompra
                         });
-
-                        setTimeout(function() {
-                            me.generarSapCompra();
-                        }, 3800);
+                        //==============================================================
+                        //================== REGITRO DE COMPRA EN SAP ===============
+                        me.generarSapCompra();
                     }else{
                         //me.generarSapCompra();
                     }
