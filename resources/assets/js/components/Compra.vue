@@ -205,7 +205,7 @@
                                                                                     <template v-if="compra.nDocEntry==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="validarSapArticulo(compra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                            <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>&nbsp;
                                                                                     </template>
                                                                                 </td>

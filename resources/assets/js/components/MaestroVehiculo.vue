@@ -19,7 +19,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="tab02" href="#TabNuevoVehiculo" @click="tabNuevoVehiculo('', 1)" role="tab" data-toggle="tab">
-                                        <i class="fa fa-list-alt"></i> NUEVO VEHÍCULO
+                                        <i class="fa fa-truck"></i> NUEVO VEHÍCULO
                                     </a>
                                 </li>
                             </ul>
