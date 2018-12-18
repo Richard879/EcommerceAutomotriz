@@ -350,8 +350,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/SapSetContacto2', 'Api\SapContactoController@SapSetContacto2');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
+    Route::post('/compra/SapSetArticulo', 'Api\SapCompraController@SapSetArticulo');
     //Articulo
-    Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     /// ============================================================
     /// METODOS ODBC

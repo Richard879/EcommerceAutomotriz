@@ -1952,7 +1952,7 @@
                     }
                 });
 
-                var sapUrl = me.ruta + '/articulo/SapSetArticulo';
+                var sapUrl = me.ruta + '/compra/SapSetArticulo';
                 axios.post(sapUrl, {
                     data: me.arraySapArticulo
                 }).then(response => {

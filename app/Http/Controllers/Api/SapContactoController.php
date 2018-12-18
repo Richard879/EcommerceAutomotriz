@@ -27,7 +27,7 @@ class SapContactoController extends Controller
     public function SapGetValidarContacto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.65/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         // $User       = Auth::user()->id;
@@ -40,14 +40,14 @@ class SapContactoController extends Controller
                     ]
                 ];
 
-        $response = $client->request('POST', "/Sap/api/Contacto/SapGetValidarContacto/", $json);
+        $response = $client->request('POST', "/api/Contacto/SapGetValidarContacto/", $json);
         return $response->getBody();
     }
 
     public function SapSetContacto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.65/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         // return $request;
@@ -75,14 +75,14 @@ class SapContactoController extends Controller
                ]
            ];
 
-        $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 
     public function SapSetContacto2(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.65/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         $CardCode       =   "C". $request->nIdContacto;
@@ -108,7 +108,7 @@ class SapContactoController extends Controller
                ]
            ];
 
-        $response = $client->request('POST', "/Sap/api/Contacto/SapSetContacto/", $json);
+        $response = $client->request('POST', "/api/Contacto/SapSetContacto/", $json);
         return $response->getBody();
     }
 }
