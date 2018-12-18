@@ -88,7 +88,7 @@
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ elemento.cElemenNombre }}</div>
                                                                 <i @click="abrirFormulario('elemento','actualizar', elemento)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                            </el-tooltip>&nbsp;
+                                                            </el-tooltip>&nbsp;&nbsp;
                                                             <template v-if="elemento.cElementoEstado=='A'">
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Desactivar {{ elemento.cElemenNombre }}</div>
@@ -100,7 +100,13 @@
                                                                     <div slot="content">Activar {{ elemento.cElemenNombre }}</div>
                                                                     <i @click="activar(elemento.nIdElemento)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                 </el-tooltip>
-                                                            </template>
+                                                            </template>&nbsp;&nbsp;
+                                                            <!--<template v-if="!elemento.cCodigoERP">
+                                                                <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                    <div slot="content">Registra Sap  {{ elemento.cElemenNombre }}</div>
+                                                                    <i @click="validarSapArticulo(elemento)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                </el-tooltip>
+                                                            </template>-->
                                                         </td>
                                                     </tr>
                                                 </tbody>
