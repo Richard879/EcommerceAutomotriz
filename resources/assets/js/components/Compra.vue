@@ -2006,10 +2006,10 @@
                 //==============================================================
                 //================== ACTUALIZAR DOCENTRY ===============
                 setTimeout(function() {
-                        me.actualizarDocEntryCompra();
+                        me.registroDocEntryCompra();
                     }, 3800);
             },
-            actualizarDocEntryCompra(){
+            registroDocEntryCompra(){
                 let me = this;
                 console.log(me.arraySapUpdCompra.length);
                 var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntry';
