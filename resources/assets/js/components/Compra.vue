@@ -2124,6 +2124,7 @@
                 axios.post(sapUrl, {
                     cNumeroVin: compra.cNumeroVin
                 }).then(response => {
+                    //Si existe articulo, registro compra
                     if(response.data == true){
                         me.arraySapCompra.push({
                             cNumeroVin: compra.cNumeroVin,
@@ -2147,9 +2148,42 @@
                         //==============================================================
                         //================== REGITRO DE COMPRA EN SAP ===============
                         me.generarSapCompra();
-                    }else{
-                        //me.generarSapCompra();
                     }
+                    //Si NO existe articulo, registro articulo
+                    else{
+                        //==============================================================
+                        //================== REGITRO ARTICULO EN SAP ===============
+                        me.generaSapArticulo();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            generaSapArticulo(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/compra/SapSetArticulo';
+                axios.post(sapUrl, {
+                    data: me.arraySapCompra
+                }).then(response => {
+                    me.arraySapRptArticulo = response.data;
+                    me.arraySapRptArticulo.map(function(x){
+                        me.jsonArticulo= JSON.parse(x);
+                        //Si el vaor de ItemCode es vacio => Error
+                        if(!me.jsonArticulo.ItemCode){
+                            me.limpiarFormulario();
+                            me.listarCompras();
+                            swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el Registro!',
+                            })
+                        }
+                        //Sino registro Compra
+                        else{
+                            me.generarSapCompra();
+                        }
+                    });
                 }).catch(error => {
                     console.log(error);
                 });
