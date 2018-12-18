@@ -2147,7 +2147,7 @@
                         });
                         //==============================================================
                         //================== REGITRO DE COMPRA EN SAP ===============
-                        me.generarSapCompra();
+                        me.generaSapCompra();
                     }
                     //Si NO existe articulo, registro articulo
                     else{
@@ -2181,14 +2181,14 @@
                         }
                         //Sino registro Compra
                         else{
-                            me.generarSapCompra();
+                            me.generaSapCompra();
                         }
                     });
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            generarSapCompra(){
+            generaSapCompra(){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
@@ -2210,10 +2210,10 @@
                 //==============================================================
                 //================== ACTUALIZAR DOCENTRY ===============
                 setTimeout(function() {
-                        me.generarActualizarDocEntry();
+                        me.generaActualizarDocEntry();
                     }, 3800);
             },
-            generarActualizarDocEntry(){
+            generaActualizarDocEntry(){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntry';
                 axios.post(sapUrl, {
