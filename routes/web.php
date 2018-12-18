@@ -334,7 +334,7 @@ Route::middleware(['auth'])->group(function(){
     /////=================  ROUTES SAP
     //
     /// ============================================================
-    /// CONECCION HANNAH - LARAVEL
+    /// CONEXION HANNAH - LARAVEL
     /// ============================================================
     ///
     Route::post('/SAPLoginController/login', 'Api\SAPLoginController@login');

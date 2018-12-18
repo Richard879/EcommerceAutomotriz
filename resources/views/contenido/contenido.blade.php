@@ -51,7 +51,7 @@
         <asigvendedorcuotasublinea :ruta="ruta" :usuario="{{ auth()->user() }}"></asigvendedorcuotasublinea>
     </template>
 
-    
+
     <template v-if="menu==1300284">
         <listapreciovh :ruta="ruta"></listapreciovh>
     </template>
@@ -83,13 +83,16 @@
         <pedido :ruta="ruta"></pedido>
     </template>
     <template v-if="menu==1300291">
-        <aprobapedido :ruta="ruta"></aprobapedido>
+        <pedidoaprobar :ruta="ruta"></pedidoaprobar>
     </template>
     <template v-if="menu==1300292">
-        <depositopedido :ruta="ruta"></depositopedido>
+        <pedidodeposito :ruta="ruta"></pedidodeposito>
     </template>
     <template v-if="menu==1300357">
         <pedidodepositoaprobar :ruta="ruta"></pedidodepositoaprobar>
+    </template>
+    <template v-if="menu==1300468">
+        <pedidodescuento :ruta="ruta"></pedidodescuento>
     </template>
     <template v-if="menu==1300282">
         <solccjefeventa :ruta="ruta"></solccjefeventa>

@@ -92,7 +92,7 @@ class PedidoController extends Controller
         $dfechafin     =   $request->dfechafin;
         $nidmarca      =   $request->nidmarca;
         $nidmodelo     =   $request->nidmodelo;
-        
+
         $nidmarca = ($nidmarca == NULL) ? ($nidmarca = 0) : $nidmarca;
         $nidmodelo = ($nidmodelo == NULL) ? ($nidmodelo = 0) : $nidmodelo;
         $dfechainicio = ($dfechainicio == NULL) ? ($dfechainicio = '') : $dfechainicio;
@@ -106,7 +106,7 @@ class PedidoController extends Controller
                                                                                         $nidsucursal,
                                                                                         $dfechainicio,
                                                                                         $dfechafin,
-                                                                                        $cnumeropedido, 
+                                                                                        $cnumeropedido,
                                                                                         $cnumerovin,
                                                                                         $nidmarca,
                                                                                         $nidmodelo,
@@ -138,7 +138,10 @@ class PedidoController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
 
-        $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        try{
+            DB::beginTransaction();
+
+            $arrayPedido = DB::select('exec [usp_Pedido_SetGenerarPedidoByVendedor] ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
@@ -151,7 +154,11 @@ class PedidoController extends Controller
                                         Auth::user()->id
                                     ]);
 
-        return response()->json($arrayPedido);
+            DB::commit();
+            return response()->json($arrayPedido);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 
     public function subirArchivo(Request $request)
@@ -170,7 +177,7 @@ class PedidoController extends Controller
                     $nameArchivo = $bandera .'_'. $file->getClientOriginalName();
 
                     $ruta = Storage::putFileAs('public/Pedido', $file, $nameArchivo);
-                    
+
                     $arrayDocumento = DB::select('exec [usp_Pedido_SetDocumentoAdjunto] ?, ?, ?',
                                                                     [   asset('storage/Pedido/'.$nameArchivo),
                                                                         $file->getClientOriginalName(),
@@ -229,15 +236,15 @@ class PedidoController extends Controller
 
         $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoByTipoEstado] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                                                             [
-                                                                                $nIdEmpresa, 
-                                                                                $nIdSucursal, 
-                                                                                $dFechaInicio, 
+                                                                                $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $dFechaInicio,
                                                                                 $dFechaFin,
-                                                                                $cNumeroPedido, 
+                                                                                $cNumeroPedido,
                                                                                 $cNumeroVin,
-                                                                                $nIdMarca, 
+                                                                                $nIdMarca,
                                                                                 $nIdModelo,
-                                                                                $nIdEstadoPedido, 
+                                                                                $nIdEstadoPedido,
                                                                                 Auth::user()->id
                                                                             ]);
 
@@ -358,6 +365,6 @@ class PedidoController extends Controller
         if($variable == "0"){
             $arrayDetallePedido = ParametroController::arrayPaginator($arrayDetallePedido, $request);
         }
-        return ['arrayDetallePedido'=>$arrayDetallePedido]; 
+        return ['arrayDetallePedido'=>$arrayDetallePedido];
     }
 }

@@ -501,6 +501,13 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-9 offset-sm-4">
+                                                            <button type="button" class="btn btn-success btn-corner btn-sm" @click.prevent="cambiarEstadoCotizacion(nIdCabeceraCotizacion, 1)">
+                                                                <i class="fa fa-check"></i> APROBAR
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </template>
                                             </template>
                                         </form>
