@@ -656,9 +656,9 @@
                 // VARIABLES TAB INSPECCIONES
                 // =============================================================
                 fillBusquedaVehiculo: {
-                    nidempresa: 1300011,
+                    nidempresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     cempresa: sessionStorage.getItem("cNombreEmpresa"),
-                    nidsucursal: sessionStorage.getItem("nIdSucursal"),
+                    nidsucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     csucursal: sessionStorage.getItem("cNombreSucursal"),
                     nidvehiculo: '',
                     cnrovehiculo: '',

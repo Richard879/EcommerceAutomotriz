@@ -1459,7 +1459,7 @@
                 if(this.arrayReferenciaVehiculo.length > 0){
                     var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
                     axios.post(url, {
-                        nIdEmpresa: 1300011,
+                        nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                         nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                         nIdCronograma: 220016,
                         nIdContacto: nIdContacto,
@@ -1483,7 +1483,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,

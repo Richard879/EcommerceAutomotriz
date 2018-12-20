@@ -556,7 +556,7 @@
                 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -593,7 +593,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoelemen': this.formEle.ntpoelemen,
                         'celementonombre': this.formEle.celementonombre,
                         'page': page
@@ -625,7 +625,7 @@
 
                 var url = this.ruta + '/elemento/SetElemento';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdProveedor: parseInt(this.formEle.nidproveedor),
                     nIdTipoElemento: parseInt(this.formEle.ntpoelemen),
                     nIdMoneda: parseInt(this.formEle.nidmoneda),
@@ -688,7 +688,7 @@
                 }
 
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdProveedor: parseInt(this.formEle.nidproveedor),
                     nIdElementoVenta: parseInt(this.formEle.nidelemento),
                     nIdTipoElemento: parseInt(this.formEle.ntpoelemen),

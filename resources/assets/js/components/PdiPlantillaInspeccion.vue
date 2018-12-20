@@ -433,7 +433,7 @@
                 var url = this.ruta + '/tipoinspeccion/GetFillTipoInspeccion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'cnombre': ''
                     }
                 }).then(response => {
@@ -481,7 +481,7 @@
                 var url = this.ruta + '/plantilla/GetListItems';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoinspeccion' : this.formPlantilla.nidtipoinspeccion,
                         'nidflag': this.formPlantilla.nidflag,
                         'nidseccion': this.formPlantilla.nidseccion,
@@ -522,7 +522,7 @@
                 var url = this.ruta + '/plantilla/SetItemPlantilla';
 
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdTipoInspeccion: this.formPlantilla.nidtipoinspeccion,
                     nIdFlag: this.formPlantilla.nidflag,
                     nIdSeccion: this.formPlantilla.nidseccion,

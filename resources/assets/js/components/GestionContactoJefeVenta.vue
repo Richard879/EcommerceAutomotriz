@@ -2764,7 +2764,7 @@
                 var url = this.ruta + '/gescontacto/GetListContactoByJFV';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillMisContactos.ntipopersona,
@@ -2828,7 +2828,7 @@
                 var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillContactoPorVendedor.ntipopersona,
@@ -2877,7 +2877,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.formReasignarContacto.nidcontacto,
                         'nidvendedor' : this.formVendedor.nidvendedor,
@@ -2892,7 +2892,7 @@
                     this.pagination.from        = response.data.arraySegReferenciavehiculo.from;
                     this.pagination.to           = response.data.arraySegReferenciavehiculo.to;
                 }).catch(error => {
-                    console.log(error);
+                    console.log(error); 
                 });
             },
             cambiarPaginaReferenciaPorReasignar(page){
@@ -2920,7 +2920,7 @@
                             axios.post(url, {
                                 nIdAsignacionContactoVendedor: parseInt(referencia.nIdAsignacionContactoVendedor),
                                 nIdReferenciaVehiculoContacto: parseInt(referencia.nIdReferenciaVehiculoContacto),
-                                nIdEmpresa: 1300011,
+                                nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                                 nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formReasignarContacto.nreasignaidvendedor)
@@ -2971,7 +2971,7 @@
                 axios.post(url, {
                     nIdAsignacionContactoVendedor: parseInt(this.formAmpliarAsignacion.nidasignacioncontactovendedor),
                     nIdReferenciaVehiculoContacto: parseInt(this.formAmpliarAsignacion.nidreferenciavehiculoontacto),
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nNroDias: parseInt(this.formAmpliarAsignacion.nrodias)
                 }).then(response => {
@@ -3094,7 +3094,7 @@
                             var url = this.ruta + '/gescontacto/SetAsignaReferenciaLibre';
                             axios.post(url, {
                                 nIdReferenciaVehiculoContacto: parseInt(nIdReferenciaVehiculoContacto),
-                                nIdEmpresa: 1300011,
+                                nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                                 nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                                 nIdCronograma: 220016,
                                 nIdVendedor: parseInt(this.formVendedor.nidvendedor)
@@ -3255,7 +3255,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.formNuevoContacto.nidcontacto,
                         'page' : page
@@ -3300,7 +3300,7 @@
                 var url = this.ruta + '/gescontacto/SetContactoSegRefVehiculo';
 
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdCronograma: 220016,
                     nIdContacto: this.formNuevoContacto.nidcontacto,
@@ -3370,7 +3370,7 @@
                 var url = this.ruta + '/gescontacto/GetEstadoAsignacionSeguimiento';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidasignacioncontactovendedor' : nIdAsignacionContactoVendedor
                     }
@@ -4103,7 +4103,7 @@
                 if(this.arrayReferenciaVehiculo.length > 0){
                     var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
                     axios.post(url, {
-                        nIdEmpresa: 1300011,
+                        nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                         nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                         nIdCronograma: 220016,
                         nIdContacto: nIdContacto,
@@ -4322,7 +4322,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,

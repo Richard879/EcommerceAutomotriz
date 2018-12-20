@@ -516,8 +516,8 @@
                 var url = this.ruta + '/puntoinspeccion/GetListPuntoInspeccion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'cnombre': this.fillPunto.cnombre,
                         'page' : page
                     }
@@ -549,8 +549,8 @@
 
                 var url = this.ruta + '/puntoinspeccion/SetPuntoInspeccion';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     cNombrePuntoInspeccion: this.formPunto.cnombre,
                     nFlagTipoMovimiento: this.formPunto.nidflagmovimiento/*,
                     nFlagIngresoSucursal: this.formPunto.nidflagingreso,
@@ -650,8 +650,8 @@
                 var url = this.ruta + '/puntoinspeccion/UpdPuntoInspeccionById';
                 axios.post(url, {
                     nIdPuntoInspeccion: parseInt(this.formPunto.nidpuntoinspeccion),
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     cNombrePuntoInspeccion: this.formPunto.cnombre,
                     nFlagTipoMovimiento: this.formPunto.nidflagmovimiento/*,
                     nFlagIngresoSucursal: this.formPunto.nidflagingreso,

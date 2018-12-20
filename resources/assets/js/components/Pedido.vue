@@ -1042,7 +1042,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaElemento">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Elementos Venta Vendidos
                                             </vs-divider>
@@ -1071,7 +1071,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaObsequio">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Regalos
                                             </vs-divider>
@@ -1100,7 +1100,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaCampania">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Campaña
                                             </vs-divider>
@@ -1304,7 +1304,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
-                                        <template v-if="arrayDetalleCotizacion.length">
+                                        <template v-if="cFlagActivaElemento">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Elementos Venta Vendidos
                                             </vs-divider>
@@ -1333,7 +1333,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
-                                        <template v-if="arrayDetalleCotizacion.length">
+                                        <template v-if="cFlagActivaObsequio">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Regalos
                                             </vs-divider>
@@ -1362,7 +1362,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
-                                        <template v-if="arrayDetalleCotizacion.length">
+                                        <template v-if="cFlagActivaCampania">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Campaña
                                             </vs-divider>
@@ -1411,10 +1411,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 // =====================================================
                 // =========== VARIABLES MODAL PROVEEDOR ===============
                 fillProveedor:{
@@ -1528,6 +1524,9 @@
                     ftotalcotizaciondolares: 0
                 },
                 arrayDetalleCotizacion: [],
+                cFlagActivaElemento: 0,
+                cFlagActivaObsequio: 0,
+                cFlagActivaCampania: 0,
                 // =============================================================
                 pagination : {
                     'total' : 0,
@@ -1641,8 +1640,8 @@
                 var url = this.ruta + '/pedido/GetListPedidoByTipoEstado';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -1700,12 +1699,13 @@
                 var url = this.ruta + '/pedido/GetLstDetallePedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido
                     }
                 }).then(response => {
                     this.arrayDetallePedido = response.data.arrayDetallePedido.data;
+                    this.verificaDetallePedido();
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1716,11 +1716,29 @@
                     }
                 });
             },
+            verificaDetallePedido(){
+                let me = this;
+                me.cFlagActivaElemento = 0;
+                me.cFlagActivaObsequio = 0;
+                me.cFlagActivaCampania = 0;
+                
+                me.arrayDetallePedido.map(function(value, key) {
+                    if(value.cFlagVista == 'E'){ 
+                        me.cFlagActivaElemento = 1;
+                    };
+                    if(value.cFlagVista == 'O'){
+                        me.cFlagActivaObsequio = 1;
+                    };
+                    if(value.cFlagVista == 'C'){
+                        me.cFlagActivaCampania = 1;
+                    };
+                });
+            },
             verDocumentosPedido(pedido){
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido,
                         'opcion': 1
@@ -1787,8 +1805,8 @@
                 var url = this.ruta + '/pedido/GetLstCotizacionIngresadas';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.formPedido.dfechainicio,
                         'dfechafin': this.formPedido.dfechafin,
                         'nidmarca': this.formPedido.nidmarca,
@@ -1867,12 +1885,13 @@
                 var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion': cotizacion.nIdCabeceraCotizacion
                     }
                 }).then(response => {
                     this.arrayDetalleCotizacion = response.data.arrayDetalleCotizacion.data;
+                    this.verificaDetalleCotizacion();
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -1881,6 +1900,24 @@
                             location.reload('0');
                         }
                     }
+                });
+            },
+            verificaDetalleCotizacion(){
+                let me = this;
+                me.cFlagActivaElemento = 0;
+                me.cFlagActivaObsequio = 0;
+                me.cFlagActivaCampania = 0;
+
+                me.arrayDetalleCotizacion.map(function(value, key) {
+                    if(value.cFlagVista == 'E'){ 
+                        me.cFlagActivaElemento = 1;
+                    };
+                    if(value.cFlagVista == 'O'){
+                        me.cFlagActivaObsequio = 1;
+                    };
+                    if(value.cFlagVista == 'C'){
+                        me.cFlagActivaCampania = 1;
+                    };
                 });
             },
             //=============== APROBAR COTIZACION ========================
@@ -1907,8 +1944,8 @@
                 var url = this.ruta + '/pedido/GetLstCompraByIdModelo';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion,
                         'cnumerovin' : this.formCompra.cnumerovin,
                         'page' : page
@@ -1966,8 +2003,8 @@
                 var url = this.ruta + '/pedido/GetListaPrecioDetalleByIdCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
                     }
                 }).then(response => {
@@ -2115,8 +2152,8 @@
 
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
-                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
                     'nIdCompra': this.formDocRef.nidcompra,
                     'cNumeroPedido': 'PEDIDO-001',

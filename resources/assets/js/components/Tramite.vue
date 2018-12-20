@@ -1304,8 +1304,8 @@
 
                 var url = this.ruta + '/tramite/SetCabeceraTramite';
                 axios.post(url, {
-                    'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'dFechaInicioTramite'   :   this.fillBusquedaPedidosSeleccionados.fechaInicioTramite,
                     'dFechaFinTramite'      :   this.fillBusquedaPedidosSeleccionados.fechaFinRealTramite,
                     'nNroVehiculoTramite'   :   this.fillBusquedaPedidosSeleccionados.nroVehiculos,

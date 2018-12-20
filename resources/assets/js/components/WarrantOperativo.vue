@@ -639,10 +639,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 arrayBanco: [],
                 arrayEstadoWarrant: [],
                 arrayWOperativo: [],
@@ -756,7 +752,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar': 110094,
                         'cnombreproveedor': '',
                         'opcion' : 1
@@ -789,10 +785,15 @@
                 this.listarWOperativo(1);
             },
             listarWOperativo(page){
-                var url = this.ruta + '/woperativo/GetWOperativo?nidestadowarrant=' + this.fillWOperativo.nidestadowarrant
-                                                                + '&cnrowarrant=' + this.fillWOperativo.cnrowarrant
-                                                                + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/woperativo/GetWOperativo';
+
+                axios.get(url, {
+                    params: {
+                        'nidestadowarrant': this.fillWOperativo.nidestadowarrant,
+                        'cnrowarrant': this.fillWOperativo.cnrowarrant,
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayWOperativo = response.data.arrayWOperativo.data;
                     this.pagination.current_page =  response.data.arrayWOperativo.current_page;
                     this.pagination.total = response.data.arrayWOperativo.total;
@@ -813,15 +814,20 @@
                 this.buscarWOperativoDetalle();
             },
             buscarWOperativoDetalle(){
-                this.listarDetalleWOperativo(this.fillWOperativoDetalle.nidwarrantoperativo, 1);
+                this.listarDetalleWOperativo(1);
             },
-            listarDetalleWOperativo(nIdWarrantOperativo, page){
+            listarDetalleWOperativo(page){
                 this.vistaFormularioTabBuscar = 0;
-                var url = this.ruta + '/woperativo/GetWOperativoDetalle?nidwarrantoperativo=' + nIdWarrantOperativo
-                                                                    + '&cnumerovin=' + this.fillWOperativoDetalle.cnumerovin
-                                                                    + '&nidestadowarrant=' + this.fillWOperativoDetalle.nidestadowarrant
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                var url = this.ruta + '/woperativo/GetWOperativoDetalle';
+
+                axios.get(url, {
+                    params: {
+                        'nidwarrantoperativo': this.fillWOperativoDetalle.nidwarrantoperativo,
+                        'cnumerovin': this.fillWOperativoDetalle.cnumerovin,
+                        'nidestadowarrant': this.fillWOperativoDetalle.nidestadowarrant,
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayWOperativoDetalle = response.data.arrayWOperativoDetalle.data;
                     this.pagination.current_page =  response.data.arrayWOperativoDetalle.current_page;
                     this.pagination.total = response.data.arrayWOperativoDetalle.total;
@@ -866,15 +872,17 @@
                 this.listarVersionVehiculo(1);
             },
             listarVersionVehiculo(page){
-                this.nidempresa = 1300011;
-                this.nidsucursal = sessionStorage.getItem("nIdSucursal");
+                var url = this.ruta + '/compra/GetCompraSinWOperativo';
 
-                var url = this.ruta + '/compra/GetCompraSinWOperativo?nidempresa=' + this.nidempresa
-                                                                    + '&nidsucursal=' + this.nidsucursal
-                                                                    + '&cnumerovin=' + this.fillVersionVehiculo.cnumerovin
-                                                                    + '&cnombrecomercial=' + this.fillVersionVehiculo.cnombrecomercial
-                                                                    + '&page='+ page;
-                axios.get(url).then(response => {
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin': this.fillVersionVehiculo.cnumerovin,
+                        'cnombrecomercial': this.fillVersionVehiculo.cnombrecomercial, 
+                        'page': page
+                    }
+                }).then(response => {
                     this.arrayVersionVehiculo = response.data.arrayVersionVehiculo.data;
                     this.paginationModal.current_page =  response.data.arrayVersionVehiculo.current_page;
                     this.paginationModal.total = response.data.arrayVersionVehiculo.total;

@@ -1077,7 +1077,7 @@
                 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProvedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -1123,7 +1123,7 @@
                 var url = this.ruta + '/listapreciovh/GetListaVh';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.formListaPrecioVh.dfechainicio,
                         'dfechafin': this.formListaPrecioVh.dfechafin,
@@ -1156,7 +1156,7 @@
 
                 var url = this.ruta + '/listapreciovh/SetListaVh';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdProveedor: parseInt(this.formListaPrecioVh.nidproveedor),
                     nIdCronograma: parseInt(this.nidcronograma),
@@ -1312,7 +1312,7 @@
 
                 axios.get(url,{
                     params: {
-                        'nidempresa': 1300011
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
                     }
                 }).then(response => {
                     this.canio = response.data.arrayCronograma[0].cAnio;

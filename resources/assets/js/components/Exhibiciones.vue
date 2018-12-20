@@ -915,7 +915,7 @@
                 var url = this.ruta + '/exhibicion/GetExhibicion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillExhibicion.dfechainicio,
                         'dfechafin': this.fillExhibicion.dfechafin,
@@ -954,7 +954,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -997,7 +997,7 @@
 
                 axios.get(url,{
                     params: {
-                        'nidempresa': 1300011
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa"))
                     }
                 }).then(response => {
                     this.canio = response.data.arrayCronograma[0].cAnio;
@@ -1111,7 +1111,7 @@
 
                 var url = this.ruta + '/exhibicion/SetExhibicion';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdCronograma: parseInt(this.nidcronograma),
                     nIdProveedor: parseInt(this.formExhibicion.nidproveedor),
@@ -1255,7 +1255,7 @@
 
                 var url = this.ruta + '/exhibicion/UpdExhibicionById';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdSucursal: sessionStorage.getItem("nIdSucursal"),
                     nIdExhibicion: this.formModalExhibicion.nidcompra,
                     cNumeroVin: this.formModalExhibicion.cnumerovin,

@@ -870,7 +870,7 @@
                 var url = this.ruta + '/pedido/GetListPedidoForDscto';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillBusquedaPedido.dfechainicio,
                         'dfechafin': this.fillBusquedaPedido.dfechafin,
@@ -960,7 +960,7 @@
                 var url = this.ruta + '/pedido/GetListHistorialPedidoDscto';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido': data.nIdCabeceraPedido,
                         'page': page
@@ -1085,7 +1085,7 @@
                 var url = this.ruta + '/pedido/GetLstDetallePedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido
                     }
@@ -1100,7 +1100,7 @@
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido,
                         'opcion': 1

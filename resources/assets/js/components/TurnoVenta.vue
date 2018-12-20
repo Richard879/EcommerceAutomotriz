@@ -339,8 +339,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidturno' : this.formTur.nturno,
                         'page' : page
                     }
@@ -414,8 +414,8 @@
 
                 var url = this.ruta + '/turnoventa/SetTurnoVenta';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdTurno: parseInt(this.formTur.nturno),
                     cHoraInicio: this.formTur.chorainicio,
                     cHoraFin: this.formTur.chorafin,
@@ -516,8 +516,8 @@
                 }
 
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdTurnoVendedor: parseInt(this.formTur.nidturnovendedor),
                     nIdTurno: parseInt(this.formTur.nturno),
                     cHoraInicio: this.formTur.chorainicio,
