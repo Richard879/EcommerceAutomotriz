@@ -357,7 +357,7 @@ Route::middleware(['auth'])->group(function(){
     //Articulo
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     //Pedido
-    Route::post('/compra/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
+    Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

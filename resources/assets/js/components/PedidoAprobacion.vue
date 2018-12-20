@@ -393,7 +393,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA VENDIDOS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaElemento">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Elementos Venta Vendidos
                                             </vs-divider>
@@ -422,7 +422,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA REGALOS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaObsequio">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Regalos
                                             </vs-divider>
@@ -451,7 +451,7 @@
                                             </div>
                                         </template>
                                         <!-- DETALLE ELEMENTOS DE VENTA CAMPAÑAS -->
-                                        <template v-if="arrayDetallePedido.length">
+                                        <template v-if="cFlagActivaCampania">
                                             <vs-divider border-style="solid" color="dark">
                                                 Detalle Campaña
                                             </vs-divider>
@@ -589,6 +589,9 @@
                 },
                 arrayDetallePedido: [],
                 arrayPedidoDoumento: [],
+                cFlagActivaElemento: 0,
+                cFlagActivaObsequio: 0,
+                cFlagActivaCampania: 0,
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -874,9 +877,28 @@
                     }
                 }).then(response => {
                     this.arrayDetallePedido = response.data.arrayDetallePedido.data;
+                    this.verificaDetallePedido();
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                });
+            },
+            verificaDetallePedido(){
+                let me = this;
+                me.cFlagActivaElemento = 0;
+                me.cFlagActivaObsequio = 0;
+                me.cFlagActivaCampania = 0;
+                
+                me.arrayDetallePedido.map(function(value, key) {
+                    if(value.cFlagVista == 'E'){ 
+                        me.cFlagActivaElemento = 1;
+                    };
+                    if(value.cFlagVista == 'O'){
+                        me.cFlagActivaObsequio = 1;
+                    };
+                    if(value.cFlagVista == 'C'){
+                        me.cFlagActivaCampania = 1;
+                    };
                 });
             },
             verDocumentosPedido(pedido){
