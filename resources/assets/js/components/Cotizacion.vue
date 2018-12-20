@@ -3145,7 +3145,7 @@
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcontacto' : this.fillAsignarContacto.nidcontacto
+                        'nidcontacto' : parseInt(this.fillAsignarContacto.nidcontacto)
                     }
                 }).then(response => {
                     let info = response.data.arraySegReferenciavehiculo;
@@ -4243,8 +4243,8 @@
                 };
                 var url = this.ruta + '/getcotizacion/GetDetalleCotizacion';
                 axios.post(url, {
-                    'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraCotizacion' :   nIdCabeCoti
                 }, config).then(response => {
                     //Create a Blob from the PDF Stream
