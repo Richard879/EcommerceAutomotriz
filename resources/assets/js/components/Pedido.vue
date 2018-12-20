@@ -2157,6 +2157,7 @@
                     return;
                 }
 
+                this.mostrarProgressBar();
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
                     'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -2177,6 +2178,7 @@
                         this.obtenerPedidoById();
                     }
                     else{
+                        $("#myBar").hide();
                         swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');
                     }
                 }).catch(error => {
@@ -2215,15 +2217,14 @@
                             'cNumeroVin': me.jsonPedido.DocumentLines[0].ItemCode.toString()
                         });
                     });
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY ===============
+                    setTimeout(function() {
+                        me.registroDocEntryPedido();
+                    }, 3800);
                 }).catch(error => {
                     console.log(error);
                 });
-
-                //==============================================================
-                //================== ACTUALIZAR DOCENTRY ===============
-                setTimeout(function() {
-                        me.registroDocEntryPedido();
-                    }, 3800);
             },
             registroDocEntryPedido(){
                 let me = this;
