@@ -2172,9 +2172,6 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         this.formPedido.nidcabecerapedido = response.data[0].nIdCabeceraPedido;
-                        if(this.attachment.length){
-                            this.subirArchivos(this.formPedido.nidcabecerapedido);
-                        }
                         this.obtenerPedidoById();
                     }
                     else{
@@ -2234,8 +2231,15 @@
                     data: me.arraySapUpdPedido
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
-                        $("#myBar").hide();
-                        swal('Pedido registrado correctamente');
+                        if(this.attachment.length){
+                            this.subirArchivos(this.formPedido.nidcabecerapedido);
+                        }
+                        else{
+                            this.vistaFormularioPedido= 1;
+                            this.limpiarFormulario();
+                            $("#myBar").hide();
+                            swal('Pedido registrado correctamente');
+                        }
                     }else{
                         swal({
                             type: 'error',
@@ -2267,8 +2271,6 @@
             subirArchivos(nIdCabeceraPedido){
                 let me = this;
 
-                //me.mostrarProgressBar();
-
                 me.attachment.map(function(value, i) {
                     if(me.attachment[i]){
                         me.form.append('file[]', value.archivo);
@@ -2291,10 +2293,10 @@
                 var url = me.ruta + '/pedido/subirArchivo';
 
                 axios.post(url, me.form, config).then(response=>{
-                    /*swal('Pedido registrado exitosamente');
-                    me.vistaFormularioPedido = 1;
-                    me.limpiarFormulario();
-                    $("#myBar").hide();*/
+                    this.vistaFormularioPedido= 1;
+                    this.limpiarFormulario();
+                    $("#myBar").hide();
+                    swal('Pedido registrado correctamente');
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {

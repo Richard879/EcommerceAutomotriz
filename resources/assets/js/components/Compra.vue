@@ -1965,15 +1965,15 @@
                             ItemCode: me.jsonArticulo.ItemCode
                         });
                     });
+
+                    //==============================================================
+                    //================== REGITRO DE COMPRA EN SAP ===============
+                    setTimeout(function() {
+                        me.registroSapCompra();
+                    }, 3800);
                 }).catch(error => {
                     console.log(error);
                 });
-
-                //==============================================================
-                //================== REGITRO DE COMPRA EN SAP ===============
-                setTimeout(function() {
-                        me.registroSapCompra();
-                    }, 3800);
             },
             registroSapCompra(){
                 let me = this;
@@ -1999,15 +1999,15 @@
                             'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
                         });
                     });
+
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY ===============
+                    setTimeout(function() {
+                        me.registroDocEntryCompra();
+                    }, 3800);
                 }).catch(error => {
                     console.log(error);
                 });
-
-                //==============================================================
-                //================== ACTUALIZAR DOCENTRY ===============
-                setTimeout(function() {
-                        me.registroDocEntryCompra();
-                    }, 3800);
             },
             registroDocEntryCompra(){
                 let me = this;
