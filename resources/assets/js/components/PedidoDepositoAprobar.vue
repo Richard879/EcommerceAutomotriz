@@ -416,6 +416,21 @@
                                     <div class="card-body">
                                         <form class="form-horizontal">
                                             <div class="col-lg-12">
+                                                <vs-divider border-style="solid" color="dark">MONTO DEPOSITADO</vs-divider>
+                                                <el-row :gutter="10">
+                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN SOLES</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            S/. {{ fillDepositoTCEspecial.fMontoOrigenSoles }}
+                                                        </div>
+                                                    </el-col>
+                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN DOLARES</div></el-col>
+                                                    <el-col :span="6">
+                                                        <div class="grid-content bg-purple">
+                                                            USD/. {{ fillDepositoTCEspecial.fMontoOrigenDolares }}
+                                                        </div>
+                                                    </el-col>
+                                                </el-row>
                                                 <vs-divider border-style="solid" color="dark">ESTADO CUENTA</vs-divider>
                                                 <el-row :gutter="10">
                                                     <el-col :span="6"><div class="grid-content bg-purple">SALDO CANCELAR</div></el-col>
@@ -428,21 +443,6 @@
                                                     <el-col :span="6">
                                                         <div class="grid-content bg-purple">
                                                             USD/. {{ Number((parseFloat(fillDepositoTCEspecial.fMontoFaltante)).toFixed(2)) }}
-                                                        </div>
-                                                    </el-col>
-                                                </el-row>
-                                                <vs-divider border-style="solid" color="dark">IMPORTE ACTUAL</vs-divider>
-                                                <el-row :gutter="10">
-                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN SOLES</div></el-col>
-                                                    <el-col :span="6">
-                                                        <div class="grid-content bg-purple">
-                                                            S/. {{ fillDepositoTCEspecial.fMontoOrigenSoles }}
-                                                        </div>
-                                                    </el-col>
-                                                    <el-col :span="6"><div class="grid-content bg-purple">IMPORTE EN DOLARES</div></el-col>
-                                                    <el-col :span="6">
-                                                        <div class="grid-content bg-purple">
-                                                            USD/. {{ fillDepositoTCEspecial.fMontoOrigenDolares }}
                                                         </div>
                                                     </el-col>
                                                 </el-row>
