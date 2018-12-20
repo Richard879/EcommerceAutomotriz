@@ -1982,8 +1982,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'cnumberovin' : this.fillVIN.cvin.toString(),
                         'page' : page
                     }
@@ -2023,8 +2023,8 @@
                 var url = this.ruta + '/cartacaracteristica/GetLstCotizacionAprobadas';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.fillMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.fillMisContactos.cnrodocumento.toString()),

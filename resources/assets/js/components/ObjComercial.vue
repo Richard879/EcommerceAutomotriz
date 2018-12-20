@@ -512,9 +512,7 @@
         props:['ruta'],
         data(){
             return {
-                nidempresa: 1300011,
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
-                nidsucursal: sessionStorage.getItem("nIdSucursal"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
                 // ===========================================================
                 // ===================== VARIABLES TAB COMPRA ================
@@ -683,7 +681,7 @@
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.fillProveedor.nidproveedor
                     }
                 }).then(response => {
@@ -762,8 +760,8 @@
                 var url = this.ruta + '/objComercial/GetDetalleVehiculoCompra';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma': this.fillObjComercialCompra.nidcronograma,
                         'nidproveedor': this.fillProveedor.nidproveedor,
                         'nidlinea': this.fillObjComercialCompra.nidlinea,
@@ -852,8 +850,8 @@
 
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialCompra';
                 axios.post(url, {
-                    'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialCompra.nidcronograma,
                     'cFlagTipoOperacion'    :   'C',
@@ -907,8 +905,8 @@
                 var url = this.ruta + '/objComercial/GetDetalleVehiculoVenta';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma': this.fillObjComercialVenta.nidcronograma,
                         'nidproveedor': this.fillProveedor.nidproveedor,
                         'nidlinea': this.fillObjComercialVenta.nidlinea,
@@ -951,8 +949,8 @@
 
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialVenta';
                 axios.post(url, {
-                    'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialVenta.nidcronograma,
                     'cFlagTipoOperacion'    :   'V',
@@ -989,7 +987,7 @@
                 var url = this.ruta + '/parametro/GetLstProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillObjComercialCompra.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cproveedornombre.toString(),
                         'opcion' : 0,
