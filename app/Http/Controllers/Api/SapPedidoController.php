@@ -19,25 +19,18 @@ class SapPedidoController extends Controller
         $array_rpta = [];
         $rptaSap   = [];
 
-        $User       =   Auth::user()->id;
-        $CardCode   =   'C'.$User;
-
         $data = $request->data;
         foreach ($data as $key => $value) {
-            $dataArray = [
-                    "ItemCode"    => $value['cNumeroVin'],
-                    "Quantity"    => "1",
-                    "TaxCode"     => "IGV",
-                    "UnitPrice"   => (string)$value['fTotalCompra']
-                ];
-
             $json = [
                 'json' => [
-                    "CardCode"      => $CardCode,
+                    "CardCode"      => $value['CardCode'],
                     "DocDate"       => "2018-11-30",
                     "DocDueDate"    => "2018-12-04",
                     "DocumentLines" => [
-                            $dataArray
+                            "ItemCode"    => $value['cNumeroVin'],
+                            "Quantity"    => "1",
+                            "TaxCode"     => "IGV",
+                            "UnitPrice"   => (string)$value['fTotalPedidoSol']
                         ]
                     ]
                 ];

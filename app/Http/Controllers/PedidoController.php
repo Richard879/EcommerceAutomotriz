@@ -453,4 +453,26 @@ class PedidoController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetPedidoById(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $nIdCabeceraPedido  = $request->nidcabecerapedido;
+        $variable   = $request->opcion;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayPedido = DB::select('exec [usp_Pedido_GetPedidoById] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido
+                                    ]);
+        if($variable == "0"){
+            $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
+        }
+        return ['arrayPedido'=>$arrayPedido];
+    }
 }

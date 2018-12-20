@@ -988,7 +988,7 @@
             getDatosPedido(data){
                 this.fillPedidoDscto.nIdCabeceraPedido = data.nIdCabeceraPedido
                 this.fillPedidoDscto.cNumeroPedido = data.cNumeroPedido
-                this.fillPedidoDscto.dMontoPedido = data.fTotalCotizacionVehiculoDolar
+                this.fillPedidoDscto.dMontoPedido = data.fTotalPedidoVehiculoDolar
             },
             calcularNuevoMonto(op, value = null){
                 if(op == 1) {

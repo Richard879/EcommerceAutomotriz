@@ -20,7 +20,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#TabGeneraPedido" @click="tabGenerarPedido()" role="tab" data-toggle="tab">
-                                            <i class="fa fa-list-alt"></i> GENERAR PEDIDO
+                                            <i class="fa fa-bus"></i> GENERAR PEDIDO
                                         </a>
                                     </li>
                                 </ul>
@@ -1527,6 +1527,12 @@
                 cFlagActivaElemento: 0,
                 cFlagActivaObsequio: 0,
                 cFlagActivaCampania: 0,
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapPedido: [],
+                arraySapRptPedido: [],
+                jsonPedido: '',
+                arraySapUpdPedido: [],
                 // =============================================================
                 pagination : {
                     'total' : 0,
@@ -2171,6 +2177,7 @@
                             this.vistaFormularioPedido = 1;
                             this.limpiarFormulario();
                         }
+                        //obtenerDetallePedidoById(response.data[0].nIdCabeceraPedido);
                     }
                     else{
                         swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');
@@ -2178,6 +2185,45 @@
                 }).catch(error => {
                     this.errors = error
                 });
+            },
+            obtenerDetallePedidoById(nIdCabeceraPedido){
+                var url = this.ruta + '/pedido/GetPedidoById';
+                axios.get(url, {
+                    'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nidcabecerapedido': nIdCabeceraPedido
+                }).then(response => {
+                    this.arraySapPedido = response.data.arrayPedido;
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            registroSapPedido(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapSetPedido';
+                axios.post(sapUrl, {
+                    data: me.arraySapPedido
+                }).then(response => {
+                    me.arraySapRptPedido = response.data;
+                    me.arraySapRptPedido.map(function(x){
+                        me.jsonPedido= JSON.parse(x);
+                        //console.log(me.jsonCompra.DocEntry.toString());
+                        //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
+                        me.arraySapUpdPedido.push({
+                            'DocEntry': me.jsonPedido.DocEntry.toString(),
+                            'cNumeroVin': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                        });
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
+
+                //==============================================================
+                //================== ACTUALIZAR DOCENTRY ===============
+                /*setTimeout(function() {
+                        me.registroDocEntryCompra();
+                    }, 3800);*/
             },
             validaRegistraraPedido(){
                 let me = this;
@@ -2199,7 +2245,7 @@
             subirArchivos(nIdCabeceraPedido){
                 let me = this;
 
-                me.mostrarProgressBar();
+                //me.mostrarProgressBar();
 
                 me.attachment.map(function(value, i) {
                     if(me.attachment[i]){
@@ -2223,10 +2269,10 @@
                 var url = me.ruta + '/pedido/subirArchivo';
 
                 axios.post(url, me.form, config).then(response=>{
-                    swal('Pedido registrado exitosamente');
+                    /*swal('Pedido registrado exitosamente');
                     me.vistaFormularioPedido = 1;
                     me.limpiarFormulario();
-                    $("#myBar").hide();
+                    $("#myBar").hide();*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
