@@ -1678,8 +1678,8 @@
                 var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
                         'criterio': (this.flagBuscarVehiculoByCriterio == 1) ? this.fillBusquedaSolicitud.nidtipobusqueda : this.fillNuevaSolicitud.nidtipobusqueda,
                         'page' : page,
@@ -1736,8 +1736,8 @@
                 var url = this.ruta + '/autorizacion/GetLstContactosByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcronograma' : 220016,
                         'ntipopersona' : this.modalMisContactos.ntipopersona,
                         'cnrodocumento' : String(this.modalMisContactos.cnrodocumento.toString()),
@@ -1769,8 +1769,8 @@
                 var url = this.ruta + '/autorizacion/GetRefVehiculoByContacto';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : 1300013,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcontacto' : this.fillNuevaSolicitud.nidcontacto
                     }
                 }).then(response => {
@@ -1938,8 +1938,8 @@
                     'nIdAsigContacto'       :   this.fillNuevaSolicitud.nidasigcontacto,
                     'nIdVehiculoPlaca'      :   (this.fillNuevaSolicitud.nidtipobusqueda == 1) ? '' : this.fillNuevaSolicitud.nidvehiculo,
                     'nIdCompra'             :   (this.fillNuevaSolicitud.nidtipobusqueda == 1) ? this.fillNuevaSolicitud.nidvehiculo : '',
-                    'nIdEmpresa'            :   1300011,
-                    'nIdSucursal'           :   1300013,
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdTipoSolicitud'      :   this.fillNuevaSolicitud.nidtiposolicitud,
                     'dFechaSolicitud'       :   this.fillNuevaSolicitud.dfechasolicitud,
                     'cFlagContacto'         :   (this.fillNuevaSolicitud.nidasigcontacto) ? 'S' : 'N',
