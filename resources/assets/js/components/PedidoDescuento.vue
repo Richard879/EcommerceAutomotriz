@@ -3,12 +3,12 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom"> APROBACIÓN DEL PEDIDO</h2>
+                    <h2 class="no-margin-bottom"> PEDIDOS PARA REALIZAR DESCUENTO</h2>
                 </div>
             </header>
 
             <section class="forms">
-                <div class="container-fluid">
+                <div class="container-fluid" v-if="cflagVer">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
@@ -152,16 +152,12 @@
                                                 <tr v-for="pedido in arrayPedidos" :key="pedido.nIdCabeceraPedido">
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                            <div slot="content">Generar Dscto del Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="generarDsctoPedido(0, pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
                                                         </el-tooltip>&nbsp;
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                        </el-tooltip>&nbsp;
-                                                        <el-tooltip class="item" effect="dark" placement="top-start">
-                                                            <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                         </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
@@ -212,6 +208,159 @@
                                         </tbody>
                                     </table>
                                 </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" v-else>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="h4">GENERAR DSCTO DEL PEDIDO {{ fillPedidoDscto.cNumeroPedido }} </h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-control-label">Monto a Descontar</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number"
+                                                                   min="0"
+                                                                   v-model="fillPedidoDscto.dMontoDescontar"
+                                                                   @keyup="calcularNuevoMonto(2, fillPedidoDscto.dMontoDescontar)"
+                                                                   class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="form-control-label">
+                                                            <el-radio-group v-model="fillPedidoDscto.cTipoDscto" @change="cambiarTipoDscto">
+                                                                <el-radio v-for="tipodsct in arrayTipoDscto" :key="tipodsct.id" :label="tipodsct.value"> {{ tipodsct.text }} </el-radio>
+                                                            </el-radio-group>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-control-label">Tipo de Cambio</label>
+                                                        <div class="col-sm-6">
+                                                            <label class="form-control-label" v-text="fillPedidoDscto.dTipoCambioComercial"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <vs-divider border-style="solid" color="dark">
+                                                CALCULO
+                                            </vs-divider>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-control-label">Monto a Actual</label>
+                                                        <div class="col-sm-6">
+                                                            <label class="form-control-label" v-text="fillPedidoDscto.dMontoPedido" ></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-control-label">Monto a Descontar</label>
+                                                        <div class="col-sm-6">
+                                                            <label class="form-control-label">
+                                                                USD/. {{ ((parseFloat(fillPedidoDscto.dMontoDescontarFlag)).toFixed(2)) }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-control-label">Monto Nuevo</label>
+                                                        <div class="col-sm-6">
+                                                            <label class="form-control-label" >
+                                                                USD/. {{ ((parseFloat(fillPedidoDscto.dMontoNuevoDolares)).toFixed(2)) }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-control-label">Monto Nuevo</label>
+                                                        <div class="col-sm-6">
+                                                            <label class="form-control-label" >
+                                                                S/. {{ ((parseFloat(fillPedidoDscto.dMontoNuevoSoles)).toFixed(2)) }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="h4">HISTORIAL DE DESCUENTOS</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <template v-if="arrayHistorialPedidoDsctos.length">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Dolare</th>
+                                                                        <th>Soles</th>
+                                                                        <th>Descuento</th>
+                                                                        <th>Tipo Cambio</th>
+                                                                        <th>Tipo Historial</th>
+                                                                        <th>Fecha</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(histodsctos, index) in arrayHistorialPedidoDsctos" :key="index">
+                                                                        <td>{{ ((parseFloat(histodsctos.fMontoDolares)).toFixed(2)) }}</td>
+                                                                        <td>{{ ((parseFloat(histodsctos.fMontoSoles)).toFixed(2)) }}</td>
+                                                                        <td>{{ ((parseFloat(histodsctos.fDsctoActual)).toFixed(2)) }}</td>
+                                                                        <td>{{ ((parseFloat(histodsctos.cTipoCambio)).toFixed(2)) }}</td>
+                                                                        <td v-text="histodsctos.cTipoHistorial"></td>
+                                                                        <td v-text="histodsctos.dFechaGeneracionDscto"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="10">No existen registros!</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <button v-if="fillPedidoDscto.dMontoDescontar > 0" type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarDsctoPedido()">
+                                                <i class="fa fa-save"></i> REGISTRAR
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-corner btn-sm" @click="generarDsctoPedido(1)">
+                                                <i class="fa fa-arrow-left"></i> CANCELAR
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -518,13 +667,6 @@
                                                 </tbody>
                                             </table>
                                         </template>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="aprobarPedidoModal()">
-                                                    <i class="fa fa-save"></i> Aprobar
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -589,6 +731,23 @@
                 },
                 arrayDetallePedido: [],
                 arrayPedidoDoumento: [],
+                cflagVer: 1,
+                fillPedidoDscto: {
+                    nIdCabeceraPedido: '',
+                    cNumeroPedido: '',
+                    dMontoDescontar: 0,
+                    dMontoDescontarFlag: 0,
+                    dTipoCambioComercial: '',
+                    cTipoDscto: '1',
+                    dMontoPedido: '',
+                    dMontoNuevoDolares: '',
+                    dMontoNuevoSoles: '',
+                },
+                arrayTipoDscto: [
+                    { value: '1', text: 'USD'},
+                    { value: '2', text: '%'}
+                ],
+                arrayHistorialPedidoDsctos: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -708,7 +867,7 @@
 
                 this.mostrarProgressBar();
 
-                var url = this.ruta + '/pedido/GetLstPedidosPendienteAprobacion';
+                var url = this.ruta + '/pedido/GetListPedidoForDscto';
                 axios.get(url, {
                     params: {
                         'nidempresa': 1300011,
@@ -719,16 +878,17 @@
                         'cnumerovin': this.fillBusquedaPedido.cnumerovin,
                         'nidmarca' : this.fillBusquedaPedido.nidmarca,
                         'nidmodelo': this.fillBusquedaPedido.nidmodelo,
+                        'nidestadopedido': '',
                         'page': page
                     }
                 }).then(response => {
-                    this.arrayPedidos = response.data.arrayPedido.data;
-                    this.pagination.current_page   =  response.data.arrayPedido.current_page;
-                    this.pagination.total          = response.data.arrayPedido.total;
-                    this.pagination.per_page       = response.data.arrayPedido.per_page;
-                    this.pagination.last_page      = response.data.arrayPedido.last_page;
-                    this.pagination.from           = response.data.arrayPedido.from;
-                    this.pagination.to             = response.data.arrayPedido.to;
+                    this.arrayPedidos              =    response.data.arrayPedido.data;
+                    this.pagination.current_page   =    response.data.arrayPedido.current_page;
+                    this.pagination.total          =    response.data.arrayPedido.total;
+                    this.pagination.per_page       =    response.data.arrayPedido.per_page;
+                    this.pagination.last_page      =    response.data.arrayPedido.last_page;
+                    this.pagination.from           =    response.data.arrayPedido.from;
+                    this.pagination.to             =    response.data.arrayPedido.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
@@ -763,85 +923,142 @@
                 this.paginationModal.current_page=page;
                 this.listarPedidos(page);
             },
-            aprobarPedido(nIdCabeceraPedido){
-                swal({
-                    title: '¿Esta seguro de APROBAR el pedido N°' + nIdCabeceraPedido + '?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Aprobar!',
-                    cancelButtonText: 'No, cancelar!'
-                }).then((result) => {
-                    if (result.value) {
-                        let me = this;
-                        var url = me.ruta + '/pedido/SetAprobarPedido';
-                        axios.put(url,{
-                            'nidempresa': 1300011,
-                            'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                            'nidcabecerapedido': parseInt(nIdCabeceraPedido)
-                        }).then(function (response) {
-                            if(response.data[0].nFlagMsje == 1)
-                            {
-                                swal(
-                                    'Aprobado!',
-                                    'El pedido ' + nIdCabeceraPedido +' ha sido APROBADO con éxito.',
-                                    'success'
-                                )
-                            }
-                            else
-                            {
-                                swal(
-                                    'ERROR!',
-                                    response.data[0].cMensaje
-                                )
-                            }
-                            me.listarPedidos(1);
-                        }).catch(function (error) {
-                            console.log(error);
-                        });
-                    } else if (result.dismiss === swal.DismissReason.cancel) {}
-                })
+            // =================================================================
+            // GENERAR DESCUENO DEL PEDIDO
+            // =================================================================
+            limpiarFormulario(){
+                this.fillPedidoDscto.nIdCabeceraPedido = '';
+                this.fillPedidoDscto.cNumeroPedido = '';
+                this.fillPedidoDscto.dMontoDescontar = 0;
+                this.fillPedidoDscto.dMontoDescontarFlag = 0;
+                this.fillPedidoDscto.dTipoCambioComercial = '';
+                this.fillPedidoDscto.cTipoDscto = '1';
+                this.fillPedidoDscto.dMontoPedido = '';
+                this.fillPedidoDscto.dMontoNuevoDolares = '';
+                this.fillPedidoDscto.dMontoNuevoSoles = '';
+                this.arrayHistorialPedidoDsctos = [];
             },
-            anularPedido(pedido){
-                swal({
-                    title: '¿Esta seguro de ANULAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Aprobar!',
-                    cancelButtonText: 'No, cancelar!'
-                }).then((result) => {
-                    if (result.value) {
-                        let me = this;
-                        var url = me.ruta + '/pedido/SetAnularPedido';
-                        axios.put(url,{
-                            'nidempresa': 1300011,
-                            'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                            'nidcabecerapedido': parseInt(pedido.nIdCabeceraPedido)
-                        }).then(function (response) {
-                            if(response.data[0].nFlagMsje == 1)
-                            {
-                                swal(
-                                    'Anulado!',
-                                    'El pedido ' + pedido.nIdCabeceraPedido +' ha sido ANULADO con éxito.',
-                                    'success'
-                                )
-                            }
-                            else
-                            {
-                                swal(
-                                    'Anulado!',
-                                    'Error en la Anulación.',
-                                )
-                            }
-                            me.listarPedidos(1);
-                        }).catch(function (error) {
-                            console.log(error);
-                        });
-                    } else if (result.dismiss === swal.DismissReason.cancel) {}
-                })
+            generarDsctoPedido(op, data = null){
+                let me = this;
+                this.limpiarFormulario();
+                this.cflagVer = op;
+                // console.log(data);
+
+                if(op == 0) {
+                    this.mostrarProgressBar();
+
+                    this.getTipoCambio();
+                    this.getHistorialDsctos(1, data);
+                    this.getDatosPedido(data);
+                    // this.calcularNuevoMonto(1);
+                    setTimeout(function() {
+                        me.calcularNuevoMonto(1);
+                    }, 1200);
+                }
+            },
+            getHistorialDsctos(page, data = null){
+                var url = this.ruta + '/pedido/GetListHistorialPedidoDscto';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': 1300011,
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nIdCabeceraPedido': data.nIdCabeceraPedido,
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayHistorialPedidoDsctos   =   response.data;
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            getTipoCambio(){
+                var url = this.ruta + '/gescotizacion/GetTipoCambio';
+                axios.get(url).then(response => {
+                    this.fillPedidoDscto.dTipoCambioComercial = response.data[0].fValorTipoCambioComercial;
+                }).then(function (response) {
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            getDatosPedido(data){
+                this.fillPedidoDscto.nIdCabeceraPedido = data.nIdCabeceraPedido
+                this.fillPedidoDscto.cNumeroPedido = data.cNumeroPedido
+                this.fillPedidoDscto.dMontoPedido = data.fTotalCotizacionVehiculoDolar
+            },
+            calcularNuevoMonto(op, value = null){
+                if(op == 1) {
+                    this.fillPedidoDscto.dMontoNuevoDolares = parseFloat(this.fillPedidoDscto.dMontoPedido) - parseFloat(this.fillPedidoDscto.dMontoDescontar);
+                    let montoDolares = this.fillPedidoDscto.dMontoNuevoDolares;
+                    this.fillPedidoDscto.dMontoNuevoSoles   = montoDolares * parseFloat(this.fillPedidoDscto.dTipoCambioComercial);
+                }
+                if (op == 2) {
+                    let me = this;
+
+                    if (me.fillPedidoDscto.cTipoDscto == '1') {
+                        if(value == '' || value < 0){
+                            me.$message.error(`El Monto ha descontar no puede ser vacío ó menor a cero`);
+                            me.fillPedidoDscto.dMontoDescontar = 0;
+                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                            me.$forceUpdate();
+                        }
+                        me.fillPedidoDscto.dMontoDescontarFlag  = value;
+                        me.fillPedidoDscto.dMontoNuevoDolares   = parseFloat(me.fillPedidoDscto.dMontoPedido) - parseFloat(me.fillPedidoDscto.dMontoDescontar);
+                        let montoDolares = me.fillPedidoDscto.dMontoNuevoDolares;
+                        me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
+                    } else {
+                        if(value < 0 || value > 100 || value == ''){
+                            me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
+                            me.fillPedidoDscto.dMontoDescontar = 0;
+                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                            me.$forceUpdate();
+                        }
+                        let montoPorcent    =   parseFloat(me.fillPedidoDscto.dMontoDescontar) / 100;
+                        let montoNuevo      =   montoPorcent * parseFloat(me.fillPedidoDscto.dMontoPedido);
+
+                        me.fillPedidoDscto.dMontoDescontarFlag  = montoNuevo;
+                        me.fillPedidoDscto.dMontoNuevoDolares   = parseFloat(me.fillPedidoDscto.dMontoPedido) - montoNuevo;
+                        let montoDolares = me.fillPedidoDscto.dMontoNuevoDolares;
+                        me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
+                    }
+                }
+                $("#myBar").hide();
+            },
+            cambiarTipoDscto(){
+                this.fillPedidoDscto.dMontoDescontar = 0;
+                this.fillPedidoDscto.dMontoDescontarFlag = 0;
+                this.calcularNuevoMonto(2, this.fillPedidoDscto.dMontoDescontarFlag);
+            },
+            registrarDsctoPedido(){
+                var url = this.ruta + '/pedido/SetHistorialPedidoDscto';
+                axios.post(url, {
+                    nIdCabeceraPedido: this.fillPedidoDscto.nIdCabeceraPedido,
+                    dMontoNuevoDolares: this.fillPedidoDscto.dMontoNuevoDolares,
+                    dMontoNuevoSoles: this.fillPedidoDscto.dMontoNuevoSoles,
+                    dMontoDescontarFlag: this.fillPedidoDscto.dMontoDescontarFlag,
+                    dTipoCambioComercial: this.fillPedidoDscto.dTipoCambioComercial
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        swal(response.data[0].cMensaje);
+                        this.arrayPedidos = [];
+                        this.generarDsctoPedido(1);
+                    }else{
+                        swal('Ocurrio un error al generar el descuento del pedido' + this.fillPedidoDscto.cNumeroPedido);
+                    }
+
+                    this.$forceUpdate();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =================================================================
             // VER DETALLE PEDIDO
@@ -893,10 +1110,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-            aprobarPedidoModal(){
-                this.aprobarPedido(parseInt(this.fillDetallePedido.nidcabecerapedido));
-                this.cerrarModal();
             },
             // =================================================================
             // MODAL

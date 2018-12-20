@@ -367,4 +367,90 @@ class PedidoController extends Controller
         }
         return ['arrayDetallePedido'=>$arrayDetallePedido];
     }
+
+    public function GetListPedidoForDscto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa     =   $request->nidempresa;
+        $nIdSucursal    =   $request->nidsucursal;
+        $dFechaInicio   =   $request->dfechainicio;
+        $dFechaFin      =   $request->dfechafin;
+        $cNumeroPedido  =   $request->cnumeropedido;
+        $cNumeroVin     =   $request->cnumerovin;
+        $nIdMarca       =   $request->nidmarca;
+        $nIdModelo      =   $request->nidmodelo;
+        $nIdEstadoPedido  = $request->nidestadopedido;
+
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        $nIdEstadoPedido = ($nIdEstadoPedido == NULL) ? ($nIdEstadoPedido = 0) : $nIdEstadoPedido;
+        $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
+        $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
+        $cNumeroPedido = ($cNumeroPedido == NULL) ? ($cNumeroPedido = '') : $cNumeroPedido;
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+
+        $arrayPedido = DB::select('exec [usp_Pedido_GetListPedidoForDscto] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                                                                            [
+                                                                                $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $dFechaInicio,
+                                                                                $dFechaFin,
+                                                                                $cNumeroPedido,
+                                                                                $cNumeroVin,
+                                                                                $nIdMarca,
+                                                                                $nIdModelo,
+                                                                                $nIdEstadoPedido,
+                                                                                Auth::user()->id
+                                                                            ]);
+
+        $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
+        return ['arrayPedido'=>$arrayPedido];
+    }
+
+    public function GetListHistorialPedidoDscto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nidempresa;
+        $nIdSucursal        =   $request->nidsucursal;
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+
+        $arrayHistorialPedidoDsctos = DB::select('exec [usp_Pedido_GetListHistorialPedidoDscto] ?, ?, ?, ?',
+                                                    [   $nIdEmpresa,
+                                                        $nIdSucursal,
+                                                        $nIdCabeceraPedido,
+                                                        Auth::user()->id
+                                                    ]);
+        return response()->json($arrayHistorialPedidoDsctos);
+    }
+
+    public function SetHistorialPedidoDscto(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+
+            $nIdCabeceraPedido      =   $request->nIdCabeceraPedido;
+            $dMontoNuevoDolares     =   $request->dMontoNuevoDolares;
+            $dMontoNuevoSoles       =   $request->dMontoNuevoSoles;
+            $dMontoDescontarFlag    =   $request->dMontoDescontarFlag;
+            $dTipoCambioComercial   =   $request->dTipoCambioComercial;
+
+
+            $data = DB::select('exec [usp_Pedido_SetHistorialPedidoDscto] ?, ?, ?, ?, ?, ?',
+                                                        [   $nIdCabeceraPedido,
+                                                            $dMontoNuevoDolares,
+                                                            $dMontoNuevoSoles,
+                                                            $dMontoDescontarFlag,
+                                                            $dTipoCambioComercial,
+                                                            Auth::user()->id
+                                                        ]);
+            DB::commit();
+            return response()->json($data);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

@@ -1628,6 +1628,11 @@
                     this.arrayEstadoPedido = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarPedidos(page){
@@ -1659,6 +1664,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -1699,6 +1709,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             verDocumentosPedido(pedido){
@@ -1714,6 +1729,11 @@
                     this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // ==========================================================
@@ -1735,6 +1755,11 @@
                     this.arrayMarca = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelos(){
@@ -1749,6 +1774,11 @@
                     this.formPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             //============= LISTAR COTIZACIONES APROBADAS PARA PEDIDO ==============
@@ -1777,6 +1807,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaCotizacion(page){
@@ -1806,6 +1841,11 @@
                         })
                         .catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
                         });
                     })
             },
@@ -1836,6 +1876,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             //=============== APROBAR COTIZACION ========================
@@ -1880,6 +1925,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaCompra(page){
@@ -1931,6 +1981,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboBanco(){
@@ -1943,6 +1998,11 @@
                     this.arrayBanco = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarFormaPago(){
@@ -1955,6 +2015,11 @@
                     this.arrayFormaPago = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             changeFormaPago(){
@@ -2019,6 +2084,11 @@
                     this.arrayTablaDocumento = response.data.arrayDocumento;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             getFile(e, index, nIdPar){
@@ -2122,6 +2192,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =============================================
