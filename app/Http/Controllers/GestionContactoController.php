@@ -625,7 +625,7 @@ class GestionContactoController extends Controller
         $CardCode       =   $request->CardCode;
         $nIdUsuario     =   Auth::user()->id;
 
-        $data = DB::select('exec usp_Contacto_UpdCardCodeContacto ?, ?, ?',
+        $data = DB::select('exec [usp_Contacto_UpdCardCodeContacto] ?, ?, ?',
                                                             [
                                                                 $nIdContacto,
                                                                 $CardCode,

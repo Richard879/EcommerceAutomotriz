@@ -306,6 +306,10 @@
                                                                                             <div slot="content">Anular de Cartera Mes  {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
                                                                                             <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                                                         </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cPerApellidos + ' ' + c.cNombre }}</div>
+                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                        </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -340,6 +344,10 @@
                                                                                         <el-tooltip class="item" effect="dark" >
                                                                                             <div slot="content">Anular de Cartera Mes  {{ c.cRazonSocial }}</div>
                                                                                             <i :style="'color:red'" class="fa-md fa fa-times-circle"></i>
+                                                                                        </el-tooltip>
+                                                                                        <el-tooltip class="item" effect="dark" v-if="c.CardCode == '' || c.CardCode == null">
+                                                                                            <div slot="content"> Generar Cardcode - SAP : {{ c.cRazonSocial }}</div>
+                                                                                            <i @click="SapRegistrarNuevoContacto(c)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
                                                                                         </el-tooltip>
                                                                                     </td>
                                                                                 </tr>
@@ -3401,7 +3409,9 @@
                     } else {
                         swal('Ocurrio un problema al Actualizar el Contacto');
                     }
-                    this.listarContactoSinCarteraMes(1);
+                    //this.listarContactoSinCarteraMes(1);
+                    this.arrayContacto = [];
+                    this.arrayContactoCarteraMes = [];
                     // this.SAPNuevoContactoJson.CardCode = ''; //Setear el JSON
                 }).catch(error => {
                     console.log(error);
