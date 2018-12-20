@@ -825,7 +825,7 @@
                 var url = this.ruta + '/flete/GetListFlete';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillFlete.dfechainicio,
                         'dfechafin': this.fillFlete.dfechafin,
@@ -869,7 +869,7 @@
                 var url = this.ruta + '/flete/GetComprasForFlete';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillCompra.dfechainicio,
                         'dfechafin': this.fillCompra.dfechafin,
@@ -999,7 +999,7 @@
 
                 var url = this.ruta + '/flete/SetFlete';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
+                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                     'cNumeroRuc': this.formmFlete.cnumeroruc,
                     'cNumeroDocumento': this.formmFlete.cnumerodocumento,
