@@ -356,7 +356,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'cnombre': this.fillTipoInsp.cnombre,
                         'page': page
                     }
@@ -388,7 +388,7 @@
                 var url = this.ruta + '/tipoinspeccion/SetTipoInspeccion';
 
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     cNombreTipoInspeccion: this.formTipoInsp.cnombre,
                     nFlagAlmacen: this.formTipoInsp.nflagalmacen,
                     nFlagAccesorio: this.formTipoInsp.nflagaccesorio,
@@ -430,7 +430,7 @@
 
                 var url = this.ruta + '/tipoinspeccion/UpdTipoInspeccionById';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdTipoInspeccion: parseInt(this.formTipoInsp.nidtipoinspeccion),
                     cNombreTipoInspeccion: this.formTipoInsp.cnombre,
                     nFlagAlmacen: this.formTipoInsp.nflagalmacen,

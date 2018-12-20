@@ -1393,8 +1393,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'ncriterio': this.fillPdi.ncriterio,
                         'cdescripcioncriterio': this.fillPdi.cdescripcioncriterio,
                         'dfechainicio': this.fillPdi.dfechainicio,
@@ -1426,8 +1426,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidestadosolicitud' : 1300240,
                         'page' : page
                     }
@@ -1458,8 +1458,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'cnombre': '',
                         'page' : page
                     }
@@ -1490,7 +1490,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'cnombre': '',
                         'page': page
                     }
@@ -1514,7 +1514,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoinspeccion': this.formPdi.nidtipoinspeccion
                     }
                 }).then(response => {
@@ -1545,8 +1545,8 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio' : this.fillCompra.dfechainicio,
                         'dfechafin' : this.fillCompra.dfechafin,
                         'nordencompra' : this.fillCompra.nordencompra == '' ? 0 : this.fillCompra.nordencompra,
@@ -1614,7 +1614,7 @@
                 var url = this.ruta + '/autorizacion/GetLstVehiculosByCriterio';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal' : 1300013,
                         'cnrovehiculo' : this.modalVehiculo.cnrovehiculo.toString(),
                         'criterio': this.fillBusquedaSolicitud.nidtipobusqueda,
@@ -1638,7 +1638,7 @@
                 var url = this.ruta + '/pdi/GetListSeccion';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion,
                         'nidflag': this.formPlantilla.nidflag
                     }
@@ -1653,7 +1653,7 @@
                 var url = this.ruta + '/pdi/GetListItem';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidtipoinspeccion' : this.formPdi.nidtipoinspeccion,
                         'nidflag': this.formPlantilla.nidflag
                     }
@@ -1740,8 +1740,8 @@
 
                 var url = this.ruta + '/pdi/SetCabeceraInspeccion';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdPuntoInspeccion: this.formPdi.nidpuntoinspeccion,
                     nIdSolicitudAutorizacion: this.formPdi.nidsolicitud,
                     nIdCompra: this.formPdi.nidcompra,
@@ -1886,8 +1886,8 @@
                 var url = this.ruta + '/pdi/UpdCabeceraInspeccion';
                 axios.post(url, {
                     nIdCabeceraInspeccion: this.formPdi.nidcabecerainspeccion,
-                    nIdEmpresa: 1300011,
-                    nIdSucursal: sessionStorage.getItem("nIdSucursal"),
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
                     nIdAlmacen: this.formPdi.nidalmacen,
                     cNumeroInspeccion: this.formPdi.cnumeroinspeccion,
                     dFechaInspeccion: this.formPdi.dfechainspeccion,
