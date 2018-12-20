@@ -464,15 +464,38 @@ class PedidoController extends Controller
         $variable   = $request->opcion;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayPedido = DB::select('exec [usp_Pedido_GetPedidoById] ?, ?, ?',
-                                    [
-                                        $nIdEmpresa,
-                                        $nIdSucursal,
-                                        $nIdCabeceraPedido
-                                    ]);
+        $arrayCabeceraPedido = DB::select('exec [usp_Pedido_GetPedidoById] ?, ?, ?',
+                                                            [
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdCabeceraPedido
+                                                            ]);
         if($variable == "0"){
-            $arrayPedido = ParametroController::arrayPaginator($arrayPedido, $request);
+            $arrayCabeceraPedido = ParametroController::arrayPaginator($arrayCabeceraPedido, $request);
         }
-        return ['arrayPedido'=>$arrayPedido];
+        return ['arrayCabeceraPedido'=>$arrayCabeceraPedido];
+    }
+
+    public function SapUpdPedidoByDocEntry(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec [usp_Pedido_SapUpdPedidoByDocEntry] ?, ?, ?, ?',
+                                                            [   $det['nIdCabeceraPedido'],
+                                                                $det['cNumeroVin'],
+                                                                $det['DocEntry'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objCompra);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
 }

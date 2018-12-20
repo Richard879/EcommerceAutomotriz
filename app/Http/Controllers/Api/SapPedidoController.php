@@ -13,7 +13,7 @@ class SapPedidoController extends Controller
     public function SapSetPedido(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://172.20.6.66/'
         ]);
 
         $array_rpta = [];
@@ -27,15 +27,17 @@ class SapPedidoController extends Controller
                     "DocDate"       => "2018-11-30",
                     "DocDueDate"    => "2018-12-04",
                     "DocumentLines" => [
-                            "ItemCode"    => $value['cNumeroVin'],
-                            "Quantity"    => "1",
-                            "TaxCode"     => "IGV",
-                            "UnitPrice"   => (string)$value['fTotalPedidoSol']
+                            [
+                                "ItemCode"    => $value['cNumeroVin'],
+                                "Quantity"    => "1",
+                                "TaxCode"     => "IGV",
+                                "UnitPrice"   => (string)$value['fTotalPedidoSoles']
+                            ]
                         ]
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Compra/SapSetCompra/", $json);
+            $response = $client->request('POST', "/Sap/api/Pedido/SapSetPedido/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }

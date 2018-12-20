@@ -1461,7 +1461,8 @@
                     nidmarca: '',
                     nidmodelo: '',
                     cnumerocotizacion: '',
-                    cnombrecontacto: ''
+                    cnombrecontacto: '',
+                    nidcabecerapedido: 0
                 },
                 arrayMisPedido: [],
                 arrayPedido: [],
@@ -2169,15 +2170,11 @@
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1)
                     {
+                        this.formPedido.nidcabecerapedido = response.data[0].nIdCabeceraPedido;
                         if(this.attachment.length){
-                            this.subirArchivos(response.data[0].nIdCabeceraPedido);
+                            this.subirArchivos(this.formPedido.nidcabecerapedido);
                         }
-                        else{
-                            swal('Pedido registrado exitosamente');
-                            this.vistaFormularioPedido = 1;
-                            this.limpiarFormulario();
-                        }
-                        //obtenerDetallePedidoById(response.data[0].nIdCabeceraPedido);
+                        this.obtenerPedidoById();
                     }
                     else{
                         swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');
@@ -2185,15 +2182,19 @@
                 }).catch(error => {
                     this.errors = error
                 });
+                
             },
-            obtenerDetallePedidoById(nIdCabeceraPedido){
+            obtenerPedidoById(){
                 var url = this.ruta + '/pedido/GetPedidoById';
                 axios.get(url, {
-                    'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                    'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nidcabecerapedido': nIdCabeceraPedido
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': this.formPedido.nidcabecerapedido
+                    }
                 }).then(response => {
-                    this.arraySapPedido = response.data.arrayPedido;
+                    this.arraySapPedido = response.data.arrayCabeceraPedido.data;
+                    this.registroSapPedido();
                 }).catch(error => {
                     this.errors = error
                 });
@@ -2208,9 +2209,8 @@
                     me.arraySapRptPedido = response.data;
                     me.arraySapRptPedido.map(function(x){
                         me.jsonPedido= JSON.parse(x);
-                        //console.log(me.jsonCompra.DocEntry.toString());
-                        //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
                         me.arraySapUpdPedido.push({
+                            'nIdCabeceraPedido': me.formPedido.nidcabecerapedido.toString(),
                             'DocEntry': me.jsonPedido.DocEntry.toString(),
                             'cNumeroVin': me.jsonPedido.DocumentLines[0].ItemCode.toString()
                         });
@@ -2221,9 +2221,30 @@
 
                 //==============================================================
                 //================== ACTUALIZAR DOCENTRY ===============
-                /*setTimeout(function() {
-                        me.registroDocEntryCompra();
-                    }, 3800);*/
+                setTimeout(function() {
+                        me.registroDocEntryPedido();
+                    }, 3800);
+            },
+            registroDocEntryPedido(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdPedido
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        $("#myBar").hide();
+                        swal('Pedido registrado correctamente');
+                    }else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });      
             },
             validaRegistraraPedido(){
                 let me = this;

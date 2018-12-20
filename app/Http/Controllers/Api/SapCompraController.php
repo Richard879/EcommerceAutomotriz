@@ -51,24 +51,29 @@ class SapCompraController extends Controller
 
         $data = $request->data;
         foreach ($data as $key => $value) {
-            $dataArray = [
+            /*$dataArray = [
                     "ItemCode"    => $value['cNumeroVin'],
                     "Quantity"    => "1",
                     "TaxCode"     => "IGV",
                     "UnitPrice"   => (string)$value['fTotalCompra']
-                ];
+                ];*/
 
             /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
-
+                
             $json = [
                 'json' => [
                     "CardCode"      => $CardCode,
                     "DocDate"       => "2018-11-30",
                     "DocDueDate"    => "2018-12-04",
                     "DocumentLines" => [
-                            $dataArray
+                            [
+                                "ItemCode"    => $value['cNumeroVin'],
+                                "Quantity"    => "1",
+                                "TaxCode"     => "IGV",
+                                "UnitPrice"   => (string)$value['fTotalCompra']
+                            ]
                         ]
                     ]
                 ];

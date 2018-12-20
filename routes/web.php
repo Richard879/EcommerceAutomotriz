@@ -155,6 +155,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetListPedidoForDscto', 'PedidoController@GetListPedidoForDscto');
     Route::get('/pedido/GetListHistorialPedidoDscto', 'PedidoController@GetListHistorialPedidoDscto');
     Route::post('/pedido/SetHistorialPedidoDscto', 'PedidoController@SetHistorialPedidoDscto');
+    Route::get('/pedido/GetPedidoById', 'PedidoController@GetPedidoById');
+    Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
