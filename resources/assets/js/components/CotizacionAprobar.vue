@@ -917,7 +917,7 @@
                 var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion': cotizacion.nIdCabeceraCotizacion
                     }
@@ -1004,7 +1004,7 @@
                 var url = this.ruta + '/getcotizacion/GetLstCotizacionPendientes';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidmarca' : this.fillCotizacionesPendiente.nidmarca,
                         'nidmodelo' : this.fillCotizacionesPendiente.nidmodelo,
@@ -1224,7 +1224,7 @@
                 var url = this.ruta + '/parametro/GetLstProveedor';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : '',
                         'opcion' : 1,
