@@ -513,12 +513,8 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                nidempresa: 1300011,
-                nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
                 // ======================================================
                 // =========== VARIABLES TAB BUSCAR PEDIDO ==============
                 fillPedido:{
@@ -726,8 +722,8 @@
                 var url = this.ruta + '/deposito/GetListPedidoConDeposito';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal': this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -815,8 +811,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'A'
                     }
@@ -836,8 +832,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'P'
                     }
@@ -857,8 +853,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'D'
                     }

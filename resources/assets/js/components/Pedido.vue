@@ -1411,10 +1411,6 @@
             return {
                 cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
-                nidempresa: 0,
-                nidsucursal: 0,
                 // =====================================================
                 // =========== VARIABLES MODAL PROVEEDOR ===============
                 fillProveedor:{
@@ -1641,8 +1637,8 @@
                 var url = this.ruta + '/pedido/GetListPedidoByTipoEstado';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -1700,7 +1696,7 @@
                 var url = this.ruta + '/pedido/GetLstDetallePedido';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido
                     }
@@ -1720,7 +1716,7 @@
                 var url = this.ruta + '/pedido/GetDocumentosById';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabecerapedido': pedido.nIdCabeceraPedido,
                         'opcion': 1
@@ -1787,8 +1783,8 @@
                 var url = this.ruta + '/pedido/GetLstCotizacionIngresadas';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.formPedido.dfechainicio,
                         'dfechafin': this.formPedido.dfechafin,
                         'nidmarca': this.formPedido.nidmarca,
@@ -1867,7 +1863,7 @@
                 var url = this.ruta + '/getcotizacion/GetLstDetalleCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion': cotizacion.nIdCabeceraCotizacion
                     }
@@ -1907,8 +1903,8 @@
                 var url = this.ruta + '/pedido/GetLstCompraByIdModelo';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion,
                         'cnumerovin' : this.formCompra.cnumerovin,
                         'page' : page
@@ -1966,8 +1962,8 @@
                 var url = this.ruta + '/pedido/GetListaPrecioDetalleByIdCotizacion';
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
-                        'nidsucursal' : sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidcabeceracotizacion' : this.formCompra.nidcabeceracotizacion
                     }
                 }).then(response => {
@@ -2115,8 +2111,8 @@
 
                 var url = this.ruta + '/pedido/SetCabeceraPedido';
                 axios.post(url, {
-                    'nIdEmpresa': 1300011,
-                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
+                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraCotizacion': this.formCompra.nidcabeceracotizacion,
                     'nIdCompra': this.formDocRef.nidcompra,
                     'cNumeroPedido': 'PEDIDO-001',

@@ -960,12 +960,8 @@
         props:['ruta'],
         data(){
             return {
-                cempresa: 'SAISAC',
+                cempresa: sessionStorage.getItem("cNombreEmpresa"),
                 csucursal: sessionStorage.getItem("cNombreSucursal"),
-                nidempresa: 1300011,
-                nidsucursal: sessionStorage.getItem("nIdSucursal"),
-                canio: '2018',
-                cmes: 'MAYO',
                 // =========== VARIABLES TIPO CAMBIO ===============
                 fValorTipoCambioCompra: 0,
                 fValorTipoCambioVenta: 0,
@@ -1201,8 +1197,8 @@
                 var url = this.ruta + '/pedido/GetListPedidoAprobados';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal': this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillPedido.dfechainicio,
                         'dfechafin': this.fillPedido.dfechafin,
                         'cnumeropedido': this.fillPedido.cnumeropedido,
@@ -1255,8 +1251,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'A'
                     }
@@ -1279,8 +1275,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'P'
                     }
@@ -1300,8 +1296,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'D'
                     }
@@ -1435,7 +1431,7 @@
                 var url = this.ruta + '/parparametro/GetBancosByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar': 110021
                     }
                 }).then(response => {
@@ -1496,7 +1492,7 @@
                 var url = this.ruta + '/deposito/GetNumeroCuentaByBancoAndMoneda';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidbanco': this.formNuevoDeposito.nidbanco_destino,
                         'nidmoneda': this.formNuevoDeposito.nidmoneda_destino
                     }
@@ -1655,8 +1651,8 @@
             setNuevoDeposito(nIdDocumentoAdjunto){
                 var url = this.ruta + '/deposito/SetDepositoPedido';
                 axios.post(url, {
-                    'nIdEmpresa': this.nidempresa,
-                    'nIdSucursal': this.nidsucursal,
+                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
                     'nIdTipoPago': this.formParametrizacionDeposito.nidtipopago,
                     'nIdFormaPago': this.formParametrizacionDeposito.nidformapago,
@@ -1767,8 +1763,8 @@
             setNuevoOtroTipoDeposito(nIdDocumentoAdjunto){
                 var url = this.ruta + '/deposito/SetDepositoPedido';
                 axios.post(url, {
-                    'nIdEmpresa': this.nidempresa,
-                    'nIdSucursal': this.nidsucursal,
+                    'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                     'nIdCabeceraPedido': this.formDeposito.nidcabecerapedido,
                     'nIdTipoPago': this.formParametrizacionDeposito.nidtipopago,
                     'nIdFormaPago': this.formParametrizacionDeposito.nidformapago,
@@ -1841,8 +1837,8 @@
                 var url = this.ruta + '/deposito/GetMontoTotalDepositos';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.nidempresa,
-                        'nidsucursal' : this.nidsucursal,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal' : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nIdCabeceraPedido' : pedido.nIdCabeceraPedido,
                         'cFlagEstadoAprobacion': 'A'
                     }
