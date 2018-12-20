@@ -651,7 +651,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.formVersion.nidproveedor
                     }
                 }).then(response => {
@@ -707,7 +707,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidgrupopar' : 110023,
                         'cnombreproveedor' : this.fillProveedor.cnombreproveedor.toString(),
                         'opcion' : 0,
@@ -763,7 +763,7 @@
 
                 axios.get(url, {
                     params: {
-                        'nidempresa' : 1300011,
+                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.formVersion.nidproveedor,
                         'nidclase' : this.formVersion.nidclase,
                         'nidsubclase' : this.formVersion.nidsubclase,
@@ -799,7 +799,7 @@
 
                 var url = this.ruta + '/versionvehiculo/SetVersion';
                 axios.post(url, {
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdProveedor: parseInt(this.formVersion.nidproveedor),
                     nIdClase: parseInt(this.formVersion.nidclase),
                     nIdSubClase: parseInt(this.formVersion.nidsubclase),
@@ -867,7 +867,7 @@
 
                 axios.post(url, {
                     nIdVersionVeh: parseInt(this.formVersion.nidversionveh),
-                    nIdEmpresa: 1300011,
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nIdProveedor: parseInt(this.formVersion.nidproveedor),
                     nIdClase: parseInt(this.formVersion.nidclase),
                     nIdSubClase: parseInt(this.formVersion.nidsubclase),
