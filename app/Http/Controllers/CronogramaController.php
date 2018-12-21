@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CronogramaController extends Controller
 {
@@ -54,7 +55,7 @@ class CronogramaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $objCronograma = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ? ,?', 
+        $objCronograma = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ? ,?, ?', 
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdTipoCronograma,
                                                                 $request->nIdAnio, 

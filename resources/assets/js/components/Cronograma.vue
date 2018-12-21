@@ -291,7 +291,13 @@
                         'nidpar': this.fillParametro.nidtipocronograma
                     }
                 }).then(response => {
-                    this.fillParametro.cdetallecronograma = response.data.arrayCronograma[0].cMes + ' - ' + response.data.arrayCronograma[0].cAnio;
+                    if(response.data.arrayCronograma.length)
+                    {
+                        this.fillParametro.cdetallecronograma = response.data.arrayCronograma[0].cMes + ' - ' + response.data.arrayCronograma[0].cAnio;
+                    }
+                    else{
+                        this.fillParametro.cdetallecronograma = "SIN CRONOGRAMA ACTIVO";
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
@@ -314,7 +320,7 @@
                 }
                 return this.error;
             },
-            activarCronograma(parametro){
+            activarCronograma(){
                 if(this.validar()){
                     this.accionmodal=1;
                     this.modal = 1;
@@ -332,7 +338,7 @@
                     }).then((result) => {
                         if (result.value) {
                             var url = this.ruta + '/cronograma/SetActivarCronograma';
-                            axios.put(url, {
+                            axios.post(url, {
                                 'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                                 'nIdTipoCronograma': this.fillParametro.nidtipocronograma,
                                 'nIdAnio': this.fillParametro.nidanio,
