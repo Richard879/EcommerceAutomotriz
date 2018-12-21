@@ -24,6 +24,9 @@
     <template v-if="menu==1300467">
         <parparametro :ruta="ruta"></parparametro>
     </template>
+    <template v-if="menu==1300469">
+        <cronograma :ruta="ruta"></cronograma>
+    </template>
 
 
     <template v-if="menu==1300266">
