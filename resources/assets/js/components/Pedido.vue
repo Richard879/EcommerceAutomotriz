@@ -2172,9 +2172,20 @@
                     if(response.data[0].nFlagMsje == 1)
                     {
                         this.formPedido.nidcabecerapedido = response.data[0].nIdCabeceraPedido;
-                        this.obtenerPedidoById();
+                        //this.obtenerPedidoById();
+                        if(this.attachment.length){
+                            this.subirArchivos(this.formPedido.nidcabecerapedido);
+                        }
+                        else{
+                            this.vistaFormularioPedido= 1;
+                            this.limpiarFormulario();
+                            $("#myBar").hide();
+                            swal('Pedido registrado correctamente');
+                        }
                     }
                     else{
+                        this.vistaFormularioPedido= 1;
+                        this.limpiarFormulario();
                         $("#myBar").hide();
                         swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');
                     }
@@ -2183,7 +2194,7 @@
                 });
                 
             },
-            obtenerPedidoById(){
+            /*obtenerPedidoById(){
                 var url = this.ruta + '/pedido/GetPedidoById';
                 axios.get(url, {
                     params: {
@@ -2250,7 +2261,7 @@
                 }).catch(error => {
                     console.log(error);
                 });      
-            },
+            },*/
             validaRegistraraPedido(){
                 let me = this;
                 me.error = 0;

@@ -592,6 +592,12 @@
                 cFlagActivaElemento: 0,
                 cFlagActivaObsequio: 0,
                 cFlagActivaCampania: 0,
+                //===========================================================
+                // =============  VARIABLES SAP ========================
+                arraySapPedido: [],
+                arraySapRptPedido: [],
+                jsonPedido: '',
+                arraySapUpdPedido: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -786,11 +792,7 @@
                         }).then(function (response) {
                             if(response.data[0].nFlagMsje == 1)
                             {
-                                swal(
-                                    'Aprobado!',
-                                    'El pedido ' + nIdCabeceraPedido +' ha sido APROBADO con éxito.',
-                                    'success'
-                                )
+                                this.obtenerPedidoById(nIdCabeceraPedido);
                             }
                             else
                             {
@@ -799,12 +801,77 @@
                                     response.data[0].cMensaje
                                 )
                             }
-                            me.listarPedidos(1);
                         }).catch(function (error) {
                             console.log(error);
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
+            },
+            obtenerPedidoById(nIdCabeceraPedido){
+                var url = this.ruta + '/pedido/GetPedidoById';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidcabecerapedido': nIdCabeceraPedido
+                    }
+                }).then(response => {
+                    this.arraySapPedido = response.data.arrayCabeceraPedido.data;
+                    this.registroSapPedido(nIdCabeceraPedido);
+                }).catch(error => {
+                    this.errors = error
+                });
+            },
+            registroSapPedido(nIdCabeceraPedido){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapSetPedido';
+                axios.post(sapUrl, {
+                    data: me.arraySapPedido
+                }).then(response => {
+                    me.arraySapRptPedido = response.data;
+                    me.arraySapRptPedido.map(function(x){
+                        me.jsonPedido= JSON.parse(x);
+                        me.arraySapUpdPedido.push({
+                            'nIdCabeceraPedido': nIdCabeceraPedido.toString(),
+                            'DocEntry': me.jsonPedido.DocEntry.toString(),
+                            'cNumeroVin': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                        });
+                    });
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY ===============
+                    setTimeout(function() {
+                        me.registroDocEntryPedido(nIdCabeceraPedido);
+                    }, 3800);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registroDocEntryPedido(nIdCabeceraPedido){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdPedido
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.listarPedidos(1);
+                        $("#myBar").hide();
+                        swal(
+                                'Aprobado!',
+                                'El pedido ' + nIdCabeceraPedido +' ha sido APROBADO con éxito.',
+                                'success'
+                            )
+                    }else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });      
             },
             anularPedido(pedido){
                 swal({
