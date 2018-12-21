@@ -194,12 +194,12 @@
                                                                                             <i @click="distribuirDeposito(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                                         </el-tooltip>
                                                                                     </template>
-                                                                                    <template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
+                                                                                    <!--<template v-if="pedido.cFlagEstadoAprobacion == 'A' && pedido.cEstadoPedido != 'CANCELADO'">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Desaprobar Pedido {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="desaprobarPedido(pedido)" :style="'color:red'" class="fa-md fa fa-trash"></i>
                                                                                         </el-tooltip>
-                                                                                    </template>
+                                                                                    </template>-->
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
