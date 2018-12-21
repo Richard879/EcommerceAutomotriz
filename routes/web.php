@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parparametro/GetListParParametroByGrupoTodos', 'ParParametroController@GetListParParametroByGrupoTodos');
     Route::post('/parparametro/SetParParametro', 'ParParametroController@SetParParametro');
     Route::post('/parparametro/ElmParParametro', 'ParParametroController@ElmParParametro');
+    Route::get('/parparametro/GetParParametro', 'ParParametroController@GetParParametro');
     Route::get('/tipoparametro/GetTipoByIdParametro', 'ParametroController@GetTipoByIdParametro');
     Route::get('/grupopar/GetGrupoParametroEventoCampania', 'GrupoParametroController@GetGrupoParametroEventoCampania');
     Route::get('/grupopar/GetListGrupoParametro', 'GrupoParametroController@GetListGrupoParametro');
@@ -305,6 +306,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cronograma/GetCronogramaVentaActivo','CronogramaController@GetCronogramaVentaActivo');
     Route::get('/cronograma/GetCronogramaCompraActivo','CronogramaController@GetCronogramaCompraActivo');
+    Route::get('/cronograma/GetCronogramaActivoByTipo','CronogramaController@GetCronogramaActivoByTipo');
+    Route::post('/cronograma/SetActivarCronograma','CronogramaController@SetActivarCronograma');
 
     Route::post('/flete/SetFlete', 'FleteController@SetFlete');
     Route::get('/flete/GetListFlete', 'FleteController@GetListFlete');

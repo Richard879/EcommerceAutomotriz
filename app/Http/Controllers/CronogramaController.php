@@ -33,4 +33,34 @@ class CronogramaController extends Controller
                                                         ]);
         return ['arrayCronograma'=>$arrayCronograma];
     }
+
+    public function GetCronogramaActivoByTipo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdGrupoPar = $request->nidgrupopar;
+        $nIdPar = $request->nidpar;
+
+        $arrayCronograma = DB::select('exec [usp_Cronog_GetCronogramaActivoByTipo] ?, ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $nIdGrupoPar,
+                                                            $nIdPar
+                                                        ]);
+        return ['arrayCronograma'=>$arrayCronograma];
+    }
+
+    public function SetActivarCronograma(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $element = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ? ,?', 
+                                                            [   $request->nIdEmpresa,
+                                                                $request->nIdTipoCronograma,
+                                                                $request->nIdAnio, 
+                                                                $request->nIdMes,
+                                                                Auth::user()->id
+                                                            ]);
+        return response()->json($element);         
+    }
 }
