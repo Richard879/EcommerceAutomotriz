@@ -792,6 +792,7 @@
                         }).then(function (response) {
                             if(response.data[0].nFlagMsje == 1)
                             {
+                                me.mostrarProgressBar();
                                 me.obtenerPedidoById(nIdCabeceraPedido);
                             }
                             else
