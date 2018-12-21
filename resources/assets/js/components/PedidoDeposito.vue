@@ -196,7 +196,7 @@
                                                                                     </template>
                                                                                     <template>
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                            <div slot="content">Detalle de Cotización {{ pedido.cNumeroPedido }}</div>
+                                                                                            <div slot="content">Detalle de Depósitos {{ pedido.cNumeroPedido }}</div>
                                                                                             <i @click="abrirModal('pedido', 'abrir', pedido)" :style="'color:green'" class="fa-md fa fa-eye"></i>
                                                                                         </el-tooltip>
                                                                                     </template>
