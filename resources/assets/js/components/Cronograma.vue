@@ -69,6 +69,38 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Fecha Inicio</label>
+                                                    <div class="col-sm-8">
+                                                       <el-date-picker
+                                                            v-model="fillParametro.dfechainicio"
+                                                            type="date"
+                                                            value-format="yyyy-MM-dd"
+                                                            format="dd/MM/yyyy"
+                                                            placeholder="dd/mm/aaaa">
+                                                        </el-date-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Fecha Fin</label>
+                                                    <div class="col-sm-8">
+                                                       <el-date-picker
+                                                            v-model="fillParametro.dfechafin"
+                                                            type="date"
+                                                            value-format="yyyy-MM-dd"
+                                                            format="dd/MM/yyyy"
+                                                            placeholder="dd/mm/aaaa">
+                                                        </el-date-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="activarCronograma()">
                                                     <i class="fa fa-save"></i> Activar
@@ -132,7 +164,9 @@
                     nidtipocronograma: '',
                     nidanio: '',
                     nidmes: '',
-                    cdetallecronograma:''
+                    cdetallecronograma:'',
+                    dfechainicio:'',
+                    dfechafin: ''
                 },
                 arrayTipoCronograma: [],
                 arrayAnios: [],

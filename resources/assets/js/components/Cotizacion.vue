@@ -2360,8 +2360,8 @@
                 // VARIABLES TAB MIS COTIZACIONES
                 // =============================================================
                 fillMisCotizaciones: {
-                    fechaInicio: '',
-                    fechaFin: '',
+                    dfechainicio: '',
+                    dfechafin: '',
                     nidmarca: '',
                     nidmodelo: '',
                     nidestadocotizacion: '',
