@@ -349,6 +349,12 @@
                 if(!this.fillParametro.nidmes || this.fillParametro.nidmes == 0){
                     this.mensajeError.push('Debes Seleccionar un Mes');
                 };
+                if(!this.fillParametro.dfechainicio){
+                    this.mensajeError.push('Debes Ingresar Fecha Inicio');
+                };
+                if(!this.fillParametro.dfechafin){
+                    this.mensajeError.push('Debes Ingresar Fecha Fin');
+                };
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
@@ -376,7 +382,9 @@
                                 'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                                 'nIdTipoCronograma': this.fillParametro.nidtipocronograma,
                                 'nIdAnio': this.fillParametro.nidanio,
-                                'nIdMes': this.fillParametro.nidmes
+                                'nIdMes': this.fillParametro.nidmes,
+                                'dFechaInicio': this.fillParametro.dfechainicio,
+                                'dFechaFin': this.fillParametro.dfechafin
                             }).then(response => {
                                 swal(
                                     'Activado!',
