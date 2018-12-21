@@ -54,13 +54,13 @@ class CronogramaController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $element = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ? ,?', 
+        $objCronograma = DB::select('exec [usp_Cronograma_SetActivarCronograma] ?, ?, ? ,?', 
                                                             [   $request->nIdEmpresa,
                                                                 $request->nIdTipoCronograma,
                                                                 $request->nIdAnio, 
                                                                 $request->nIdMes,
                                                                 Auth::user()->id
                                                             ]);
-        return response()->json($element);         
+        return response()->json($objCronograma);         
     }
 }
