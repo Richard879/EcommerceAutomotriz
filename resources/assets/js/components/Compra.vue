@@ -2198,6 +2198,7 @@
                     data: me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
+                    console.log("Integración SAP : OK");
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
                         me.arraySapUpdCompra.push({

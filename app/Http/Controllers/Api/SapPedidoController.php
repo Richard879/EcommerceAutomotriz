@@ -13,7 +13,7 @@ class SapPedidoController extends Controller
     public function SapSetPedido(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.66/'
+            'base_uri'  => 'http://172.20.6.68/'
         ]);
 
         $array_rpta = [];

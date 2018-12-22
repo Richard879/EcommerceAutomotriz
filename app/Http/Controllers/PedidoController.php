@@ -485,10 +485,13 @@ class PedidoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Pedido_SapUpdPedidoByDocEntry] ?, ?, ?, ?',
+                $objCompra = DB::select('exec [usp_Pedido_SapUpdPedidoByDocEntry] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $det['nIdCabeceraPedido'],
-                                                                $det['cNumeroVin'],
-                                                                $det['DocEntry'],
+                                                                $det['cItemCode'],
+                                                                $det['nDocEntry'],
+                                                                $det['nDocNum'],
+                                                                $det['cDocType'],
+                                                                $det['cLogRespuesta'],
                                                                 Auth::user()->id
                                                             ]);
             }

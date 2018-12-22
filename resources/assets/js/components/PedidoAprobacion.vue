@@ -831,12 +831,16 @@
                     data: me.arraySapPedido
                 }).then(response => {
                     me.arraySapRptPedido = response.data;
+                    console.log("Integración SAP : OK");
                     me.arraySapRptPedido.map(function(x){
                         me.jsonPedido= JSON.parse(x);
                         me.arraySapUpdPedido.push({
                             'nIdCabeceraPedido': nIdCabeceraPedido.toString(),
-                            'DocEntry': me.jsonPedido.DocEntry.toString(),
-                            'cNumeroVin': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                            'nDocEntry': parseInt(me.jsonPedido.DocEntry),
+                            'nDocNum': parseInt(me.jsonPedido.DocNum),
+                            'cDocType': me.jsonPedido.DocType.toString(),
+                            'cLogRespuesta': response.data.toString(),
+                            'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
                         });
                     });
                     //==============================================================
