@@ -2,9 +2,9 @@
     <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">Cronograma</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Cronograma</h2>
+                </div>
             </header>
 
             <template v-if="vistaFormulario">
@@ -268,6 +268,11 @@
                     this.arrayTipoCronograma = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboAnios(){
@@ -280,6 +285,11 @@
                     this.arrayAnios = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarBusqueda(){
@@ -313,6 +323,11 @@
                     this.arrayMes = response.data.arrayParParametro;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             obtenerCronogramaActivo(){
@@ -334,6 +349,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){
@@ -394,6 +414,11 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        location.reload('0');
+                                    }
+                                }
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -423,6 +448,11 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        location.reload('0');
+                                    }
+                                }
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -499,6 +529,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;
