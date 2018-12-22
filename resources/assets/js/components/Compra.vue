@@ -2000,7 +2000,7 @@
                             'nDocNum': parseInt(me.jsonCompra.DocNum),
                             'cDocType': me.jsonCompra.DocType.toString(),
                             'cLogRespuesta': response.data.toString(),
-                            'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                            'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
                         });
                     });
 
@@ -2205,7 +2205,7 @@
                             'nDocNum': parseInt(me.jsonCompra.DocNum),
                             'cDocType': me.jsonCompra.DocType.toString(),
                             'cLogRespuesta': response.data.toString(),
-                            'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                            'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
                         });
                         console.log(me.jsonCompra.DocEntry);
                     });

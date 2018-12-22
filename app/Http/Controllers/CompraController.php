@@ -319,7 +319,7 @@ class CompraController extends Controller
             foreach($detalles as $ep=>$det)
             {
                 $objCompra = DB::select('exec [usp_Compra_SapUpdCompraByDocEntry] ?, ?, ?, ?, ?, ?',
-                                                            [   $det['cNumeroVin'],
+                                                            [   $det['cItemCode'],
                                                                 $det['nDocEntry'],
                                                                 $det['nDocNum'],
                                                                 $det['cDocType'],
