@@ -1990,12 +1990,16 @@
                     data: me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
+                    console.log("Integración SAP : OK");
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
                         //console.log(me.jsonCompra.DocEntry.toString());
                         //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
                         me.arraySapUpdCompra.push({
-                            'DocEntry': me.jsonCompra.DocEntry.toString(),
+                            'nDocEntry': parseInt(me.jsonCompra.DocEntry),
+                            'nDocNum': parseInt(me.jsonCompra.DocNum),
+                            'cDocType': me.jsonCompra.DocType.toString(),
+                            'cLogRespuesta': response.data.toString(),
                             'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
                         });
                     });
@@ -2011,7 +2015,6 @@
             },
             registroDocEntryCompra(){
                 let me = this;
-                console.log(me.arraySapUpdCompra.length);
                 var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntry';
                 axios.post(sapUrl, {
                     data: me.arraySapUpdCompra
@@ -2198,7 +2201,10 @@
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
                         me.arraySapUpdCompra.push({
-                            'DocEntry': me.jsonCompra.DocEntry.toString(),
+                            'nDocEntry': parseInt(me.jsonCompra.DocEntry),
+                            'nDocNum': parseInt(me.jsonCompra.DocNum),
+                            'cDocType': me.jsonCompra.DocType.toString(),
+                            'cLogRespuesta': response.data.toString(),
                             'cNumeroVin': me.jsonCompra.DocumentLines[0].ItemCode.toString()
                         });
                         console.log(me.jsonCompra.DocEntry);
