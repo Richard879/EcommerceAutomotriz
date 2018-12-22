@@ -828,6 +828,7 @@
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
+                    console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
                     this.registroSapPedido();
                 }).catch(error => {
                     this.errors = error

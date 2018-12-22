@@ -13,7 +13,7 @@ class SapComprobanteController extends Controller
     public function SapSetFactura(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://localhost:49454/'
+            'base_uri'  => 'http://172.20.6.68/'
         ]);
 
         $array_rpta = [];
@@ -35,7 +35,7 @@ class SapComprobanteController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/api/Factura/SapSetFactura/", $json);
+            $response = $client->request('POST', "/Sap/api/Factura/SapSetFactura/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
