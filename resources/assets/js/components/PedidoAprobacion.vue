@@ -153,7 +153,7 @@
                                                     <td>
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="aprobarPedido(pedido.nIdCabeceraPedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
+                                                            <i @click="aprobarPedido(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
                                                         </el-tooltip>&nbsp;
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
@@ -594,10 +594,18 @@
                 cFlagActivaCampania: 0,
                 //===========================================================
                 // =============  VARIABLES SAP ========================
+                formSap:{
+                    nidcabecerapedido: 0,
+                    ccardcode: ''
+                },
                 arraySapPedido: [],
                 arraySapRptPedido: [],
                 jsonPedido: '',
                 arraySapUpdPedido: [],
+                arraySapFactura: [],
+                arraySapRptFactura: [],
+                jsonFactura: '',
+                arraySapUpdFactura: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -772,9 +780,11 @@
                 this.paginationModal.current_page=page;
                 this.listarPedidos(page);
             },
-            aprobarPedido(nIdCabeceraPedido){
+            aprobarPedido(pedido){
+                this.formSap.nidcabecerapedido = pedido.nIdCabeceraPedido;
+                this.formSap.ccardcode          = pedido.cCardCode;
                 swal({
-                    title: '¿Esta seguro de APROBAR el pedido N°' + nIdCabeceraPedido + '?',
+                    title: '¿Esta seguro de APROBAR el pedido N°' + pedido.nIdCabeceraPedido + '?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -788,12 +798,12 @@
                         axios.put(url,{
                             'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                             'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                            'nidcabecerapedido': parseInt(nIdCabeceraPedido)
+                            'nidcabecerapedido': parseInt(me.formSap.nidcabecerapedido)
                         }).then(function (response) {
                             if(response.data[0].nFlagMsje == 1)
                             {
                                 me.mostrarProgressBar();
-                                me.obtenerPedidoById(nIdCabeceraPedido);
+                                me.obtenerPedidoById();
                             }
                             else
                             {
@@ -808,22 +818,22 @@
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
             },
-            obtenerPedidoById(nIdCabeceraPedido){
+            obtenerPedidoById(){
                 var url = this.ruta + '/pedido/GetPedidoById';
                 axios.get(url, {
                     params: {
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
-                        'nidcabecerapedido': nIdCabeceraPedido
+                        'nidcabecerapedido': this.formSap.nidcabecerapedido
                     }
                 }).then(response => {
                     this.arraySapPedido = response.data.arrayCabeceraPedido.data;
-                    this.registroSapPedido(nIdCabeceraPedido);
+                    this.registroSapPedido();
                 }).catch(error => {
                     this.errors = error
                 });
             },
-            registroSapPedido(nIdCabeceraPedido){
+            registroSapPedido(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
@@ -831,11 +841,11 @@
                     data: me.arraySapPedido
                 }).then(response => {
                     me.arraySapRptPedido = response.data;
-                    console.log("Integración SAP : OK");
+                    console.log("Integración Pedido SAP : OK");
                     me.arraySapRptPedido.map(function(x){
                         me.jsonPedido= JSON.parse(x);
                         me.arraySapUpdPedido.push({
-                            'nIdCabeceraPedido': nIdCabeceraPedido.toString(),
+                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
                             'nDocEntry': parseInt(me.jsonPedido.DocEntry),
                             'nDocNum': parseInt(me.jsonPedido.DocNum),
                             'cDocType': me.jsonPedido.DocType.toString(),
@@ -844,27 +854,80 @@
                         });
                     });
                     //==============================================================
-                    //================== ACTUALIZAR DOCENTRY ===============
+                    //================== ACTUALIZAR DOCENTRY PEDIDO ===============
                     setTimeout(function() {
-                        me.registroDocEntryPedido(nIdCabeceraPedido);
+                        me.registroDocEntryPedido();
                     }, 3800);
                 }).catch(error => {
                     console.log(error);
                 });
             },
-            registroDocEntryPedido(nIdCabeceraPedido){
+            registroDocEntryPedido(){
                 let me = this;
 
                 var sapUrl = me.ruta + '/pedido/SapUpdPedidoByDocEntry';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdPedido
+                    'data': me.arraySapUpdPedido
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
+                        setTimeout(function() {
+                            me.registroSapComprobante();
+                        }, 3800);
+                    }else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                }); 
+            },
+            registroSapComprobante(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SapSetFactura';
+                axios.post(sapUrl, {
+                    'cCardCode': me.formSap.ccardcode.toString(),
+                    'data': me.arraySapUpdPedido
+                }).then(response => {
+                    me.arraySapRptFactura = response.data;
+                    console.log("Integración Factura SAP : OK");
+                    me.arraySapRptFactura.map(function(x){
+                        me.jsonFactura= JSON.parse(x);
+                        me.arraySapUpdFactura.push({
+                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(), 
+                            'nDocEntry': parseInt(me.jsonFactura.DocEntry),
+                            'nDocNum': parseInt(me.jsonFactura.DocNum),
+                            'cDocType': me.jsonFactura.DocType.toString(),
+                            'cLogRespuesta': response.data.toString(),
+                            'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
+                        });
+                    });
+                    //==============================================================
+                    //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                    setTimeout(function() {
+                        me.registroDocEntryComprobante();
+                    }, 3800);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            registroDocEntryComprobante(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapUpdFacturaByDocEntry';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdFactura
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.limpiarFormulario();
                         me.listarPedidos(1);
                         $("#myBar").hide();
                         swal(
                                 'Aprobado!',
-                                'El pedido ' + nIdCabeceraPedido +' ha sido APROBADO con éxito.',
+                                'El pedido ha sido APROBADO con éxito.',
                                 'success'
                             )
                     }else{
@@ -876,7 +939,7 @@
                     }
                 }).catch(error => {
                     console.log(error);
-                });      
+                }); 
             },
             anularPedido(pedido){
                 swal({
@@ -1016,6 +1079,19 @@
                 this.accionmodal = 0;
                 this.error = 0;
                 this.mensajeError = '';
+            },
+            limpiarFormulario(){
+                //Limpiar Variables SAP
+                this.arraySapPedido=  [],
+                this.arraySapRptPedido= [],
+                this.jsonPedido= '',
+                this.arraySapUpdPedido= [],
+                this.arraySapFactura= [],
+                this.arraySapRptFactura= [],
+                this.jsonFactura= '',
+                this.arraySapUpdFactura= [],
+                this.formSap.nidcabecerapedido= 0,
+                this.formSap.ccardcode= ''
             },
             //Limpiar Paginación
             limpiarPaginacion(){

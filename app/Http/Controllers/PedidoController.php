@@ -501,4 +501,30 @@ class PedidoController extends Controller
             DB::rollBack();
         }
     }
+
+    public function SapUpdFacturaByDocEntry(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec [usp_Pedido_SapUpdComprobanteByDocEntry] ?, ?, ?, ?, ?, ?, ?',
+                                                            [   $det['nIdCabeceraPedido'],
+                                                                $det['cItemCode'],
+                                                                $det['nDocEntry'],
+                                                                $det['nDocNum'],
+                                                                $det['cDocType'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objCompra);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }    
 }

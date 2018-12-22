@@ -23,7 +23,7 @@ class SapPedidoController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
-                    "CardCode"      => $value['CardCode'],
+                    "CardCode"      => $value['cCardCode'],
                     "DocDate"       => "2018-11-30",
                     "DocDueDate"    => "2018-12-04",
                     "DocumentLines" => [

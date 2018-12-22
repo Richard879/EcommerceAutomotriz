@@ -158,6 +158,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pedido/SetHistorialPedidoDscto', 'PedidoController@SetHistorialPedidoDscto');
     Route::get('/pedido/GetPedidoById', 'PedidoController@GetPedidoById');
     Route::post('/pedido/SapUpdPedidoByDocEntry', 'PedidoController@SapUpdPedidoByDocEntry');
+    Route::post('/pedido/SapUpdFacturaByDocEntry', 'PedidoController@SapUpdFacturaByDocEntry');
 
     Route::get('/deposito/GetNumeroCuentaByBancoAndMoneda', 'PedidoDepositoController@GetNumeroCuentaByBancoAndMoneda');
     Route::get('/deposito/GetParDsctByParSrc', 'PedidoDepositoController@GetParDsctByParSrc');
@@ -363,6 +364,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
+    //Comprobante
+    Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================
