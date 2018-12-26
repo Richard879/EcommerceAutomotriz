@@ -1931,7 +1931,22 @@
 
                     //==============================================================
                     //================== REGITRO DE ARTICULO EN SAP ===============
-                    me.registroSapArticulo();
+                    //Depurar Array para registrar en SAP
+                    me.arrayExcel.map(function(x, y){
+                        //comprobar si un determinado elemento no existe dentro de un array
+                        if (me.arrayVinDepura.includes(x.cNumeroVin)) {
+                            me.arraySapArticulo.push(x);
+                        }
+                    });
+                    
+                    //Si existen compras para registrar (QUE NO EXISTAN VIN; QUE SEAN IGUALES A LA COMPRA; QUE ESTEN REGISTRADOS NOMBRE COMERCIAL)
+                    if(me.arraySapArticulo.length){
+                        me.registroSapArticulo();
+                    }
+                    else{
+                        $("#myBar").hide();
+                        me.verResultados();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1943,14 +1958,6 @@
             },
             registroSapArticulo(){
                 let me = this;
-
-                //Depurar Array para registrar en SAP
-                me.arrayExcel.map(function(x, y){
-                    //comprobar si un determinado elemento no existe dentro de un array
-                    if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
-                        me.arraySapArticulo.push(x);
-                    }
-                });
 
                 var sapUrl = me.ruta + '/compra/SapSetArticulo';
                 axios.post(sapUrl, {
@@ -2022,10 +2029,13 @@
                     $("#myBar").hide();
                     me.attachment = [];
                     me.limpiarFormulario();
+                    me.verResultados();
                 }).catch(error => {
                     console.log(error);
                 });
-
+            },
+            verResultados(){
+                let me = this;
                 //============= RESULTADO PARA MOSTRAR ================
                 if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                     me.accionmodal=3;
