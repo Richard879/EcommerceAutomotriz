@@ -1934,11 +1934,12 @@
                     //Depurar Array para registrar en SAP
                     me.arrayExcel.map(function(x, y){
                         //comprobar si un determinado elemento no existe dentro de un array
-                        if (me.arrayVinDepura.includes(x.cNumeroVin)) {
+                        if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
                             me.arraySapArticulo.push(x);
                         }
                     });
-                    
+
+                    console.log("N° articulos a registrar" + me.arraySapArticulo.length);
                     //Si existen compras para registrar (QUE NO EXISTAN VIN; QUE SEAN IGUALES A LA COMPRA; QUE ESTEN REGISTRADOS NOMBRE COMERCIAL)
                     if(me.arraySapArticulo.length){
                         me.registroSapArticulo();
