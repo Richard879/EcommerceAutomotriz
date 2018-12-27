@@ -1446,6 +1446,7 @@
                 arrayProveedor: [],
                 //===========================================================
                 // =============  VARIABLES SAP ========================
+                arrayVinDepura: [],
                 arraySapCompra: [],
                 arraySapRptCompra: [],
                 jsonCompra: '',
@@ -1901,9 +1902,7 @@
                             me.arrayCompraExisteVin.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
                             });
-                            me.arrayVinDepura.push({
-                                cNumeroVin: me.arrayTempVinExiste[key]
-                            });
+                            me.arrayVinDepura.push(me.arrayTempVinExiste[key]);
                         });
                     }
                     if(response.data.arrayPrecioLista.length){
@@ -1912,9 +1911,7 @@
                             me.arrayCompraPrecioLista.push({
                                 cNumeroVin: me.arrayTempVinListaPrecio[key]
                             });
-                            me.arrayVinDepura.push({
-                                cNumeroVin: me.arrayTempVinListaPrecio[key]
-                            });
+                            me.arrayVinDepura.push(me.arrayTempVinListaPrecio[key]);
                         });
                     }
                     if(response.data.arrayNombreComercial.length){
@@ -1923,9 +1920,7 @@
                             me.arrayCompraNombreComercial.push({
                                 cNumeroVin: me.arrayTempVinNombreComercial[key]
                             });
-                            me.arrayVinDepura.push({
-                                cNumeroVin: me.arrayTempVinNombreComercial[key]
-                            });
+                            me.arrayVinDepura.push(me.arrayTempVinNombreComercial[key]);
                         });
                     }
 
@@ -1935,6 +1930,7 @@
                     me.arrayExcel.map(function(x, y){
                         //comprobar si un determinado elemento no existe dentro de un array
                         if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
+                            console.log("VIN depurados: " + x.cNumeroVin);
                             me.arraySapArticulo.push(x);
                         }
                     });
@@ -1945,7 +1941,6 @@
                         me.registroSapArticulo();
                     }
                     else{
-                        $("#myBar").hide();
                         me.verResultados();
                     }
                 }).catch(error => {
@@ -2027,9 +2022,6 @@
                 axios.post(sapUrl, {
                     data: me.arraySapUpdCompra
                 }).then(response => {
-                    $("#myBar").hide();
-                    me.attachment = [];
-                    me.limpiarFormulario();
                     me.verResultados();
                 }).catch(error => {
                     console.log(error);
@@ -2037,13 +2029,15 @@
             },
             verResultados(){
                 let me = this;
+                $("#myBar").hide();
+                me.attachment = [];
+                me.limpiarFormulario();
                 //============= RESULTADO PARA MOSTRAR ================
                 if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                     me.accionmodal=3;
                     me.modal = 1;
                     me.attachment = [];
                 }else{
-                    $("#myBar").hide();
                     swal('Compra registrada correctamente');
                 }
             },
