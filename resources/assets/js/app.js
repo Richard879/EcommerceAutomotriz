@@ -61,7 +61,6 @@ Vue.component('asigvendedorcuota', require('./components/AsigVendedorCuota.vue')
 Vue.component('entregavehiculo', require('./components/EntregaVehiculo.vue'));
 Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('permisos', require('./components/AdmPermisos.vue'));
-Vue.component('cabecera', require('./components/Cabecera.vue'));
 Vue.component('cotizacionaprobar', require('./components/CotizacionAprobar.vue'));
 Vue.component('exhibiciones', require('./components/Exhibiciones.vue'));
 Vue.component('flete', require('./components/Flete.vue'));
@@ -77,7 +76,7 @@ const app = new Vue({
     el: '#app',
     data: {
         menu: 1300362,
-        ruta: 'http://localhost:8080/saisacsys/public'
+        ruta: 'http://172.20.6.54:8080/saisacsys/public'
     },
     methods: {
         reiniciaMenu: function(data) {

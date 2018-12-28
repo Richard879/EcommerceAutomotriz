@@ -47,7 +47,7 @@ class SapCompraController extends Controller
         //$DocEntry   = [];
 
         $User       =   Auth::user()->id;
-        $CardCode   =   'C'.$User;
+        $cCardCode   =   'C'.$User;
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -64,9 +64,9 @@ class SapCompraController extends Controller
                 
             $json = [
                 'json' => [
-                    "CardCode"      => $CardCode,
-                    "DocDate"       => "2018-11-30",
-                    "DocDueDate"    => "2018-12-04",
+                    "CardCode"      => $cCardCode,
+                    "DocDate"       => (string)$request->fDocDate,
+                    "DocDueDate"    => (string)$request->fDocDueDate,
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => $value['cNumeroVin'],

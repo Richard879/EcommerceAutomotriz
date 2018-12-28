@@ -839,7 +839,9 @@
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
-                    data: me.arraySapPedido
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapPedido
                 }).then(response => {
                     me.arraySapRptPedido = response.data;
                     console.log("Integración Pedido SAP : OK");
@@ -891,6 +893,7 @@
                 var sapUrl = me.ruta + '/comprobante/SapSetFactura';
                 axios.post(sapUrl, {
                     'cCardCode': me.formSap.ccardcode.toString(),
+                    'fDocDate': moment().format('YYYY-MM-DD'),
                     'data': me.arraySapUpdPedido
                 }).then(response => {
                     me.arraySapRptFactura = response.data;

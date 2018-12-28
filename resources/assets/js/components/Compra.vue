@@ -1990,7 +1990,9 @@
                 //console.log(me.arraySapCompra.length);
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    data: me.arraySapCompra
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     console.log("Integración SAP : OK");
@@ -2200,7 +2202,9 @@
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    data: me.arraySapCompra
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     console.log("Integración SAP : OK");
