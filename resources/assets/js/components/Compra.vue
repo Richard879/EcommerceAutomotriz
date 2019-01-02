@@ -1995,7 +1995,7 @@
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
-                    console.log("Integración SAP : OK");
+                    console.log("Integración SAP Compra : OK");
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
                         //console.log(me.jsonCompra.DocEntry.toString());
@@ -2181,13 +2181,13 @@
                         me.jsonArticulo= JSON.parse(x);
                         //Si el vaor de ItemCode es vacio => Error
                         if(!me.jsonArticulo.ItemCode){
+                            swal({
+                                type: 'error',
+                                title: 'Error...',
+                                text: 'Error en la Integración de Artículo!',
+                            });
                             me.limpiarFormulario();
                             me.listarCompras();
-                            swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en el Registro!',
-                            })
                         }
                         //Sino registro Compra
                         else{
@@ -2207,27 +2207,39 @@
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
-                    console.log("Integración SAP : OK");
+                    
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
-                        me.arraySapUpdCompra.push({
-                            'nDocEntry': parseInt(me.jsonCompra.DocEntry),
-                            'nDocNum': parseInt(me.jsonCompra.DocNum),
-                            'cDocType': me.jsonCompra.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
-                        });
-                        console.log(me.jsonCompra.DocEntry);
+                        //Verifico que devuelva DocEntry
+                        if(!me.jsonCompra.DocEntry){
+                            console.log("Integración SAP Compra : OK");
+                            console.log(me.jsonCompra.DocEntry);
+                            me.arraySapUpdCompra.push({
+                                'nDocEntry': parseInt(me.jsonCompra.DocEntry),
+                                'nDocNum': parseInt(me.jsonCompra.DocNum),
+                                'cDocType': me.jsonCompra.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            setTimeout(function() {
+                                    me.generaActualizarDocEntry();
+                                }, 3800);
+                        }
+                        else{
+                            swal({
+                                type: 'error',
+                                title: 'Error...',
+                                text: 'Error en la Integración Sap!',
+                                });
+                            me.limpiarFormulario();
+                            me.listarCompras();
+                        }
                     });
                 }).catch(error => {
                     console.log(error);
                 });
-
-                //==============================================================
-                //================== ACTUALIZAR DOCENTRY ===============
-                setTimeout(function() {
-                        me.generaActualizarDocEntry();
-                    }, 3800);
             },
             generaActualizarDocEntry(){
                 let me = this;
@@ -2238,16 +2250,18 @@
                     $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
+                        swal('Compra registrada correctamente');
                         me.limpiarFormulario();
                         me.listarCompras();
-                        swal('Compra registrada correctamente');
                     }
                     else{
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Error en el Registro!',
-                            })
+                            text: 'Error en Actulizar Compra!',
+                            });
+                        me.limpiarFormulario();
+                        me.listarCompras();
                     }
                 }).catch(error => {
                     console.log(error);
