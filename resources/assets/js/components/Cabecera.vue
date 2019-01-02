@@ -43,7 +43,7 @@
             }
         },
         mounted(){
-            console.log("Entro a la Cabecera");
+            //console.log("Entro a la Cabecera");
             this.listarEmpresaByUsuario();
             //this.listarSucursalByEmpresa();
         },

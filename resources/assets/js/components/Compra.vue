@@ -2180,22 +2180,19 @@
                     me.arraySapRptArticulo = response.data;
                     me.arraySapRptArticulo.map(function(x){
                         me.jsonArticulo= JSON.parse(x);
-                        //Si el vaor de ItemCode es vacio => Error
-                        if(!me.jsonArticulo.ItemCode){
-                            swal({
-                                type: 'error',
-                                title: 'Error...',
-                                text: 'Error en la Integración de Artículo!',
-                            });
-                            me.limpiarFormulario();
-                            me.listarCompras();
-                        }
-                        //Sino registro Compra
-                        else{
+                        //Si el vaor de ItemCode tiene un valor
+                        if(me.jsonArticulo.ItemCode){
                             me.generaSapCompra();
                         }
                     });
                 }).catch(error => {
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Artículo SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarCompras();
                     console.log(error);
                 });
             },
@@ -2208,7 +2205,6 @@
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
-                    
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
                         //Verifico que devuelva DocEntry
@@ -2225,20 +2221,19 @@
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY ===============
                             setTimeout(function() {
-                                    me.generaActualizarDocEntry();
-                                }, 3800);
-                        }
-                        else{
-                            swal({
-                                type: 'error',
-                                title: 'Error...',
-                                text: 'Error en la Integración Sap!',
-                                });
-                            me.limpiarFormulario();
-                            me.listarCompras();
+                                me.generaActualizarDocEntry();
+                            }, 3800);
                         }
                     });
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración Compra SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarCompras();
                     console.log(error);
                 });
             },
@@ -2260,7 +2255,7 @@
                             type: 'error',
                             title: 'Error...',
                             text: 'Error en Actulizar Compra!',
-                            });
+                        });
                         me.limpiarFormulario();
                         me.listarCompras();
                     }
