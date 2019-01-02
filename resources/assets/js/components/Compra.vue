@@ -1446,6 +1446,7 @@
                 arrayProveedor: [],
                 //===========================================================
                 // =============  VARIABLES SAP ========================
+                arrayVinDepura: [],
                 arraySapCompra: [],
                 arraySapRptCompra: [],
                 jsonCompra: '',
@@ -1901,9 +1902,7 @@
                             me.arrayCompraExisteVin.push({
                                 cNumeroVin: me.arrayTempVinExiste[key]
                             });
-                            me.arrayVinDepura.push({
-                                cNumeroVin: me.arrayTempVinExiste[key]
-                            });
+                            me.arrayVinDepura.push(me.arrayTempVinExiste[key]);
                         });
                     }
                     if(response.data.arrayPrecioLista.length){
@@ -1912,9 +1911,7 @@
                             me.arrayCompraPrecioLista.push({
                                 cNumeroVin: me.arrayTempVinListaPrecio[key]
                             });
-                            me.arrayVinDepura.push({
-                                cNumeroVin: me.arrayTempVinListaPrecio[key]
-                            });
+                            me.arrayVinDepura.push(me.arrayTempVinListaPrecio[key]);
                         });
                     }
                     if(response.data.arrayNombreComercial.length){
@@ -1923,15 +1920,29 @@
                             me.arrayCompraNombreComercial.push({
                                 cNumeroVin: me.arrayTempVinNombreComercial[key]
                             });
-                            me.arrayVinDepura.push({
-                                cNumeroVin: me.arrayTempVinNombreComercial[key]
-                            });
+                            me.arrayVinDepura.push(me.arrayTempVinNombreComercial[key]);
                         });
                     }
 
                     //==============================================================
                     //================== REGITRO DE ARTICULO EN SAP ===============
-                    me.registroSapArticulo();
+                    //Depurar Array para registrar en SAP
+                    me.arrayExcel.map(function(x, y){
+                        //comprobar si un determinado elemento no existe dentro de un array
+                        if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
+                            console.log("VIN depurados: " + x.cNumeroVin);
+                            me.arraySapArticulo.push(x);
+                        }
+                    });
+
+                    console.log("N° articulos a registrar" + me.arraySapArticulo.length);
+                    //Si existen compras para registrar (QUE NO EXISTAN VIN; QUE SEAN IGUALES A LA COMPRA; QUE ESTEN REGISTRADOS NOMBRE COMERCIAL)
+                    if(me.arraySapArticulo.length){
+                        me.registroSapArticulo();
+                    }
+                    else{
+                        me.verResultados();
+                    }
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1943,14 +1954,6 @@
             },
             registroSapArticulo(){
                 let me = this;
-
-                //Depurar Array para registrar en SAP
-                me.arrayExcel.map(function(x, y){
-                    //comprobar si un determinado elemento no existe dentro de un array
-                    if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
-                        me.arraySapArticulo.push(x);
-                    }
-                });
 
                 var sapUrl = me.ruta + '/compra/SapSetArticulo';
                 axios.post(sapUrl, {
@@ -1988,7 +1991,9 @@
                 //console.log(me.arraySapCompra.length);
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    data: me.arraySapCompra
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     console.log("Integración SAP : OK");
@@ -2020,20 +2025,22 @@
                 axios.post(sapUrl, {
                     data: me.arraySapUpdCompra
                 }).then(response => {
-                    $("#myBar").hide();
-                    me.attachment = [];
-                    me.limpiarFormulario();
+                    me.verResultados();
                 }).catch(error => {
                     console.log(error);
                 });
-
+            },
+            verResultados(){
+                let me = this;
+                $("#myBar").hide();
+                me.attachment = [];
+                me.limpiarFormulario();
                 //============= RESULTADO PARA MOSTRAR ================
                 if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
                     me.accionmodal=3;
                     me.modal = 1;
                     me.attachment = [];
                 }else{
-                    $("#myBar").hide();
                     swal('Compra registrada correctamente');
                 }
             },
@@ -2196,7 +2203,9 @@
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
-                    data: me.arraySapCompra
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     console.log("Integración SAP : OK");

@@ -511,7 +511,7 @@ class PedidoController extends Controller
             $detalles = $request->data;
             foreach($detalles as $ep=>$det)
             {
-                $objCompra = DB::select('exec [usp_Pedido_SapUpdComprobanteByDocEntry] ?, ?, ?, ?, ?, ?, ?',
+                $objFactura = DB::select('exec [usp_Pedido_SapUpdComprobanteByDocEntry] ?, ?, ?, ?, ?, ?, ?',
                                                             [   $det['nIdCabeceraPedido'],
                                                                 $det['cItemCode'],
                                                                 $det['nDocEntry'],
@@ -522,7 +522,7 @@ class PedidoController extends Controller
                                                             ]);
             }
             DB::commit();
-            return response()->json($objCompra);
+            return response()->json($objFactura);
         } catch (Exception $e){
             DB::rollBack();
         }
