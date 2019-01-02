@@ -2209,7 +2209,7 @@
                     me.arraySapRptCompra.map(function(x){
                         me.jsonCompra= JSON.parse(x);
                         //Verifico que devuelva DocEntry
-                        if(!me.jsonCompra.DocEntry){
+                        if(me.jsonCompra.DocEntry){
                             console.log("Integración SAP Compra : OK");
                             console.log(me.jsonCompra.DocEntry);
                             me.arraySapUpdCompra.push({
