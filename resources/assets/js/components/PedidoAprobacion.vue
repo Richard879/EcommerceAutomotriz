@@ -843,24 +843,28 @@
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                     'data': me.arraySapPedido
                 }).then(response => {
-                    me.arraySapRptPedido = response.data;
-                    console.log("Integración Pedido SAP : OK");
+                    me.arraySapRptPedido = response.data; 
                     me.arraySapRptPedido.map(function(x){
                         me.jsonPedido= JSON.parse(x);
-                        me.arraySapUpdPedido.push({
-                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                            'nDocEntry': parseInt(me.jsonPedido.DocEntry),
-                            'nDocNum': parseInt(me.jsonPedido.DocNum),
-                            'cDocType': me.jsonPedido.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
-                        });
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonPedido.DocEntry){
+                            console.log("Integración Pedido SAP : OK");
+                            console.log(me.jsonPedido.DocEntry);
+                            me.arraySapUpdPedido.push({
+                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
+                                'nDocEntry': parseInt(me.jsonPedido.DocEntry),
+                                'nDocNum': parseInt(me.jsonPedido.DocNum),
+                                'cDocType': me.jsonPedido.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY PEDIDO ===============
+                            setTimeout(function() {
+                                me.registroDocEntryPedido();
+                            }, 3800);
+                        }
                     });
-                    //==============================================================
-                    //================== ACTUALIZAR DOCENTRY PEDIDO ===============
-                    setTimeout(function() {
-                        me.registroDocEntryPedido();
-                    }, 3800);
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
