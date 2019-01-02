@@ -988,7 +988,7 @@
             getDatosPedido(data){
                 this.fillPedidoDscto.nIdCabeceraPedido = data.nIdCabeceraPedido
                 this.fillPedidoDscto.cNumeroPedido = data.cNumeroPedido
-                this.fillPedidoDscto.dMontoPedido = data.fTotalPedidoVehiculoDolar
+                this.fillPedidoDscto.dMontoPedido = data.fTotalPedidoDolares
             },
             calcularNuevoMonto(op, value = null){
                 if(op == 1) {
@@ -1000,7 +1000,7 @@
                     let me = this;
 
                     if (me.fillPedidoDscto.cTipoDscto == '1') {
-                        if(value == '' || value < 0){
+                        if(parseInt(value) == '' || parseInt(value) < 0){
                             me.$message.error(`El Monto ha descontar no puede ser vacío ó menor a cero`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
@@ -1011,7 +1011,7 @@
                         let montoDolares = me.fillPedidoDscto.dMontoNuevoDolares;
                         me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
                     } else {
-                        if(value < 0 || value > 100 || value == ''){
+                        if(parseInt(value) < 0 || parseInt(value) > 100 || parseInt(value) == ''){
                             me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;

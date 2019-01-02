@@ -239,7 +239,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Detalle Pedido -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -409,7 +409,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -438,7 +438,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -467,7 +467,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" 
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
                                                             v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
@@ -701,6 +701,11 @@
                     this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelo(){
@@ -714,6 +719,11 @@
                     this.fillBusquedaPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarPedidos(page){
@@ -750,6 +760,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarBuscarPedidos(){
@@ -814,6 +829,11 @@
                             }
                         }).catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
@@ -831,7 +851,12 @@
                     console.log("Cantidad Pedidos: " + this.arraySapPedido.length);
                     this.registroSapPedido();
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registroSapPedido(){
@@ -863,6 +888,11 @@
                     }, 3800);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registroDocEntryPedido(){
@@ -885,7 +915,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
-                }); 
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             registroSapComprobante(){
                 let me = this;
@@ -901,7 +936,7 @@
                     me.arraySapRptFactura.map(function(x){
                         me.jsonFactura= JSON.parse(x);
                         me.arraySapUpdFactura.push({
-                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(), 
+                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
                             'nDocEntry': parseInt(me.jsonFactura.DocEntry),
                             'nDocNum': parseInt(me.jsonFactura.DocNum),
                             'cDocType': me.jsonFactura.DocType.toString(),
@@ -916,6 +951,11 @@
                     }, 3800);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registroDocEntryComprobante(){
@@ -943,7 +983,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
-                }); 
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             anularPedido(pedido){
                 swal({
@@ -981,6 +1026,11 @@
                             me.listarPedidos(1);
                         }).catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
@@ -1020,6 +1070,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             verificaDetallePedido(){
@@ -1027,9 +1082,9 @@
                 me.cFlagActivaElemento = 0;
                 me.cFlagActivaObsequio = 0;
                 me.cFlagActivaCampania = 0;
-                
+
                 me.arrayDetallePedido.map(function(value, key) {
-                    if(value.cFlagVista == 'E'){ 
+                    if(value.cFlagVista == 'E'){
                         me.cFlagActivaElemento = 1;
                     };
                     if(value.cFlagVista == 'O'){
@@ -1050,9 +1105,14 @@
                         'opcion': 1
                     }
                 }).then(response => {
-                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;           
+                    this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             aprobarPedidoModal(){
