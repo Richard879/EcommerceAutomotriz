@@ -90,13 +90,12 @@
         <div class="invoice">
             <table width="100%">
                 <tr>
-                    <td align="left" style="width: 40%;"></td>
-                    <td align="center" style="width: 40%;"></td>
                     <td align="right" style="width: 40%;">
                         {{ $CartaDetalleSolicitud[0]->Fecha }}
                     </td>
                 </tr>
             </table>
+            <br>
 
             <table width="100%">
                 <tr>
@@ -161,23 +160,23 @@
                 </tr>
                 <tr>
                     <td>Número de Chasis/Serie:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNumeroChasis }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNumeroChasis) ? $CartaDetalleSolicitud[0]->cNumeroChasis : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Número de Motor:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNumeroMotor }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNumeroMotor) ? $CartaDetalleSolicitud[0]->cNumeroMotor : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Color:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNombreColor }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNombreColor) ? $CartaDetalleSolicitud[0]->cNombreColor : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Clase:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNombreClase }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNombreClase) ? $CartaDetalleSolicitud[0]->cNombreClase : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Carrocería:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNombreSubClase }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNombreSubClase) ? $CartaDetalleSolicitud[0]->cNombreSubClase : '-' }}</strong></td>
                 </tr>
             </table>
 
@@ -206,6 +205,7 @@
                     Nos compremetemos a gestionar la Tarjeta de Propiedad del Vehículo a nombre de
                 </td>
             </table>
+
             <table width="100%">
                 <tr>
                     <td align="center" style="width: 40%;">
@@ -222,7 +222,6 @@
                     Atentamente,
                 </tr>
             </table>
-
         </div>
     </div>
 
