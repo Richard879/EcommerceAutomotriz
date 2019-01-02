@@ -526,5 +526,5 @@ class PedidoController extends Controller
         } catch (Exception $e){
             DB::rollBack();
         }
-    }    
+    }
 }

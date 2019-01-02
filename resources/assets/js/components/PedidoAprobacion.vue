@@ -859,6 +859,7 @@
                     }
                 });
             },
+            //REGISTRA PEDIDO EN SAP
             registroSapPedido(){
                 let me = this;
 
@@ -907,6 +908,7 @@
                     }
                 });
             },
+            //REGISTRA DOCENTRY-PEDIDO EN SQLSERVER
             registroDocEntryPedido(){
                 let me = this;
 
@@ -934,6 +936,7 @@
                     }
                 });
             },
+            //REGISTRA COMPROBANTE SAP
             registroSapComprobante(){
                 let me = this;
 
@@ -982,6 +985,7 @@
                     }
                 });
             },
+            //REGISTRA DOCENTRYCOMPROBANTE EN SQLSERVER
             registroDocEntryComprobante(){
                 let me = this;
 
