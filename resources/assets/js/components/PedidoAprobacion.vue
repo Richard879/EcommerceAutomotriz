@@ -869,24 +869,36 @@
                     'data': me.arraySapPedido
                 }).then(response => {
                     me.arraySapRptPedido = response.data;
-                    console.log("Integración Pedido SAP : OK");
                     me.arraySapRptPedido.map(function(x){
                         me.jsonPedido= JSON.parse(x);
-                        me.arraySapUpdPedido.push({
-                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                            'nDocEntry': parseInt(me.jsonPedido.DocEntry),
-                            'nDocNum': parseInt(me.jsonPedido.DocNum),
-                            'cDocType': me.jsonPedido.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
-                        });
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonPedido.DocEntry){
+                            console.log("Integración Pedido SAP : OK");
+                            console.log(me.jsonPedido.DocEntry);
+                            me.arraySapUpdPedido.push({
+                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
+                                'nDocEntry': parseInt(me.jsonPedido.DocEntry),
+                                'nDocNum': parseInt(me.jsonPedido.DocNum),
+                                'cDocType': me.jsonPedido.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY PEDIDO ===============
+                            setTimeout(function() {
+                                me.registroDocEntryPedido();
+                            }, 3800);
+                        }
                     });
-                    //==============================================================
-                    //================== ACTUALIZAR DOCENTRY PEDIDO ===============
-                    setTimeout(function() {
-                        me.registroDocEntryPedido();
-                    }, 3800);
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Pedido SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -910,7 +922,7 @@
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Error en el registro de Pedido!',
+                            text: 'Error en Actualizar Pedido!',
                         })
                     }
                 }).catch(error => {
@@ -932,24 +944,36 @@
                     'data': me.arraySapUpdPedido
                 }).then(response => {
                     me.arraySapRptFactura = response.data;
-                    console.log("Integración Factura SAP : OK");
                     me.arraySapRptFactura.map(function(x){
                         me.jsonFactura= JSON.parse(x);
-                        me.arraySapUpdFactura.push({
-                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
-                            'nDocEntry': parseInt(me.jsonFactura.DocEntry),
-                            'nDocNum': parseInt(me.jsonFactura.DocNum),
-                            'cDocType': me.jsonFactura.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
-                        });
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonFactura.DocEntry){
+                            console.log("Integración Factura SAP : OK");
+                            console.log(me.jsonFactura.DocEntry);
+                            me.arraySapUpdFactura.push({
+                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
+                                'nDocEntry': parseInt(me.jsonFactura.DocEntry),
+                                'nDocNum': parseInt(me.jsonFactura.DocNum),
+                                'cDocType': me.jsonFactura.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.registroDocEntryComprobante();
+                            }, 3800);
+                        }
                     });
-                    //==============================================================
-                    //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                    setTimeout(function() {
-                        me.registroDocEntryComprobante();
-                    }, 3800);
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Comprobante SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
@@ -970,10 +994,10 @@
                         me.listarPedidos(1);
                         $("#myBar").hide();
                         swal(
-                                'Aprobado!',
-                                'El pedido ha sido APROBADO con éxito.',
-                                'success'
-                            )
+                            'Aprobado!',
+                            'El pedido ha sido APROBADO con éxito.',
+                            'success'
+                        );
                     }else{
                         swal({
                             type: 'error',
