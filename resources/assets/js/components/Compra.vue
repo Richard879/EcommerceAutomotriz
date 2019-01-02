@@ -1979,6 +1979,7 @@
                 let me = this;
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
+                    // Si no se encuentra
                     if (!me.arraySapItemCode.includes(x.cNumeroVin)) {
                         me.arraySapCompra.push(x);
                     }
@@ -2120,9 +2121,9 @@
             //=================== REGISTRO SAP INDIVIDUAL ==============
             validarSapArticulo(compra){
                 this.mostrarProgressBar();
-                
+
                 let me = this;
-                
+
                 var sapUrl = me.ruta + '/articulo/SapGetValidarArticulo';
                 axios.post(sapUrl, {
                     cNumeroVin: compra.cNumeroVin
@@ -2242,7 +2243,7 @@
                     }
                 }).catch(error => {
                     console.log(error);
-                });                    
+                });
             },
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){

@@ -203,7 +203,11 @@ class CartaCaracteristicaController extends Controller
                                                                                     'CartaDetalleSolicitud' => $lstSCC,
                                                                                     'logo'                  => $logo,
                                                                                     'hyundai'               => $hyundai
-                                                                                ])->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
+                                                                                ])
+                                                                                ->save($path);//ALMACENO EL ARCHIVO EN EL SERVIDOR
+        // $pdf->setPaper('A4', 'landscape');
+        // $pdf->render();
+        // $pdf->stream('samplepdf1');
 
         //REGISTRO EN LA DB LA RUTA, NOMBRE Y USUARIO
         $arrayDocumento = DB::select('exec usp_Pedido_SetDocumentoAdjunto ?, ?, ?',
