@@ -2186,6 +2186,7 @@
                         }
                     });
                 }).catch(error => {
+                    $("#myBar").hide();
                     swal({
                         type: 'error',
                         title: 'Error...',

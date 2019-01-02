@@ -862,6 +862,14 @@
                         me.registroDocEntryPedido();
                     }, 3800);
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Pedido SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
                     console.log(error);
                 });
             },
@@ -880,7 +888,7 @@
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Error en el registro de Pedido!',
+                            text: 'Error en Actualizar Pedido!',
                         })
                     }
                 }).catch(error => {
@@ -915,6 +923,14 @@
                         me.registroDocEntryComprobante();
                     }, 3800);
                 }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Comprobante SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
                     console.log(error);
                 });
             },
@@ -930,10 +946,10 @@
                         me.listarPedidos(1);
                         $("#myBar").hide();
                         swal(
-                                'Aprobado!',
-                                'El pedido ha sido APROBADO con éxito.',
-                                'success'
-                            )
+                            'Aprobado!',
+                            'El pedido ha sido APROBADO con éxito.',
+                            'success'
+                        );
                     }else{
                         swal({
                             type: 'error',
