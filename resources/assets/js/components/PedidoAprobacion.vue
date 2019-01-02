@@ -909,23 +909,27 @@
                     'data': me.arraySapUpdPedido
                 }).then(response => {
                     me.arraySapRptFactura = response.data;
-                    console.log("Integración Factura SAP : OK");
                     me.arraySapRptFactura.map(function(x){
                         me.jsonFactura= JSON.parse(x);
-                        me.arraySapUpdFactura.push({
-                            'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(), 
-                            'nDocEntry': parseInt(me.jsonFactura.DocEntry),
-                            'nDocNum': parseInt(me.jsonFactura.DocNum),
-                            'cDocType': me.jsonFactura.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
-                        });
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonFactura.DocEntry){
+                            console.log("Integración Factura SAP : OK");
+                            console.log(me.jsonFactura.DocEntry);
+                            me.arraySapUpdFactura.push({
+                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(), 
+                                'nDocEntry': parseInt(me.jsonFactura.DocEntry),
+                                'nDocNum': parseInt(me.jsonFactura.DocNum),
+                                'cDocType': me.jsonFactura.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.registroDocEntryComprobante();
+                            }, 3800);
+                        }
                     });
-                    //==============================================================
-                    //================== ACTUALIZAR DOCENTRY FACTURA ===============
-                    setTimeout(function() {
-                        me.registroDocEntryComprobante();
-                    }, 3800);
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
