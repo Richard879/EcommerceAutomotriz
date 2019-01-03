@@ -366,6 +366,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
     //Comprobante
     Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
+    //Nota Credito
+    Route::post('/pedido/SapSetPedidoNotaCreditoDscto', 'Api\SapNotaCreditoController@SapSetPedidoNotaCreditoDscto');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

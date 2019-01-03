@@ -200,7 +200,7 @@ class CartaCaracteristicaController extends Controller
         $hyundai            = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
         $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.detallesolicitud', [
-                                                                                    'CartaDetalleSolicitud' => $lstSCC,
+                                                                                    'CartaDetalleSolicitud' => $lstSCC[0],
                                                                                     'logo'                  => $logo,
                                                                                     'hyundai'               => $hyundai
                                                                                 ])
@@ -254,7 +254,7 @@ class CartaCaracteristicaController extends Controller
         $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
         $pdf = \PDF::loadView('pdf.solicitudcartacaracteristica.aprobacionsolicitud', [
-                                                                                        'CartaDetalleSolicitud' => $lstSCC,
+                                                                                        'CartaDetalleSolicitud' => $lstSCC[0],
                                                                                         'logo' => $logo,
                                                                                         'hyundai' => $hyundai,
                                                                                         'imagen' => $basePath

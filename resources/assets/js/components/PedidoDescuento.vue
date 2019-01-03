@@ -742,6 +742,9 @@
                     dMontoPedido: '',
                     dMontoNuevoDolares: '',
                     dMontoNuevoSoles: '',
+                    //Integración Dscto
+                    nDocEntryPedido: '',
+                    cItemCode: ''
                 },
                 arrayTipoDscto: [
                     { value: '1', text: 'USD'},
@@ -936,6 +939,7 @@
                 this.fillPedidoDscto.dMontoPedido = '';
                 this.fillPedidoDscto.dMontoNuevoDolares = '';
                 this.fillPedidoDscto.dMontoNuevoSoles = '';
+                this.fillPedidoDscto.nDocNum = '';
                 this.arrayHistorialPedidoDsctos = [];
             },
             generarDsctoPedido(op, data = null){
@@ -989,6 +993,9 @@
                 this.fillPedidoDscto.nIdCabeceraPedido = data.nIdCabeceraPedido
                 this.fillPedidoDscto.cNumeroPedido = data.cNumeroPedido
                 this.fillPedidoDscto.dMontoPedido = data.fTotalPedidoDolares
+                //Integración Dscto
+                this.fillPedidoDscto.nDocEntryPedido = data.nDocEntryPedido
+                this.fillPedidoDscto.cItemCode = data.cItemCode
             },
             calcularNuevoMonto(op, value = null){
                 if(op == 1) {
@@ -1033,6 +1040,60 @@
                 this.fillPedidoDscto.dMontoDescontarFlag = 0;
                 this.calcularNuevoMonto(2, this.fillPedidoDscto.dMontoDescontarFlag);
             },
+            //REGISTRO DSCTO PEDIDO//NOTA CREDITO EN SAP
+            registrarDsctoPedidoSAP(){
+                var url = this.ruta + '/pedido/SapSetPedidoNotaCreditoDscto';
+                axios.post(url, {
+                    nDocEntryPedido: this.fillPedidoDscto.nDocEntryPedido,
+                    cItemCode: this.fillPedidoDscto.cItemCode,
+                    dMontoNuevoSoles: this.fillPedidoDscto.dMontoNuevoSoles,
+                }).then(response => {
+                    console.log(response.data);
+                    this.$forceUpdate();
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en Generar la Nota de Crédito Pedido SapB1!',
+                    });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //REGISTRO DOCENTRY-PEDIDO EN SQLSERVER
+            registrarDsctoPedidoNotaCredito(data){
+                var url = this.ruta + '/pedido/SapSetPedidoNotaCreditoDscto';
+                axios.post(url, {
+                    nIdCabeceraPedido   : this.fillPedidoDscto.nIdCabeceraPedido,
+                    cItemCode           : this.fillPedidoDscto.cItemCode,
+                    nDocEntry           : data.nDocEntry,
+                    nDocNum             : data.nDocNum,
+                    cDocTyp             : data.cDocTyp,
+                    cLogRespuesta       : data
+                }).then(response => {
+                    console.log(response.data);
+                    this.$forceUpdate();
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en Registrar DocEntry Nota Credito del Pedido SapB1!',
+                    });
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //GENERAR DSCTO EN PEDIDO-HISTORIAL EN SQLSERVER
             registrarDsctoPedido(){
                 var url = this.ruta + '/pedido/SetHistorialPedidoDscto';
                 axios.post(url, {

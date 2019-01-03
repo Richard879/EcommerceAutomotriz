@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Carta de Caracteristicaas N° {{ $CartaDetalleSolicitud[0]->cNumCarta }}</title>
+    <title>Carta de Caracteristicaas N° {{ $CartaDetalleSolicitud->cNumCarta }}</title>
     <style type="text/css">
         @page {
             margin: 0px;
@@ -91,31 +91,30 @@
             <table width="100%">
                 <tr>
                     <td align="right" style="width: 40%;">
-                        {{ $CartaDetalleSolicitud[0]->Fecha }}
+                        {{ $CartaDetalleSolicitud->Fecha }}
                     </td>
                 </tr>
             </table>
             <br>
-
             <table width="100%">
                 <tr>
                     <td align="left" style="width: 40%;">
                         <h4>Señores</h4>
                         <strong>
-                            {{ $CartaDetalleSolicitud[0]->cNombreBanco }}
+                            {{ $CartaDetalleSolicitud->cNombreBanco }}
                         </strong>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" style="width: 40%;">
-                        <h4>Presente.-</h4>
+                        <h4>Presente.</h4>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" style="width: 40%;">
                         <h4>Atención :</h4>
                         <strong>
-                            {{ $CartaDetalleSolicitud[0]->cRef }}  {{ $CartaDetalleSolicitud[0]->cAtencion }}
+                            {{ $CartaDetalleSolicitud->cRef }}  {{ $CartaDetalleSolicitud->cAtencion }}
                         </strong>
                     </td>
                 </tr>
@@ -123,7 +122,7 @@
                     <td align="left" style="width: 40%;">
                         <h4>Referencia - Cliente :</h4>
                         <strong>
-                            {{ $CartaDetalleSolicitud[0]->cContacto }}
+                            {{ $CartaDetalleSolicitud->cContacto }}
                         </strong>
                     </td>
                 </tr>
@@ -135,7 +134,7 @@
                 <tr>
                     <td align="left" style="width: 100%;">
                         <p>
-                            Mediante la presente, cumplimos con informar las características del vehículo asignado a nuestro mutuo cliente <strong>{{ $CartaDetalleSolicitud[0]->cContacto }}</strong> , identificado con DNI  <strong>{{ $CartaDetalleSolicitud[0]->cNumDocumento }}</strong>
+                            Mediante la presente, cumplimos con informar las características del vehículo asignado a nuestro mutuo cliente <strong>{{ $CartaDetalleSolicitud->cContacto }}</strong> , identificado con DNI  <strong>{{ $CartaDetalleSolicitud->cNumDocumento }}</strong>
                         </p>
                     </td>
                 </tr>
@@ -144,39 +143,39 @@
             <table width="100%">
                 <tr>
                     <td>Marca:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNombreMarca }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->cNombreMarca }}</strong></td>
                 </tr>
                 <tr>
                     <td>Modelo:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cNombreModelo }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->cNombreModelo }}</strong></td>
                 </tr>
                 <tr>
                     <td>Año Fabricación:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->nAnioFabricacion }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->nAnioFabricacion }}</strong></td>
                 </tr>
                 <tr>
                     <td>Año Modelo:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->nAnioModelo }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->nAnioModelo }}</strong></td>
                 </tr>
                 <tr>
                     <td>Número de Chasis/Serie:</td>
-                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNumeroChasis) ? $CartaDetalleSolicitud[0]->cNumeroChasis : '-' }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud->cNumeroChasis) ? $CartaDetalleSolicitud->cNumeroChasis : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Número de Motor:</td>
-                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNumeroMotor) ? $CartaDetalleSolicitud[0]->cNumeroMotor : '-' }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud->cNumeroMotor) ? $CartaDetalleSolicitud->cNumeroMotor : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Color:</td>
-                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNombreColor) ? $CartaDetalleSolicitud[0]->cNombreColor : '-' }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud->cNombreColor) ? $CartaDetalleSolicitud->cNombreColor : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Clase:</td>
-                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNombreClase) ? $CartaDetalleSolicitud[0]->cNombreClase : '-' }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud->cNombreClase) ? $CartaDetalleSolicitud->cNombreClase : '-' }}</strong></td>
                 </tr>
                 <tr>
                     <td>Carrocería:</td>
-                    <td><strong>{{ ($CartaDetalleSolicitud[0]->cNombreSubClase) ? $CartaDetalleSolicitud[0]->cNombreSubClase : '-' }}</strong></td>
+                    <td><strong>{{ ($CartaDetalleSolicitud->cNombreSubClase) ? $CartaDetalleSolicitud->cNombreSubClase : '-' }}</strong></td>
                 </tr>
             </table>
 
@@ -188,15 +187,15 @@
                 </tr>
                 <tr>
                     <td>Precio del Vehículo:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cMoneda }} {{ $CartaDetalleSolicitud[0]->fPrecioBase }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->cMoneda }} {{ $CartaDetalleSolicitud->fPrecioBase }}</strong></td>
                 </tr>
                 <tr>
                     <td>Cuota Inicial:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cMoneda }} {{ $CartaDetalleSolicitud[0]->fCuotaInicial }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->cMoneda }} {{ $CartaDetalleSolicitud->fCuotaInicial }}</strong></td>
                 </tr>
                 <tr>
                     <td>Monto a Desembolsar:</td>
-                    <td><strong>{{ $CartaDetalleSolicitud[0]->cMoneda }} {{ $CartaDetalleSolicitud[0]->fMontoDesembolsado }}</strong></td>
+                    <td><strong>{{ $CartaDetalleSolicitud->cMoneda }} {{ $CartaDetalleSolicitud->fMontoDesembolsado }}</strong></td>
                 </tr>
             </table>
 
@@ -209,17 +208,17 @@
             <table width="100%">
                 <tr>
                     <td align="center" style="width: 40%;">
-                        {{ $CartaDetalleSolicitud[0]->cContacto }}
+                        {{ $CartaDetalleSolicitud->cContacto }}
                     </td>
                 </tr>
             </table>
 
             <table width="100%">
                 <tr>
-                    Quedamos de ustedes
+                    <td>Quedamos de ustedes</td>
                 </tr>
                 <tr>
-                    Atentamente,
+                    <td>Atentamente,</td>
                 </tr>
             </table>
         </div>
