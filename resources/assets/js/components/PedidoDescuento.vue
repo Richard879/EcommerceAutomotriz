@@ -529,7 +529,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" v-if="vehiculo.cFlagTipoItem=='V'">
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" :v-if="vehiculo.cFlagTipoItem=='V'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.fSobrePrecio"></td>
@@ -559,7 +559,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -588,7 +588,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -617,7 +617,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -643,7 +643,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar" v-if="documento.nValida==1">
+                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar" :v-if="documento.nValida==1">
                                                             <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
                                                             <td v-text="documento.cArchivo"></td>
                                                             <td>
@@ -751,6 +751,8 @@
                     { value: '2', text: '%'}
                 ],
                 arrayHistorialPedidoDsctos: [],
+                arraySapRptPedido: [],
+                arraySapUpdPedido: [],
                 // =============================================================
                 // VARIABLES GENÉRICAS
                 // =============================================================
@@ -1049,13 +1051,34 @@
                     dMontoNuevoSoles: this.fillPedidoDscto.dMontoNuevoSoles,
                 }).then(response => {
                     console.log(response.data);
-                    this.$forceUpdate();
+                    me.arraySapRptPedido = response.data;
+                    me.arraySapRptPedido.map(function(x) {
+                        me.jsonPedido= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonPedido.DocEntry) {
+                            console.log("Integración Nota de Credito SAP : OK");
+                            console.log(me.jsonPedido.DocEntry);
+                            me.arraySapUpdPedido.push({
+                                'nIdCabeceraPedido': me.fillPedidoDscto.nIdCabeceraPedido.toString(),
+                                'nDocEntry': parseInt(me.jsonPedido.DocEntry),
+                                'nDocNum': parseInt(me.jsonPedido.DocNum),
+                                'cDocType': me.jsonPedido.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY PEDIDO ===============
+                            setTimeout(function() {
+                                me.registraroDocEntryCreditNotePedido();
+                            }, 3800);
+                        }
+                    });
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'Error en Generar la Nota de Crédito Pedido SapB1!',
+                        text: 'Error al Generar la Nota de Crédito Pedido SapB1!',
                     });
                     console.log(error);
                     if (error.response) {
@@ -1066,18 +1089,22 @@
                 });
             },
             //REGISTRO DOCENTRY-PEDIDO EN SQLSERVER
-            registrarDsctoPedidoNotaCredito(data){
+            registraroDocEntryCreditNotePedido(){
                 var url = this.ruta + '/pedido/SapSetPedidoNotaCreditoDscto';
                 axios.post(url, {
-                    nIdCabeceraPedido   : this.fillPedidoDscto.nIdCabeceraPedido,
-                    cItemCode           : this.fillPedidoDscto.cItemCode,
-                    nDocEntry           : data.nDocEntry,
-                    nDocNum             : data.nDocNum,
-                    cDocTyp             : data.cDocTyp,
-                    cLogRespuesta       : data
+                    'data': me.arraySapUpdPedido
                 }).then(response => {
-                    console.log(response.data);
-                    this.$forceUpdate();
+                    if(response.data[0].nFlagMsje == 1){
+                        setTimeout(function() {
+                            me.registrarDsctoPedido();
+                        }, 3800);
+                    }else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en Actualizar Dscto Pedido!',
+                        })
+                    }
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({

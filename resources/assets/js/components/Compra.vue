@@ -172,6 +172,7 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
+                                                                                <th>#Doc SAP</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
                                                                                 <th>OC</th>
@@ -209,6 +210,7 @@
                                                                                         </el-tooltip>&nbsp;
                                                                                     </template>
                                                                                 </td>
+                                                                                <td v-text="compra.nDocNum"></td>
                                                                                 <td v-text="compra.nIdCompra"></td>
                                                                                 <td v-text="compra.cNumeroMes + '-' + compra.cAnio"></td>
                                                                                 <td v-text="compra.nOrdenCompra"></td>
