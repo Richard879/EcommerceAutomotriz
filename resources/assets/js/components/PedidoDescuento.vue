@@ -1044,7 +1044,7 @@
             },
             //REGISTRO DSCTO PEDIDO//NOTA CREDITO EN SAP
             registrarDsctoPedidoSAP(){
-                var url = this.ruta + '/pedido/SapSetPedidoNotaCreditoDscto';
+                var url = this.ruta + '/pedido/SapSetPedidoDscto';
                 axios.post(url, {
                     nDocEntryPedido: this.fillPedidoDscto.nDocEntryPedido,
                     cItemCode: this.fillPedidoDscto.cItemCode,
@@ -1069,7 +1069,7 @@
                             //==============================================================
                             //================== ACTUALIZAR DOCENTRY PEDIDO ===============
                             setTimeout(function() {
-                                me.registraroDocEntryCreditNotePedido();
+                                me.registraroDocEntryPedido();
                             }, 3800);
                         }
                     });
@@ -1089,7 +1089,7 @@
                 });
             },
             //REGISTRO DOCENTRY-PEDIDO EN SQLSERVER
-            registraroDocEntryCreditNotePedido(){
+            registraroDocEntryPedido(){
                 var url = this.ruta + '/pedido/SapSetPedidoNotaCreditoDscto';
                 axios.post(url, {
                     'data': me.arraySapUpdPedido

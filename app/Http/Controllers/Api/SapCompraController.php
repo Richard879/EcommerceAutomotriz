@@ -106,8 +106,8 @@ class SapCompraController extends Controller
                     "ItemCode"    => $value['cNumeroVin'],
                     "ItemName"    => $value['cNombreComercial'],
                     "ItemType"    => "itItems"
-                    ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Articulo/SapSetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
