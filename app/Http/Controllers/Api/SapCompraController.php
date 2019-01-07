@@ -39,7 +39,7 @@ class SapCompraController extends Controller
     public function SapSetCompra(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://localhost:49454/'
         ]);
 
         $array_rpta = [];
@@ -62,17 +62,21 @@ class SapCompraController extends Controller
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
 
+            $precioUnit1 = (floatval($value['fTotalCompra']) * 0.18);
+            $precioUnit2 = (floatval($value['fTotalCompra']) - $precioUnit1);
+
             $json = [
                 'json' => [
                     "CardCode"      => $cCardCode,
-                    "DocDate"       => (string)$request->fDocDate,
-                    "DocDueDate"    => (string)$request->fDocDueDate,
+                    // "DocDate"       => (string)$request->fDocDate,
+                    // "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => $value['cNumeroVin'],
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
-                                "UnitPrice"   => (string)$value['fTotalCompra']
+                                "UnitPrice"   => (string)$precioUnit2
                             ]
                         ]
                     ]

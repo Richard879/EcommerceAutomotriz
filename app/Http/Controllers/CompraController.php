@@ -26,7 +26,7 @@ class CompraController extends Controller
         $cNumeroVin = $request->cnumerovin;
         $nIdMarca   = $request->nidmarca;
         $nIdModelo  = $request->nidmodelo;
-        
+
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
         $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
@@ -180,16 +180,16 @@ class CompraController extends Controller
     public function SetForum(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
            DB::beginTransaction();
 
-            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?', 
+            $wo = DB::select('exec [usp_WO_SetWOperativo] ?, ?, ?',
                                                         [
                                                             $request->nIdProveedor,
                                                             $request->dFechaInicio,
                                                             Auth::user()->id
-                                                        ]);                 
+                                                        ]);
             $nIdWarrantOperativo =  $wo[0]->nIdWarrantOperativo;
 
             $detalles = $request->data;
@@ -206,11 +206,11 @@ class CompraController extends Controller
                                                                 $det['dFecha'],
                                                                 Auth::user()->id
                                                             ]);
-            }  
-            DB::commit(); 
+            }
+            DB::commit();
         } catch (Exception $e){
             DB::rollBack();
-        }    
+        }
 
     }
 
@@ -297,7 +297,7 @@ class CompraController extends Controller
         $variable   = $request->opcion;
 
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
-        
+
         $arrayListaPrecio = DB::select('exec [usp_Compra_GetListaPrecioByProveedor] ?, ?, ?',
                                                             [   $nIdProveedor,
                                                                 $nIdTipoLista,

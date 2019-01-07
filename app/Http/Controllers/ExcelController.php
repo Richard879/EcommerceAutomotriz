@@ -15,7 +15,7 @@ class ExcelController extends Controller
 {
 
     public function importFileCompra(Request $request)
-    {    
+    {
         $file = $request->file;
         $bandera = str_random(10);
         $ruta = Storage::putFileAs('uploads/ExcelCompra', $file, $bandera .'_'. $file->getClientOriginalName());
@@ -29,7 +29,7 @@ class ExcelController extends Controller
             'textoFile' => $textFile
         ]);*/
     }
-    
+
     public function readFileCompra(Request $request)
     {
         $nameFile = $request->nameFile;
@@ -74,7 +74,7 @@ class ExcelController extends Controller
         $ruta = Storage::putFileAs('uploads/ExcelListaPrecio', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
-    
+
     public function readFileListaPrecioVh(Request $request)
     {
         $nameFile = $request->nameFile;
@@ -123,7 +123,7 @@ class ExcelController extends Controller
         $ruta = Storage::putFileAs('uploads/ExcelLeads', $file, $bandera .'_'. $file->getClientOriginalName());
         return $ruta;
     }
-    
+
     public function readFileLeads(Request $request)
     {
         $nameFile = $request->nameFile;
