@@ -27,9 +27,10 @@ class SapComprobanteController extends Controller
                     "DocDate"       => (string)$request->fDocDate,
                     "DocumentLines" => [
                             [
-                                "BaseType"    => "17",
+                                "BaseType"     => "17",
                                 "BaseEntry"    => $value['nDocEntry'],
-                                "BaseLine"     => "0"
+                                "BaseLine"     => "0",
+                                "LineTotal"    => $value['nDocEntry']
                             ]
                         ]
                     ]

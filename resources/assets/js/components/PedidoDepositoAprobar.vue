@@ -914,6 +914,88 @@
                     }
                 })
             },
+            //REGISTRA COMPROBANTE SAP
+            registroSapComprobante(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/comprobante/SapSetFactura';
+                axios.post(sapUrl, {
+                    'cCardCode': me.formSap.ccardcode.toString(),
+                    'fDocDate': moment().format('YYYY-MM-DD'),
+                    'data': me.arraySapUpdPedido
+                }).then(response => {
+                    me.arraySapRptFactura = response.data;
+                    me.arraySapRptFactura.map(function(x){
+                        me.jsonFactura= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonFactura.DocEntry){
+                            console.log("Integración Factura SAP : OK");
+                            console.log(me.jsonFactura.DocEntry);
+                            me.arraySapUpdFactura.push({
+                                'nIdCabeceraPedido': me.formSap.nidcabecerapedido.toString(),
+                                'nDocEntry': parseInt(me.jsonFactura.DocEntry),
+                                'nDocNum': parseInt(me.jsonFactura.DocNum),
+                                'cDocType': me.jsonFactura.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonFactura.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY FACTURA ===============
+                            setTimeout(function() {
+                                me.registroDocEntryComprobante();
+                            }, 3800);
+                        }
+                    });
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración de Comprobante SapB1!',
+                    });
+                    me.limpiarFormulario();
+                    me.listarPedidos(1);
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //REGISTRA DOCENTRYCOMPROBANTE EN SQLSERVER
+            registroDocEntryComprobante(){
+                let me = this;
+
+                var sapUrl = me.ruta + '/pedido/SapUpdFacturaByDocEntry';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdFactura
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1){
+                        me.limpiarFormulario();
+                        me.listarPedidos(1);
+                        $("#myBar").hide();
+                        swal(
+                            'Aprobado!',
+                            'El pedido ha sido APROBADO con éxito.',
+                            'success'
+                        );
+                    }else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             rechazarDeposito(deposito){
                 swal({
                     title: 'Estas seguro de rechazar el Deposito',
