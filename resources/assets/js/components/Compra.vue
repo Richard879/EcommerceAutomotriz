@@ -2228,7 +2228,7 @@
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!',
+                        text: 'Error en la Integración de Artículo SapB1!', 
                     });
                     me.limpiarFormulario();
                     me.listarCompras();
