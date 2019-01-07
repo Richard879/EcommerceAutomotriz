@@ -917,6 +917,22 @@
                     'data': me.arraySapUpdPedido
                 }).then(response => {
                     if(response.data[0].nFlagMsje == 1){
+                        me.limpiarFormulario();
+                        me.listarPedidos(1);
+                        $("#myBar").hide();
+                        swal(
+                            'Aprobado!',
+                            'El pedido ha sido APROBADO con éxito.',
+                            'success'
+                        );
+                    }else{
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en el registro de Pedido!',
+                        })
+                    }
+                    /*if(response.data[0].nFlagMsje == 1){
                         setTimeout(function() {
                             me.registroSapComprobante();
                         }, 3800);
@@ -926,7 +942,7 @@
                             title: 'Error...',
                             text: 'Error en Actualizar Pedido!',
                         })
-                    }
+                    }*/
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
