@@ -364,10 +364,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
+    //Pedido Descuento
+    Route::post('/pedido/SapSetPedidoDscto', 'Api\SapPedidoController@SapSetPedidoDscto');
     //Comprobante
     Route::post('/comprobante/SapSetFactura', 'Api\SapComprobanteController@SapSetFactura');
-    //Nota Credito
-    Route::post('/pedido/SapSetPedidoNotaCreditoDscto', 'Api\SapNotaCreditoController@SapSetPedidoNotaCreditoDscto');
     /// ============================================================
     /// METODOS ODBC
     /// ============================================================

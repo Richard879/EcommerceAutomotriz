@@ -2,9 +2,9 @@
      <transition name="slide-fade" appear>
         <main>
             <header class="page-header">
-            <div class="container-fluid">
-                <h2 class="no-margin-bottom">COMPRA</h2>
-            </div>
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">COMPRA</h2>
+                </div>
             </header>
 
             <section>
@@ -122,7 +122,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                                <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                                     <el-option
                                                                                     v-for="item in arrayMarca"
                                                                                     :key="item.nIdPar"
@@ -342,12 +342,16 @@
                                                                         <div class="row" v-if="formCompra.nidproveedor>0">
                                                                             <label class="col-sm-4 form-control-label">* Tipo Lista</label>
                                                                             <div class="col-sm-8">
-                                                                                <el-select v-model="formCompra.nidtipolista" filterable clearable placeholder="SELECCIONE" v-on:change="obtenerListaPrecioActiva()">
+                                                                                <el-select v-model="formCompra.nidtipolista"
+                                                                                            filterable
+                                                                                            clearable
+                                                                                            placeholder="SELECCIONE"
+                                                                                            @change="obtenerListaPrecioActiva()">
                                                                                     <el-option
-                                                                                    v-for="item in arrayTipoLista"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
+                                                                                        v-for="item in arrayTipoLista"
+                                                                                        :key="item.nIdPar"
+                                                                                        :label="item.cParNombre"
+                                                                                        :value="item.nIdPar">
                                                                                     </el-option>
                                                                                 </el-select>
                                                                             </div>
@@ -820,7 +824,7 @@
                                         <h3 class="h4">LISTA DE PROVEEDORES</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
+                                        <form @submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -1074,7 +1078,7 @@
                                         <h3 class="h4">LISTA DE COMPRAS NO LINEA CREDITO</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form v-on:submit.prevent class="form-horizontal">
+                                        <form @submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -1128,7 +1132,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-4 form-control-label">Marca</label>
                                                         <div class="col-sm-8">
-                                                            <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                            <el-select v-model="fillCompra.nidmarca" filterable clearable placeholder="SELECCIONE" @change="llenarComboModelo()">
                                                                 <el-option
                                                                 v-for="item in arrayMarca"
                                                                 :key="item.nIdPar"
@@ -1271,7 +1275,7 @@
                                         <h3 class="h4">LISTA DE PRECIOS</h3>
                                     </div>
                                     <div class="card-body">
-                                        <!--<form v-on:submit.prevent class="form-horizontal">
+                                        <!--<form @submit.prevent class="form-horizontal">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <div class="row">
@@ -1769,6 +1773,7 @@
                     }
                 });
             },
+            //Proceso Carga de Formato Compra Excel
             getFile(e){
                 //console.log(e);
                 let selectFile = e.target.files[0];
@@ -1800,6 +1805,7 @@
                 });
             },
             readFileCompra(nameFile){
+                // console.log(nameFile);
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/compra/readFileCompra';
@@ -1866,6 +1872,7 @@
             eliminarItemExcel(index){
                 this.$delete(this.arrayExcel, index);
             },
+            //Registrar Excel Compra
             registrar(){
                 if(this.validarRegistro()){
                     this.accionmodal=1;
@@ -1890,6 +1897,7 @@
                     me.arrayTempVinExiste = [];
                     me.arrayTempVinListaPrecio = [];
                     me.arrayTempVinNombreComercial = [];
+
                     me.arrayCompraExisteVin = [];
                     me.arrayCompraPrecioLista = [];
                     me.arrayCompraNombreComercial = [];
@@ -1897,6 +1905,7 @@
                     //ARRAY PARA DEPURAR
                     me.arrayVinDepura = [];
 
+                    //Si el VIN existe
                     if(response.data.arrayVinExiste.length)
                     {
                         me.arrayTempVinExiste = response.data.arrayVinExiste;
@@ -1932,12 +1941,12 @@
                     me.arrayExcel.map(function(x, y){
                         //comprobar si un determinado elemento no existe dentro de un array
                         if (!me.arrayVinDepura.includes(x.cNumeroVin)) {
-                            console.log("VIN depurados: " + x.cNumeroVin);
+                            // console.log("VIN depurados: " + x.cNumeroVin);
                             me.arraySapArticulo.push(x);
                         }
                     });
 
-                    console.log("N° articulos a registrar" + me.arraySapArticulo.length);
+                    // console.log("N° articulos a registrar" + me.arraySapArticulo.length);
                     //Si existen compras para registrar (QUE NO EXISTAN VIN; QUE SEAN IGUALES A LA COMPRA; QUE ESTEN REGISTRADOS NOMBRE COMERCIAL)
                     if(me.arraySapArticulo.length){
                         me.registroSapArticulo();
@@ -1961,6 +1970,9 @@
                 axios.post(sapUrl, {
                     data: me.arraySapArticulo
                 }).then(response => {
+                    // console.log("registroSapArticulo");
+                    // console.log(response.data);
+
                     me.arraySapRptArticulo = response.data;
                     me.arraySapRptArticulo.map(function(x){
                         me.jsonArticulo= JSON.parse(x);
@@ -1978,6 +1990,11 @@
                     }, 3800);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registroSapCompra(){
@@ -1997,9 +2014,12 @@
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                     'data': me.arraySapCompra
                 }).then(response => {
+                    // console.log("registroSapCompra");
+                    // console.log(response.data);
+
                     me.arraySapRptCompra = response.data;
-                    console.log("Integración SAP Compra : OK");
                     me.arraySapRptCompra.map(function(x){
+                        console.log("Integración SAP Compra : OK");
                         me.jsonCompra= JSON.parse(x);
                         //console.log(me.jsonCompra.DocEntry.toString());
                         //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
@@ -2017,8 +2037,14 @@
                     setTimeout(function() {
                         me.registroDocEntryCompra();
                     }, 3800);
+
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registroDocEntryCompra(){
@@ -2030,6 +2056,11 @@
                     me.verResultados();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             verResultados(){
@@ -2170,6 +2201,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             generaSapArticulo(){
@@ -2197,6 +2233,11 @@
                     me.limpiarFormulario();
                     me.listarCompras();
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             generaSapCompra(){
@@ -2238,6 +2279,11 @@
                     me.limpiarFormulario();
                     me.listarCompras();
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             generaActualizarDocEntry(){
@@ -2264,6 +2310,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =============  ACTUALIZAR COMPRA ======================
@@ -2449,6 +2500,11 @@
                     this.arrayProveedorForum = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             descargaFormatoForum(){
@@ -2575,6 +2631,11 @@
                     this.limpiarFormulario();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistroForum(){
@@ -2660,6 +2721,15 @@
                 this.arrayExcel = [],
                 this.form = new FormData,
                 $("#file-upload").val(""),
+
+                //Limpiar Validadores VIN
+                // this.arrayTempVinExiste = [];
+                // this.arrayTempVinListaPrecio = [];
+                // this.arrayTempVinNombreComercial = [];
+                // this.arrayCompraExisteVin = [];
+                // this.arrayCompraPrecioLista = [];
+                // this.arrayCompraNombreComercial = [];
+
                 //Limpiar Variables SAP
                 this.arraySapCompra=  [],
                 this.arraySapRptCompra= [],

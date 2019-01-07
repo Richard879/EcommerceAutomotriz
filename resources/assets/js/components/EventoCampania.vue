@@ -2072,7 +2072,7 @@
                         }
                     }).then(response => {
                         this.formEventoCamp.fvalortipocambio = response.data[0].fValorTipoCambio;
-                        
+
                         this.fValorTipoCambioTransaccion = response.data[0].fValorTipoCambio;
                         this.nIdTipoCambio = response.data[0].nIdTipoCambio;
                         $("#myBar").hide();
@@ -2322,7 +2322,7 @@
                 }
                 else{
                     this.arrayTemporalModelo = [];
-                    
+
                     this.arrayTemporalModelo.push({
                         nIdModelo: modelo.nIdModelo,
                         cModeloNombre: modelo.cModeloNombre,
@@ -2350,7 +2350,7 @@
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
-                return this.error; 
+                return this.error;
             },
             encuentraModelos(nIdModelo){
                 var sw=0;
@@ -2654,7 +2654,7 @@
                         })
                     return;
                 }
-                
+
                 $.each(me.arrayProveedor, function (index, value) {
                     if(value.nIdPar == me.formDistribucionEv.nidentidad){
                         me.cnombreentidad = value.cParNombre;
@@ -2762,7 +2762,7 @@
                         })
                      return;
                 }
-                
+
                 $.each(me.arrayModalidadEntrega, function (index, value) {
                     if(value.nIdPar == me.formModalEntrega.nidmodalidad){
                         me.cNombreModalidad = value.cParNombre;
@@ -2884,7 +2884,7 @@
                 });
             },
             asignarProveedorCabecera(entidad){
-                if(this.encuentraProveedorCabecera(data['nIdPar'])){
+                if(this.encuentraProveedorCabecera(entidad['nIdPar'])){
                     swal({
                         type: 'error',
                         title: 'Error...',

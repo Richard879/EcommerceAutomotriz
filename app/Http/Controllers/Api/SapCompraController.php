@@ -62,17 +62,21 @@ class SapCompraController extends Controller
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
 
+            $precioUnit1 = (floatval($value['fTotalCompra']) * 0.18);
+            $precioUnit2 = (floatval($value['fTotalCompra']) - $precioUnit1);
+
             $json = [
                 'json' => [
                     "CardCode"      => $cCardCode,
-                    "DocDate"       => (string)$request->fDocDate,
-                    "DocDueDate"    => (string)$request->fDocDueDate,
+                    // "DocDate"       => (string)$request->fDocDate,
+                    // "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => $value['cNumeroVin'],
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
-                                "UnitPrice"   => (string)$value['fTotalCompra']
+                                "UnitPrice"   => (string)$precioUnit2
                             ]
                         ]
                     ]
@@ -106,8 +110,8 @@ class SapCompraController extends Controller
                     "ItemCode"    => $value['cNumeroVin'],
                     "ItemName"    => $value['cNombreComercial'],
                     "ItemType"    => "itItems"
-                    ]
-                ];
+                ]
+            ];
 
             $response = $client->request('POST', "/api/Articulo/SapSetArticulo/", $json);
             $rptaSap = json_decode($response->getBody());
