@@ -1400,6 +1400,24 @@
                 </div>
             </div>
 
+            <div class="modal fade" v-if="accionmodal==100" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -1521,7 +1539,8 @@
                 mensajeError: [],
                 attachment: null,
                 form: new FormData,
-                textFile: ''
+                textFile: '',
+                loading: false
             }
         },
         mounted(){
@@ -2344,6 +2363,9 @@
             },
             generaSapCompra(){
                 let me = this;
+
+                me.loadingProgressBar("Registrando en Sap");
+
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
                     'fDocDate': moment().format('YYYY-MM-DD'),
@@ -2399,6 +2421,7 @@
                     $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
+                        me.loading.close();
                         swal('Compra registrada correctamente');
                         me.limpiarFormulario();
                         me.listarCompras();
@@ -2855,6 +2878,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                lock: true,
+                text: texto,
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }
