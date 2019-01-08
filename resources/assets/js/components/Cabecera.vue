@@ -21,7 +21,7 @@
                 <el-option
                     v-for="item in arraySucursal"
                     :key="item.nIdPar"
-                    :label="item.cParAbreviatura"
+                    :label="item.cParNombre"
                     :value="item.nIdPar">
                 </el-option>
             </el-select>
