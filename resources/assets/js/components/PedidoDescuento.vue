@@ -316,7 +316,7 @@
                                                             <table class="table table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Dolare</th>
+                                                                        <th>Dolares</th>
                                                                         <th>Soles</th>
                                                                         <th>Descuento</th>
                                                                         <th>Tipo Cambio</th>
