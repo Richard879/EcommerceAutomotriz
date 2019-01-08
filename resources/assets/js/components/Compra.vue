@@ -2087,7 +2087,7 @@
             },
             registroSapArticulo(){
                 let me = this;
-
+                me.loadingProgressBar("Verificando Articulo");
                 var sapUrl = me.ruta + '/compra/SapSetArticulo';
                 axios.post(sapUrl, {
                     data: me.arraySapArticulo
@@ -2150,6 +2150,7 @@
                         });
                     });
 
+                    me.loading.close();
                     //==============================================================
                     //================== ACTUALIZAR DOCENTRY ===============
                     setTimeout(function() {
@@ -2170,8 +2171,9 @@
                 axios.post(sapUrl, {
                     'data': me.arraySapUpdCompra
                 }).then(response => {
+                    me.loading.close();
                     //==============================================================
-                    //================== REGITRO DE COMPRA EN SAP ===============
+                    //================== REGITRO DE MERCANCIA EN SAP ===============
                     setTimeout(function() {
                         me.registroSapMercancia();
                     }, 3800);
