@@ -352,7 +352,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <button v-if="fillPedidoDscto.dMontoDescontar > 0" type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarDsctoPedido()">
+                                            <button v-if="fillPedidoDscto.dMontoDescontar > 0" type="button" class="btn btn-primary btn-corner btn-sm" @click.prevent="registrarDsctoPedidoSAP()">
                                                 <i class="fa fa-save"></i> REGISTRAR
                                             </button>
                                             <button type="button" class="btn btn-default btn-corner btn-sm" @click="generarDsctoPedido(1)">
@@ -743,6 +743,7 @@
                     dMontoNuevoDolares: '',
                     dMontoNuevoSoles: '',
                     //Integración Dscto
+                    cCardCode: '',
                     nDocEntryPedido: '',
                     cItemCode: ''
                 },
@@ -941,7 +942,9 @@
                 this.fillPedidoDscto.dMontoPedido = '';
                 this.fillPedidoDscto.dMontoNuevoDolares = '';
                 this.fillPedidoDscto.dMontoNuevoSoles = '';
-                this.fillPedidoDscto.nDocNum = '';
+                this.fillPedidoDscto.cCardCode = '';
+                this.fillPedidoDscto.nDocEntryPedido = '';
+                this.fillPedidoDscto.cItemCode = '';
                 this.arrayHistorialPedidoDsctos = [];
             },
             generarDsctoPedido(op, data = null){
@@ -959,7 +962,7 @@
                     // this.calcularNuevoMonto(1);
                     setTimeout(function() {
                         me.calcularNuevoMonto(1);
-                    }, 1200);
+                    }, 1500);
                 }
             },
             getHistorialDsctos(page, data = null){
@@ -992,46 +995,74 @@
                 });
             },
             getDatosPedido(data){
-                this.fillPedidoDscto.nIdCabeceraPedido = data.nIdCabeceraPedido
-                this.fillPedidoDscto.cNumeroPedido = data.cNumeroPedido
-                this.fillPedidoDscto.dMontoPedido = data.fTotalPedidoDolares
+                this.fillPedidoDscto.nIdCabeceraPedido  = data.nIdCabeceraPedido
+                this.fillPedidoDscto.cNumeroPedido      = data.cNumeroPedido
+                this.fillPedidoDscto.dMontoPedido       = data.fTotalPedidoDolares
                 //Integración Dscto
-                this.fillPedidoDscto.nDocEntryPedido = data.nDocEntryPedido
-                this.fillPedidoDscto.cItemCode = data.cItemCode
+                this.fillPedidoDscto.cCardCode          = data.cCardCode
+                this.fillPedidoDscto.nDocEntryPedido    = data.nDocEntryPedido
+                this.fillPedidoDscto.cItemCode          = data.cItemCode
             },
             calcularNuevoMonto(op, value = null){
+                //Al cargar la ventana
                 if(op == 1) {
                     this.fillPedidoDscto.dMontoNuevoDolares = parseFloat(this.fillPedidoDscto.dMontoPedido) - parseFloat(this.fillPedidoDscto.dMontoDescontar);
-                    let montoDolares = this.fillPedidoDscto.dMontoNuevoDolares;
+                    let montoDolares                        = this.fillPedidoDscto.dMontoNuevoDolares;
                     this.fillPedidoDscto.dMontoNuevoSoles   = montoDolares * parseFloat(this.fillPedidoDscto.dTipoCambioComercial);
                 }
+                //Al realizar algun cambio en el input del monto
                 if (op == 2) {
                     let me = this;
 
                     if (me.fillPedidoDscto.cTipoDscto == '1') {
-                        if(parseInt(value) == '' || parseInt(value) < 0){
-                            me.$message.error(`El Monto ha descontar no puede ser vacío ó menor a cero`);
+
+                        //TIPO DSCTO ES 1 (DOLARES) Y EL MONTO ES MAYOR AL MONTO ACTUAL DEL PEDIDO
+                        if(parseFloat(value) > me.fillPedidoDscto.dMontoPedido) {
+                            me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
                             me.fillPedidoDscto.dMontoDescontar = 0;
                             me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                            value = 0;
                             me.$forceUpdate();
+                        } else {
+                            //TIPO DSCTO ES 1 (DOLARES) Y EL MONTO A DESCONTAR ES VACÍO O < A 0
+                            if(!value || parseFloat(value) == '' || value < 0){
+                                me.$message.error(`El Monto ha descontar no puede estar vacío ó menor a cero`);
+                                me.fillPedidoDscto.dMontoDescontar = 0;
+                                me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                                me.$forceUpdate();
+                            }
                         }
+
                         me.fillPedidoDscto.dMontoDescontarFlag  = value;
                         me.fillPedidoDscto.dMontoNuevoDolares   = parseFloat(me.fillPedidoDscto.dMontoPedido) - parseFloat(me.fillPedidoDscto.dMontoDescontar);
-                        let montoDolares = me.fillPedidoDscto.dMontoNuevoDolares;
+                        let montoDolares                        = me.fillPedidoDscto.dMontoNuevoDolares;
                         me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
+
                     } else {
-                        if(parseInt(value) < 0 || parseInt(value) > 100 || parseInt(value) == ''){
-                            me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
-                            me.fillPedidoDscto.dMontoDescontar = 0;
-                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
-                            me.$forceUpdate();
-                        }
+                        //Calcular Porcentaje de Dscto
                         let montoPorcent    =   parseFloat(me.fillPedidoDscto.dMontoDescontar) / 100;
                         let montoNuevo      =   montoPorcent * parseFloat(me.fillPedidoDscto.dMontoPedido);
 
+                        //TIPO DSCTO ES 2 (%) Y EL MONTO ES MAYOR AL MONTO ACTUAL DEL PEDIDO
+                        if(montoNuevo > me.fillPedidoDscto.dMontoPedido) {
+                            me.$message.error(`El Monto ha descontar no puede ser mayor al monto del Pedido`);
+                            me.fillPedidoDscto.dMontoDescontar = 0;
+                            me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                            montoNuevo = 0;
+                            me.$forceUpdate();
+                        } else {
+                            //TIPO DSCTO ES 2 (%) Y EL MONTO A DESCONTAR ES < A 0 > A 100 Ó VACÍO
+                            if(value < 0 || parseFloat(value) > 100 || !value || parseFloat(value) == ''){
+                                me.$message.error(`El Porcentaje del Monto a Descontar debe estar entre 0 - 100 %`);
+                                me.fillPedidoDscto.dMontoDescontar = 0;
+                                me.fillPedidoDscto.dMontoDescontarFlag = 0;
+                                me.$forceUpdate();
+                            }
+                        }
+
                         me.fillPedidoDscto.dMontoDescontarFlag  = montoNuevo;
                         me.fillPedidoDscto.dMontoNuevoDolares   = parseFloat(me.fillPedidoDscto.dMontoPedido) - montoNuevo;
-                        let montoDolares = me.fillPedidoDscto.dMontoNuevoDolares;
+                        let montoDolares                        = me.fillPedidoDscto.dMontoNuevoDolares;
                         me.fillPedidoDscto.dMontoNuevoSoles     = montoDolares * parseFloat(me.fillPedidoDscto.dTipoCambioComercial);
                     }
                 }
@@ -1046,71 +1077,21 @@
             registrarDsctoPedidoSAP(){
                 var url = this.ruta + '/pedido/SapSetPedidoDscto';
                 axios.post(url, {
-                    nDocEntryPedido: this.fillPedidoDscto.nDocEntryPedido,
-                    cItemCode: this.fillPedidoDscto.cItemCode,
-                    dMontoNuevoSoles: this.fillPedidoDscto.dMontoNuevoSoles,
+                    nDocEntryPedido     : this.fillPedidoDscto.nDocEntryPedido,
+                    cCardCode           : this.fillPedidoDscto.cCardCode,
+                    cItemCode           : this.fillPedidoDscto.cItemCode,
+                    dMontoNuevoSoles    : this.fillPedidoDscto.dMontoNuevoSoles,
+                    dFechaModificacion  : moment().format('YYYY-MM-DD'),
                 }).then(response => {
                     console.log(response.data);
-                    me.arraySapRptPedido = response.data;
-                    me.arraySapRptPedido.map(function(x) {
-                        me.jsonPedido= JSON.parse(x);
-                        //Verifico que devuelva DocEntry
-                        if(me.jsonPedido.DocEntry) {
-                            console.log("Integración Nota de Credito SAP : OK");
-                            console.log(me.jsonPedido.DocEntry);
-                            me.arraySapUpdPedido.push({
-                                'nIdCabeceraPedido': me.fillPedidoDscto.nIdCabeceraPedido.toString(),
-                                'nDocEntry': parseInt(me.jsonPedido.DocEntry),
-                                'nDocNum': parseInt(me.jsonPedido.DocNum),
-                                'cDocType': me.jsonPedido.DocType.toString(),
-                                'cLogRespuesta': response.data.toString(),
-                                'cItemCode': me.jsonPedido.DocumentLines[0].ItemCode.toString()
-                            });
-                            //==============================================================
-                            //================== ACTUALIZAR DOCENTRY PEDIDO ===============
-                            setTimeout(function() {
-                                me.registraroDocEntryPedido();
-                            }, 3800);
-                        }
-                    });
+                    console.log("Integración Descuento del Pedido - SAP : OK");
+                    this.registrarDsctoPedido();
                 }).catch(error => {
                     $("#myBar").hide();
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'Error al Generar la Nota de Crédito Pedido SapB1!',
-                    });
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            location.reload('0');
-                        }
-                    }
-                });
-            },
-            //REGISTRO DOCENTRY-PEDIDO EN SQLSERVER
-            registraroDocEntryPedido(){
-                var url = this.ruta + '/pedido/SapSetPedidoNotaCreditoDscto';
-                axios.post(url, {
-                    'data': me.arraySapUpdPedido
-                }).then(response => {
-                    if(response.data[0].nFlagMsje == 1){
-                        setTimeout(function() {
-                            me.registrarDsctoPedido();
-                        }, 3800);
-                    }else{
-                        swal({
-                            type: 'error',
-                            title: 'Error...',
-                            text: 'Error en Actualizar Dscto Pedido!',
-                        })
-                    }
-                }).catch(error => {
-                    $("#myBar").hide();
-                    swal({
-                        type: 'error',
-                        title: 'Error...',
-                        text: 'Error en Registrar DocEntry Nota Credito del Pedido SapB1!',
+                        text: 'Error al Generar el Dscto del Pedido SapB1!',
                     });
                     console.log(error);
                     if (error.response) {
@@ -1137,7 +1118,6 @@
                     }else{
                         swal('Ocurrio un error al generar el descuento del pedido' + this.fillPedidoDscto.cNumeroPedido);
                     }
-
                     this.$forceUpdate();
                 }).catch(error => {
                     console.log(error);
