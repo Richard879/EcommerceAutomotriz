@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/compra/UpdCompraLineaCreditoById', 'CompraController@UpdCompraLineaCreditoById');
     Route::get('/compra/GetListaPrecioByProveedor', 'CompraController@GetListaPrecioByProveedor');
     Route::post('/compra/SapUpdCompraByDocEntry', 'CompraController@SapUpdCompraByDocEntry');
+    Route::post('/compra/SapUpdCompraByDocEntryMercancia', 'CompraController@SapUpdCompraByDocEntryMercancia');
 
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
     Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');
@@ -360,6 +361,8 @@ Route::middleware(['auth'])->group(function(){
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
     Route::post('/compra/SapSetArticulo', 'Api\SapCompraController@SapSetArticulo');
+    //Entrada Mercancia
+    Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
     //Articulo
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
     //Pedido

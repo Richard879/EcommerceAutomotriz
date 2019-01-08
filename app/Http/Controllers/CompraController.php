@@ -333,4 +333,29 @@ class CompraController extends Controller
             DB::rollBack();
         }
     }
+
+    public function SapUpdCompraByDocEntryMercancia(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+            DB::beginTransaction();
+            $detalles = $request->data;
+            foreach($detalles as $ep=>$det)
+            {
+                $objCompra = DB::select('exec [usp_Compra_SapUpdCompraByDocEntryMercancia] ?, ?, ?, ?, ?, ?',
+                                                            [   $det['cItemCode'],
+                                                                $det['nDocEntry'],
+                                                                $det['nDocNum'],
+                                                                $det['cDocType'],
+                                                                $det['cLogRespuesta'],
+                                                                Auth::user()->id
+                                                            ]);
+            }
+            DB::commit();
+            return response()->json($objCompra);
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

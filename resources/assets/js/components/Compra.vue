@@ -1509,6 +1509,9 @@
                 arraySapArticulo : [],
                 arraySapRptArticulo: [],
                 jsonArticulo: '',
+                arraySapRptMercancia: [],
+                jsonMercancia: '',
+                arraySapUpdMercancia: [],
                 arraySapItemCode: [],
                 WarehouseCode: '',
                 // ============================================================
@@ -2357,7 +2360,7 @@
             },
             generaSapCompra(){
                 let me = this;
-                me.loadingProgressBar("Registrando en Sap");
+                me.loadingProgressBar("Registrando Compra en SapB1...");
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
@@ -2395,6 +2398,7 @@
                         title: 'Error...',
                         text: 'Error en la Integración Compra SapB1!',
                     });
+                    me.loading.close();
                     me.limpiarFormulario();
                     me.listarCompras();
                     console.log(error);
@@ -2411,6 +2415,87 @@
                 axios.post(sapUrl, {
                     data: me.arraySapUpdCompra
                 }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        me.loading.close();
+                        //==============================================================
+                        //================== REGITRO DE MERCANCIA EN SAP ===============
+                        setTimeout(function() {
+                            me.generaEntradaMercancia();
+                        }, 3800);
+                    }
+                    else{
+                        $("#myBar").hide();
+                        swal({
+                            type: 'error',
+                            title: 'Error...',
+                            text: 'Error en la Integración Stock SapB1!',
+                        });
+                        me.limpiarFormulario();
+                        me.listarCompras();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaEntradaMercancia(){
+                let me = this;
+                me.loadingProgressBar("Ingresando Stock en Sap");
+
+                var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdCompra
+                }).then(response => {
+                    me.arraySapRptMercancia = response.data;
+                    me.arraySapRptMercancia.map(function(x){
+                        me.jsonMercancia= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonMercancia.DocEntry){
+                            console.log("Integración SAP Mercancia : OK");
+                            console.log(me.jsonMercancia.DocEntry);
+                            me.arraySapUpdMercancia.push({
+                                'nDocEntry': parseInt(me.jsonMercancia.DocEntry),
+                                'nDocNum': parseInt(me.jsonMercancia.DocNum),
+                                'cDocType': me.jsonMercancia.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonMercancia.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            setTimeout(function() {
+                                me.generaActualizarDocEntryStock();
+                            }, 3800);
+                        }
+                    });
+                }).catch(error => {
+                    $("#myBar").hide();
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Error en la Integración Mercancia SapB1!',
+                    });
+                    me.loading.close();
+                    me.limpiarFormulario();
+                    me.listarCompras();
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            generaActualizarDocEntryStock(){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntryMercancia';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdMercancia
+                }).then(response => {
                     $("#myBar").hide();
                     if(response.data[0].nFlagMsje == 1)
                     {
@@ -2423,7 +2508,7 @@
                         swal({
                             type: 'error',
                             title: 'Error...',
-                            text: 'Error en Actulizar Compra!',
+                            text: 'Error en Actualizar Mercancia!',
                         });
                         me.limpiarFormulario();
                         me.listarCompras();
@@ -2858,6 +2943,9 @@
                 this.arraySapArticulo= [],
                 this.arraySapRptArticulo= [],
                 this.jsonArticulo= '',
+                this.arraySapRptMercancia=  [],
+                this.jsonMercancia= '',
+                this.arraySapUpdMercancia=  [],
                 this.arraySapItemCode= []
             },
             limpiarPaginacion(){
