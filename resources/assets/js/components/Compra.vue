@@ -2089,9 +2089,6 @@
                 axios.post(sapUrl, {
                     data: me.arraySapArticulo
                 }).then(response => {
-                    // console.log("registroSapArticulo");
-                    // console.log(response.data);
-
                     me.arraySapRptArticulo = response.data;
                     me.arraySapRptArticulo.map(function(x){
                         me.jsonArticulo= JSON.parse(x);
@@ -2118,6 +2115,7 @@
             },
             registroSapCompra(){
                 let me = this;
+                me.loadingProgressBar("Registrando en Sap");
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
                     // Si no se encuentra
@@ -2126,7 +2124,6 @@
                     }
                 });
 
-                //console.log(me.arraySapCompra.length);
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
                     'fDocDate': moment().format('YYYY-MM-DD'),
@@ -2135,9 +2132,6 @@
                     'Igv': me.formCompra.igv,
                     'data': me.arraySapCompra
                 }).then(response => {
-                    // console.log("registroSapCompra");
-                    // console.log(response.data);
-
                     me.arraySapRptCompra = response.data;
                     me.arraySapRptCompra.map(function(x){
                         console.log("Integración SAP Compra : OK");
@@ -2158,7 +2152,6 @@
                     setTimeout(function() {
                         me.registroDocEntryCompra();
                     }, 3800);
-
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2186,6 +2179,7 @@
             },
             verResultados(){
                 let me = this;
+                me.loading.close();
                 $("#myBar").hide();
                 me.attachment = [];
                 me.limpiarFormulario();
@@ -2363,7 +2357,6 @@
             },
             generaSapCompra(){
                 let me = this;
-
                 me.loadingProgressBar("Registrando en Sap");
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
