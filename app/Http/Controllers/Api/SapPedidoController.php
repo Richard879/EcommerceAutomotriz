@@ -47,20 +47,27 @@ class SapPedidoController extends Controller
     public function SapSetPedidoDscto(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.0.10/'
+            'base_uri'  => 'http://localhost:49454/'
         ]);
 
         $nDocEntryPedido    =   $request->nDocEntryPedido;
+        $cCardCode          =   $request->cCardCode;
         $cItemCode          =   $request->cItemCode;
         $dMontoNuevoSoles   =   $request->dMontoNuevoSoles;
+        $dMontoNuevoSoles   =   round($dMontoNuevoSoles, 2);
+
+        $dFechaModificacion =   $request->dFechaModificacion;
 
         $json = [
             'json' => [
-                "DocTotal"      => (string)$dMontoNuevoSoles
+                "DocEntryPedido"    => (string)$nDocEntryPedido,
+                "CardCode"          => (string)$cCardCode,
+                "DocTotal"          => (string)$dMontoNuevoSoles,
+                "Comments"          => (string)$dFechaModificacion,
             ]
         ];
 
-        $response = $client->request('PATCH', "/api/Pedido/SapSetPedidoNotaCredito/($nDocEntryPedido)", $json);
+        $response = $client->request('POST', "/api/Pedido/SapSetPedidoDscto/", $json);
         return $response->getBody();
     }
 }
