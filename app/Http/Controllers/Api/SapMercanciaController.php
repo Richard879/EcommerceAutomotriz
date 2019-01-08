@@ -13,7 +13,7 @@ class SapMercanciaController extends Controller
     public function SapSetMercanciaByOC(Request $request)
     {
         $client = new Client([
-            'base_uri'  => 'http://172.20.6.54/'
+            'base_uri'  => 'http://172.20.0.10/'
         ]);
 
         $array_rpta = [];
@@ -39,7 +39,7 @@ class SapMercanciaController extends Controller
                     ]
                 ];
 
-            $response = $client->request('POST', "/Sap/api/Mercancia/SapSetMercanciaByOC/", $json);
+            $response = $client->request('POST', "/api/Mercancia/SapSetMercanciaByOC/", $json);
             $rptaSap = json_decode($response->getBody());
             array_push($array_rpta, $rptaSap);
         }
