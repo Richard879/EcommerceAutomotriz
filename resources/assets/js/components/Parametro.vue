@@ -55,8 +55,8 @@
                                                         <th>Codigo</th>
                                                         <th>Grupo</th>
                                                         <th>Jerarquia</th>
-                                                        <th>Abreviatura</th>
                                                         <th>Nombre</th>
+                                                        <th>Descripción</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -159,7 +159,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Abreviatura</label>
+                                                    <label class="col-sm-4 form-control-label">Nombre</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="formParametro.cparabreviatura" class="form-control form-control-sm">
                                                     </div>
@@ -167,7 +167,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Nombre</label>
+                                                    <label class="col-sm-4 form-control-label">* Descripción</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" v-model="formParametro.cparnombre" class="form-control form-control-sm">
                                                     </div>
