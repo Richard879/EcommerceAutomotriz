@@ -2168,7 +2168,64 @@
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntry';
                 axios.post(sapUrl, {
-                    data: me.arraySapUpdCompra
+                    'data': me.arraySapUpdCompra
+                }).then(response => {
+                    //==============================================================
+                    //================== REGITRO DE COMPRA EN SAP ===============
+                    setTimeout(function() {
+                        me.registroSapMercancia();
+                    }, 3800);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroSapMercancia(){
+                let me = this;
+                me.loadingProgressBar("Ingresando Stock en Sap");
+
+                var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
+                axios.post(sapUrl, {
+                    'data': me.arraySapUpdCompra
+                }).then(response => {
+                    me.arraySapRptMercancia = response.data;
+                    me.arraySapRptMercancia.map(function(x){
+                        me.jsonMercancia= JSON.parse(x);
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonMercancia.DocEntry){
+                            console.log("Integración SAP Mercancia : OK");
+                            me.arraySapUpdMercancia.push({
+                                'nDocEntry': parseInt(me.jsonMercancia.DocEntry),
+                                'nDocNum': parseInt(me.jsonMercancia.DocNum),
+                                'cDocType': me.jsonMercancia.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonMercancia.DocumentLines[0].ItemCode.toString()
+                            });
+                            //==============================================================
+                            //================== ACTUALIZAR DOCENTRY ===============
+                            setTimeout(function() {
+                                me.registroDocEntryMercancia();
+                            }, 3800);
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registroDocEntryMercancia(){
+                let me = this;
+                var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntryMercancia';
+                axios.post(sapUrl, {
+                    data: me.arraySapUpdMercancia
                 }).then(response => {
                     me.verResultados();
                 }).catch(error => {
