@@ -322,6 +322,24 @@
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Código Almacén</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formCompra.warehousecode" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Igv</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formCompra.igv" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
                                                                             <label class="col-sm-4 form-control-label">* Proveedor</label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="input-group">
@@ -401,6 +419,16 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <!--<div class="form-group row">
+                                                                    <div class="col-sm-8">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Código Almacén</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" v-model="formCompra.warehousecode" class="form-control form-control-sm" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-8">
                                                                         <div class="row">
@@ -1406,7 +1434,10 @@
                     nidproveedor: 0,
                     cproveedornombre: '',
                     nnumerolista: '',
-                    nidlistaprecio: 0
+                    nidlistaprecio: 0,
+                    nidalmacen: 0,
+                    warehousecode: '',
+                    igv: 0
                 },
                 arrayExcel: [],
                 contadorArrayExcel: 0,
@@ -1461,6 +1492,7 @@
                 arraySapRptArticulo: [],
                 jsonArticulo: '',
                 arraySapItemCode: [],
+                WarehouseCode: '',
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1491,6 +1523,11 @@
                 form: new FormData,
                 textFile: ''
             }
+        },
+        mounted(){
+            this.llenarComboMarca();
+            this.llenarComboModelo();
+            this.obtenerIgv();
         },
         computed:{
             isActived: function(){
@@ -1634,6 +1671,7 @@
             // =============  GENERAR COMPRA ======================
             tabGenerarCompra(){
                 this.obtenerCronogramaCompraActivo();
+                this.obtenerLocalidadBySucursal();
                 this.listarTipoLista();
                 this.limpiarFormulario();
             },
@@ -1764,6 +1802,68 @@
                     this.canio = response.data.arrayCronograma[0].cAnio;
                     this.cmes = response.data.arrayCronograma[0].cMes;
                     this.nidcronograma = response.data.arrayCronograma[0].nIdCronograma;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerLocalidadBySucursal(){
+                var url = this.ruta + '/parparametro/GetParParametro';
+
+                axios.get(url, {
+                    params: {
+                        'nparsrccodigo': 0,
+                        'nparsrcgrupoarametro': 110102,
+                        'npardstcodigo': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'npardstgrupoarametro': 110022,
+                        'opcion': 1
+                    }
+                }).then(response => {
+                    if(response.data.arrayParParametro.length){
+                        this.formCompra.nidalmacen = response.data.arrayParParametro[0].nParSrcCodigo;
+                        this.obtenerAlmacenByLocalidad();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            obtenerAlmacenByLocalidad(){
+                var url = this.ruta + '/parametro/GetParametroById';
+                axios.get(url, {
+                    params: {
+                        'nidpar': this.formCompra.nidalmacen,
+                        'nidtipopar': 110102
+                    }
+                }).then(response => {
+                    if(response.data.length){
+                        this.formCompra.warehousecode = response.data[0].cParJerarquia;
+                    }
+                    else{
+                        this.formCompra.warehousecode = "SIN CÓDIGO";
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerIgv(){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar': 1300477,
+                        'ctipoparametro': 'P',
+                        'nidtipopar': 51
+                    }
+                }).then(response => {
+                    this.formCompra.igv = response.data[0].fDatoParPorcentual;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2246,6 +2346,8 @@
                 axios.post(sapUrl, {
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode': me.formCompra.warehousecode,
+                    'Igv': me.formCompra.igv,
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
@@ -2751,11 +2853,7 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
-            },
-        },
-        mounted(){
-            this.llenarComboMarca();
-            this.llenarComboModelo();
+            }
         }
     }
 </script>

@@ -62,8 +62,8 @@ class SapCompraController extends Controller
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
 
-            $precioUnit1 = (floatval($value['fTotalCompra']) * 0.18);
-            $precioUnit2 = (floatval($value['fTotalCompra']) - $precioUnit1);
+            $ValorIgv = (floatval($value['fTotalCompra']) * floatval($request->Igv));
+            $SubTotal = (floatval($value['fTotalCompra']) - $ValorIgv);
 
             $json = [
                 'json' => [
@@ -76,7 +76,8 @@ class SapCompraController extends Controller
                                 "ItemCode"    => $value['cNumeroVin'],
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
-                                "UnitPrice"   => (string)$precioUnit2
+                                "UnitPrice"   => (string)$SubTotal,
+                                "WarehouseCode" =>(string)$request->WarehouseCode
                             ]
                         ]
                     ]
