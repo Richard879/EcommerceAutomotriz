@@ -471,7 +471,7 @@
                 var url = this.ruta + '/puga/DeletePermisosByUsuario';
                 axios.post(url, {
                     'nIdEmpresa': this.fillPuga.nidempresa,
-                    'nIdSucursal': sessionStorage.getItem("nIdSucursal"),
+                    'nIdSucursal': this.fillPuga.nidsucursal,
                     'nIdPerfil' : 0,
                     'nIdUsuario': this.formPuga.nidusuario
                 }).then(response => {

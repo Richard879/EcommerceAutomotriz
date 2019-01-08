@@ -1527,6 +1527,7 @@
         mounted(){
             this.llenarComboMarca();
             this.llenarComboModelo();
+            this.obtenerLocalidadBySucursal();
             this.obtenerIgv();
         },
         computed:{
@@ -1671,7 +1672,6 @@
             // =============  GENERAR COMPRA ======================
             tabGenerarCompra(){
                 this.obtenerCronogramaCompraActivo();
-                this.obtenerLocalidadBySucursal();
                 this.listarTipoLista();
                 this.limpiarFormulario();
             },
@@ -2112,6 +2112,8 @@
                 axios.post(sapUrl, {
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'WarehouseCode': me.formCompra.warehousecode,
+                    'Igv': me.formCompra.igv,
                     'data': me.arraySapCompra
                 }).then(response => {
                     // console.log("registroSapCompra");
