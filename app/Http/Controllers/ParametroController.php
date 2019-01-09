@@ -377,4 +377,32 @@ class ParametroController extends Controller
                                                             ]);
         return response()->json($objParParametroExt);
     }
+
+    public function LineaMarcaModeloDesactiva(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $objParParametroExt = DB::select('exec [usp_Par_LineaMarcaModeloDesactiva] ?, ?, ?, ?, ?',
+                                                        [   $request->nIdProveedor,
+                                                            $request->nIdLinea,
+                                                            $request->nIdMarca,
+                                                            $request->nIdModelo,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($objParParametroExt);
+    }
+
+    public function LineaMarcaModeloActiva(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $objParParametroExt = DB::select('exec [usp_Par_LineaMarcaModeloActiva] ?, ?, ?, ?, ?',
+                                                        [   $request->nIdProveedor,
+                                                            $request->nIdLinea,
+                                                            $request->nIdMarca,
+                                                            $request->nIdModelo,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($objParParametroExt);
+    }
 }

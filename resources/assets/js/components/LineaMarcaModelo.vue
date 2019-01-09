@@ -104,25 +104,25 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="vehiculo in arrayVersionVehiculo" :key="vehiculo.nIdLinea + vehiculo.nIdMarca + vehiculo.nIdModelo">
-                                                        <td v-text="vehiculo.nIdLinea"></td>
-                                                        <td v-text="vehiculo.cLineaNombre"></td>
-                                                        <td v-text="vehiculo.nIdMarca"></td>
-                                                        <td v-text="vehiculo.cMarcaNombre"></td>
-                                                        <td v-text="vehiculo.nIdModelo"></td>
-                                                        <td v-text="vehiculo.cModeloNombre"></td>
+                                                    <tr v-for="p in arrayVersionVehiculo" :key="p.nIdLinea + p.nIdMarca + p.nIdModelo">
+                                                        <td v-text="p.nIdLinea"></td>
+                                                        <td v-text="p.cLineaNombre"></td>
+                                                        <td v-text="p.nIdMarca"></td>
+                                                        <td v-text="p.cMarcaNombre"></td>
+                                                        <td v-text="p.nIdModelo"></td>
+                                                        <td v-text="p.cModeloNombre"></td>
                                                         <td>
-                                                            <el-tooltip class="item" :content="'Editar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
-                                                                <i @click="abrirFormulario('versionvehiculo','actualizar', vehiculo)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
+                                                            <el-tooltip class="item" :content="'Editar '" effect="dark" placement="top-start">
+                                                                <i @click="abrirFormulario('versionvehiculo','actualizar', p)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
                                                             </el-tooltip>&nbsp;
-                                                            <template v-if="vehiculo.cSituacionRegistro=='A'">
-                                                                <el-tooltip class="item" :content="'Desactivar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
-                                                                    <i @click="desactivar(vehiculo.nIdVersionVeh)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                            <template v-if="p.cSituacionRegistro=='A'">
+                                                                <el-tooltip class="item" :content="'Desactivar '" effect="dark" placement="top-start">
+                                                                    <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
                                                                 </el-tooltip>
                                                             </template>
                                                             <template v-else>
-                                                                <el-tooltip class="item" :content="'Activar ' + vehiculo.cNombreComercial" effect="dark" placement="top-start">
-                                                                    <i @click="activar(vehiculo.nIdVersionVeh)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                <el-tooltip class="item" :content="'Activar '" effect="dark" placement="top-start">
+                                                                    <i @click="activar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
                                                                 </el-tooltip>
                                                             </template>
                                                         </td>
@@ -612,6 +612,9 @@
                 if(this.formVersion.nidproveedor == 0 || !this.formVersion.nidproveedor){
                     this.mensajeError.push('Debes Seleccionar Proveedor');
                 };
+                if(this.formVersion.nidlinea == 0 || !this.formVersion.nidlinea){
+                    this.mensajeError.push('Debe Seleccionar Linea');
+                };
                 if(this.formVersion.nidmarca == 0 || !this.formVersion.nidmarca){
                     this.mensajeError.push('Debe Seleccionar Marca');
                 };
@@ -735,9 +738,9 @@
                     console.log(error);
                 });
             },
-            activar(nIdVersionVeh){
+            activar(p){
                 swal({
-                    title: 'Estas seguro de activar este vehículo?',
+                    title: 'Estas seguro de activar este registro?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -746,9 +749,12 @@
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
                         if (result.value) {
-                            var url = this.ruta + '/versionvehiculo/activar';
+                            var url = this.ruta + '/parametro/LineaMarcaModeloActiva';
                             axios.put(url, {
-                                nIdVersionVeh: parseInt(nIdVersionVeh)
+                                'nIdProveedor': this.formVersion.nidproveedor,
+                                'nIdLinea': parseInt(p.nIdLinea),
+                                'nIdMarca': parseInt(p.nIdMarca),
+                                'nIdModelo': parseInt(p.nIdModelo)
                             }).then(response => {
                                 swal(
                                 'Activado!',
@@ -764,9 +770,9 @@
                         }
                     })
             },
-            desactivar(nIdVersionVeh){
+            desactivar(p){
                 swal({
-                    title: 'Estas seguro de desactivar este vehículo?',
+                    title: 'Estas seguro de desactivar este registro?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -775,9 +781,12 @@
                     cancelButtonText: 'No, cancelar!'
                     }).then((result) => {
                         if (result.value) {
-                            var url = this.ruta + '/versionvehiculo/desactivar';
+                            var url = this.ruta + '/parametro/LineaMarcaModeloDesactiva';
                             axios.put(url, {
-                                nIdVersionVeh: parseInt(nIdVersionVeh)
+                                'nIdProveedor': this.formVersion.nidproveedor,
+                                'nIdLinea': parseInt(p.nIdLinea),
+                                'nIdMarca': parseInt(p.nIdMarca),
+                                'nIdModelo': parseInt(p.nIdModelo)
                             }).then(response => {
                                 swal(
                                 'Desactivado!',
@@ -868,15 +877,10 @@
 
             },
             limpiarFormulario(){
-                //this.formVersion.nidproveedor= 0,
-                //this.formVersion.cproveedornombre= '',
-                this.formVersion.nidclase=  '',
-                this.formVersion.nidsubclase= '',
                 this.formVersion.nidlinea= '',
                 this.formVersion.nidmarca= '',
                 this.formVersion.nidmodelo= '',
                 this.formVersion.cnombrecomercial= ''
-                //this.arrayVersionVehiculo = []
             },
             mostrarProgressBar(){
                 $("#myBar").show();

@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/parametro/activar','ParametroController@activar');
     Route::get('/parametro/GetLineaMarcaModelo','ParametroController@GetLineaMarcaModelo');
     Route::post('/parametro/SetLineaMarcaModelo','ParametroController@SetLineaMarcaModelo');
+    Route::put('/parametro/LineaMarcaModeloDesactiva','ParametroController@LineaMarcaModeloDesactiva');
+    Route::put('/parametro/LineaMarcaModeloActiva','ParametroController@LineaMarcaModeloActiva');
 
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/parparametro/GetListParParametroByGrupoTodos', 'ParParametroController@GetListParParametroByGrupoTodos');
