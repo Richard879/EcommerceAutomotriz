@@ -101,6 +101,7 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Código</th>
+                                                                                    <th># Codigo SAP</th>
                                                                                     <th>Apellidos</th>
                                                                                     <th>Nombres</th>
                                                                                     <th>Nro Documento</th>
@@ -114,6 +115,7 @@
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.CardCode"></td>
                                                                                     <td v-text="c.cPerApellidos"></td>
                                                                                     <td v-text="c.cNombre"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
@@ -138,6 +140,7 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Código</th>
+                                                                                    <th># Codigo SAP</th>
                                                                                     <th>Razon Social</th>
                                                                                     <th>Nro Documento</th>
                                                                                     <th>Telefono</th>
@@ -150,6 +153,7 @@
                                                                             <tbody>
                                                                                 <tr v-for="c in arrayContacto" :key="c.nIdContacto">
                                                                                     <td v-text="c.nIdContacto"></td>
+                                                                                    <td v-text="c.CardCode"></td>
                                                                                     <td v-text="c.cRazonSocial"></td>
                                                                                     <td v-text="c.cNumeroDocumento"></td>
                                                                                     <td v-text="c.nTelefonoMovil"></td>
@@ -3387,7 +3391,7 @@
                     // console.log(response.data);
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
-                    this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson.CardCode);
+                    this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3397,17 +3401,20 @@
                     }
                 });
             },
-            actualizarCardCodeContacto(nIdContacto, CardCode){
+            actualizarCardCodeContacto(nIdContacto, dataJSON, logRpta){
                 var url = this.ruta + '/gescontacto/UpdCardCodeContacto';
                 axios.post(url, {
                     'nIdContacto'   : nIdContacto,
-                    'CardCode'      : CardCode
+                    'CardCode'      : dataJSON.CardCode.toString(),
+                    'CardType'      : dataJSON.CardType.toString(),
+                    'LogRespuesta'  : logRpta
                 }).then(response => {
                     $("#myBar").hide();
+                    console.log(response);
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
                     } else {
-                        swal('Ocurrio un problema al Actualizar el Contacto');
+                        swal(response.data[0].cMensaje);
                     }
                     //this.listarContactoSinCarteraMes(1);
                     this.arrayContacto = [];
@@ -3428,7 +3435,6 @@
                     'nIdContacto': nIdContacto,
                     'CardName': (contacto.cnombre + ' ' + contacto.capepaterno + ' ' + contacto.capematerno),
                     'FederalTaxID': contacto.cnrodocumento,
-                    'U_SAI_CAMPO3': '1',
                     'EmailAddress': contacto.cmailprincipal,
                     'Address': contacto.cdireccion,
                     'Cellular': contacto.ncelular,
@@ -3438,7 +3444,7 @@
                     swal('Contacto registrado exitosamente');
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
-                    this.actualizarCardCodeContacto2(nIdContacto, this.SAPNuevoContactoJson.CardCode);
+                    this.actualizarCardCodeContacto2(nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -3448,17 +3454,20 @@
                     }
                 });
             },
-            actualizarCardCodeContacto2(nIdContacto, CardCode){
+            actualizarCardCodeContacto2(nIdContacto, dataJSON, logRpta){
                 var url = this.ruta + '/gescontacto/UpdCardCodeContacto';
                 axios.post(url, {
                     'nIdContacto'   : nIdContacto,
-                    'CardCode'      : CardCode
+                    'CardCode'      : dataJSON.CardCode.toString(),
+                    'CardType'      : dataJSON.CardType.toString(),
+                    'LogRespuesta'  : logRpta
                 }).then(response => {
                     $("#myBar").hide();
+                    console.log(response);
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
                     } else {
-                        swal('Ocurrio un problema al Actualizar el Contacto');
+                        swal(response.data[0].cMensaje);
                     }
                     this.limpiarNuevoContacto();
                     this.tabDatosPersonales();

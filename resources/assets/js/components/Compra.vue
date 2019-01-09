@@ -1399,25 +1399,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" v-if="accionmodal==100" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-md" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Automotores INKA</h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </transition>
 </template>
@@ -1852,6 +1833,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             obtenerAlmacenByLocalidad(){
@@ -2414,7 +2400,7 @@
                     swal({
                         type: 'error',
                         title: 'Error...',
-                        text: 'Error en la Integración de Artículo SapB1!', 
+                        text: 'Error en la Integración de Artículo SapB1!',
                     });
                     me.limpiarFormulario();
                     me.listarCompras();

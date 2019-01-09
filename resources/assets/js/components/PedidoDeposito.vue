@@ -1710,6 +1710,7 @@
                     'fTipoCambioDeposito': this.formNuevoDeposito.ftipocambiovoucher,
                     'fTipoCambioComercial': this.formNuevoDeposito.ftipocambiocomercial,
                     'fMonto': this.formNuevoDeposito.fmonto,
+                    'cTipoComprobante': this.formNuevoDeposito.cTipoComprobante,
                     'cGlosa': this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial' : (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                 }).then(response => {
@@ -1821,6 +1822,7 @@
                     'fTipoCambioDeposito': this.formNuevoDeposito.ftipocambiovoucher,
                     'fTipoCambioComercial': this.formNuevoDeposito.ftipocambiocomercial,
                     'fMonto': this.formNuevoDeposito.fmonto,
+                    'cTipoComprobante': this.formNuevoDeposito.cTipoComprobante,
                     'cGlosa': this.formNuevoDeposito.cglosa,
                     'cFlagTipoCambioEspecial' : (this.formNuevoDeposito.cflagtce == true) ? 'S' : 'N',
                 }).then(response => {

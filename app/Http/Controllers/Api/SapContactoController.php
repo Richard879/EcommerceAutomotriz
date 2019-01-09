@@ -88,7 +88,7 @@ class SapContactoController extends Controller
         $CardCode       =   "C". $request->nIdContacto;
         $UserName       =   $request->CardName;
         $FederalTaxID   =   $request->FederalTaxID;
-        // $U_SAI_CAMPO3   =   $request->U_SAI_CAMPO3;
+        $U_SAI_CAMPO3   =   1;
         $EmailAddress   =   $request->EmailAddress;
         $Address        =   $request->Address;
         $Cellular       =   $request->Cellular;
@@ -100,7 +100,7 @@ class SapContactoController extends Controller
                 "CardType"      => "cCustomer",
                 "CardName"      => $UserName,
                 "FederalTaxID"  => $FederalTaxID,
-                // "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
+                "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
                 "EmailAddress"  => $EmailAddress,
                 "Address"       => $Address,
                 "Cellular"      => $Cellular,
