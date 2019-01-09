@@ -345,12 +345,13 @@
                                                                                     <el-select v-model="formParametrizacionDeposito.nidformapago"
                                                                                             filterable
                                                                                             clearable
-                                                                                            placeholder="SELECCIONE FORMA DE PAGO">
+                                                                                            placeholder="SELECCIONE FORMA DE PAGO"
+                                                                                            @change="seleccionarFormaPago">
                                                                                         <el-option
                                                                                             v-for="item in arrayFormaPago"
-                                                                                            :key="item.nIdPar"
-                                                                                            :label="item.cParNombre"
-                                                                                            :value="item.nIdPar">
+                                                                                            :key="item.nParDstCodigo"
+                                                                                            :label="item.cParNombreDestino"
+                                                                                            :value="item.nParDstCodigo">
                                                                                         </el-option>
                                                                                     </el-select>
                                                                                 </div>
@@ -1573,7 +1574,7 @@
                         'ngrupoparid': 110104
                     }
                 }).then(response => {
-                    this.arrayFormaPago = response.data;
+                    this.arrayTipoComprobante = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
