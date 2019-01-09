@@ -338,4 +338,43 @@ class ParametroController extends Controller
                                                         ]);
         return response()->json($parametro);
     }
+
+    public function GetLineaMarcaModelo(Request $request)
+    {
+        $nIdProveedor = $request->nidproveedor;
+        $nIdLinea = $request->nidlinea;
+        $nIdMarca = $request->nidmarca;
+        $nIdModelo = $request->nidmodelo;
+        //$cModeloNombre = $request->cmodelonombre;
+        $variable   = $request->opcion;
+
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        //$cModeloNombre = ($cModeloNombre == NULL) ? ($cModeloNombre = ' ') : $cModeloNombre;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayLineaMarcaModelo = DB::select('exec [usp_Par_GetLineaMarcaModelo] ?, ?, ?, ?',
+                                                            [   $nIdProveedor,
+                                                                $nIdLinea,
+                                                                $nIdMarca,
+                                                                $nIdModelo
+                                                            ]);
+        if($variable == "0"){
+            $arrayLineaMarcaModelo = $this->arrayPaginator($arrayLineaMarcaModelo, $request);
+        }
+        return ['arrayLineaMarcaModelo'=>$arrayLineaMarcaModelo];
+    }
+
+    public function SetLineaMarcaModelo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $objParParametroExt = DB::select('exec [usp_Par_SetLineaMarcaModelo] ?, ?, ?, ?, ?',
+                                                            [   $request->nIdProveedor,
+                                                                $request->nIdLinea,
+                                                                $request->nIdMarca,
+                                                                $request->nIdModelo,
+                                                                Auth::user()->id
+                                                            ]);
+        return response()->json($objParParametroExt);
+    }
 }

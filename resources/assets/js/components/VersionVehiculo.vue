@@ -749,7 +749,7 @@
             validarBusqueda(){
                 this.error = 0;
                 this.mensajeError =[];
-                if(this.formVersion.nidproveedor == 0){
+                if(this.formVersion.nidproveedor == 0 || !this.formVersion.nidproveedor){
                     this.mensajeError.push('Debes Seleccionar el Proveedor');
                 };
                 if(this.mensajeError.length){
@@ -830,22 +830,22 @@
                     this.mensajeError.push('No ha seleccionado el Vehiculo');
                 }
 
-                if(!this.formVersion.nidproveedor || this.formVersion.nidproveedor == 0){
+                if(this.formVersion.nidproveedor == 0 || !this.formVersion.nidproveedor){
                     this.mensajeError.push('Debes Ingresar el Proveedor');
                 };
-                if(this.formVersion.nidclase == ''){
+                if(this.formVersion.nidclase == 0 || !this.formVersion.nidclase){
                     this.mensajeError.push('Debes Ingresar una Clase');
                 };
-                if(this.formVersion.nidsubclase == ''){
+                if(this.formVersion.nidsubclase == 0 || !this.formVersion.nidsubclase){
                     this.mensajeError.push('Debes Ingresar una Sub clase');
                 };
-                if(this.formVersion.nidlinea == ''){
+                if(this.formVersion.nidlinea == 0 || !this.formVersion.nidlinea){
                     this.mensajeError.push('Debes Ingresar una Línea');
                 };
-                if(this.formVersion.nidmarca == '0'){
+                if(this.formVersion.nidmarca == 0 || !this.formVersion.nidmarca){
                     this.mensajeError.push('Debes Ingresar una Marca');
                 };
-                if(this.formVersion.nidmodelo == ''){
+                if(this.formVersion.nidmodelo == 0 || !this.formVersion.nidmodelo){
                     this.mensajeError.push('Debes Ingresar un Modelo');
                 };
                 if(!this.formVersion.cnombrecomercial){
