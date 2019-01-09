@@ -72,7 +72,7 @@ class PedidoDepositoController extends Controller
         $nIdFormaPago = ($nIdFormaPago == NULL) ? ($nIdFormaPago = 0) : $nIdFormaPago;
         $nIdFormaPago2 = ($nIdFormaPago2 == NULL) ? ($nIdFormaPago2 = 0) : $nIdFormaPago2;
 
-        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+        $arrayPedido = DB::select('exec usp_Deposito_SetDeposito ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                                     [
                                         $request->nIdEmpresa,
                                         $request->nIdSucursal,
@@ -90,6 +90,7 @@ class PedidoDepositoController extends Controller
                                         $request->fTipoCambioDeposito,
                                         $request->fTipoCambioComercial,
                                         $request->fMonto,
+                                        $request->cTipoComprobante,
                                         $request->cGlosa,
                                         $request->cFlagTipoCambioEspecial,
                                         Auth::user()->id
