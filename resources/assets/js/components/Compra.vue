@@ -889,7 +889,7 @@
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" placement="top-start">
                                                                     <div slot="content">Seleccionar {{ proveedor.cParNombre }}</div>
-                                                                    <i @click="asignarProveedor(proveedor.nIdPar, proveedor.cParNombre)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
+                                                                    <i @click="asignarProveedor(proveedor)" :style="'color:#796AEE'" class="fa-md fa fa-check-circle"></i>
                                                                 </el-tooltip>
                                                             </td>
                                                             <td>{{proveedor.cParNombre}}</td>
@@ -1455,6 +1455,7 @@
                     nidlistaprecio: 0,
                     nidalmacen: 0,
                     warehousecode: '',
+                    ccarcode: '',
                     igv: 0
                 },
                 arrayExcel: [],
@@ -1513,7 +1514,6 @@
                 jsonMercancia: '',
                 arraySapUpdMercancia: [],
                 arraySapItemCode: [],
-                WarehouseCode: '',
                 // ============================================================
                 pagination : {
                     'total' : 0,
@@ -1732,9 +1732,10 @@
                 this.paginationModal.current_page=page;
                 this.listarProveedores(page);
             },
-            asignarProveedor(nProveedorId, cProveedorNombre){
-                this.formCompra.nidproveedor = nProveedorId;
-                this.formCompra.cproveedornombre = cProveedorNombre;
+            asignarProveedor(proveedor){
+                this.formCompra.nidproveedor = proveedor.nIdPar;
+                this.formCompra.cproveedornombre = proveedor.cParNombre;
+                this.formCompra.ccarcode = proveedor.cParJerarquia;
                 this.cerrarModal();
             },
             listarTipoLista(){
@@ -2129,6 +2130,7 @@
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
+                    'cCardCode': me.formCompra.ccarcode,
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode': me.formCompra.warehousecode,
@@ -2192,6 +2194,7 @@
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                 axios.post(sapUrl, {
+                    'cCardCode': me.formCompra.ccarcode,
                     'data': me.arraySapUpdCompra
                 }).then(response => {
                     me.arraySapRptMercancia = response.data;
@@ -2269,6 +2272,10 @@
                 };
                 if(this.formCompra.nidlistaprecio == 0){
                     this.mensajeError.push('Debes seleccionar una Lista');
+                };
+                if(this.formCompra.ccarcode == '' || !this.formCompra.ccarcode)
+                {
+                    this.mensajeError.push('El Proveedor no tiene codigo Sap');
                 };
                 if(this.nidcronograma == 0){
                     this.mensajeError.push('No existe Periodo Compra Activo');
@@ -2366,6 +2373,8 @@
                             dFechaFacturado: compra.dFechaFacturado,
                             dFechaCompra: compra.dFechaCompra
                         });
+                        //Obtener Codigo Sap Proveedor
+                        me.formCompra.ccarcode = compra.cCarCode;
                         //==============================================================
                         //================== REGITRO DE COMPRA EN SAP ===============
                         me.generaSapCompra();
@@ -2423,6 +2432,7 @@
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
+                    'cCardCode': me.formCompra.ccarcode,
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode': me.formCompra.warehousecode,
@@ -2508,6 +2518,7 @@
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                 axios.post(sapUrl, {
+                    'cCardCode': me.formCompra.ccarcode,
                     'data': me.arraySapUpdCompra
                 }).then(response => {
                     me.arraySapRptMercancia = response.data;
@@ -2982,6 +2993,7 @@
                 this.fillCompra.nordencompra= '',
                 this.fillCompra.cnumerovin=  '',
                 this.formCompra.nidtipolista= '',
+                this.formCompra.ccarcode= '',
                 this.arrayExcel = [],
                 this.form = new FormData,
                 $("#file-upload").val(""),

@@ -26,7 +26,7 @@ class SapMercanciaController extends Controller
         foreach ($data as $key => $value) {
             $json = [
                 'json' => [
-                    "CardCode"      => $cCardCode,
+                    "CardCode"      => $request->cCardCode,
                     //"DocDate"       => (string)$request->fDocDate,
                     //"DocDueDate"    => (string)$request->fDocDueDate,
                     "DocumentLines" => [
