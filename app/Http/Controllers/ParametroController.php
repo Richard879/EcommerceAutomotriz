@@ -368,11 +368,12 @@ class ParametroController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         
-        $objParParametroExt = DB::select('exec [usp_Par_SetLineaMarcaModelo] ?, ?, ?, ?',
+        $objParParametroExt = DB::select('exec [usp_Par_SetLineaMarcaModelo] ?, ?, ?, ?, ?',
                                                             [   $request->nIdProveedor,
                                                                 $request->nIdLinea,
                                                                 $request->nIdMarca,
-                                                                $request->nIdModelo
+                                                                $request->nIdModelo,
+                                                                Auth::user()->id
                                                             ]);
         return response()->json($objParParametroExt);
     }
