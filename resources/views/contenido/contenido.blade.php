@@ -27,6 +27,9 @@
     <template v-if="menu==1300469">
         <cronograma :ruta="ruta"></cronograma>
     </template>
+    <template v-if="menu==1300480">
+        <lineamarcamodelo :ruta="ruta"></lineamarcamodelo>
+    </template>
 
 
     <template v-if="menu==1300266">

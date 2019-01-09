@@ -72,12 +72,13 @@ Vue.component('asigvendedorsublinea', require('./components/AsignaVendedorSubLin
 Vue.component('asigvendedorcuotasublinea', require('./components/AsignaVendedorCuotaSubLinea.vue'));
 Vue.component('parparametro', require('./components/ParParametro.vue'));
 Vue.component('cronograma', require('./components/Cronograma.vue'));
+Vue.component('lineamarcamodelo', require('./components/LineaMarcaModelo.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
         menu: 1300362,
-        ruta: 'http://172.20.6.51:8080/saisacsys/public'
+        ruta: 'http://172.20.6.54:8080/saisacsys/public'
     },
     methods: {
         reiniciaMenu: function(data) {

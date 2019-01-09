@@ -46,8 +46,8 @@ class SapCompraController extends Controller
         $rptaSap   = [];
         //$DocEntry   = [];
 
-        $User       =   Auth::user()->id;
-        $cCardCode   =   'C'.$User;
+        /*$User       =   Auth::user()->id;
+        $cCardCode   =   'C'.$User;*/
 
         $data = $request->data;
         foreach ($data as $key => $value) {
@@ -67,7 +67,7 @@ class SapCompraController extends Controller
 
             $json = [
                 'json' => [
-                    "CardCode"      => $cCardCode,
+                    "CardCode"      => $request->cCardCode,
                     // "DocDate"       => (string)$request->fDocDate,
                     // "DocDueDate"    => (string)$request->fDocDueDate,
                     "DocTotal"      => (string)$value['fTotalCompra'],
