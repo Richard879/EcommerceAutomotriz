@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/parametro/UpdParametroById', 'ParametroController@UpdParametroById');
     Route::put('/parametro/desactivar','ParametroController@desactivar');
     Route::put('/parametro/activar','ParametroController@activar');
+    Route::get('/parametro/GetLineaMarcaModelo','ParametroController@GetLineaMarcaModelo');
+    Route::post('/parametro/SetLineaMarcaModelo','ParametroController@SetLineaMarcaModelo');
 
     Route::get('/parparametro/GetBancosByEmpresa', 'ParParametroController@GetBancosByEmpresa');
     Route::get('/parparametro/GetListParParametroByGrupoTodos', 'ParParametroController@GetListParParametroByGrupoTodos');

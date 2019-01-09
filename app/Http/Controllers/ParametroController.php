@@ -341,21 +341,39 @@ class ParametroController extends Controller
 
     public function GetLineaMarcaModelo(Request $request)
     {
-        $nIdEmpresa = $request->nidempresa;
         $nIdProveedor = $request->nidproveedor;
-        $cLineaNombre = $request->clineanombre;
+        $nIdLinea = $request->nidlinea;
+        $nIdMarca = $request->nidmarca;
+        $nIdModelo = $request->nidmodelo;
+        //$cModeloNombre = $request->cmodelonombre;
         $variable   = $request->opcion;
-        $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
+
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+        //$cModeloNombre = ($cModeloNombre == NULL) ? ($cModeloNombre = ' ') : $cModeloNombre;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
-                                                            [   $nIdEmpresa,
-                                                                $nIdProveedor,
-                                                                $cLineaNombre
+        $arrayLineaMarcaModelo = DB::select('exec [usp_Par_GetLineaMarcaModelo] ?, ?, ?, ?',
+                                                            [   $nIdProveedor,
+                                                                $nIdLinea,
+                                                                $nIdMarca,
+                                                                $nIdModelo
                                                             ]);
         if($variable == "0"){
-            $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
+            $arrayLineaMarcaModelo = $this->arrayPaginator($arrayLineaMarcaModelo, $request);
         }
-        return ['arrayLinea'=>$arrayLinea];
+        return ['arrayLineaMarcaModelo'=>$arrayLineaMarcaModelo];
+    }
+
+    public function SetLineaMarcaModelo(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        
+        $objParParametroExt = DB::select('exec [usp_Par_SetLineaMarcaModelo] ?, ?, ?, ?',
+                                                            [   $request->nIdProveedor,
+                                                                $request->nIdLinea,
+                                                                $request->nIdMarca,
+                                                                $request->nIdModelo
+                                                            ]);
+        return response()->json($objParParametroExt);
     }
 }
