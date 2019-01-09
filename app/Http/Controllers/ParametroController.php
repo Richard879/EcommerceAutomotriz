@@ -338,4 +338,24 @@ class ParametroController extends Controller
                                                         ]);
         return response()->json($parametro);
     }
+
+    public function GetLineaMarcaModelo(Request $request)
+    {
+        $nIdEmpresa = $request->nidempresa;
+        $nIdProveedor = $request->nidproveedor;
+        $cLineaNombre = $request->clineanombre;
+        $variable   = $request->opcion;
+        $cLineaNombre = ($cLineaNombre == NULL) ? ($cLineaNombre = ' ') : $cLineaNombre;
+        $variable = ($variable == NULL) ? ($variable = 0) : $variable;
+
+        $arrayLinea = DB::select('exec [usp_Par_GetLineaByProveedor] ?, ?, ?',
+                                                            [   $nIdEmpresa,
+                                                                $nIdProveedor,
+                                                                $cLineaNombre
+                                                            ]);
+        if($variable == "0"){
+            $arrayLinea = $this->arrayPaginator($arrayLinea, $request);
+        }
+        return ['arrayLinea'=>$arrayLinea];
+    }
 }

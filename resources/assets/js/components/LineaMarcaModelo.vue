@@ -68,25 +68,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--<div class="col-sm-6">
-                                                <div class="row">
-                                                    <label class="col-sm-4 form-control-label">Modelo</label>
-                                                    <div class="col-sm-8">
-                                                        <el-select v-model="formVersion.nidmodelo" filterable clearable placeholder="SELECCIONE" >
-                                                            <el-option
-                                                            v-for="item in arrayModelo"
-                                                            :key="item.nIdPar"
-                                                            :label="item.cParNombre"
-                                                            :value="item.nIdPar">
-                                                            </el-option>
-                                                        </el-select>
-                                                    </div>
-                                                </div>
-                                            </div>-->
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-5">
-                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarVersionVehiculo();">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="buscarLineaMarcaModelo();">
                                                     <i class="fa fa-search"></i> Buscar
                                                 </button>
                                                 <button type="button" class="btn btn-success btn-corner btn-sm" @click="abrirFormulario('versionvehiculo','registrar')">
@@ -406,7 +391,6 @@
                 </div>
             </div>
 
-
         </main>
     </transition>
 </template>
@@ -520,32 +504,6 @@
             }
         },
         methods:{
-            llenarComboClase(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110029
-                    }
-                }).then(response => {
-                    this.arrayClase = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-            llenarComboSubClase(){
-                var url = this.ruta + '/parametro/GetParametroByGrupo';
-
-                axios.get(url, {
-                    params: {
-                        'ngrupoparid' : 110030
-                    }
-                }).then(response => {
-                    this.arraySubClase = response.data;
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
             llenarComboLinea(){
                 var url = this.ruta + '/versionvehiculo/GetLineasByProveedor';
 
@@ -637,14 +595,14 @@
                 this.arrayModelo = [];
                 this.llenarComboLinea();
             },
-            buscarVersionVehiculo(){
+            buscarLineaMarcaModelo(){
                 if(this.validarBusqueda()){
                     this.accionmodal=1;
                     this.modal = 1;
                     return;
                 }
 
-                this.listarVersionVehiculo(1);
+                this.listarLineaMarcaModelo(1);
             },
             validarBusqueda(){
                 this.error = 0;
@@ -657,20 +615,16 @@
                 }
                 return this.error;
             },
-            listarVersionVehiculo(page){
+            listarLineaMarcaModelo(page){
                 this.mostrarProgressBar();
-                var url = this.ruta + '/versionvehiculo/GetVersionVehiculo';
+                var url = this.ruta + '/lineamarcamodelo/GetLineaMarcaModelo';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidproveedor' : this.formVersion.nidproveedor,
-                        'nidclase' : this.formVersion.nidclase,
-                        'nidsubclase' : this.formVersion.nidsubclase,
                         'nidlinea' : this.formVersion.nidlinea,
                         'nidmarca' : this.formVersion.nidmarca,
                         'nidmodelo' : this.formVersion.nidmodelo,
-                        'cnombrecomercial' : this.formVersion.cnombrecomercial.toString(),
                         'page' : page
                     }
                 }).then(response => {
@@ -688,7 +642,7 @@
             },
             cambiarPagina(page){
                 this.pagination.current_page=page;
-                this.listarVersionVehiculo(page);
+                this.listarLineaMarcaModelo(page);
             },
             registrar(){
                 if(this.validar()){
@@ -712,7 +666,7 @@
                     {
                         swal('Versión Vehículo registrado');
                         this.limpiarFormulario();
-                        this.listarVersionVehiculo(1);
+                        this.listarLineaMarcaModelo(1);
                         this.vistaFormulario = 1;
                     }
                     else{
@@ -780,7 +734,7 @@
                     {
                         swal('Versión Vehículo Actualizado');
                         this.limpiarFormulario();
-                        this.listarVersionVehiculo(1);
+                        this.listarLineaMarcaModelo(1);
                         this.vistaFormulario = 1;
                     }
                     else{
@@ -809,7 +763,7 @@
                                 'Activado!',
                                 'El registro fue activado.'
                                 );
-                                this.listarVersionVehiculo(1);
+                                this.listarLineaMarcaModelo(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -838,7 +792,7 @@
                                 'Desactivado!',
                                 'El registro fue desactivado.'
                                 );
-                                this.listarVersionVehiculo(1);
+                                this.listarLineaMarcaModelo(1);
                             })
                             .catch(function (error) {
                                 console.log(error);
