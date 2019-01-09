@@ -3033,10 +3033,10 @@
             },
             loadingProgressBar(texto){
                 this.loading = this.$loading({
-                lock: true,
-                text: texto,
-                spinner: 'el-icon-loading',
-                background: 'rgba(0, 0, 0, 0.7)'
+                    lock: true,
+                    text: texto,
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
                 });
             }
         }
