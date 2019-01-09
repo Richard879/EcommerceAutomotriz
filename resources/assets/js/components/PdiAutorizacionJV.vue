@@ -172,7 +172,7 @@
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                    <tr v-for="carta in arrayMisSolicitudes" :key="carta.nIdSolicitudAutorizacion">
+                                                                                    <tr v-for="(carta, index) in arrayMisSolicitudes" :key="index">
                                                                                         <td v-text="carta.cFechaSolicitud"></td>
                                                                                         <td v-text="carta.cTipoSolicitud"></td>
                                                                                         <td v-text="carta.cNroSolicitud"></td>

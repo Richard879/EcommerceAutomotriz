@@ -2854,6 +2854,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarTipoPersonaContactosPorVendedor(){
@@ -2892,7 +2897,12 @@
                     this.pagination.from        = response.data.arraySegReferenciavehiculo.from;
                     this.pagination.to           = response.data.arraySegReferenciavehiculo.to;
                 }).catch(error => {
-                    console.log(error); 
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaReferenciaPorReasignar(page){
@@ -2936,6 +2946,11 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        location.reload('0');
+                                    }
+                                }
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -2985,6 +3000,11 @@
                     this.listarReferenciaVehiculoPorReasignar(1);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =========================================================
@@ -3027,6 +3047,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboTipoContacto(){
@@ -3039,6 +3064,11 @@
                     this.arrayTipoContacto = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarTipoPersonaContactoLibre(){
@@ -3068,6 +3098,11 @@
                     this.pagination.to           = response.data.arrayReferenciaLibre.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaReferenciaLibre(page){
@@ -3107,6 +3142,11 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        location.reload('0');
+                                    }
+                                }
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -3161,6 +3201,11 @@
                         this.formSegDatosContacto.cdireccion = response.data[0].cDireccion;
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
                 else
@@ -3181,6 +3226,11 @@
                         this.formSegDatosContacto.cdireccion = response.data[0].cDireccion;
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
             },
@@ -3271,6 +3321,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarSegReferenciaVehiculo(){
@@ -3322,6 +3377,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistraSegReferenciaVehiculo(){
@@ -3379,6 +3439,11 @@
                     this.formNuevoSeguimiento.nidestadoseguimiento = response.data.arrayEstadoSeguimiento[0].nIdEstadoSeguimiento;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboZona(){
@@ -3391,6 +3456,11 @@
                     this.arrayZona = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboTipoSeguimiento(){
@@ -3403,6 +3473,11 @@
                     this.arrayTipoSeguimiento = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboFormaPago(){
@@ -3415,6 +3490,11 @@
                     this.arrayFormaPago = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarSeguimientoPorIdAsignacion(page){
@@ -3437,6 +3517,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarSeguimiento(){
@@ -3470,6 +3555,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistroMovimiento(){
@@ -3532,6 +3622,11 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        location.reload('0');
+                                    }
+                                }
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -3642,6 +3737,11 @@
                         this.formNuevoContacto.ntpodocumento = '';
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
                 else{
@@ -3655,6 +3755,11 @@
                         this.formNuevoContacto.ntpodocumento = '';
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
             },
@@ -3664,6 +3769,11 @@
                     this.arrayDptos = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboProv(){
@@ -3675,6 +3785,11 @@
                     this.llenarComboDist();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboDist(){
@@ -3684,6 +3799,11 @@
                     this.formNuevoContacto.niddistrito = 0;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboEstadoCivil(){
@@ -3696,6 +3816,11 @@
                     this.arrayEstadoCivil = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboProfesion(){
@@ -3708,6 +3833,11 @@
                     this.arrayProfesion = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =============  TAB DATOS DE CONTACTO ======================
@@ -3795,6 +3925,11 @@
                     this.formNuevoContactoJurifico.ntpodocumento = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =============  TAB REFERENCIA VEHICULO ======================
@@ -3827,6 +3962,11 @@
                     this.llenarComboMarca();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboMarca(){
@@ -3843,6 +3983,11 @@
                     this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelo(){
@@ -3857,6 +4002,11 @@
                     this.formNuevoContacto.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboAnioFabricacion(){
@@ -3869,6 +4019,11 @@
                     this.arrayAnioFabricacion = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboAnioModelo(){
@@ -3881,6 +4036,11 @@
                     this.arrayAnioModelo = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             asignarReferenciaVehiculo(){
@@ -4053,6 +4213,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarPersonaJuridica(){
@@ -4085,6 +4250,11 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarRegistroNuevoContacto(){
@@ -4114,6 +4284,11 @@
                         this.tabDatosPersonales();
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
             },
@@ -4141,6 +4316,11 @@
                     this.readFileLeads(response.data);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             readFileLeads(nameFile){
@@ -4226,6 +4406,11 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarReadFileLeads(){
@@ -4293,9 +4478,12 @@
                     $("#file-upload").val("");
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
-
-
             },
             validarRegistroLead(){
                 this.error = 0;
@@ -4338,6 +4526,11 @@
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaProveedor(page){
@@ -4372,6 +4565,11 @@
                     this.paginationModal.to           = response.data.arrayVendedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaVendedor(page){
@@ -4552,6 +4750,7 @@
         }
     }
 </script>
+
 <style>
     .mostrar{
         display: list-item !important;

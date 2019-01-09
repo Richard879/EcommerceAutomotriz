@@ -623,12 +623,16 @@ class GestionContactoController extends Controller
 
         $nIdContacto    =   $request->nIdContacto;
         $CardCode       =   $request->CardCode;
+        $CardType       =   $request->CardType;
+        $LogRespuesta   =   $request->LogRespuesta;
         $nIdUsuario     =   Auth::user()->id;
 
-        $data = DB::select('exec [usp_Contacto_UpdCardCodeContacto] ?, ?, ?',
+        $data = DB::select('exec [usp_Contacto_UpdCardCodeContacto] ?, ?, ?, ?, ?',
                                                             [
                                                                 $nIdContacto,
                                                                 $CardCode,
+                                                                $CardType,
+                                                                $LogRespuesta,
                                                                 $nIdUsuario
                                                             ]);
 
