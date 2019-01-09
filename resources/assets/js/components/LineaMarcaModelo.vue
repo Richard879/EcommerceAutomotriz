@@ -13,7 +13,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="h4">BUSCAR VERSION VEHICULO</h3>
+                                    <h3 class="h4">BUSCAR LINEA MARCA MODELO</h3>
                                 </div>
                                 <div class="card-body">
                                     <form class="form-horizontal">
@@ -112,9 +112,6 @@
                                                         <td v-text="p.nIdModelo"></td>
                                                         <td v-text="p.cModeloNombre"></td>
                                                         <td>
-                                                            <el-tooltip class="item" :content="'Editar '" effect="dark" placement="top-start">
-                                                                <i @click="abrirFormulario('versionvehiculo','actualizar', p)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                            </el-tooltip>&nbsp;
                                                             <template v-if="p.cSituacionRegistro=='A'">
                                                                 <el-tooltip class="item" :content="'Desactivar '" effect="dark" placement="top-start">
                                                                     <i @click="desactivar(p)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
@@ -839,7 +836,7 @@
                                 this.llenarComboLinea();
                                 this.llenarComboMarca();
                                 this.llenarComboModelo();
-                                this.tituloFormulario = 'NUEVO VERSION VEHICULO';
+                                this.tituloFormulario = 'NUEVO LINEA MARCA MODELO';
                                 this.limpiarFormulario();
                                 break;
                             }
@@ -856,7 +853,7 @@
                                 //this.llenarComboMarca();
                                 this.formVersion.nidmarca = data['nIdMarca'];
                                 //this.llenarComboModelo();
-                                this.tituloFormulario = 'ACTUALIZAR VERSION VEHICULO';
+                                this.tituloFormulario = 'ACTUALIZAR LINEA MARCA MODELO';
                                 this.formVersion.nidmodelo = data['nIdModelo'];
                                 this.formVersion.nidversionveh = data['nIdVersionVeh'];
                                 this.formVersion.cnombrecomercial = data['cNombreComercial'];
