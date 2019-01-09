@@ -726,9 +726,18 @@
                                                                             </div>
                                                                             <div class="col-sm-6">
                                                                                 <div class="row">
-                                                                                    <label class="col-sm-4 form-control-label">* Voucher</label>
+                                                                                    <label class="col-sm-4 form-control-label">* Tipo Comprobante</label>
                                                                                     <div class="col-sm-8">
-                                                                                        <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                                                        <el-select v-model="formNuevoDeposito.cTipoComprobante"
+                                                                                                            filterable
+                                                                                                            placeholder="SELECCIONE TIPO COMPROBANTE">
+                                                                                            <el-option
+                                                                                                v-for="item in arrayTipoComprobante"
+                                                                                                :key="item.nIdPar"
+                                                                                                :label="item.cParNombre"
+                                                                                                :value="item.nIdPar">
+                                                                                            </el-option>
+                                                                                        </el-select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -742,6 +751,16 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="row">
+                                                                                    <label class="col-sm-4 form-control-label">* Voucher</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <input type="file" id="file-upload" @change="getFile" class="form-control form-control-sm"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
                                                                             <template v-if="formNuevoDeposito.verificarMonedaTCE">
                                                                                 <div class="col-sm-6">
                                                                                     <div class="row">
@@ -898,7 +917,7 @@
                 </div>
             </div>
 
-            <!-- Modal Buscar Compras -->
+            <!-- Modal Tipo Pago -->
             <div class="modal fade" v-if="accionmodal==3" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
                     <div class="modal-content">
@@ -1017,6 +1036,7 @@
                     nnumerooperacion: '',
                     ftipocambiovoucher: '',
                     ftipocambiocomercial: '',
+                    cTipoComprobante: '',
                     cglosa: '',
                     cflagtce: false,
                     verificarMonedaTCE: false
@@ -1028,6 +1048,7 @@
                 arrayMoneda_Origen: [],
                 arrayCuenta_Origen: [],
                 arrayDeposito: [],
+                arrayTipoComprobante: [],
                 // =============================================================================
                 // ================ VARIABLES MODAL DETALLE DEPOSITOS POR PEDIDO ===============
                 fillDetalleDeposito: {
@@ -1378,6 +1399,8 @@
                 });
             },
             seleccionarFormaPago(){
+                this.ocultarFormularioDeposito();
+
                 var url = this.ruta + '/deposito/GetParDsctByParSrc';
                 axios.get(url, {
                     params: {
@@ -1400,6 +1423,7 @@
                 this.getTipoCambio();
                 this.llenarComboBanco_Destino();
                 this.llenarComboMoneda_Destino();
+                this.llenarTipoComprobante();
             },
             mostrarFormularioOtroDeposito(){
                 this.getTipoCambio();
@@ -1407,6 +1431,7 @@
                 this.llenarComboMoneda_Destino();
                 this.llenarComboBanco_Origen();
                 this.llenarComboMoneda_Origen();
+                this.llenarTipoComprobante();
             },
             getTipoCambio(){
                 this.mostrarProgressBar();
@@ -1533,6 +1558,23 @@
                     }
                 }).then(response => {
                     this.arrayMoneda_Origen = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            llenarTipoComprobante(){
+                var url = this.ruta + '/parametro/GetParametroByGrupo';
+                axios.get(url, {
+                    params: {
+                        'ngrupoparid': 110104
+                    }
+                }).then(response => {
+                    this.arrayTipoComprobante = response.data;
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1964,9 +2006,10 @@
                 this.formNuevoDeposito.ftipocambiovoucher = '',
                 this.attachment = '';
                 //this.formNuevoDeposito.ftipocambiocomercial = '',
+                this.formNuevoDeposito.nidformapago = '';
                 this.formNuevoDeposito.verificarMonedaTCE = false;
                 this.formNuevoDeposito.cflagtce = false;
-                this.formNuevoDeposito.cglosa = ''
+                this.formNuevoDeposito.cglosa = '';
             },
             limpiarBsqGeneracionDeposito(){
                 this.formParametrizacionDeposito.nidtipopago = '',
