@@ -1436,7 +1436,12 @@
                     this.arrayTipoDocumentoNaturales = response.data;
                     this.formNuevoContactoJurifico.ntpodocumento = '';
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =============  TAB REFERENCIA VEHICULO ======================

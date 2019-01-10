@@ -2941,7 +2941,8 @@
                 mensajeError: [],
                 attachment: null,
                 form: new FormData,
-                textFile: ''
+                textFile: '',
+                loading: false
             }
         },
         computed:{
@@ -4616,6 +4617,9 @@
             },
             // =============  REGISTRAR CONTACTO ======================
             SapRegistrarNuevoContacto(contacto){
+                let me = this;
+                me.loadingProgressBar("Registrando Contacto en SapB1...");
+
                 // console.log(contacto);
                 this.mostrarProgressBar();
                 var url = this.ruta + '/gescontacto/SapSetContacto';
@@ -4627,6 +4631,7 @@
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
                     this.actualizarCardCodeContacto(contacto.nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -4663,6 +4668,9 @@
                 });
             },
             SapRegistrarNuevoContacto2(nIdContacto, contacto){
+                let me = this;
+                me.loadingProgressBar("Registrando Contacto en SapB1...");
+
                 var url = this.ruta + '/gescontacto/SapSetContacto2';
                 axios.post(url, {
                     'nIdContacto': nIdContacto,
@@ -4678,6 +4686,7 @@
                     let data = response.data;
                     this.SAPNuevoContactoJson  =  JSON.parse(data);
                     this.actualizarCardCodeContacto2(nIdContacto, this.SAPNuevoContactoJson, response.data.toString());
+                    me.loading.close();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -5302,6 +5311,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){
