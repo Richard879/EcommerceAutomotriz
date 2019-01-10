@@ -101,7 +101,7 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Código</th>
-                                                                                    <th># Codigo SAP</th>
+                                                                                    <th>#Codigo SAP</th>
                                                                                     <th>Apellidos</th>
                                                                                     <th>Nombres</th>
                                                                                     <th>Nro Documento</th>
@@ -140,7 +140,7 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Código</th>
-                                                                                    <th># Codigo SAP</th>
+                                                                                    <th>#Codigo SAP</th>
                                                                                     <th>Razon Social</th>
                                                                                     <th>Nro Documento</th>
                                                                                     <th>Telefono</th>
@@ -1846,6 +1846,8 @@
                 // =============================================================
                 // ================ VARIABLES TAB NUEVO CONTACTO ===============
                 formNuevoContacto:{
+                    //Variables Seguimiento
+                    nidcontacto: 0,
                     //Variables Datos Personales
                     ntipopersona: 1,
                     ntpodocumento: '',
@@ -3354,6 +3356,9 @@
                 }
                 return this.error;
             },
+            eliminarItemOtrosIntereses(index){
+                this.$delete(this.arrayOtrosIntereses, index);
+            },
             // =============  REGISTRAR CONTACTO ======================
             SapGetValidarContacto(nIdContacto){
                 var url = this.ruta + '/gescontacto/SapGetValidarContacto';
@@ -3463,7 +3468,7 @@
                     'LogRespuesta'  : logRpta
                 }).then(response => {
                     $("#myBar").hide();
-                    console.log(response);
+                    // console.log(response);s
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
                     } else {
