@@ -16,6 +16,8 @@ class PerUsuGruAccController extends Controller
         $nIdUsuario = $request->nidusuario;
         $nLenJerarquia = $request->nlenjerarquia;
 
+        $nIdSucursal = ($nIdSucursal == NULL) ? ($nIdSucursal = 0) : $nIdSucursal;
+
         $data = DB::select('exec [usp_Puga_GetListMenuByUsuario] ?, ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,

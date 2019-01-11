@@ -67,7 +67,6 @@ class SapContactoController extends Controller
                 "CardType"      => "cCustomer",
                 "CardName"      => $UserName,
                 "FederalTaxID"  => $FederalTaxID,
-                "U_SAI_CAMPO3"  => $U_SAI_CAMPO3,
                 "EmailAddress"  => $EmailAddress,
                 "Address"       => $Address,
                 "Cellular"      => $Cellular,
