@@ -70,6 +70,7 @@ class SapCompraController extends Controller
                     "CardCode"      => $request->cCardCode,
                     // "DocDate"       => (string)$request->fDocDate,
                     // "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocCurrency"   => "US$",
                     "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
                             [
@@ -77,6 +78,7 @@ class SapCompraController extends Controller
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
+                                "Currency"    => "US$",
                                 "WarehouseCode" =>(string)$request->WarehouseCode
                             ]
                         ]
