@@ -2075,7 +2075,7 @@
             registroSapArticulo(){
                 let me = this;
                 me.loadingProgressBar("Verificando Articulo");
-                var sapUrl = me.ruta + '/compra/SapSetArticulo';
+                var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
                     data: me.arraySapArticulo
                 }).then(response => {
@@ -2120,7 +2120,7 @@
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode': me.formCompra.warehousecode,
-                    'Igv': me.formCompra.igv,
+                    'Igv': 1 + parseFloat((me.formCompra.igv)),
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
@@ -2357,7 +2357,8 @@
                             fTotalCompra: compra.fTotalCompra,
                             cNumeroFactura: compra.cNumeroFactura,
                             dFechaFacturado: compra.dFechaFacturado,
-                            dFechaCompra: compra.dFechaCompra
+                            dFechaCompra: compra.dFechaCompra,
+                            cItemType: compra.cItemType
                         });
                         //Obtener Codigo Sap Proveedor
                         me.formCompra.ccarcode = compra.cCarCode;
@@ -2383,7 +2384,7 @@
             generaSapArticulo(){
                 let me = this;
 
-                var sapUrl = me.ruta + '/compra/SapSetArticulo';
+                var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
                     data: me.arraySapCompra
                 }).then(response => {
@@ -2422,7 +2423,7 @@
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
                     'WarehouseCode': me.formCompra.warehousecode,
-                    'Igv': me.formCompra.igv,
+                    'Igv': 1 + parseFloat((me.formCompra.igv)),
                     'data': me.arraySapCompra
                 }).then(response => {
                     me.arraySapRptCompra = response.data;

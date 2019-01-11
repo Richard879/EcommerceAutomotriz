@@ -364,11 +364,11 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/gescontacto/SapSetContacto2', 'Api\SapContactoController@SapSetContacto2');
     //Compra
     Route::post('/compra/SapSetCompra', 'Api\SapCompraController@SapSetCompra');
-    Route::post('/compra/SapSetArticulo', 'Api\SapCompraController@SapSetArticulo');
     //Entrada Mercancia
     Route::post('/mercancia/SapSetMercanciaByOC', 'Api\SapMercanciaController@SapSetMercanciaByOC');
     //Articulo
     Route::post('/articulo/SapGetValidarArticulo', 'Api\SapArticuloController@SapGetValidarArticulo');
+    Route::post('/articulo/SapSetArticulo', 'Api\SapArticuloController@SapSetArticulo');
     //Pedido
     Route::post('/pedido/SapSetPedido', 'Api\SapPedidoController@SapSetPedido');
     //Pedido Descuento
