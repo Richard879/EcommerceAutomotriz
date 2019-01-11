@@ -39,12 +39,14 @@ class SapArticuloController extends Controller
         foreach ($data as $key => $value) {
 
             $cItemCode = $value['cNumeroVin'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'];
+            $ItemType = $value['cItemType'];
+            $ItemType = ($ItemType == NULL) ? ($ItemType = 'itItems') : $ItemType;
 
             $json = [
                 'json' => [
                     "ItemCode"    => $value['cNumeroVin'],
                     "ItemName"    => $cItemCode,
-                    "ItemType"    => $value['cItemType']
+                    "ItemType"    => $ItemType
                 ]
             ];
 
