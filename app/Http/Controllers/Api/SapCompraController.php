@@ -67,8 +67,8 @@ class SapCompraController extends Controller
             $json = [
                 'json' => [
                     "CardCode"      => $request->cCardCode,
-                    // "DocDate"       => (string)$request->fDocDate,
-                    // "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocDate"       => (string)$request->fDocDate,
+                    "DocDueDate"    => (string)$request->fDocDueDate,
                     "DocCurrency"   => "US$",
                     "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
