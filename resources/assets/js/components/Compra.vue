@@ -172,7 +172,7 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Acciones</th>
-                                                                                <th>#Doc SAP</th>
+                                                                                <th>NroDoc SAP</th>
                                                                                 <th>Código</th>
                                                                                 <th>Periodo</th>
                                                                                 <th>OC</th>
@@ -189,7 +189,8 @@
                                                                                 <th>Nro Factura</th>
                                                                                 <th>Fecha Facturado</th>
                                                                                 <th>Fecha Compra</th>
-                                                                                <th>DocEntry</th>
+                                                                                <th>DocEntry Compra</th>
+                                                                                <th>DocEntry Merc.</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -207,6 +208,12 @@
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
+                                                                                        </el-tooltip>&nbsp;
+                                                                                    </template>
+                                                                                    <template v-if="compra.nDocEntryMercanciaValida==0">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
+                                                                                            <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;
                                                                                     </template>
                                                                                 </td>
@@ -228,6 +235,7 @@
                                                                                 <td v-text="compra.dFechaFacturado"></td>
                                                                                 <td v-text="compra.dFechaCompra"></td>
                                                                                 <td v-text="compra.nDocEntry"></td>
+                                                                                <td v-text="compra.nDocEntryMercancia"></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -2547,7 +2555,7 @@
                     }
                 });
             },
-            generaActualizarDocEntryStock(){
+            generaActualizarDocEntryStock(compra){
                 let me = this;
                 var sapUrl = me.ruta + '/compra/SapUpdCompraByDocEntryMercancia';
                 axios.post(sapUrl, {
@@ -2578,6 +2586,13 @@
                         }
                     }
                 });
+            },
+            asignaMercancia(){
+                let me = this;
+                me.arraySapUpdCompra.push({
+                    'nDocEntry': parseInt(compra.nDocEntry)
+                });
+                me.generaEntradaMercancia();
             },
             // =============  ACTUALIZAR COMPRA ======================
             actualizar(){
