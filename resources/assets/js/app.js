@@ -78,7 +78,7 @@ const app = new Vue({
     el: '#app',
     data: {
         menu: 1300362,
-        ruta: 'http://172.20.6.54:8080/saisacsys/public'
+        ruta: 'http://localhost:8080/saisacsys/public'
     },
     methods: {
         reiniciaMenu: function(data) {
