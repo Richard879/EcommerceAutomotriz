@@ -596,7 +596,8 @@
                 // =============  VARIABLES SAP ========================
                 formSap:{
                     nidcabecerapedido: 0,
-                    ccardcode: ''
+                    ccardcode: '',
+                    igv: 0
                 },
                 arraySapPedido: [],
                 arraySapRptPedido: [],
@@ -818,7 +819,8 @@
                             if(response.data[0].nFlagMsje == 1)
                             {
                                 me.mostrarProgressBar();
-                                me.obtenerPedidoById();
+                                me.obtenerIgv();
+                                //me.obtenerPedidoById();
                             }
                             else
                             {
@@ -837,6 +839,28 @@
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
+            },
+            obtenerIgv(){
+                var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';
+                axios.get(url, {
+                    params: {
+                        'nidpar': 1300477,
+                        'ctipoparametro': 'P',
+                        'nidtipopar': 51
+                    }
+                }).then(response => {
+                    this.formSap.igv = response.data[0].fDatoParPorcentual;
+                    if(this.formSap.igv > 0){
+                        this.obtenerPedidoById();
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             obtenerPedidoById(){
                 var url = this.ruta + '/pedido/GetPedidoById';
@@ -867,6 +891,7 @@
                 axios.post(sapUrl, {
                     'fDocDate': moment().format('YYYY-MM-DD'),
                     'fDocDueDate': moment().add(30, 'days').format('YYYY-MM-DD'),
+                    'Igv': 1 + parseFloat((me.formSap.igv)),
                     'data': me.arraySapPedido
                 }).then(response => {
                     me.arraySapRptPedido = response.data;

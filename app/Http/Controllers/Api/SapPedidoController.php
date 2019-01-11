@@ -21,17 +21,23 @@ class SapPedidoController extends Controller
 
         $data = $request->data;
         foreach ($data as $key => $value) {
+
+            $SubTotal = (floatval($value['fTotalPedidoDolares']) / floatval($request->Igv));
+
             $json = [
                 'json' => [
                     "CardCode"      => $value['cCardCode'],
                     "DocDate"       => (string)$request->fDocDate,
                     "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocCurrency"   => "US$",
+                    "UnitPrice"   => (string)$value['fTotalPedidoDolares'],
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => $value['cNumeroVin'],
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
-                                "UnitPrice"   => (string)$value['fTotalPedidoSoles']
+                                "UnitPrice"   => (string)$SubTotal,
+                                "Currency"    => "US$",
                             ]
                         ]
                     ]
