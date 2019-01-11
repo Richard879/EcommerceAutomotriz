@@ -30,7 +30,7 @@ class SapPedidoController extends Controller
                     "DocDate"       => (string)$request->fDocDate,
                     "DocDueDate"    => (string)$request->fDocDueDate,
                     "DocCurrency"   => "US$",
-                    "UnitPrice"   => (string)$value['fTotalPedidoDolares'],
+                    "DocTotal"      => (string)$value['fTotalPedidoDolares'],
                     "DocumentLines" => [
                             [
                                 "ItemCode"    => $value['cNumeroVin'],
