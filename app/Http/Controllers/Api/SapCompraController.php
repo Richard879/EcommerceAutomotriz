@@ -61,7 +61,8 @@ class SapCompraController extends Controller
             /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
-
+            
+            $cItemCode = $value['cNumeroVin'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'];
             $ValorIgv = (floatval($value['fTotalCompra']) / floatval(1 + floatval($request->Igv)));
             $SubTotal = (floatval($value['fTotalCompra']) - $ValorIgv);
 
@@ -74,7 +75,7 @@ class SapCompraController extends Controller
                     "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
                             [
-                                "ItemCode"    => $value['cNumeroVin'],
+                                "ItemCode"    => (string)$cItemCode,
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
