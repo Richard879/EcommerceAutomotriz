@@ -1029,7 +1029,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" v-if="vehiculo.cFlagTipoItem=='V'">
+                                                        <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar" :v-if="vehiculo.cFlagTipoItem=='V'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.fSobrePrecio"></td>
@@ -1059,7 +1059,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1088,7 +1088,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1117,7 +1117,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetallePedido" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1143,7 +1143,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar" v-if="documento.nValida==1">
+                                                        <tr v-for="documento in arrayPedidoDoumento" :key="documento.nIdPar" :v-if="documento.nValida==1">
                                                             <td :style="documento.nValida==1 ? 'color:red' : ''" v-text="documento.cCaracter + ' ' + documento.cParNombre"></td>
                                                             <td v-text="documento.cArchivo"></td>
                                                             <td>
@@ -1291,7 +1291,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" v-if="vehiculo.cFlagTipoItem=='V'">
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" :v-if="vehiculo.cFlagTipoItem=='V'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.fSobrePrecio"></td>
@@ -1321,7 +1321,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1350,7 +1350,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -1379,7 +1379,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
