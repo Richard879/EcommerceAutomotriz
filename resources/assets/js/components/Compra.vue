@@ -2980,6 +2980,8 @@
                 this.fillCompra.cnumerovin=  '',
                 this.formCompra.nidtipolista= '',
                 this.formCompra.ccarcode= '',
+                this.formCompra.nidproveedor = 0,
+                this.formCompra.cproveedornombre = '',
                 this.arrayExcel = [],
                 this.form = new FormData,
                 $("#file-upload").val(""),
