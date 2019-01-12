@@ -2587,7 +2587,7 @@
                     }
                 });
             },
-            asignaMercancia(){
+            asignaMercancia(compra){
                 let me = this;
                 me.arraySapUpdCompra.push({
                     'nDocEntry': parseInt(compra.nDocEntry)
