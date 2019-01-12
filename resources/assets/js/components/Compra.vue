@@ -2382,6 +2382,7 @@
             },
             generaSapArticulo(){
                 let me = this;
+                me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/compra/SapSetArticulo';
                 axios.post(sapUrl, {
@@ -2414,7 +2415,7 @@
             },
             generaSapCompra(){
                 let me = this;
-                me.loadingProgressBar("Registrando Compra en SapB1...");
+                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/compra/SapSetCompra';
                 axios.post(sapUrl, {
@@ -2500,7 +2501,7 @@
             },
             generaEntradaMercancia(){
                 let me = this;
-                me.loadingProgressBar("Ingresando Stock en Sap");
+                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                 axios.post(sapUrl, {
@@ -3021,7 +3022,7 @@
                 this.loading = this.$loading({
                     lock: true,
                     text: texto,
-                    spinner: 'el-icon-loading',
+                    spinner: 'fa-spin fa-md fa fa-cube',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }

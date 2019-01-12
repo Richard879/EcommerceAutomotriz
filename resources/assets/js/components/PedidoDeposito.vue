@@ -175,12 +175,14 @@
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Nro Pedido</th>
+                                                                                <th>#Doc SAP</th>
                                                                                 <th>Vendedor</th>
                                                                                 <th>Contacto</th>
                                                                                 <th>Vehiculo</th>
                                                                                 <th>Número VIN</th>
                                                                                 <th>Número DUA</th>
                                                                                 <th>Fecha Pedido</th>
+                                                                                <th>DocEntry</th>
                                                                                 <th>Aprobación</th>
                                                                                 <th>Estado Pedido</th>
                                                                             </tr>
@@ -202,12 +204,14 @@
                                                                                     </template>
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
+                                                                                <td v-text="pedido.nDocNum"></td>
                                                                                 <td v-text="pedido.cVendedorNombre"></td>
                                                                                 <td v-text="pedido.cContacto"></td>
                                                                                 <td v-text="pedido.cNombreComercial + ' ' + pedido.nAnioFabricacion + '-' + pedido.nAnioModelo"></td>
                                                                                 <td v-text="pedido.cNumeroVin"></td>
                                                                                 <td v-text="pedido.cNumeroDUA"></td>
                                                                                 <td v-text="pedido.dFechaPedido"></td>
+                                                                                <td v-text="pedido.nDocEntryPedido"></td>
                                                                                 <td v-text="pedido.cEstadoAprobacion"></td>
                                                                                 <td v-text="pedido.cEstadoPedido"></td>
                                                                             </tr>

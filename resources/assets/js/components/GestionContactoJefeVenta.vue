@@ -4618,7 +4618,7 @@
             // =============  REGISTRAR CONTACTO ======================
             SapRegistrarNuevoContacto(contacto){
                 let me = this;
-                me.loadingProgressBar("Registrando Contacto en SapB1...");
+                me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
 
                 // console.log(contacto);
                 this.mostrarProgressBar();
@@ -4669,7 +4669,7 @@
             },
             SapRegistrarNuevoContacto2(nIdContacto, contacto){
                 let me = this;
-                me.loadingProgressBar("Registrando Contacto en SapB1...");
+                me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
 
                 var url = this.ruta + '/gescontacto/SapSetContacto2';
                 axios.post(url, {
@@ -5316,7 +5316,7 @@
                 this.loading = this.$loading({
                     lock: true,
                     text: texto,
-                    spinner: 'el-icon-loading',
+                    spinner: 'fa-spin fa-md fa fa-cube',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
             }

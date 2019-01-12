@@ -631,7 +631,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: [],
+                loading: false
             }
         },
         computed:{
@@ -862,6 +863,7 @@
             //REGISTRA PEDIDO EN SAP
             registroSapPedido(){
                 let me = this;
+                me.loadingProgressBar("INTEGRANDO EL PEDIDO CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/pedido/SapSetPedido';
                 axios.post(sapUrl, {
@@ -889,6 +891,7 @@
                             setTimeout(function() {
                                 me.registroDocEntryPedido();
                             }, 3800);
+                            me.loading.close();
                         }
                     });
                 }).catch(error => {
@@ -1221,6 +1224,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         },
         mounted(){
