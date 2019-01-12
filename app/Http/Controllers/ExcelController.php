@@ -57,7 +57,8 @@ class ExcelController extends Controller
                     'cSimboloMoneda' => $value[12],
                     'fTotalCompra' => $value[13],
                     'cNumeroFactura' => $value[14],
-                    'dFechaFacturado' => $value[15]
+                    'dFechaFacturado' => $value[15],
+                    'cItemType' => 'itItems'
                 ];
             }
         }

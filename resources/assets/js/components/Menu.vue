@@ -42,8 +42,8 @@
                 var url = this.ruta + '/puga/GetListMenuByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': !sessionStorage.getItem("nIdSucursal") ? 0 : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidusuario': this.usuario.id,
                         'nlenjerarquia': 4
                     }
@@ -63,8 +63,8 @@
                 var url = this.ruta + '/puga/GetListMenuByUsuario';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011,
-                        'nidsucursal': sessionStorage.getItem("nIdSucursal"),
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': !sessionStorage.getItem("nIdSucursal") ? 0 : parseInt(sessionStorage.getItem("nIdSucursal")),
                         'nidusuario': this.usuario.id,
                         'nlenjerarquia': 6
                     }

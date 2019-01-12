@@ -2161,7 +2161,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" v-if="vehiculo.cFlagTipoItem=='V'">
+                                                        <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar" :v-if="vehiculo.cFlagTipoItem=='V'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.fSobrePrecio"></td>
@@ -2191,7 +2191,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -2220,7 +2220,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='S' && vehiculo.cFlagActivaEventoCampania=='N'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -2249,7 +2249,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="vehiculo in arrayDetalleCotizacion" :key="vehiculo.nIdPar"
-                                                            v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
+                                                            :v-if="vehiculo.cFlagTipoItem=='E' && vehiculo.cFlagActivaObsequio=='N' && vehiculo.cFlagActivaEventoCampania=='S'">
                                                             <td v-text="vehiculo.nIdCodigoArticulo"></td>
                                                             <td v-text="vehiculo.cNombreArticulo"></td>
                                                             <td v-text="vehiculo.nCantidad"></td>
@@ -2978,9 +2978,9 @@
                 me.cFlagActivaElemento = 0;
                 me.cFlagActivaObsequio = 0;
                 me.cFlagActivaCampania = 0;
-                
+
                 me.arrayDetalleCotizacion.map(function(value, key) {
-                    if(value.cFlagVista == 'E'){ 
+                    if(value.cFlagVista == 'E'){
                         me.cFlagActivaElemento = 1;
                     };
                     if(value.cFlagVista == 'O'){
@@ -3267,7 +3267,7 @@
                         }
                     }
                 });
-            }, 
+            },
             // =================================================================
             // TAB DETALLE COTIZACION
             // =================================================================

@@ -61,15 +61,15 @@ class SapCompraController extends Controller
             /*foreach ($dataArray as $keyArray => $valueArray) {
                     $arrayResult[$keyArray] = $valueArray;
                 }*/
-
-            $ValorIgv = (floatval($value['fTotalCompra']) * floatval($request->Igv));
-            $SubTotal = (floatval($value['fTotalCompra']) - $ValorIgv);
+            
+            $SubTotal = (floatval($value['fTotalCompra']) / floatval($request->Igv));
 
             $json = [
                 'json' => [
                     "CardCode"      => $request->cCardCode,
-                    // "DocDate"       => (string)$request->fDocDate,
-                    // "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocDate"       => (string)$request->fDocDate,
+                    "DocDueDate"    => (string)$request->fDocDueDate,
+                    "DocCurrency"   => "US$",
                     "DocTotal"      => (string)$value['fTotalCompra'],
                     "DocumentLines" => [
                             [
@@ -77,6 +77,7 @@ class SapCompraController extends Controller
                                 "Quantity"    => "1",
                                 "TaxCode"     => "IGV",
                                 "UnitPrice"   => (string)$SubTotal,
+                                "Currency"    => "US$",
                                 "WarehouseCode" =>(string)$request->WarehouseCode
                             ]
                         ]
@@ -92,7 +93,7 @@ class SapCompraController extends Controller
         return $array_rpta;
     }
 
-    public function SapSetArticulo(Request $request)
+    /*public function SapSetArticulo(Request $request)
     {
         $client = new Client([
             'base_uri'  => 'http://172.20.0.10/'
@@ -119,5 +120,5 @@ class SapCompraController extends Controller
             array_push($array_rpta, $rptaSap);
         }
         return $array_rpta;
-    }
+    }*/
 }
