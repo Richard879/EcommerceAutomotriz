@@ -158,6 +158,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pedido/GetDocumentosById', 'PedidoController@GetDocumentosById');
     Route::put('/pedido/SetAnularPedido', 'PedidoController@SetAnularPedido');
     Route::get('/pedido/GetLstDetallePedido', 'PedidoController@GetLstDetallePedido');
+    Route::post('/pedido/GetDetallePedido', 'PedidoController@GetDetallePedido');
     Route::get('/pedido/GetListPedidoForDscto', 'PedidoController@GetListPedidoForDscto');
     Route::get('/pedido/GetListHistorialPedidoDscto', 'PedidoController@GetListHistorialPedidoDscto');
     Route::post('/pedido/SetHistorialPedidoDscto', 'PedidoController@SetHistorialPedidoDscto');

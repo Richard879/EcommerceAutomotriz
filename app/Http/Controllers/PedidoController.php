@@ -368,6 +368,56 @@ class PedidoController extends Controller
         return ['arrayDetallePedido'=>$arrayDetallePedido];
     }
 
+    public function GetDetallePedido(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa         =   $request->nIdEmpresa;
+        $nIdSucursal        =   $request->nIdEmpresa;
+        $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
+
+        $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
+        $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
+
+        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetDetallePedido] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido
+                                    ]);
+
+        return [
+            'nIdEmpresa' => $nIdEmpresa,
+            'nIdSucursal' => $nIdSucursal,
+            'nIdCabeceraPedido' => $nIdCabeceraPedido
+        ];
+
+        // $arrayPedidoDoumento = DB::select('exec [usp_Pedido_GetDocumentosById] ?, ?, ?',
+        //                             [
+        //                                 $nIdEmpresa,
+        //                                 $nIdSucursal,
+        //                                 $nIdCabeceraPedido
+        //                             ]);
+
+        // $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
+
+
+        // return [
+        //     'pedido' => $request->pedido,
+        //     'arrayDetallePedido' => $arrayDetallePedido,
+        //     'arrayPedidoDoumento' => $arrayPedidoDoumento,
+        //     'arrayDatosBanco' => $arrayDatosBanco
+        // ];
+
+        // $pdf = \PDF::loadView('pdf.pedido.pedido', [
+        //                                     'arrayDetallePedido' => $arrayDetallePedido,
+        //                                     'arrayPedidoDoumento' => $arrayPedidoDoumento,
+        //                                     'arrayDatosBanco' => $arrayDatosBanco,
+        //                                     'logo' => $logo,
+        //                                     'hyundai' => $hyundai
+        //                                 ]);
+    }
+
     public function GetListPedidoForDscto(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
