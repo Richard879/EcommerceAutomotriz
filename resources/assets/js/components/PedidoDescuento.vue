@@ -161,6 +161,10 @@
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                         </el-tooltip>&nbsp;
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa-file-pdf-o"></i>
+                                                        </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
                                                     <td v-text="pedido.nDocNum"></td>
@@ -932,6 +936,36 @@
             cambiarPaginaPedido(page){
                 this.paginationModal.current_page=page;
                 this.listarPedidos(page);
+            },
+            //GENERAR REPORTE PEDIDO
+            generarPedidoPDF(nIdCabeceraPedido){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pedido/GetDetallePedido';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
+                }, config).then(response => {
+                    console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             // =================================================================
             // GENERAR DESCUENO DEL PEDIDO

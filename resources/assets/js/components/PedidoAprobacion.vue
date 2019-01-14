@@ -163,6 +163,10 @@
                                                             <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
                                                         </el-tooltip>&nbsp;
+                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
+                                                            <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa-file-pdf-o"></i>
+                                                        </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
                                                     <td v-text="pedido.cContacto"></td>
@@ -840,6 +844,36 @@
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel) {}
                 })
+            },
+            //GENERAR REPORTE PEDIDO
+            generarPedidoPDF(nIdCabeceraPedido){
+                var config = {
+                    responseType: 'blob'
+                };
+                var url = this.ruta + '/pedido/GetDetallePedido';
+                axios.post(url, {
+                    'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
+                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
+                }, config).then(response => {
+                    console.log(response.data);
+                    //Create a Blob from the PDF Stream
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
+                    //Construye la URL del Archivo
+                    const fileURL = URL.createObjectURL(file);
+                    //Abre la URL en una nueva Ventana
+                    window.open(fileURL);
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
             },
             obtenerIgv(){
                 var url = this.ruta + '/tipoparametro/GetTipoByIdParametro';

@@ -448,7 +448,7 @@
                         <h3>_____________________________</h3>
                         <h3>CLIENTE : {{ $arrayDetalleCotizacion[0]->cContacto }}</h3>
                         <pre>
-                            DOC IDEN: 40438902
+                            DOC IDEN: {{ $arrayDetalleCotizacion[0]->cNumeroDocumento }}
                         </pre>
                     </td>
                     <td align="right" style="width: 40%;">

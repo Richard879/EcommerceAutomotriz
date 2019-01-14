@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cotización {{ $arrayDetallePedido[0]->cNumeroCotizacion }} </title>
+    <title>Pedido {{ $arrayDetallePedido[0]->cNumeroPedido }} </title>
     <style type="text/css">
         @page {
             margin: 0px;
@@ -84,9 +84,9 @@
                     <h3>{{ $arrayDetallePedido[0]->cSucursal }} - {{ $arrayDetallePedido[0]->cDireccionSucursal }}</h3>
                 </td>
                 <td align="right">
-                    <h3>{{ $arrayDetallePedido[0]->cFechaCotizacion }}</h3>
+                    <h3>{{ $arrayDetallePedido[0]->cFechaPedido }}</h3>
                     <pre>
-                        {{ $arrayDetallePedido[0]->cNumeroCotizacion }}
+                        {{ $arrayDetallePedido[0]->cNumeroPedido }}
                     </pre>
                 </td>
             </tr>
@@ -107,11 +107,6 @@
                 <td>Telf. Celular: <strong>{{ $arrayDetallePedido[0]->cTelefonoMovil }}</strong></td>
             </tr>
             <br/>
-            <tr>
-                <td>
-                    Estimado cliente de acuerdo con sus indicaciones se le extiende la cotización con los datos técnicos de su elección.
-                </td>
-            </tr>
         </table>
 
         <br/>
@@ -126,109 +121,24 @@
                         <td><h3>PRECIO ESPECIAL:</h3> <strong> <h3> {{ $arrayDetallePedido[0]->cMonedaLista }}. {{ $arrayDetallePedido[0]->fPrecioEspecial }} </h3></strong></td>
                     </tr>
                 </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">DIMENSIONES</th >
-                    </tr>
-                    <tr>
-                        <td>RADIO MIMO DE GIRO (M.) </td>
-                        <td>4.88</td>
-                    </tr>
-                    <tr>
-                        <td>CAPACIDAD DE LA MALETERA (LTS.) </td>
-                        <td>4.88</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">EQUIPAMIENTO</th >
-                    </tr>
-                    <tr>
-                        <td>AIRE ACONDICIONADO </td>
-                        <td>Si</td>
-                    </tr>
-                    <tr>
-                        <td>AROS DE FIERRO CON VASOS 14 PULGADAS  </td>
-                        <td>Si</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">FRENOS</th >
-                    </tr>
-                    <tr>
-                        <td>FRENOS DELANTEROS </td>
-                        <td>DISCOS VENTILADOS</td>
-                    </tr>
-                    <tr>
-                        <td>FRENOS POSTERIORES</td>
-                        <td>TAMBOR</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">GENERAL</th >
-                    </tr>
-                    <tr>
-                        <td>VERSI</td>
-                        <td>GL</td>
-                    </tr>
-                    <tr>
-                        <td>NOMBRE DEL FABRICANTE</td>
-                        <td>HYUNDAI MOTOR INDIA LTD</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">MOTOR</th >
-                    </tr>
-                    <tr>
-                        <td>TIPO DE COMBUSTIBLE</td>
-                        <td>GASOLINA</td>
-                    </tr>
-                    <tr>
-                        <td>CAPACIDAD DEL TANQUE DE COMBUSTIBLE (LT/GL) </td>
-                        <td>43 LT</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">SEGURIDAD</th >
-                    </tr>
-                    <tr>
-                        <td>BARRA DE ACERO EN PUERTAS LATERALES </td>
-                        <td>Si</td>
-                    </tr>
-                    <tr>
-                        <td>CHASIS REFORZADO</td>
-                        <td>Si</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">SUSPENSI</th >
-                    </tr>
-                    <tr>
-                        <td>SUSPENSI DELANTERA </td>
-                        <td>MC PHERSON</td>
-                    </tr>
-                    <tr>
-                        <td>DIRECCI</td>
-                        <td>Eltrica</td>
-                    </tr>
-                </table>
-                <table width="90%" border="2">
-                    <tr align="center" valign="middle" style="background-color: lightgray;">
-                        <th colspan="3">EQUIPAMIENTO EXTERIOR</th >
-                    </tr>
-                    <tr>
-                        <td>PARACHOQUES DEL COLOR DE LA CARROCER</td>
-                        <td>Si</td>
-                    </tr>
-                    <tr>
-                        <td>TERCERA LUZ DE FRENO </td>
-                        <td>Si</td>
-                    </tr>
+                <table width="100%">
+                    <thead style="background-color: lightgray;">
+                        <tr align="center" valign="middle" >
+                            <th colspan="2">DOCUMENTOS ASOCIADOS</th >
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Archivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($arrayPedidoDoumento as $doc)
+                            <tr>
+                                <td> {{ $doc->cParNombre }} </td>
+                                <td> {{ $doc->cArchivo }} </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
 
@@ -448,7 +358,7 @@
                         <h3>_____________________________</h3>
                         <h3>CLIENTE : {{ $arrayDetallePedido[0]->cContacto }}</h3>
                         <pre>
-                            DOC IDEN: 40438902
+                            DOC IDEN: {{ $arrayDetallePedido[0]->cNumeroDocumento }}
                         </pre>
                     </td>
                     <td align="right" style="width: 40%;">
@@ -463,7 +373,6 @@
         <table width="100%">
             <tr>
                 <td align="left" style="width: 50%;">
-                    Esta cotización vencerá en {{ $arrayDetallePedido[0]->cNumeroDiasCotizacion }} días Nro Cotización: {{ $arrayDetallePedido[0]->cNumeroCotizacion }}.<br>
                     &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
                 </td>
                 <td align="right" style="width: 50%;">

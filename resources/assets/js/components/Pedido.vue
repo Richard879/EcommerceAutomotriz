@@ -196,7 +196,7 @@
                                                                                     </el-tooltip>&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="generarPedidoPDF(pedido)" :style="'color:red'" class="fa fa-file-pdf-o"></i>
+                                                                                        <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>
@@ -1691,27 +1691,27 @@
                 this.pagination.current_page=page;
                 this.listarPedidos(page);
             },
-            generarPedidoPDF(pedido){
-                // var config = {
-                //     responseType: 'blob'
-                // };
+            //GENERAR REPORTE PEDIDO
+            generarPedidoPDF(nIdCabeceraPedido){
+                var config = {
+                    responseType: 'blob'
+                };
                 var url = this.ruta + '/pedido/GetDetallePedido';
                 axios.post(url, {
                     'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdSucursal'           :   parseInt(sessionStorage.getItem("nIdSucursal")),
-                    'nIdCabeceraPedido'     :   parseInt(pedido.nIdCabeceraPedido),
-                    'pedido'                :   pedido
-                }).then(response => {
+                    'nIdCabeceraPedido'     :   parseInt(nIdCabeceraPedido)
+                }, config).then(response => {
                     console.log(response.data);
                     //Create a Blob from the PDF Stream
-                    // const file = new Blob(
-                    //     [response.data],
-                    //     {type: 'application/pdf'}
-                    // );
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'}
+                    );
                     //Construye la URL del Archivo
-                    // const fileURL = URL.createObjectURL(file);
+                    const fileURL = URL.createObjectURL(file);
                     //Abre la URL en una nueva Ventana
-                    // window.open(fileURL);
+                    window.open(fileURL);
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -2215,8 +2215,8 @@
                         //this.obtenerPedidoById();
                         if(this.attachment.length){
                             this.subirArchivos(this.formPedido.nidcabecerapedido);
-                        }
-                        else{
+                        }else{
+                            this.generarPedidoPDF(this.formPedido.nidcabecerapedido);
                             this.vistaFormularioPedido= 1;
                             this.limpiarFormulario();
                             $("#myBar").hide();
@@ -2230,9 +2230,13 @@
                         swal('Compra' + this.formDocRef.nidcompra + 'No Disponible');
                     }
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
                 });
-
             },
             /*obtenerPedidoById(){
                 var url = this.ruta + '/pedido/GetPedidoById';
@@ -2344,6 +2348,7 @@
                 var url = me.ruta + '/pedido/subirArchivo';
 
                 axios.post(url, me.form, config).then(response=>{
+                    this.generarPedidoPDF(nIdCabeceraPedido);
                     this.vistaFormularioPedido= 1;
                     this.limpiarFormulario();
                     $("#myBar").hide();

@@ -386,37 +386,24 @@ class PedidoController extends Controller
                                         $nIdCabeceraPedido
                                     ]);
 
-                                    return ['arrayDetallePedido'=>$arrayDetallePedido];
-        /*return [
-            'nIdEmpresa' => $nIdEmpresa,
-            'nIdSucursal' => $nIdSucursal,
-            'nIdCabeceraPedido' => $nIdCabeceraPedido
-        ];*/
+        $arrayPedidoDoumento = DB::select('exec [usp_Pedido_GetDocumentosById] ?, ?, ?',
+                                    [
+                                        $nIdEmpresa,
+                                        $nIdSucursal,
+                                        $nIdCabeceraPedido
+                                    ]);
 
-        // $arrayPedidoDoumento = DB::select('exec [usp_Pedido_GetDocumentosById] ?, ?, ?',
-        //                             [
-        //                                 $nIdEmpresa,
-        //                                 $nIdSucursal,
-        //                                 $nIdCabeceraPedido
-        //                             ]);
+        $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
 
-        // $arrayDatosBanco = DB::select('exec [usp_Banco_GetDatosBanco]');
+        $pdf = \PDF::loadView('pdf.pedido.pedido', [
+                                            'arrayDetallePedido' => $arrayDetallePedido,
+                                            'arrayPedidoDoumento' => $arrayPedidoDoumento,
+                                            'arrayDatosBanco' => $arrayDatosBanco,
+                                            'logo' => $logo,
+                                            'hyundai' => $hyundai
+                                        ]);
 
-
-        // return [
-        //     'pedido' => $request->pedido,
-        //     'arrayDetallePedido' => $arrayDetallePedido,
-        //     'arrayPedidoDoumento' => $arrayPedidoDoumento,
-        //     'arrayDatosBanco' => $arrayDatosBanco
-        // ];
-
-        // $pdf = \PDF::loadView('pdf.pedido.pedido', [
-        //                                     'arrayDetallePedido' => $arrayDetallePedido,
-        //                                     'arrayPedidoDoumento' => $arrayPedidoDoumento,
-        //                                     'arrayDatosBanco' => $arrayDatosBanco,
-        //                                     'logo' => $logo,
-        //                                     'hyundai' => $hyundai
-        //                                 ]);
+        return $pdf->download('Pedido -'.$nIdCabeceraPedido.'.pdf');
     }
 
     public function GetListPedidoForDscto(Request $request)
