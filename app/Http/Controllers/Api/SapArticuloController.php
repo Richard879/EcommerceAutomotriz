@@ -46,7 +46,8 @@ class SapArticuloController extends Controller
                 'json' => [
                     "ItemCode"    => $value['cNumeroVin'],
                     "ItemName"    => $cItemCode,
-                    "ItemType"    => $ItemType
+                    "ItemType"    => $ItemType,
+                    "ItemsGroupCode" => "107"
                 ]
             ];
 
