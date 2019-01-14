@@ -2085,7 +2085,7 @@
                 me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
-                    data: me.arraySapArticulo
+                    'data': me.arraySapArticulo
                 }).then(response => {
                     me.arraySapRptArticulo = response.data;
                     me.arraySapRptArticulo.map(function(x){
@@ -2133,17 +2133,20 @@
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     me.arraySapRptCompra.map(function(x){
-                        console.log("Integración SAP Compra : OK");
                         me.jsonCompra= JSON.parse(x);
-                        //console.log(me.jsonCompra.DocEntry.toString());
-                        //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
-                        me.arraySapUpdCompra.push({
-                            'nDocEntry': parseInt(me.jsonCompra.DocEntry),
-                            'nDocNum': parseInt(me.jsonCompra.DocNum),
-                            'cDocType': me.jsonCompra.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
-                        });
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonCompra.DocEntry){
+                            console.log("Integración SAP Compra : OK");
+                            //console.log(me.jsonCompra.DocEntry.toString());
+                            //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
+                            me.arraySapUpdCompra.push({
+                                'nDocEntry': parseInt(me.jsonCompra.DocEntry),
+                                'nDocNum': parseInt(me.jsonCompra.DocNum),
+                                'cDocType': me.jsonCompra.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                            });
+                        }
                     });
 
                     me.loading.close();
