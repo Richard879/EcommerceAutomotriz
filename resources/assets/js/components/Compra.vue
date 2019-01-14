@@ -2593,6 +2593,8 @@
                 me.arraySapUpdCompra.push({
                     'nDocEntry': parseInt(compra.nDocEntry)
                 });
+                //Obtener Codigo Sap Proveedor
+                me.formCompra.ccarcode = compra.cCarCode;
                 me.generaEntradaMercancia();
             },
             // =============  ACTUALIZAR COMPRA ======================
