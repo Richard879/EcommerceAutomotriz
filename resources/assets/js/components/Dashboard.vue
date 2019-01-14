@@ -6,7 +6,7 @@
                 <div class="container-fluid">
                 <h2 class="no-margin-bottom">Dashboard</h2>
                 </div>
-                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
+                <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
                     <i class="fa fa-user"></i> Login
                 </button>
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapLogout">
@@ -14,7 +14,7 @@
                 </button>
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapMetaData">
                     <i class="fa fa-out"></i> MetaData
-                </button>
+                </button>-->
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapGetValidarContacto">
                     <i class="fa fa-out"></i> Verificar Usuario
                 </button>
