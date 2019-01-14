@@ -2082,7 +2082,7 @@
             },
             registroSapArticulo(){
                 let me = this;
-                me.loadingProgressBar("Verificando Articulo");
+                me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
                     data: me.arraySapArticulo
@@ -2113,7 +2113,7 @@
             },
             registroSapCompra(){
                 let me = this;
-                me.loadingProgressBar("Registrando en Sap");
+                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
                     // Si no se encuentra
@@ -2184,7 +2184,7 @@
             },
             registroSapMercancia(){
                 let me = this;
-                me.loadingProgressBar("Ingresando Stock en Sap");
+                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                 axios.post(sapUrl, {
