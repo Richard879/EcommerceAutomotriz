@@ -6,7 +6,7 @@
                 <div class="container-fluid">
                 <h2 class="no-margin-bottom">Dashboard</h2>
                 </div>
-                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
+                <!--<button type="button" class="btn btn-primary btn-corner btn-sm" @click="SapLogin">
                     <i class="fa fa-user"></i> Login
                 </button>
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapLogout">
@@ -14,9 +14,9 @@
                 </button>
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapMetaData">
                     <i class="fa fa-out"></i> MetaData
-                </button>
+                </button>-->
                 <button type="button" class="btn btn-default btn-corner btn-sm" @click="SapGetValidarContacto">
-                    <i class="fa fa-out"></i> Verificar Usuario
+                    <i class="fa fa-user"></i> User
                 </button>
             </header>
             <!-- Dashboard Counts Section-->
@@ -556,9 +556,10 @@
             SapGetValidarContacto(){
                 var url = this.ruta + '/gescontacto/SapGetValidarContacto';
 
-                this.mostrarProgressBar();
+                this.loadingProgressBar("VERIFICANDO CONTACTO EN SAP BUSINESS ONE...");
+
                 axios.get(url).then(response => {
-                    $("#myBar").hide();
+                    this.loading.close();
                     console.log(response.data);
                     if(response.data == true){
                         swal("EXISTE");
@@ -572,6 +573,14 @@
             mostrarProgressBar(){
                 $("#myBar").show();
                 progress();
+            },
+            loadingProgressBar(texto){
+                this.loading = this.$loading({
+                    lock: true,
+                    text: texto,
+                    spinner: 'fa-spin fa-md fa fa-cube',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
             }
         }
     }

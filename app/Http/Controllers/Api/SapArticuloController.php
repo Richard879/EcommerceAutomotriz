@@ -38,7 +38,7 @@ class SapArticuloController extends Controller
         $data = $request->data;
         foreach ($data as $key => $value) {
 
-            $cItemCode = $value['cNumeroVin'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'];
+            $cItemCode = $value['cNombreComercial'].' '.$value['nAnioFabricacion'].' '.$value['nAnioVersion'];
             $ItemType = $value['cItemType'];
             $ItemType = ($ItemType == NULL) ? ($ItemType = 'itItems') : $ItemType;
 
@@ -46,7 +46,8 @@ class SapArticuloController extends Controller
                 'json' => [
                     "ItemCode"    => $value['cNumeroVin'],
                     "ItemName"    => $cItemCode,
-                    "ItemType"    => $ItemType
+                    "ItemType"    => $ItemType,
+                    "ItemsGroupCode" => "107"
                 ]
             ];
 

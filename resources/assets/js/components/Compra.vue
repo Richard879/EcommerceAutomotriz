@@ -2082,10 +2082,10 @@
             },
             registroSapArticulo(){
                 let me = this;
-                me.loadingProgressBar("Verificando Articulo");
+                me.loadingProgressBar("INTEGRANDO ARTÍCULO CON SAP BUSINESS ONE...");
                 var sapUrl = me.ruta + '/articulo/SapSetArticulo';
                 axios.post(sapUrl, {
-                    data: me.arraySapArticulo
+                    'data': me.arraySapArticulo
                 }).then(response => {
                     me.arraySapRptArticulo = response.data;
                     me.arraySapRptArticulo.map(function(x){
@@ -2113,7 +2113,7 @@
             },
             registroSapCompra(){
                 let me = this;
-                me.loadingProgressBar("Registrando en Sap");
+                me.loadingProgressBar("INTEGRANDO COMPRA CON SAP BUSINESS ONE...");
                 //Depurar Array para registrar en SAP
                 me.arraySapArticulo.map(function(x, y){
                     // Si no se encuentra
@@ -2133,17 +2133,20 @@
                 }).then(response => {
                     me.arraySapRptCompra = response.data;
                     me.arraySapRptCompra.map(function(x){
-                        console.log("Integración SAP Compra : OK");
                         me.jsonCompra= JSON.parse(x);
-                        //console.log(me.jsonCompra.DocEntry.toString());
-                        //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
-                        me.arraySapUpdCompra.push({
-                            'nDocEntry': parseInt(me.jsonCompra.DocEntry),
-                            'nDocNum': parseInt(me.jsonCompra.DocNum),
-                            'cDocType': me.jsonCompra.DocType.toString(),
-                            'cLogRespuesta': response.data.toString(),
-                            'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
-                        });
+                        //Verifico que devuelva DocEntry
+                        if(me.jsonCompra.DocEntry){
+                            console.log("Integración SAP Compra : OK");
+                            //console.log(me.jsonCompra.DocEntry.toString());
+                            //console.log(me.jsonCompra.DocumentLines[0].ItemCode.toString());
+                            me.arraySapUpdCompra.push({
+                                'nDocEntry': parseInt(me.jsonCompra.DocEntry),
+                                'nDocNum': parseInt(me.jsonCompra.DocNum),
+                                'cDocType': me.jsonCompra.DocType.toString(),
+                                'cLogRespuesta': response.data.toString(),
+                                'cItemCode': me.jsonCompra.DocumentLines[0].ItemCode.toString()
+                            });
+                        }
                     });
 
                     me.loading.close();
@@ -2184,7 +2187,7 @@
             },
             registroSapMercancia(){
                 let me = this;
-                me.loadingProgressBar("Ingresando Stock en Sap");
+                me.loadingProgressBar("INTEGRANDO ENTRADA DE MERCANCÍAS CON SAP BUSINESS ONE...");
 
                 var sapUrl = me.ruta + '/mercancia/SapSetMercanciaByOC';
                 axios.post(sapUrl, {
@@ -2593,6 +2596,8 @@
                 me.arraySapUpdCompra.push({
                     'nDocEntry': parseInt(compra.nDocEntry)
                 });
+                //Obtener Codigo Sap Proveedor
+                me.formCompra.ccarcode = compra.cCarCode;
                 me.generaEntradaMercancia();
             },
             // =============  ACTUALIZAR COMPRA ======================
