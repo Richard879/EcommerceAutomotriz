@@ -373,24 +373,25 @@ class PedidoController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $nIdEmpresa         =   $request->nIdEmpresa;
-        $nIdSucursal        =   $request->nIdEmpresa;
+        $nIdSucursal        =   $request->nIdSucursal;
         $nIdCabeceraPedido  =   $request->nIdCabeceraPedido;
 
         $logo       = public_path('img/automotoresinka.png');//CAPTURO LA RUTA DEL LOGO
         $hyundai    = public_path('img/hyundai.png');//CAPTURO LA RUTA DE HYUNDAI
 
-        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetDetallePedido] ?, ?, ?',
+        $arrayDetallePedido = DB::select('exec [usp_Pedido_GetPdfDetallePedido] ?, ?, ?',
                                     [
                                         $nIdEmpresa,
                                         $nIdSucursal,
                                         $nIdCabeceraPedido
                                     ]);
 
-        return [
+                                    return ['arrayDetallePedido'=>$arrayDetallePedido];
+        /*return [
             'nIdEmpresa' => $nIdEmpresa,
             'nIdSucursal' => $nIdSucursal,
             'nIdCabeceraPedido' => $nIdCabeceraPedido
-        ];
+        ];*/
 
         // $arrayPedidoDoumento = DB::select('exec [usp_Pedido_GetDocumentosById] ?, ?, ?',
         //                             [
