@@ -523,12 +523,12 @@
                     }
                 }).then(response => {
                     this.arrayPuntoInspeccion = response.data.arrayPuntoInspeccion.data;
-                    this.paginationModal.current_page =  response.data.arrayPuntoInspeccion.current_page;
-                    this.paginationModal.total = response.data.arrayPuntoInspeccion.total;
-                    this.paginationModal.per_page    = response.data.arrayPuntoInspeccion.per_page;
-                    this.paginationModal.last_page   = response.data.arrayPuntoInspeccion.last_page;
-                    this.paginationModal.from        = response.data.arrayPuntoInspeccion.from;
-                    this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
+                    this.pagination.current_page =  response.data.arrayPuntoInspeccion.current_page;
+                    this.pagination.total = response.data.arrayPuntoInspeccion.total;
+                    this.pagination.per_page    = response.data.arrayPuntoInspeccion.per_page;
+                    this.pagination.last_page   = response.data.arrayPuntoInspeccion.last_page;
+                    this.pagination.from        = response.data.arrayPuntoInspeccion.from;
+                    this.pagination.to           = response.data.arrayPuntoInspeccion.to;
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
