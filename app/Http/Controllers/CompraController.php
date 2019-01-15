@@ -177,6 +177,17 @@ class CompraController extends Controller
         return response()->json($arrayCompra);
     }
 
+    public function activar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $objCompra = DB::select('exec [usp_Compra_ActivaById] ?, ?',
+                                                        [   $request->nIdCompra,
+                                                            Auth::user()->id
+                                                        ]);
+        return response()->json($objCompra);
+    }
+
     public function SetForum(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

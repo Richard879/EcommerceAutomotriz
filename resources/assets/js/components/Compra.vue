@@ -196,10 +196,17 @@
                                                                         <tbody>
                                                                             <tr v-for="compra in arrayCompra" :key="compra.nIdCompra">
                                                                                 <td>
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Anular O/C  {{ compra.nOrdenCompra }}</div>
-                                                                                        <i @click="desactivar(compra.nIdCompra)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    <template v-if="compra.cSituacionRegistro=='A'">
+                                                                                        <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                            <div slot="content">Desactivar Compra {{ compra.nOrdenCompra }}</div>
+                                                                                            <i @click="desactivar(compra)" :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
+                                                                                    </template>
+                                                                                    <template v-else>
+                                                                                        <el-tooltip class="item" :content="'Activar ' + compra.nOrdenCompra" effect="dark" placement="top-start">
+                                                                                            <i @click="activar(compra)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                                        </el-tooltip>
+                                                                                    </template>
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
                                                                                         <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
@@ -2313,7 +2320,50 @@
                 }
                 return this.error;
             },
-            desactivar(nIdCompra){
+            activar(compra){
+                swal({
+                    title: 'Estas seguro de activar esta compra?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Activar!',
+                    cancelButtonText: 'No, cancelar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            var url = this.ruta + '/compra/activar';
+                            axios.put(url, {
+                                nIdCompra: parseInt(compra.nIdCompra)
+                            }).then(response => {
+                                if(response.data[0].nFlagMsje == 1){
+                                    swal(
+                                        'Activado!',
+                                        response.data[0].cMensaje
+                                    );
+                                }
+                                else{
+                                    swal(
+                                        'Alerta!',
+                                        response.data[0].cMensaje
+                                    );
+                                }
+                                this.listarCompras(1);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
+                            });
+                        } else if (result.dismiss === swal.DismissReason.cancel)
+                        {
+                        }
+                    })
+            },
+            desactivar(compra){
                 swal({
                     title: 'Estas seguro de eliminar esta Compra?',
                     type: 'warning',
@@ -2326,7 +2376,7 @@
                     if (result.value) {
                         var url = this.ruta + '/compra/desactivar';
                         axios.put(url, {
-                            nIdCompra: nIdCompra
+                            nIdCompra: parseInt(compra.nIdCompra)
                         }).then(response => {
                             if(response.data[0].nFlagMsje == 1){
                                 swal(
