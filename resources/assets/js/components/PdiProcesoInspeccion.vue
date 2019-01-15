@@ -1382,6 +1382,12 @@
                     this.arrayEstatoPdi = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarBusquedaPorCriterio(){
@@ -1413,6 +1419,12 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -1441,6 +1453,12 @@
                     this.paginationModal.to           = response.data.arraySolicitud.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaSolicitud(page){
@@ -1473,6 +1491,12 @@
                     this.paginationModal.to           = response.data.arrayPuntoInspeccion.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaPuntoInspeccion(page){
@@ -1503,7 +1527,13 @@
                     this.pagination.from        = response.data.arrayTipoInspeccion.from;
                     this.pagination.to           = response.data.arrayTipoInspeccion.to;
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             changeTipoInspeccion(){
@@ -1524,7 +1554,13 @@
                     this.nflagseccioninspeccion = response.data[0].nFlagSeccionInspeccion;
                     this.nflagvalidarfichatecnica = response.data[0].nFlagValidarFichaTecnica;
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarAlmacen(){
@@ -1537,6 +1573,12 @@
                     this.arrayAlmacen = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             //=============== LISTAR MODAL POR VIN ===================
@@ -1565,6 +1607,12 @@
                     this.paginationModal.to           = response.data.arrayCompra.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaVin(page){
@@ -1588,6 +1636,12 @@
                     this.arrayMarca = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelo(){
@@ -1602,6 +1656,12 @@
                     this.fillCompra.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             changeFlagVinPlaca(){
@@ -1631,6 +1691,12 @@
                     this.paginationModal.to           = info.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             //=============== LISTAR MODAL PLANTILLA ===================
@@ -1647,6 +1713,12 @@
                     this.listarItems();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarItems(){
@@ -1665,6 +1737,12 @@
                     });
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarFlag(){
@@ -1677,6 +1755,12 @@
                     this.arrayFlag = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             aceptarPlantilla(){
@@ -1710,6 +1794,12 @@
                     });
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             aceptarAccesorio(){
@@ -1769,6 +1859,12 @@
                     }*/
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){
@@ -1844,6 +1940,12 @@
                         })
                         .catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
@@ -1872,6 +1974,12 @@
                         })
                         .catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
@@ -1922,6 +2030,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarPlantilla(){
@@ -1932,6 +2046,12 @@
                 }).then(response => {
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarAccesorios(){
@@ -1943,6 +2063,12 @@
 
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             subirArchivo(){
@@ -1955,6 +2081,12 @@
                 }).then(function (response) {
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarCabeceraInspeccionDocumento(nIdDocumentoAdjunto){
@@ -1964,7 +2096,13 @@
                     nIdDocumentoAdjunto: nIdDocumentoAdjunto
                 }).then(response => {
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             abrirFormulario(modelo, accion, data =[]){

@@ -857,6 +857,12 @@
                     this.llenarComboModelo();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboModelo(){
@@ -870,6 +876,12 @@
                     this.fillBusquedaPedido.nidmodelo = '';
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarPedidos(page){
@@ -907,6 +919,12 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarBuscarPedidos(){
@@ -962,6 +980,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1027,6 +1046,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1134,6 +1154,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1161,6 +1182,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1200,6 +1222,12 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             verDocumentosPedido(pedido){
@@ -1215,6 +1243,12 @@
                     this.arrayPedidoDoumento = response.data.arrayPedidoDoumento;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =================================================================

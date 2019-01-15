@@ -371,7 +371,13 @@
                 }).then(function (response) {
                     $("#myBar").hide();
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -407,6 +413,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){
@@ -450,6 +462,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             activar(nIdTipoInspeccion){
@@ -476,6 +494,12 @@
                         })
                         .catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })
@@ -504,6 +528,12 @@
                         })
                         .catch(function (error) {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
                         });
                     } else if (result.dismiss === swal.DismissReason.cancel){}
                 })

@@ -329,6 +329,12 @@
                     this.arrayTurno = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             buscarTurnoVenta(){
@@ -354,6 +360,12 @@
                     this.pagination.to           = response.data.arrayTurnoVenta.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){

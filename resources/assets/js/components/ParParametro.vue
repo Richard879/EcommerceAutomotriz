@@ -95,7 +95,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" v-if="p.nFlagParParametro==1">
+                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" :v-if="p.nFlagParParametro==1">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>
@@ -357,6 +357,12 @@
                     this.arrayGrupoParametro = response.data.arrayGrupoParametro;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboSubGrupoParametro(){
@@ -370,6 +376,12 @@
                     this.arraySubGrupoParametro = response.data.arrayGrupoParametro;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             buscaProveedores(){
@@ -396,6 +408,12 @@
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaProveedor(page){
@@ -431,6 +449,12 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarBusqueda(){
@@ -466,6 +490,12 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarBusquedaSubParametro(){
@@ -488,7 +518,7 @@
             },
             selectParametro(index, nIdPar){
                 let me = this;
-                
+
                 if(me.arrayIndex[index])
                 {
                     me.formParametro.nidpar = nIdPar;
@@ -496,7 +526,7 @@
                 else{
                     me.formParametro.nidpar = '';
                 }
-                
+
                 me.arrayParametro.map(function(value, key) {
                     if(me.arrayIndex[key] && key == index) {
                         console.log("activa");
@@ -504,7 +534,7 @@
                     }
                     else{
                         me.arrayIndex[key] = false;
-                    }       
+                    }
                 });
             },
             registrar(p){
@@ -534,6 +564,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){
@@ -581,6 +617,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cerrarModal(){

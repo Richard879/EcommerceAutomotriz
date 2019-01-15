@@ -106,9 +106,6 @@
                                                                                 </el-table-column>
                                                                                 <el-table-column property="cEstadoTramite" label="Estado" show-overflow-tooltip>
                                                                                 </el-table-column>
-                                                                                <el-table-column fixed="right" label="Acciones" width="80">
-                                                                                    <template slot-scope="scope"></template>
-                                                                                </el-table-column>
                                                                             </el-table>
                                                                         </div>
                                                                     </template>
@@ -1149,6 +1146,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1195,6 +1193,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1287,6 +1286,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1322,6 +1322,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1377,6 +1378,7 @@
                         console.log(error);
                         if (error.response) {
                             if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                                 location.reload('0');
                             }
                         }
@@ -1445,6 +1447,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1483,6 +1486,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1525,6 +1529,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1553,6 +1558,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1604,6 +1610,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1661,6 +1668,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }

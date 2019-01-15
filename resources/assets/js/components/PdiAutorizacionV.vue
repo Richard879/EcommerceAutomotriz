@@ -1104,6 +1104,12 @@
                     this.informacionJefeInmediato(response.data[0]);
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             informacionJefeInmediato(data){
@@ -1118,6 +1124,12 @@
                     this.fillNuevaSolicitud.cnombrejefeinmediato = response.data[0].cParNombre;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =================================================================
@@ -1146,6 +1158,12 @@
                     this.arrayEstado = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             buscarMisSolicitudes(page){
@@ -1175,6 +1193,12 @@
                     this.pagination.to           = info.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaMiSolicitudes(page){
@@ -1228,6 +1252,12 @@
                     this.paginationModal.to           = info.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             asignarVehiculo(vehiculo){
@@ -1290,6 +1320,12 @@
                     this.paginationModal.to           = info.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             limpiarAlAsignarContacto(){
@@ -1319,7 +1355,13 @@
                     this.pagination.from           =   info.from;
                     this.pagination.to             =   info.to;
                 }).catch(error => {
-                    this.errors = error.response.data
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             // =================================================================
@@ -1371,6 +1413,12 @@
                     this.arrayTipoSolicitudes = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             tipoBusquedaVehiculoPorTipoSolicitud(){
@@ -1386,6 +1434,12 @@
                     this.fillNuevaSolicitud.nidtipobusqueda = this.arrayTipoBusquedaVehiculoTDV[0].nDatoParNumerico;//SETEAR AL ITEM CARGADO
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             updateEstadoChecked(){
@@ -1458,6 +1512,12 @@
                     this.arrayMoverVehiculo = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             registrarAutorizacion(){
@@ -1491,7 +1551,13 @@
                     this.limpiarNuevaSolicitud();
                     this.tabVolverMisSolicitudes();
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             tabVolverMisSolicitudes(){

@@ -761,6 +761,12 @@
                     this.arrayBanco = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboEstadoWarrant(){
@@ -773,6 +779,12 @@
                     this.arrayEstadoWarrant = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             tabBuscarWOperativo(){
@@ -803,6 +815,12 @@
                     this.pagination.to           = response.data.arrayWOperativo.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -837,6 +855,12 @@
                     this.pagination.to           = response.data.arrayWOperativoDetalle.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaDetalle(page){
@@ -879,7 +903,7 @@
                         'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'cnumerovin': this.fillVersionVehiculo.cnumerovin,
-                        'cnombrecomercial': this.fillVersionVehiculo.cnombrecomercial, 
+                        'cnombrecomercial': this.fillVersionVehiculo.cnombrecomercial,
                         'page': page
                     }
                 }).then(response => {
@@ -892,6 +916,12 @@
                     this.paginationModal.to           = response.data.arrayVersionVehiculo.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaVehiculos(page){
@@ -964,6 +994,12 @@
                     this.arrayTemporal = [];
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){

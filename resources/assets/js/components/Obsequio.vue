@@ -1882,6 +1882,12 @@
                     this.arrayTipoElemento = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             tabBuscarObsequio(){
@@ -1916,6 +1922,12 @@
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPagina(page){
@@ -1946,6 +1958,12 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                if (error.response) {
+                                    if (error.response.status == 401) {
+                                        swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                        location.reload('0');
+                                    }
+                                }
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -1977,6 +1995,7 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             });
                         } else if (result.dismiss === swal.DismissReason.cancel)
                         {
@@ -2002,6 +2021,12 @@
                     this.arrayTipoMoneda = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             llenarComboTipoCambio(){
@@ -2014,6 +2039,12 @@
                     this.arrayTipoCambio = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             onchangeTipoCambio(){
@@ -2052,6 +2083,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -2069,6 +2101,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -2084,6 +2117,12 @@
                     this.arrayDetalleEC = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validaAsignaDetalle(){
@@ -2125,6 +2164,12 @@
                     this.paginationModal.to           = response.data.arrayLinea.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaLineasByProveedor(page){
@@ -2185,6 +2230,12 @@
                     this.paginationModal.to           = response.data.arrayMarca.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaMarcasByProveedor(page){
@@ -2245,6 +2296,12 @@
                     this.paginationModal.to           = response.data.arrayModelo.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaModelosByProveedor(page){
@@ -2265,7 +2322,7 @@
                 }
                 else{
                     this.arrayTemporalModelo = [];
-                    
+
                     this.arrayTemporalModelo.push({
                         nIdModelo: modelo.nIdModelo,
                         cModeloNombre: modelo.cModeloNombre,
@@ -2293,7 +2350,7 @@
                 if(this.mensajeError.length){
                     this.error = 1;
                 }
-                return this.error; 
+                return this.error;
             },
             encuentraModelos(nIdModelo){
                 var sw=0;
@@ -2370,7 +2427,13 @@
                     this.paginationModal.from        = response.data.arrayElementoVenta.from;
                     this.paginationModal.to           = response.data.arrayElementoVenta.to;
                 }).catch(error => {
-                    this.errors = error
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaElemento(page){
@@ -2453,6 +2516,12 @@
                     }
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validar(){
@@ -2511,6 +2580,12 @@
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
             },
@@ -2527,6 +2602,12 @@
                         //this.registrarAsignaDetalle(response.data);
                     }).catch(error => {
                         console.log(error);
+                        if (error.response) {
+                            if (error.response.status == 401) {
+                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                location.reload('0');
+                            }
+                        }
                     });
                 }
             },
@@ -2561,6 +2642,12 @@
                     this.arrayElementoDistribucion = response.data.arrayElementoDistribucion.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             listarProveedorElementoVenta(){
@@ -2576,6 +2663,12 @@
                     this.arrayProveedor = response.data.arrayProveedor;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             asignarDistribucionElementoVenta(){
@@ -2590,7 +2683,7 @@
                         })
                     return;
                 }
-                
+
                 $.each(me.arrayProveedor, function (index, value) {
                     if(value.nIdPar == me.formDistribucionEv.nidentidad){
                         me.cnombreentidad = value.cParNombre;
@@ -2684,6 +2777,12 @@
                     this.arrayModalidadEntrega = response.data;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             asignaEntregaElementoVenta(){
@@ -2698,7 +2797,7 @@
                         })
                      return;
                 }
-                
+
                 $.each(me.arrayModalidadEntrega, function (index, value) {
                     if(value.nIdPar == me.formModalEntrega.nidmodalidad){
                         me.cNombreModalidad = value.cParNombre;
@@ -2817,6 +2916,12 @@
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             asignarProveedorCabecera(entidad){
@@ -2907,6 +3012,12 @@
                             me.inicio();
                         }).catch(error => {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
                         });
                     }
                 }
@@ -2928,6 +3039,12 @@
                               }
                         }).catch(error => {
                             console.log(error);
+                            if (error.response) {
+                                if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                                    location.reload('0');
+                                }
+                            }
                         });
                     }
                 }
@@ -2943,6 +3060,12 @@
                     this.inicio();
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             validarDistribucion(){
@@ -3016,6 +3139,12 @@
                     this.paginationModal.to           = response.data.arrayProveedor.to;
                 }).catch(error => {
                     console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
                 });
             },
             cambiarPaginaProveedor(page){
