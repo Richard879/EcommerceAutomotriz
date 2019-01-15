@@ -205,23 +205,23 @@
                                                                                     <template v-else>
                                                                                         <el-tooltip class="item" :content="'Activar ' + compra.nOrdenCompra" effect="dark" placement="top-start">
                                                                                             <i @click="activar(compra)" :style="'color:red'" class="fa-md fa fa-square"></i>
-                                                                                        </el-tooltip>
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
-                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                    <!--<el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Editar O/C  {{ compra.nOrdenCompra }}</div>
                                                                                         <i @click="abrirModal('compra','editar', compra)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                                                    </el-tooltip>&nbsp;&nbsp;
+                                                                                    </el-tooltip>&nbsp;&nbsp;-->
                                                                                     <template v-if="compra.nDocEntry==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Sap  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="validarSapArticulo(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-cube"></i>
-                                                                                        </el-tooltip>&nbsp;
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                     <template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
                                                                                             <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa fa-md fa fa-wpforms"></i>
-                                                                                        </el-tooltip>&nbsp;
+                                                                                        </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
                                                                                 <td v-text="compra.nDocNum"></td>
