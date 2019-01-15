@@ -95,7 +95,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" :v-if="p.nFlagParParametro==1">
+                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" v-if="p.nFlagParParametro==1">
                                                             <td v-text="p.nIdPar"></td>
                                                             <td v-text="p.nIdGrupoPar"></td>
                                                             <td v-text="p.cParNombre"></td>

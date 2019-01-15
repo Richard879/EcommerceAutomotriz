@@ -73,6 +73,7 @@ Vue.component('asigvendedorcuotasublinea', require('./components/AsignaVendedorC
 Vue.component('parparametro', require('./components/ParParametro.vue'));
 Vue.component('cronograma', require('./components/Cronograma.vue'));
 Vue.component('lineamarcamodelo', require('./components/LineaMarcaModelo.vue'));
+Vue.component('asignavendedorjefeventas', require('./components/AsignaVendedorJefeVentas.vue'));
 
 const app = new Vue({
     el: '#app',
