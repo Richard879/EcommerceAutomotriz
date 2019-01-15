@@ -701,7 +701,7 @@
                     </div>
                 </div>
             </div>
-        
+
 
         </main>
     </transition>
@@ -885,6 +885,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -904,6 +905,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -937,6 +939,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -972,6 +975,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1007,6 +1011,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1033,6 +1038,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1061,6 +1067,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1151,7 +1158,7 @@
                             });
                         });
                     }
-                    
+
                     $("#myBar").hide();
                     //============= RESULTADO PARA MOSTRAR ================
                     if(me.arrayCompraExisteVin.length || me.arrayCompraPrecioLista.length || me.arrayCompraNombreComercial.length){
@@ -1167,6 +1174,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
@@ -1233,6 +1241,7 @@
                             console.log(error);
                             if (error.response) {
                                 if (error.response.status == 401) {
+                                    swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                                     location.reload('0');
                                 }
                             }
@@ -1274,6 +1283,7 @@
                     console.log(error);
                     if (error.response) {
                         if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
                             location.reload('0');
                         }
                     }
