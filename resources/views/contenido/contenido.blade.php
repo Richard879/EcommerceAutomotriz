@@ -30,6 +30,9 @@
     <template v-if="menu==1300480">
         <lineamarcamodelo :ruta="ruta"></lineamarcamodelo>
     </template>
+    <template v-if="menu==1300481">
+        <asignavendedorjefeventas :ruta="ruta"></asignavendedorjefeventas>
+    </template>
 
 
     <template v-if="menu==1300266">

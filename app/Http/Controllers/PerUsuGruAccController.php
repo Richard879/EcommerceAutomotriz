@@ -97,4 +97,30 @@ class PerUsuGruAccController extends Controller
             DB::rollBack();
         }
     }
+
+    public function GetListUsuarios2(Request $request)
+    {
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $cDescripcion = $request->cdescripcion;
+        $nIdGrupoPar = $request->nidgrupopar;
+
+        $opcion = $request->opcion;
+
+        $cDescripcion = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
+
+        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios2] ?, ?, ?, ?',
+                                                        [   $nIdEmpresa,
+                                                            $nIdSucursal,
+                                                            $cDescripcion,
+                                                            $nIdGrupoPar
+                                                        ]);
+
+        if($opcion == 1) {
+            $arrayUsuarios = ParametroController::arrayPaginator($arrayUsuarios, $request);
+            return ['arrayUsuarios'=>$arrayUsuarios];
+        } else {
+            return response()->json($arrayUsuarios);
+        }
+    }
 }
