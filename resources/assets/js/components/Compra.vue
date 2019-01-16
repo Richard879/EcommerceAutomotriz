@@ -220,7 +220,7 @@
                                                                                     <template v-if="compra.nDocEntryMercanciaValida==0">
                                                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                             <div slot="content">Registra Stock Sap  {{ compra.cNumeroVin }}</div>
-                                                                                            <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa fa-md fa fa-wpforms"></i>
+                                                                                            <i @click="asignaMercancia(compra)" :style="'color:green'" class="fa-spin fa-md fa fa-wpforms"></i>
                                                                                         </el-tooltip>&nbsp;&nbsp;
                                                                                     </template>
                                                                                 </td>
