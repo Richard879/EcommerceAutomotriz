@@ -3,7 +3,7 @@
         <main>
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Asignacion de Vendedores - Jefe Ventas</h2>
+                    <h2 class="no-margin-bottom">Asignación de Vendedores - Jefe Ventas</h2>
                 </div>
             </header>
 
@@ -144,7 +144,7 @@
                     <div class="container-fluid">
                         <div class="col-sm-12">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="h4">Información Usuario</h3>
@@ -173,42 +173,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <template v-if="arrayParParametro.length">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Codigo</th>
-                                                                <th>Grupo</th>
-                                                                <th>Nombre</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="p in arrayParParametro" :key="p.nIdPar" :v-if="p.nFlagParParametro==1">
-                                                                <td v-text="p.nIdPar"></td>
-                                                                <td v-text="p.nIdGrupoPar"></td>
-                                                                <td v-text="p.cParNombre"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">No existen registros!</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </template>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <template v-if="arrayUsuariosVendedores.length">
@@ -216,6 +181,7 @@
                                                     <table class="table table-striped table-sm">
                                                         <thead>
                                                             <tr>
+                                                                <th>Acción</th>
                                                                 <th>Codigo</th>
                                                                 <th>Rol</th>
                                                                 <th>Vendedor</th>
@@ -223,6 +189,18 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr v-for="p in arrayUsuariosVendedores" :key="p.nIdPar">
+                                                                <td>
+                                                                    <template v-if="p.nFlagParParametro==1">
+                                                                        <el-tooltip class="item" :content="'Desactivar ' + p.cNombreUsuario" effect="dark" placement="top-start">
+                                                                            <i :style="'color:#796AEE'" class="fa-md fa fa-check-square"></i>
+                                                                        </el-tooltip>
+                                                                    </template>
+                                                                    <template v-else>
+                                                                        <el-tooltip class="item" :content="'Activar ' + p.cNombreUsuario" effect="dark" placement="top-start">
+                                                                            <i @click="registrar(p)" :style="'color:red'" class="fa-md fa fa-square"></i>
+                                                                        </el-tooltip>
+                                                                    </template>
+                                                                </td>
                                                                 <td v-text="p.nIdUsuario"></td>
                                                                 <td v-text="p.cGrupoParNombre"></td>
                                                                 <td v-text="p.cNombreUsuario"></td>
@@ -240,6 +218,15 @@
                                                     </tbody>
                                                 </table>
                                             </template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-9 offset-sm-5">
+                                            <button type="button" class="btn btn-primary btn-corner btn-sm" @click="cambiarVistaFormulario(1)">
+                                                <i class="fa fa-back"></i> Regresar
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -294,8 +281,9 @@
                 //================== REGISTRO PERMISOS =====================
                 formAsignacion:{
                     nIdUsuario: '',
-                    cGrupoParNombre: '',
-                    cNombreUsuario: ''
+                    cNombreUsuario: '',
+                    nIdParParent: '',
+                    cGrupoParNombre: ''
                 },
                 arrayUsuariosVendedores: [],
                 arrayParParametro: [],
@@ -416,6 +404,7 @@
                         'nidsucursal': this.fillPuga.nidsucursal,
                         'cdescripcion': this.fillPuga.cdescripcion,
                         'nidgrupopar': 110026,
+                        'nidparparent': 0,
                         'opcion': 1,
                         'page' : page
                     }
@@ -455,6 +444,82 @@
                 return this.error;
             },
             //==========================================================
+            //===================== ASIGNAR JV =========================
+            listarUsuariosJefeVentasByEmpSucur(data = null, op){
+                var url = this.ruta + '/puga/GetListUsuarios2';
+
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillPuga.nidempresa,
+                        'nidsucursal': this.fillPuga.nidsucursal,
+                        'cdescripcion': this.fillPuga.cdescripcion,
+                        'nidgrupopar': 110025,
+                        'nidparparent': (op == 1) ? this.formAsignacion.nIdParParent : data,
+                        'opcion': 0
+                    }
+                }).then(response => {
+                    this.arrayUsuariosVendedores = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registrar(p){
+                //Valida que el JV que se selecciono es el mismo que ya se encuentra asignado
+                if(p.nFlagParParametro == 1){
+                    console.log("Es igual")
+                    return;
+                }
+
+                //Valida que existe Vendedor
+                if(this.validar()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/puga/SetAsignarJefeVentas';
+                axios.post(url, {
+                    nIdUsuario : this.formAsignacion.nIdUsuario,
+                    nIdParParent : p.nIdUsuario
+                }).then(response => {
+                    if(response.data[0].nFlagMsje == 1)
+                    {
+                        swal(response.data[0].cMensaje);
+                        this.arrayUsuariosVendedores = [];
+                        this.listarUsuariosJefeVentasByEmpSucur(p.nIdUsuario, 2);
+                    }
+                    else{
+                        swal(response.data[0].cMensaje);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validar(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.formAsignacion.nIdUsuario && !this.formAsignacion.cNombreUsuario){
+                    this.mensajeError.push('Debes Seleccionar un Asesor de Ventas para realizar Asignación');
+                };
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            //==========================================================
             //===================== METODOS GENÉRICOS ====================
             cerrarModal(){
                 this.modal = 0
@@ -481,43 +546,26 @@
                 }
             },
             limpiarFormulario(){
+                this.formAsignacion.nIdUsuario = '';
+                this.formAsignacion.cNombreUsuario = '';
+                this.formAsignacion.nIdParParent = '';
+                this.formAsignacion.cGrupoParNombre = '';
+                this.arrayUsuariosVendedores = [];
             },
-            cambiarVistaFormulario(op, data){
+            cambiarVistaFormulario(op, data = null){
                 if(op == 1) {
                     this.listarUsuarios(1);
+                    this.limpiarFormulario();
                 }
                 if(op == 0){
                     this.formAsignacion.nIdUsuario = data.nIdUsuario;
-                    this.formAsignacion.cGrupoParNombre = data.cGrupoParNombre;
                     this.formAsignacion.cNombreUsuario = data.cNombreUsuario;
-                    this.listarUsuariosVendedoresByEmpSucur(1);
+                    this.formAsignacion.nIdParParent = data.nIdParParent;
+                    this.formAsignacion.cGrupoParNombre = data.cGrupoParNombre;
+                    this.listarUsuariosJefeVentasByEmpSucur(null, 1);
                 }
-                console.log(data.nIdUsuario);
+                // console.log(data);
                 this.vistaFormulario = op;
-            },
-            listarUsuariosVendedoresByEmpSucur(page){
-                var url = this.ruta + '/puga/GetListUsuarios2';
-
-                axios.get(url, {
-                    params: {
-                        'nidempresa': this.fillPuga.nidempresa,
-                        'nidsucursal': this.fillPuga.nidsucursal,
-                        'cdescripcion': this.fillPuga.cdescripcion,
-                        'nidgrupopar': 110026,
-                        'opcion': 0,
-                        'page' : page
-                    }
-                }).then(response => {
-                    this.arrayUsuariosVendedores = response.data;
-                }).catch(error => {
-                    console.log(error);
-                    if (error.response) {
-                        if (error.response.status == 401) {
-                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                            location.reload('0');
-                        }
-                    }
-                });
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
