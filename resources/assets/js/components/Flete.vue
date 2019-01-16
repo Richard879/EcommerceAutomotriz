@@ -84,7 +84,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">
+                                                                <!--<div class="form-group row">
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Marca</label>
@@ -125,7 +125,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
                                                                         <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarFleteDetalle(1);">
