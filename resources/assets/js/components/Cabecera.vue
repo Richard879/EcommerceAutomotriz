@@ -101,7 +101,7 @@
                 me.arraySucursal.map(function(value, key) {
                     if(value.nIdPar == me.formCabecera.nidsucursal){
                         //CAPTURO NUEVA SESIÓN DEL cNombreSucursal SELECCIONADO
-                        sessionStorage.setItem("cNombreSucursal", value.cParAbreviatura);
+                        sessionStorage.setItem("cNombreSucursal", value.cParNombre);
                     }
                 });
                 me.$emit('cabecera', me.formCabecera.nidsucursal);

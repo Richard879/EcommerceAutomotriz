@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/compra/GetListaPrecioByProveedor', 'CompraController@GetListaPrecioByProveedor');
     Route::post('/compra/SapUpdCompraByDocEntry', 'CompraController@SapUpdCompraByDocEntry');
     Route::post('/compra/SapUpdCompraByDocEntryMercancia', 'CompraController@SapUpdCompraByDocEntryMercancia');
+    Route::put('/compra/activar','CompraController@activar');
 
     Route::get('/listapreciovh/GetListaVh', 'ListaPrecioVersionVehController@GetListaVh');
     Route::post('/listapreciovh/SetListaVh', 'ListaPrecioVersionVehController@SetListaVh');

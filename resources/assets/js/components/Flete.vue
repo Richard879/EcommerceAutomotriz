@@ -818,6 +818,8 @@
         methods:{
             tabBuscarFlete(){
                 this.limpiarFormulario();
+                this.llenarComboMarca();
+                this.llenarComboModelo();
             },
             listarFleteDetalle(page){
                 this.mostrarProgressBar();
@@ -927,7 +929,7 @@
 
                 axios.get(url,{
                     params: {
-                        'nidmarca' : this.fillFlete.nidmarca
+                        'nidmarca' : this.accionmodal==3 ? this.fillCompra.nidmarca : this.fillFlete.nidmarca
                     }
                 }).then(response => {
                     this.arrayModelo = response.data;
@@ -1044,7 +1046,8 @@
             cerrarModal(){
                 this.modal = 0,
                 this.error = 0,
-                this.mensajeError = ''
+                this.mensajeError = '',
+                this.accionmodal = 0
             },
             abrirModal(modelo, accion, data =[]){
                 switch(modelo){
@@ -1102,6 +1105,7 @@
             }
         },
         mounted(){
+            this.llenarComboMarca();
         }
     }
 </script>

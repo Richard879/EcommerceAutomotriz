@@ -154,18 +154,18 @@
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Aprobar Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="aprobarPedido(pedido)" :style="'color:#796AEE'" class="fa-md fa fa-check"></i>
-                                                        </el-tooltip>&nbsp;
+                                                        </el-tooltip>&nbsp;&nbsp;
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Ver Detalle Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="abrirModal('pedido', 'detalle', pedido)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
-                                                        </el-tooltip>&nbsp;
+                                                        </el-tooltip>&nbsp;&nbsp;
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Anular Pedido {{ pedido.cNumeroPedido }}</div>
                                                             <i @click="anularPedido(pedido)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                        </el-tooltip>&nbsp;
+                                                        </el-tooltip>&nbsp;&nbsp;
                                                         <el-tooltip class="item" effect="dark" placement="top-start">
                                                             <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
-                                                            <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa-file-pdf-o"></i>
+                                                            <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa fa fa-file-pdf-o"></i>
                                                         </el-tooltip>&nbsp;
                                                     </td>
                                                     <td v-text="pedido.cNumeroPedido"></td>
