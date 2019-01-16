@@ -196,7 +196,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Pedido {{ pedido.cNumeroPedido }}</div>
-                                                                                        <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa-file-pdf-o"></i>
+                                                                                        <i @click="generarPedidoPDF(pedido.nIdCabeceraPedido)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="pedido.cNumeroPedido"></td>

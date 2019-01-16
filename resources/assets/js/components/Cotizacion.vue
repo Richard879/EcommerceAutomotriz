@@ -196,7 +196,7 @@
                                                                                     </el-tooltip>&nbsp;&nbsp;
                                                                                     <el-tooltip class="item" effect="dark" placement="top-start">
                                                                                         <div slot="content">Reporte Cotizacion {{ cotizacion.nIdCabeceraCotizacion }}</div>
-                                                                                        <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa-file-pdf-o"></i>
+                                                                                        <i @click="generarCotizacionPDF(cotizacion.nIdCabeceraCotizacion)" :style="'color:red'" class="fa-md fa fa-file-pdf-o"></i>
                                                                                     </el-tooltip>&nbsp;
                                                                                 </td>
                                                                                 <td v-text="cotizacion.cNumeroCotizacion"></td>
