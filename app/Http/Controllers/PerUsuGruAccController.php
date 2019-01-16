@@ -98,22 +98,26 @@ class PerUsuGruAccController extends Controller
         }
     }
 
+    //Asignar Jefe Ventas
     public function GetListUsuarios2(Request $request)
     {
         $nIdEmpresa = $request->nidempresa;
         $nIdSucursal = $request->nidsucursal;
         $cDescripcion = $request->cdescripcion;
         $nIdGrupoPar = $request->nidgrupopar;
+        $nIdParParent = $request->nidparparent;
 
         $opcion = $request->opcion;
 
         $cDescripcion = ($cDescripcion == NULL) ? ($cDescripcion = '') : $cDescripcion;
+        $nIdParParent = ($nIdParParent == NULL) ? ($nIdParParent = 0) : $nIdParParent;
 
-        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios2] ?, ?, ?, ?',
+        $arrayUsuarios = DB::select('exec [usp_Puga_GetListUsuarios2] ?, ?, ?, ?, ?',
                                                         [   $nIdEmpresa,
                                                             $nIdSucursal,
                                                             $cDescripcion,
-                                                            $nIdGrupoPar
+                                                            $nIdGrupoPar,
+                                                            $nIdParParent
                                                         ]);
 
         if($opcion == 1) {
@@ -122,5 +126,21 @@ class PerUsuGruAccController extends Controller
         } else {
             return response()->json($arrayUsuarios);
         }
+    }
+
+    public function SetAsignarJefeVentas(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdUsuario = $request->nIdUsuario;
+        $nIdParParent = $request->nIdParParent;
+
+        $data = DB::select('exec [usp_Puga_SetAsignarJefeVentas] ?, ?, ?',
+                                                            [
+                                                                $request->nIdUsuario,
+                                                                $request->nIdParParent,
+                                                                Auth::user()->id
+                                                            ]);
+        return response()->json($data);
     }
 }

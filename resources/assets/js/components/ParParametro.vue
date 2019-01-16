@@ -95,17 +95,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-<<<<<<< HEAD
-                                                        <tr v-for="p in arrayParParametro" :key="p.nIdPar" v-if="p.nFlagParParametro==1">
-                                                            <td v-text="p.nIdPar"></td>
-                                                            <td v-text="p.nIdGrupoPar"></td>
-                                                            <td v-text="p.cParNombre"></td>
-=======
                                                         <tr v-for="p in arrayParParametro" :key="p.nIdPar">
                                                             <td v-if="p.nFlagParParametro==1" v-text="p.nIdPar"></td>
                                                             <td v-if="p.nFlagParParametro==1" v-text="p.nIdGrupoPar"></td>
                                                             <td v-if="p.nFlagParParametro==1" v-text="p.cParNombre"></td>
->>>>>>> b9b9eaf66d1e1dbed8d05f499ba1466f7bf39ec6
                                                         </tr>
                                                     </tbody>
                                                 </table>
