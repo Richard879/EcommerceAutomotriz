@@ -1114,8 +1114,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110044,
-                        'opcion' : 0
+                        'ngrupoparid' : 110044
                     }
                 }).then(response => {
                     this.arrayTipoLista = response.data;
