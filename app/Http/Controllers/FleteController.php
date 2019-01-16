@@ -53,30 +53,47 @@ class FleteController extends Controller
         $nIdSucursal = $request->nidsucursal;
         $dFechaInicio = $request->dfechainicio;
         $dFechaFin = $request->dfechafin;
-        $cNumeroVin = $request->cnumerovin;
-        $nIdMarca   = $request->nidmarca;
-        $nIdModelo  = $request->nidmodelo;
         
         $dFechaInicio = ($dFechaInicio == NULL) ? ($dFechaInicio = '') : $dFechaInicio;
         $dFechaFin = ($dFechaFin == NULL) ? ($dFechaFin = '') : $dFechaFin;
-        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = ' ') : $cNumeroVin;
-        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
-        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
 
-
-
-        $arrayFlete = DB::select('exec [usp_Flete_GetListFlete] ?, ?, ?, ?, ?, ?, ?',
+        $arrayFlete = DB::select('exec [usp_Flete_GetListFlete] ?, ?, ?, ?',
                                                             [   $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $dFechaInicio,
-                                                                $dFechaFin,
-                                                                $cNumeroVin,
-                                                                $nIdMarca,
-                                                                $nIdModelo
+                                                                $dFechaFin
                                                             ]);
 
         $arrayFlete = Parametro::arrayPaginator($arrayFlete, $request);
         return ['arrayFlete'=>$arrayFlete];
+    }
+
+    public function GetListFleteDetalle(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdFlete = $request->nidflete;
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $cNumeroVin = $request->cnumerovin;
+        $nIdMarca   = $request->nidmarca;
+        $nIdModelo  = $request->nidmodelo;
+        
+        $cNumeroVin = ($cNumeroVin == NULL) ? ($cNumeroVin = '') : $cNumeroVin;
+        $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
+        $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
+
+        $arrayFleteDetalle = DB::select('exec [usp_Flete_GetListFleteDetalle] ?, ?, ?, ?, ?, ?',
+                                                            [   $nIdFlete,
+                                                                $nIdEmpresa,
+                                                                $nIdSucursal,
+                                                                $nIdMarca,
+                                                                $nIdModelo,
+                                                                $cNumeroVin
+                                                            ]);
+
+        $arrayFleteDetalle = Parametro::arrayPaginator($arrayFleteDetalle, $request);
+        return ['arrayFleteDetalle'=>$arrayFleteDetalle];
     }
 
     public function SetFlete(Request $request)

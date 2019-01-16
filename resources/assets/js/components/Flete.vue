@@ -84,51 +84,9 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--<div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Marca</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="fillFlete.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayMarca"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Modelo</label>
-                                                                            <div class="col-sm-8">
-                                                                                <el-select v-model="fillFlete.nidmodelo" filterable clearable placeholder="SELECCIONE">
-                                                                                    <el-option
-                                                                                    v-for="item in arrayModelo"
-                                                                                    :key="item.nIdPar"
-                                                                                    :label="item.cParNombre"
-                                                                                    :value="item.nIdPar">
-                                                                                    </el-option>
-                                                                                </el-select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">Nro Vin</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" v-model="fillFlete.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="form-group row">
                                                                     <div class="col-sm-9 offset-sm-5">
-                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarFleteDetalle(1);">
+                                                                        <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarFlete(1);">
                                                                             <i class="fa fa-search"></i> Buscar
                                                                         </button>
                                                                     </div>
@@ -150,30 +108,26 @@
                                                                             <tr>
                                                                                 <th>Acciones</th>
                                                                                 <th>Código</th>
-                                                                                <th>Nro Vin</th>
-                                                                                <th>Nombre Comercial</th>
-                                                                                <th>Año Fab</th>
-                                                                                <th>Año Mod</th>
-                                                                                <th>Moneda</th>
-                                                                                <th>Monto Flete</th>
-                                                                                <th>Fecha Reg</th>
+                                                                                <th>Nro Serie</th>
+                                                                                <th>Nro Comprobante</th>
+                                                                                <th>Nro Ruc</th>
+                                                                                <th>Importe Total</th>
+                                                                                <th>Fecha Registro</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="flete in arrayFlete" :key="flete.nIdFleteDetalle">
                                                                                 <td>
-                                                                                    <!--<el-tooltip class="item" effect="dark" placement="top-start">
-                                                                                        <div slot="content">Anular O/C  {{ flete.nOrdenCompra }}</div>
-                                                                                        <i @click="desactivar(flete.nIdFleteDetalle)" :style="'color:red'" class="fa-md fa fa-times-circle"></i>
-                                                                                    </el-tooltip>&nbsp;-->
+                                                                                    <el-tooltip class="item" effect="dark" placement="top-start">
+                                                                                        <div slot="content">Ver Detalle  {{ flete.nIdFlete }}</div>
+                                                                                        <i @click="abrirModal('detalle','buscar', flete)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
+                                                                                    </el-tooltip>&nbsp;&nbsp;
                                                                                 </td>
-                                                                                <td v-text="flete.nIdFleteDetalle"></td>
-                                                                                <td v-text="flete.cNumeroVin"></td>
-                                                                                <td v-text="flete.cNombreComercial"></td>
-                                                                                <td v-text="flete.nAnioFabricacion"></td>
-                                                                                <td v-text="flete.nAnioVersion"></td>
-                                                                                <td v-text="flete.cMonedaNombre"></td>
-                                                                                <td v-text="flete.fImporteFleteSinIgv"></td>
+                                                                                <td v-text="flete.nIdFlete"></td>
+                                                                                <td v-text="flete.cSerieComprobante"></td>
+                                                                                <td v-text="flete.cNumeroComprobante"></td>
+                                                                                <td v-text="flete.cNumeroRuc"></td>
+                                                                                <td v-text="flete.fImporteTotalFlete"></td>
                                                                                 <td v-text="flete.dFechaRegistro"></td>
                                                                             </tr>
                                                                         </tbody>
@@ -185,16 +139,16 @@
                                                                             <nav>
                                                                                 <ul class="pagination">
                                                                                     <li v-if="pagination.current_page > 1" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                                        <a @click.prevent="cambiarPaginaFlete(pagination.current_page-1)" class="page-link" href="#">Ant</a>
                                                                                     </li>
                                                                                     <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                                     :class="[page==isActived?'active':'']">
                                                                                         <a class="page-link"
-                                                                                        href="#" @click.prevent="cambiarPagina(page)"
+                                                                                        href="#" @click.prevent="cambiarPaginaFlete(page)"
                                                                                         v-text="page"></a>
                                                                                     </li>
                                                                                     <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                                        <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                                        <a @click.prevent="cambiarPaginaFlete(pagination.current_page+1)" class="page-link" href="#">Sig</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </nav>
@@ -654,8 +608,8 @@
                                                     <div class="col-sm-7">
                                                         <nav>
                                                             <ul class="pagination">
-                                                                <li v-if="pagination.current_page > 1" class="page-item">
-                                                                    <a @click.prevent="cambiarPagina(pagination.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPagina(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
                                                                 </li>
                                                                 <li  class="page-item" v-for="page in pagesNumber" :key="page"
                                                                 :class="[page==isActived?'active':'']">
@@ -663,14 +617,152 @@
                                                                     href="#" @click.prevent="cambiarPagina(page)"
                                                                     v-text="page"></a>
                                                                 </li>
-                                                                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                                                                    <a @click.prevent="cambiarPagina(pagination.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPagina(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
                                                                 </li>
                                                             </ul>
                                                         </nav>
                                                     </div>
                                                     <div class="col-sm-5">
-                                                        <div class="datatable-info">Mostrando {{ pagination.from }} a {{ pagination.to }} de {{ pagination.total }} registros</div>
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="10">No existen registros!</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL DETALLE FLETE -->
+            <div class="modal fade" v-if="accionmodal==4" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="h4">DETALLE FLETE</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form v-on:submit.prevent class="form-horizontal">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Marca</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillFlete.nidmarca" filterable clearable placeholder="SELECCIONE" v-on:change="llenarComboModelo()">
+                                                                <el-option
+                                                                v-for="item in arrayMarca"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Modelo</label>
+                                                        <div class="col-sm-8">
+                                                            <el-select v-model="fillFlete.nidmodelo" filterable clearable placeholder="SELECCIONE">
+                                                                <el-option
+                                                                v-for="item in arrayModelo"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <label class="col-sm-4 form-control-label">Nro Vin</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" v-model="fillFlete.cnumerovin" @keyup.enter="buscarCompras()" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarFleteDetalle(1);"><i class="fa fa-search"></i> Buscar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                        <template v-if="arrayFleteDetalle.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Código</th>
+                                                            <th>Nro Vin</th>
+                                                            <th>Nombre Comercial</th>
+                                                            <th>Año Fab</th>
+                                                            <th>Año Mod</th>
+                                                            <th>Moneda</th>
+                                                            <th>Monto Flete</th>
+                                                            <th>Fecha Reg</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="flete in arrayFleteDetalle" :key="flete.nIdFleteDetalle">
+                                                            <td></td>
+                                                            <td v-text="flete.nIdFleteDetalle"></td>
+                                                            <td v-text="flete.cNumeroVin"></td>
+                                                            <td v-text="flete.cNombreComercial"></td>
+                                                            <td v-text="flete.nAnioFabricacion"></td>
+                                                            <td v-text="flete.nAnioVersion"></td>
+                                                            <td v-text="flete.cMonedaNombre"></td>
+                                                            <td v-text="flete.fImporteFleteSinIgv"></td>
+                                                            <td v-text="flete.dFechaRegistro"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <nav>
+                                                            <ul class="pagination">
+                                                                <li v-if="paginationModal.current_page > 1" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaFleteDetalle(paginationModal.current_page-1)" class="page-link" href="#">Ant</a>
+                                                                </li>
+                                                                <li  class="page-item" v-for="page in pagesNumber" :key="page"
+                                                                :class="[page==isActived?'active':'']">
+                                                                    <a class="page-link"
+                                                                    href="#" @click.prevent="cambiarPaginaFleteDetalle(page)"
+                                                                    v-text="page"></a>
+                                                                </li>
+                                                                <li v-if="paginationModal.current_page < paginationModal.last_page" class="page-item">
+                                                                    <a @click.prevent="cambiarPaginaFleteDetalle(paginationModal.current_page+1)" class="page-link" href="#">Sig</a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="datatable-info">Mostrando {{ paginationModal.from }} a {{ paginationModal.to }} de {{ paginationModal.total }} registros</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -711,6 +803,7 @@
                 // ============================================
                 // ============ BUSCAR FLETE =================
                 fillFlete:{
+                    nidflete: 0,
                     dfechainicio: '',
                     dfechafin: '',
                     cnumerofactura: '',
@@ -740,6 +833,7 @@
                 arrayFlete: [],
                 arrayTempFlete: [],
                 arrayIndexFleteMonto: [],
+                arrayFleteDetalle: [],
                 // ==========================================================
                 // =============  BUSCAR PROVEEDORES ========================
                 fillProveedor:{
@@ -832,7 +926,7 @@
                 this.llenarComboMarca();
                 this.llenarComboModelo();
             },
-            listarFleteDetalle(page){
+            listarFlete(page){
                 this.mostrarProgressBar();
 
                 var url = this.ruta + '/flete/GetListFlete';
@@ -842,9 +936,6 @@
                         'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                         'dfechainicio': this.fillFlete.dfechainicio,
                         'dfechafin': this.fillFlete.dfechafin,
-                        'cnumerovin': this.fillFlete.cnumerovin,
-                        'nidmarca': this.fillFlete.nidmarca,
-                        'nidmodelo': this.fillFlete.nidmodelo,
                         'page': page
                     }
                 }).then(response => {
@@ -868,6 +959,43 @@
             },
             cambiarPaginaFlete(page){
                 this.pagination.current_page=page;
+                this.listarFlete(page);
+            },
+            listarFleteDetalle(page){
+                this.mostrarProgressBar();
+
+                var url = this.ruta + '/flete/GetListFleteDetalle';
+                axios.get(url, {
+                    params: {
+                        'nidflete': this.fillFlete.nidflete,
+                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
+                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'cnumerovin': this.fillFlete.cnumerovin,
+                        'nidmarca': this.fillFlete.nidmarca,
+                        'nidmodelo': this.fillFlete.nidmodelo,
+                        'page': page
+                    }
+                }).then(response => {
+                    this.arrayFleteDetalle = response.data.arrayFleteDetalle.data;
+                    this.paginationModal.current_page =  response.data.arrayFleteDetalle.current_page;
+                    this.paginationModal.total = response.data.arrayFleteDetalle.total;
+                    this.paginationModal.per_page    = response.data.arrayFleteDetalle.per_page;
+                    this.paginationModal.last_page   = response.data.arrayFleteDetalle.last_page;
+                    this.paginationModal.from        = response.data.arrayFleteDetalle.from;
+                    this.paginationModal.to           = response.data.arrayFleteDetalle.to;
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            cambiarPaginaFleteDetalle(){
+                this.paginationModal.current_page=page;
                 this.listarFleteDetalle(page);
             },
             // ====================================================
@@ -895,12 +1023,12 @@
                     }
                 }).then(response => {
                     this.arrayCompra = response.data.arrayCompra.data;
-                    this.pagination.current_page =  response.data.arrayCompra.current_page;
-                    this.pagination.total = response.data.arrayCompra.total;
-                    this.pagination.per_page    = response.data.arrayCompra.per_page;
-                    this.pagination.last_page   = response.data.arrayCompra.last_page;
-                    this.pagination.from        = response.data.arrayCompra.from;
-                    this.pagination.to           = response.data.arrayCompra.to;
+                    this.paginationModal.current_page =  response.data.arrayCompra.current_page;
+                    this.paginationModal.total = response.data.arrayCompra.total;
+                    this.paginationModal.per_page    = response.data.arrayCompra.per_page;
+                    this.paginationModal.last_page   = response.data.arrayCompra.last_page;
+                    this.paginationModal.from        = response.data.arrayCompra.from;
+                    this.paginationModal.to           = response.data.arrayCompra.to;
                     $("#myBar").hide();
                 }).catch(error => {
                     console.log(error);
@@ -913,7 +1041,7 @@
                 });
             },
             cambiarPagina(page){
-                this.pagination.current_page=page;
+                this.paginationModal.current_page=page;
                 this.listarCompras(page);
             },
             llenarComboMarca(){
@@ -1065,7 +1193,7 @@
                 this.mensajeError = '',
                 this.accionmodal = 0
             },
-            abrirModal(modelo, accion, data =[]){
+            abrirModal(modelo, accion, data){
                 switch(modelo){
                     case 'proveedor':
                     {
@@ -1092,7 +1220,20 @@
                                 break;
                             }
                         }
-                    };
+                    }break;
+                    case 'detalle':
+                    {
+                        switch(accion){
+                            case 'buscar':
+                            {
+                                this.accionmodal=4;
+                                this.modal = 1;
+                                this.fillFlete.nidflete = data.nIdFlete;
+                                this.listarFleteDetalle(1);
+                                break;
+                            }
+                        }
+                    }break;
                 }
             },
             // ===========================================================
