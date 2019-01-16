@@ -1067,7 +1067,7 @@
                 this.formListaPrecioVh.cproveedornombre = '';
                 this.arrayListaPrecioVhDet = [];
                 this.desactivarTabs();
-                this.listarListaPrecioVh(1);
+                //this.listarListaPrecioVh(1);
             },
             buscaProveedores(){
                 this.listarProveedores(1);
