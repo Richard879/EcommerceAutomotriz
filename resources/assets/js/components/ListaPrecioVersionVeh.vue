@@ -957,15 +957,15 @@
                     nidlistaprecioversionVeh: 0,
                     nnrolistaprecio: '',
                     nidtipolista: '',
-                    cnombrecomercial: ''
+                    cnombrecomercial: '',
+                    nidmarca: '',
+                    nidmodelo: ''
                 },
                 arrayListaPrecioVh: [],
                 arrayProveedor: [],
                 arrayListaPrecioVhDet: [],
                 arrayTipoLista: [],
                 arrayExcel: [],
-                nidmarca: '',
-                nidmodelo: '',
                 arrayMarca: [],
                 arrayModelo: [],
                 contadorArrayExcel: 0,
