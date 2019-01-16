@@ -91,11 +91,13 @@ class FleteController extends Controller
             $arrayNombreComercial = [];*/
             $detalles = $request->data;
 
-            $objFlete = DB::select('exec [usp_Flete_SetFlete] ?, ?, ?, ?, ?', 
+            $objFlete = DB::select('exec [usp_Flete_SetFlete] ?, ?, ?, ?, ?, ?, ?', 
                                                                 [   $request->nIdEmpresa,
                                                                     $request->nIdSucursal,
                                                                     $request->cNumeroRuc,
-                                                                    $request->cNumeroDocumento,
+                                                                    $request->cTipoComprobante,
+                                                                    $request->cSerieComprobante,
+                                                                    $request->cNumeroComprobante,
                                                                     Auth::user()->id
                                                                 ]);
 

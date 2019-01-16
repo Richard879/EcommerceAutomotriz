@@ -259,9 +259,19 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="row">
-                                                                            <label class="col-sm-4 form-control-label">* Numero Comprobante</label>
+                                                                            <label class="col-sm-4 form-control-label">* Serie Comprobante</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" v-model="formmFlete.cnumerodocumento" class="form-control form-control-sm">
+                                                                                <input type="text" v-model="formmFlete.cseriecomprobante" class="form-control form-control-sm">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <label class="col-sm-4 form-control-label">* Nro Comprobante</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="number" v-model="formmFlete.cnumerocomprobante" class="form-control form-control-sm">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -496,7 +506,7 @@
                             <div class="container-fluid">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="h4">LISTA DE COMPRAS NO LINEA CREDITO</h3>
+                                        <h3 class="h4">LISTA DE COMPRAS</h3>
                                     </div>
                                     <div class="card-body">
                                         <form v-on:submit.prevent class="form-horizontal">
@@ -710,7 +720,8 @@
                 },
                 formmFlete:{
                     cnumeroruc: '',
-                    cnumerodocumento: ''
+                    cseriecomprobante: '',
+                    cnumerocomprobante: ''
                 },
                 fillCompra:{
                     dfechainicio: '',
@@ -1008,7 +1019,9 @@
                     'nIdEmpresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
                     'nIdSucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
                     'cNumeroRuc': this.formmFlete.cnumeroruc,
-                    'cNumeroDocumento': this.formmFlete.cnumerodocumento,
+                    'cTipoComprobante': 'F',
+                    'cSerieComprobante': this.formmFlete.cseriecomprobante,
+                    'cNumeroComprobante': this.formmFlete.cnumerocomprobante,
                     'data': this.arrayFlete
                 }).then(response => {
                     swal('Flete registrado exitosamente');
@@ -1030,11 +1043,14 @@
                 if(this.arrayTempFlete == []){
                     this.mensajeError.push('No hay Datos a Registrar');
                 };
-                if(!this.formmFlete.cnumeroruc){
-                    this.mensajeError.push('Debe Ingresar Numero Ruc');
+                if(!this.formmFlete.cnumeroruc || this.formmFlete.cnumeroruc.length != 11){
+                    this.mensajeError.push('El Ruc debe contener 11 dígitos');
                 };
-                if(!this.formmFlete.cnumerodocumento){
-                    this.mensajeError.push('Debe Ingresar Numero de Comprobante');
+                if(!this.formmFlete.cseriecomprobante){
+                    this.mensajeError.push('Debe Ingresar Serie Comprobante');
+                };
+                if(!this.formmFlete.cnumerocomprobante){
+                    this.mensajeError.push('Debe Ingresar Nro Comprobante');
                 };
                 if(this.mensajeError.length){
                     this.error = 1;
@@ -1089,7 +1105,8 @@
                 this.arrayTempFlete = [];
                 this.arrayIndexFleteMonto = [];
                 this.formmFlete.cnumeroruc = '';
-                this.formmFlete.cnumerodocumento = '';
+                this.formmFlete.cseriecomprobante = '';
+                this.formmFlete.cnumerocomprobante = '';
             },
             limpiarPaginacion(){
                 this.pagination.current_page =  0,
