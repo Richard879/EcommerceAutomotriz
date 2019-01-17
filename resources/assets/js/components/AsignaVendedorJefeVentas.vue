@@ -271,7 +271,7 @@
                 //==========================================================
                 //===================== LISTAR USUARIOS ====================
                 fillPuga:{
-                    nidempresa: 1300011,
+                    nidempresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
                     nidsucursal: '',
                     cdescripcion: ''
                 },
@@ -375,7 +375,7 @@
                 var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': 1300011
+                        'nidempresa': this.fillPuga.nidempresa
                     }
                 }).then(response => {
                     this.arraySucursal = response.data;

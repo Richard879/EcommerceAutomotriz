@@ -349,6 +349,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/asignacuota/GetLstVendedorSubLineaCuota','AsignaVendedorCuotaSubLineaController@GetLstVendedorSubLineaCuota');
     Route::post('/asignacuota/SetRegistraAsignacionCuota','AsignaVendedorCuotaSubLineaController@SetRegistraAsignacionCuota');
 
+    Route::get('/usuarios/GetListUsuarios','GestionUsuariosController@GetListUsuarios');
 
     ///========================================
     /////=================  ROUTES SAP
