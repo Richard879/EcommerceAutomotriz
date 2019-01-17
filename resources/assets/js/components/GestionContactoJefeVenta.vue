@@ -4705,7 +4705,7 @@
                     }
                 });
             },
-            SapRegistrarNuevoContacto2(nIdContacto, contacto){
+            /*SapRegistrarNuevoContacto2(nIdContacto, contacto){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
 
@@ -4762,7 +4762,7 @@
                         }
                     }
                 });
-            },
+            },*/
             registrarNuevoContacto(){
                 if(this.validarTab22()){
                     this.accionmodal=1;
@@ -4884,7 +4884,11 @@
                         referencia: this.arrayReferenciaVehiculo,
                         otrosintreses: this.arrayOtrosIntereses
                     }).then(response => {
-                        this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
+                        //this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
+                        $("#myBar").hide();
+                        swal("Contacto Registrado Correctamente");
+                        this.limpiarNuevoContacto();
+                        this.tabDatosPersonales();
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {
