@@ -4237,7 +4237,8 @@
             llenarComboLinea(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetLineasByUsuario') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
+                //(this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetLineasByUsuario') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetLineasByProveedor') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
 
                 axios.get(url, {
                     params: {
@@ -4262,7 +4263,8 @@
             llenarComboMarca(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
+                //(this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
 
                 axios.get(url, {
                     params: {
@@ -4288,7 +4290,8 @@
             llenarComboModelo(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
+                //(this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
 
                 axios.get(url, {
                     params: {
@@ -4702,7 +4705,7 @@
                     }
                 });
             },
-            SapRegistrarNuevoContacto2(nIdContacto, contacto){
+            /*SapRegistrarNuevoContacto2(nIdContacto, contacto){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
 
@@ -4759,7 +4762,7 @@
                         }
                     }
                 });
-            },
+            },*/
             registrarNuevoContacto(){
                 if(this.validarTab22()){
                     this.accionmodal=1;
@@ -4881,7 +4884,11 @@
                         referencia: this.arrayReferenciaVehiculo,
                         otrosintreses: this.arrayOtrosIntereses
                     }).then(response => {
-                        this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
+                        //this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
+                        $("#myBar").hide();
+                        swal("Contacto Registrado Correctamente");
+                        this.limpiarNuevoContacto();
+                        this.tabDatosPersonales();
                     }).catch(error => {
                         console.log(error);
                         if (error.response) {

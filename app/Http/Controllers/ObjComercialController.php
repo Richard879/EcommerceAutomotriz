@@ -61,7 +61,7 @@ class ObjComercialController extends Controller
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoCompra ?, ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_ObjComercial_GetDetalleVehiculoCompra] ?, ?, ?, ?, ?, ?, ?',
                                                              [  $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nIdCronograma,
@@ -83,7 +83,7 @@ class ObjComercialController extends Controller
 
             foreach($detalles as $key => $det){
                 if($det['nCantidadVehiculo'] > 0){                    
-                    DB::select('exec usp_ObjComercial_SetRegistrarCompra ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_ObjComercial_SetRegistrarCompra] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $request->nIdEmpresa,
                                 $request->nIdSucursal,
@@ -121,7 +121,7 @@ class ObjComercialController extends Controller
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
 
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoVenta ?, ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_ObjComercial_GetDetalleVehiculoVenta] ?, ?, ?, ?, ?, ?, ?',
                                                              [  $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nIdCronograma,
@@ -143,7 +143,7 @@ class ObjComercialController extends Controller
 
             foreach($detalles as $key => $det){
                 if($det['nCantidadVehiculo'] > 0){                    
-                    DB::select('exec usp_ObjComercial_SetRegistrarVenta ?, ?, ?, ?, ?, ?, ?, ?',
+                    DB::select('exec [usp_ObjComercial_SetRegistrarVenta] ?, ?, ?, ?, ?, ?, ?, ?, ?, ?',
                             [
                                 $request->nIdEmpresa,
                                 $request->nIdSucursal,
@@ -152,6 +152,8 @@ class ObjComercialController extends Controller
                                 $request->cFlagTipoOperacion,
                                 $det['nIdVersionVeh'],
                                 $det['nCantidadVehiculo'],
+                                $det['nIdFlagTipoValor'],
+                                $det['fValorBeneficio'],
                                 Auth::user()->id
                             ]);
                 }
