@@ -3469,7 +3469,7 @@
                     }
                 });
             },
-            SapRegistrarNuevoContacto2(nIdContacto, contacto){
+            /*SapRegistrarNuevoContacto2(nIdContacto, contacto){
                 let me = this;
                 me.loadingProgressBar("INTEGRANDO CONTACTO CON SAP BUSINESS ONE...");
 
@@ -3508,7 +3508,7 @@
                     'LogRespuesta'  : logRpta
                 }).then(response => {
                     $("#myBar").hide();
-                    // console.log(response);s
+                    // console.log(response);
                     if(response.data[0].nFlagMsje==1){
                         swal(response.data[0].cMensaje);
                     } else {
@@ -3526,7 +3526,7 @@
                         }
                     }
                 });
-            },
+            },*/
             registrarNuevoContacto(){
                 if(this.validarTab22()){
                     this.accionmodal=1;
@@ -3639,29 +3639,29 @@
                 return this.error;
             },
             registrarReferenciaVehiculo(nIdContacto){
-                if(this.arrayReferenciaVehiculo.length > 0){
-                    var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
-                    axios.post(url, {
-                        nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
-                        nIdCronograma: 220016,
-                        nIdContacto: nIdContacto,
-                        referencia: this.arrayReferenciaVehiculo,
-                        otrosintreses: this.arrayOtrosIntereses
-                    }).then(response => {
-                        this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
-                        // this.limpiarNuevoContacto();
-                        // this.tabDatosPersonales();
-                    }).catch(error => {
-                        console.log(error);
-                        if (error.response) {
-                            if (error.response.status == 401) {
-                                swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
-                                location.reload('0');
-                            }
+                var url = this.ruta + '/gescontacto/SetContactoRefVehiculo';
+                axios.post(url, {
+                    nIdEmpresa: parseInt(sessionStorage.getItem("nIdEmpresa")),
+                    nIdSucursal: parseInt(sessionStorage.getItem("nIdSucursal")),
+                    nIdCronograma: 220016,
+                    nIdContacto: nIdContacto,
+                    referencia: this.arrayReferenciaVehiculo,
+                    otrosintreses: this.arrayOtrosIntereses
+                }).then(response => {
+                    //this.SapRegistrarNuevoContacto2(nIdContacto, this.formNuevoContacto);
+                    $("#myBar").hide();
+                    swal("Contacto Registrado Correctamente");
+                    this.limpiarNuevoContacto();
+                    this.tabDatosPersonales();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
                         }
-                    });
-                }
+                    }
+                });
             },
             // ==========================================================
             // =============  BUSCAR PROVEEDORES ========================
