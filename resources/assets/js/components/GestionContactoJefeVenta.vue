@@ -4237,7 +4237,8 @@
             llenarComboLinea(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetLineasByUsuario') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
+                //(this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetLineasByUsuario') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetLineasByProveedor') : (url = this.ruta + '/versionvehiculo/GetLineasByProveedor')
 
                 axios.get(url, {
                     params: {
@@ -4262,7 +4263,8 @@
             llenarComboMarca(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
+                //(this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetMarcaByLinea') : (url = this.ruta + '/versionvehiculo/GetMarcaByLinea')
 
                 axios.get(url, {
                     params: {
@@ -4288,7 +4290,8 @@
             llenarComboModelo(){
                 var url;
 
-                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
+                //(this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/gescontacto/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
+                (this.cFlagReferenciaInteres == 1) ? (url = this.ruta + '/versionvehiculo/GetModeloByMarca') : (url = this.ruta + '/versionvehiculo/GetModeloByMarca')
 
                 axios.get(url, {
                     params: {
