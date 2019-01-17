@@ -61,7 +61,7 @@ class ObjComercialController extends Controller
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
         
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoCompra ?, ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_ObjComercial_GetDetalleVehiculoCompra] ?, ?, ?, ?, ?, ?, ?',
                                                              [  $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nIdCronograma,
@@ -121,7 +121,7 @@ class ObjComercialController extends Controller
         $nIdMarca = ($nIdMarca == NULL) ? ($nIdMarca = 0) : $nIdMarca;
         $nIdModelo = ($nIdModelo == NULL) ? ($nIdModelo = 0) : $nIdModelo;
 
-        $data = DB::select('exec usp_ObjComercial_GetDetalleVehiculoVenta ?, ?, ?, ?, ?, ?, ?',
+        $data = DB::select('exec [usp_ObjComercial_GetDetalleVehiculoVenta] ?, ?, ?, ?, ?, ?, ?',
                                                              [  $nIdEmpresa,
                                                                 $nIdSucursal,
                                                                 $nIdCronograma,

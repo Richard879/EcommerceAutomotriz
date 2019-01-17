@@ -40,7 +40,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Empresa</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="cempresa" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -48,7 +48,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Sucursal</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="csucursal" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -58,7 +58,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Año</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="fillObjComercialCompra.canio" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="fillObjComercialCompra.canio" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -66,7 +66,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Mes</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="fillObjComercialCompra.cmes" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="fillObjComercialCompra.cmes" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -158,6 +158,9 @@
                                                         <div class="card-body">
                                                             <form class="form-horizontal">
                                                                 <template v-if="arrayDetalleVehiculoCompra.length">
+                                                                    <!--<div id="divDespliegue">
+                                                                        <el-collapse v-model="activeNames" @change="handleChange">
+                                                                            <el-collapse-item title="" name="1">-->
                                                                     <div class="table-responsive barraLateral">
                                                                         <table class="table table-striped table-sm">
                                                                             <thead>
@@ -210,6 +213,9 @@
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
+                                                                            <!--</el-collapse-item>
+                                                                        </el-collapse>
+                                                                    </div>-->
                                                                     <br>
                                                                     <div class="form-group row">
                                                                         <div class="col-md-9 offset-md-5">
@@ -336,7 +342,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="detalle in arrayDetalleVehiculoVenta" :key="detalle.nIdVersionVeh">
+                                                                                <tr v-for="(detalle, index) in arrayDetalleVehiculoVenta" :key="detalle.nIdVersionVeh">
                                                                                     <td v-text="detalle.Proveedor"></td>
                                                                                     <td v-text="detalle.Linea"></td>
                                                                                     <td v-text="detalle.Marca"></td>
@@ -544,7 +550,7 @@
                 arrayTipoBeneficio: [],
                 arrayListaVehiculoCompra: [],
                 arrayDetalleVehiculoCompra: [],
-                arrayTempDetalleVehiculo: [],
+                arrayTempDetalleVehiculoCompra: [],
                 arrayLinea: [],
                 arrayMarca: [],
                 arrayModelo: [],
@@ -566,8 +572,10 @@
                     canio: '',
                     cmes: ''
                 },
-                arrayDetalleVehiculoVenta: [],
                 arrayFlagTipoValorVenta: [],
+                arrayListaVehiculoVenta: [],
+                arrayDetalleVehiculoVenta: [],
+                arrayTempDetalleVehiculoVenta: [],
                 // ============== VARIABLES PARA FLAG BENEFICIO VENTA ================
                 arrayIndexValorBeneficioVenta: [],
                 // ============== VARIABLES PARA FLAG TIPO MONEDA VENTA ================
@@ -605,7 +613,8 @@
                 tituloModal:'',
                 error: 0,
                 errors: [],
-                mensajeError: []
+                mensajeError: []/*,
+                activeNames: ['1']*/
             }
         },
         mounted(){
@@ -667,6 +676,9 @@
             },
         },
         methods: {
+            /*handleChange(val) {
+                console.log(val);
+            },*/
             llenarCompraActiva(){
                 var url = this.ruta + '/objComercial/getCompraActiva';
                 axios.get(url).then(response => {
@@ -826,11 +838,10 @@
                         'page' : page
                     }
                 }).then(response => {
+                    $("#myBar").hide();
                     let info = response.data;
                     this.arrayListaVehiculoCompra = info;
-                    this.llenarArrayDetalleVehiculoCompra();
-                }).then(function (response) {
-                    $("#myBar").hide();
+                    this.iniciaArrayDetalleVehiculoCompra();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -841,7 +852,7 @@
                     }
                 });
             },
-            llenarArrayDetalleVehiculoCompra(){
+            iniciaArrayDetalleVehiculoCompra(){
                 let me = this;
 
                 me.arrayDetalleVehiculoCompra = [];
@@ -877,14 +888,14 @@
             },
             // ====================================================================
             // ============== REGISTRAR OBJETIVO COMERCIAL COMPRA =================
-            llenarArrayDetalleVehiculo(){
+            llenarArrayDetalleVehiculoCompra(){
                 let me = this;
 
-                me.arrayTempDetalleVehiculo = [];
+                me.arrayTempDetalleVehiculoCompra = [];
 
                 me.arrayDetalleVehiculoCompra.map(function(value, key){
                     if(value.nCantidadVehiculo > 0){
-                        me.arrayTempDetalleVehiculo.push({
+                        me.arrayTempDetalleVehiculoCompra.push({
                             nIdVersionVeh       : value.nIdVersionVeh,
                             cNombreComercial    : value.cNombreComercial,
                             nCantidadVehiculo   : value.nCantidadVehiculo,
@@ -895,7 +906,7 @@
                         //console.log(me.arrayIndexFlagTipoValorId[key]);
                     }
                 });
-                //console.log(me.arrayTempDetalleVehiculo.length);
+                //console.log(me.arrayTempDetalleVehiculoCompra.length);
             },
             registrarObjComercialCompra(){
 
@@ -907,7 +918,7 @@
                 }
 
                 //======= LLeno el array para enviar ==========
-                this.llenarArrayDetalleVehiculo();
+                this.llenarArrayDetalleVehiculoCompra();
 
 
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialCompra';
@@ -917,9 +928,9 @@
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialCompra.nidcronograma,
                     'cFlagTipoOperacion'    :   'C',
-                    'arrayData'             :   this.arrayTempDetalleVehiculo
+                    'arrayData'             :   this.arrayTempDetalleVehiculoCompra
                 }).then(response => {
-                    swal('Objetivo Comercial - Compra registrada exitosamente');
+                    swal('Objetivo Compra registrada exitosamente');
                     this.limpiarTabCompra();
                 }).catch(error => {
                     this.errors = error
@@ -1001,10 +1012,10 @@
                         'page' : page
                     }
                 }).then(response => {
-                    let info = response.data;
-                    this.arrayDetalleVehiculoVenta = info;
-                }).then(function (response) {
                     $("#myBar").hide();
+                    let info = response.data;
+                    this.arrayListaVehiculoVenta = info;
+                    this.iniciaArrayDetalleVehiculoVenta();
                 }).catch(error => {
                     console.log(error);
                     if (error.response) {
@@ -1013,6 +1024,26 @@
                             location.reload('0');
                         }
                     }
+                });
+            },
+            iniciaArrayDetalleVehiculoVenta(){
+                let me = this;
+
+                me.arrayDetalleVehiculoVenta = [];
+
+                me.arrayListaVehiculoVenta.map(function(value, key){
+                    me.arrayDetalleVehiculoVenta.push({
+                            nIdVersionVeh   : value.nIdVersionVeh,
+                            Proveedor       : value.Proveedor,
+                            Linea           : value.Linea,
+                            Marca           : value.Marca,
+                            Modelo          : value.Modelo,
+                            cNombreComercial: value.cNombreComercial,
+                            nCantidadVehiculo: value.nCantidadVehiculo
+                    });
+
+                    me.arrayIndexFlagTipoValorIdVenta[key] = value.arrayIndexFlagTipoValorIdVenta == 0 ? '' : value.arrayIndexFlagTipoValorIdVenta,
+                    me.arrayIndexValorBeneficioVenta[key] = value.arrayIndexValorBeneficioVenta == 0 ? '' : value.arrayIndexValorBeneficioVenta
                 });
             },
             validaBuscaDetalleVehiculoVenta(){
@@ -1030,6 +1061,23 @@
             },
             // ====================================================================
             // ============== REGISTRAR OBJETIVO COMERCIAL VENTA =================
+            llenarArrayDetalleVehiculoVenta(){
+                let me = this;
+
+                me.arrayTempDetalleVehiculoVenta = [];
+
+                me.arrayDetalleVehiculoVenta.map(function(value, key){
+                    if(value.nCantidadVehiculo > 0){
+                        me.arrayTempDetalleVehiculoVenta.push({
+                            nIdVersionVeh       : value.nIdVersionVeh,
+                            cNombreComercial    : value.cNombreComercial,
+                            nCantidadVehiculo   : value.nCantidadVehiculo,
+                            nIdFlagTipoValor    : me.arrayIndexFlagTipoValorIdVenta[key] = '' ? 0 : me.arrayIndexFlagTipoValorIdVenta[key],
+                            fValorBeneficio     : me.arrayIndexValorBeneficioVenta[key]
+                        });
+                    }
+                });               
+            },
             registrarObjComercialVenta(){
 
                 //======= Valido informacion correcta ==========
@@ -1039,6 +1087,9 @@
                     return;
                 }
 
+                //======= LLeno el array para enviar ==========
+                this.llenarArrayDetalleVehiculoVenta();
+
                 var url = this.ruta + '/objComercial/SetRegistrarObjComercialVenta';
                 axios.post(url, {
                     'nIdEmpresa'            :   parseInt(sessionStorage.getItem("nIdEmpresa")),
@@ -1046,9 +1097,9 @@
                     'nIdProveedor'          :   this.fillProveedor.nidproveedor,
                     'nIdCronograma'         :   this.fillObjComercialVenta.nidcronograma,
                     'cFlagTipoOperacion'    :   'V',
-                    'arrayData'             :   this.arrayDetalleVehiculoVenta
+                    'arrayData'             :   this.arrayTempDetalleVehiculoVenta
                 }).then(response => {
-                    swal('Objetivo Comercial - Venta registrada exitosamente');
+                    swal('Objetivo Venta registrado exitosamente');
                     this.limpiarTabVenta();
                 }).catch(error => {
                     this.errors = error
@@ -1059,6 +1110,17 @@
 
                 me.error = 0;
                 me.mensajeError =[];
+
+                if(me.arrayDetalleVehiculoVenta.length > 0){
+                    me.arrayDetalleVehiculoVenta.map(function(value, key){
+                        if(me.arrayIndexValorBeneficioVenta[key])
+                        {
+                            if(me.arrayIndexFlagTipoValorIdVenta[key] == 0 || !me.arrayIndexFlagTipoValorIdVenta[key]){
+                                me.mensajeError.push('Seleccione Tipo Valor para' + value.cNombreComercial);
+                            }
+                        }
+                    });
+                }
 
                 if(me.fillProveedor.nidproveedor == 0 && !me.fillProveedor.cproveedornombre){
                     me.mensajeError.push('Debe seleccionar un proveedor');
@@ -1170,10 +1232,12 @@
             },
             limpiarTabCompra(){
                 this.arrayListaVehiculoCompra = [],
-                this.arrayTempDetalleVehiculo = [],
+                this.arrayTempDetalleVehiculoCompra = [],
                 this.arrayDetalleVehiculoCompra = []
             },
             limpiarTabVenta(){
+                this.arrayListaVehiculoVenta = [],
+                this.arrayTempDetalleVehiculoVenta = [],
                 this.arrayDetalleVehiculoVenta = []
             },
             limpiarFormulario(){
