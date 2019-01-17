@@ -35,6 +35,20 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Descripción</label>
+                                                    <div class="col-sm-8">
+                                                        <el-input
+                                                            placeholder=""
+                                                            v-model="fillParametro.cparnombre"
+                                                            clearable>
+                                                        </el-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="col-sm-9 offset-sm-4">
                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarParametroByGrupo(1);">
                                                     <i class="fa fa-search"></i> Buscar
@@ -234,7 +248,8 @@
                 // =============================================================
                 // =========== VARIABLES PARAMETRO ===========
                 fillParametro:{
-                    nidgrupopar: ''
+                    nidgrupopar: '',
+                    cparnombre: ''
                 },
                 formParametro:{
                     nidpar: 0,
@@ -417,6 +432,7 @@
                 axios.get(url, {
                     params: {
                         'ngrupoparid' : this.fillParametro.nidgrupopar,
+                        'cparnombre': this.fillParametro.cparnombre,
                         'page' : page
                     }
                 }).then(response => {

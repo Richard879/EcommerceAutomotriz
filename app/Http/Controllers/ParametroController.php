@@ -274,12 +274,15 @@ class ParametroController extends Controller
     public function GetListParametroByGrupo(Request $request)
     {
         $nIdGrupoPar = $request->ngrupoparid;
+        $cParNombre = $request->cparnombre;
         $variable   = $request->opcion;
         $nIdGrupoPar = ($nIdGrupoPar == NULL) ? ($nIdGrupoPar = 0) : $nIdGrupoPar;
+        $cParNombre = ($cParNombre == NULL) ? ($cParNombre = '') : $cParNombre;
         $variable = ($variable == NULL) ? ($variable = 0) : $variable;
 
-        $arrayParametro = DB::select('exec [usp_Par_GetListParametroByGrupo] ?',
-                                            [   $nIdGrupoPar
+        $arrayParametro = DB::select('exec [usp_Par_GetListParametroByGrupo] ?, ?',
+                                            [   $nIdGrupoPar,
+                                                $cParNombre
                                             ]);
 
         if($variable == "0"){

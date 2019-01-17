@@ -1067,7 +1067,7 @@
                 this.formListaPrecioVh.cproveedornombre = '';
                 this.arrayListaPrecioVhDet = [];
                 this.desactivarTabs();
-                this.listarListaPrecioVh(1);
+                //this.listarListaPrecioVh(1);
             },
             buscaProveedores(){
                 this.listarProveedores(1);
@@ -1114,8 +1114,7 @@
                 var url = this.ruta + '/parametro/GetParametroByGrupo';
                 axios.get(url, {
                     params: {
-                        'ngrupoparid' : 110044,
-                        'opcion' : 0
+                        'ngrupoparid' : 110044
                     }
                 }).then(response => {
                     this.arrayTipoLista = response.data;
