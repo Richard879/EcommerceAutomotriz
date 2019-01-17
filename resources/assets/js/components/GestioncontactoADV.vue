@@ -1742,7 +1742,7 @@
                 this.formNuevoContacto.nidmodelo = '';
                 this.formNuevoContacto.naniofabricacion = '';
                 this.formNuevoContacto.naniomodelo = '';
-                this.formNuevoContacto.dfechareferenciacompra = 0;
+                this.formNuevoContacto.dfechareferenciacompra = moment().format('YYYY-MM-DD');
                 //Variables Asignación Otros Intereses
                 this.formNuevoContacto.nidproveedor2 = 0;
                 this.formNuevoContacto.cproveedornombre2 = '';
@@ -1751,7 +1751,7 @@
                 this.formNuevoContacto.nidmodelo2 = '';
                 this.formNuevoContacto.naniofabricacion2 = '';
                 this.formNuevoContacto.naniomodelo2 = '';
-                this.formNuevoContacto.dfechareferenciacompra2 = 0;
+                this.formNuevoContacto.dfechareferenciacompra2 = moment().format('YYYY-MM-DD');
 
                 this.arrayLinea = [];
                 this.arrayMarca = [];

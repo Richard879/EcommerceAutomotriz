@@ -33,6 +33,9 @@
     <template v-if="menu==1300481">
         <asignavendedorjefeventas :ruta="ruta"></asignavendedorjefeventas>
     </template>
+    <template v-if="menu==1300482">
+        <gestionusuarios :ruta="ruta"></gestionusuarios>
+    </template>
 
 
     <template v-if="menu==1300266">
