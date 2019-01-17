@@ -70,7 +70,8 @@ class SapContactoController extends Controller
                 "EmailAddress"  => $EmailAddress,
                 "Address"       => $Address,
                 "Cellular"      => $Cellular,
-                "City"          => $City
+                "City"          => $City,
+                "Currency"      =>	"##"
                ]
            ];
 
@@ -102,7 +103,8 @@ class SapContactoController extends Controller
                 "EmailAddress"  => $EmailAddress,
                 "Address"       => $Address,
                 "Cellular"      => $Cellular,
-                "City"          => $City
+                "City"          => $City,
+                "Currency"      =>	"##"
                ]
            ];
 
