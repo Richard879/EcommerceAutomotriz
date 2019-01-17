@@ -256,7 +256,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Empresa</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="cempresa" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="cempresa" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -264,7 +264,7 @@
                                                                         <div class="row">
                                                                             <label class="col-sm-4 form-control-label">Sucursal</label>
                                                                             <div class="col-sm-8">
-                                                                                <label v-text="csucursal" class="form-control-label-readonly"></label>
+                                                                                <input type="text" v-model="csucursal" class="form-control form-control-sm" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -899,9 +899,9 @@
                             nIdVersionVeh       : value.nIdVersionVeh,
                             cNombreComercial    : value.cNombreComercial,
                             nCantidadVehiculo   : value.nCantidadVehiculo,
-                            nIdFlagTipoBeneficio  : me.arrayIndexTipoBeneficioId[key] = '' ? 0 : me.arrayIndexTipoBeneficioId[key],
-                            nIdFlagTipoValor      : me.arrayIndexFlagTipoValorId[key] = '' ? 0 : me.arrayIndexFlagTipoValorId[key],
-                            fValorBeneficio     : me.arrayIndexValorBeneficio[key]
+                            nIdFlagTipoBeneficio  : !me.arrayIndexTipoBeneficioId[key] ? 0 : me.arrayIndexTipoBeneficioId[key],
+                            nIdFlagTipoValor      : !me.arrayIndexFlagTipoValorId[key] ? 0 : me.arrayIndexFlagTipoValorId[key],
+                            fValorBeneficio     : !me.arrayIndexValorBeneficio[key] ? 0 : me.arrayIndexValorBeneficio[key]
                         });
                         //console.log(me.arrayIndexFlagTipoValorId[key]);
                     }
@@ -1042,8 +1042,8 @@
                             nCantidadVehiculo: value.nCantidadVehiculo
                     });
 
-                    me.arrayIndexFlagTipoValorIdVenta[key] = value.arrayIndexFlagTipoValorIdVenta == 0 ? '' : value.arrayIndexFlagTipoValorIdVenta,
-                    me.arrayIndexValorBeneficioVenta[key] = value.arrayIndexValorBeneficioVenta == 0 ? '' : value.arrayIndexValorBeneficioVenta
+                    me.arrayIndexFlagTipoValorIdVenta[key] = value.nIdFlagTipoValor == 0 ? '' : value.nIdFlagTipoValor,
+                    me.arrayIndexValorBeneficioVenta[key] = value.fValorBeneficio == 0 ? '' : value.fValorBeneficio
                 });
             },
             validaBuscaDetalleVehiculoVenta(){
@@ -1072,8 +1072,8 @@
                             nIdVersionVeh       : value.nIdVersionVeh,
                             cNombreComercial    : value.cNombreComercial,
                             nCantidadVehiculo   : value.nCantidadVehiculo,
-                            nIdFlagTipoValor    : me.arrayIndexFlagTipoValorIdVenta[key] = '' ? 0 : me.arrayIndexFlagTipoValorIdVenta[key],
-                            fValorBeneficio     : me.arrayIndexValorBeneficioVenta[key]
+                            nIdFlagTipoValor    : !me.arrayIndexFlagTipoValorIdVenta[key] ? 0 : me.arrayIndexFlagTipoValorIdVenta[key],
+                            fValorBeneficio     : !me.arrayIndexValorBeneficioVenta[key] ? 0 : me.arrayIndexValorBeneficioVenta[key]
                         });
                     }
                 });               
