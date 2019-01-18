@@ -678,4 +678,34 @@ class CotizacionController extends Controller
 
         return response()->json($arrayObsequioEleVenta);
     }
+
+    public function GetListContactoByVendedor(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $nIdEmpresa = $request->nidempresa;
+        $nIdSucursal = $request->nidsucursal;
+        $nIdCronograma = $request->nidcronograma;
+        $nTipoPersona = $request->ntipopersona;
+        $cNroDocumento = $request->cnrodocumento;
+        $cFiltroDescripcion = $request->cfiltrodescripcion;
+        $nIdVendedor = $request->nidvendedor;
+
+        $cNroDocumento = ($cNroDocumento == NULL) ? ($cNroDocumento = ' ') : $cNroDocumento;
+        $cFiltroDescripcion = ($cFiltroDescripcion == NULL) ? ($cFiltroDescripcion = ' ') : $cFiltroDescripcion;
+        $nIdVendedor = ($nIdVendedor == NULL) ? ($nIdVendedor = Auth::user()->id) : $nIdVendedor;
+
+        $arrayContactosPorVendedor = DB::select('exec [usp_Cotizacion_GetListContactoByVendedor] ?, ?, ?, ?, ?, ?, ?',
+                                                                        array(  $nIdEmpresa,
+                                                                                $nIdSucursal,
+                                                                                $nIdCronograma,
+                                                                                $nTipoPersona,
+                                                                                $cNroDocumento,
+                                                                                $cFiltroDescripcion,
+                                                                                $nIdVendedor
+                                                                                ));
+
+        $arrayContactosPorVendedor = ParametroController::arrayPaginator($arrayContactosPorVendedor, $request);
+        return ['arrayContactosPorVendedor'=>$arrayContactosPorVendedor];
+    }
 }

@@ -3098,7 +3098,7 @@
                 return this.error;
             },
             buscarContactosPorVendedor(page){
-                var url = this.ruta + '/gescontacto/GetListContactoByVendedor';
+                var url = this.ruta + '/getcotizacion/GetListContactoByVendedor';
                 axios.get(url, {
                     params: {
                         'nidempresa' : parseInt(sessionStorage.getItem("nIdEmpresa")),
