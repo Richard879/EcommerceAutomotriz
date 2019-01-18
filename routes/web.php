@@ -353,6 +353,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/usuario/GetListRoles','GestionUsuariosController@GetListRoles');
     Route::post('/usuario/SetRegistrarUsuario','GestionUsuariosController@SetRegistrarUsuario');
     Route::get('/usuario/GetListPermisosByRol','GestionUsuariosController@GetListPermisosByRol');
+    Route::post('/usuario/SetPermisosByUsuario','GestionUsuariosController@SetPermisosByUsuario');
 
     ///========================================
     /////=================  ROUTES SAP
