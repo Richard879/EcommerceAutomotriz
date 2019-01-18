@@ -769,7 +769,7 @@
         width:60px;
         height:60px;
         border-radius:150px;
-        border:10px solid #666;
+        border:3px solid #666;
     }
     #preview {
         width: 100%;
@@ -783,6 +783,6 @@
         min-width: 33%;
         max-height: 200px;
         border-radius:120px;
-        border:10px solid #666;
+        border:5px solid #666;
     }
 </style>
