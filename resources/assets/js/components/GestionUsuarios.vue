@@ -20,9 +20,20 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="row">
-                                                    <label class="col-sm-4 form-control-label">* Empresa</label>
+                                                    <label class="col-sm-4 form-control-label">Empresa</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" v-model="fillBsqUsuario.cdescripcion" class="form-control form-control-sm">
+                                                        <el-select v-model="fillBsqUsuario.nidempresa"
+                                                                    filterable
+                                                                    @change="listarSucursal"
+                                                                    clearable
+                                                                     placeholder="SELECCIONE UNA EMPRESA" >
+                                                            <el-option
+                                                                v-for="item in arrayEmpresas"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -30,7 +41,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-4 form-control-label">Sucursal</label>
                                                     <div class="col-sm-8">
-                                                        <el-select v-model="fillPuga.nidsucursal" filterable clearable placeholder="SELECCIONE UNA SUCURSAL" >
+                                                        <el-select v-model="fillBsqUsuario.nidsucursal" filterable clearable placeholder="SELECCIONE UNA SUCURSAL" >
                                                             <el-option
                                                                 v-for="item in arraySucursal"
                                                                 :key="item.nIdPar"
@@ -56,6 +67,9 @@
                                             <div class="col-sm-9 offset-sm-5">
                                                 <button type="button" class="btn btn-primary btn-corner btn-sm" @click="listarUsuarios(1)">
                                                     <i class="fa fa-search"></i> Buscar
+                                                </button>
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="cambiarVistaFormulario(0)">
+                                                    <i class="fa fa-file-o"></i> Nuevo
                                                 </button>
                                             </div>
                                         </div>
@@ -146,6 +160,147 @@
                     </div>
                 </section>
             </template>
+            <template v-else>
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h4">REGISTRAR NUEVO USUARIO</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Empresa</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillUsuario.nidempresa"
+                                                                    filterable
+                                                                    @change="listarSucursal2"
+                                                                    clearable
+                                                                     placeholder="SELECCIONE UNA EMPRESA" >
+                                                            <el-option
+                                                                v-for="item in arrayEmpresas"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Sucursal</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillUsuario.nidsucursal" filterable clearable placeholder="SELECCIONE UNA SUCURSAL" >
+                                                            <el-option
+                                                                v-for="item in arraySucursal"
+                                                                :key="item.nIdPar"
+                                                                :label="item.cParNombre"
+                                                                :value="item.nIdPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Nombre Completo</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="fillUsuario.cnombrecompleto" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Usuario</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" v-model="fillUsuario.cusuario" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Contraseña</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="password" v-model="fillUsuario.cpassword" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">Rol</label>
+                                                    <div class="col-sm-8">
+                                                        <el-select v-model="fillUsuario.nrol" filterable clearable placeholder="SELECCIONE UN ROL">
+                                                            <el-option
+                                                                v-for="item in arrayRoles"
+                                                                :key="item.nIdGrupoPar"
+                                                                :label="item.cGrupoParNombre"
+                                                                :value="item.nIdGrupoPar">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <label class="col-sm-4 form-control-label">* Fotografía</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="file" id="file-upload" @change="getFile" accept="image/*" class="form-control form-control-sm"/>
+                                                    </div>
+                                                    <div id="preview">
+                                                        <img v-if="urlImage" :src="urlImage"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9 offset-sm-5">
+                                                <button type="button" class="btn btn-success btn-corner btn-sm" @click="registrarUsuario()">
+                                                    <i class="fa fa-plus"></i> Registrar
+                                                </button>
+                                                <button type="button" class="btn btn-info btn-corner btn-sm" @click="cambiarVistaFormulario(1)">
+                                                    <i class="fa fa-arrow-left"></i> Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+
+            <!-- Modal Show Errors -->
+            <div class="modal fade" v-if="accionmodal==1" :class="{ 'mostrar': modal }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-primary modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Automotores INKA</h4>
+                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div v-for="e in mensajeError" :key="e" v-text="e"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-corner btn-sm" @click="cerrarModal()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </transition>
 </template>
@@ -166,8 +321,21 @@
                 arraySucursal: [],
                 arrayUsuarios: [],
                 //==========================================================
-                //================== REGISTRO PERMISOS =====================
-
+                //================== REGISTRAR USUARIO =====================
+                flagRegistrarEditar: 1,
+                fillUsuario: {
+                    nidempresa: '',
+                    nidsucursal: '',
+                    nIdUsuario: '',
+                    cnombrecompleto: '',
+                    cusuario: '',
+                    cpassword: '',
+                    nrol: ''
+                },
+                arrayRoles: [],
+                attachment: '',// Archivo a almacenar
+                form: new FormData,// El archivo tendrá que ser enviado como elemento FormData
+                urlImage: '',
                 //==========================================================
                 pagination: {
                     'total': 0,
@@ -274,7 +442,7 @@
                 var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
                 axios.get(url, {
                     params: {
-                        'nidempresa': this.fillPuga.nidempresa
+                        'nidempresa': this.fillBsqUsuario.nidempresa
                     }
                 }).then(response => {
                     this.arraySucursal = response.data;
@@ -289,12 +457,18 @@
                 });
             },
             listarUsuarios(page){
-                var url = this.ruta + '/usuarios/GetListUsuarios';
+                if(this.validarListarUsuarios()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                var url = this.ruta + '/usuario/GetListUsuarios';
 
                 axios.get(url, {
                     params: {
-                        'nidempresa': parseInt(sessionStorage.getItem("nIdEmpresa")),
-                        'nidsucursal': parseInt(sessionStorage.getItem("nIdSucursal")),
+                        'nidempresa': this.fillBsqUsuario.nidempresa,
+                        'nidsucursal': this.fillBsqUsuario.nidsucursal,
                         'cdescripcion': this.fillBsqUsuario.cdescripcion,
                         'opcion': 1,
                         'page' : page
@@ -321,6 +495,244 @@
                 this.pagination.current_page=page;
                 this.listarUsuarios(page);
             },
+            validarListarUsuarios(){
+                this.error = 0;
+                this.mensajeError =[];
+
+                if(!this.fillBsqUsuario.nidempresa){
+                    this.mensajeError.push('Debe seleccionar una Empresa');
+                }
+                if(!this.fillBsqUsuario.nidsucursal){
+                    this.mensajeError.push('Debe seleccionar una Sucursal');
+                }
+
+                if(this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            //====================================================================
+            //===================== METODOS REGISTRAR USUARIO ====================
+            getFile(e){
+                let selectFile  = e.target.files[0];
+                this.attachment = selectFile;
+                this.urlImage   = URL.createObjectURL(selectFile);
+            },
+            registrarUsuario(){
+                if(this.validarRegistrarUsuario()){
+                    this.accionmodal=1;
+                    this.modal = 1;
+                    return;
+                }
+
+                //AGREGAR ARCHIVO AL FORM DATA
+                this.form.append('file', this.attachment);
+                this.form.append('nidempresa', this.fillUsuario.nidempresa);
+                this.form.append('nidsucursal', this.fillUsuario.nidsucursal);
+                this.form.append('cnombrecompleto', this.fillUsuario.cnombrecompleto);
+                this.form.append('cusuario', this.fillUsuario.cusuario);
+                this.form.append('cpassword', this.fillUsuario.cpassword);
+                this.form.append('nrol', this.fillUsuario.nrol);
+
+                const config = { headers: { 'Content-Type': 'multipart/form-data'  } };
+
+                // Mostrar ProgressBar
+                this.mostrarProgressBar();
+
+                let url;
+                (this.flagRegistrarEditar == 1) ? (url = this.ruta + '/usuario/SetRegistrarUsuario') : (url = this.ruta + '/usuario/SetEditarUsuario');
+                axios.post(url, this.form, config).then(response => {
+                    console.log(response.data)
+                    if(response.data[0].nIdRpta == 1) {
+                        swal(response.data[0].cMsjRpta);
+
+                        this.fillUsuario.nIdUsuario = response.data[0].nIdPar
+                        this.obtenerPermisosPorRol();
+                    } else {
+                        swal(response.data[0].cMsjRpta);
+                    }
+                    $("#myBar").hide();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            validarRegistrarUsuario(){
+                let me = this;
+
+                me.error = 0;
+                me.mensajeError =[];
+
+                if(!this.fillUsuario.nidempresa) {
+                    me.mensajeError.push('Debe Seleccionar una Empresa, es un campo obligatorio ');
+                }
+                if(!this.fillUsuario.nidsucursal) {
+                    me.mensajeError.push('Debe Seleccionar una Sucursal, es un campo obligatorio ');
+                }
+                if(!this.fillUsuario.cnombrecompleto) {
+                    me.mensajeError.push('Debe Ingresar un Nombre, es un campo obligatorio ');
+                }
+                if(!this.fillUsuario.cusuario) {
+                    me.mensajeError.push('Debe Ingresar un Usuario, es un campo obligatorio ');
+                }
+                if(!this.fillUsuario.cpassword) {
+                    me.mensajeError.push('Debe Ingresar una Contraseña, es un campo obligatorio ');
+                }
+                if(!this.fillUsuario.nrol) {
+                    me.mensajeError.push('Debe seleccionar un Rol, es un campo obligatorio ');
+                }
+
+                if(me.mensajeError.length){
+                    me.error = 1;
+                }
+                return me.error;
+            },
+            listarRolesPreConfig(){
+                var url = this.ruta + '/usuario/GetListRoles';
+                axios.get(url).then(response => {
+                    this.arrayRoles = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            listarSucursal2(){
+                var url = this.ruta + '/parametro/GetListSucursalByEmpresa';
+                axios.get(url, {
+                    params: {
+                        'nidempresa': this.fillUsuario.nidempresa
+                    }
+                }).then(response => {
+                    this.arraySucursal = response.data;
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            obtenerPermisosPorRol(){
+                var url = this.ruta + '/usuario/GetListPermisosByRol';
+                axios.get(url, {
+                    params: {
+                        'nrol': this.fillUsuario.nrol
+                    }
+                }).then(response => {
+                    this.arrayPermisosbyRol = response.data;
+                    this.registrarPermisosByRol();
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            registrarPermisosByRol(){
+                var url = this.ruta + '/puga/SetPermisosByUsuario';
+                axios.post(url, {
+                    'nIdEmpresa'    :   this.fillUsuario.nidempresa,
+                    'nIdSucursal'   :   this.fillUsuario.nidsucursal,
+                    'nIdUsuario'    :   this.fillUsuario.nIdUsuario,
+                    'arrayData'     :   this.arrayPermisosbyRol
+                }).then(response => {
+                    this.listarUsuarios(1);
+                    this.limpiarFormulario();
+                    this.mostrarFormulario(1);
+                    this.attachment = '';
+                    this.form = new FormData;
+                    // Ocultar ProgressBar
+                    $("#myBar").hide();
+                }).catch(error => {
+                    this.errors = error
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
+            //============================================================
+            //===================== METODOS GENÉRICOS ====================
+            cerrarModal(){
+                this.modal = 0
+                this.error = 0,
+                this.mensajeError = ''
+            },
+            abrirFormulario(modelo, accion, data =[]){
+                switch(modelo){
+                    case 'usuario':
+                    {
+                        switch(accion){
+                            case 'registrar':
+                            {
+
+                                break;
+                            }
+                            case 'permisos':
+                            {
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            limpiarFormulario(){
+                //Busqueda
+                this.listarEmpresa();
+                this.fillBsqUsuario.nidempresa = '';
+                this.fillBsqUsuario.nidsucursal = '';
+                this.fillBsqUsuario.cdescripcion = '';
+                this.arrayUsuarios = [];
+                //Registrar
+                this.fillUsuario.cnombrecompleto = '';
+                this.fillUsuario.cusuario = '';
+                this.fillUsuario.cpassword = '';
+                this.fillUsuario.nrol = '';
+                this.attachment = '';
+                this.form = '';//Seteo a vacio
+                this.form = new FormData;//Inicializo el Obj FormData
+                this.urlImage = '';
+            },
+            cambiarVistaFormulario(op, data = null){
+                if(op == 1) {
+                    this.limpiarFormulario();
+                }
+                if(op == 0){
+                    this.flagRegistrarEditar = 1;
+                    this.listarEmpresa();
+                    this.listarRolesPreConfig();
+                }
+                this.vistaFormulario = op;
+            },
+            limpiarPaginacion(){
+                this.pagination.current_page =  0,
+                this.pagination.total = 0,
+                this.pagination.per_page = 0,
+                this.pagination.last_page = 0,
+                this.pagination.from  = 0,
+                this.pagination.to = 0
+            },
+            mostrarProgressBar(){
+                $("#myBar").show();
+                progress();
+            }
         }
     }
 </script>
@@ -350,6 +762,20 @@
         width:60px;
         height:60px;
         border-radius:150px;
+        border:10px solid #666;
+    }
+    #preview {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #preview img {
+        max-width: 60%;
+        min-width: 33%;
+        max-height: 200px;
+        border-radius:120px;
         border:10px solid #666;
     }
 </style>
