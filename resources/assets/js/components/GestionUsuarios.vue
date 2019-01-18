@@ -106,14 +106,14 @@
                                                         <td v-text="usuario.usuario"></td>
                                                         <td v-text="usuario.cGrupoParNombre"></td>
                                                         <td>
-                                                            <el-tooltip class="item" effect="dark" placement="top-start">
+                                                            <!-- <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Ver Permisos {{ usuario.cParNombre }}</div>
                                                                 <i @click="cambiarVistaFormulario(0, rol)" :style="'color:#796AEE'" class="fa-md fa fa-eye"></i>
                                                             </el-tooltip>&nbsp;
                                                             <el-tooltip class="item" effect="dark" placement="top-start">
                                                                 <div slot="content">Editar {{ usuario.cParNombre }}</div>
                                                                 <i @click="cambiarVistaFormulario(0, rol)" :style="'color:#796AEE'" class="fa-md fa fa-edit"></i>
-                                                            </el-tooltip>&nbsp;
+                                                            </el-tooltip>&nbsp; -->
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -576,7 +576,7 @@
                 let url;
                 (this.flagRegistrarEditar == 1) ? (url = this.ruta + '/usuario/SetRegistrarUsuario') : (url = this.ruta + '/usuario/SetEditarUsuario');
                 axios.post(url, this.form, config).then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     if(response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
 
@@ -632,7 +632,7 @@
                         'nrol': this.fillUsuario.nrol
                     }
                 }).then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.arrayPermisosbyRol = response.data;
                     this.registrarPermisosByRol();
                 }).catch(error => {
@@ -654,7 +654,7 @@
                     'nIdPerfil'     :   this.fillUsuario.nrol,
                     'arrayData'     :   this.arrayPermisosbyRol
                 }).then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     if(response.data[0].nFlagMsje == 1) {
                         swal(response.data[0].cMensaje);
                         this.cambiarVistaFormulario(1);
