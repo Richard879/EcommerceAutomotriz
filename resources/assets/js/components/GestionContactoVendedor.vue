@@ -1856,7 +1856,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto">
+                                                        <tr v-for="r in arrayAsignacionReferenciavehiculo" :key="r.nIdReferenciaVehiculoContacto" :style="{ background : r.cColorEstado}">
                                                             <template v-if="r.cFlagCarteraMes=='N'">
                                                                 <td>
                                                                     <!--<template v-if="r.nNroCotizacionesActivas == 0">
