@@ -2081,6 +2081,31 @@
                     }
                 });
             },
+            asignarCarteraMesTodos(nIdContacto){
+                var url = this.ruta + '/gescontacto/SetContactoCarteraMesTodos';
+
+                axios.post(url, {
+                    nIdCronograma: 220016,
+                    nIdContacto: parseInt(nIdContacto)
+                }).then(response => {
+                    if(response.data[0].nFlagMsje==1){
+                        swal('Se asignó a Cartera de Mes');
+                        this.listarContactoSinCarteraMes(1);
+                    }
+                    else{
+                        swal('No se Asignó');
+                        this.listarContactoSinCarteraMes(1);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response) {
+                        if (error.response.status == 401) {
+                            swal('VUELVA INICIAR SESIÓN - SESIÓN INHAUTORIZADA - 401');
+                            location.reload('0');
+                        }
+                    }
+                });
+            },
             asignarCarteraMes(nIdContacto){
                 var url = this.ruta + '/gescontacto/SetContactoCarteraMes';
 
